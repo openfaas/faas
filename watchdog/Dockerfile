@@ -1,7 +1,9 @@
-FROM alpine:edge
+FROM alpine:latest
+ENTRYPOINT []
 
 COPY ./fwatchdog /usr/bin/fwatchdog
-ENV fprocess "cat -b"
+ENV fprocess "cat"
+
 
 EXPOSE 8080
-CMD ["fwatchdog"]
+CMD ["/usr/bin/fwatchdog"]
