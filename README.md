@@ -24,3 +24,24 @@ This binary fwatchdog acts as a watchdog for your function. Features:
 * Only lets processes run for set duration i.e. 500ms, 2s, 3s.
 * Language/binding independent
 
+Complete example:
+=================
+
+```
+# docker network create --driver overlay --attachable functions
+# git clone https://github.com/alexellis/faas && cd faas
+# cd watchdog
+# ./build.sh
+# docker build -t catservice .
+# docker service rm catservice ; docker service create --network=functions --name catservice catservice
+# cd ..
+# cd gateway
+# docker build -t server . ;docker rm -f server; docker run -v /var/run/docker.sock:/var/run/docker.sock --name server -p 8080:8080 --network=functions server
+```
+
+Accessing the `cat` (read echo) service:
+
+```
+# curl -X POST -H 'x-function: catservice' --data-binary @/etc/hostname -v http://localhost:8080/curl -X POST -H 'x-function: catservice' --data-binary @$HOME/.ssh/known_hosts -v http://localhost:8080/
+```
+
