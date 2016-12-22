@@ -1,0 +1,6 @@
+FROM golang:1.7.3
+RUN mkdir -p /go/src/fwatchdog
+COPY main.go /go/src/fwatchdog
+WORKDIR /go/src/fwatchdog
+RUN go get -d -v
+RUN go build
