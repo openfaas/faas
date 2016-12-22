@@ -5,16 +5,25 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"time"
 
 	"io/ioutil"
 
 	"strconv"
 
+	"github.com/alexellis/faas/gateway/metrics"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/client"
 	"github.com/gorilla/mux"
+	"github.com/prometheus/client_golang/prometheus"
 )
+
+type MetricOptions struct {
+	GatewayRequestsTotal         prometheus.Counter
+	GatewayServerlessServedTotal prometheus.Counter
+	GatewayFunctions             prometheus.Histogram
+}
 
 func lookupSwarmService(serviceName string) (bool, error) {
 	var c *client.Client
@@ -30,34 +39,66 @@ func lookupSwarmService(serviceName string) (bool, error) {
 	return len(services) > 0, err
 }
 
-func proxy(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "POST" {
-		log.Println(r.Header)
-		header := r.Header["X-Function"]
-		log.Println(header)
+func makeProxy(metrics MetricOptions) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		metrics.GatewayRequestsTotal.Inc()
 
-		exists, err := lookupSwarmService(header[0])
-		if err != nil {
-			log.Fatalln(err)
-		}
+		start := time.Now()
 
-		if exists == true {
-			// client := http.Client{Timeout: time.Second * 2}
-			requestBody, _ := ioutil.ReadAll(r.Body)
-			buf := bytes.NewBuffer(requestBody)
+		if r.Method == "POST" {
+			log.Println(r.Header)
+			header := r.Header["X-Function"]
+			log.Println(header)
 
-			response, err := http.Post("http://"+header[0]+":"+strconv.Itoa(8080)+"/", "text/plain", buf)
+			exists, err := lookupSwarmService(header[0])
 			if err != nil {
 				log.Fatalln(err)
 			}
-			responseBody, _ := ioutil.ReadAll(response.Body)
-			w.Write(responseBody)
+
+			if exists == true {
+				requestBody, _ := ioutil.ReadAll(r.Body)
+				buf := bytes.NewBuffer(requestBody)
+
+				response, err := http.Post("http://"+header[0]+":"+strconv.Itoa(8080)+"/", "text/plain", buf)
+				if err != nil {
+					log.Fatalln(err)
+				}
+				responseBody, _ := ioutil.ReadAll(response.Body)
+				w.Write(responseBody)
+				metrics.GatewayServerlessServedTotal.Inc()
+
+				metrics.GatewayFunctions.Observe(time.Since(start).Seconds())
+			}
 		}
 	}
 }
 
 func main() {
+	GatewayRequestsTotal := prometheus.NewCounter(prometheus.CounterOpts{
+		Name: "gateway_requests_total",
+		Help: "Total amount of HTTP requests to the gateway",
+	})
+	GatewayServerlessServedTotal := prometheus.NewCounter(prometheus.CounterOpts{
+		Name: "gateway_serverless_invocation_total",
+		Help: "Total amount of serverless function invocations",
+	})
+	GatewayFunctions := prometheus.NewHistogram(prometheus.HistogramOpts{
+		Name: "gateway_functions",
+		Help: "Gateway functions",
+	})
+
+	prometheus.Register(GatewayRequestsTotal)
+	prometheus.Register(GatewayServerlessServedTotal)
+	prometheus.Register(GatewayFunctions)
+
 	r := mux.NewRouter()
-	r.HandleFunc("/", proxy)
+	r.HandleFunc("/", makeProxy(MetricOptions{
+		GatewayRequestsTotal:         GatewayRequestsTotal,
+		GatewayServerlessServedTotal: GatewayServerlessServedTotal,
+		GatewayFunctions:             GatewayFunctions,
+	}))
+
+	metricsHandler := metrics.Handler()
+	r.Handle("/metrics", metricsHandler)
 	log.Fatal(http.ListenAndServe(":8080", r))
 }

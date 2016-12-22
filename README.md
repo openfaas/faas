@@ -1,6 +1,8 @@
 # faas
 Functions as a service
 
+Minimum requirements: Docker 1.13
+
 gateway
 =======
 
