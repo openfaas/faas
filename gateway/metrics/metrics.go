@@ -6,8 +6,14 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-// Handler returns the global http.Handler that provides the prometheus
-// metrics format on GET requests
-func Handler() http.Handler {
+// MetricOptions to be used by web handlers
+type MetricOptions struct {
+	GatewayRequestsTotal         prometheus.Counter
+	GatewayServerlessServedTotal prometheus.Counter
+	GatewayFunctions             prometheus.Histogram
+}
+
+// PrometheusHandler Bootstraps prometheus for metrics collection
+func PrometheusHandler() http.Handler {
 	return prometheus.Handler()
 }

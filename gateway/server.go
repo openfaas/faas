@@ -19,12 +19,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-type MetricOptions struct {
-	GatewayRequestsTotal         prometheus.Counter
-	GatewayServerlessServedTotal prometheus.Counter
-	GatewayFunctions             prometheus.Histogram
-}
-
 func lookupSwarmService(serviceName string) (bool, error) {
 	var c *client.Client
 	var err error
@@ -39,7 +33,7 @@ func lookupSwarmService(serviceName string) (bool, error) {
 	return len(services) > 0, err
 }
 
-func makeProxy(metrics MetricOptions) http.HandlerFunc {
+func makeProxy(metrics metrics.MetricOptions) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		metrics.GatewayRequestsTotal.Inc()
 
@@ -68,6 +62,9 @@ func makeProxy(metrics MetricOptions) http.HandlerFunc {
 				metrics.GatewayServerlessServedTotal.Inc()
 
 				metrics.GatewayFunctions.Observe(time.Since(start).Seconds())
+			} else {
+				w.WriteHeader(http.StatusBadRequest)
+				w.Write([]byte("Provide an x-function header."))
 			}
 		}
 	}
@@ -92,13 +89,13 @@ func main() {
 	prometheus.Register(GatewayFunctions)
 
 	r := mux.NewRouter()
-	r.HandleFunc("/", makeProxy(MetricOptions{
+	r.HandleFunc("/", makeProxy(metrics.MetricOptions{
 		GatewayRequestsTotal:         GatewayRequestsTotal,
 		GatewayServerlessServedTotal: GatewayServerlessServedTotal,
 		GatewayFunctions:             GatewayFunctions,
 	}))
 
-	metricsHandler := metrics.Handler()
+	metricsHandler := metrics.PrometheusHandler()
 	r.Handle("/metrics", metricsHandler)
 	log.Fatal(http.ListenAndServe(":8080", r))
 }
