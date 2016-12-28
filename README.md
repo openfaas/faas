@@ -1,5 +1,9 @@
-# faas
-Functions as a service
+# faas - Functions As A Service
+
+This project provides a way to run Docker containers as functions on Swarm Mode. 
+
+* Each container has a watchdog process that hosts a web server allowing a JSON post request to be fowarded to a desired process via STDIN. The respose is sent to the caller via STDOUT.
+* A gateway provides a view to the containers/functions to the public Internet and collects metrics for Prometheus and in a future version will manage replicas and scale as throughput increases.
 
 Minimum requirements: Docker 1.13
 
