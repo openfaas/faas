@@ -1,0 +1,1 @@
+docker build -t captainsintent . ; docker service rm CaptainsIntent ; docker service create --network=functions --name CaptainsIntent captainsintent

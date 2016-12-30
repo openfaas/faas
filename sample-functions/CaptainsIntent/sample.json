@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "response": {
+    "outputSpeech": {
+      "type": "PlainText",
+      "text": "There's currently 6 people in space"
+    },
+    "card": {
+      "content": "There's currently 6 people in space",
+      "title": "People in space",
+      "type": "Simple"
+    },
+    "shouldEndSession": true
+  },
+  "sessionAttributes": {}
+}
