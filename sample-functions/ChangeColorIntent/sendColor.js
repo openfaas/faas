@@ -13,7 +13,7 @@ class Send {
     var client = mqtt.connect(ops);
 
     client.on('connect', () => {
-      console.log("Connected");
+
       let payload = req;
       let cb = () => {
         done();
@@ -30,7 +30,7 @@ class Send {
       done();
     };
     client.on('connect', () => {
-      console.log("Connected");
+
       let payload = req;
       client.publish(this.topic, JSON.stringify(payload), {qos: 1}, cb);
     });

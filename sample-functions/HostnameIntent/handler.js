@@ -2,21 +2,24 @@
 let fs = require('fs');
 let sample = require("./sample.json");
 
-var content = '';
-process.stdin.resume();
-process.stdin.on('data', function(buf) { content += buf.toString(); });
-process.stdin.on('end', function() {
+getStdin().then(content => {
+  let request = JSON.parse(content);
+  handle(request, request.request.intent);
+});
+
+function tellWithCard(speechOutput) {
+  sample.response.outputSpeech.text = speechOutput
+  sample.response.card.content = speechOutput
+  sample.response.card.title = "Hostname";
+  console.log(JSON.stringify(sample));
+  process.exit(0);
+}
+
+function handle(request, intent) {
     fs.readFile("/etc/hostname", "utf8", (err, data) => {
       if(err) {
         return console.log(err);
       }
-//      console.log(content);
-
-      sample.response.outputSpeech.text = "Your hostname is: " + data;
-      sample.response.card.content = "Your hostname is: "+ data
-      sample.response.card.title = "Your hostname";
-      console.log(JSON.stringify(sample));
-      process.exit(0);
-   });
-});
-
+      tellWithCard("Your hostname is " + data);
+  });
+};
