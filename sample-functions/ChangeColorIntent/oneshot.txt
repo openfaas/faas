@@ -1,0 +1,1 @@
+docker build -t changecolorintent . ; docker service rm ChangeColorIntent ; docker service create --network=functions --name ChangeColorIntent changecolorintent

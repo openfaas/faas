@@ -116,10 +116,9 @@ func makeProxy(metrics metrics.MetricOptions) http.HandlerFunc {
 					len(alexaService.Request.Intent.Name) > 0 {
 					fmt.Println("Alexa skill detected")
 					invokeService(w, r, metrics, alexaService.Request.Intent.Name, requestBody)
-
 				} else {
 					w.WriteHeader(http.StatusBadRequest)
-					w.Write([]byte("Provide an x-function header."))
+					w.Write([]byte("Provide an x-function header or a valid Alexa SDK request."))
 				}
 			}
 		}

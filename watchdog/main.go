@@ -13,8 +13,8 @@ import (
 func main() {
 	s := &http.Server{
 		Addr:           ":8080",
-		ReadTimeout:    2 * time.Second,
-		WriteTimeout:   2 * time.Second,
+		ReadTimeout:    500 * time.Millisecond,
+		WriteTimeout:   1 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
 
@@ -39,4 +39,3 @@ func main() {
 
 	log.Fatal(s.ListenAndServe())
 }
-
