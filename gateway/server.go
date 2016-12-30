@@ -73,19 +73,33 @@ func isAlexa(requestBody []byte) AlexaRequestBody {
 }
 
 func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, requestBody []byte) {
+	stamp := strconv.FormatInt(time.Now().Unix(), 10)
+
 	start := time.Now()
 	buf := bytes.NewBuffer(requestBody)
 	url := "http://" + service + ":" + strconv.Itoa(8080) + "/"
-	fmt.Println("Forwarding request to ", url)
+	fmt.Printf("[%s] Forwarding request to: %s\n", stamp, url)
 	response, err := http.Post(url, "text/plain", buf)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
+		w.WriteHeader(500)
+		buf := bytes.NewBufferString("Can't reach service: " + service)
+		w.Write(buf.Bytes())
+		return
 	}
 
-	responseBody, _ := ioutil.ReadAll(response.Body)
+	responseBody, readErr := ioutil.ReadAll(response.Body)
+	if readErr != nil {
+		fmt.Println(readErr)
+		w.WriteHeader(500)
+		buf := bytes.NewBufferString("Error reading response from service: " + service)
+		w.Write(buf.Bytes())
+		return
+	}
+
 	w.Write(responseBody)
 	seconds := time.Since(start).Seconds()
-	fmt.Printf("Took %f\n", seconds)
+	fmt.Printf("[%s] took %f seconds\n", stamp, seconds)
 	metrics.GatewayServerlessServedTotal.Inc()
 	metrics.GatewayFunctions.Observe(seconds)
 }
@@ -152,5 +166,14 @@ func main() {
 
 	metricsHandler := metrics.PrometheusHandler()
 	r.Handle("/metrics", metricsHandler)
-	log.Fatal(http.ListenAndServe(":8080", r))
+
+	s := &http.Server{
+		Addr:           ":8080",
+		ReadTimeout:    8 * time.Second,
+		WriteTimeout:   8 * time.Second,
+		MaxHeaderBytes: 1 << 20,
+		Handler:        r,
+	}
+
+	log.Fatal(s.ListenAndServe())
 }
