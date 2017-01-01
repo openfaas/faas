@@ -64,10 +64,8 @@ func isAlexa(requestBody []byte) AlexaRequestBody {
 	fmt.Println(buf)
 	str := buf.String()
 	parts := strings.Split(str, "sessionId")
-	if len(parts) > 0 {
+	if len(parts) > 1 {
 		json.Unmarshal(requestBody, &body)
-		fmt.Println("Alexa SDK request found")
-		fmt.Printf("Session=%s, Intent=%s, App=%s\n", body.Session.SessionId, body.Request.Intent, body.Session.Application.ApplicationId)
 	}
 	return body
 }
@@ -125,10 +123,15 @@ func makeProxy(metrics metrics.MetricOptions) http.HandlerFunc {
 			} else {
 				requestBody, _ := ioutil.ReadAll(r.Body)
 				alexaService := isAlexa(requestBody)
+				fmt.Println(alexaService)
+
 				if len(alexaService.Session.SessionId) > 0 &&
 					len(alexaService.Session.Application.ApplicationId) > 0 &&
 					len(alexaService.Request.Intent.Name) > 0 {
-					fmt.Println("Alexa skill detected")
+
+					fmt.Println("Alexa SDK request found")
+					fmt.Printf("SessionId=%s, Intent=%s, AppId=%s\n", alexaService.Session.SessionId, alexaService.Request.Intent.Name, alexaService.Session.Application.ApplicationId)
+
 					invokeService(w, r, metrics, alexaService.Request.Intent.Name, requestBody)
 				} else {
 					w.WriteHeader(http.StatusBadRequest)
