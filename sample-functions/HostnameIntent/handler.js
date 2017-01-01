@@ -1,6 +1,7 @@
 "use strict"
 let fs = require('fs');
 let sample = require("./sample.json");
+let getStdin = require("get-stdin");
 
 getStdin().then(content => {
   let request = JSON.parse(content);
