@@ -1,0 +1,2 @@
+docker build -t nodeinfo . ; docker service rm NodeInfo ; docker service create --network=functions --name NodeInfo nodeinfo
+
