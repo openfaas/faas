@@ -51,6 +51,7 @@ func lookupSwarmService(serviceName string) (bool, error) {
 	if err != nil {
 		log.Fatal("Error with Docker client.")
 	}
+	fmt.Printf("Resolving: '%s'\n", serviceName)
 	serviceFilter := filters.NewArgs()
 	serviceFilter.Add("name", serviceName)
 	services, err := c.ServiceList(context.Background(), types.ServiceListOptions{Filters: serviceFilter})
@@ -95,6 +96,7 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 		return
 	}
 
+	w.WriteHeader(http.StatusOK)
 	w.Write(responseBody)
 	seconds := time.Since(start).Seconds()
 	fmt.Printf("[%s] took %f seconds\n", stamp, seconds)
@@ -102,7 +104,22 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	metrics.GatewayFunctions.Observe(seconds)
 }
 
-func makeProxy(metrics metrics.MetricOptions) http.HandlerFunc {
+func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, name string) {
+	exists, err := lookupSwarmService(name)
+	if err != nil || exists == false {
+		if err != nil {
+			log.Fatalln(err)
+		}
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Error resolving service."))
+	}
+	if exists == true {
+		requestBody, _ := ioutil.ReadAll(r.Body)
+		invokeService(w, r, metrics, name, requestBody)
+	}
+}
+
+func makeProxy(metrics metrics.MetricOptions, wildcard bool) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		metrics.GatewayRequestsTotal.Inc()
 
@@ -110,16 +127,15 @@ func makeProxy(metrics metrics.MetricOptions) http.HandlerFunc {
 			log.Println(r.Header)
 			header := r.Header["X-Function"]
 			log.Println(header)
+			fmt.Println(wildcard)
 
-			if len(header) > 0 {
-				exists, err := lookupSwarmService(header[0])
-				if err != nil {
-					log.Fatalln(err)
-				}
-				if exists == true {
-					requestBody, _ := ioutil.ReadAll(r.Body)
-					invokeService(w, r, metrics, header[0], requestBody)
-				}
+			if wildcard == true {
+				vars := mux.Vars(r)
+				name := vars["name"]
+				fmt.Println("invoke by name")
+				lookupInvoke(w, r, metrics, name)
+			} else if len(header) > 0 {
+				lookupInvoke(w, r, metrics, header[0])
 			} else {
 				requestBody, _ := ioutil.ReadAll(r.Body)
 				alexaService := isAlexa(requestBody)
@@ -160,12 +176,16 @@ func main() {
 	prometheus.Register(GatewayServerlessServedTotal)
 	prometheus.Register(GatewayFunctions)
 
-	r := mux.NewRouter()
-	r.HandleFunc("/", makeProxy(metrics.MetricOptions{
+	metricsOptions := metrics.MetricOptions{
 		GatewayRequestsTotal:         GatewayRequestsTotal,
 		GatewayServerlessServedTotal: GatewayServerlessServedTotal,
 		GatewayFunctions:             GatewayFunctions,
-	}))
+	}
+
+	r := mux.NewRouter()
+	r.HandleFunc("/", makeProxy(metricsOptions, false))
+
+	r.HandleFunc("/function/{name:[a-zA-Z]+}", makeProxy(metricsOptions, true))
 
 	metricsHandler := metrics.PrometheusHandler()
 	r.Handle("/metrics", metricsHandler)

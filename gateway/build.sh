@@ -1,5 +1,4 @@
 #!/bin/sh
-echo Building catservice:latest
+echo Building server:latest
 
-docker build -t catservice .
-
+docker build -t server . 

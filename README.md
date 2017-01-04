@@ -19,9 +19,9 @@ This container acts in a similar way to the API Gateway on AWS. Requests can be 
 
 There are three options for routing:
 
-* Routing is enabled through a `X-Function` header which matches a service name (function) directly.
+* Functions created on the overlay network can be invoked by: http://localhost:8080/function/{servicename}
 * Routing automatically detects Alexa SDK requests and forwards to a service name (function) that matches the Intent name
-* [todo] individual routes can be set up mapping to a specific service name (function).
+* Routing is enabled through a `X-Function` header which matches a service name (function) directly.
 
 Features:
 
