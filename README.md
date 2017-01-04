@@ -12,6 +12,8 @@ Minimum requirements:
 * Docker 1.13-RC (to support attachable overlay networks)
 * At least a single host in Swarm Mode. (run `docker swarm init`)
 
+Check your `docker version` and upgrade to one of the latest 1.13-RCs from the [Docker Releases page](https://github.com/docker/docker/releases). This is already available through the Beta channel in Docker for Mac.
+
 #### Create an attachable network for the gateway and functions to join
 
 ```
@@ -22,7 +24,9 @@ Minimum requirements:
 
 ```
 # docker pull alexellisio/faas-gateway:latest
-# docker rm -f gateway; docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name gateway -p 8080:8080 --network=functions alexellisio/faas-gateway:latest
+# docker rm -f gateway;
+# docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name gateway -p 8080:8080 \
+  --network=functions alexellisio/faas-gateway:latest
 ```
 
 #### Start at least one of the serverless functions:
@@ -30,7 +34,8 @@ Minimum requirements:
 Here we start an echo service using the `cat` command found in a shell.
 
 ```
-# docker service rm catservice ; docker service create --network=functions --name catservice alexellisio/faas-catservice:latest
+# docker service rm catservice
+# docker service create --network=functions --name catservice alexellisio/faas-catservice:latest
 ```
 
 #### Now send an event to the API gateway
@@ -56,7 +61,6 @@ Visit the accompanying blog post to find out how to build your own function in w
 # Overview
 
 ## the gateway
-
 
 This container acts in a similar way to the API Gateway on AWS. Requests can be made to this endpoint with a JSON body.
 
