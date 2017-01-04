@@ -5,7 +5,7 @@ This project provides a way to run Docker containers as functions on Swarm Mode.
 * Each container has a watchdog process that hosts a web server allowing a JSON post request to be forwarded to a desired process via STDIN. The respose is sent to the caller via STDOUT.
 * A gateway provides a view to the containers/functions to the public Internet and collects metrics for Prometheus and in a future version will manage replicas and scale as throughput increases.
 
-### Quickstart
+## Quickstart
 
 Minimum requirements: 
 
@@ -53,7 +53,7 @@ Visit the accompanying blog post to find out how to build your own function in w
 
 [FaaS blog post](http://blog.alexellis.io/functions-as-a-service/)
 
-### Overview
+## Overview
 
 gateway
 =======
