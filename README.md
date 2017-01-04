@@ -5,10 +5,55 @@ This project provides a way to run Docker containers as functions on Swarm Mode.
 * Each container has a watchdog process that hosts a web server allowing a JSON post request to be forwarded to a desired process via STDIN. The respose is sent to the caller via STDOUT.
 * A gateway provides a view to the containers/functions to the public Internet and collects metrics for Prometheus and in a future version will manage replicas and scale as throughput increases.
 
+### Quickstart
+
 Minimum requirements: 
 
-* Docker 1.13
-* Run `docker swarm init` to enable Docker Swarm Mode on your host. Multiple hosts are not required. 
+* Docker 1.13-RC (to support attachable overlay networks)
+* At least a single host in Swarm Mode. (run `docker swarm init`)
+
+* Create an attachable network for the gateway and functions to join
+
+```
+# docker network create --driver overlay --attachable functions
+```
+
+* Start the gateway
+
+```
+# docker pull alexellisio/faas-gateway:latest
+# docker rm -f gateway; docker run -d -v /var/run/docker.sock:/var/run/docker.sock --name gateway -p 8080:8080 --network=functions alexellisio/faas-gateway:latest
+```
+
+* Start at least one of the serverless functions:
+
+Here we start an echo service using the `cat` command found in a shell.
+
+```
+# docker service rm catservice ; docker service create --network=functions --name catservice alexellisio/faas-catservice:latest
+```
+
+* Now send an event to the API gateway
+
+**Method 1 - use the service name as a URL:**
+
+```
+# curl -X POST --data-binary @$HOME/.ssh/known_hosts -v http://localhost:8080/function/catservice
+```
+
+**Method 2 - use the X-Function header:**
+
+```
+# curl -X POST -H 'x-function: catservice' --data-binary @$HOME/.ssh/known_hosts -v http://localhost:8080/
+```
+
+* Build your own function
+
+Visit the accompanying blog post to find out how to build your own function in whatever programming language you prefer.
+
+[FaaS blog post](http://blog.alexellis.io/functions-as-a-service/)
+
+### Overview
 
 gateway
 =======
@@ -41,8 +86,8 @@ This binary fwatchdog acts as a watchdog for your function. Features:
 * [todo] Only lets processes run for set duration i.e. 500ms, 2s, 3s.
 * Language/binding independent
 
-Complete example:
-=================
+Building a development environment:
+===================================
 
 To use multiple hosts you should push your services (functions) to the Docker Hub or a registry accessible to all nodes.
 
