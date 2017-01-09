@@ -60,6 +60,12 @@ Visit the accompanying blog post to find out how to build your own function in w
 
 [FaaS blog post](http://blog.alexellis.io/functions-as-a-service/)
 
+#### Setup a Prometheus instance
+
+Please review the following quickstart example and edit the configuration in `monitor/prometheus.yml`.
+
+* [Quickstart-Prometheus](https://github.com/alexellis/quickstart-prometheus)
+
 # Overview
 
 ## the gateway
