@@ -10,7 +10,7 @@ This project provides a way to run Docker containers as functions on Swarm Mode.
 Minimum requirements: 
 
 * Docker 1.13-RC (to support attachable overlay networks)
-* At least a single host in Swarm Mode. (run `docker swarm init`)
+* At least a single host in [Swarm Mode](https://docs.docker.com/engine/swarm/swarm-tutorial/). (run `docker swarm init`)
 
 Check your `docker version` and upgrade to one of the latest 1.13-RCs from the [Docker Releases page](https://github.com/docker/docker/releases). This is already available through the Beta channel in Docker for Mac.
 
