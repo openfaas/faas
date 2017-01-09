@@ -5,16 +5,49 @@ This project provides a way to run Docker containers as functions on Swarm Mode.
 * Each container has a watchdog process that hosts a web server allowing a JSON post request to be forwarded to a desired process via STDIN. The respose is sent to the caller via STDOUT.
 * A gateway provides a view to the containers/functions to the public Internet and collects metrics for Prometheus and in a future version will manage replicas and scale as throughput increases.
 
-## Quickstart
-
-Minimum requirements: 
-
+## Minimum requirements: 
 * Docker 1.13-RC (to support attachable overlay networks)
 * At least a single host in Swarm Mode. (run `docker swarm init`)
 
-`For more information on Swarm mode and configuration please have a look at the [Swarm Mode tutorial](https://docs.docker.com/engine/swarm/swarm-tutorial/). `
+> For more information on Swarm mode and configuration please read the [Swarm Mode tutorial](https://docs.docker.com/engine/swarm/swarm-tutorial/).
 
 Check your `docker version` and upgrade to one of the latest 1.13-RCs from the [Docker Releases page](https://github.com/docker/docker/releases). This is already available through the Beta channel in Docker for Mac.
+
+## Quickstart with `docker stack deploy`
+
+For a complete stack of Prometheus, the gateway and the DockerHubStats function: 
+
+* Simply run `./deploy_stack.sh` - following that you can find out information about the services like this:
+
+```
+# docker stack ls
+NAME  SERVICES
+func  3
+
+# docker stack ps func
+ID            NAME               IMAGE                                  NODE  DESIRED STATE  CURRENT STATE         
+rhzej73haufd  func_gateway.1     alexellis2/faas-gateway:latest         moby  Running        Running 26 minutes ago
+fssz6unq3e74  func_hubstats.1    alexellis2/faas-dockerhubstats:latest  moby  Running        Running 27 minutes ago
+nnlzo6u3pilg  func_prometheus.1  quay.io/prometheus/prometheus:latest   moby  Running        Running 27 minutes ago
+```
+
+* Then head over to http://localhost:9090 for your Prometheus metrics
+
+* Your function can be accessed via the gateway like this:
+
+```
+# curl -X POST http://localhost:8080/function/func_hubstats -d "alexellis2"
+The organisation or user alexellis2 has 99 repositories on the Docker hub.
+
+# curl -X POST http://localhost:8080/function/func_hubstats -d "library"
+The organisation or user library has 128 repositories on the Docker hub.
+```
+
+The `-d` value passes in the argument for your function. This is read via STDIN and used to query the Docker Hub to see how many images you've created/pushed.
+
+If you're looking for a UI checkout the [Postman plugin for Chrome](https://www.getpostman.com) where you can send POSTs without needing `curl`.
+
+## Manual quickstart
 
 #### Create an attachable network for the gateway and functions to join
 

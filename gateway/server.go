@@ -185,7 +185,7 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", makeProxy(metricsOptions, false))
 
-	r.HandleFunc("/function/{name:[a-zA-Z]+}", makeProxy(metricsOptions, true))
+	r.HandleFunc("/function/{name:[a-zA-Z_]+}", makeProxy(metricsOptions, true))
 
 	metricsHandler := metrics.PrometheusHandler()
 	r.Handle("/metrics", metricsHandler)
