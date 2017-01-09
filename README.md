@@ -94,6 +94,7 @@ This binary fwatchdog acts as a watchdog for your function. Features:
 
 * Must switch over to timeouts for HTTP.post via HttpClient.
 * Coverage with unit tests
+* Update quick-start to use `docker stack deploy`
 
 ## Building a development environment:
 
