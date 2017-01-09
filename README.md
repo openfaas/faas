@@ -17,7 +17,19 @@ Check your `docker version` and upgrade to one of the latest 1.13-RCs from the [
 
 For a complete stack of Prometheus, the gateway and the DockerHubStats function: 
 
-* Simply run `./deploy_stack.sh`.
+* Simply run `./deploy_stack.sh` - following that you can find out information about the services like this:
+
+```
+# docker stack ls
+NAME  SERVICES
+func  3
+
+# docker stack ps func
+ID            NAME               IMAGE                                  NODE  DESIRED STATE  CURRENT STATE         
+rhzej73haufd  func_gateway.1     alexellis2/faas-gateway:latest         moby  Running        Running 26 minutes ago
+fssz6unq3e74  func_hubstats.1    alexellis2/faas-dockerhubstats:latest  moby  Running        Running 27 minutes ago
+nnlzo6u3pilg  func_prometheus.1  quay.io/prometheus/prometheus:latest   moby  Running        Running 27 minutes ago
+```
 
 * Then head over to http://localhost:9090 for your Prometheus metrics
 
