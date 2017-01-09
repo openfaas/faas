@@ -90,6 +90,11 @@ This binary fwatchdog acts as a watchdog for your function. Features:
 * [todo] Only lets processes run for set duration i.e. 500ms, 2s, 3s.
 * Language/binding independent
 
+### Additional technical debt:
+
+* Must switch over to timeouts for HTTP.post via HttpClient.
+* Coverage with unit tests
+
 ## Building a development environment:
 
 To use multiple hosts you should push your services (functions) to the Docker Hub or a registry accessible to all nodes.
