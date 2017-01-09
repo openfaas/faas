@@ -24,7 +24,17 @@ services:
             - functions
 
 # Sample functions go here.
-    hubstats:
+    webhookstash:
+        image: alexellis2/faas-webhookstash:latest
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
+            no_proxy:   "gateway"
+            https_proxy: $https_proxy
+
+   hubstats:
         image: alexellis2/faas-dockerhubstats:latest
         depends_on:
             - gateway

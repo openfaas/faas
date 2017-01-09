@@ -45,6 +45,30 @@ The organisation or user library has 128 repositories on the Docker hub.
 
 The `-d` value passes in the argument for your function. This is read via STDIN and used to query the Docker Hub to see how many images you've created/pushed.
 
+Another cool sample function is the Webhook Stasher which saves the body of any data posted to the service to the container's filesystem. Each file is written with the filename of the UNIX time.
+
+```
+# curl -X POST http://localhost:8080/function/func_webhookstash -d '{"event": "fork", "repo": "alexellis2/faas"}'
+Webhook stashed
+
+# docker ps|grep stash
+d769ca70729d        alexellis2/faas-webhookstash@sha256:b378f1a144202baa8fb008f2c8896f5a8
+
+# docker exec d769ca70729d find .
+.
+./1483999546817280727.txt
+./1483999702130689245.txt
+./1483999702533419188.txt
+./1483999702978454621.txt
+./1483999703284879767.txt
+./1483999719981227578.txt
+./1483999720296180414.txt
+./1483999720666705381.txt
+./1483999720961054638.txt
+```
+
+> Why not start the code on play-with-docker.com and then configure a Github repository to send webhook to the function?
+
 If you're looking for a UI checkout the [Postman plugin for Chrome](https://www.getpostman.com) where you can send POSTs without needing `curl`.
 
 ## Manual quickstart
