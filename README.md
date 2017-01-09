@@ -36,10 +36,10 @@ nnlzo6u3pilg  func_prometheus.1  quay.io/prometheus/prometheus:latest   moby  Ru
 * Your function can be accessed via the gateway like this:
 
 ```
-# curl -X POST http://localhost:3000/function/func_hubstats -d "alexellis2"
+# curl -X POST http://localhost:8080/function/func_hubstats -d "alexellis2"
 The organisation or user alexellis2 has 99 repositories on the Docker hub.
 
-# curl -X POST http://localhost:3000/function/func_hubstats -d "library"
+# curl -X POST http://localhost:8080/function/func_hubstats -d "library"
 The organisation or user library has 128 repositories on the Docker hub.
 ```
 
