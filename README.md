@@ -35,6 +35,8 @@ nnlzo6u3pilg  func_prometheus.1  quay.io/prometheus/prometheus:latest   moby  Ru
 
 * Your function can be accessed via the gateway like this:
 
+**Sample function: Docker Hub Stats (hubstats)**
+
 ```
 # curl -X POST http://localhost:8080/function/func_hubstats -d "alexellis2"
 The organisation or user alexellis2 has 99 repositories on the Docker hub.
@@ -44,6 +46,8 @@ The organisation or user library has 128 repositories on the Docker hub.
 ```
 
 The `-d` value passes in the argument for your function. This is read via STDIN and used to query the Docker Hub to see how many images you've created/pushed.
+
+**Sample function: webhook stasher (webhookstash)**
 
 Another cool sample function is the Webhook Stasher which saves the body of any data posted to the service to the container's filesystem. Each file is written with the filename of the UNIX time.
 
@@ -65,6 +69,24 @@ d769ca70729d        alexellis2/faas-webhookstash@sha256:b378f1a144202baa8fb008f2
 ./1483999720296180414.txt
 ./1483999720666705381.txt
 ./1483999720961054638.txt
+```
+
+**Sample function: Node OS Info (nodeinfo)**
+
+Grab OS, CPU and other info via a Node.js container using the `os` module.
+
+```
+# curl -X POST http://localhost:8080/function/func_nodeinfo -d ''
+
+linux x64 [ { model: 'Intel(R) Xeon(R) CPU E5-2670 v2 @ 2.50GHz',
+    speed: 2500,
+    times: 
+     { user: 3754430800,
+       nice: 2450200,
+       sys: 885352200,
+       idle: 25599742200,
+       irq: 0 } },
+...
 ```
 
 > Why not start the code on play-with-docker.com and then configure a Github repository to send webhook to the function?
