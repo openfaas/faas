@@ -43,3 +43,10 @@ Once you're up and running checkout the `gateway_functions_count` metrics on you
 See how to deploy FaaS onto play-with-docker.com and Docker Swarm in 1-2 minutes. See the sample functions in action and watch the graphs in Prometheus as we ramp up the amount of requests. 
 
 * [Deep Dive into Functions as a Service (FaaS) on Docker](https://www.youtube.com/watch?v=sp1B7l5mEzc)
+
+#### Prometheus metrics are built-in
+
+Prometheus is built into FaaS and the sample stack, so you can check throughput for each function individually with a rate function in Prometheus like this:
+
+![](https://pbs.twimg.com/media/C2d9IkbXAAI58fz.jpg)
+
