@@ -54,6 +54,27 @@ services:
             no_proxy:   "gateway"
             https_proxy: $https_proxy
 
+    echoit:
+        image: alexellis2/faas-alpinefunction:latest
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
+            fprocess:	"cat"
+            no_proxy:   "gateway"
+            https_proxy: $https_proxy
+
+    wordcount:
+        image: alexellis2/faas-alpinefunction:latest
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
+            fprocess:	"wc"
+            no_proxy:   "gateway"
+            https_proxy: $https_proxy
 networks:
     functions:
         driver: overlay
