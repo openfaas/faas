@@ -72,6 +72,8 @@ func isAlexa(requestBody []byte) AlexaRequestBody {
 }
 
 func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, requestBody []byte) {
+	metrics.GatewayFunctionInvocation.WithLabelValues(service).Add(1)
+
 	stamp := strconv.FormatInt(time.Now().Unix(), 10)
 
 	start := time.Now()
@@ -171,15 +173,24 @@ func main() {
 		Name: "gateway_functions",
 		Help: "Gateway functions",
 	})
+	GatewayFunctionInvocation := prometheus.NewCounterVec(
+		prometheus.CounterOpts{
+			Name: "gateway_function_invocation_total",
+			Help: "Individual function metrics",
+		},
+		[]string{"function_name"},
+	)
 
 	prometheus.Register(GatewayRequestsTotal)
 	prometheus.Register(GatewayServerlessServedTotal)
 	prometheus.Register(GatewayFunctions)
+	prometheus.Register(GatewayFunctionInvocation)
 
 	metricsOptions := metrics.MetricOptions{
 		GatewayRequestsTotal:         GatewayRequestsTotal,
 		GatewayServerlessServedTotal: GatewayServerlessServedTotal,
 		GatewayFunctions:             GatewayFunctions,
+		GatewayFunctionInvocation:    GatewayFunctionInvocation,
 	}
 
 	r := mux.NewRouter()

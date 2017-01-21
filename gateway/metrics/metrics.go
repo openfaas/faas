@@ -11,6 +11,7 @@ type MetricOptions struct {
 	GatewayRequestsTotal         prometheus.Counter
 	GatewayServerlessServedTotal prometheus.Counter
 	GatewayFunctions             prometheus.Histogram
+	GatewayFunctionInvocation    *prometheus.CounterVec
 }
 
 // PrometheusHandler Bootstraps prometheus for metrics collection

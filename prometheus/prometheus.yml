@@ -7,12 +7,12 @@ global:
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
   external_labels:
-      monitor: 'codelab-monitor'
+      monitor: 'faas-monitor'
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
-  # - "first.rules"
-  # - "second.rules"
+    - 'alert.rules'
+
 
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
@@ -29,6 +29,6 @@ scrape_configs:
       - targets: ['localhost:9090']
 
   - job_name: "gateway"
-    scrape_interval: "15s"
+    scrape_interval: 5s
     static_configs:
       - targets: ['gateway:8080']
