@@ -8,6 +8,9 @@ services:
         image: alexellis2/faas-gateway:latest-dev1
         networks:
             - functions
+        deploy:
+            placement:
+                constraints: [node.role == manager]
 
     prometheus:
         image: quay.io/prometheus/prometheus:latest
