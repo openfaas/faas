@@ -5,7 +5,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: alexellis2/faas-gateway:latest-dev
+        image: alexellis2/faas-gateway:latest-dev1
         networks:
             - functions
 

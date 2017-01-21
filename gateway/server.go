@@ -44,13 +44,7 @@ type AlexaRequestBody struct {
 	Request AlexaRequest `json:"request"`
 }
 
-func lookupSwarmService(serviceName string) (bool, error) {
-	var c *client.Client
-	var err error
-	c, err = client.NewEnvClient()
-	if err != nil {
-		log.Fatal("Error with Docker client.")
-	}
+func lookupSwarmService(serviceName string, c *client.Client) (bool, error) {
 	fmt.Printf("Resolving: '%s'\n", serviceName)
 	serviceFilter := filters.NewArgs()
 	serviceFilter.Add("name", serviceName)
@@ -106,8 +100,8 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	metrics.GatewayFunctions.Observe(seconds)
 }
 
-func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, name string) {
-	exists, err := lookupSwarmService(name)
+func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, name string, c *client.Client) {
+	exists, err := lookupSwarmService(name, c)
 	if err != nil || exists == false {
 		if err != nil {
 			log.Fatalln(err)
@@ -121,7 +115,7 @@ func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.Metric
 	}
 }
 
-func makeProxy(metrics metrics.MetricOptions, wildcard bool) http.HandlerFunc {
+func makeProxy(metrics metrics.MetricOptions, wildcard bool, c *client.Client) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		metrics.GatewayRequestsTotal.Inc()
 
@@ -135,9 +129,9 @@ func makeProxy(metrics metrics.MetricOptions, wildcard bool) http.HandlerFunc {
 				vars := mux.Vars(r)
 				name := vars["name"]
 				fmt.Println("invoke by name")
-				lookupInvoke(w, r, metrics, name)
+				lookupInvoke(w, r, metrics, name, c)
 			} else if len(header) > 0 {
-				lookupInvoke(w, r, metrics, header[0])
+				lookupInvoke(w, r, metrics, header[0], c)
 			} else {
 				requestBody, _ := ioutil.ReadAll(r.Body)
 				alexaService := isAlexa(requestBody)
@@ -157,6 +151,15 @@ func makeProxy(metrics metrics.MetricOptions, wildcard bool) http.HandlerFunc {
 				}
 			}
 		}
+	}
+}
+
+func makeAlertHandler(c *client.Client) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println(c)
+		// Todo: parse alert, validate alert and scale up or down function
+
+		fmt.Println("Alert received.")
 	}
 }
 
@@ -193,10 +196,19 @@ func main() {
 		GatewayFunctionInvocation:    GatewayFunctionInvocation,
 	}
 
-	r := mux.NewRouter()
-	r.HandleFunc("/", makeProxy(metricsOptions, false))
+	var c *client.Client
+	var err error
+	c, err = client.NewEnvClient()
+	if err != nil {
+		log.Fatal("Error with Docker client.")
+	}
 
-	r.HandleFunc("/function/{name:[a-zA-Z_]+}", makeProxy(metricsOptions, true))
+	r := mux.NewRouter()
+	r.HandleFunc("/function/{name:[a-zA-Z_]+}", makeProxy(metricsOptions, true, c))
+
+	r.HandleFunc("/system/alert", makeAlertHandler(c))
+
+	r.HandleFunc("/", makeProxy(metricsOptions, false, c))
 
 	metricsHandler := metrics.PrometheusHandler()
 	r.Handle("/metrics", metricsHandler)

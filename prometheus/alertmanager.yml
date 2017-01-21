@@ -44,9 +44,9 @@ route:
   # The child route trees.
   routes:
   - match:
-    service: gateway
-    receiver: scale-up
-    severity: major
+      service: gateway
+      receiver: scale-up
+      severity: major
 
 
 # Inhibition rules allow to mute a set of alerts given that another alert is
