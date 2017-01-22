@@ -44,6 +44,16 @@ Head over to the Github repo now for the quick-start to test out the sample func
 
 Once you're up and running checkout the `gateway_functions_count` metrics on your Prometheus endpoint on *port 9090*.
 
+### More resources:
+
+FaaS is still expanding and growing, check out the development branch for:
+
+* Auto-scaling
+* Prometheus alerts
+* More sample functions
+
+[Development branch](https://github.com/alexellis/faas/tree/labels_metrics)
+
 #### Would you prefer a video overview?
 
 See how to deploy FaaS onto play-with-docker.com and Docker Swarm in 1-2 minutes. See the sample functions in action and watch the graphs in Prometheus as we ramp up the amount of requests. 
@@ -55,4 +65,6 @@ See how to deploy FaaS onto play-with-docker.com and Docker Swarm in 1-2 minutes
 Prometheus is built into FaaS and the sample stack, so you can check throughput for each function individually with a rate function in Prometheus like this:
 
 ![](https://pbs.twimg.com/media/C2d9IkbXAAI58fz.jpg)
+
+#### Wanna 
 
