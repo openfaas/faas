@@ -15,7 +15,7 @@ The guide makes use of a free testing/cloud service, but if you want to try it o
 This one-shot script clones the code, initialises Docker swarm mode and then deploys the FaaS sample stack.
 
 ```
-# docker swarm init --advertise-addr=$(ifconfig eth0| grep 'inet addr:'| cut -d: -f2 | awk '{ print $1}') && \
+# docker swarm init --advertise-addr=$(ip addr s | grep global | grep -oE '((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}(1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])' | head -n1) && \
   git clone https://github.com/alexellis/faas && \
   cd faas && \
   ./deploy_stack.sh && \
