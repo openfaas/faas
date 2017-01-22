@@ -1,4 +1,4 @@
-### faas - Functions As A Service
+## faas - Functions As A Service
 
 FaaS is a platform for building serverless functions on Docker Swarm Mode with first class metrics. Any UNIX process can be packaged as a function in FaaS enabling you to consume a range of web events without repetitive boiler-plate coding.
 
