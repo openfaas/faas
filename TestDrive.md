@@ -48,10 +48,10 @@ Once you're up and running checkout the `gateway_functions_count` metrics on you
 
 FaaS is still expanding and growing, check out the development branch for:
 
-* Auto-scaling
+* [Auto-scaling](https://twitter.com/alexellisuk/status/823262200236277762)
 * Prometheus alerts
 * More sample functions
-* Brand new UI
+* [Brand new UI](https://twitter.com/alexellisuk/status/823262200236277762)
 
 [Development branch](https://github.com/alexellis/faas/tree/labels_metrics)
 
@@ -67,5 +67,4 @@ Prometheus is built into FaaS and the sample stack, so you can check throughput 
 
 ![](https://pbs.twimg.com/media/C2d9IkbXAAI58fz.jpg)
 
-#### Wanna 
 
