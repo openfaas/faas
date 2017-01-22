@@ -4,7 +4,7 @@ FaaS is a platform for building serverless functions on Docker Swarm Mode with f
 
 #### This is a Quickstart guide for the [FaaS functions as a Service](https://github.com/alexellis/faas/) project
 
-> A sample stack with a number of sample functions is provided, you can also clone the code to hack on it or package your own functions.
+> A Docker stack file with a number of sample functions is provided so that you can get up and running within minutes. You can also clone the code to hack on it or package your own functions.
 
 The guide makes use of a free testing/cloud service, but if you want to try it on your own laptop just follow the guide in the README file on Github. There is also a [blog post](http://blog.alexellis.io/functions-as-a-service/) that goes into the background of the project.
 
@@ -51,6 +51,7 @@ FaaS is still expanding and growing, check out the development branch for:
 * Auto-scaling
 * Prometheus alerts
 * More sample functions
+* Brand new UI
 
 [Development branch](https://github.com/alexellis/faas/tree/labels_metrics)
 
