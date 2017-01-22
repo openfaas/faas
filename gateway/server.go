@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/alexellis/faas/gateway/metrics"
+	"github.com/alexellis/faas/gateway/requests"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/client"
@@ -17,14 +18,50 @@ import (
 	io_prometheus_client "github.com/prometheus/client_model/go"
 )
 
-func makeAlertHandler() http.HandlerFunc {
+func makeAlertHandler(c *client.Client) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("Alert received.")
+		log.Println("Alert received.")
 		body, _ := ioutil.ReadAll(r.Body)
 		fmt.Println(string(body))
 		// Todo: parse alert, validate alert and scale up or down function
 
-		w.WriteHeader(http.StatusOK)
+		var req requests.PrometheusAlert
+		err := json.Unmarshal(body, &req)
+		if err != nil {
+			log.Println(err)
+		}
+
+		if len(req.Alerts) > 0 {
+			serviceName := req.Alerts[0].Labels.FunctionName
+			service, _, _ := c.ServiceInspectWithRaw(context.Background(), serviceName)
+			var replicas uint64
+
+			if req.Status == "firing" {
+				if *service.Spec.Mode.Replicated.Replicas < 20 {
+					replicas = *service.Spec.Mode.Replicated.Replicas + uint64(5)
+				} else {
+					return
+				}
+			} else {
+				replicas = *service.Spec.Mode.Replicated.Replicas - uint64(5)
+				if replicas <= 0 {
+					replicas = 1
+				}
+			}
+			log.Printf("Scaling %s to %d replicas.\n", serviceName, replicas)
+
+			service.Spec.Mode.Replicated.Replicas = &replicas
+			updateOpts := types.ServiceUpdateOptions{}
+			updateOpts.RegistryAuthFrom = types.RegistryAuthFromSpec
+
+			response, updateErr := c.ServiceUpdate(context.Background(), service.ID, service.Version, service.Spec, updateOpts)
+			if updateErr != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				log.Println(response)
+			}
+
+			w.WriteHeader(http.StatusOK)
+		}
 	}
 }
 
@@ -89,7 +126,7 @@ func main() {
 
 	r := mux.NewRouter()
 	r.HandleFunc("/function/{name:[a-zA-Z_]+}", MakeProxy(metricsOptions, true, dockerClient))
-	r.HandleFunc("/system/alert", makeAlertHandler())
+	r.HandleFunc("/system/alert", makeAlertHandler(dockerClient))
 	r.HandleFunc("/system/functions", makeFunctionReader(metricsOptions, dockerClient)).Methods("GET")
 	r.HandleFunc("/", MakeProxy(metricsOptions, false, dockerClient)).Methods("POST")
 

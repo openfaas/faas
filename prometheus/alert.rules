@@ -3,7 +3,7 @@ ALERT service_down
 
 ALERT APIHighInvocationRate
   IF rate ( gateway_function_invocation_total [10s] ) > 5
-  FOR 30s
+  FOR 5s
   LABELS {
     service = "gateway",
     severity = "major",

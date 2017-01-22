@@ -29,7 +29,7 @@ func MakeProxy(metrics metrics.MetricOptions, wildcard bool, c *client.Client) h
 			log.Println(r.Header)
 			header := r.Header["X-Function"]
 			log.Println(header)
-			fmt.Println(wildcard)
+			// fmt.Println(wildcard)
 
 			if wildcard == true {
 				vars := mux.Vars(r)
