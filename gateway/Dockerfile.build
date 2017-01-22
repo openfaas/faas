@@ -6,6 +6,7 @@ RUN go get -d github.com/docker/docker/api/types \
    && go get -d github.com/docker/docker/client \
    && go get github.com/gorilla/mux \
    && go get github.com/prometheus/client_golang/prometheus
+# RUN go get -d github.com/prometheus/client_model/go
 
 WORKDIR /go/src/github.com/alexellis/faas/gateway
 
@@ -14,5 +15,4 @@ COPY requests requests
 COPY server.go .
 COPY proxy.go .
 
-RUN find /go/src/github.com/alexellis/faas/gateway/
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .

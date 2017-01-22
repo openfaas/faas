@@ -64,5 +64,5 @@ inhibit_rules:
 receivers:
 - name: 'scale-up'
   webhook_configs:
-    - url: http://gateway:8080/function/func_webhookstash
+    - url: http://gateway:8080/system/alert
       send_resolved: true

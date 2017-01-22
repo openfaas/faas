@@ -5,7 +5,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: alexellis2/faas-gateway:latest-dev
+        image: alexellis2/faas-gateway:latest-dev2
         networks:
             - functions
         deploy:
@@ -94,6 +94,7 @@ services:
             fprocess:	"wc"
             no_proxy:   "gateway"
             https_proxy: $https_proxy
+
 networks:
     functions:
         driver: overlay
