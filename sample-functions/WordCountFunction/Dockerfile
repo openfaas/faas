@@ -1,7 +1,5 @@
-FROM alexellis2/faas-alpinefunction
-
-COPY fwatchdog  /usr/bin/
+FROM alexellis2/faas-alpinefunction:latest
 
 # Populate example here
-ENV fprocess="wc -l"
+ENV fprocess="wc"
 CMD ["fwatchdog"]
