@@ -10,9 +10,10 @@ RUN go get -d github.com/docker/docker/api/types \
 
 WORKDIR /go/src/github.com/alexellis/faas/gateway
 
-COPY metrics metrics
-COPY requests requests
-COPY server.go .
-COPY proxy.go .
+COPY metrics	metrics
+COPY requests	requests
+COPY tests	    tests
+COPY server.go	.
+COPY proxy.go	.
 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .

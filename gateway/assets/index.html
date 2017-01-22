@@ -1,8 +1,7 @@
 <html ng-app="faasGateway" >
 <head>
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" />
-        <!--<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">-->
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
     <!-- Angular Material CSS now available via Google CDN; version 1.0.7 used here -->
     <link rel="stylesheet" href="style/angular-material.min.css">
 
@@ -11,9 +10,7 @@
   </head>
 
   <body ng-controller="home">
-
-
-<div layout="column" style="height:100%;" ng-cloak>
+  <div layout="column" style="height:100%;" ng-cloak>
 
   <section id="popupContainer" layout="row" flex>
     <md-sidenav
@@ -30,7 +27,7 @@
         <md-button ng-click="newFunction()" ng-disabled="isFunctionBeingCreated" class="md-primary">New function</md-button>
 
         <md-list>
-          <md-list-item ng-switch class="md-3-line" ng-click="showFunction(function)" ng-repeat="function in functions" ng-class="function.name == selectedFunction.name ? 'selected' : false">
+          <md-list-item ng-switch class="md-3-line" ng-click="showFunction(function)" ng-repeat="function in functions | orderBy: '-invocationCount'" ng-class="function.name == selectedFunction.name ? 'selected' : false">
               <md-icon ng-switch-when="true" style="color: blue" md-svg-icon="person"></md-icon>
               <md-icon ng-switch-when="false" md-svg-icon="person-outline"></md-icon>
               <p>{{function.name}}</p>

@@ -1,10 +1,18 @@
 "use strict"
 var app = angular.module('faasGateway', ['ngMaterial']);
+
 app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', function($scope, $log, $http, $location, $timeout) {
     $scope.functions = [];
-    $http.get("/system/functions").then(function(response) {
-      $scope.functions = response.data;
-    });
+
+    setInterval(function() {
+        fetch();
+    }, 1000);
+
+    var fetch = function() {
+        $http.get("/system/functions").then(function(response) {
+            $scope.functions = response.data;
+        });
+    };
 
     $scope.showFunction = function(fn) {
         $scope.selectedFunction = fn;
@@ -18,4 +26,6 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', func
             invokedCount: 0
         });
     };
+
+    fetch();
 }]);
