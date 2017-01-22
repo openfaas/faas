@@ -26,4 +26,14 @@ func TestUnmarshallAlert(t *testing.T) {
 	if (len(alert.Receiver)) == 0 {
 		t.Fatal("No status read")
 	}
+	if (len(alert.Alerts)) == 0 {
+		t.Fatal("No alerts read")
+	}
+	if (len(alert.Alerts[0].Labels.AlertName)) == 0 {
+		t.Fatal("No alerts name")
+	}
+	if (len(alert.Alerts[0].Labels.FunctionName)) == 0 {
+		t.Fatal("No function name read")
+	}
+
 }

@@ -22,7 +22,18 @@ type AlexaRequestBody struct {
 	Request AlexaRequest `json:"request"`
 }
 
+type PrometheusInnerAlertLabel struct {
+	AlertName    string `json:"alertname"`
+	FunctionName string `json:"function_name"`
+}
+
+type PrometheusInnerAlert struct {
+	Status string                    `json:"status"`
+	Labels PrometheusInnerAlertLabel `json:"labels"`
+}
+
 type PrometheusAlert struct {
-	Status   string `json:"status"`
-	Receiver string `json:"receiver"`
+	Status   string                 `json:"status"`
+	Receiver string                 `json:"receiver"`
+	Alerts   []PrometheusInnerAlert `json:"alerts"`
 }
