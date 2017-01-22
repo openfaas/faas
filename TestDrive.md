@@ -53,7 +53,7 @@ FaaS is still expanding and growing, check out the development branch for:
 * More sample functions
 * [Brand new UI](https://twitter.com/alexellisuk/status/823262200236277762)
 
-[Development branch](https://github.com/alexellis/faas/tree/labels_metrics)
+[Development branch](https://github.com/alexellis/faas/commits/labels_metrics)
 
 #### Would you prefer a video overview?
 
