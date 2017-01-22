@@ -21,3 +21,8 @@ type AlexaRequestBody struct {
 	Session AlexaSession `json:"session"`
 	Request AlexaRequest `json:"request"`
 }
+
+type PrometheusAlert struct {
+	Status   string `json:"status"`
+	Receiver string `json:"receiver"`
+}
