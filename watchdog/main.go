@@ -27,9 +27,9 @@ func main() {
 			res, _ := ioutil.ReadAll(r.Body)
 			writer.Write(res)
 			writer.Close()
-			out, err := targetCmd.Output()
+			out, err := targetCmd.CombinedOutput()
 			if err != nil {
-				panic(err)
+				panic(err.Error() + "\n" + string(out))
 			}
 
 			os.Stdout.Write(out)
