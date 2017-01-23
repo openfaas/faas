@@ -190,11 +190,19 @@ This binary fwatchdog acts as a watchdog for your function. Features:
 
 For development of the FaaS framework / library read on. If you would like to consume the project with your own functions then you can use the public images and the supplied `docker stack` file as a template (docker-compose.yml)
 
-### Contributing
+### License
+
+This project is licensed until the MIT License.
+
+## Contributing
+
+Here are a few guidelines for contributing:
 
 * If you have found a bug please raise an issue.
 * If the documentation can be improved / translated etc please raise an issue to discuss.
 * If you would like to contribute to the codebase please raise an issue to propose the change.
+
+> Please provide a summary of what you changed, how you did it and how it can be tested.
 
 ### Building a development environment:
 
