@@ -23,7 +23,7 @@ func scaleService(req requests.PrometheusAlert, c *client.Client) error {
 	//Todo: convert to loop / handler.
 	serviceName := req.Alerts[0].Labels.FunctionName
 	service, _, inspectErr := c.ServiceInspectWithRaw(context.Background(), serviceName)
-	if inspectErr != nil {
+	if inspectErr == nil {
 		var replicas uint64
 
 		if req.Status == "firing" {
@@ -60,12 +60,17 @@ func scaleService(req requests.PrometheusAlert, c *client.Client) error {
 func makeAlertHandler(c *client.Client) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Println("Alert received.")
-		body, _ := ioutil.ReadAll(r.Body)
+		body, readErr := ioutil.ReadAll(r.Body)
+		if readErr != nil {
+			log.Println(readErr)
+			return
+		}
 
 		var req requests.PrometheusAlert
 		err := json.Unmarshal(body, &req)
 		if err != nil {
 			log.Println(err)
+			return
 		}
 
 		if len(req.Alerts) > 0 {
