@@ -1,5 +1,7 @@
 version: "3"
 services:
+
+# Core API services are pinned, HA is provided for functions.
     gateway:
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
@@ -28,6 +30,10 @@ services:
             no_proxy:   "gateway"
         networks:
             - functions
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+
 
     alertmanager:
         image: quay.io/prometheus/alertmanager
@@ -41,6 +47,10 @@ services:
             - functions
         ports:
             - 9093:9093
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+
 
     # Sample functions go here.
     webhookstash:
