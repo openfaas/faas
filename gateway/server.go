@@ -32,12 +32,21 @@ func scaleService(req requests.PrometheusAlert, c *client.Client) error {
 			} else {
 				return err
 			}
-		} else {
-			replicas = *service.Spec.Mode.Replicated.Replicas - uint64(5)
-			if replicas <= 0 {
+		} else { // Resolved event.
+			// Previously decremented by 5, but event only fires once, so set to 1/1.
+			if *service.Spec.Mode.Replicated.Replicas > 1 {
+				// replicas = *service.Spec.Mode.Replicated.Replicas - uint64(5)
+				// if replicas < 1 {
+				// replicas = 1
+				// }
+				// return nil
+
 				replicas = 1
+			} else {
+				return nil
 			}
 		}
+
 		log.Printf("Scaling %s to %d replicas.\n", serviceName, replicas)
 
 		service.Spec.Mode.Replicated.Replicas = &replicas
