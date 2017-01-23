@@ -18,12 +18,49 @@ import (
 	io_prometheus_client "github.com/prometheus/client_model/go"
 )
 
+func scaleService(req requests.PrometheusAlert, c *client.Client) error {
+	var err error
+	//Todo: convert to loop / handler.
+	serviceName := req.Alerts[0].Labels.FunctionName
+	service, _, inspectErr := c.ServiceInspectWithRaw(context.Background(), serviceName)
+	if inspectErr != nil {
+		var replicas uint64
+
+		if req.Status == "firing" {
+			if *service.Spec.Mode.Replicated.Replicas < 20 {
+				replicas = *service.Spec.Mode.Replicated.Replicas + uint64(5)
+			} else {
+				return err
+			}
+		} else {
+			replicas = *service.Spec.Mode.Replicated.Replicas - uint64(5)
+			if replicas <= 0 {
+				replicas = 1
+			}
+		}
+		log.Printf("Scaling %s to %d replicas.\n", serviceName, replicas)
+
+		service.Spec.Mode.Replicated.Replicas = &replicas
+		updateOpts := types.ServiceUpdateOptions{}
+		updateOpts.RegistryAuthFrom = types.RegistryAuthFromSpec
+
+		response, updateErr := c.ServiceUpdate(context.Background(), service.ID, service.Version, service.Spec, updateOpts)
+		if updateErr != nil {
+			err = updateErr
+		}
+		log.Println(response)
+
+	} else {
+		err = inspectErr
+	}
+
+	return err
+}
+
 func makeAlertHandler(c *client.Client) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Println("Alert received.")
 		body, _ := ioutil.ReadAll(r.Body)
-		fmt.Println(string(body))
-		// Todo: parse alert, validate alert and scale up or down function
 
 		var req requests.PrometheusAlert
 		err := json.Unmarshal(body, &req)
@@ -32,47 +69,18 @@ func makeAlertHandler(c *client.Client) http.HandlerFunc {
 		}
 
 		if len(req.Alerts) > 0 {
-			serviceName := req.Alerts[0].Labels.FunctionName
-			service, _, _ := c.ServiceInspectWithRaw(context.Background(), serviceName)
-			var replicas uint64
-
-			if req.Status == "firing" {
-				if *service.Spec.Mode.Replicated.Replicas < 20 {
-					replicas = *service.Spec.Mode.Replicated.Replicas + uint64(5)
-				} else {
-					return
-				}
-			} else {
-				replicas = *service.Spec.Mode.Replicated.Replicas - uint64(5)
-				if replicas <= 0 {
-					replicas = 1
-				}
-			}
-			log.Printf("Scaling %s to %d replicas.\n", serviceName, replicas)
-
-			service.Spec.Mode.Replicated.Replicas = &replicas
-			updateOpts := types.ServiceUpdateOptions{}
-			updateOpts.RegistryAuthFrom = types.RegistryAuthFromSpec
-
-			response, updateErr := c.ServiceUpdate(context.Background(), service.ID, service.Version, service.Spec, updateOpts)
-			if updateErr != nil {
+			err := scaleService(req, c)
+			if err != nil {
+				log.Println(err)
 				w.WriteHeader(http.StatusInternalServerError)
-				log.Println(response)
+			} else {
+				w.WriteHeader(http.StatusOK)
 			}
-
-			w.WriteHeader(http.StatusOK)
 		}
 	}
 }
 
-// Function exported for system/functions endpoint
-type Function struct {
-	Name            string  `json:"name"`
-	Image           string  `json:"image"`
-	InvocationCount float64 `json:"invocationCount"`
-	Replicas        uint64  `json:"replicas"`
-}
-
+// makeFunctionReader gives a summary of Function structs with Docker service stats overlaid with Prometheus counters.
 func makeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
@@ -88,16 +96,16 @@ func makeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 		}
 
 		// TODO: Filter only "faas" functions (via metadata?)
-
-		functions := make([]Function, 0)
+		functions := make([]requests.Function, 0)
 		for _, service := range services {
 			counter, _ := metricsOptions.GatewayFunctionInvocation.GetMetricWithLabelValues(service.Spec.Name)
 
-			var pbmetric io_prometheus_client.Metric
-			counter.Write(&pbmetric)
-			invocations := pbmetric.GetCounter().GetValue()
+			// Get the metric's value from ProtoBuf interface (idea via Julius Volz)
+			var protoMetric io_prometheus_client.Metric
+			counter.Write(&protoMetric)
+			invocations := protoMetric.GetCounter().GetValue()
 
-			f := Function{
+			f := requests.Function{
 				Name:            service.Spec.Name,
 				Image:           service.Spec.TaskTemplate.ContainerSpec.Image,
 				InvocationCount: invocations,
@@ -120,6 +128,11 @@ func main() {
 	if err != nil {
 		log.Fatal("Error with Docker client.")
 	}
+	dockerVersion, err := dockerClient.ServerVersion(context.Background())
+	if err != nil {
+		log.Fatal("Error with Docker server.\n", err)
+	}
+	log.Println("API version: %s, %s\n", dockerVersion.APIVersion, dockerVersion.Version)
 
 	metricsOptions := metrics.BuildMetricsOptions()
 	metrics.RegisterMetrics(metricsOptions)

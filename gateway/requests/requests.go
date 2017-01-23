@@ -17,6 +17,7 @@ type AlexaRequest struct {
 	Intent AlexaIntent `json:"intent"`
 }
 
+// AlexaRequestBody top-level request produced by Alexa SDK
 type AlexaRequestBody struct {
 	Session AlexaSession `json:"session"`
 	Request AlexaRequest `json:"request"`
@@ -32,8 +33,17 @@ type PrometheusInnerAlert struct {
 	Labels PrometheusInnerAlertLabel `json:"labels"`
 }
 
+// PrometheusAlert as produced by AlertManager
 type PrometheusAlert struct {
 	Status   string                 `json:"status"`
 	Receiver string                 `json:"receiver"`
 	Alerts   []PrometheusInnerAlert `json:"alerts"`
+}
+
+// Function exported for system/functions endpoint
+type Function struct {
+	Name            string  `json:"name"`
+	Image           string  `json:"image"`
+	InvocationCount float64 `json:"invocationCount"`
+	Replicas        uint64  `json:"replicas"`
 }
