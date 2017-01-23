@@ -186,7 +186,17 @@ This binary fwatchdog acts as a watchdog for your function. Features:
 * Update quick-start to use `docker stack deploy`
  * Have `docker stack deploy` include a pre-configured Prometheus instance.
 
-## Building a development environment:
+## Development
+
+For development of the FaaS framework / library read on. If you would like to consume the project with your own functions then you can use the public images and the supplied `docker stack` file as a template (docker-compose.yml)
+
+### Contributing
+
+* If you have found a bug please raise an issue.
+* If the documentation can be improved / translated etc please raise an issue to discuss.
+* If you would like to contribute to the codebase please raise an issue to propose the change.
+
+### Building a development environment:
 
 To use multiple hosts you should push your services (functions) to the Docker Hub or a registry accessible to all nodes.
 
