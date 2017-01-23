@@ -33,7 +33,7 @@ func main() {
 			fprocessCmd := exec.Command(parts[0], parts[1:]...)
 			//
 
-			// get a reference on all outputs for the fprocess (as byte[])
+			// get a reference on all outputs for the fprocess (as bytes.Buffer)
 			var stdout bytes.Buffer
 			fprocessCmd.Stdout = &stdout
 
