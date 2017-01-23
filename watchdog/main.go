@@ -14,8 +14,8 @@ import (
 func main() {
 	s := &http.Server{
 		Addr:           ":8080",
-		ReadTimeout:    25 * time.Second,
-		WriteTimeout:   25 * time.Second,
+		ReadTimeout:    5 * time.Second,
+		WriteTimeout:   5 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
 
