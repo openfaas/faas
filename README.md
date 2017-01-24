@@ -7,6 +7,9 @@ FaaS is a platform for building serverless functions on Docker Swarm Mode with f
 * Each container has a watchdog process that hosts a web server allowing a JSON post request to be forwarded to a desired process via STDIN. The respose is sent to the caller via STDOUT.
 * A gateway provides a view to the containers/functions to the public Internet and collects metrics for Prometheus and in a future version will manage replicas and scale as throughput increases.
 
+[![Build
+Status](https://travis-ci.org/alexellis/faas.svg?branch=master)](https://travis-ci.org/alexellis/faas)
+
 ## Minimum requirements: 
 * Docker 1.13-RC (to support attachable overlay networks)
 * At least a single host in Swarm Mode. (run `docker swarm init`)
