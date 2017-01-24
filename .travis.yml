@@ -6,5 +6,5 @@ before_install:
     - docker pull golang:1.7.3
 
 script:
-    - sh build.sh
+    - ./build.sh
 
