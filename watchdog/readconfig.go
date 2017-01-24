@@ -1,6 +1,9 @@
 package main
 
-import "strconv"
+import (
+	"strconv"
+	"time"
+)
 
 // HasEnv provides interface for os.Getenv
 type HasEnv interface {
@@ -42,15 +45,15 @@ func (ReadConfig) Read(hasEnv HasEnv) WatchdogConfig {
 	writeTimeout := parseIntValue(hasEnv.Getenv("write_timeout"))
 
 	if readTimeout == 0 {
-		cfg.readTimeout = 5
-	} else {
-		cfg.readTimeout = readTimeout
+		readTimeout = 5
 	}
+
 	if writeTimeout == 0 {
-		cfg.writeTimeout = 5
-	} else {
-		cfg.writeTimeout = writeTimeout
+		writeTimeout = 5
 	}
+
+	cfg.readTimeout = time.Duration(readTimeout) * time.Second
+	cfg.writeTimeout = time.Duration(writeTimeout) * time.Second
 
 	cfg.writeDebug = parseBoolValue(hasEnv.Getenv("write_debug"))
 
@@ -59,8 +62,8 @@ func (ReadConfig) Read(hasEnv HasEnv) WatchdogConfig {
 
 // WatchdogConfig for the process.
 type WatchdogConfig struct {
-	readTimeout  int
-	writeTimeout int
+	readTimeout  time.Duration
+	writeTimeout time.Duration
 	// faasProcess is the process to exec
 	faasProcess string
 
