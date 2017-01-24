@@ -45,12 +45,14 @@ func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.
 				w.Write(response.Bytes())
 				return
 			}
-			w.WriteHeader(200)
-
 			if config.writeDebug == true {
 				os.Stdout.Write(out)
 			}
+
+			w.WriteHeader(200)
 			w.Write(out)
+		} else {
+			w.WriteHeader(http.StatusMethodNotAllowed)
 		}
 	}
 }
