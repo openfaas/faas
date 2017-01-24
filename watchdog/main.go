@@ -7,54 +7,23 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
-	"strconv"
 	"strings"
 	"time"
 )
 
-func main() {
-	readTimeoutStr := os.Getenv("read_timeout")
-	writeTimeoutStr := os.Getenv("write_timeout")
-	writeDebugStr := os.Getenv("write_debug")
-	process := os.Getenv("fprocess")
+// OsEnv implements interface to wrap os.Getenv
+type OsEnv struct {
+}
 
-	readTimeout := 5 * time.Second
-	writeTimeout := 5 * time.Second
-	writeDebug := true
+// Getenv wraps os.Getenv
+func (OsEnv) Getenv(key string) string {
+	return os.Getenv(key)
+}
 
-	if len(process) == 0 {
-		log.Panicln("Provide a valid process via fprocess environmental variable.")
-		return
-	}
-
-	if len(writeDebugStr) > 0 && writeDebugStr == "false" {
-		writeDebug = false
-	}
-
-	if len(readTimeoutStr) > 0 {
-		parsedVal, parseErr := strconv.Atoi(readTimeoutStr)
-		if parseErr == nil && parsedVal > 0 {
-			readTimeout = time.Duration(parsedVal) * time.Second
-		}
-	}
-
-	if len(writeTimeoutStr) > 0 {
-		parsedVal, parseErr := strconv.Atoi(writeTimeoutStr)
-		if parseErr == nil && parsedVal > 0 {
-			writeTimeout = time.Duration(parsedVal) * time.Second
-		}
-	}
-
-	s := &http.Server{
-		Addr:           ":8080",
-		ReadTimeout:    readTimeout,
-		WriteTimeout:   writeTimeout,
-		MaxHeaderBytes: 1 << 20,
-	}
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "POST" {
-			parts := strings.Split(process, " ")
+			parts := strings.Split(config.faasProcess, " ")
 
 			targetCmd := exec.Command(parts[0], parts[1:]...)
 			writer, _ := targetCmd.StdinPipe()
@@ -67,7 +36,7 @@ func main() {
 			out, err := targetCmd.CombinedOutput()
 
 			if err != nil {
-				if writeDebug == true {
+				if config.writeDebug == true {
 					log.Println(targetCmd, err)
 				}
 
@@ -78,13 +47,35 @@ func main() {
 			}
 			w.WriteHeader(200)
 
-			if writeDebug == true {
+			if config.writeDebug == true {
 				os.Stdout.Write(out)
 			}
-
 			w.Write(out)
 		}
-	})
+	}
+}
+
+func main() {
+	osEnv := OsEnv{}
+	readConfig := ReadConfig{}
+	config := readConfig.Read(osEnv)
+
+	if len(config.faasProcess) == 0 {
+		log.Panicln("Provide a valid process via fprocess environmental variable.")
+		return
+	}
+
+	readTimeout := time.Duration(config.readTimeout) * time.Second
+	writeTimeout := time.Duration(config.writeTimeout) * time.Second
+
+	s := &http.Server{
+		Addr:           ":8080",
+		ReadTimeout:    readTimeout,
+		WriteTimeout:   writeTimeout,
+		MaxHeaderBytes: 1 << 20,
+	}
+
+	http.HandleFunc("/", makeRequestHandler(&config))
 
 	log.Fatal(s.ListenAndServe())
 }
