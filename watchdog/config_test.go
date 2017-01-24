@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"testing"
+	"time"
+)
 
 type EnvBucket struct {
 	Items map[string]string
@@ -62,11 +65,11 @@ func TestRead_EmptyTimeoutConfig(t *testing.T) {
 
 	config := readConfig.Read(defaults)
 
-	if (config.readTimeout) != 5 {
+	if (config.readTimeout) != time.Duration(5)*time.Second {
 		t.Log("readTimeout incorrect")
 		t.Fail()
 	}
-	if (config.writeTimeout) != 5 {
+	if (config.writeTimeout) != time.Duration(5)*time.Second {
 		t.Log("writeTimeout incorrect")
 		t.Fail()
 	}
@@ -80,11 +83,11 @@ func TestRead_ReadAndWriteTimeoutConfig(t *testing.T) {
 	readConfig := ReadConfig{}
 	config := readConfig.Read(defaults)
 
-	if (config.readTimeout) != 10 {
+	if (config.readTimeout) != time.Duration(10)*time.Second {
 		t.Logf("readTimeout incorrect, got: %d\n", config.readTimeout)
 		t.Fail()
 	}
-	if (config.writeTimeout) != 60 {
+	if (config.writeTimeout) != time.Duration(60)*time.Second {
 		t.Logf("writeTimeout incorrect, got: %d\n", config.writeTimeout)
 		t.Fail()
 	}
