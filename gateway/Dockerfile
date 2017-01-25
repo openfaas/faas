@@ -7,6 +7,7 @@ ENV http_proxy      ""
 ENV https_proxy     ""
 
 COPY gateway    .
+
 COPY assets     assets
 
 CMD ["./gateway"]

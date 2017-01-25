@@ -1,7 +1,6 @@
-package requests
+package tests
 
 import (
-	"fmt"
 	"testing"
 
 	"io/ioutil"
@@ -11,6 +10,7 @@ import (
 	"github.com/alexellis/faas/gateway/requests"
 )
 
+// TestUnmarshallAlert is an exploratory test from TDD'ing the struct to parse a Prometheus alert
 func TestUnmarshallAlert(t *testing.T) {
 	file, _ := ioutil.ReadFile("./test_alert.json")
 
@@ -19,7 +19,6 @@ func TestUnmarshallAlert(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	fmt.Println("OK", string(file), alert)
 	if (len(alert.Status)) == 0 {
 		t.Fatal("No status read")
 	}
