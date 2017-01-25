@@ -18,6 +18,8 @@ This one-shot script clones the code, initialises Docker swarm mode and then dep
 # docker swarm init --advertise-addr=$(ifconfig eth0| grep 'inet addr:'| cut -d: -f2 | awk '{ print $1}') && \
   git clone https://github.com/alexellis/faas && \
   cd faas && \
+  git checkout labels_metrics && \
+  (cd gateway && ./build.sh) && \
   ./deploy_stack.sh && \
   docker service ls
 ```
