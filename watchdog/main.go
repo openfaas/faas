@@ -29,6 +29,7 @@ func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.
 			writer, _ := targetCmd.StdinPipe()
 
 			res, _ := ioutil.ReadAll(r.Body)
+			defer r.Body.Close()
 
 			writer.Write(res)
 			writer.Close()
