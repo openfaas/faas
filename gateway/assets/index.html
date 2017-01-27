@@ -1,0 +1,99 @@
+<html ng-app="faasGateway" >
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <!-- Angular Material CSS now available via Google CDN; version 1.0.7 used here -->
+    <link rel="stylesheet" href="style/angular-material.min.css">
+
+    <link rel="stylesheet" href="style/bootstrap.css">
+
+  </head>
+
+  <body ng-controller="home">
+  <div layout="column" style="height:100%;" ng-cloak>
+
+  <section id="popupContainer" layout="row" flex>
+    <md-sidenav
+        class="md-sidenav-left"
+        md-component-id="left"
+        md-is-locked-open="$mdMedia('gt-sm')"
+        md-whiteframe="4" layout="column">
+
+      <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">FaaS Gateway</h1>
+      </md-toolbar>
+      
+      <md-content layout-padding>
+        <md-button ng-click="newFunction()" ng-disabled="isFunctionBeingCreated" class="md-primary">New function</md-button>
+
+        <md-list>
+          <md-list-item ng-switch class="md-3-line" ng-click="showFunction(function)" ng-repeat="function in functions | orderBy: '-invocationCount'" ng-class="function.name == selectedFunction.name ? 'selected' : false">
+              <md-icon ng-switch-when="true" style="color: blue" md-svg-icon="person"></md-icon>
+              <md-icon ng-switch-when="false" md-svg-icon="person-outline"></md-icon>
+              <p>{{function.name}}</p>
+              <md-divider ng-if="!$last"></md-divider>
+          </md-list-item>
+        </md-list>
+      </md-content>
+    </md-sidenav>
+
+    <md-content flex layout-padding ng-if="!selectedFunction" ng-show="functions.length">
+      <div layout="column" layout-align="top center">
+        <p>Select a function.</p>
+      </div>
+      <div flex></div>
+    </md-content>
+
+    <md-content flex layout-padding ng-if="!functions.length">
+      <div layout="column" layout-align="top center">
+        <p>No functions found in FaaS.</p>
+      </div>
+      <div flex></div>
+    </md-content>
+    <md-content flex layout="column" ng-repeat="function in functions" ng-show="function.name == selectedFunction.name">
+
+        <md-card md-theme="default" md-theme-watch>
+            <md-card-title>
+
+                <md-card-title-text>
+
+                    <span class="md-headline">
+                      {{function.name}}
+                    </span>
+                    <div layout-gt-sm="row">
+                      <md-input-container class="md-icon-float md-block">
+                        <label>Replicas</label>
+                        <input ng-model="function.replicas" type="text" readonly="readonly">
+                      </md-input-container>
+                      <md-input-container class="md-block" flex-gt-sm>
+                        <label>Invocation count</label>
+                        <input ng-model="function.invocationCount" type="text" readonly="readonly">
+                      </md-input-container>
+                    </div>
+
+                    <div layout-gt-sm="row">
+                      <md-input-container class="md-block" flex-gt-sm>
+                        <label>Image</label>
+                        <input ng-model="function.image" type="text" readonly="readonly">
+                      </md-input-container>
+                    </div>
+
+                <md-card-title-text>
+
+            </md-card-title>
+        </md-card>
+
+    </md-content>
+  </section>
+  </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    <script src="script/bootstrap.js"></script>
+  </body>
+
+</html>
