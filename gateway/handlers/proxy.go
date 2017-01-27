@@ -35,12 +35,18 @@ func MakeProxy(metrics metrics.MetricOptions, wildcard bool, c *client.Client, l
 				name := vars["name"]
 				fmt.Println("invoke by name")
 				lookupInvoke(w, r, metrics, name, c, logger)
+				defer r.Body.Close()
+
 			} else if len(header) > 0 {
 				lookupInvoke(w, r, metrics, header[0], c, logger)
+				defer r.Body.Close()
+
 			} else {
 				requestBody, _ := ioutil.ReadAll(r.Body)
+				defer r.Body.Close()
 				alexaService := IsAlexa(requestBody)
 				fmt.Println(alexaService)
+				defer r.Body.Close()
 
 				if len(alexaService.Session.SessionId) > 0 &&
 					len(alexaService.Session.Application.ApplicationId) > 0 &&
@@ -50,9 +56,11 @@ func MakeProxy(metrics metrics.MetricOptions, wildcard bool, c *client.Client, l
 					fmt.Printf("SessionId=%s, Intent=%s, AppId=%s\n", alexaService.Session.SessionId, alexaService.Request.Intent.Name, alexaService.Session.Application.ApplicationId)
 
 					invokeService(w, r, metrics, alexaService.Request.Intent.Name, requestBody, logger)
+
 				} else {
 					w.WriteHeader(http.StatusBadRequest)
 					w.Write([]byte("Provide an x-function header or a valid Alexa SDK request."))
+					defer r.Body.Close()
 				}
 			}
 		}
@@ -79,6 +87,7 @@ func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.Metric
 		}
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("Error resolving service."))
+		defer r.Body.Close()
 	}
 	if exists == true {
 		requestBody, _ := ioutil.ReadAll(r.Body)
@@ -125,6 +134,7 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 
 	w.WriteHeader(http.StatusOK)
 	w.Write(responseBody)
+
 	seconds := time.Since(start).Seconds()
 	fmt.Printf("[%s] took %f seconds\n", stamp, seconds)
 	metrics.GatewayServerlessServedTotal.Inc()
