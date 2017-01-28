@@ -50,6 +50,10 @@ func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.
 				os.Stdout.Write(out)
 			}
 
+			// Match header for strict services
+			if r.Header.Get("Content-Type") == "application/json" {
+				w.Header().Set("Content-Type", "application/json")
+			}
 			w.WriteHeader(200)
 			w.Write(out)
 		} else {

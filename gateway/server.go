@@ -33,7 +33,11 @@ func main() {
 	metrics.RegisterMetrics(metricsOptions)
 
 	r := mux.NewRouter()
-	r.HandleFunc("/function/{name:[a-zA-Z_]+}", faashandlers.MakeProxy(metricsOptions, true, dockerClient, &logger))
+	// r.StrictSlash(false)
+
+	functionHandler := faashandlers.MakeProxy(metricsOptions, true, dockerClient, &logger)
+	r.HandleFunc("/function/{name:[a-zA-Z_]+}", functionHandler)
+	r.HandleFunc("/function/{name:[a-zA-Z_]+}/", functionHandler)
 
 	r.HandleFunc("/system/alert", faashandlers.MakeAlertHandler(dockerClient))
 	r.HandleFunc("/system/functions", faashandlers.MakeFunctionReader(metricsOptions, dockerClient)).Methods("GET")

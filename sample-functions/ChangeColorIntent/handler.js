@@ -2,10 +2,10 @@
 let fs = require('fs');
 let sample = require("./sample.json");
 let SendColor = require('./sendColor');
-let sendColor = new SendColor("alexellis.io/tree1")
+let sendColor = new SendColor("alexellis.io/officelights")
 
 const getStdin = require('get-stdin');
- 
+
 getStdin().then(content => {
   let request = JSON.parse(content);
   handle(request, request.request.intent);
@@ -14,7 +14,7 @@ getStdin().then(content => {
 function tellWithCard(speechOutput) {
   sample.response.outputSpeech.text = speechOutput
   sample.response.card.content = speechOutput
-  sample.response.card.title = "Christmas Lights";
+  sample.response.card.title = "Office Lights";
   console.log(JSON.stringify(sample));
   process.exit(0);
 }

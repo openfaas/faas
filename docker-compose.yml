@@ -72,7 +72,6 @@ services:
         environment:
             no_proxy:   "gateway"
             https_proxy: $https_proxy
-
     nodeinfo:
         image: alexellis2/faas-nodeinfo:latest
         depends_on:
@@ -104,6 +103,19 @@ services:
             fprocess:	"wc"
             no_proxy:   "gateway"
             https_proxy: $https_proxy
+
+
+    # alexacolorchange:
+    #     image: alexellis2/faas-alexachangecolorintent 
+    #     depends_on:
+    #         - gateway
+    #     networks:
+    #         - functions
+    #     environment:
+    #         no_proxy:   "gateway"
+    #         https_proxy: $https_proxy
+
+
 
 networks:
     functions:

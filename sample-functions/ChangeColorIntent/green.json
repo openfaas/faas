@@ -1,0 +1,29 @@
+{
+  "session": {
+    "sessionId": "SessionId.ce487e6e-9975-4c95-b305-2a0b354f3ee0",
+    "application": {
+      "applicationId": "amzn1.ask.skill.dc0c07b4-e18d-4f6f-a571-90cd1aca3bc6"
+    },
+    "attributes": {},
+    "user": {
+      "userId": "amzn1.ask.account.AEFGBTDIPL5K3HYKXGNAXDHANW2MPMFRRM5QX7FCMUEOJYCGNIVUTVR7IUUHZ2VFPIDNOPIUBWZLGYSSLOBLZ6FR5FRUJMP3OAZKUI3ZZ4ADLR7M4ROICY5H5RFASQLTV5IUNIOTA7OP6N2ZNCXXZDXS7BVGPB6GKIWZAJRHOGUYSBHX2JMSLNPQ6V6HMFKGKZLAWLHKGYEUDBI"
+    },
+    "new": true
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.ee57cb67-a465-4d93-9ea8-29229f2634bc",
+    "locale": "en-GB",
+    "timestamp": "2017-01-28T11:32:04Z",
+    "intent": {
+      "name": "ChangeColorIntent",
+      "slots": {
+        "LedColor": {
+          "name": "LedColor",
+          "value": "green"
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
