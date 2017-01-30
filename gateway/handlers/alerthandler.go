@@ -12,38 +12,43 @@ import (
 	"github.com/docker/docker/client"
 )
 
+// CalculateReplicas decides what replica count to set depending on a Prometheus alert
+func CalculateReplicas(status string, currentReplicas uint64) uint64 {
+	newReplicas := currentReplicas
+
+	if status == "firing" {
+		if currentReplicas == 1 {
+			newReplicas = 5
+		} else {
+			if currentReplicas+5 > 20 {
+				newReplicas = 20
+			} else {
+				newReplicas = currentReplicas + 5
+			}
+		}
+	} else { // Resolved event.
+		newReplicas = 1
+	}
+	return newReplicas
+}
+
 func scaleService(req requests.PrometheusAlert, c *client.Client) error {
 	var err error
 	//Todo: convert to loop / handler.
 	serviceName := req.Alerts[0].Labels.FunctionName
 	service, _, inspectErr := c.ServiceInspectWithRaw(context.Background(), serviceName)
 	if inspectErr == nil {
-		var replicas uint64
 
-		if req.Status == "firing" {
-			if *service.Spec.Mode.Replicated.Replicas < 20 {
-				replicas = *service.Spec.Mode.Replicated.Replicas + uint64(5)
-			} else {
-				return err
-			}
-		} else { // Resolved event.
-			// Previously decremented by 5, but event only fires once, so set to 1/1.
-			if *service.Spec.Mode.Replicated.Replicas > 1 {
-				// replicas = *service.Spec.Mode.Replicated.Replicas - uint64(5)
-				// if replicas < 1 {
-				// replicas = 1
-				// }
-				// return nil
+		currentReplicas := *service.Spec.Mode.Replicated.Replicas
+		status := req.Status
+		newReplicas := CalculateReplicas(status, currentReplicas)
 
-				replicas = 1
-			} else {
-				return nil
-			}
+		if newReplicas == currentReplicas {
+			return nil
 		}
 
-		log.Printf("Scaling %s to %d replicas.\n", serviceName, replicas)
-
-		service.Spec.Mode.Replicated.Replicas = &replicas
+		log.Printf("Scaling %s to %d replicas.\n", serviceName, newReplicas)
+		service.Spec.Mode.Replicated.Replicas = &newReplicas
 		updateOpts := types.ServiceUpdateOptions{}
 		updateOpts.RegistryAuthFrom = types.RegistryAuthFromSpec
 
