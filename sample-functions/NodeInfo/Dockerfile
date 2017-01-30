@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM armhf/alpine:latest
 RUN apk --update add nodejs
 COPY ./fwatchdog /usr/bin/
 

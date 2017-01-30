@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM aafrey/golang-alpine
 ENTRYPOINT []
 
 COPY ./fwatchdog /usr/bin/fwatchdog
