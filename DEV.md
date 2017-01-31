@@ -12,7 +12,7 @@ Before you start development, you may want to take FaaS for a test drive which s
 
 To work on either of the FaaS Golang components checkout the "./build.sh" scripts and acompanying Dockerfiles.
 
-* ![Roadmap and Contributing](https://github.com/alexellis/faas/blob/master/ROADMAP.md)
+* [Roadmap and Contributing](https://github.com/alexellis/faas/blob/master/ROADMAP.md)
 
 ### Creating a function
 
