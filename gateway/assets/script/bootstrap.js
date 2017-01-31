@@ -24,8 +24,8 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', func
             $scope.invocationStatus = null;
         });
 
-        console.log("POST /function/"+ $scope.selectedFunction.name);
-        console.log("Body: " + $scope.invocation.request);
+        // console.log("POST /function/"+ $scope.selectedFunction.name);
+        // console.log("Body: " + $scope.invocation.request);
     };
 
     var refreshData = function () {
