@@ -1,4 +1,4 @@
-## faas - Functions As A Service
+## Functions As A Service - TestDrive
 
 FaaS is a platform for building serverless functions on Docker Swarm Mode with first class metrics. Any UNIX process can be packaged as a function in FaaS enabling you to consume a range of web events without repetitive boiler-plate coding.
 
@@ -28,9 +28,7 @@ This one-shot script clones the code, initialises Docker swarm mode and then dep
 
 ![](https://pbs.twimg.com/media/C1wDi_tXUAIphu-.jpg)
 
-* Head over to the README to see how to invoke the sample function for Docker Hub Stats via the `curl` commands.
-
-#### The sample functions are:
+#### Some of the sample functions are:
 
 * Webhook stasher function (webhookstash) - saves webhook body into container's filesystem (Golang)
 * Docker Hub Stats function (hubstats) - queries the count of images for a user on the Docker Hub (Golang)
@@ -38,33 +36,82 @@ This one-shot script clones the code, initialises Docker swarm mode and then dep
 
 #### Invoke the sample functions with curl or Postman:
 
-Head over to the Github repo now for the quick-start to test out the sample functions:
+Head over to the [Github repo to fork the code](https://github.com/alexellis/faas), or read on to see the input/output from the sample functions.
 
-[Quickstart documentation with `docker-stack deploy`](https://github.com/alexellis/faas/tree/stack_1#quickstart-with-docker-stack-deploy)
+#### Working with the sample functions
 
-Once you're up and running checkout the `gateway_functions_count` metrics on your Prometheus endpoint on *port 9090*.
+> If you're looking for a UI head over to http://localhost:8080/ for a list of functions deployed on your swarm.
 
-### More resources:
+You can find out which services are deployed like this:
 
-FaaS is still expanding and growing, check out the development branch for:
+```
+# docker stack ls
+NAME  SERVICES
+func  3
 
-* [Auto-scaling](https://twitter.com/alexellisuk/status/823262200236277762)
-* Prometheus alerts
-* More sample functions
-* [Brand new UI](https://twitter.com/alexellisuk/status/823262200236277762)
+# docker stack ps func
+ID            NAME               IMAGE                                  NODE  DESIRED STATE  CURRENT STATE         
+rhzej73haufd  func_gateway.1     alexellis2/faas-gateway:latest         moby  Running        Running 26 minutes ago
+fssz6unq3e74  func_hubstats.1    alexellis2/faas-dockerhubstats:latest  moby  Running        Running 27 minutes ago
+nnlzo6u3pilg  func_prometheus.1  quay.io/prometheus/prometheus:latest   moby  Running        Running 27 minutes ago
+```
 
-[Development branch](https://github.com/alexellis/faas/commits/labels_metrics)
+* Head over to http://localhost:9090 for your Prometheus metrics
 
-#### Would you prefer a video overview?
+* Your function can be accessed via the gateway like this:
 
-See how to deploy FaaS onto play-with-docker.com and Docker Swarm in 1-2 minutes. See the sample functions in action and watch the graphs in Prometheus as we ramp up the amount of requests. 
+**Sample function: Docker Hub Stats (hubstats)**
 
-* [Deep Dive into Functions as a Service (FaaS) on Docker](https://www.youtube.com/watch?v=sp1B7l5mEzc)
+```
+# curl -X POST http://localhost:8080/function/func_hubstats -d "alexellis2"
+The organisation or user alexellis2 has 99 repositories on the Docker hub.
 
-#### Prometheus metrics are built-in
+# curl -X POST http://localhost:8080/function/func_hubstats -d "library"
+The organisation or user library has 128 repositories on the Docker hub.
+```
 
-Prometheus is built into FaaS and the sample stack, so you can check throughput for each function individually with a rate function in Prometheus like this:
+The `-d` value passes in the argument for your function. This is read via STDIN and used to query the Docker Hub to see how many images you've created/pushed.
 
-![](https://pbs.twimg.com/media/C2d9IkbXAAI58fz.jpg)
+**Sample function: webhook stasher (webhookstash)**
 
+Another cool sample function is the Webhook Stasher which saves the body of any data posted to the service to the container's filesystem. Each file is written with the filename of the UNIX time.
 
+```
+# curl -X POST http://localhost:8080/function/func_webhookstash -d '{"event": "fork", "repo": "alexellis2/faas"}'
+Webhook stashed
+
+# docker ps|grep stash
+d769ca70729d        alexellis2/faas-webhookstash@sha256:b378f1a144202baa8fb008f2c8896f5a8
+
+# docker exec d769ca70729d find .
+.
+./1483999546817280727.txt
+./1483999702130689245.txt
+./1483999702533419188.txt
+./1483999702978454621.txt
+./1483999703284879767.txt
+./1483999719981227578.txt
+./1483999720296180414.txt
+./1483999720666705381.txt
+./1483999720961054638.txt
+```
+
+**Sample function: Node OS Info (nodeinfo)**
+
+Grab OS, CPU and other info via a Node.js container using the `os` module.
+
+```
+# curl -X POST http://localhost:8080/function/func_nodeinfo -d ''
+
+linux x64 [ { model: 'Intel(R) Xeon(R) CPU E5-2670 v2 @ 2.50GHz',
+    speed: 2500,
+    times: 
+     { user: 3754430800,
+       nice: 2450200,
+       sys: 885352200,
+       idle: 25599742200,
+       irq: 0 } },
+...
+```
+
+> Why not start the code on play-with-docker.com and then configure a Github repository to send webhook to the function?

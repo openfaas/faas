@@ -53,8 +53,11 @@ services:
 
 
     # Sample functions go here.
+    # Service label of "function" allows functions to show up in UI on http://gateway:8080/
     webhookstash:
         image: alexellis2/faas-webhookstash:latest
+        labels:
+            function: "true"
         depends_on:
             - gateway
         networks:
@@ -65,6 +68,8 @@ services:
 
     hubstats:
         image: alexellis2/faas-dockerhubstats:latest
+        labels:
+            function: "true"
         depends_on:
             - gateway
         networks:
@@ -72,8 +77,11 @@ services:
         environment:
             no_proxy:   "gateway"
             https_proxy: $https_proxy
+
     nodeinfo:
         image: alexellis2/faas-nodeinfo:latest
+        labels:
+            function: "true"
         depends_on:
             - gateway
         networks:
@@ -84,6 +92,8 @@ services:
 
     echoit:
         image: alexellis2/faas-alpinefunction:latest
+        labels:
+            function: "true"
         depends_on:
             - gateway
         networks:
@@ -95,6 +105,8 @@ services:
 
     wordcount:
         image: alexellis2/faas-alpinefunction:latest
+        labels:
+            function: "true"
         depends_on:
             - gateway
         networks:
@@ -106,6 +118,8 @@ services:
 
     markdown:
         image: alexellis2/faas-markdownrender:latest
+        labels:
+            function: "true"
         depends_on:
             - gateway
         networks:
@@ -114,15 +128,17 @@ services:
             no_proxy:   "gateway"
             https_proxy: $https_proxy
 
-    # alexacolorchange:
-    #     image: alexellis2/faas-alexachangecolorintent 
-    #     depends_on:
-    #         - gateway
-    #     networks:
-    #         - functions
-    #     environment:
-    #         no_proxy:   "gateway"
-    #         https_proxy: $https_proxy
+    alexacolorchange:
+        labels:
+            function: "true"
+        image: alexellis2/faas-alexachangecolorintent 
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
+            no_proxy:   "gateway"
+            https_proxy: $https_proxy
 
 
 
