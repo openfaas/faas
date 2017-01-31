@@ -50,11 +50,11 @@
       </div>
       <div flex></div>
     </md-content>
+
     <md-content flex layout="column" ng-repeat="function in functions" ng-show="function.name == selectedFunction.name">
 
         <md-card md-theme="default" md-theme-watch>
             <md-card-title>
-
                 <md-card-title-text>
 
                     <span class="md-headline">
@@ -77,12 +77,44 @@
                         <input ng-model="function.image" type="text" readonly="readonly">
                       </md-input-container>
                     </div>
-
                 <md-card-title-text>
-
             </md-card-title>
         </md-card>
+        <md-card>
+         <md-card-title>
+            <md-card-title-text>
 
+                <span class="md-headline">
+                  Invoke function
+                </span>
+                <div layout-gt-sm="row">
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <button ng-click="fireRequest()" class="md-raised md-button md-ink-ripple" type="button">
+                      <span class="ng-scope">Invoke</span><div class="md-ripple-container"></div>
+                    </button>
+                  </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Request body</label>
+                    <textarea ng-model="invocation.request" cols="80" rows="4"></textarea>
+                  </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Response status</label>
+                    <input ng-model="invocationStatus" type="text" readonly="readonly">
+                  </md-input-container>
+                </div>
+                <div layout-gt-sm="row">
+                  <md-input-container class="md-block" flex-gt-sm>
+                    <label>Response body</label>
+                    <textarea ng-model="invocationResponse" cols="80" rows=10></textarea>
+                  </md-input-container>
+                </div>
+            <md-card-title-text>
+        </md-card-title>
+    </md-card>
     </md-content>
   </section>
   </div>

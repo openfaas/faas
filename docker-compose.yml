@@ -104,6 +104,15 @@ services:
             no_proxy:   "gateway"
             https_proxy: $https_proxy
 
+    markdown:
+        image: alexellis2/faas-markdownrender:latest
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
+            no_proxy:   "gateway"
+            https_proxy: $https_proxy
 
     # alexacolorchange:
     #     image: alexellis2/faas-alexachangecolorintent 
