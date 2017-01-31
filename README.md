@@ -20,13 +20,15 @@ You can test-drive FaaS with a set of sample functions as defined in docker-comp
 
 * [Begin the TestDrive instructions](https://github.com/alexellis/faas/blob/master/TestDrive.md)
 
+## Develop your own functions
+
+* [Package your function](https://github.com/alexellis/faas/blob/master/DEV.md)
+
 ## Roadmap and contributing
 
 * [Read the Roadmap](https://github.com/alexellis/faas/blob/master/ROADMAP.md)
 
-## Develop your own functions
-
-* [Package your function](https://github.com/alexellis/faas/blob/master/DEV.md)
+## Additional content
 
 #### Would you prefer a video overview?
 
