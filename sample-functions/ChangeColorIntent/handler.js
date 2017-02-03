@@ -1,6 +1,6 @@
 "use strict"
 let fs = require('fs');
-let sample = require("./sample.json");
+let sample = require("./sample_response.json");
 let SendColor = require('./sendColor');
 let sendColor = new SendColor("alexellis.io/officelights")
 
@@ -12,6 +12,7 @@ getStdin().then(content => {
 });
 
 function tellWithCard(speechOutput) {
+  console.log(sample)
   sample.response.outputSpeech.text = speechOutput
   sample.response.card.content = speechOutput
   sample.response.card.title = "Office Lights";
@@ -20,20 +21,28 @@ function tellWithCard(speechOutput) {
 }
 
 function handle(request, intent) {
-  let colorRequested = intent.slots.LedColor.value;
-  let req = {r:0,g:0,b:0};
-  if(colorRequested == "red") { 
-    req.r = 255;
-  } else if(colorRequested== "blue") {
-      req.b = 255;
-  } else if (colorRequested == "green") {
-      req.g = 255;
+  if(intent.name == "TurnOffIntent") {
+    let req = {r:0,g:0,b:0};
+    var speechOutput = "Lights off.";
+    sendColor.sendColor(req, () => {
+      return tellWithCard(speechOutput);
+    });
+  } else {
+    let colorRequested = intent.slots.LedColor.value;
+    let req = {r:0,g:0,b:0};
+    if(colorRequested == "red") { 
+      req.r = 255;
+    } else if(colorRequested== "blue") {
+        req.b = 255;
+    } else if (colorRequested == "green") {
+        req.g = 255;
+    }
+    else {
+        return tellWithCard("I heard "+colorRequested+ " but can only do: red, green, blue.", "I heard "+colorRequested+ " but can only do: red, green, blue.");
+    }
+    sendColor.sendColor(req, () => {
+      var speechOutput = "OK, " + colorRequested + ".";
+      return tellWithCard(speechOutput);
+    });
   }
-  else {
-      return tellWithCard("I heard "+colorRequested+ " but can only do: red, green, blue.", "I heard "+colorRequested+ " but can only do: red, green, blue.");
-  }
-  sendColor.sendColor(req, () => {
-    var speechOutput = "OK, " + colorRequested + ".";
-    return tellWithCard(speechOutput);
-  });
 }

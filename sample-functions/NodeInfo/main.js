@@ -11,9 +11,9 @@ getStdin().then((content) => {
         console.log("Arch: " + os.arch());
         console.log("CPU count: " + os.cpus().length);
         console.log("Uptime: " + os.uptime())
-        console.log("User info: " + os.userInfo());
         if (content && content.length && content.indexOf("verbose") > -1) {
             console.log(os.cpus());
+            console.log(os.networkInterfaces());
         }
     });
 });

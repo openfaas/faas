@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "response": {
+    "outputSpeech": {
+      "type": "PlainText",
+      "text": "OK, red."
+    },
+    "card": {
+      "content": "OK, red.",
+      "title": "Office Lights",
+      "type": "Simple"
+    },
+    "shouldEndSession": true
+  },
+  "sessionAttributes": {}
+}
