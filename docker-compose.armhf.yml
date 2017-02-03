@@ -54,6 +54,8 @@ services:
 # Sample functions go here.
     wordcount:
         image: alexellis2/faas-alpinefunction:latest-armhf
+        labels:
+            function: "true"
         depends_on:
             - gateway
         networks:
@@ -67,6 +69,8 @@ services:
 
     echoit:
         image: alexellis2/faas-alpinefunction:latest-armhf
+        labels:
+            function: "true"
         depends_on:
             - gateway
         networks:
@@ -78,6 +82,8 @@ services:
 
     nodeinfo:
         image: alexellis2/faas-nodeinfo:latest-armhf
+        labels:
+            function: "true"
         depends_on:
             - gateway
         networks:
@@ -88,6 +94,8 @@ services:
 
     hubstats:
         image: alexellis2/faas-hubstats:latest-armhf
+        labels:
+            function: "true"
         depends_on:
             - gateway
         networks:
