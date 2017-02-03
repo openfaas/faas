@@ -1,0 +1,17 @@
+FROM alexellis2/go-armhf:1.7.4
+
+MAINTAINER alexellis2@gmail.com
+ENTRYPOINT []
+
+RUN apk --no-cache add make
+WORKDIR /go/src/github.com/alexellis/faas/sample-functions/DockerHubStats
+COPY . /go/src/github.com/alexellis/faas/sample-functions/DockerHubStats
+
+RUN make
+
+COPY ./fwatchdog /usr/bin
+RUN chmod +x /usr/bin/fwatchdog
+
+ENV fprocess "/go/bin/DockerHubStats"
+
+CMD [ "/usr/bin/fwatchdog"]

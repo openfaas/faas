@@ -1,0 +1,8 @@
+FROM armhf/alpine:latest
+
+COPY fwatchdog /usr/bin
+RUN chmod +x /usr/bin/fwatchdog
+
+# Populate example here
+# ENV fprocess="wc -l"
+CMD ["fwatchdog"]
