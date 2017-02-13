@@ -46,7 +46,9 @@ You can access the sample functions via the command line with a HTTP POST reques
 
 The UI portal is accessible on: http://localhost:8080/ - it show a list of functions deployed on your swarm and allows you to test them out.
 
-* [View screenshot](https://pbs.twimg.com/media/C3hDUkyWEAEgciP.jpg)
+View screenshot:
+
+<a href="https://pbs.twimg.com/media/C3hDUkyWEAEgciP.jpg"><img src="https://pbs.twimg.com/media/C3hDUkyWEAEgciP.jpg" width="800"></img></a>
 
 You can find out which services are deployed like this:
 
@@ -64,7 +66,7 @@ nnlzo6u3pilg  func_prometheus.1  quay.io/prometheus/prometheus:latest   moby  Ru
 
 * Head over to http://localhost:9090 for your Prometheus metrics
 
-* Your function can be accessed via the gateway like this:
+* Your function can be accessed via the gateway with curl (read on)
 
 **Sample function: Docker Hub Stats (hubstats)**
 
