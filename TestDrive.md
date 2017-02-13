@@ -40,7 +40,13 @@ Head over to the [Github repo to fork the code](https://github.com/alexellis/faa
 
 #### Working with the sample functions
 
-> If you're looking for a UI head over to http://localhost:8080/ for a list of functions deployed on your swarm.
+You can access the sample functions via the command line with a HTTP POST request or by using the built-in UI portal. 
+
+**UI portal:**
+
+The UI portal is accessible on: http://localhost:8080/ - it show a list of functions deployed on your swarm and allows you to test them out.
+
+* [View screenshot](https://pbs.twimg.com/media/C3hDUkyWEAEgciP.jpg)
 
 You can find out which services are deployed like this:
 
