@@ -135,6 +135,20 @@ services:
             no_proxy:   "gateway"
             https_proxy: $https_proxy
 
+    # Decodes base64 representation of request body.
+    decodebase64:
+        image: alexellis2/faas-alpinefunction:latest
+        labels:
+            function: "true"
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
+            fprocess:	"base64 -d"
+            no_proxy:   "gateway"
+            https_proxy: $https_proxy
+
     # Converts body in (markdown format) -> (html)
     markdown:
         image: alexellis2/faas-markdownrender:latest
