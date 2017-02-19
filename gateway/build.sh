@@ -10,4 +10,4 @@ docker rm -f gateway_extract
 
 echo Building alexellis2/faas-gateway:latest
 
-docker build --no-cache -t alexellis2/faas-gateway:latest-dev4 .
+docker build --no-cache -t alexellis2/faas-gateway:latest-dev .

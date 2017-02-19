@@ -7,7 +7,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: alexellis2/faas-gateway:latest
+        image: alexellis2/faas-gateway:latest-dev
         networks:
             - functions
         deploy:
@@ -53,6 +53,7 @@ services:
 
 
     # Sample functions go here.
+
     # Service label of "function" allows functions to show up in UI on http://gateway:8080/
     webhookstash:
         image: alexellis2/faas-webhookstash:latest
@@ -66,6 +67,7 @@ services:
             no_proxy:   "gateway"
             https_proxy: $https_proxy
 
+    # Pass a username as an argument to find how many images user has pushed to Docker Hub.
     hubstats:
         image: alexellis2/faas-dockerhubstats:latest
         labels:
@@ -78,6 +80,7 @@ services:
             no_proxy:   "gateway"
             https_proxy: $https_proxy
 
+    # Node.js gives OS info about the node (Host)
     nodeinfo:
         image: alexellis2/faas-nodeinfo:latest
         labels:
@@ -90,6 +93,7 @@ services:
             no_proxy:   "gateway"
             https_proxy: $https_proxy
 
+    # Uses `cat` to echo back response, fastest function to execute.
     echoit:
         image: alexellis2/faas-alpinefunction:latest
         labels:
@@ -103,6 +107,7 @@ services:
             no_proxy:   "gateway"
             https_proxy: $https_proxy
 
+    # Counts words in request with `wc` utility
     wordcount:
         image: alexellis2/faas-alpinefunction:latest
         labels:
@@ -116,6 +121,21 @@ services:
             no_proxy:   "gateway"
             https_proxy: $https_proxy
 
+    # Calculates base64 representation of request body.
+    base64:
+        image: alexellis2/faas-alpinefunction:latest
+        labels:
+            function: "true"
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
+            fprocess:	"base64"
+            no_proxy:   "gateway"
+            https_proxy: $https_proxy
+
+    # Converts body in (markdown format) -> (html)
     markdown:
         image: alexellis2/faas-markdownrender:latest
         labels:
@@ -128,6 +148,7 @@ services:
             no_proxy:   "gateway"
             https_proxy: $https_proxy
 
+    # Example of Alexa SDK skill, set skill to invoke HTTPs endpoint in Amazon Alexa Skills page. 
     alexacolorchange:
         labels:
             function: "true"
@@ -139,8 +160,6 @@ services:
         environment:
             no_proxy:   "gateway"
             https_proxy: $https_proxy
-
-
 
 networks:
     functions:
