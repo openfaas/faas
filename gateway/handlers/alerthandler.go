@@ -82,8 +82,8 @@ func MakeAlertHandler(c *client.Client) http.HandlerFunc {
 		}
 
 		if len(req.Alerts) > 0 {
-			err := scaleService(req, c)
-			if err != nil {
+
+			if err := scaleService(req, c); err != nil {
 				log.Println(err)
 				w.WriteHeader(http.StatusInternalServerError)
 			} else {

@@ -42,7 +42,7 @@ func fireRequestWithHeader(url string, method string, reqBody string, xheader st
 	return string(body), res.StatusCode, readErr
 }
 
-func Test_Get_Rejected(t *testing.T) {
+func TestGet_Rejected(t *testing.T) {
 	var reqBody string
 	_, code, err := fireRequest("http://localhost:8080/function/func_echoit", http.MethodGet, reqBody)
 	if code != http.StatusInternalServerError {
@@ -56,7 +56,7 @@ func Test_Get_Rejected(t *testing.T) {
 
 }
 
-func Test_EchoIt_Post_Route_Handler(t *testing.T) {
+func TestEchoIt_Post_Route_Handler(t *testing.T) {
 	reqBody := "test message"
 	body, code, err := fireRequest("http://localhost:8080/function/func_echoit", http.MethodPost, reqBody)
 
@@ -73,7 +73,7 @@ func Test_EchoIt_Post_Route_Handler(t *testing.T) {
 	}
 }
 
-func Test_EchoIt_Post_Header_Handler(t *testing.T) {
+func TestEchoIt_Post_Header_Handler(t *testing.T) {
 	reqBody := "test message"
 	body, code, err := fireRequestWithHeader("http://localhost:8080/", http.MethodPost, reqBody, "func_echoit")
 
