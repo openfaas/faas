@@ -1,13 +1,17 @@
 "use strict"
 var app = angular.module('faasGateway', ['ngMaterial']);
 
-app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$mdDialog', function($scope, $log, $http, $location, $timeout, $mdDialog) {
+app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$mdDialog', 
+        function($scope, $log, $http, $location, $timeout, $mdDialog) {
     $scope.functions = [];
     $scope.invocationRequest = "";
     $scope.invocationResponse = "";
     $scope.invocationStatus = "";
     $scope.invocation = {
         contentType: "text"
+    };
+    $scope.functionTemplate = {
+        image: ""
     };
     $scope.invocation.request = ""
     setInterval(function() {
@@ -32,9 +36,6 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
                 $scope.invocationResponse = error1;
                 $scope.invocationStatus = null;
             });
-
-        // console.log("POST /function/"+ $scope.selectedFunction.name);
-        // console.log("Body: " + $scope.invocation.request);
     };
 
     var refreshData = function() {
@@ -77,29 +78,59 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
         }
     };
 
-    var showDialog = function() {
-        var alert = $mdDialog.alert({
-            title: 'New function',
-            textContent: 'New functions are not supported yet, but will be defined here.',
-            ok: 'Close'
-        });
-        $mdDialog
-            .show(alert)
-            .finally(function() {
-                alert = undefined;
-            });
+    var showDialog=function($event) {
+       var parentEl = angular.element(document.body);
+       $mdDialog.show({
+         parent: parentEl,
+         targetEvent: $event,
+         templateUrl: "newfunction.html",
+         locals: {
+           item: $scope.functionTemplate
+         },
+         controller: DialogController
+      });
     };
 
-    // TODO: popup + form to create new Docker service.
-    // More to follow @ https://material.angularjs.org/latest/demo/dialog
+    var DialogController = function($scope, $mdDialog, item) {
+        $scope.item = item;
+        $scope.closeDialog = function() {
+            $mdDialog.hide();
+        };
+
+        $scope.createFunc = function() {
+            console.log($scope.item);
+            $scope.closeDialog();
+        };
+    };
+
     $scope.newFunction = function() {
-        // $scope.functions.push({
-        //     name: "f" + ($scope.functions.length + 2),
-        //     replicas: 0,
-        //     invokedCount: 0
-        // });
-        showDialog()
+        showDialog();
     };
 
     fetch();
 }]);
+
+
+// '<md-dialog aria-label="List dialog">' +
+//            '  <md-dialog-content class="md-padding">'+
+//            '<label>Define a function</label>'+
+//            '<form name="userForm">'+
+//             '<md-input-container>'+
+//                 '<label>Image:</label>'+
+//                 '<input name="dockerImage" ng-model="item.image" required md-maxlength="200" minlength="4">'+
+//            '</md-input-container>'+
+//             '<md-input-container>'+
+//                 '<label>Name:</label>'+
+//                 '<input name="serviceName" ng-model="item.name" required md-maxlength="200" minlength="4">'+
+//            '</md-input-container>'+
+//            '</form>'+
+//            '  </md-dialog-content>' +
+//            '  <md-dialog-actions>' +
+//            '    <md-button ng-click="closeDialog()" class="md-secondary">' +
+//            '      Close Dialog' +
+//            '    </md-button>' +
+//            '    <md-button ng-click="createFunc()" class="md-primary">' +
+//            '      Create' +
+//            '    </md-button>' +
+//            '  </md-dialog-actions>' +
+//            '</md-dialog>'
