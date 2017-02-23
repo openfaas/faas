@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	faashandlers "github.com/alexellis/faas/gateway/handlers"
+	faasHandlers "github.com/alexellis/faas/gateway/handlers"
 	"github.com/alexellis/faas/gateway/metrics"
 	"github.com/docker/docker/client"
 	"github.com/gorilla/mux"
@@ -35,14 +35,15 @@ func main() {
 	r := mux.NewRouter()
 	// r.StrictSlash(false)
 
-	functionHandler := faashandlers.MakeProxy(metricsOptions, true, dockerClient, &logger)
+	functionHandler := faasHandlers.MakeProxy(metricsOptions, true, dockerClient, &logger)
 	r.HandleFunc("/function/{name:[a-zA-Z_0-9]+}", functionHandler)
 	r.HandleFunc("/function/{name:[a-zA-Z_0-9]+}/", functionHandler)
 
-	r.HandleFunc("/system/alert", faashandlers.MakeAlertHandler(dockerClient))
-	r.HandleFunc("/system/functions", faashandlers.MakeFunctionReader(metricsOptions, dockerClient)).Methods("GET")
+	r.HandleFunc("/system/alert", faasHandlers.MakeAlertHandler(dockerClient))
+	r.HandleFunc("/system/functions", faasHandlers.MakeFunctionReader(metricsOptions, dockerClient)).Methods("GET")
+	r.HandleFunc("/system/functions", faasHandlers.MakeNewFunctionHandler(metricsOptions, dockerClient)).Methods("POST")
 
-	r.HandleFunc("/", faashandlers.MakeProxy(metricsOptions, false, dockerClient, &logger)).Methods("POST")
+	r.HandleFunc("/", faasHandlers.MakeProxy(metricsOptions, false, dockerClient, &logger)).Methods("POST")
 
 	metricsHandler := metrics.PrometheusHandler()
 	r.Handle("/metrics", metricsHandler)

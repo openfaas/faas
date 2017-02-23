@@ -25,7 +25,7 @@ func fireRequestWithHeader(url string, method string, reqBody string, xheader st
 		log.Fatal(err)
 	}
 
-	req.Header.Set("User-Agent", "spacecount-tutorial")
+	req.Header.Set("User-Agent", "go-integration")
 	if len(xheader) != 0 {
 		req.Header.Set("X-Function", xheader)
 	}

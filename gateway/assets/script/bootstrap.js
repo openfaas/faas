@@ -98,6 +98,22 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
         };
 
         $scope.createFunc = function() {
+            var options = {
+                url: "/system/functions",
+                data: $scope.item,
+                method: "POST",
+                headers: { "Content-Type": "application/json"},
+                responseType: "json"
+            };
+
+            $http(options)
+                .then(function(response) {
+                    $scope.invocationResponse = response.data;
+                    $scope.invocationStatus = response.status;
+                }).catch(function(error1) {
+                    $scope.invocationResponse = error1;
+                    $scope.invocationStatus = null;
+                });
             console.log($scope.item);
             $scope.closeDialog();
         };
@@ -109,28 +125,3 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
 
     fetch();
 }]);
-
-
-// '<md-dialog aria-label="List dialog">' +
-//            '  <md-dialog-content class="md-padding">'+
-//            '<label>Define a function</label>'+
-//            '<form name="userForm">'+
-//             '<md-input-container>'+
-//                 '<label>Image:</label>'+
-//                 '<input name="dockerImage" ng-model="item.image" required md-maxlength="200" minlength="4">'+
-//            '</md-input-container>'+
-//             '<md-input-container>'+
-//                 '<label>Name:</label>'+
-//                 '<input name="serviceName" ng-model="item.name" required md-maxlength="200" minlength="4">'+
-//            '</md-input-container>'+
-//            '</form>'+
-//            '  </md-dialog-content>' +
-//            '  <md-dialog-actions>' +
-//            '    <md-button ng-click="closeDialog()" class="md-secondary">' +
-//            '      Close Dialog' +
-//            '    </md-button>' +
-//            '    <md-button ng-click="createFunc()" class="md-primary">' +
-//            '      Create' +
-//            '    </md-button>' +
-//            '  </md-dialog-actions>' +
-//            '</md-dialog>'

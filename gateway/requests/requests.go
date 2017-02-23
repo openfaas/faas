@@ -1,5 +1,13 @@
 package requests
 
+// CreateFunctionRequest create a function in the swarm.
+type CreateFunctionRequest struct {
+	Service  string `json:"service"`
+	FProcess string `json:"fprocess"`
+	Image    string `json:"image"`
+	Network  string `json:"network"`
+}
+
 type AlexaSessionApplication struct {
 	ApplicationId string `json:"applicationId"`
 }

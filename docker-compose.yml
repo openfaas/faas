@@ -7,13 +7,13 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: alexellis2/faas-gateway:latest
+        image: alexellis2/faas-gateway:latest-dev
         networks:
             - functions
         deploy:
             placement:
                 constraints: [node.role == manager]
-
+ 
     prometheus:
         image: quay.io/prometheus/prometheus:latest
         volumes:

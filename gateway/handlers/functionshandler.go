@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"io/ioutil"
+
 	"github.com/alexellis/faas/gateway/metrics"
 	"github.com/alexellis/faas/gateway/requests"
 	"github.com/docker/docker/api/types"
@@ -57,5 +59,24 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(200)
 		w.Write(functionBytes)
+	}
+}
+
+// MakeNewFunctionHandler creates a new function (service) inside the swarm network.
+func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Client) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		body, _ := ioutil.ReadAll(r.Body)
+		defer r.Body.Close()
+
+		request := requests.CreateFunctionRequest{}
+		err := json.Unmarshal(body, &request)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		fmt.Println(request)
+		w.WriteHeader(http.StatusNotImplemented)
 	}
 }
