@@ -10,9 +10,14 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
     $scope.invocation = {
         contentType: "text"
     };
+
     $scope.functionTemplate = {
-        image: ""
+        image: "",
+        envProcess: "",
+        network: "",
+        service: ""
     };
+
     $scope.invocation.request = ""
     setInterval(function() {
         refreshData();

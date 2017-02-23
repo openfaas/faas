@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"io/ioutil"
@@ -12,6 +13,7 @@ import (
 	"github.com/alexellis/faas/gateway/requests"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
+	"github.com/docker/docker/api/types/swarm"
 	"github.com/docker/docker/client"
 	io_prometheus_client "github.com/prometheus/client_model/go"
 )
@@ -78,5 +80,40 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 
 		fmt.Println(request)
 		w.WriteHeader(http.StatusNotImplemented)
+		options := types.ServiceCreateOptions{}
+		spec := makeSpec(&request)
+
+		response, err := c.ServiceCreate(context.Background(), spec, options)
+		if err != nil {
+			log.Println(err)
+		}
+		log.Println(response.ID, response.Warnings)
 	}
+}
+
+func makeSpec(request *requests.CreateFunctionRequest) swarm.ServiceSpec {
+	max := uint64(1)
+
+	nets := []swarm.NetworkAttachmentConfig{
+		swarm.NetworkAttachmentConfig{Target: request.Network},
+	}
+
+	spec := swarm.ServiceSpec{
+		TaskTemplate: swarm.TaskSpec{
+			RestartPolicy: &swarm.RestartPolicy{
+				MaxAttempts: &max,
+				Condition:   swarm.RestartPolicyConditionNone,
+			},
+			ContainerSpec: swarm.ContainerSpec{
+				Image:  request.Image,
+				Env:    []string{fmt.Sprintf("fprocess=%s", request.EnvProcess)},
+				Labels: map[string]string{"function": "true"},
+			},
+			Networks: nets,
+		},
+		Annotations: swarm.Annotations{
+			Name: request.Service,
+		},
+	}
+	return spec
 }

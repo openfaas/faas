@@ -1,4 +1,4 @@
-<md-dialog  aria-label="List dialog" layout="column" flex="80"> 
+<md-dialog  aria-label="List dialog" layout="column" flex="70"> 
     <md-dialog-content class="md-padding">
         <label>Define a function:</label>
         <form name="userForm">
@@ -10,14 +10,14 @@
             </div>
             <div layout-gt-xs="row">
                 <md-input-container class="md-block" flex-gt-sm>
-                <label>Name:</label>
-                <input name="serviceName" ng-model="item.name" required md-maxlength="200" minlength="4">
+                <label>Service name:</label>
+                <input name="serviceName" ng-model="item.service" required md-maxlength="200" minlength="4">
                 </md-input-container>
             </div>
             <div layout-gt-xs="row">
                 <md-input-container class="md-block" flex-gt-sm>
                 <label>fProcess:</label>
-                <input name="fprocess" ng-model="item.fprocess" required md-maxlength="200" minlength="4">
+                <input name="envProcess" ng-model="item.envProcess" required md-maxlength="200" minlength="1">
                 </md-input-container>
             </div>
             <div layout-gt-xs="row">
