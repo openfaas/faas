@@ -20,6 +20,17 @@ You can test-drive FaaS with a set of sample functions as defined in docker-comp
 
 * [Begin the TestDrive instructions](https://github.com/alexellis/faas/blob/master/TestDrive.md)
 
+### Ongoing development/screenshots:
+
+FaaS is still expanding and growing, check out the developments around:
+
+* [Auto-scaling through Prometheus alerts](https://twitter.com/alexellisuk/status/825295438412709888)
+* [Prometheus alert example](https://twitter.com/alexellisuk/status/823262200236277762)
+* [Invoke functions through UI](https://twitter.com/alexellisuk/status/823262200236277762)
+* [Create new functions through UI](https://twitter.com/alexellisuk/status/835047437588905984)
+* [Various sample functions](https://github.com/alexellis/faas/blob/master/docker-compose.yml)
+* [ARM / Raspberry Pi support](https://github.com/alexellis/faas/blob/master/docker-compose.armhf.yml)
+
 ## Develop your own functions
 
 * [Package your function](https://github.com/alexellis/faas/blob/master/DEV.md)
@@ -41,12 +52,3 @@ See how to deploy FaaS onto play-with-docker.com and Docker Swarm in 1-2 minutes
 Prometheus is built into FaaS and the sample stack, so you can check throughput for each function individually with a rate function in Prometheus like this:
 
 ![](https://pbs.twimg.com/media/C2d9IkbXAAI58fz.jpg)
-
-### More resources:
-
-FaaS is still expanding and growing, check out the developments around:
-
-* [Auto-scaling](https://twitter.com/alexellisuk/status/823262200236277762)
-* Prometheus alerts
-* More sample functions
-* [Brand new UI](https://twitter.com/alexellisuk/status/823262200236277762)
