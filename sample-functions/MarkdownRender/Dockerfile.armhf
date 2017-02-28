@@ -3,6 +3,13 @@ FROM armhf/alpine:3.5
 ADD https://github.com/alexellis/faas/releases/download/v0.3-alpha/fwatchdog-armhf /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
 
-# Populate example here
-# ENV fprocess="wc -l"
+WORKDIR /root/
+
+EXPOSE 8080
+ENV http_proxy      ""
+ENV https_proxy     ""
+
+COPY app    .
+
+ENV fprocess="/root/app"
 CMD ["fwatchdog"]
