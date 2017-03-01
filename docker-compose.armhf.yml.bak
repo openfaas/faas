@@ -7,7 +7,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: alexellis2/faas-gateway:latest-armhf-dev
+        image: alexellis2/faas-gateway:latest-armhf
         networks:
             - functions
         deploy:
@@ -15,7 +15,7 @@ services:
                 constraints: [node.role == manager]
 
     prometheus:
-        image: alexellis2/prometheus-armhf:1.5.2
+        image: alexellis2/prometheus-armhf:latest
         volumes:
             - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
             - ./prometheus/alert.rules:/etc/prometheus/alert.rules
@@ -36,7 +36,7 @@ services:
 
 
     alertmanager:
-        image: alexellis2/alertmanager-armhf:0.5.1
+        image: alexellis2/alertmanager-armhf
         environment:
             no_proxy:   "gateway"
         volumes:
@@ -62,6 +62,58 @@ services:
             - functions
         environment:
             fprocess:   "wc"
+            no_proxy:   "gateway"
+            https_proxy: $https_proxy
+
+
+
+    echoit:
+        image: alexellis2/faas-alpinefunction:latest-armhf
+        labels:
+            function: "true"
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
+            fprocess:   "cat"
+            no_proxy:   "gateway"
+            https_proxy: $https_proxy
+
+    nodeinfo:
+        image: alexellis2/faas-nodeinfo:latest-armhf
+        labels:
+            function: "true"
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
+            no_proxy:   "gateway"
+            https_proxy: $https_proxy
+
+    hubstats:
+        image: alexellis2/faas-hubstats:latest-armhf
+        labels:
+            function: "true"
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
+            no_proxy:   "gateway"
+            https_proxy: $https_proxy
+
+    # Converts body in (markdown format) -> (html)
+    markdown:
+        image: alexellis2/faas-markdownrender:latest-armhf
+        labels:
+            function: "true"
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
             no_proxy:   "gateway"
             https_proxy: $https_proxy
 
