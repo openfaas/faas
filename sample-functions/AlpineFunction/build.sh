@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t alexellis2/faas-alpinefunction .
+docker build -t functions/alpine .

@@ -7,7 +7,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: alexellis2/faas-gateway:latest-dev
+        image: functions/gateway:latest-dev
         networks:
             - functions
         deploy:
@@ -95,7 +95,7 @@ services:
 
     # Uses `cat` to echo back response, fastest function to execute.
     echoit:
-        image: alexellis2/faas-alpinefunction:latest
+        image: functions/alpine:latest
         labels:
             function: "true"
         depends_on:
@@ -109,7 +109,7 @@ services:
 
     # Counts words in request with `wc` utility
     wordcount:
-        image: alexellis2/faas-alpinefunction:latest
+        image: functions/alpine:latest
         labels:
             function: "true"
         depends_on:
@@ -123,7 +123,7 @@ services:
 
     # Calculates base64 representation of request body.
     base64:
-        image: alexellis2/faas-alpinefunction:latest
+        image: functions/alpine:latest
         labels:
             function: "true"
         depends_on:
@@ -137,7 +137,7 @@ services:
 
     # Decodes base64 representation of request body.
     decodebase64:
-        image: alexellis2/faas-alpinefunction:latest
+        image: functions/alpine:latest
         labels:
             function: "true"
         depends_on:
