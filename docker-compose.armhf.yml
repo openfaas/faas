@@ -7,7 +7,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: alexellis2/faas-gateway:latest-armhf-dev
+        image: functions/gateway:latest-armhf-dev
         networks:
             - functions
         deploy:
@@ -53,7 +53,7 @@ services:
 
 # Sample functions go here.
     wordcount:
-        image: alexellis2/faas-alpinefunction:latest-armhf
+        image: functions/alpine:latest-armhf
         labels:
             function: "true"
         depends_on:
