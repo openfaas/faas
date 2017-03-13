@@ -15,6 +15,7 @@ import (
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/client"
 	"github.com/gorilla/mux"
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 // MakeProxy creates a proxy for HTTP web requests which can be routed to a function.
@@ -46,13 +47,21 @@ func MakeProxy(metrics metrics.MetricOptions, wildcard bool, c *client.Client, l
 	}
 }
 
+func writeHead(service string, metrics metrics.MetricOptions, code int, w http.ResponseWriter) {
+	w.WriteHeader(code)
+
+	metrics.GatewayFunctionInvocation.With(prometheus.Labels{"function_name": service, "code": strconv.Itoa(code)}).Inc()
+
+	// metrics.GatewayFunctionInvocation.WithLabelValues(service).Add(1)
+}
+
 func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, name string, c *client.Client, logger *logrus.Logger) {
 	exists, err := lookupSwarmService(name, c)
 	if err != nil || exists == false {
 		if err != nil {
 			logger.Fatalln(err)
 		}
-		w.WriteHeader(http.StatusInternalServerError)
+		writeHead(name, metrics, http.StatusInternalServerError, w)
 		w.Write([]byte("Error resolving service."))
 		defer r.Body.Close()
 	}
@@ -72,7 +81,6 @@ func lookupSwarmService(serviceName string, c *client.Client) (bool, error) {
 }
 
 func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, requestBody []byte, logger *logrus.Logger) {
-	metrics.GatewayFunctionInvocation.WithLabelValues(service).Add(1)
 
 	stamp := strconv.FormatInt(time.Now().Unix(), 10)
 
@@ -89,7 +97,7 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	response, err := http.Post(url, r.Header.Get("Content-Type"), buf)
 	if err != nil {
 		logger.Infoln(err)
-		w.WriteHeader(500)
+		writeHead(service, metrics, http.StatusInternalServerError, w)
 		buf := bytes.NewBufferString("Can't reach service: " + service)
 		w.Write(buf.Bytes())
 		return
@@ -98,7 +106,8 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	responseBody, readErr := ioutil.ReadAll(response.Body)
 	if readErr != nil {
 		fmt.Println(readErr)
-		w.WriteHeader(500)
+
+		writeHead(service, metrics, http.StatusInternalServerError, w)
 		buf := bytes.NewBufferString("Error reading response from service: " + service)
 		w.Write(buf.Bytes())
 		return
@@ -107,7 +116,7 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	// Match header for strict services
 	w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
 
-	w.WriteHeader(http.StatusOK)
+	writeHead(service, metrics, http.StatusOK, w)
 	w.Write(responseBody)
 
 	seconds := time.Since(start).Seconds()

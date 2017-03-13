@@ -37,7 +37,7 @@ func BuildMetricsOptions() MetricOptions {
 			Name: "gateway_function_invocation_total",
 			Help: "Individual function metrics",
 		},
-		[]string{"function_name"},
+		[]string{"function_name", "code"},
 	)
 
 	metricsOptions := MetricOptions{
