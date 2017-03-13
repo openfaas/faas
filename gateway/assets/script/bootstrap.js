@@ -38,8 +38,8 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
                 $scope.invocationResponse = response.data;
                 $scope.invocationStatus = response.status;
             }).catch(function(error1) {
-                $scope.invocationResponse = error1;
-                $scope.invocationStatus = null;
+                $scope.invocationResponse = error1.statusText + "\n" + error1.data;
+                $scope.invocationStatus = error1.status;
             });
     };
 
