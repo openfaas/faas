@@ -4,7 +4,7 @@
 # from the golang runtime/SDK
 
 docker build --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy \
-    -t alexellis2/faas-watchdog:build .
-docker create --name buildoutput alexellis2/faas-watchdog:build echo
+    -t functions/watchdog:build .
+docker create --name buildoutput functions/watchdog:build echo
 docker cp buildoutput:/go/src/app/app ./fwatchdog
 docker rm buildoutput
