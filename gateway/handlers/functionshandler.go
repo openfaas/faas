@@ -15,8 +15,23 @@ import (
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/api/types/swarm"
 	"github.com/docker/docker/client"
+	"github.com/prometheus/client_golang/prometheus"
 	io_prometheus_client "github.com/prometheus/client_model/go"
 )
+
+func getCounterValue(service string, code string, metricsOptions *metrics.MetricOptions) float64 {
+
+	metric, err := metricsOptions.GatewayFunctionInvocation.GetMetricWith(prometheus.Labels{"function_name": service, "code": code})
+	if err != nil {
+		return 0
+	}
+
+	// Get the metric's value from ProtoBuf interface (idea via Julius Volz)
+	var protoMetric io_prometheus_client.Metric
+	metric.Write(&protoMetric)
+	invocations := protoMetric.GetCounter().GetValue()
+	return invocations
+}
 
 // MakeFunctionReader gives a summary of Function structs with Docker service stats overlaid with Prometheus counters.
 func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) http.HandlerFunc {
@@ -39,13 +54,8 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 		for _, service := range services {
 
 			if len(service.Spec.TaskTemplate.ContainerSpec.Labels["function"]) > 0 {
-
-				counter, _ := metricsOptions.GatewayFunctionInvocation.GetMetricWithLabelValues(service.Spec.Name)
-
-				// Get the metric's value from ProtoBuf interface (idea via Julius Volz)
-				var protoMetric io_prometheus_client.Metric
-				counter.Write(&protoMetric)
-				invocations := protoMetric.GetCounter().GetValue()
+				invocations := getCounterValue(service.Spec.Name, "200", &metricsOptions) +
+					getCounterValue(service.Spec.Name, "500", &metricsOptions)
 
 				f := requests.Function{
 					Name:            service.Spec.Name,
