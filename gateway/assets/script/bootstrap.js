@@ -35,7 +35,11 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
 
         $http(options)
             .then(function(response) {
-                $scope.invocationResponse = response.data;
+                if($scope.invocation && $scope.invocation.contentType == "json") {
+                    $scope.invocationResponse = JSON.stringify(response.data, -1, "  ");
+                } else {
+                    $scope.invocationResponse = response.data;
+                }
                 $scope.invocationStatus = response.status;
             }).catch(function(error1) {
                 $scope.invocationResponse = error1.statusText + "\n" + error1.data;

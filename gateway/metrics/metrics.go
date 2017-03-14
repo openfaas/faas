@@ -8,10 +8,9 @@ import (
 
 // MetricOptions to be used by web handlers
 type MetricOptions struct {
-	GatewayRequestsTotal         prometheus.Counter
-	GatewayServerlessServedTotal prometheus.Counter
-	GatewayFunctions             prometheus.Histogram
-	GatewayFunctionInvocation    *prometheus.CounterVec
+	GatewayFunctionInvocation *prometheus.CounterVec
+	GatewayFunctionsHistogram *prometheus.HistogramVec
+	ServiceReplicasCounter    *prometheus.GaugeVec
 }
 
 // PrometheusHandler Bootstraps prometheus for metrics collection
@@ -19,20 +18,14 @@ func PrometheusHandler() http.Handler {
 	return prometheus.Handler()
 }
 
+// BuildMetricsOptions builds metrics for tracking functions in the API gateway
 func BuildMetricsOptions() MetricOptions {
-	GatewayRequestsTotal := prometheus.NewCounter(prometheus.CounterOpts{
-		Name: "gateway_requests_total",
-		Help: "Total amount of HTTP requests to the gateway",
-	})
-	GatewayServerlessServedTotal := prometheus.NewCounter(prometheus.CounterOpts{
-		Name: "gateway_serverless_invocation_total",
-		Help: "Total amount of serverless function invocations",
-	})
-	GatewayFunctions := prometheus.NewHistogram(prometheus.HistogramOpts{
-		Name: "gateway_functions",
-		Help: "Gateway functions",
-	})
-	GatewayFunctionInvocation := prometheus.NewCounterVec(
+	gatewayFunctionsHistogram := prometheus.NewHistogramVec(prometheus.HistogramOpts{
+		Name: "gateway_functions_seconds",
+		Help: "Function time taken",
+	}, []string{"function_name"})
+
+	gatewayFunctionInvocation := prometheus.NewCounterVec(
 		prometheus.CounterOpts{
 			Name: "gateway_function_invocation_total",
 			Help: "Individual function metrics",
@@ -40,19 +33,26 @@ func BuildMetricsOptions() MetricOptions {
 		[]string{"function_name", "code"},
 	)
 
+	serviceReplicas := prometheus.NewGaugeVec(
+		prometheus.GaugeOpts{
+			Name: "gateway_service_count",
+			Help: "Docker service replicas",
+		},
+		[]string{"function_name"},
+	)
+
 	metricsOptions := MetricOptions{
-		GatewayRequestsTotal:         GatewayRequestsTotal,
-		GatewayServerlessServedTotal: GatewayServerlessServedTotal,
-		GatewayFunctions:             GatewayFunctions,
-		GatewayFunctionInvocation:    GatewayFunctionInvocation,
+		GatewayFunctionsHistogram: gatewayFunctionsHistogram,
+		GatewayFunctionInvocation: gatewayFunctionInvocation,
+		ServiceReplicasCounter:    serviceReplicas,
 	}
 
 	return metricsOptions
 }
 
+//RegisterMetrics registers with Prometheus for tracking
 func RegisterMetrics(metricsOptions MetricOptions) {
-	prometheus.Register(metricsOptions.GatewayRequestsTotal)
-	prometheus.Register(metricsOptions.GatewayServerlessServedTotal)
-	prometheus.Register(metricsOptions.GatewayFunctions)
 	prometheus.Register(metricsOptions.GatewayFunctionInvocation)
+	prometheus.Register(metricsOptions.GatewayFunctionsHistogram)
+	prometheus.Register(metricsOptions.ServiceReplicasCounter)
 }

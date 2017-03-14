@@ -21,7 +21,6 @@ import (
 // MakeProxy creates a proxy for HTTP web requests which can be routed to a function.
 func MakeProxy(metrics metrics.MetricOptions, wildcard bool, c *client.Client, logger *logrus.Logger) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		metrics.GatewayRequestsTotal.Inc()
 
 		if r.Method == "POST" {
 			logger.Infoln(r.Header)
@@ -55,8 +54,14 @@ func writeHead(service string, metrics metrics.MetricOptions, code int, w http.R
 	// metrics.GatewayFunctionInvocation.WithLabelValues(service).Add(1)
 }
 
+func trackTime(then time.Time, metrics metrics.MetricOptions, name string) {
+	since := time.Since(then)
+	metrics.GatewayFunctionsHistogram.WithLabelValues(name).Observe(since.Seconds())
+}
+
 func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, name string, c *client.Client, logger *logrus.Logger) {
 	exists, err := lookupSwarmService(name, c)
+
 	if err != nil || exists == false {
 		if err != nil {
 			logger.Fatalln(err)
@@ -64,8 +69,11 @@ func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.Metric
 		writeHead(name, metrics, http.StatusInternalServerError, w)
 		w.Write([]byte("Error resolving service."))
 		defer r.Body.Close()
+		return
 	}
-	if exists == true {
+
+	if exists {
+		defer trackTime(time.Now(), metrics, name)
 		requestBody, _ := ioutil.ReadAll(r.Body)
 		invokeService(w, r, metrics, name, requestBody, logger)
 	}
@@ -81,10 +89,16 @@ func lookupSwarmService(serviceName string, c *client.Client) (bool, error) {
 }
 
 func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, requestBody []byte, logger *logrus.Logger) {
-
 	stamp := strconv.FormatInt(time.Now().Unix(), 10)
 
-	start := time.Now()
+	defer func(when time.Time) {
+		seconds := time.Since(when).Seconds()
+
+		fmt.Printf("[%s] took %f seconds\n", stamp, seconds)
+		metrics.GatewayFunctionsHistogram.WithLabelValues(service).Observe(seconds)
+	}(time.Now())
+
+	// start := time.Now()
 	buf := bytes.NewBuffer(requestBody)
 	url := "http://" + service + ":" + strconv.Itoa(8080) + "/"
 	contentType := r.Header.Get("Content-Type")
@@ -118,9 +132,4 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 
 	writeHead(service, metrics, http.StatusOK, w)
 	w.Write(responseBody)
-
-	seconds := time.Since(start).Seconds()
-	fmt.Printf("[%s] took %f seconds\n", stamp, seconds)
-	metrics.GatewayServerlessServedTotal.Inc()
-	metrics.GatewayFunctions.Observe(seconds)
 }

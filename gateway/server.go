@@ -33,7 +33,7 @@ func main() {
 	metrics.RegisterMetrics(metricsOptions)
 
 	r := mux.NewRouter()
-	// r.StrictSlash(false)
+	// r.StrictSlash(false)	// This didn't work, so register routes twice.
 
 	functionHandler := faasHandlers.MakeProxy(metricsOptions, true, dockerClient, &logger)
 	r.HandleFunc("/function/{name:[a-zA-Z_0-9]+}", functionHandler)
@@ -47,6 +47,7 @@ func main() {
 
 	metricsHandler := metrics.PrometheusHandler()
 	r.Handle("/metrics", metricsHandler)
+	metrics.AttachSwarmWatcher(dockerClient, metricsOptions)
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./assets/"))).Methods("GET")
 	s := &http.Server{
