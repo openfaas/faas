@@ -21,7 +21,9 @@ import (
 
 func getCounterValue(service string, code string, metricsOptions *metrics.MetricOptions) float64 {
 
-	metric, err := metricsOptions.GatewayFunctionInvocation.GetMetricWith(prometheus.Labels{"function_name": service, "code": code})
+	metric, err := metricsOptions.GatewayFunctionInvocation.
+		GetMetricWith(prometheus.Labels{"function_name": service, "code": code})
+
 	if err != nil {
 		return 0
 	}
