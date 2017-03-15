@@ -99,7 +99,20 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 		metrics.GatewayFunctionsHistogram.WithLabelValues(service).Observe(seconds)
 	}(time.Now())
 
-	buf := bytes.NewBuffer(requestBody)
+	client := http.Client{
+		Transport: &http.Transport{
+			Proxy: http.ProxyFromEnvironment,
+			DialContext: (&net.Dialer{
+				Timeout:   3 * time.Second,
+				KeepAlive: 0,
+			}).DialContext,
+			MaxIdleConns:          1,
+			DisableKeepAlives:     true,
+			IdleConnTimeout:       120 * time.Millisecond,
+			ExpectContinueTimeout: 1500 * time.Millisecond,
+		},
+	}
+
 	watchdogPort := 8080
 	addr, lookupErr := net.LookupIP(service)
 	var url string
@@ -116,7 +129,10 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 
 	fmt.Printf("[%s] Forwarding request [%s] to: %s\n", stamp, contentType, url)
 
-	response, err := http.Post(url, r.Header.Get("Content-Type"), buf)
+	request, err := http.NewRequest("POST", url, bytes.NewReader(requestBody))
+	request.Header.Add("Content-Type", contentType)
+
+	response, err := client.Do(request)
 	if err != nil {
 		logger.Infoln(err)
 		writeHead(service, metrics, http.StatusInternalServerError, w)
