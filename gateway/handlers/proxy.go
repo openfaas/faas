@@ -21,6 +21,20 @@ import (
 
 // MakeProxy creates a proxy for HTTP web requests which can be routed to a function.
 func MakeProxy(metrics metrics.MetricOptions, wildcard bool, c *client.Client, logger *logrus.Logger) http.HandlerFunc {
+	proxyClient := http.Client{
+		Transport: &http.Transport{
+			Proxy: http.ProxyFromEnvironment,
+			DialContext: (&net.Dialer{
+				Timeout:   3 * time.Second,
+				KeepAlive: 0,
+			}).DialContext,
+			MaxIdleConns:          1,
+			DisableKeepAlives:     true,
+			IdleConnTimeout:       120 * time.Millisecond,
+			ExpectContinueTimeout: 1500 * time.Millisecond,
+		},
+	}
+
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		if r.Method == "POST" {
@@ -32,11 +46,11 @@ func MakeProxy(metrics metrics.MetricOptions, wildcard bool, c *client.Client, l
 				vars := mux.Vars(r)
 				name := vars["name"]
 				fmt.Println("invoke by name")
-				lookupInvoke(w, r, metrics, name, c, logger)
+				lookupInvoke(w, r, metrics, name, c, logger, &proxyClient)
 				defer r.Body.Close()
 
 			} else if len(header) > 0 {
-				lookupInvoke(w, r, metrics, header[0], c, logger)
+				lookupInvoke(w, r, metrics, header[0], c, logger, &proxyClient)
 				defer r.Body.Close()
 			} else {
 				w.WriteHeader(http.StatusBadRequest)
@@ -60,7 +74,7 @@ func trackTime(then time.Time, metrics metrics.MetricOptions, name string) {
 	metrics.GatewayFunctionsHistogram.WithLabelValues(name).Observe(since.Seconds())
 }
 
-func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, name string, c *client.Client, logger *logrus.Logger) {
+func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, name string, c *client.Client, logger *logrus.Logger, proxyClient *http.Client) {
 	exists, err := lookupSwarmService(name, c)
 
 	if err != nil || exists == false {
@@ -76,7 +90,7 @@ func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.Metric
 	if exists {
 		defer trackTime(time.Now(), metrics, name)
 		requestBody, _ := ioutil.ReadAll(r.Body)
-		invokeService(w, r, metrics, name, requestBody, logger)
+		invokeService(w, r, metrics, name, requestBody, logger, proxyClient)
 	}
 }
 
@@ -89,7 +103,7 @@ func lookupSwarmService(serviceName string, c *client.Client) (bool, error) {
 	return len(services) > 0, err
 }
 
-func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, requestBody []byte, logger *logrus.Logger) {
+func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, requestBody []byte, logger *logrus.Logger, proxyClient *http.Client) {
 	stamp := strconv.FormatInt(time.Now().Unix(), 10)
 
 	defer func(when time.Time) {
@@ -98,20 +112,6 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 		fmt.Printf("[%s] took %f seconds\n", stamp, seconds)
 		metrics.GatewayFunctionsHistogram.WithLabelValues(service).Observe(seconds)
 	}(time.Now())
-
-	client := http.Client{
-		Transport: &http.Transport{
-			Proxy: http.ProxyFromEnvironment,
-			DialContext: (&net.Dialer{
-				Timeout:   3 * time.Second,
-				KeepAlive: 0,
-			}).DialContext,
-			MaxIdleConns:          1,
-			DisableKeepAlives:     true,
-			IdleConnTimeout:       120 * time.Millisecond,
-			ExpectContinueTimeout: 1500 * time.Millisecond,
-		},
-	}
 
 	watchdogPort := 8080
 	addr, lookupErr := net.LookupIP(service)
@@ -131,8 +131,9 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 
 	request, err := http.NewRequest("POST", url, bytes.NewReader(requestBody))
 	request.Header.Add("Content-Type", contentType)
+	defer request.Body.Close()
 
-	response, err := client.Do(request)
+	response, err := proxyClient.Do(request)
 	if err != nil {
 		logger.Infoln(err)
 		writeHead(service, metrics, http.StatusInternalServerError, w)
