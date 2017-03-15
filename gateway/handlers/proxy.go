@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"strconv"
 	"time"
@@ -98,9 +99,16 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 		metrics.GatewayFunctionsHistogram.WithLabelValues(service).Observe(seconds)
 	}(time.Now())
 
-	// start := time.Now()
 	buf := bytes.NewBuffer(requestBody)
-	url := "http://" + service + ":" + strconv.Itoa(8080) + "/"
+	watchdogPort := 8080
+	addr, lookupErr := net.LookupIP(service)
+	var url string
+	if len(addr) > 0 && lookupErr == nil {
+		url = fmt.Sprintf("http://%s:%d/", addr[0].String(), watchdogPort)
+	} else {
+		url = fmt.Sprintf("http://%s:%d/", service, watchdogPort)
+	}
+
 	contentType := r.Header.Get("Content-Type")
 	if len(contentType) == 0 {
 		contentType = "text/plain"
