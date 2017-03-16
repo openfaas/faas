@@ -1,8 +1,7 @@
 FROM armhf/alpine:latest
-RUN apk --update add nodejs
+RUN apk --no-cache add nodejs
 
-COPY fwatchdog /usr/bin
-
+COPY fwatchdog-armhf /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
 
 COPY package.json .

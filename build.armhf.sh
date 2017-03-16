@@ -1,4 +1,4 @@
 #!/bin/bash
 
-(cd gateway && ./armhf.build.sh)
-(cd watchdog && ./armhf.build.sh)
+(cd gateway && ./build.armhf.sh) && \
+  (cd watchdog && ./build.armhf.sh)
