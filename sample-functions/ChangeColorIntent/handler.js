@@ -11,21 +11,25 @@ getStdin().then(content => {
   handle(request, request.request.intent);
 });
 
-function tellWithCard(speechOutput) {
-  console.log(sample)
-  sample.response.outputSpeech.text = speechOutput
-  sample.response.card.content = speechOutput
+function tellWithCard(speechOutput, request) {
+  // console.log(sample)
+  sample.response.session = request.session;
+  sample.response.outputSpeech.text = speechOutput;
+  sample.response.card.content = speechOutput;
   sample.response.card.title = "Office Lights";
+
   console.log(JSON.stringify(sample));
   process.exit(0);
 }
 
 function handle(request, intent) {
+  // console.log("Intent: " + intent.name);
+
   if(intent.name == "TurnOffIntent") {
     let req = {r:0,g:0,b:0};
     var speechOutput = "Lights off.";
     sendColor.sendColor(req, () => {
-      return tellWithCard(speechOutput);
+      return tellWithCard(speechOutput, request);
     });
   } else {
     let colorRequested = intent.slots.LedColor.value;
@@ -38,11 +42,13 @@ function handle(request, intent) {
         req.g = 255;
     }
     else {
-        return tellWithCard("I heard "+colorRequested+ " but can only do: red, green, blue.", "I heard "+colorRequested+ " but can only do: red, green, blue.");
+        return tellWithCard("I heard "+colorRequested+
+         " but can only do: red, green, blue.", 
+         "I heard "+colorRequested+ " but can only do: red, green, blue.", request);
     }
     sendColor.sendColor(req, () => {
       var speechOutput = "OK, " + colorRequested + ".";
-      return tellWithCard(speechOutput);
+      return tellWithCard(speechOutput, request);
     });
   }
 }
