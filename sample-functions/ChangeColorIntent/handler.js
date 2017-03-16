@@ -11,9 +11,10 @@ getStdin().then(content => {
   handle(request, request.request.intent);
 });
 
-function tellWithCard(speechOutput) {
-  sample.response.outputSpeech.text = speechOutput
-  sample.response.card.content = speechOutput
+function tellWithCard(speechOutput, request) {
+  sample.response.session = request.session;
+  sample.response.outputSpeech.text = speechOutput;
+  sample.response.card.content = speechOutput;
   sample.response.card.title = "Office Lights";
 
   console.log(JSON.stringify(sample));
@@ -21,7 +22,6 @@ function tellWithCard(speechOutput) {
 }
 
 function handle(request, intent) {
-
   if(intent.name == "TurnOffIntent") {
     let req = {r:0,g:0,b:0};
     var speechOutput = "Lights off.";
@@ -43,7 +43,7 @@ function handle(request, intent) {
         req.b = 23;
     } else {
         let msg = "I heard "+colorRequested+ " but can only show: red, green, blue and white.";
-        return tellWithCard(msg, msg);
+        return tellWithCard(msg, request);
     }
 
     sendColor.sendColor(req, () => {
