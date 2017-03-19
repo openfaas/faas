@@ -11,11 +11,9 @@ getStdin().then(content => {
   handle(request, request.request.intent);
 });
 
-function tellWithCard(speechOutput, request) {
-  // console.log(sample)
-  sample.response.session = request.session;
-  sample.response.outputSpeech.text = speechOutput;
-  sample.response.card.content = speechOutput;
+function tellWithCard(speechOutput) {
+  sample.response.outputSpeech.text = speechOutput
+  sample.response.card.content = speechOutput
   sample.response.card.title = "Office Lights";
 
   console.log(JSON.stringify(sample));
@@ -23,7 +21,6 @@ function tellWithCard(speechOutput, request) {
 }
 
 function handle(request, intent) {
-  // console.log("Intent: " + intent.name);
 
   if(intent.name == "TurnOffIntent") {
     let req = {r:0,g:0,b:0};
@@ -40,12 +37,15 @@ function handle(request, intent) {
         req.b = 255;
     } else if (colorRequested == "green") {
         req.g = 255;
+    } else if (colorRequested == "white") {
+        req.r = 255;
+        req.g = 103;
+        req.b = 23;
+    } else {
+        let msg = "I heard "+colorRequested+ " but can only show: red, green, blue and white.";
+        return tellWithCard(msg, msg);
     }
-    else {
-        return tellWithCard("I heard "+colorRequested+
-         " but can only do: red, green, blue.", 
-         "I heard "+colorRequested+ " but can only do: red, green, blue.", request);
-    }
+
     sendColor.sendColor(req, () => {
       var speechOutput = "OK, " + colorRequested + ".";
       return tellWithCard(speechOutput, request);
