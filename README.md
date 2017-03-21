@@ -22,6 +22,10 @@ You can test-drive FaaS with a set of sample functions as defined in docker-comp
 
 * [Begin the TestDrive instructions](https://github.com/alexellis/faas/blob/master/TestDrive.md)
 
+Here is a screenshot of the API gateway portal - designed for ease of use.
+
+![Portal](https://pbs.twimg.com/media/C7bkpZbWwAAnKsx.jpg)
+
 ### Ongoing development/screenshots:
 
 FaaS is still expanding and growing, check out the developments around:
