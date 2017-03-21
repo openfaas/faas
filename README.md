@@ -1,16 +1,6 @@
-## faas - Functions As A Service
+## Functions As A Service (faas)
 
 FaaS is a platform for building serverless functions on Docker Swarm Mode with first class metrics. Any UNIX process can be packaged as a function in FaaS enabling you to consume a range of web events without repetitive boiler-plate coding.
-
-## Highlights:
-
-* Ease of use through UI portal
-* Setup a working environment with one script
-* Portable - runs on any hardware
-
-* Baked-in Prometheus metrics
-* Any container can be a function
-* Auto-scales as demand increases
 
 ## Concept
 
@@ -30,7 +20,17 @@ Status](https://travis-ci.org/alexellis/faas.svg?branch=master)](https://travis-
 
 You can test-drive FaaS with a set of sample functions as defined in docker-compose.yml on play-with-docker.com for free, or on your own laptop.
 
-* [Begin the TestDrive instructions](https://github.com/alexellis/faas/blob/master/TestDrive.md)
+**Highlights:**
+
+* Ease of use through UI portal
+* Setup a working environment with one script
+* Portable - runs on any hardware
+
+* Baked-in Prometheus metrics
+* Any container can be a function
+* Auto-scales as demand increases
+
+### [Begin the TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md)
 
 Here is a screenshot of the API gateway portal - designed for ease of use.
 
