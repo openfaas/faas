@@ -51,6 +51,10 @@ See how to deploy FaaS onto play-with-docker.com and Docker Swarm in 1-2 minutes
 
 #### Prometheus metrics are built-in
 
-Prometheus is built into FaaS and the sample stack, so you can check throughput for each function individually with a rate function in Prometheus like this:
+Prometheus is built into FaaS and the sample stack, so you can check throughput for each function individually with a rate function in the UI at port 9090 on your Swarm manager.
 
-![](https://pbs.twimg.com/media/C2d9IkbXAAI58fz.jpg)
+If you are new to Prometheus, you can start learning about metrics and monitoring on my blog:
+
+> [Monitor your applications with Prometheus](http://blog.alexellis.io/prometheus-monitoring/)
+
+![Prometheus UI](https://pbs.twimg.com/media/C7bkiT9X0AASVuu.jpg)
