@@ -1,8 +1,8 @@
 {
     "receiver": "scale-up",
-    "status": "firing",
+    "status": "resolved",
     "alerts": [{
-        "status": "firing",
+        "status": "resolved",
         "labels": {
             "alertname": "APIHighInvocationRate",
             "code": "200",
@@ -19,7 +19,7 @@
             "summary": "High invocation total on gateway:8080"
         },
         "startsAt": "2017-03-15T15:52:57.805Z",
-        "endsAt": "0001-01-01T00:00:00Z",
+        "endsAt": "2017-03-15T15:53:52.806Z",
         "generatorURL": "http://4156cb797423:9090/graph?g0.expr=rate%28gateway_function_invocation_total%5B10s%5D%29+%3E+5\u0026g0.tab=0"
     }],
     "groupLabels": {
