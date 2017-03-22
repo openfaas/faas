@@ -14,6 +14,8 @@ Features:
 * Unique URL routes for serverless functions
 * Instrumentation via Prometheus metrics at GET /metrics
 * Bundled Prometheus stack with AlertManager
+* UI enhancements to create new function through a form
+
 
 **Incoming requests and routing**
 
@@ -34,19 +36,19 @@ This binary fwatchdog acts as a watchdog for your function. Features:
 
 ## 2. Future items
 
-* UI enhancements to create new function through a form
 * Asynchronous / long-running tasks
-* Built-in TLS termination
+* Built-in TLS termination or guide for termination through NGinx etc
 * Deeper tests coverage and integration tests
 * Documentation about Alexa sample function
+* Supporting request parameters
 
 ## 3. Development and Contributing
 
-For development of the FaaS framework / library read on. If you would like to consume the project with your own functions then you can use the public images and the supplied `docker stack` file as a template (docker-compose.yml)
+If you would like to consume the project with your own functions then you can use the public images and the supplied `docker stack` file as a template (docker-compose.yml)
 
 ### License
 
-This project is licensed until the MIT License.
+This project is licensed under the MIT License.
 
 ## Contributing
 
