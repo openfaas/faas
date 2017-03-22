@@ -1,3 +1,4 @@
 #!/bin/bash
 
-docker build -t alexellis2/faas-hubstats .
+docker build -t functions/hubstats:latest .
+
