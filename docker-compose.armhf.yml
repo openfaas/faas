@@ -51,7 +51,19 @@ services:
             placement:
                 constraints: [node.role == manager]
 
-# Sample functions go here.
+# sample functions go here, but can be created in the UI too.
+    nodeinfo:
+        image: functions/nodeinfo:latest-armhf
+        labels:
+            function: "true"
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
+            no_proxy:   "gateway"
+            https_proxy: $https_proxy
+
     wordcount:
         image: functions/alpine:latest-armhf
         labels:
