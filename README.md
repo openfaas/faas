@@ -4,7 +4,7 @@ FaaS is a platform for building serverless functions on Docker Swarm Mode with f
 
 ## Concept
 
-* Each container has a watchdog process that hosts a web server allowing a JSON post request to be forwarded to a desired process via STDIN. The respose is sent to the caller via STDOUT.
+* Each container has a watchdog process that hosts a web server allowing a JSON post request to be forwarded to a desired process via STDIN. The response is sent to the caller via STDOUT.
 * A gateway provides a view to the containers/functions to the public Internet and collects metrics for Prometheus and will manage replicas and auto-scale as throughput increases.
 
 > [Read the story on my blog](http://blog.alexellis.io/functions-as-a-service/) or find out more below.
