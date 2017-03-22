@@ -24,15 +24,18 @@ This one-shot script clones the code, initialises Docker swarm mode and then dep
 
 *The shell script makes use of a v3 docker-compose.yml file*
 
+> If you are not testing on play-with-docker then remove `--advertise-addr eth0` from first line of the script.
+
 * Now that everything's deployed take note of the two DNS entries at the top of the screen.
 
 ![](https://pbs.twimg.com/media/C1wDi_tXUAIphu-.jpg)
 
 #### Some of the sample functions are:
 
-* Webhook stasher function (webhookstash) - saves webhook body into container's filesystem (Golang)
+* Markdown to HTML renderer (markdownrender) - takes .MD input and produces HTML (Golang)
 * Docker Hub Stats function (hubstats) - queries the count of images for a user on the Docker Hub (Golang)
 * Node Info (nodeinfo) function - gives you the OS architecture and detailled info about the CPUS (Node.js)
+* Webhook stasher function (webhookstash) - saves webhook body into container's filesystem (Golang)
 
 #### Invoke the sample functions with curl or Postman:
 
@@ -80,6 +83,31 @@ The organisation or user library has 128 repositories on the Docker hub.
 
 The `-d` value passes in the argument for your function. This is read via STDIN and used to query the Docker Hub to see how many images you've created/pushed.
 
+
+**Sample function: Node OS Info (nodeinfo)**
+
+Grab OS, CPU and other info via a Node.js container using the `os` module.
+
+If you invoke this method in a while loop or with a load-generator tool then it will auto-scale to 5, 10, 15 and finally 20 replicas due to the load. You will then be able to see the various Docker containers responding with a different Hostname for each request as the work is distributed evenly.
+
+Here is a loop that can be used to invoke the function in a loop to trigger auto-scaling.
+```
+while [ true ] ; do curl -X POST http://localhost:8080/function/func_nodeinfo -d ''; done
+```
+
+Example:
+
+```
+# curl -X POST http://localhost:8080/function/func_nodeinfo -d ''
+
+Hostname: 9b077a81a489
+
+Platform: linux
+Arch: arm
+CPU count: 1
+Uptime: 776839
+```
+
 **Sample function: webhook stasher (webhookstash)**
 
 Another cool sample function is the Webhook Stasher which saves the body of any data posted to the service to the container's filesystem. Each file is written with the filename of the UNIX time.
@@ -104,22 +132,4 @@ d769ca70729d        alexellis2/faas-webhookstash@sha256:b378f1a144202baa8fb008f2
 ./1483999720961054638.txt
 ```
 
-**Sample function: Node OS Info (nodeinfo)**
-
-Grab OS, CPU and other info via a Node.js container using the `os` module.
-
-```
-# curl -X POST http://localhost:8080/function/func_nodeinfo -d ''
-
-linux x64 [ { model: 'Intel(R) Xeon(R) CPU E5-2670 v2 @ 2.50GHz',
-    speed: 2500,
-    times: 
-     { user: 3754430800,
-       nice: 2450200,
-       sys: 885352200,
-       idle: 25599742200,
-       irq: 0 } },
-...
-```
-
-> Why not start the code on play-with-docker.com and then configure a Github repository to send webhook to the function?
+> Why not start the code on play-with-docker.com and then configure a Github repository to send webhooks to the API Gateway?
