@@ -1,11 +1,12 @@
 ## Functions As A Service (faas)
 
-FaaS is a platform for building serverless functions on Docker Swarm Mode with first class metrics. Any UNIX process can be packaged as a function in FaaS enabling you to consume a range of web events without repetitive boiler-plate coding.
+FaaS is a framework for building serverless functions on Docker Swarm with first class support for metrics. Any UNIX process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
 
 ## Concept
 
-* Each container has a watchdog process that hosts a web server allowing a JSON post request to be forwarded to a desired process via STDIN. The response is sent to the caller via STDOUT.
-* A gateway provides a view to the containers/functions to the public Internet and collects metrics for Prometheus and will manage replicas and auto-scale as throughput increases.
+* Each container has a watchdog process that hosts a web server allowing a post request to be forwarded to a desired process via STDIN. The response is sent back to the caller via STDOUT.
+
+* The API Gateway provides an external route into your functions and collects metrics in Prometheus. The gateway will scale functions according to demand by mangaging Docker Swarm replicas as throughput increases. A UI is baked in allowing you to invoke functions in your browser and create new ones as needed.
 
 > ### [Read the story of FaaS on my blog](http://blog.alexellis.io/functions-as-a-service/) or find out more about the project below.
 
@@ -13,12 +14,14 @@ FaaS is a platform for building serverless functions on Docker Swarm Mode with f
 Status](https://travis-ci.org/alexellis/faas.svg?branch=master)](https://travis-ci.org/alexellis/faas)
 
 ## Minimum requirements: 
-* Docker 1.13 (to support attachable overlay networks)
-* At least a single host in Swarm Mode. (run `docker swarm init`)
+* Docker 1.13 (to support Docker Stacks)
+* At least a single host in Docker Swarm Mode. (run `docker swarm init`)
 
 ## TestDrive
 
-You can test-drive FaaS with a set of sample functions as defined in docker-compose.yml on play-with-docker.com for free, or on your own laptop.
+A one-line script is provided to help you get started quickly. You can test-drive FaaS with a set of sample functions as defined in the provided [docker-compose.yml](https://github.com/alexellis/faas/blob/master/docker-compose.yml) file. 
+
+Use your own laptop or the free community-run Docker playground: play-with-docker.com.
 
 **Highlights:**
 
@@ -45,9 +48,10 @@ FaaS is still expanding and growing, check out the developments around:
 * [Invoke functions through UI](https://twitter.com/alexellisuk/status/823262200236277762)
 * [Create new functions through UI](https://twitter.com/alexellisuk/status/835047437588905984)
 * [Various sample functions](https://github.com/alexellis/faas/blob/master/docker-compose.yml)
-* [ARM / Raspberry Pi support](https://github.com/alexellis/faas/blob/master/docker-compose.armhf.yml)
 
-## Develop your own functions
+* [ARM / Raspberry Pi support](https://gist.github.com/alexellis/665332cd8bd9657c9649d0cd6c2dc187)
+
+## Package existing code as functions
 
 * [Package your function](https://github.com/alexellis/faas/blob/master/DEV.md)
 
