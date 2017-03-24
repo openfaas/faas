@@ -103,7 +103,7 @@ services:
         networks:
             - functions
         environment:
-            fprocess:	"cat"
+            fprocess:   "cat"
             no_proxy:   "gateway"
             https_proxy: $https_proxy
 
@@ -117,7 +117,7 @@ services:
         networks:
             - functions
         environment:
-            fprocess:	"wc"
+            fprocess:   "wc"
             no_proxy:   "gateway"
             https_proxy: $https_proxy
 
@@ -131,7 +131,7 @@ services:
         networks:
             - functions
         environment:
-            fprocess:	"base64"
+            fprocess:   "base64"
             no_proxy:   "gateway"
             https_proxy: $https_proxy
 
@@ -145,7 +145,7 @@ services:
         networks:
             - functions
         environment:
-            fprocess:	"base64 -d"
+            fprocess:   "base64 -d"
             no_proxy:   "gateway"
             https_proxy: $https_proxy
 
