@@ -27,7 +27,7 @@ services:
             - gateway
             - alertmanager
         environment:
-            no_proxy:   "gateway"
+            no_proxy: "gateway"
         networks:
             - functions
         deploy:
@@ -38,7 +38,7 @@ services:
     alertmanager:
         image: quay.io/prometheus/alertmanager
         environment:
-            no_proxy:   "gateway"
+            no_proxy: "gateway"
         volumes:
             - ./prometheus/alertmanager.yml:/alertmanager.yml
         command:
@@ -50,7 +50,6 @@ services:
         deploy:
             placement:
                 constraints: [node.role == manager]
-
 
     # Sample functions go here.
 
@@ -64,7 +63,7 @@ services:
         networks:
             - functions
         environment:
-            no_proxy:   "gateway"
+            no_proxy: "gateway"
             https_proxy: $https_proxy
 
     # Pass a username as an argument to find how many images user has pushed to Docker Hub.
@@ -77,7 +76,7 @@ services:
         networks:
             - functions
         environment:
-            no_proxy:   "gateway"
+            no_proxy: "gateway"
             https_proxy: $https_proxy
 
     # Node.js gives OS info about the node (Host)
@@ -90,7 +89,7 @@ services:
         networks:
             - functions
         environment:
-            no_proxy:   "gateway"
+            no_proxy: "gateway"
             https_proxy: $https_proxy
 
     # Uses `cat` to echo back response, fastest function to execute.
@@ -103,8 +102,8 @@ services:
         networks:
             - functions
         environment:
-            fprocess:	"cat"
-            no_proxy:   "gateway"
+            fprocess: "cat"
+            no_proxy: "gateway"
             https_proxy: $https_proxy
 
     # Counts words in request with `wc` utility
@@ -117,8 +116,8 @@ services:
         networks:
             - functions
         environment:
-            fprocess:	"wc"
-            no_proxy:   "gateway"
+            fprocess: "wc"
+            no_proxy: "gateway"
             https_proxy: $https_proxy
 
     # Calculates base64 representation of request body.
@@ -131,8 +130,8 @@ services:
         networks:
             - functions
         environment:
-            fprocess:	"base64"
-            no_proxy:   "gateway"
+            fprocess: "base64"
+            no_proxy: "gateway"
             https_proxy: $https_proxy
 
     # Decodes base64 representation of request body.
@@ -145,8 +144,8 @@ services:
         networks:
             - functions
         environment:
-            fprocess:	"base64 -d"
-            no_proxy:   "gateway"
+            fprocess: "base64 -d"
+            no_proxy: "gateway"
             https_proxy: $https_proxy
 
     # Converts body in (markdown format) -> (html)
@@ -159,7 +158,7 @@ services:
         networks:
             - functions
         environment:
-            no_proxy:   "gateway"
+            no_proxy: "gateway"
             https_proxy: $https_proxy
 
     # Example of Alexa SDK skill, set skill to invoke HTTPs endpoint in Amazon Alexa Skills page. 
@@ -172,7 +171,7 @@ services:
         networks:
             - functions
         environment:
-            no_proxy:   "gateway"
+            no_proxy: "gateway"
             https_proxy: $https_proxy
 
 networks:
