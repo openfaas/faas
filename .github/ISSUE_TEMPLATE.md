@@ -26,8 +26,8 @@
 
 ## Your Environment
 <!--- Include as many relevant details about the environment you experienced the bug in -->
-* Version used:
-* Environment name and version (e.g. nginx 1.9.1):
-* Server type and version:
-* Operating System and version:
+* Docker version `docker version` (e.g. Docker 17.0.03 ):
+
+* Operating System and version (e.g. Linux, Windows, MacOS):
+
 * Link to your project:
