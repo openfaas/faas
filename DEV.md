@@ -23,7 +23,7 @@ Functions run as Docker containers with the Watchdog component embedded to handl
 This is the basis of a function which generates HTML from MarkDown:
 
 ```
-FROM golang:1.7.3
+FROM golang:1.7.5
 RUN mkdir -p /go/src/app
 COPY handler.go /go/src/app
 WORKDIR /go/src/app
