@@ -2,7 +2,7 @@
 
 FaaS is a platform for building serverless functions on Docker Swarm Mode with first class metrics. Any UNIX process can be packaged as a function in FaaS enabling you to consume a range of web events without repetitive boiler-plate coding.
 
-#### This is a Quickstart guide for the [FaaS functions as a Service](https://github.com/alexellis/faas/) project
+### This is a Quickstart guide for the [FaaS functions as a Service](https://github.com/alexellis/faas/) project
 
 > A Docker stack file with a number of sample functions is provided so that you can get up and running within minutes. You can also clone the code to hack on it or package your own functions.
 
@@ -30,18 +30,20 @@ This one-shot script clones the code, initialises Docker swarm mode and then dep
 
 ![](https://pbs.twimg.com/media/C1wDi_tXUAIphu-.jpg)
 
-#### Some of the sample functions are:
+## Sample functions
+
+Some of the sample functions are:
 
 * Markdown to HTML renderer (markdownrender) - takes .MD input and produces HTML (Golang)
 * Docker Hub Stats function (hubstats) - queries the count of images for a user on the Docker Hub (Golang)
 * Node Info (nodeinfo) function - gives you the OS architecture and detailled info about the CPUS (Node.js)
 * Webhook stasher function (webhookstash) - saves webhook body into container's filesystem (Golang)
 
-#### Invoke the sample functions with curl or Postman:
+### Invoke the sample functions with curl or Postman:
 
 Head over to the [Github repo to fork the code](https://github.com/alexellis/faas), or read on to see the input/output from the sample functions.
 
-#### Working with the sample functions
+### Working with the sample functions
 
 You can access the sample functions via the command line with a HTTP POST request or by using the built-in UI portal. 
 
@@ -69,7 +71,19 @@ nnlzo6u3pilg  func_prometheus.1  quay.io/prometheus/prometheus:latest   moby  Ru
 
 * Head over to http://localhost:9090 for your Prometheus metrics
 
-* Your function can be accessed via the gateway with curl (read on)
+* Your function can be accessed via the gateway or read on for `curl`
+
+## Packaging your own function
+
+Read the developer guide:
+
+* [Packaging a function](https://github.com/alexellis/faas/blob/master/DEV.md)
+
+The original blog post also walks through creating a function:
+
+* [FaaS blog post](http://blog.alexellis.io/functions-as-a-service/)
+
+### Exploring the functions with `curl`
 
 **Sample function: Docker Hub Stats (hubstats)**
 
