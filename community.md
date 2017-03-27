@@ -8,8 +8,16 @@
 | [Operationalizing Containers](http://www.rackspace-inform.eu/dispatcher/action?wlmsac=t1ejSDdh1hygBurJJANV)| Brian Christner   | Zürich   | 5-April-2017 |
 | [ETH Polymese](https://www.polymesse.ch/current-presentations.html)| Brian Christner   | Zürich   | 4-April-2017 |
 
+### Blog posts and write-ups
 
-### I'm using evaluating/FaaS
+| Event name and description                                          | Author       | Site     | Date        |
+|---------------------------------------------------------------------|--------------|----------|-------------|
+| [Open source project uses Docker for serverless computing](http://www.infoworld.com/article/3184757/open-source-tools/open-source-project-uses-docker-for-serverless-computing.html#tk.twt_ifw)| Serdar Yegulalp  | InfoWorld.com   | 27-Mar-2017 |
+| [Docker-awesome curated projects](https://github.com/veggiemonk/awesome-docker#serverless) | Julien Bisconti | Github.com | 23-Mar-2017 |
+| [Functions as a Service (FaaS) in French](http://blog.alexellis.io/fonction-service/) | Alex Ellis | alexellis.io | 13-Jan-2017 |
+| [Functions as a Service (FaaS)](http://blog.alexellis.io/functions-as-a-service/) | Alex Ellis | alexellis.io | 4-Jan-2017 |
+
+### Use-case
 
 **Name / company**
 
