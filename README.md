@@ -39,6 +39,10 @@ Here is a screenshot of the API gateway portal - designed for ease of use.
 
 ![Portal](https://pbs.twimg.com/media/C7bkpZbWwAAnKsx.jpg)
 
+### Community
+
+* [Read blogs/articles and find events about FaaS](https://github.com/alexellis/faas/blob/master/community.md)
+
 ### Ongoing development/screenshots:
 
 FaaS is still expanding and growing, check out the developments around:
