@@ -1,4 +1,4 @@
-FROM golang:1.7.3
+FROM golang:1.7.5
 RUN mkdir -p /go/src/app
 WORKDIR /go/src/app
 COPY main.go        .

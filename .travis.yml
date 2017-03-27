@@ -3,7 +3,7 @@ sudo: required
 services:
       - docker
 before_install:
-    - docker pull golang:1.7.3
+    - docker pull golang:1.7.5
 
 script:
     - sh build.sh
