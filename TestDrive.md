@@ -83,6 +83,55 @@ The original blog post also walks through creating a function:
 
 * [FaaS blog post](http://blog.alexellis.io/functions-as-a-service/)
 
+## Add new functions to FaaS at runtime
+
+**Option 1** 
+
+Edit the docker-compose stack file, then run ./deploy_stack.sh - this will only update changed/added services, not existing ones.
+
+**Option 2**
+
+To attach a function at runtime you can use the "New function" button on the portal UI at http://localhost:8080/
+
+**Option 3**
+
+A HTTP post can also be sent via `curl` etc to the endpoint used by the UI (HTTP post to `/system/functions`)
+
+```
+// CreateFunctionRequest create a function in the swarm.
+type CreateFunctionRequest struct {
+	Service    string `json:"service"`
+	Image      string `json:"image"`
+	Network    string `json:"network"`
+	EnvProcess string `json:"envProcess"`
+}
+```
+
+Example:
+
+For a quote-of-the-day type of application:
+
+```
+curl localhost:8080/system/functions -d '
+{"service": "oblique", "image": "vielmetti/faas-oblique", "envProcess": "/usr/bin/oblique", "network": "func_functions"}'
+```
+
+For a hashing algorithm:
+
+```
+curl localhost:8080/system/functions -d '
+{"service": "stronghash", "image": "functions/alpine", "envProcess": "sha512sum", "network": "func_functions"}'
+```
+
+### Delete a function at runtime
+
+No support through UI at the moment, but the Docker CLI supports this:
+
+```
+$ docker service rm func_echoit
+```
+
+
 ### Exploring the functions with `curl`
 
 **Sample function: Docker Hub Stats (hubstats)**
