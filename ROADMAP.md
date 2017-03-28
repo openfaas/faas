@@ -37,10 +37,13 @@ This binary fwatchdog acts as a watchdog for your function. Features:
 ## 2. Future items
 
 * Asynchronous / long-running tasks
-* Built-in TLS termination or guide for termination through NGinx etc
-* Deeper tests coverage and integration tests
+* Function store - list of useful predefined functions
+* Guide for termination through NGinx or built-in TLS termination
+* Guide for basic authentication over HTTPs (set up externally through NGinx etc)
 * Documentation about Alexa sample function
 * Supporting request parameters
+
+* Deeper tests coverage and integration tests
 
 ## 3. Development and Contributing
 
