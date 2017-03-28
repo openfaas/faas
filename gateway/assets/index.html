@@ -21,7 +21,7 @@
                 </md-toolbar>
 
                 <md-content layout-padding>
-                    <md-button ng-click="newFunction()" ng-disabled="isFunctionBeingCreated" class="md-primary">New function</md-button>
+                    <md-button ng-click="newFunction()" ng-disabled="isFunctionBeingCreated" class="md-primary">Create New Function</md-button>
 
                     <md-list>
                         <md-list-item ng-switch class="md-3-line" ng-click="showFunction(function)" ng-repeat="function in functions | orderBy: '-invocationCount'" ng-class="function.name == selectedFunction.name ? 'selected' : false">
