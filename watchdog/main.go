@@ -32,13 +32,10 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request)
 	var res []byte
 
 	var wg sync.WaitGroup
-	wg.Add(3)
+	wg.Add(2)
 
-	go func() {
-		defer wg.Done()
-		res, _ = ioutil.ReadAll(r.Body)
-		defer r.Body.Close()
-	}()
+	res, _ = ioutil.ReadAll(r.Body)
+	defer r.Body.Close()
 
 	go func() {
 		defer wg.Done()
