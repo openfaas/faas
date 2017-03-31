@@ -112,6 +112,8 @@ func makeSpec(request *requests.CreateFunctionRequest) swarm.ServiceSpec {
 		swarm.NetworkAttachmentConfig{Target: request.Network},
 	}
 
+	// TODO: request.EnvProcess should only be set if it's not nil, otherwise we override anything in the Docker image already
+
 	spec := swarm.ServiceSpec{
 		TaskTemplate: swarm.TaskSpec{
 			RestartPolicy: &swarm.RestartPolicy{
