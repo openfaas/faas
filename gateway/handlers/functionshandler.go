@@ -79,9 +79,8 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 // MakeNewFunctionHandler creates a new function (service) inside the swarm network.
 func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Client) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-
-		body, _ := ioutil.ReadAll(r.Body)
 		defer r.Body.Close()
+		body, _ := ioutil.ReadAll(r.Body)
 
 		request := requests.CreateFunctionRequest{}
 		err := json.Unmarshal(body, &request)
@@ -91,7 +90,10 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 		}
 
 		fmt.Println(request)
-		w.WriteHeader(http.StatusNotImplemented)
+
+		// TODO: review why this was here... debugging?
+		// w.WriteHeader(http.StatusNotImplemented)
+
 		options := types.ServiceCreateOptions{}
 		spec := makeSpec(&request)
 

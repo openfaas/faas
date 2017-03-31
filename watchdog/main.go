@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -31,8 +32,18 @@ func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error)
 	return res, err
 }
 
+func debugHeaders(source *http.Header, direction string) {
+	for k, vv := range *source {
+		fmt.Printf("[%s] %s=%s\n", direction, k, vv)
+	}
+}
+
 func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request) {
 	parts := strings.Split(config.faasProcess, " ")
+
+	if config.debugHeaders {
+		debugHeaders(&r.Header, "in")
+	}
 
 	targetCmd := exec.Command(parts[0], parts[1:]...)
 	writer, _ := targetCmd.StdinPipe()
@@ -51,6 +62,7 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request)
 		return
 	}
 
+	// Write to pipe in separate go-routine to prevent blocking
 	go func() {
 		defer wg.Done()
 		writer.Write(res)
@@ -77,12 +89,18 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request)
 		os.Stdout.Write(out)
 	}
 
-	// Match header for strict services
-	if r.Header.Get("Content-Type") == "application/json" {
+	clientContentType := r.Header.Get("Content-Type")
+	if len(clientContentType) > 0 {
 		w.Header().Set("Content-Type", "application/json")
 	}
+
 	w.WriteHeader(200)
 	w.Write(out)
+
+	if config.debugHeaders {
+		header := w.Header()
+		debugHeaders(&header, "out")
+	}
 }
 
 func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.Request) {

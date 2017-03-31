@@ -58,13 +58,15 @@ func (ReadConfig) Read(hasEnv HasEnv) WatchdogConfig {
 	cfg.writeDebug = parseBoolValue(hasEnv.Getenv("write_debug"))
 
 	cfg.marshallRequest = parseBoolValue(hasEnv.Getenv("marshall_request"))
+	cfg.debugHeaders = parseBoolValue(hasEnv.Getenv("debug_headers"))
 
 	return cfg
 }
 
 // WatchdogConfig for the process.
 type WatchdogConfig struct {
-	readTimeout  time.Duration
+	readTimeout time.Duration
+
 	writeTimeout time.Duration
 	// faasProcess is the process to exec
 	faasProcess string
@@ -73,4 +75,7 @@ type WatchdogConfig struct {
 	writeDebug bool
 
 	marshallRequest bool
+
+	// prints out all incoming and out-going HTTP headers
+	debugHeaders bool
 }

@@ -103,6 +103,14 @@ func lookupSwarmService(serviceName string, c *client.Client) (bool, error) {
 	return len(services) > 0, err
 }
 
+func copyHeaders(destination *http.Header, source *http.Header) {
+	for k, vv := range *source {
+		vvClone := make([]string, len(vv))
+		copy(vvClone, vv)
+		(*destination)[k] = vvClone
+	}
+}
+
 func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, requestBody []byte, logger *logrus.Logger, proxyClient *http.Client) {
 	stamp := strconv.FormatInt(time.Now().Unix(), 10)
 
@@ -123,14 +131,12 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	}
 
 	contentType := r.Header.Get("Content-Type")
-	if len(contentType) == 0 {
-		contentType = "text/plain"
-	}
-
 	fmt.Printf("[%s] Forwarding request [%s] to: %s\n", stamp, contentType, url)
 
 	request, err := http.NewRequest("POST", url, bytes.NewReader(requestBody))
-	request.Header.Add("Content-Type", contentType)
+
+	copyHeaders(&request.Header, &r.Header)
+
 	defer request.Body.Close()
 
 	response, err := proxyClient.Do(request)
@@ -151,6 +157,9 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 		w.Write(buf.Bytes())
 		return
 	}
+
+	clientHeader := w.Header()
+	copyHeaders(&clientHeader, &response.Header)
 
 	// Match header for strict services
 	w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
