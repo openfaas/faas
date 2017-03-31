@@ -10,6 +10,5 @@ docker build --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_p
 
 docker create --name buildoutput functions/watchdog:build-armhf echo
 
-docker cp buildoutput:/go/src/app/app ./fwatchdog-armhf
+docker cp buildoutput:/go/src/github.com/alexellis/faas/watchdog/watchdog ./fwatchdog-armhf
 docker rm buildoutput
-

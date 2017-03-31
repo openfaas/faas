@@ -10,15 +10,25 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/alexellis/faas/watchdog/types"
 )
 
-// OsEnv implements interface to wrap os.Getenv
-type OsEnv struct {
-}
+func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error) {
+	var res []byte
+	var requestBytes []byte
+	var err error
 
-// Getenv wraps os.Getenv
-func (OsEnv) Getenv(key string) string {
-	return os.Getenv(key)
+	defer r.Body.Close()
+	requestBytes, _ = ioutil.ReadAll(r.Body)
+	if config.marshallRequest {
+		marshalRes, marshallErr := types.MarshalRequest(requestBytes, &r.Header)
+		err = marshallErr
+		res = marshalRes
+	} else {
+		res = requestBytes
+	}
+	return res, err
 }
 
 func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request) {
@@ -34,8 +44,12 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request)
 	var wg sync.WaitGroup
 	wg.Add(2)
 
-	res, _ = ioutil.ReadAll(r.Body)
-	defer r.Body.Close()
+	res, buildInputErr := buildFunctionInput(config, r)
+	if buildInputErr != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(buildInputErr.Error()))
+		return
+	}
 
 	go func() {
 		defer wg.Done()
@@ -54,7 +68,6 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request)
 		if config.writeDebug == true {
 			log.Println(targetCmd, err)
 		}
-
 		w.WriteHeader(500)
 		response := bytes.NewBufferString(err.Error())
 		w.Write(response.Bytes())
@@ -83,7 +96,7 @@ func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.
 }
 
 func main() {
-	osEnv := OsEnv{}
+	osEnv := types.OsEnv{}
 	readConfig := ReadConfig{}
 	config := readConfig.Read(osEnv)
 
