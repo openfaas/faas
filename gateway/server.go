@@ -10,6 +10,7 @@ import (
 	faasHandlers "github.com/alexellis/faas/gateway/handlers"
 	"github.com/alexellis/faas/gateway/metrics"
 	"github.com/docker/docker/client"
+	
 	"github.com/gorilla/mux"
 )
 
