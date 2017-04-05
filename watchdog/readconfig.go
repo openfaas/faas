@@ -57,9 +57,9 @@ func (ReadConfig) Read(hasEnv HasEnv) WatchdogConfig {
 
 	cfg.writeDebug = parseBoolValue(hasEnv.Getenv("write_debug"))
 
-	cfg.marshallRequest = parseBoolValue(hasEnv.Getenv("marshall_request"))
+	cfg.marshalRequest = parseBoolValue(hasEnv.Getenv("marshal_request"))
 	cfg.debugHeaders = parseBoolValue(hasEnv.Getenv("debug_headers"))
-
+	cfg.suppressLock = parseBoolValue(hasEnv.Getenv("suppress_lock"))
 	return cfg
 }
 
@@ -74,8 +74,11 @@ type WatchdogConfig struct {
 	// writeDebug write console stdout statements to the container
 	writeDebug bool
 
-	marshallRequest bool
+	marshalRequest bool
 
 	// prints out all incoming and out-going HTTP headers
 	debugHeaders bool
+
+	// Don't write a lock file to /tmp/
+	suppressLock bool
 }
