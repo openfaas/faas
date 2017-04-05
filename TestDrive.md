@@ -100,7 +100,7 @@ Creating a function via the UI:
 | Option                 | Usage             |
 |------------------------|--------------|
 | `Image`		 	| The name of the image you want to use for the function. A good starting point is functions/alpine |
-| `Service Name`  	 	| Describe the name of your service. No spaces please |
+| `Service Name`  	 	| Describe the name of your service. The Service Name format is: [a-zA-Z_0-9] |
 | `fProcess` 		 	| The process to invoke for each function call. This must be a UNIX binary and accept input via STDIN and output via STDOUT. |
 | `Network`		 	| The network `func_functions` is the default network. |
 
