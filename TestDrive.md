@@ -96,6 +96,7 @@ To attach a function at runtime you can use the "Create New Function" button on 
 <a href="https://pbs.twimg.com/media/C8opW3RW0AAc9Th.jpg:large"><img src="https://pbs.twimg.com/media/C8opW3RW0AAc9Th.jpg:large" width="600"></img></a>
 
 Creating a function via the UI:
+
 | Option                 | Usage             |
 |------------------------|--------------|
 | `Image`		 | The name of the image you want to use for the function. A good starting point is functions/alpine |
