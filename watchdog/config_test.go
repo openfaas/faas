@@ -29,19 +29,46 @@ func TestRead_WriteDebug_DefaultIsTrueConfig(t *testing.T) {
 	config := readConfig.Read(defaults)
 
 	if config.writeDebug != true {
-		t.Logf("writeDebug should have been true")
+		t.Logf("writeDebug should have been true (unspecified)")
 		t.Fail()
 	}
 }
-func TestRead_WriteDebug_FalseConfig(t *testing.T) {
+
+func TestRead_WriteDebug_FalseOverrideConfig(t *testing.T) {
 	defaults := NewEnvBucket()
 	readConfig := ReadConfig{}
-	defaults.Setenv("writeDebug", "true")
+	defaults.Setenv("write_debug", "false")
+
+	config := readConfig.Read(defaults)
+
+	if config.writeDebug != false {
+		t.Logf("writeDebug should have been false (specified)")
+		t.Fail()
+	}
+}
+
+func TestRead_WriteDebug_TrueConfig(t *testing.T) {
+	defaults := NewEnvBucket()
+	readConfig := ReadConfig{}
+	defaults.Setenv("write_debug", "true")
 
 	config := readConfig.Read(defaults)
 
 	if config.writeDebug != true {
-		t.Logf("writeDebug should have been true")
+		t.Logf("writeDebug should have been true (specified)")
+		t.Fail()
+	}
+}
+
+func TestRead_SuppressLockConfig(t *testing.T) {
+	defaults := NewEnvBucket()
+	readConfig := ReadConfig{}
+	defaults.Setenv("suppress_lock", "true")
+
+	config := readConfig.Read(defaults)
+
+	if config.suppressLock != true {
+		t.Logf("suppress_lock envVariable incorrect, got: %s.\n", config.faasProcess)
 		t.Fail()
 	}
 }
