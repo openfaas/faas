@@ -99,10 +99,10 @@ Creating a function via the UI:
 
 | Option                 | Usage             |
 |------------------------|--------------|
-| `Image`		 | The name of the image you want to use for the function. A good starting point is functions/alpine |
-| `Service Name`  	 | Describe the name of your service. No spaces please |
-| `fProcess` 		 | The process to invoke for each function call. This must be a UNIX binary and accept input via STDIN and output via STDOUT. |
-| `Network`		 | The network `func_functions` is the default network. |
+| `Image`		 	| The name of the image you want to use for the function. A good starting point is functions/alpine |
+| `Service Name`  	 	| Describe the name of your service. No spaces please |
+| `fProcess` 		 	| The process to invoke for each function call. This must be a UNIX binary and accept input via STDIN and output via STDOUT. |
+| `Network`		 	| The network `func_functions` is the default network. |
 
 Once the create button is clicked, faas will provision a new Docker Swarm service. The newly created function will shortly be available in the list of functions on the left hand side of the UI.
 
