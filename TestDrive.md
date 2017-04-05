@@ -85,11 +85,11 @@ The original blog post also walks through creating a function:
 
 ## Add new functions to FaaS at runtime
 
-**Option 1 Add Functions via docker-compose** 
+**Option 1: Add Functions via docker-compose** 
 
 Edit the docker-compose stack file, then run ./deploy_stack.sh - this will only update changed/added services, not existing ones.
 
-**Option 2 Add Functions via faas UI**
+**Option 2: Add Functions via faas UI**
 
 To attach a function at runtime you can use the "Create New Function" button on the portal UI at http://localhost:8080/ 
 
@@ -105,7 +105,7 @@ Creating a function via the UI:
 Once the create button is clicked, faas will provision a new Docker Swarm service. The newly created function will shortly be available in the list of functions on the left hand side of the UI.
 
 
-**Option 3 Add Function via HTTP Post**
+**Option 3: Add Function via HTTP Post**
 
 A HTTP post can also be sent via `curl` etc to the endpoint used by the UI (HTTP post to `/system/functions`)
 
