@@ -136,9 +136,11 @@ func main() {
 	http.HandleFunc("/", makeRequestHandler(&config))
 
 	if config.suppressLock == false {
-		writeErr := ioutil.WriteFile("/tmp/.lock", []byte{}, 0660)
+		path := "/tmp/.lock"
+		log.Printf("Writing lock-file to: %s\n", path)
+		writeErr := ioutil.WriteFile(path, []byte{}, 0660)
 		if writeErr != nil {
-			log.Panicf("Cannot write /tmp/.lock for healthcheck: %s \n", writeErr.Error())
+			log.Panicf("Cannot write %s. Error: %s\n", path, writeErr.Error())
 		}
 	}
 
