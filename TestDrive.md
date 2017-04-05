@@ -102,7 +102,7 @@ Creating a function via the UI:
 - [x] Network: The network `func_functions` is the default network. 
 - [x] Click Create
 
-Once the create button is clicked faas will provision a new Docker Swarm service which will shortly be available in the list of functions on the left hand side of the UI.
+Once the create button is clicked, faas will provision a new Docker Swarm service. The newly created function will shortly be available in the list of functions on the left hand side of the UI.
 
 
 **Option 3 Add Function via HTTP Post**
