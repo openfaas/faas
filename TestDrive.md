@@ -91,7 +91,18 @@ Edit the docker-compose stack file, then run ./deploy_stack.sh - this will only 
 
 **Option 2**
 
-To attach a function at runtime you can use the "New function" button on the portal UI at http://localhost:8080/
+To attach a function at runtime you can use the "Create New Function" button on the portal UI at http://localhost:8080/ 
+<a href="https://pbs.twimg.com/media/C8opW3RW0AAc9Th.jpg:large"><img src="https://pbs.twimg.com/media/C8opW3RW0AAc9Th.jpg:large" width="500"></img></a>
+
+Creating a function via the UI:
+- [x] Image: The name of the image you want to use for the function. A good starting point is functions/alpine
+- [x] Service Name: Describe the name of your service. No spaces please
+- [x] fProcess: The name of the unix process which you want to invoke with the function.
+- [x] Network: The network `func_functions` is the default network. 
+- [x] Click Create
+
+Once the create button is clicked faas will provision a new Docker Swarm service which will shortly be available in the list of functions on the left hand side of the UI.
+
 
 **Option 3**
 
