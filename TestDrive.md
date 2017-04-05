@@ -93,7 +93,7 @@ Edit the docker-compose stack file, then run ./deploy_stack.sh - this will only 
 
 To attach a function at runtime you can use the "Create New Function" button on the portal UI at http://localhost:8080/ 
 
-<a href="https://pbs.twimg.com/media/C8opW3RW0AAc9Th.jpg:large"><img src="https://pbs.twimg.com/media/C8opW3RW0AAc9Th.jpg:large" width="500"></img></a>
+<a href="https://pbs.twimg.com/media/C8opW3RW0AAc9Th.jpg:large"><img src="https://pbs.twimg.com/media/C8opW3RW0AAc9Th.jpg:large" width="600"></img></a>
 
 Creating a function via the UI:
 - [x] Image: The name of the image you want to use for the function. A good starting point is functions/alpine
