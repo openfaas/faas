@@ -5,10 +5,13 @@ import (
 	"context"
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"net"
 	"net/http"
 	"strconv"
 	"time"
+
+	"os"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/alexellis/faas/gateway/metrics"
@@ -111,6 +114,11 @@ func copyHeaders(destination *http.Header, source *http.Header) {
 	}
 }
 
+func randomInt(min, max int) int {
+	rand.Seed(time.Now().Unix())
+	return rand.Intn(max-min) + min
+}
+
 func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, requestBody []byte, logger *logrus.Logger, proxyClient *http.Client) {
 	stamp := strconv.FormatInt(time.Now().Unix(), 10)
 
@@ -121,14 +129,23 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 		metrics.GatewayFunctionsHistogram.WithLabelValues(service).Observe(seconds)
 	}(time.Now())
 
-	watchdogPort := 8080
-	addr, lookupErr := net.LookupIP(service)
-	var url string
-	if len(addr) > 0 && lookupErr == nil {
-		url = fmt.Sprintf("http://%s:%d/", addr[0].String(), watchdogPort)
-	} else {
-		url = fmt.Sprintf("http://%s:%d/", service, watchdogPort)
+	var dnsrr bool
+	if os.Getenv("dnsrr") == "true" {
+		dnsrr = true
 	}
+
+	watchdogPort := 8080
+
+	addr := service
+	// Use DNS-RR via tasks.servicename if enabled as override, otherwise VIP.
+	if dnsrr {
+		entries, lookupErr := net.LookupIP(fmt.Sprintf("tasks.%s", service))
+		if lookupErr == nil && len(entries) > 0 {
+			index := randomInt(0, len(entries))
+			addr = entries[index].String()
+		}
+	}
+	url := fmt.Sprintf("http://%s:%d/", addr, watchdogPort)
 
 	contentType := r.Header.Get("Content-Type")
 	fmt.Printf("[%s] Forwarding request [%s] to: %s\n", stamp, contentType, url)
@@ -161,6 +178,7 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	clientHeader := w.Header()
 	copyHeaders(&clientHeader, &response.Header)
 
+	// TODO: copyHeaders removes the need for this line - test removal.
 	// Match header for strict services
 	w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
 
