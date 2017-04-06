@@ -7,6 +7,8 @@ import (
 	"log"
 	"net/http"
 
+	"strconv"
+
 	"github.com/alexellis/faas/gateway/requests"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
@@ -33,7 +35,6 @@ func MakeAlertHandler(c *client.Client) http.HandlerFunc {
 		}
 
 		if len(req.Alerts) > 0 {
-
 			if err := scaleService(req, c); err != nil {
 				log.Println(err)
 				w.WriteHeader(http.StatusInternalServerError)
@@ -45,15 +46,15 @@ func MakeAlertHandler(c *client.Client) http.HandlerFunc {
 }
 
 // CalculateReplicas decides what replica count to set depending on a Prometheus alert
-func CalculateReplicas(status string, currentReplicas uint64) uint64 {
+func CalculateReplicas(status string, currentReplicas uint64, maxReplicas uint64) uint64 {
 	newReplicas := currentReplicas
 
 	if status == "firing" {
 		if currentReplicas == 1 {
 			newReplicas = 5
 		} else {
-			if currentReplicas+5 > 20 {
-				newReplicas = 20
+			if currentReplicas+5 > maxReplicas {
+				newReplicas = maxReplicas
 			} else {
 				newReplicas = currentReplicas + 5
 			}
@@ -75,7 +76,16 @@ func scaleService(req requests.PrometheusAlert, c *client.Client) error {
 
 			currentReplicas := *service.Spec.Mode.Replicated.Replicas
 			status := req.Status
-			newReplicas := CalculateReplicas(status, currentReplicas)
+
+			replicaLabel := service.Spec.TaskTemplate.ContainerSpec.Labels["com.faas.max_replicas"]
+			maxReplicas := 20
+			if len(replicaLabel) > 0 {
+				maxReplicas, err = strconv.Atoi(replicaLabel)
+				if err != nil {
+					log.Printf("Bad replica count: %s, should be uint.\n", replicaLabel)
+				}
+			}
+			newReplicas := CalculateReplicas(status, currentReplicas, uint64(maxReplicas))
 
 			if newReplicas == currentReplicas {
 				return nil
