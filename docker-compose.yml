@@ -111,6 +111,7 @@ services:
         image: functions/alpine:latest
         labels:
             function: "true"
+            com.faas.max_replicas: "10"
         depends_on:
             - gateway
         networks:
