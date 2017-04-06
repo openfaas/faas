@@ -13,9 +13,7 @@ FaaS is a framework for building serverless functions on Docker Swarm with first
 [![Build
 Status](https://travis-ci.org/alexellis/faas.svg?branch=master)](https://travis-ci.org/alexellis/faas)
 
-## Minimum requirements: 
-* Docker 1.13 (to support Docker Stacks)
-* At least a single host in Docker Swarm Mode. (run `docker swarm init`)
+![Stack](http://blog.alexellis.io/content/images/2017/04/faas_hi.png)
 
 ## TestDrive
 
@@ -62,6 +60,10 @@ FaaS is still expanding and growing, check out the developments around:
 ## Roadmap and contributing
 
 * [Read the Roadmap](https://github.com/alexellis/faas/blob/master/ROADMAP.md)
+
+## Minimum requirements: 
+* Docker 1.13 (to support Docker Stacks)
+* At least a single host in Docker Swarm Mode. (run `docker swarm init`)
 
 ## Additional content
 
