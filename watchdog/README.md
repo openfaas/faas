@@ -45,7 +45,6 @@ Swarm tutorial on Healthchecks:
 
  * [Test-drive Docker Healthcheck in 10 minutes](http://blog.alexellis.io/test-drive-healthcheck/)
 
-
 **Environmental overrides:**
 
 A number of environmental overrides can be added for additional flexibility and options:
@@ -57,3 +56,32 @@ A number of environmental overrides can be added for additional flexibility and 
 | `write_timeout`        | HTTP timeout for writing a response body from your function  |
 | `read_timeout`         | HTTP timeout for reading the payload from the client caller  |
 | `suppress_lock`        | The watchdog will attempt to write a lockfile to /tmp/ for swarm healthchecks - set this to true to disable behaviour. |
+
+## Advanced / tuning
+
+**Content-Type of request/response**
+
+By default the watchdog will match the response of your function to the "Content-Type" of the client.
+
+* If your client sends a JSON post with a Content-Type of `application/json` this will be matched automatically in the response.
+* If your client sends a JSON post with a Content-Type of `text/plain` this will be matched automatically in the response too
+
+See open issues for custom override of response ContentType.
+
+
+**Tuning auto-scaling**
+
+Auto-scaling starts at 1 replica and steps up in blocks of 5:
+
+* 1->5
+* 5->10
+* 10->15
+* 15->20
+
+You can override the upper limit of auto-scaling by setting the following label on your container:
+
+```
+com.faas.max_replicas: "10"
+```
+
+If you want to disable scaling, set the `com.faas.max_replicas` value to `"1"`.
