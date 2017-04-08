@@ -14,6 +14,9 @@ import (
 	"github.com/docker/docker/client"
 )
 
+// DefaultMaxReplicas is the amount of replicas a service will auto-scale up to.
+const DefaultMaxReplicas = 20
+
 // MakeAlertHandler handles alerts from Prometheus Alertmanager
 func MakeAlertHandler(c *client.Client) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -45,26 +48,6 @@ func MakeAlertHandler(c *client.Client) http.HandlerFunc {
 	}
 }
 
-// CalculateReplicas decides what replica count to set depending on a Prometheus alert
-func CalculateReplicas(status string, currentReplicas uint64, maxReplicas uint64) uint64 {
-	newReplicas := currentReplicas
-
-	if status == "firing" {
-		if currentReplicas == 1 {
-			newReplicas = 5
-		} else {
-			if currentReplicas+5 > maxReplicas {
-				newReplicas = maxReplicas
-			} else {
-				newReplicas = currentReplicas + 5
-			}
-		}
-	} else { // Resolved event.
-		newReplicas = 1
-	}
-	return newReplicas
-}
-
 func scaleService(req requests.PrometheusAlert, c *client.Client) error {
 	var err error
 	serviceName := req.Alerts[0].Labels.FunctionName
@@ -78,7 +61,7 @@ func scaleService(req requests.PrometheusAlert, c *client.Client) error {
 			status := req.Status
 
 			replicaLabel := service.Spec.TaskTemplate.ContainerSpec.Labels["com.faas.max_replicas"]
-			maxReplicas := 20
+			maxReplicas := DefaultMaxReplicas
 			if len(replicaLabel) > 0 {
 				maxReplicas, err = strconv.Atoi(replicaLabel)
 				if err != nil {
@@ -107,4 +90,26 @@ func scaleService(req requests.PrometheusAlert, c *client.Client) error {
 		}
 	}
 	return err
+}
+
+// CalculateReplicas decides what replica count to set depending on current/desired amount
+func CalculateReplicas(status string, currentReplicas uint64, maxReplicas uint64) uint64 {
+	newReplicas := currentReplicas
+	const step = 5
+
+	if status == "firing" {
+		if currentReplicas == 1 {
+			// First jump is from 1 to "step" i.e. 1->5
+			newReplicas = step
+		} else {
+			if currentReplicas+step > maxReplicas {
+				newReplicas = maxReplicas
+			} else {
+				newReplicas = currentReplicas + step
+			}
+		}
+	} else { // Resolved event.
+		newReplicas = 1
+	}
+	return newReplicas
 }
