@@ -86,15 +86,28 @@ The original blog post also walks through creating a function:
 
 ## Add new functions to FaaS at runtime
 
-**Option 1** 
+**Option 1: Through docker-compose.yml stack file** 
 
 Edit the docker-compose stack file, then run ./deploy_stack.sh - this will only update changed/added services, not existing ones.
 
-**Option 2**
+**Option 2: via FaaS UI portal**
 
-To attach a function at runtime you can use the "New function" button on the portal UI at http://localhost:8080/
+To attach a function at runtime you can use the "Create New Function" button on the portal UI at http://localhost:8080/ 
 
-**Option 3**
+<a href="https://pbs.twimg.com/media/C8opW3RW0AAc9Th.jpg:large"><img src="https://pbs.twimg.com/media/C8opW3RW0AAc9Th.jpg:large" width="600"></img></a>
+
+Creating a function via the UI:
+
+| Option                 | Usage             |
+|------------------------|--------------|
+| `Image`		 	| The name of the image you want to use for the function. A good starting point is functions/alpine |
+| `Service Name`  	 	| Describe the name of your service. The Service Name format is: [a-zA-Z_0-9] |
+| `fProcess` 		 	| The process to invoke for each function call. This must be a UNIX binary and accept input via STDIN and output via STDOUT. |
+| `Network`		 	| The network `func_functions` is the default network. |
+
+Once the create button is clicked, faas will provision a new Docker Swarm service. The newly created function will shortly be available in the list of functions on the left hand side of the UI.
+
+**Option 3: Programatically through a HTTP POST to the API Gateway**
 
 A HTTP post can also be sent via `curl` etc to the endpoint used by the UI (HTTP post to `/system/functions`)
 
