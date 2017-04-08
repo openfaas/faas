@@ -53,6 +53,7 @@ A number of environmental overrides can be added for additional flexibility and 
 |------------------------|--------------|
 | `fprocess`             | The process to invoke for each function call. This must be a UNIX binary and accept input via STDIN and output via STDOUT.  |
 | `marshal_requests`     | Instead of re-directing the raw HTTP body into your fprocess, it will first be marshalled into JSON. Use this if you need to work with HTTP headers |
+| `content_type`         | Force a specific Content-Type response for all responses.    |
 | `write_timeout`        | HTTP timeout for writing a response body from your function  |
 | `read_timeout`         | HTTP timeout for reading the payload from the client caller  |
 | `suppress_lock`        | The watchdog will attempt to write a lockfile to /tmp/ for swarm healthchecks - set this to true to disable behaviour. |
@@ -66,8 +67,7 @@ By default the watchdog will match the response of your function to the "Content
 * If your client sends a JSON post with a Content-Type of `application/json` this will be matched automatically in the response.
 * If your client sends a JSON post with a Content-Type of `text/plain` this will be matched automatically in the response too
 
-See open issues for custom override of response ContentType.
-
+To override the Content-Type of all your responses set the `content_type` environmental variable.
 
 **Tuning auto-scaling**
 

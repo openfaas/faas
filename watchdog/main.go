@@ -89,9 +89,15 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request)
 		os.Stdout.Write(out)
 	}
 
-	clientContentType := r.Header.Get("Content-Type")
-	if len(clientContentType) > 0 {
-		w.Header().Set("Content-Type", "application/json")
+	if len(config.contentType) > 0 {
+		w.Header().Set("Content-Type", config.contentType)
+	} else {
+
+		// Match content-type of caller if no override specified.
+		clientContentType := r.Header.Get("Content-Type")
+		if len(clientContentType) > 0 {
+			w.Header().Set("Content-Type", clientContentType)
+		}
 	}
 
 	w.WriteHeader(200)
