@@ -19,6 +19,11 @@
 | [Functions as a Service (FaaS) in French](http://blog.alexellis.io/fonction-service/) | Alex Ellis | alexellis.io | 13-Jan-2017 |
 | [Functions as a Service (FaaS)](http://blog.alexellis.io/functions-as-a-service/) | Alex Ellis | alexellis.io | 4-Jan-2017 |
 
+### Projects / Use cases
+| Project name and description                                         | Author     | Site      | Date        |
+|----------------------------------------------------------------------|------------|-----------|-------------|
+| [Github-Airtable Bug Tracker integration](https://github.com/aafrey/faas-demo) | Austin Frey | github.com/aafrey/faas-demo | 10-April-2017 |
+
 ### Use-case
 
 **Name / company**
@@ -28,4 +33,3 @@
 * Key feature
 
 * We wish FaaS could...
-
