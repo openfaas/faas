@@ -5,10 +5,13 @@ import (
 	"context"
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"net"
 	"net/http"
 	"strconv"
 	"time"
+
+	"os"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/alexellis/faas/gateway/metrics"
@@ -20,7 +23,7 @@ import (
 )
 
 // MakeProxy creates a proxy for HTTP web requests which can be routed to a function.
-func MakeProxy(metrics metrics.MetricOptions, wildcard bool, c *client.Client, logger *logrus.Logger) http.HandlerFunc {
+func MakeProxy(metrics metrics.MetricOptions, wildcard bool, client *client.Client, logger *logrus.Logger) http.HandlerFunc {
 	proxyClient := http.Client{
 		Transport: &http.Transport{
 			Proxy: http.ProxyFromEnvironment,
@@ -36,27 +39,35 @@ func MakeProxy(metrics metrics.MetricOptions, wildcard bool, c *client.Client, l
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
 
 		if r.Method == "POST" {
 			logger.Infoln(r.Header)
-			header := r.Header["X-Function"]
-			logger.Infoln(header)
 
-			if wildcard == true {
+			xfunctionHeader := r.Header["X-Function"]
+			if len(xfunctionHeader) > 0 {
+				logger.Infoln(xfunctionHeader)
+			}
+
+			// getServiceName
+			var serviceName string
+			if wildcard {
 				vars := mux.Vars(r)
 				name := vars["name"]
-				fmt.Println("invoke by name")
-				lookupInvoke(w, r, metrics, name, c, logger, &proxyClient)
-				defer r.Body.Close()
+				serviceName = name
+			} else if len(xfunctionHeader) > 0 {
+				serviceName = xfunctionHeader[0]
+			}
 
-			} else if len(header) > 0 {
-				lookupInvoke(w, r, metrics, header[0], c, logger, &proxyClient)
-				defer r.Body.Close()
+			if len(serviceName) > 0 {
+				lookupInvoke(w, r, metrics, serviceName, client, logger, &proxyClient)
 			} else {
 				w.WriteHeader(http.StatusBadRequest)
-				w.Write([]byte("Provide a named /function URL or an x-function header."))
-				defer r.Body.Close()
+				w.Write([]byte("Provide an x-function header or valid route /function/function_name."))
 			}
+
+		} else {
+			w.WriteHeader(http.StatusMethodNotAllowed)
 		}
 	}
 }
@@ -79,12 +90,12 @@ func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.Metric
 
 	if err != nil || exists == false {
 		if err != nil {
-			logger.Fatalln(err)
+			logger.Infof("Could not resolve service: %s error: %s.", name, err)
 		}
-		writeHead(name, metrics, http.StatusInternalServerError, w)
-		w.Write([]byte("Error resolving service."))
-		defer r.Body.Close()
-		return
+
+		// TODO: Should record the 404/not found error in Prometheus.
+		writeHead(name, metrics, http.StatusNotFound, w)
+		w.Write([]byte(fmt.Sprintf("Cannot find service: %s.", name)))
 	}
 
 	if exists {
@@ -103,14 +114,6 @@ func lookupSwarmService(serviceName string, c *client.Client) (bool, error) {
 	return len(services) > 0, err
 }
 
-func copyHeaders(destination *http.Header, source *http.Header) {
-	for k, vv := range *source {
-		vvClone := make([]string, len(vv))
-		copy(vvClone, vv)
-		(*destination)[k] = vvClone
-	}
-}
-
 func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, requestBody []byte, logger *logrus.Logger, proxyClient *http.Client) {
 	stamp := strconv.FormatInt(time.Now().Unix(), 10)
 
@@ -121,14 +124,24 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 		metrics.GatewayFunctionsHistogram.WithLabelValues(service).Observe(seconds)
 	}(time.Now())
 
-	watchdogPort := 8080
-	addr, lookupErr := net.LookupIP(service)
-	var url string
-	if len(addr) > 0 && lookupErr == nil {
-		url = fmt.Sprintf("http://%s:%d/", addr[0].String(), watchdogPort)
-	} else {
-		url = fmt.Sprintf("http://%s:%d/", service, watchdogPort)
+	//TODO: inject setting rather than looking up each time.
+	var dnsrr bool
+	if os.Getenv("dnsrr") == "true" {
+		dnsrr = true
 	}
+
+	watchdogPort := 8080
+
+	addr := service
+	// Use DNS-RR via tasks.servicename if enabled as override, otherwise VIP.
+	if dnsrr {
+		entries, lookupErr := net.LookupIP(fmt.Sprintf("tasks.%s", service))
+		if lookupErr == nil && len(entries) > 0 {
+			index := randomInt(0, len(entries))
+			addr = entries[index].String()
+		}
+	}
+	url := fmt.Sprintf("http://%s:%d/", addr, watchdogPort)
 
 	contentType := r.Header.Get("Content-Type")
 	fmt.Printf("[%s] Forwarding request [%s] to: %s\n", stamp, contentType, url)
@@ -161,9 +174,23 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	clientHeader := w.Header()
 	copyHeaders(&clientHeader, &response.Header)
 
+	// TODO: copyHeaders removes the need for this line - test removal.
 	// Match header for strict services
 	w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
 
 	writeHead(service, metrics, http.StatusOK, w)
 	w.Write(responseBody)
+}
+
+func copyHeaders(destination *http.Header, source *http.Header) {
+	for k, vv := range *source {
+		vvClone := make([]string, len(vv))
+		copy(vvClone, vv)
+		(*destination)[k] = vvClone
+	}
+}
+
+func randomInt(min, max int) int {
+	rand.Seed(time.Now().Unix())
+	return rand.Intn(max-min) + min
 }

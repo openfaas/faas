@@ -22,9 +22,9 @@ func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error)
 
 	defer r.Body.Close()
 	requestBytes, _ = ioutil.ReadAll(r.Body)
-	if config.marshallRequest {
-		marshalRes, marshallErr := types.MarshalRequest(requestBytes, &r.Header)
-		err = marshallErr
+	if config.marshalRequest {
+		marshalRes, marshalErr := types.MarshalRequest(requestBytes, &r.Header)
+		err = marshalErr
 		res = marshalRes
 	} else {
 		res = requestBytes
@@ -134,6 +134,15 @@ func main() {
 	}
 
 	http.HandleFunc("/", makeRequestHandler(&config))
+
+	if config.suppressLock == false {
+		path := "/tmp/.lock"
+		log.Printf("Writing lock-file to: %s\n", path)
+		writeErr := ioutil.WriteFile(path, []byte{}, 0660)
+		if writeErr != nil {
+			log.Panicf("Cannot write %s. Error: %s\n", path, writeErr.Error())
+		}
+	}
 
 	log.Fatal(s.ListenAndServe())
 }

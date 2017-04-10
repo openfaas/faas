@@ -83,7 +83,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
             $scope.invocation.request = "";
             $scope.invocationResponse = "";
             $scope.invocationStatus = "";
-            $scope.invocation.contentType = "";
+            $scope.invocation.contentType = "text";
         }
     };
 

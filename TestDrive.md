@@ -1,6 +1,6 @@
-## Functions As A Service - TestDrive
+## Functions as a Service - TestDrive
 
-FaaS is a platform for building serverless functions on Docker Swarm Mode with first class metrics. Any UNIX process can be packaged as a function in FaaS enabling you to consume a range of web events without repetitive boiler-plate coding.
+FaaS is a framework for building serverless functions on Docker Swarm Mode with first class metrics. Any UNIX process can be packaged as a function in FaaS enabling you to consume a range of web events without repetitive boiler-plate coding.
 
 ### This is a Quickstart guide for the [FaaS functions as a Service](https://github.com/alexellis/faas/) project
 
@@ -70,8 +70,9 @@ nnlzo6u3pilg  func_prometheus.1  quay.io/prometheus/prometheus:latest   moby  Ru
 ```
 
 * Head over to http://localhost:9090 for your Prometheus metrics
+ * A saved Prometheus view is available here: [metrics overview](http://localhost:9090/graph?g0.range_input=15m&g0.expr=rate(gateway_function_invocation_total%5B20s%5D)&g0.tab=0&g1.range_input=15m&g1.expr=gateway_functions_seconds_sum+%2F+gateway_functions_seconds_counts&g1.tab=0&g2.range_input=15m&g2.expr=gateway_service_count&g2.tab=0)
 
-* Your function can be accessed via the gateway or read on for `curl`
+* Your functions can be accessed via the gateway UI or read on for `curl`
 
 ## Packaging your own function
 

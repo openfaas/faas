@@ -1,0 +1,15 @@
+{
+  "name": "NodejsBase",
+  "version": "1.0.0",
+  "description": "",
+  "main": "faas_index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "get-stdin": "^5.0.1"
+  }
+}

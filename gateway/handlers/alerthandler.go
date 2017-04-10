@@ -7,10 +7,15 @@ import (
 	"log"
 	"net/http"
 
+	"strconv"
+
 	"github.com/alexellis/faas/gateway/requests"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
 )
+
+// DefaultMaxReplicas is the amount of replicas a service will auto-scale up to.
+const DefaultMaxReplicas = 20
 
 // MakeAlertHandler handles alerts from Prometheus Alertmanager
 func MakeAlertHandler(c *client.Client) http.HandlerFunc {
@@ -33,7 +38,6 @@ func MakeAlertHandler(c *client.Client) http.HandlerFunc {
 		}
 
 		if len(req.Alerts) > 0 {
-
 			if err := scaleService(req, c); err != nil {
 				log.Println(err)
 				w.WriteHeader(http.StatusInternalServerError)
@@ -42,26 +46,6 @@ func MakeAlertHandler(c *client.Client) http.HandlerFunc {
 			}
 		}
 	}
-}
-
-// CalculateReplicas decides what replica count to set depending on a Prometheus alert
-func CalculateReplicas(status string, currentReplicas uint64) uint64 {
-	newReplicas := currentReplicas
-
-	if status == "firing" {
-		if currentReplicas == 1 {
-			newReplicas = 5
-		} else {
-			if currentReplicas+5 > 20 {
-				newReplicas = 20
-			} else {
-				newReplicas = currentReplicas + 5
-			}
-		}
-	} else { // Resolved event.
-		newReplicas = 1
-	}
-	return newReplicas
 }
 
 func scaleService(req requests.PrometheusAlert, c *client.Client) error {
@@ -75,7 +59,16 @@ func scaleService(req requests.PrometheusAlert, c *client.Client) error {
 
 			currentReplicas := *service.Spec.Mode.Replicated.Replicas
 			status := req.Status
-			newReplicas := CalculateReplicas(status, currentReplicas)
+
+			replicaLabel := service.Spec.TaskTemplate.ContainerSpec.Labels["com.faas.max_replicas"]
+			maxReplicas := DefaultMaxReplicas
+			if len(replicaLabel) > 0 {
+				maxReplicas, err = strconv.Atoi(replicaLabel)
+				if err != nil {
+					log.Printf("Bad replica count: %s, should be uint.\n", replicaLabel)
+				}
+			}
+			newReplicas := CalculateReplicas(status, currentReplicas, uint64(maxReplicas))
 
 			if newReplicas == currentReplicas {
 				return nil
@@ -97,4 +90,26 @@ func scaleService(req requests.PrometheusAlert, c *client.Client) error {
 		}
 	}
 	return err
+}
+
+// CalculateReplicas decides what replica count to set depending on current/desired amount
+func CalculateReplicas(status string, currentReplicas uint64, maxReplicas uint64) uint64 {
+	newReplicas := currentReplicas
+	const step = 5
+
+	if status == "firing" {
+		if currentReplicas == 1 {
+			// First jump is from 1 to "step" i.e. 1->5
+			newReplicas = step
+		} else {
+			if currentReplicas+step > maxReplicas {
+				newReplicas = maxReplicas
+			} else {
+				newReplicas = currentReplicas + step
+			}
+		}
+	} else { // Resolved event.
+		newReplicas = 1
+	}
+	return newReplicas
 }
