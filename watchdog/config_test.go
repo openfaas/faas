@@ -73,6 +73,19 @@ func TestRead_SuppressLockConfig(t *testing.T) {
 	}
 }
 
+func TestRead_ContentTypeConfig(t *testing.T) {
+	defaults := NewEnvBucket()
+	readConfig := ReadConfig{}
+	defaults.Setenv("content_type", "application/json")
+
+	config := readConfig.Read(defaults)
+
+	if config.contentType != "application/json" {
+		t.Logf("content_type envVariable incorrect, got: %s.\n", config.contentType)
+		t.Fail()
+	}
+}
+
 func TestRead_FprocessConfig(t *testing.T) {
 	defaults := NewEnvBucket()
 	readConfig := ReadConfig{}
