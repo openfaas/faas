@@ -53,8 +53,11 @@ func scaleService(req requests.PrometheusAlert, c *client.Client) error {
 	serviceName := req.Alerts[0].Labels.FunctionName
 
 	if len(serviceName) > 0 {
+		opts := types.ServiceInspectOptions{
+			InsertDefaults: true,
+		}
 
-		service, _, inspectErr := c.ServiceInspectWithRaw(context.Background(), serviceName)
+		service, _, inspectErr := c.ServiceInspectWithRaw(context.Background(), serviceName, opts)
 		if inspectErr == nil {
 
 			currentReplicas := *service.Spec.Mode.Replicated.Replicas
