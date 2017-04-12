@@ -10,7 +10,7 @@ import (
 	faasHandlers "github.com/alexellis/faas/gateway/handlers"
 	"github.com/alexellis/faas/gateway/metrics"
 	"github.com/docker/docker/client"
-	
+
 	"github.com/gorilla/mux"
 )
 
@@ -37,8 +37,8 @@ func main() {
 	// r.StrictSlash(false)	// This didn't work, so register routes twice.
 
 	functionHandler := faasHandlers.MakeProxy(metricsOptions, true, dockerClient, &logger)
-	r.HandleFunc("/function/{name:[a-zA-Z_0-9]+}", functionHandler)
-	r.HandleFunc("/function/{name:[a-zA-Z_0-9]+}/", functionHandler)
+	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}", functionHandler)
+	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/", functionHandler)
 
 	r.HandleFunc("/system/alert", faasHandlers.MakeAlertHandler(dockerClient))
 	r.HandleFunc("/system/functions", faasHandlers.MakeFunctionReader(metricsOptions, dockerClient)).Methods("GET")
