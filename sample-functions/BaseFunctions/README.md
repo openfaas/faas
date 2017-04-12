@@ -11,4 +11,5 @@ Each one will read the request from the watchdog then print it back resulting in
 | Golang                 | functions/base:golang-1.7.5-alpine      | Golang compiled on Alpine Linux        |
 | Python                 | functions/base:python-2.7-alpine        | Python 2.7 built on Alpine Linux       |
 | Java                   | functions/base:openjdk-8u121-jdk-alpine | OpenJDK built on Alpine Linux |
+| Dotnet Core            | functions/base:dotnet-sdk               | Microsoft dotnet core SDK |
 | Busybox / shell        | functions/alpine:latest            | Busybox contains useful binaries which can be turned into a FaaS function such as `sha512sum` or `cat` |
