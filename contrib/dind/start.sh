@@ -8,4 +8,4 @@ docker run --name faas --privileged -p 8080:8080 -p 9090:9090 -d faas:dind
 echo "Quitting after 120 seconds."
 sleep 120
 
-docker rmi -f faas
+docker rm -f faas
