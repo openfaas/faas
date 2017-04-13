@@ -1,7 +1,7 @@
 FROM alpine:latest
 RUN apk --update add nodejs
 
-ADD https://github.com/alexellis/faas/releases/download/v0.5-alpha/fwatchdog /usr/bin
+ADD https://github.com/alexellis/faas/releases/download/0.5.3-alpha/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
 COPY package.json   .

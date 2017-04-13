@@ -36,7 +36,7 @@ services:
 
 
     alertmanager:
-        image: alexellis2/alertmanager-armhf:0.5.1
+        image: alexellis2/alertmanager-armhf:0.5.3
         environment:
             no_proxy:   "gateway"
         volumes:
