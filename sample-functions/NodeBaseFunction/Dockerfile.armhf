@@ -1,6 +1,7 @@
-FROM node:6.9.1-alpine
+FROM armhf/alpine:3.5
+RUN apk add --no-cache nodejs
 
-ADD https://github.com/alexellis/faas/releases/download/0.5.3-alpha/fwatchdog /usr/bin
+ADD https://github.com/alexellis/faas/releases/download/0.5.3-alpha/fwatchdog-armhf /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
 
 WORKDIR /root/
