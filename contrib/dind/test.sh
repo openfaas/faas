@@ -21,7 +21,7 @@ echo
 function test_function_output {
 for i in {1..100}
 do
-   out=$(curl -s localhost:8080/function/$1 -d "$2")
+   out=$(curl --fail -s localhost:8080/function/$1 -d "$2")
    echo $out
    if [ "$out" == "$3" ]
    then
@@ -41,7 +41,7 @@ echo
 function test_function {
 for i in {1..100}
 do
-   curl localhost:8080/function/$1 -d "$2"
+   curl -s --fail localhost:8080/function/$1 -d "$2"
    if [ ! 0 -eq $? ]
    then
       echo "Service $1 not ready"
@@ -58,7 +58,7 @@ echo
 
 function create_function {
   echo "Creating function: " $1
-  curl -s localhost:8080/system/functions -d "$1"
+  curl -s --fail localhost:8080/system/functions -d "$1"
 }
 
 test_gateway

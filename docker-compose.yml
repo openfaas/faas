@@ -34,7 +34,6 @@ services:
             placement:
                 constraints: [node.role == manager]
 
-
     alertmanager:
         image: quay.io/prometheus/alertmanager
         environment:
@@ -55,7 +54,7 @@ services:
 
     # Service label of "function" allows functions to show up in UI on http://gateway:8080/
     webhookstash:
-        image: alexellis2/faas-webhookstash:latest
+        image: functions/webhookstash:latest
         labels:
             function: "true"
         depends_on:
