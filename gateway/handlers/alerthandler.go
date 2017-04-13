@@ -9,6 +9,8 @@ import (
 
 	"strconv"
 
+	"fmt"
+
 	"github.com/alexellis/faas/gateway/requests"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
@@ -21,11 +23,15 @@ const DefaultMaxReplicas = 20
 func MakeAlertHandler(c *client.Client) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Println("Alert received.")
+
 		body, readErr := ioutil.ReadAll(r.Body)
 
 		log.Println(string(body))
 
 		if readErr != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte("Unable to read alert."))
+
 			log.Println(readErr)
 			return
 		}
@@ -33,24 +39,43 @@ func MakeAlertHandler(c *client.Client) http.HandlerFunc {
 		var req requests.PrometheusAlert
 		err := json.Unmarshal(body, &req)
 		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte("Unable to parse alert, bad format."))
 			log.Println(err)
 			return
 		}
 
-		if len(req.Alerts) > 0 {
-			if err := scaleService(req, c); err != nil {
-				log.Println(err)
-				w.WriteHeader(http.StatusInternalServerError)
-			} else {
-				w.WriteHeader(http.StatusOK)
+		errors := handleAlerts(&req, c)
+		if len(errors) > 0 {
+			log.Println(errors)
+			w.WriteHeader(http.StatusInternalServerError)
+
+			var errorOutput string
+			for d, err := range errors {
+				errorOutput += fmt.Sprintf("[%d] %s\n", d, err)
 			}
+			w.Write([]byte(errorOutput))
+		} else {
+			w.WriteHeader(http.StatusOK)
 		}
 	}
 }
 
-func scaleService(req requests.PrometheusAlert, c *client.Client) error {
+func handleAlerts(req *requests.PrometheusAlert, c *client.Client) []error {
+	var errors []error
+	for _, alert := range req.Alerts {
+		if err := scaleService(alert, c); err != nil {
+			log.Println(err)
+			errors = append(errors, err)
+		}
+	}
+
+	return errors
+}
+
+func scaleService(alert requests.PrometheusInnerAlert, c *client.Client) error {
 	var err error
-	serviceName := req.Alerts[0].Labels.FunctionName
+	serviceName := alert.Labels.FunctionName
 
 	if len(serviceName) > 0 {
 		opts := types.ServiceInspectOptions{
@@ -61,7 +86,7 @@ func scaleService(req requests.PrometheusAlert, c *client.Client) error {
 		if inspectErr == nil {
 
 			currentReplicas := *service.Spec.Mode.Replicated.Replicas
-			status := req.Status
+			status := alert.Status
 
 			replicaLabel := service.Spec.TaskTemplate.ContainerSpec.Labels["com.faas.max_replicas"]
 			maxReplicas := DefaultMaxReplicas
@@ -73,20 +98,19 @@ func scaleService(req requests.PrometheusAlert, c *client.Client) error {
 			}
 			newReplicas := CalculateReplicas(status, currentReplicas, uint64(maxReplicas))
 
+			log.Printf("[Scale] function=%s %d => %d.\n", serviceName, currentReplicas, newReplicas)
 			if newReplicas == currentReplicas {
 				return nil
 			}
 
-			log.Printf("Scaling %s to %d replicas.\n", serviceName, newReplicas)
 			service.Spec.Mode.Replicated.Replicas = &newReplicas
 			updateOpts := types.ServiceUpdateOptions{}
 			updateOpts.RegistryAuthFrom = types.RegistryAuthFromSpec
 
-			response, updateErr := c.ServiceUpdate(context.Background(), service.ID, service.Version, service.Spec, updateOpts)
+			_, updateErr := c.ServiceUpdate(context.Background(), service.ID, service.Version, service.Spec, updateOpts)
 			if updateErr != nil {
 				err = updateErr
 			}
-			log.Println(response)
 
 		} else {
 			err = inspectErr
