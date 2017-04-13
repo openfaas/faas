@@ -94,7 +94,7 @@ services:
 
     # Uses `cat` to echo back response, fastest function to execute.
     echoit:
-        image: functions/alpine:latest
+        image: functions/alpine:health
         labels:
             function: "true"
         depends_on:
@@ -108,7 +108,7 @@ services:
 
     # Counts words in request with `wc` utility
     wordcount:
-        image: functions/alpine:latest
+        image: functions/alpine:health
         labels:
             function: "true"
             com.faas.max_replicas: "10"
@@ -123,7 +123,7 @@ services:
 
     # Calculates base64 representation of request body.
     base64:
-        image: functions/alpine:latest
+        image: functions/alpine:health
         labels:
             function: "true"
         depends_on:
@@ -137,7 +137,7 @@ services:
 
     # Decodes base64 representation of request body.
     decodebase64:
-        image: functions/alpine:latest
+        image: functions/alpine:health
         labels:
             function: "true"
         depends_on:
