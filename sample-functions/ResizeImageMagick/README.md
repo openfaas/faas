@@ -2,11 +2,19 @@
 
 To resize an image with ImageMagick do the following:
 
-**Create your function on the FaaS UI or via `curl`**
+**Deploy the resizer function**
 
+(Make sure you have already deployed FaaS with ./deploy_stack.sh in the root of this Github repository.
+
+* Use `curl` to deploy the function, or click *Create a new function* on the FaaS UI 
 ```
 $ curl -s --fail localhost:8080/system/functions -d \
-'{"service": "resizer", "image": "functions/resizer", "envProcess": "convert - -resize 50% fd:1", "network": "func_functions"}'
+'{ 
+   "service": "resizer",
+   "image": "functions/resizer",
+   "envProcess": "convert - -resize 50% fd:1",
+   "network": "func_functions"
+   }'
 ```
 
 **Resize a picture by 50%**
@@ -19,6 +27,5 @@ $ curl localhost:8080/function/resizer --data-binary @gordon.png > small_gordon.
 
 **Customize the transformation**
 
-If you want to customise the transformation then edit the Dockerfile and create a new image.
-
+If you want to customise the transformation then edit the Dockerfile or the fprocess variable and create a new image.
 
