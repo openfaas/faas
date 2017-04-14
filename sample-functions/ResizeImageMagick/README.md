@@ -8,7 +8,20 @@ Use this FaaS function to resize an image with ImageMagick.
 
 (Make sure you have already deployed FaaS with ./deploy_stack.sh in the root of this Github repository.
 
-* Use `curl` to deploy the function, or click *Create a new function* on the FaaS UI 
+* Option 1 - click *Create a new function* on the FaaS UI
+
+* Option 2 - use the faas-cli (experimental)
+
+```
+# curl -SL https://github.com/alexellis/faas-cli/releases/download/0.1-alpha/faas-cli-macos > faas-cli
+# chmod +x ./faas-cli-macos
+
+# ./faas-cli -action=deploy -image=functions/resizer -name=resizer -fprocess="convert - -resize 50% fd:1"
+200 OK
+URL: http://localhost:8080/function/resizer
+```
+
+* Option 3 - use `curl` to deploy the function 
 ```
 $ curl -s --fail localhost:8080/system/functions -d \
 '{ 
