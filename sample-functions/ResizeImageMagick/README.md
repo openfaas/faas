@@ -5,9 +5,9 @@ To resize an image with ImageMagick do the following:
 **Create your function on the FaaS UI or via `curl`**
 
 ```
-$ curl -s --fail localhost:8080/system/functions -d '{"service": "stronghash", "image": "functions/alpine", "envProcess": "sha512sum", "network": "func_functions"}'
+$ curl -s --fail localhost:8080/system/functions -d \
+'{"service": "resizer", "image": "functions/resizer", "envProcess": "convert - -resize 50% fd:1", "network": "func_functions"}'
 ```
-
 
 **Resize a picture by 50%**
 
