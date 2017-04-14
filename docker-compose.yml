@@ -161,19 +161,6 @@ services:
             no_proxy: "gateway"
             https_proxy: $https_proxy
 
-    # Example of Alexa SDK skill, set skill to invoke HTTPs endpoint in Amazon Alexa Skills page. 
-    alexacolorchange:
-        labels:
-            function: "true"
-        image: alexellis2/faas-alexachangecolorintent 
-        depends_on:
-            - gateway
-        networks:
-            - functions
-        environment:
-            no_proxy: "gateway"
-            https_proxy: $https_proxy
-
 networks:
     functions:
         driver: overlay
