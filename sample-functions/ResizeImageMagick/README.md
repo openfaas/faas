@@ -43,5 +43,9 @@ $ curl localhost:8080/function/resizer --data-binary @gordon.png > small_gordon.
 
 **Customize the transformation**
 
-If you want to customise the transformation then edit the Dockerfile or the fprocess variable and create a new image.
+If you want to customise the transformation then edit the Dockerfile or the fprocess variable and create a new function.
+
+**Remove the function**
+
+You can remove the function with `docker service rm resizer`.
 
