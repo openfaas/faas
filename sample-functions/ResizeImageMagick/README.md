@@ -1,6 +1,8 @@
 ## functions/resizer
 
-To resize an image with ImageMagick do the following:
+![](https://github.com/alexellis/faas/blob/master/sample-functions/ResizeImageMagick/gordon.png)
+
+Use this FaaS function to resize an image with ImageMagick.
 
 **Deploy the resizer function**
 
