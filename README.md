@@ -69,6 +69,12 @@ FaaS is still expanding and growing, check out the developments around:
 
 #### Would you prefer a video overview?
 
+**FaaS tour of features including an Alexa Skill - April 2017**
+
+[Watch on YouTube](https://www.youtube.com/watch?v=BK076ChLKKE)
+
+**FaaS deep dive - 11 Jan 2017**
+
 See how to deploy FaaS onto play-with-docker.com and Docker Swarm in 1-2 minutes. See the sample functions in action and watch the graphs in Prometheus as we ramp up the amount of requests. 
 
 * [Deep Dive into Functions as a Service (FaaS) on Docker](https://www.youtube.com/watch?v=sp1B7l5mEzc)
