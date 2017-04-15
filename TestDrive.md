@@ -37,7 +37,13 @@ Some of the sample functions are:
 * Markdown to HTML renderer (markdownrender) - takes .MD input and produces HTML (Golang)
 * Docker Hub Stats function (hubstats) - queries the count of images for a user on the Docker Hub (Golang)
 * Node Info (nodeinfo) function - gives you the OS architecture and detailled info about the CPUS (Node.js)
-* Webhook stasher function (webhookstash) - saves webhook body into container's filesystem (Golang)
+* Webhook stasher function (webhookstash) - saves webhook body into container's filesystem - even binaries (Golang)
+
+New functions:
+
+* Hello world in - [Java/.NET core/Python/Node/Go and more](https://github.com/alexellis/faas/tree/master/sample-functions/BaseFunctions)
+* [Resize images with Image Magick](https://github.com/alexellis/faas/tree/master/sample-functions/ResizeImageMagick)
+* [Function protected by API key in HTTP Header](https://github.com/alexellis/faas/tree/master/sample-functions/ApiKeyProtected)
 
 ### Invoke the sample functions with curl or Postman:
 
@@ -85,6 +91,10 @@ The original blog post also walks through creating a function:
 * [FaaS blog post](http://blog.alexellis.io/functions-as-a-service/)
 
 ## Add new functions to FaaS at runtime
+
+* Experimental options
+
+[FaaS CLI as documented here](https://github.com/alexellis/faas/tree/master/sample-functions/ResizeImageMagick)
 
 **Option 1: Through docker-compose.yml stack file** 
 
