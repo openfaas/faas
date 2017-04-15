@@ -88,3 +88,9 @@ If you are new to Prometheus, you can start learning about metrics and monitorin
 > [Monitor your applications with Prometheus](http://blog.alexellis.io/prometheus-monitoring/)
 
 ![Prometheus UI](https://pbs.twimg.com/media/C7bkiT9X0AASVuu.jpg)
+
+You can also link this to a Grafana dashboard and see auto-scaling live in action:
+
+![](https://pbs.twimg.com/media/C9caE6CXUAAX_64.jpg:large)
+
+Sample dashboard JSON file available [here](https://github.com/alexellis/faas/blob/master/contrib/grafana.json)
