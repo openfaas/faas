@@ -7,7 +7,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:0.5.2
+        image: functions/gateway:0.5.3
         networks:
             - functions
         deploy:
@@ -15,7 +15,7 @@ services:
                 constraints: [node.role == manager]
  
     prometheus:
-        image: quay.io/prometheus/prometheus:latest
+        image: functions/prometheus:1.5.2 # Mirrors version 1.5.2 of quay.io/prometheus/prometheus:latest
         volumes:
             - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
             - ./prometheus/alert.rules:/etc/prometheus/alert.rules

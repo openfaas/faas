@@ -8,8 +8,6 @@ COPY config_test.go .
 COPY requesthandler_test.go .
 COPY types types
 
-#RUN go get -d -v
-
 RUN go test
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o watchdog .
 
