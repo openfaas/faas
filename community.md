@@ -27,6 +27,7 @@
 | [Github-Airtable Bug Tracker integration](https://github.com/aafrey/faas-demo) | Austin Frey | github.com/aafrey/faas-demo | 10-April-2017 |
 | [Github - ascii art generator](https://github.com/developius/faas-node-ascii) | Finnian Anderson | [developius/faas-node-ascii](https://github.com/developius/faas-node-ascii) | 17-April-2017 |
 | [Github - URL Shortener](https://github.com/developius/faas-node-url-shortener) | Finnian Anderson | [developius/faas-node-url-shortener](https://github.com/developius/faas-node-url-shortener) | 19-April-2017 |
+| [Github - fibonacci numbers up to N](https://github.com/developius/faas-python-fib/) | Finnian Anderson | [developius/faas-python-fib/](https://github.com/developius/faas-python-fib/) | 19-April-2017 |
 
 ### Use-case template
 
