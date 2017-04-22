@@ -11,4 +11,4 @@ COPY types types
 RUN go test
 env CGO_ENABLED=0
 env GOOS=windows
-RUN go build -a -installsuffix cgo -o watchdog .
+RUN go build -a -installsuffix cgo -o watchdog.exe .
