@@ -6,4 +6,7 @@ install:
 
 build_script:
   - ps: .\watchdog\build.ps1
-  
+
+artifacts:
+  - path: watchdog\watchdog.exe
+    name: watchdog
