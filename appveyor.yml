@@ -3,3 +3,7 @@ image: Visual Studio 2017
 
 install:
   - docker version
+
+build_script:
+  - ps: .\watchdog\build.ps1
+  
