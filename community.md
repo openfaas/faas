@@ -12,7 +12,7 @@
 
 ### Blog posts and write-ups
 
-| Event name and description                                          | Author       | Site     | Date        |
+| Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [O’Reilly Systems Engineering and Operations newsletter](http://post.oreilly.com/form/oreilly/viewhtml/9z1zlu60fomtoiq41cigtigddvnejvh4vjjfm0i1sh8) | O'Reilly | oreilly.com | 11-Apr-2017 |
 | [Test Driving Docker Functions as a Service (FaaS)](https://www.brianchristner.io/test-driving-docker-function-as-a-service-faas/) | Brian Christner | brianchristner.io | 10-Apr-2017 |
@@ -25,6 +25,8 @@
 ### Projects / Use cases
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| [Dockercon FaaS demos including Alexa/Github](https://github.com/alexellis/faas-dockercon) | Alex Ellis | github.com | 14-Apr-2017 |
+| [Docker Birthday voting app ported to FaaS](https://github.com/alexellis/faas-example-voting-app) | Alex Ellis | github.com | 14-Apr-2017 |
 | [Github-Airtable Bug Tracker integration](https://github.com/aafrey/faas-demo) | Austin Frey | github.com/aafrey/faas-demo | 10-April-2017 |
 | [Github - ascii art generator](https://github.com/developius/faas-node-ascii) | Finnian Anderson | [developius/faas-node-ascii](https://github.com/developius/faas-node-ascii) | 17-April-2017 |
 | [Github - URL Shortener](https://github.com/developius/faas-node-url-shortener) | Finnian Anderson | [developius/faas-node-url-shortener](https://github.com/developius/faas-node-url-shortener) | 19-April-2017 |
