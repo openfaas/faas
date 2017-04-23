@@ -58,11 +58,15 @@ Could have
 
 Nice to have
 
+* Raspberry Pi (armhf/armv6) support (currently available)
+* AARCH64 (64-bit ARM) port
+
 * Guide for termination through NGinx or built-in TLS termination
 * Guide for basic authentication over HTTPs (set up externally through NGinx etc)
+
+* CRIU - (Checkpoint/Restore In Userspace) for warm-loading serverless tasks with a high start-up cost/latency.
 * Billing control for functions
-* AARCH64 (64-bit ARM) port
-* Raspberry Pi (armhf/armv6) support (currently available)
+
 
 ## 3. Development and Contributing
 
