@@ -1,13 +1,16 @@
 FROM golang:1.7.5-windowsservercore
 MAINTAINER alexellis2@gmail.com
-
 ENTRYPOINT []
 
-
 WORKDIR /go/src/github.com/alexellis/faas/sample-functions/golang
-
 COPY . /go/src/github.com/alexellis/faas/sample-functions/golang
+RUN go build
 
+ADD ./watchdog.exe /
 
-RUN go install
+EXPOSE 8080
+ENV fprocess="app.exe"
 
+ENV suppress_lock="true"
+
+CMD ["watchdog.exe"]
