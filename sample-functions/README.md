@@ -1,4 +1,10 @@
-## Sample functions for FaaS
+## Hello World in different languages:
+
+For examples of hello-world in different programming languages see inside the BaseFunctions folder:
+
+* [Base Functions](https://github.com/alexellis/faas/tree/master/sample-functions/BaseFunctions)
+
+## Sample functions from the FaaS stack
 
 Here is a list of the sample functions included this repository.
 
@@ -15,7 +21,4 @@ Here is a list of the sample functions included this repository.
 | WebhookStash           | Golang function provides way to capture webhooks - JSON/text/binary are all OK |
 | WordCountFunction      | BusyBox `wc` is exposed as a function / service through FaaS |
 
-For examples of hello-world, see inside the BaseFunctions folder:
-
-* [Base Functions](https://github.com/alexellis/faas/tree/master/sample-functions/BaseFunctions)
-
+Also see the [community page](https://github.com/alexellis/faas/blob/master/community.md) for functions created by FaaS users and contributors.
