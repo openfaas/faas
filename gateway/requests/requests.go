@@ -8,6 +8,10 @@ type CreateFunctionRequest struct {
 	EnvProcess string `json:"envProcess"`
 }
 
+type DeleteFunctionRequest struct {
+	FunctionName string `json:"functionName"`
+}
+
 type AlexaSessionApplication struct {
 	ApplicationId string `json:"applicationId"`
 }

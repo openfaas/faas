@@ -1,0 +1,16 @@
+package: github.com/alexellis/faas/gateway
+import:
+- package: github.com/Sirupsen/logrus
+- package: github.com/docker/docker
+  subpackages:
+  - api/types
+  - api/types/filters
+  - api/types/swarm
+  - client
+- package: github.com/gorilla/mux
+- package: github.com/prometheus/client_golang
+  subpackages:
+  - prometheus
+- package: github.com/prometheus/client_model
+  subpackages:
+  - go
