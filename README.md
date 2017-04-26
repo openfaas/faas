@@ -69,6 +69,7 @@ FaaS is still expanding and growing, check out the developments around:
 * [Invoke functions through UI](https://twitter.com/alexellisuk/status/823262200236277762)
 * [Create new functions through UI](https://twitter.com/alexellisuk/status/835047437588905984)
 * [Various sample functions](https://github.com/alexellis/faas/blob/master/docker-compose.yml)
+* [Integration between IFTTT and Slack](https://twitter.com/alexellisuk/status/857300138745876483)
 
 * [ARM / Raspberry Pi support](https://gist.github.com/alexellis/665332cd8bd9657c9649d0cd6c2dc187)
 
