@@ -1,6 +1,6 @@
 ## Functions as a Service (FaaS)
 
-FaaS is a framework for building serverless functions on Docker Swarm with first class support for metrics. Any UNIX process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
+FaaS is a framework for building serverless functions on Docker with first class support for metrics. Any UNIX process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
 
 ## Concept
 
@@ -51,6 +51,15 @@ Here is a screenshot of the API gateway portal - designed for ease of use.
 
 * [Read blogs/articles and find events about FaaS](https://github.com/alexellis/faas/blob/master/community.md)
 
+## Package existing code as functions
+
+* [Package your function](https://github.com/alexellis/faas/blob/master/DEV.md)
+* [Experimental CLI for templating/deploying functions](https://github.com/alexellis/faas-cli)
+
+## Roadmap and contributing
+
+* [Read the Roadmap](https://github.com/alexellis/faas/blob/master/ROADMAP.md)
+
 ### Ongoing development/screenshots:
 
 FaaS is still expanding and growing, check out the developments around:
@@ -63,14 +72,6 @@ FaaS is still expanding and growing, check out the developments around:
 
 * [ARM / Raspberry Pi support](https://gist.github.com/alexellis/665332cd8bd9657c9649d0cd6c2dc187)
 
-## Package existing code as functions
-
-* [Package your function](https://github.com/alexellis/faas/blob/master/DEV.md)
-
-## Roadmap and contributing
-
-* [Read the Roadmap](https://github.com/alexellis/faas/blob/master/ROADMAP.md)
-
 ## Minimum requirements: 
 * Docker 1.13 (to support Docker Stacks)
 * At least a single host in Docker Swarm Mode. (run `docker swarm init`)
@@ -79,11 +80,15 @@ FaaS is still expanding and growing, check out the developments around:
 
 #### Would you prefer a video overview?
 
-**FaaS tour of features including an Alexa Skill - April 2017**
+**Dockercon closing keynote - Cool Hacks demos with Alexa/Github - April 19th 2017**
+
+[Watch on YouTube](https://www.youtube.com/watch?v=-h2VTE9WnZs&t=961s&list=PLlIapFDp305AiwA17mUNtgi5-u23eHm5j&index=1)
+
+**FaaS tour of features including an Alexa Skill - April 9th 2017**
 
 [Watch on YouTube](https://www.youtube.com/watch?v=BK076ChLKKE)
 
-**FaaS deep dive - 11 Jan 2017**
+**FaaS deep dive - 11th Jan 2017**
 
 See how to deploy FaaS onto play-with-docker.com and Docker Swarm in 1-2 minutes. See the sample functions in action and watch the graphs in Prometheus as we ramp up the amount of requests. 
 
