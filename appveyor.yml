@@ -1,0 +1,12 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+
+install:
+  - docker version
+
+build_script:
+  - ps: .\watchdog\build.ps1
+
+artifacts:
+  - path: watchdog\watchdog.exe
+    name: watchdog
