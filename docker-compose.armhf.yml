@@ -64,6 +64,19 @@ services:
             no_proxy:   "gateway"
             https_proxy: $https_proxy
 
+    markdown:
+        image: functions/markdownrender:latest-armhf
+        labels:
+            function: "true"
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
+            no_proxy:   "gateway"
+            https_proxy: $https_proxy
+
+
     wordcount:
         image: functions/alpine:latest-armhf
         labels:
@@ -76,19 +89,6 @@ services:
             fprocess:   "wc"
             no_proxy:   "gateway"
             https_proxy: $https_proxy
-    markdown:
-        image: functions/markdownrender:latest-armhf
-        labels:
-            function: "true"
-        depends_on:
-            - gateway
-        networks:
-            - functions
-        environment:
-            fprocess:   "wc"
-            no_proxy:   "gateway"
-            https_proxy: $https_proxy
-
 networks:
     functions:
         driver: overlay
