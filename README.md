@@ -8,7 +8,7 @@ FaaS is a framework for building serverless functions on Docker with first class
 
 * The API Gateway provides an external route into your functions and collects metrics in Prometheus. The gateway will scale functions according to demand by mangaging Docker Swarm replicas as throughput increases. A UI is baked in allowing you to invoke functions in your browser and create new ones as needed.
 
-## Keynote at Dockercon 2017
+## Closing Keynote at Dockercon 2017
 
 Functions as a Service or FaaS was a winner in the Cool Hacks contest for Dockercon 2017.
 
