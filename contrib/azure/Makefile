@@ -9,13 +9,11 @@ export MASTER_FQDN=$(RESOURCE_GROUP)-master0.$(LOCATION).cloudapp.azure.com
 export LOADBALANCER_FQDN=$(RESOURCE_GROUP)-agents-lb.$(LOCATION).cloudapp.azure.com
 export VMSS_NAME=agents
 
-MASTER_REPO_URL=https://raw.githubusercontent.com/alexellis/faas/master
-
 # Generated key files (if you don't want to use your existing ones)
-SSH_KEY_FILES := faas.pem faas.pub
-ADMIN_USERNAME := faas
-TEMPLATE_FILE := faas-cluster-template.json
-PARAMETERS_FILE := faas-cluster-parameters.json
+export ADMIN_USERNAME?=faas
+SSH_KEY_FILES:=$(ADMIN_USERNAME).pem $(ADMIN_USERNAME).pub
+TEMPLATE_FILE:=faas-luster-template.json
+PARAMETERS_FILE:=faas-cluster-parameters.json
 
 # Helper targets for folk not used to Azure
 
@@ -31,13 +29,13 @@ locations:
 
 ## Generate SSH keys for the cluster
 keys:
-	ssh-keygen -b 2048 -t rsa -f faas -q -N ""
-	mv faas faas.pem
+	ssh-keygen -b 2048 -t rsa -f $(ADMIN_USERNAME) -q -N ""
+	mv $(ADMIN_USERNAME) $(ADMIN_USERNAME).pem
 
 
 ## Generate Azure Resource Template parameter files
 params:
-	python genparams.py
+	python genparams.py $(ADMIN_USERNAME) > $(PARAMETERS_FILE)
 
 
 ## Destroy the entire resource group and all cluster resources

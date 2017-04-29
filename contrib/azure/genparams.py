@@ -1,22 +1,28 @@
+# Azure Template Parameter Packer
+# Takes username as first argument and outputs parameter JSON on stdout
+
 from base64 import b64encode
 from os import environ
 from json import dumps
 from os.path import exists, join
+from sys import argv, stderr, stdout
 
+USERNAME = argv[1].strip()
 OWN_PUBKEY = join(environ['HOME'],'.ssh','id_rsa.pub')
-GEN_PUBKEY = 'faas.pub'
+GEN_PUBKEY = USERNAME + '.pub'
 
 if exists(GEN_PUBKEY):
     admin_public_key = open(GEN_PUBKEY,'r').read()
 elif exists(OWN_PUBKEY):
     admin_public_key = open(OWN_PUBKEY,'r').read()
+    stderr.write('Warning: using %s instead of freshly generated keys.\n' % OWN_PUBKEY)
 else:
-    print('No public keys found, exiting.')
+    stderr.write('No public keys found, exiting.\n')
     exit(1)
 
 params = {
     "adminUsername": {
-        "value": "faas" # if you want to customize this, update the yml files too 
+        "value": USERNAME
     },
     "adminPublicKey": {
         "value": admin_public_key
@@ -44,5 +50,4 @@ params = {
     }
 }
 
-with open('faas-cluster-parameters.json', 'w') as h:
-    h.write(dumps(params))
+stdout.write(dumps(params))
