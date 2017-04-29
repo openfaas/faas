@@ -8,10 +8,45 @@ FaaS is a framework for building serverless functions on Docker with first class
 
 * The API Gateway provides an external route into your functions and collects metrics in Prometheus. The gateway will scale functions according to demand by mangaging Docker Swarm replicas as throughput increases. A UI is baked in allowing you to invoke functions in your browser and create new ones as needed.
 
-## Closing Keynote at Dockercon 2017
+## FaaS Stack
+
+FaaS is an open-source project written in Golang and licensed under the MIT license.
+
+![Stack](http://blog.alexellis.io/content/images/2017/04/faas_hi.png)
+
+**Highlights:**
+
+* Ease of use through UI portal
+* Setup a working environment with one script
+* Portable - runs on any hardware supported by Docker
+
+* Any process that can run in Docker can be a serverless function
+
+* Baked-in Prometheus metrics and logging
+* Auto-scales as demand increases
+
+## Getting started
+
+You can [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md) FaaS on your laptop in 60 seconds, or deploy to a free online Docker playground. Find out more in the [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md).
+
+## Notable mentions
+
+### Closing Keynote at Dockercon 2017
 
 Functions as a Service or FaaS was a winner in the Cool Hacks contest for Dockercon 2017.
 
 * [Watch my FaaS keynote at Dockercon 2017](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/)
 
 If you'd like to find the functions I used in the demos head over to the [faas-dockercon](https://github.com/alexellis/faas-dockercon/) repository.
+
+### InfoWorld
+
+Serdar Yegulalp	Senior Technical Writer covered FaaS in a write-up looking at serverless in the open-source world:
+
+http://www.infoworld.com/article/3184757/open-source-tools/open-source-project-uses-docker-for-serverless-computing.html#tk.twt_ifw
+
+### Community activity
+
+There is also a community being built around FaaS with talks, demos and sample functions being built out.
+
+[Find out more](https://github.com/alexellis/faas/blob/master/community.md)
