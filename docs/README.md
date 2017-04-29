@@ -25,10 +25,6 @@ FaaS is an open-source project written in Golang and licensed under the MIT lice
 * Baked-in Prometheus metrics and logging
 * Auto-scales as demand increases
 
-## Getting started
-
-You can [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md) FaaS on your laptop in 60 seconds, or deploy to a free online Docker playground. Find out more in the [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md).
-
 ## Notable mentions
 
 ### Closing Keynote at Dockercon 2017
@@ -43,10 +39,25 @@ If you'd like to find the functions I used in the demos head over to the [faas-d
 
 Serdar Yegulalp	Senior Technical Writer covered FaaS in a write-up looking at serverless in the open-source world:
 
-http://www.infoworld.com/article/3184757/open-source-tools/open-source-project-uses-docker-for-serverless-computing.html#tk.twt_ifw
+[Open source project uses Docker for serverless computing](http://www.infoworld.com/article/3184757/open-source-tools/open-source-project-uses-docker-for-serverless-computing.html#tk.twt_ifw)
 
 ### Community activity
 
 There is also a community being built around FaaS with talks, demos and sample functions being built out.
 
-[Find out more](https://github.com/alexellis/faas/blob/master/community.md)
+[Find out about community activity](https://github.com/alexellis/faas/blob/master/community.md)
+
+## Getting started
+
+**Test Drive FaaS**
+
+You can [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md) FaaS on your laptop in 60 seconds, or deploy to a free online Docker playground. Find out more in the [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md).
+
+**Contribute to FaaS**
+
+FaaS enables you to run your serverless functions in whatever language you like, wherever you like - for however long you need.
+
+Contributions to the project are welcome - please send in issues and questions through Github.
+
+[See issues and PRs](https://github.com/alexellis/faas/issues)
+
