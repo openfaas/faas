@@ -1,0 +1,84 @@
+#cloud-config
+
+write_files:
+  - path: /root/swarm-helper.py
+    permissions: 0755
+    content: |
+      #!/usr/bin/env python
+      from bottle import get, run, abort
+      from subprocess import check_output
+      from socket import gethostname
+      from signal import signal, setitimer, ITIMER_REAL, SIGALRM
+
+      def cleanup(signum, frame):
+          try:
+              nodes = check_output('docker node ls', shell=True).strip()
+              down = map(lambda x: x.split()[1], filter(lambda x: 'Down' in x, nodes.split("\n")))
+              for node in down:
+                  check_output('docker node rm ' + node, shell=True)
+          except:
+              pass
+
+      @get("/join/worker")
+      def token():
+          return check_output('docker swarm join-token -q worker', shell=True).strip()
+
+      @get("/join/master")
+      def token():
+          return check_output('docker swarm join-token -q master', shell=True).strip()
+      
+      @get("/drain/<hostname>")
+      def drain(hostname):
+          try:
+              return check_output('docker node update --availability drain ' + hostname, shell=True).strip()
+          except:
+              abort(404, "node not found")
+        
+      if gethostname() == 'master0':
+          try:
+              check_output('docker swarm init', shell=True)
+          except:
+              pass
+          signal(SIGALRM, cleanup)
+          setitimer(ITIMER_REAL, 10, 10)
+          run(port=1337,host='0.0.0.0')
+  - path: /etc/systemd/system/swarm-helper.service
+    permissions: 0444
+    content: |
+      [Unit]
+      Description=Swarm Helper
+      DefaultDependencies=no
+      After=multi-user.target
+      [Service]
+      Type=oneshot
+      ExecStart=/root/swarm-helper.py
+      [Install]
+      WantedBy=multi-user.target
+
+apt:
+  sources:
+    docker_ce.list:
+      source: "deb https://download.docker.com/linux/ubuntu xenial stable"
+      keyserver: p80.pool.sks-keyservers.net
+      keyid: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+
+#apt_update: true
+#apt_upgrade: true
+
+packages:
+  - ntp
+  - docker-ce
+  - tmux
+  - htop
+  - vim
+  - fail2ban
+  - curl
+  - python-bottle
+
+runcmd:
+  - usermod -G docker faas
+  - systemctl enable docker
+  - systemctl start docker
+  - systemctl enable swarm-helper
+  - systemctl start swarm-helper
+  #- reboot

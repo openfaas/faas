@@ -1,0 +1,74 @@
+#cloud-config
+
+write_files:
+  - path: /root/join-swarm.sh
+    permissions: 0755
+    content: |
+      #!/bin/bash
+      # make sure there's no disk state that points to an existing swarm
+      docker swarm leave
+      # get the swarm worker token
+      TOKEN=$(wget -nv -q -O - --retry-connrefused 10 --waitretry 5 http://master0:1337/join/worker)
+      docker swarm join --token $TOKEN master0:2377
+  - path: /root/leave-swarm.sh
+    permissions: 0755
+    content: |
+      #!/bin/bash
+      HOSTNAME=$(hostname)
+      # signal the master to drain services from our node
+      wget -nv -q -O - --retry-connrefused 10 --waitretry 5 http://master0:1337/drain/$HOSTNAME
+      docker swarm leave
+  - path: /etc/systemd/system/swarm-join.service
+    permissions: 0444
+    content: |
+      [Unit]
+      Description=Join Swarm
+      DefaultDependencies=no
+      After=multi-user.target
+      [Service]
+      Type=oneshot
+      ExecStart=/root/join-swarm.sh
+      [Install]
+      WantedBy=multi-user.target
+  - path: /etc/systemd/system/swarm-leave.service
+    permissions: 0444
+    content: |
+      [Unit]
+      Description=Leave Swarm
+      DefaultDependencies=no
+      Before=shutdown.target reboot.target halt.target
+      [Service]
+      Type=oneshot
+      ExecStart=/root/leave-swarm.sh
+      [Install]
+      WantedBy=halt.target reboot.target shutdown.target
+
+apt:
+  sources:
+    docker_ce.list:
+      source: "deb https://download.docker.com/linux/ubuntu xenial stable"
+      keyserver: p80.pool.sks-keyservers.net
+      keyid: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+
+# Skip upgrading the agents for quicker spin-up
+#apt_update: true
+#apt_upgrade: true
+
+packages:
+  - ntp
+  - docker-ce
+  #- tmux
+  #- htop
+  #- vim
+  - fail2ban
+  #- curl
+
+runcmd:
+  - usermod -G docker faas
+  - systemctl enable docker
+  - systemctl enable swarm-join
+  - systemctl enable swarm-leave
+  - systemctl start docker
+  - systemctl start swarm-leave
+  - systemctl start swarm-join
+  #- reboot
