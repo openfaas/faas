@@ -53,6 +53,8 @@ There is also a community being built around FaaS with talks, demos and sample f
 
 You can [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md) FaaS on your laptop in 60 seconds, or deploy to a free online Docker playground. Find out more in the [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md).
 
+You can dive straight into the [sample functions here](https://github.com/alexellis/faas/blob/master/sample-functions/README.md).
+
 **Contribute to FaaS**
 
 FaaS enables you to run your serverless functions in whatever language you like, wherever you like - for however long you need.
