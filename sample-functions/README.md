@@ -6,8 +6,8 @@ For examples of hello-world in different programming languages see inside the Ba
 
 ## Demo functions from closing keynote @ Dockercon
 
-* [fass-dockercon](https://github.com/alexellis/faas-dockercon/)
-* [Video from Dockercon](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/)
+* Demo functions - [fass-dockercon](https://github.com/alexellis/faas-dockercon/)
+* Video recording from Dockercon [on YouTube](https://youtu.be/-h2VTE9WnZs?t=15m52s)
 
 ## Sample functions from the FaaS stack
 
