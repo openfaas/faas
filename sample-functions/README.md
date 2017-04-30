@@ -4,7 +4,14 @@ For examples of hello-world in different programming languages see inside the Ba
 
 * [Base Functions](https://github.com/alexellis/faas/tree/master/sample-functions/BaseFunctions)
 
+## Demo functions from closing keynote @ Dockercon
+
+* [fass-dockercon](https://github.com/alexellis/faas-dockercon/)
+* [Video from Dockercon](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/)
+
 ## Sample functions from the FaaS stack
+
+> Also see the [community page](https://github.com/alexellis/faas/blob/master/community.md) for functions created by FaaS users and contributors.
 
 Here is a list of the sample functions included this repository.
 
@@ -21,4 +28,3 @@ Here is a list of the sample functions included this repository.
 | WebhookStash           | Golang function provides way to capture webhooks - JSON/text/binary are all OK |
 | WordCountFunction      | BusyBox `wc` is exposed as a function / service through FaaS |
 
-Also see the [community page](https://github.com/alexellis/faas/blob/master/community.md) for functions created by FaaS users and contributors.
