@@ -1,6 +1,6 @@
 FROM armhf/alpine:3.5
 
-ADD https://github.com/alexellis/faas/releases/download/v0.5-alpha/fwatchdog-armhf /usr/bin/fwatchdog
+ADD https://github.com/alexellis/faas/releases/download/0.5.4-alpha/fwatchdog-armhf /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
 
 WORKDIR /root/
@@ -12,4 +12,6 @@ ENV https_proxy     ""
 COPY app    .
 
 ENV fprocess="/root/app"
+
+HEALTHCHECK --interval=5s CMD [ -e /tmp/.lock ] || exit 1
 CMD ["fwatchdog"]

@@ -75,8 +75,6 @@ services:
         environment:
             no_proxy:   "gateway"
             https_proxy: $https_proxy
-
-
     wordcount:
         image: functions/alpine:latest-armhf
         labels:
@@ -89,6 +87,19 @@ services:
             fprocess:   "wc"
             no_proxy:   "gateway"
             https_proxy: $https_proxy
+    echoit:
+        image: functions/alpine:latest-armhf
+        labels:
+            function: "true"
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
+            fprocess:   "cat"
+            no_proxy:   "gateway"
+            https_proxy: $https_proxy
+
 networks:
     functions:
         driver: overlay
