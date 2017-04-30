@@ -55,6 +55,8 @@ You can [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md) 
 
 You can dive straight into the [sample functions here](https://github.com/alexellis/faas/blob/master/sample-functions/README.md). You'll find hello-world examples for the most common programming languages including: Golang, DotNet Core, Java, NodeJS, Python even BusyBox.
 
+There is even an experimental [faas-cli](https://github.com/alexellis/faas-cli/) in development to create functions quickly from templates for [Node.js](https://github.com/alexellis/faas-cli/blob/master/test_node.sh) or [Python](https://github.com/alexellis/faas-cli/blob/master/test_python.sh), and to deploy to your gateway with a single command.
+
 **Contribute to FaaS**
 
 FaaS enables you to run your serverless functions in whatever language you like, wherever you like - for however long you need.
