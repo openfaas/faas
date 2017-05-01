@@ -10,6 +10,22 @@ schemes:
 - "http"
 paths:
   /system/functions:
+    get:
+      summary: "Get a list of deployed functions with: stats and image digest"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "List of deployed functions."
+          examples:
+           application/json: |-
+            [
+              {"name":"func_payroll","image":"alexellis2/faas-payroll:latest@sha256:0bc2773613c76d9ee4906bf3887ea2527f135cb7a0d0f430743e7c6712949709","invocationCount":16,"replicas":1},
+              {"name":"func_fanclub","image":"alexellis2/fanclub:18-04-2017@sha256:37bb3fabee7e36abab7e6250bb7d13c9ab66e983782b35200470fe2a3aa14daa","invocationCount":1125,"replicas":1}
+            ]
     post:
       summary: "Deploy a new function."
       description: ""
@@ -27,7 +43,32 @@ paths:
       responses:
         200:
           description: "OK"
+    delete:
+      summary: "Remove a deployed function."
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Function to delete"
+        required: true
+        schema:
+          $ref: "#/definitions/DeleteFunctionRequest"
+      responses:
+        200:
+          description: "OK"
+        404:
+          description: "Function not found in gateway"
 definitions:
+  DeleteFunctionRequest:
+    type: "object"
+    properties:
+      functionName:
+        type: "string"
+        description: "Name of deployed function"
   CreateFunctionRequest:
     type: "object"
     properties:
