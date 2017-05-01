@@ -1,0 +1,49 @@
+swagger: "2.0"
+info:
+  description: "FaaS API documentation"
+  version: "0.5.4"
+  title: "FaaS API Gateway"
+  license:
+    name: "MIT"
+basePath: "/"
+schemes:
+- "http"
+paths:
+  /system/functions:
+    post:
+      summary: "Deploy a new function."
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Function to deploy"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateFunctionRequest"
+      responses:
+        200:
+          description: "OK"
+definitions:
+  CreateFunctionRequest:
+    type: "object"
+    properties:
+      service:
+        type: "string"
+        description: "Name of deployed function"
+      network:
+        type: "string"
+        description: "Docker swarm network, usually func_functions"
+      image:
+        type: "string"
+        description: "Docker image in accessible registry"
+      envProcess:
+        type: "string"
+        description: "Process for watchdog to fork"
+externalDocs:
+  description: "More documentation available on Github"
+  url: "http://docs.get-faas.com"
+  
