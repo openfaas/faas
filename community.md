@@ -17,6 +17,7 @@
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+[Ship Serverless Functions to your Docker Swarm with FaaS](https://finnian.io/blog/ship-or-deploy-serverless-functions-to-your-docker-swarm-with-faas/) | Finnian Anderson | finnian.io | 2 May 2017 |
 | [O’Reilly Systems Engineering and Operations newsletter](http://post.oreilly.com/form/oreilly/viewhtml/9z1zlu60fomtoiq41cigtigddvnejvh4vjjfm0i1sh8) | O'Reilly | oreilly.com | 11-Apr-2017 |
 | [Test Driving Docker Functions as a Service (FaaS)](https://www.brianchristner.io/test-driving-docker-function-as-a-service-faas/) | Brian Christner | brianchristner.io | 10-Apr-2017 |
 | [[cncf-toc] The Cloud-Nativity of Serverless](https://lists.cncf.io/pipermail/cncf-toc/2017-March/000781.html) | CNCF mailing-list | cncf.io | 31-May 2017 
@@ -35,13 +36,3 @@
 | [Github - ascii art generator](https://github.com/developius/faas-node-ascii) | Finnian Anderson | [developius/faas-node-ascii](https://github.com/developius/faas-node-ascii) | 17-April-2017 |
 | [Github - URL Shortener](https://github.com/developius/faas-node-url-shortener) | Finnian Anderson | [developius/faas-node-url-shortener](https://github.com/developius/faas-node-url-shortener) | 19-April-2017 |
 | [Github - fibonacci numbers up to N](https://github.com/developius/faas-python-fib/) | Finnian Anderson | [developius/faas-python-fib/](https://github.com/developius/faas-python-fib/) | 19-April-2017 |
-
-### Use-case template
-
-**Name / company**
-
-* What we're using FaaS for
-
-* Key feature
-
-* We wish FaaS could...
