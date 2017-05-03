@@ -11,6 +11,8 @@ import (
 	"github.com/alexellis/faas/gateway/metrics"
 	"github.com/docker/docker/client"
 
+	"fmt"
+
 	"github.com/gorilla/mux"
 )
 
@@ -52,15 +54,22 @@ func main() {
 
 	metricsHandler := metrics.PrometheusHandler()
 	r.Handle("/metrics", metricsHandler)
-	metrics.AttachSwarmWatcher(dockerClient, metricsOptions)
+
+	// This could exist in a separate process - records the replicas of each swarm service.
+	functionLabel := "function"
+	metrics.AttachSwarmWatcher(dockerClient, metricsOptions, functionLabel)
 
 	r.Handle("/", http.RedirectHandler("/ui/", http.StatusMovedPermanently)).Methods("GET")
 
+	readTimeout := 8 * time.Second
+	writeTimeout := 8 * time.Second
+	tcpPort := 8080
+
 	s := &http.Server{
-		Addr:           ":8080",
-		ReadTimeout:    8 * time.Second,
-		WriteTimeout:   8 * time.Second,
-		MaxHeaderBytes: 1 << 20,
+		Addr:           fmt.Sprintf(":%d", tcpPort),
+		ReadTimeout:    readTimeout,
+		WriteTimeout:   writeTimeout,
+		MaxHeaderBytes: http.DefaultMaxHeaderBytes, // 1MB - can be overridden by setting Server.MaxHeaderBytes.
 		Handler:        r,
 	}
 
