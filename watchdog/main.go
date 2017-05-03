@@ -42,6 +42,8 @@ func debugHeaders(source *http.Header, direction string) {
 }
 
 func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request) {
+	startTime := time.Now()
+
 	parts := strings.Split(config.faasProcess, " ")
 
 	if config.debugHeaders {
@@ -102,6 +104,9 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request)
 			w.Header().Set("Content-Type", clientContentType)
 		}
 	}
+
+	execTime := time.Since(startTime).Seconds()
+	w.Header().Set("X-Duration-Seconds", fmt.Sprintf("%f", execTime))
 
 	w.WriteHeader(200)
 	w.Write(out)
