@@ -45,13 +45,17 @@ func main() {
 	r.HandleFunc("/system/functions", faasHandlers.MakeNewFunctionHandler(metricsOptions, dockerClient)).Methods("POST")
 	r.HandleFunc("/system/functions", faasHandlers.MakeDeleteFunctionHandler(metricsOptions, dockerClient)).Methods("DELETE")
 
+	fs := http.FileServer(http.Dir("./assets/"))
+	r.PathPrefix("/ui/").Handler(http.StripPrefix("/ui", fs)).Methods("GET")
+
 	r.HandleFunc("/", faasHandlers.MakeProxy(metricsOptions, false, dockerClient, &logger)).Methods("POST")
 
 	metricsHandler := metrics.PrometheusHandler()
 	r.Handle("/metrics", metricsHandler)
 	metrics.AttachSwarmWatcher(dockerClient, metricsOptions)
 
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./assets/"))).Methods("GET")
+	r.Handle("/", http.RedirectHandler("/ui/", http.StatusMovedPermanently)).Methods("GET")
+
 	s := &http.Server{
 		Addr:           ":8080",
 		ReadTimeout:    8 * time.Second,
