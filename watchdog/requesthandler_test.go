@@ -20,6 +20,33 @@ func TestHandler_make(t *testing.T) {
 	}
 }
 
+func TestHandler_HasXDurationSecondsHeader(t *testing.T) {
+	rr := httptest.NewRecorder()
+
+	body := "hello"
+	req, err := http.NewRequest("POST", "/", bytes.NewBufferString(body))
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	config := WatchdogConfig{
+		faasProcess: "cat",
+	}
+	handler := makeRequestHandler(&config)
+	handler(rr, req)
+
+	required := http.StatusOK
+	if status := rr.Code; status != required {
+		t.Errorf("handler returned wrong status code: got %v, but wanted %v",
+			status, required)
+	}
+
+	seconds := rr.Header().Get("X-Duration-Seconds")
+	if len(seconds) == 0 {
+		t.Errorf("Exec of cat should have given a duration as an X-Duration-Seconds header\n")
+	}
+}
+
 func TestHandler_StatusOKAllowed_ForPOST(t *testing.T) {
 	rr := httptest.NewRecorder()
 
