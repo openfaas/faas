@@ -174,11 +174,8 @@ func makeSpec(request *requests.CreateFunctionRequest) swarm.ServiceSpec {
 	max := uint64(1)
 
 	nets := []swarm.NetworkAttachmentConfig{
-		swarm.NetworkAttachmentConfig{Target: request.Network},
+		{Target: request.Network},
 	}
-
-	// TODO: request.EnvProcess should only be set if it's not nil, otherwise we override anything in the Docker image already
-
 	spec := swarm.ServiceSpec{
 		TaskTemplate: swarm.TaskSpec{
 			RestartPolicy: &swarm.RestartPolicy{
@@ -187,7 +184,6 @@ func makeSpec(request *requests.CreateFunctionRequest) swarm.ServiceSpec {
 			},
 			ContainerSpec: swarm.ContainerSpec{
 				Image:  request.Image,
-				Env:    []string{fmt.Sprintf("fprocess=%s", request.EnvProcess)},
 				Labels: map[string]string{"function": "true"},
 			},
 			Networks: nets,
@@ -196,5 +192,15 @@ func makeSpec(request *requests.CreateFunctionRequest) swarm.ServiceSpec {
 			Name: request.Service,
 		},
 	}
+
+	// TODO: request.EnvProcess should only be set if it's not nil, otherwise we override anything in the Docker image already
+	var env []string
+	if len(request.EnvProcess) > 0 {
+		env = append(env, fmt.Sprintf("fprocess=%s", request.EnvProcess))
+	}
+	if len(env) > 0 {
+		spec.TaskTemplate.ContainerSpec.Env = env
+	}
+
 	return spec
 }
