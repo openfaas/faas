@@ -18,8 +18,8 @@ EXPOSE 8080
 ENV http_proxy      ""
 ENV https_proxy     ""
 
-COPY --from 0 gateway    .
+COPY --from=0 /go/src/github.com/alexellis/faas/gateway/gateway    .
 
-COPY --from 0 assets     assets
+COPY assets     assets
 
 CMD ["./gateway"]
