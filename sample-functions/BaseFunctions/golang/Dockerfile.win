@@ -1,12 +1,16 @@
-FROM golang:1.7.5-windowsservercore
+FROM golang:1.7.5-windowsservercore AS build
 MAINTAINER alexellis2@gmail.com
 ENTRYPOINT []
 
 WORKDIR /go/src/github.com/alexellis/faas/sample-functions/golang
-COPY . /go/src/github.com/alexellis/faas/sample-functions/golang
+COPY handler.go /go/src/github.com/alexellis/faas/sample-functions/golang/
 RUN go build
 
 ADD ./watchdog.exe /
+
+FROM microsoft/nanoserver
+COPY --from=build /watchdog.exe /watchdog.exe
+COPY --from=build /go/src/github.com/alexellis/faas/sample-functions/golang/golang.exe /app.exe
 
 EXPOSE 8080
 ENV fprocess="app.exe"
