@@ -9,7 +9,7 @@ RUN go build
 ADD ./watchdog.exe /
 
 EXPOSE 8080
-ENV fprocess="app.exe"
+ENV fprocess="golang.exe"
 
 ENV suppress_lock="true"
 
