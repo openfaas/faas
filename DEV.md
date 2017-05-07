@@ -37,7 +37,7 @@ RUN chmod +x /usr/bin/fwatchdog
 
 ENV fprocess="/go/src/app/app"
 
-CMD ["/usr/bin/watchdog"]
+CMD ["/usr/bin/fwatchdog"]
 ```
 
 The base Docker container is not important, you just need to add the watchdog component and then set the fprocess to execute your binary at runtime.
