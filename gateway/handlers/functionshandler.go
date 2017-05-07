@@ -198,6 +198,10 @@ func makeSpec(request *requests.CreateFunctionRequest) swarm.ServiceSpec {
 	if len(request.EnvProcess) > 0 {
 		env = append(env, fmt.Sprintf("fprocess=%s", request.EnvProcess))
 	}
+	for k, v := range request.EnvVars {
+		env = append(env, fmt.Sprintf("%s=%s", k, v))
+	}
+
 	if len(env) > 0 {
 		spec.TaskTemplate.ContainerSpec.Env = env
 	}
