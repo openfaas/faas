@@ -1,12 +1,24 @@
 ## Functions as a Service (FaaS)
 
+[![Build
+Status](https://travis-ci.org/alexellis/faas.svg?branch=master)](https://travis-ci.org/alexellis/faas)
+
 FaaS is a framework for building serverless functions on Docker with first class support for metrics. Any UNIX process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
+
+**Highlights**
+
+* Ease of use through UI portal and *one-click* install
+* Write functions in any language for Linux or Windows
+* Portable - runs on your own hardware, or any cloud
+* Auto-scales as demand increases
 
 ## Concept
 
 * Each container has a watchdog process that hosts a web server allowing a post request to be forwarded to a desired process via STDIN. The response is sent back to the caller via STDOUT.
 
 * The API Gateway provides an external route into your functions and collects metrics in Prometheus. The gateway will scale functions according to demand by mangaging Docker Swarm replicas as throughput increases. A UI is baked in allowing you to invoke functions in your browser and create new ones as needed.
+
+![Stack](http://blog.alexellis.io/content/images/2017/04/faas_hi.png)
 
 ## Closing Keynote at Dockercon 2017
 
@@ -20,26 +32,11 @@ If you'd like to find the functions I used in the demos head over to the [faas-d
 
 This is my original blog post on FaaS from Janurary: [Functions as a Service blog post](http://blog.alexellis.io/functions-as-a-service/)
 
-[![Build
-Status](https://travis-ci.org/alexellis/faas.svg?branch=master)](https://travis-ci.org/alexellis/faas)
-
-![Stack](http://blog.alexellis.io/content/images/2017/04/faas_hi.png)
-
 ## TestDrive
 
 A one-line script is provided to help you get started quickly. You can test-drive FaaS with a set of sample functions as defined in the provided [docker-compose.yml](https://github.com/alexellis/faas/blob/master/docker-compose.yml) file. 
 
 Use your own laptop or the free community-run Docker playground: play-with-docker.com.
-
-**Highlights:**
-
-* Ease of use through UI portal
-* Setup a working environment with one script
-* Portable - runs on any hardware
-
-* Baked-in Prometheus metrics
-* Any container can be a function
-* Auto-scales as demand increases
 
 ### [Begin the TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md)
 
@@ -70,7 +67,7 @@ FaaS is still expanding and growing, check out the developments around:
 * [Create new functions through UI](https://twitter.com/alexellisuk/status/835047437588905984)
 * [Various sample functions](https://github.com/alexellis/faas/blob/master/docker-compose.yml)
 * [Integration between IFTTT and Slack](https://twitter.com/alexellisuk/status/857300138745876483)
-
+* [Mixed Linux / Windows serverless functions](https://github.com/alexellis/faas/pull/79)
 * [ARM / Raspberry Pi support](https://gist.github.com/alexellis/665332cd8bd9657c9649d0cd6c2dc187)
 
 ## Minimum requirements: 
