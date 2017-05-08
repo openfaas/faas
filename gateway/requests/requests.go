@@ -5,8 +5,12 @@ package requests
 
 // CreateFunctionRequest create a function in the swarm.
 type CreateFunctionRequest struct {
+	// Service corresponds to a Docker Service
 	Service string `json:"service"`
-	Image   string `json:"image"`
+	// Image corresponds to a Docker image
+	Image string `json:"image"`
+
+	// Network is a Docker overlay network in Swarm - the default value is func_functions
 	Network string `json:"network"`
 
 	// EnvProcess corresponds to the fprocess variable for your container watchdog.
