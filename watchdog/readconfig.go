@@ -59,6 +59,8 @@ func (ReadConfig) Read(hasEnv HasEnv) WatchdogConfig {
 		cfg.writeDebug = parseBoolValue(hasEnv.Getenv("write_debug"))
 	}
 
+	cfg.cgiHeaders = parseBoolValue(hasEnv.Getenv("cgi_headers"))
+
 	cfg.marshalRequest = parseBoolValue(hasEnv.Getenv("marshal_request"))
 	cfg.debugHeaders = parseBoolValue(hasEnv.Getenv("debug_headers"))
 
@@ -81,6 +83,9 @@ type WatchdogConfig struct {
 	writeDebug bool
 
 	marshalRequest bool
+
+	// cgiHeaders will make environmental variables available with all the HTTP headers.
+	cgiHeaders bool
 
 	// prints out all incoming and out-going HTTP headers
 	debugHeaders bool

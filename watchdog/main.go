@@ -51,6 +51,16 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request)
 	}
 
 	targetCmd := exec.Command(parts[0], parts[1:]...)
+
+	if config.cgiHeaders {
+		envs := os.Environ()
+		for k, v := range r.Header {
+			kv := fmt.Sprintf("Http_%s=%s", k, v[0])
+			envs = append(envs, kv)
+		}
+		targetCmd.Env = envs
+	}
+
 	writer, _ := targetCmd.StdinPipe()
 
 	var out []byte

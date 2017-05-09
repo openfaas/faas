@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 )
 
@@ -17,6 +18,78 @@ func TestHandler_make(t *testing.T) {
 
 	if handler == nil {
 		t.Fail()
+	}
+}
+
+func TestHandler_HasCustomHeaderInFunction_WithCgi_Mode(t *testing.T) {
+	rr := httptest.NewRecorder()
+
+	body := ""
+	req, err := http.NewRequest("POST", "/", bytes.NewBufferString(body))
+	req.Header.Add("custom-header", "value")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	config := WatchdogConfig{
+		faasProcess: "env",
+		cgiHeaders:  true,
+	}
+	handler := makeRequestHandler(&config)
+	handler(rr, req)
+
+	required := http.StatusOK
+	if status := rr.Code; status != required {
+		t.Errorf("handler returned wrong status code: got %v, but wanted %v",
+			status, required)
+	}
+
+	read, _ := ioutil.ReadAll(rr.Body)
+	val := string(read)
+	if strings.Index(val, "Http_Custom-Header") == -1 {
+		t.Errorf("'env' should printed: Http_Custom-Header, got: %s\n", val)
+
+	}
+
+	seconds := rr.Header().Get("X-Duration-Seconds")
+	if len(seconds) == 0 {
+		t.Errorf("Exec of cat should have given a duration as an X-Duration-Seconds header\n")
+	}
+}
+
+func TestHandler_DoesntHaveCustomHeaderInFunction_WithoutCgi_Mode(t *testing.T) {
+	rr := httptest.NewRecorder()
+
+	body := ""
+	req, err := http.NewRequest("POST", "/", bytes.NewBufferString(body))
+	req.Header.Add("custom-header", "value")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	config := WatchdogConfig{
+		faasProcess: "env",
+		cgiHeaders:  false,
+	}
+	handler := makeRequestHandler(&config)
+	handler(rr, req)
+
+	required := http.StatusOK
+	if status := rr.Code; status != required {
+		t.Errorf("handler returned wrong status code: got %v, but wanted %v",
+			status, required)
+	}
+
+	read, _ := ioutil.ReadAll(rr.Body)
+	val := string(read)
+	if strings.Index(val, "Http_Custom-Header") != -1 {
+		t.Errorf("'env' should not have printed: Http_Custom-Header, got: %s\n", val)
+
+	}
+
+	seconds := rr.Header().Get("X-Duration-Seconds")
+	if len(seconds) == 0 {
+		t.Errorf("Exec of cat should have given a duration as an X-Duration-Seconds header\n")
 	}
 }
 
