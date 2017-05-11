@@ -3,6 +3,8 @@ Watchdog
 
 The FaaS watchdog is designed to marshal a HTTP request between your public HTTP URL and a individual function.
 
+Every FaaS function embeds this binary and uses it as its entrypoint.
+
 Creating a function:
 
 - [x] Use an existing or a new Docker image
@@ -52,11 +54,13 @@ A number of environmental overrides can be added for additional flexibility and 
 | Option                 | Usage             |
 |------------------------|--------------|
 | `fprocess`             | The process to invoke for each function call. This must be a UNIX binary and accept input via STDIN and output via STDOUT.  |
-| `marshal_requests`     | Instead of re-directing the raw HTTP body into your fprocess, it will first be marshalled into JSON. Use this if you need to work with HTTP headers |
+| `cgi_headers`          | HTTP headers from request are made available through environmental variables - `Http_X-Served-By` etc. |
+| `marshal_requests`     | Instead of re-directing the raw HTTP body into your fprocess, it will first be marshalled into JSON. Use this if you need to work with HTTP headers and do not want to use environmental variables via the `cgi_headers` flag. |
 | `content_type`         | Force a specific Content-Type response for all responses.    |
 | `write_timeout`        | HTTP timeout for writing a response body from your function  |
 | `read_timeout`         | HTTP timeout for reading the payload from the client caller  |
 | `suppress_lock`        | The watchdog will attempt to write a lockfile to /tmp/ for swarm healthchecks - set this to true to disable behaviour. |
+ 
 
 ## Advanced / tuning
 
