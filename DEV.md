@@ -18,6 +18,9 @@ To work on either of the FaaS Golang components checkout the "./build.sh" script
 
 Functions run as Docker containers with the Watchdog component embedded to handle communication with the API Gateway.
 
+You can find the [reference documentation for the Watchdog here](https://github.com/alexellis/faas/tree/master/watchdog).
+
+
 **Markdown Parser**
 
 This is the basis of a function which generates HTML from MarkDown:
