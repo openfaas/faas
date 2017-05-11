@@ -7,11 +7,11 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:0.5.3
+        image: functions/gateway:0.5.5
         networks:
             - functions
-        environment:
-            dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
+#        environment:
+#            dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
         deploy:
             placement:
                 constraints: [node.role == manager]
