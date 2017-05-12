@@ -12,6 +12,8 @@ import (
 
 	"io/ioutil"
 
+	"os"
+
 	"github.com/alexellis/faas/gateway/metrics"
 	"github.com/alexellis/faas/gateway/requests"
 	"github.com/docker/docker/api/types"
@@ -38,6 +40,48 @@ func getCounterValue(service string, code string, metricsOptions *metrics.Metric
 	return invocations
 }
 
+func getTargetNetwork(namespace string, c *client.Client) *types.NetworkResource {
+	var networkResource *types.NetworkResource
+	if len(namespace) > 0 {
+
+		filters1 := filters.NewArgs()
+		options := types.NetworkListOptions{
+			Filters: filters1,
+		}
+
+		res, err := c.NetworkList(context.Background(), options)
+		if err != nil {
+			log.Println(err)
+		}
+
+		for _, network := range res {
+			if network.Labels["com.docker.stack.namespace"] == namespace {
+				networkResource = &network
+				break
+			}
+		}
+	}
+
+	return networkResource
+}
+
+func isMatchedNetwork(networkID string, networks []swarm.NetworkAttachmentConfig) bool {
+	matched := false
+
+	if len(networkID) > 0 {
+		for _, network := range networks {
+			if network.Target == networkID {
+				matched = true
+				break
+			}
+		}
+
+	} else {
+		matched = true
+	}
+	return matched
+}
+
 // MakeFunctionReader gives a summary of Function structs with Docker service stats overlaid with Prometheus counters.
 func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -53,22 +97,34 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 			fmt.Println(err)
 		}
 
-		// TODO: Filter only "faas" functions (via metadata?)
+		var networkID string
+		filterStacks := len(os.Getenv("stack_namespace")) > 0
+		network := getTargetNetwork(os.Getenv("stack_namespace"), c)
+
+		if filterStacks && network == nil {
+			networkID = "not_found"
+		} else if network != nil {
+			networkID = network.ID
+		}
+
 		var functions []requests.Function
 
 		for _, service := range services {
+			matchingNetwork := isMatchedNetwork(networkID, service.Spec.TaskTemplate.Networks)
 
-			if len(service.Spec.TaskTemplate.ContainerSpec.Labels["function"]) > 0 {
-				invocations := getCounterValue(service.Spec.Name, "200", &metricsOptions) +
-					getCounterValue(service.Spec.Name, "500", &metricsOptions)
+			if matchingNetwork {
+				if len(service.Spec.TaskTemplate.ContainerSpec.Labels["function"]) > 0 {
+					invocations := getCounterValue(service.Spec.Name, "200", &metricsOptions) +
+						getCounterValue(service.Spec.Name, "500", &metricsOptions)
 
-				f := requests.Function{
-					Name:            service.Spec.Name,
-					Image:           service.Spec.TaskTemplate.ContainerSpec.Image,
-					InvocationCount: invocations,
-					Replicas:        *service.Spec.Mode.Replicated.Replicas,
+					f := requests.Function{
+						Name:            service.Spec.Name,
+						Image:           service.Spec.TaskTemplate.ContainerSpec.Image,
+						InvocationCount: invocations,
+						Replicas:        *service.Spec.Mode.Replicated.Replicas,
+					}
+					functions = append(functions, f)
 				}
-				functions = append(functions, f)
 			}
 		}
 
@@ -79,6 +135,7 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 	}
 }
 
+// MakeDeleteFunctionHandler create a handler to delete existing functions.
 func MakeDeleteFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Client) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
