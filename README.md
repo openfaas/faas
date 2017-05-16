@@ -16,7 +16,7 @@ FaaS is a framework for building serverless functions on Docker with first class
 
 * Each container has a watchdog process that hosts a web server allowing a post request to be forwarded to a desired process via STDIN. The response is sent back to the caller via STDOUT.
 
-* The API Gateway provides an external route into your functions and collects metrics in Prometheus. The gateway will scale functions according to demand by mangaging Docker Swarm replicas as throughput increases. A UI is baked in allowing you to invoke functions in your browser and create new ones as needed.
+* The API Gateway provides an external route into your functions and collects metrics in Prometheus. The gateway will scale functions according to demand by managing Docker Swarm replicas as throughput increases. A UI is baked in allowing you to invoke functions in your browser and create new ones as needed.
 
 ![Stack](http://blog.alexellis.io/content/images/2017/04/faas_hi.png)
 
