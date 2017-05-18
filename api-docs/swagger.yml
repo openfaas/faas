@@ -150,6 +150,11 @@ definitions:
       envProcess:
         type: "string"
         description: "Process for watchdog to fork"
+      envVars:
+        type: "array"
+        items:
+          type: "string"
+        description: "Overrides to environmental variables"
 externalDocs:
   description: "More documentation available on Github"
   url: "http://docs.get-faas.com"
