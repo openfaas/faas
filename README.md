@@ -38,7 +38,7 @@ A one-line script is provided to help you get started quickly. You can test-driv
 
 Use your own laptop or the free community-run Docker playground: play-with-docker.com.
 
-[![Try in PWD](https://cdn.rawgit.com/play-with-docker/stacks/cff22438/assets/images/button.png)](http://play-with-docker.com?stack=https://raw.githubusercontent.com/alexellis/faas/master/docker-compose.yml)
+[![Try in PWD](https://cdn.rawgit.com/play-with-docker/stacks/cff22438/assets/images/button.png)](http://play-with-docker.com?stack=https://raw.githubusercontent.com/alexellis/faas/master/docker-compose.yml&stack_name=func)
 
 ### [Begin the TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md)
 
