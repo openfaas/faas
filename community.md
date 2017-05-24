@@ -17,6 +17,8 @@
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Create a Morse Code serverless FaaS function in Quick Basic](http://jmkhael.io/code-a-morse-serverless-function-in-quick-basic-with-faas-and-docker/) | Johnny Mkhael | jmkhael.io | 8 May 2017 |
+| ["Serverless"? On my own servers?](http:///serverless-and-on-my-own-servers/) | Johnny Mkhael | jmkhael.io | 4 May 2017 |
 [Ship Serverless Functions to your Docker Swarm with FaaS](https://finnian.io/blog/ship-serverless-functions-to-your-docker-swarm-with-faas/) | Finnian Anderson | finnian.io | 2 May 2017 |
 | [O’Reilly Systems Engineering and Operations newsletter](http://post.oreilly.com/form/oreilly/viewhtml/9z1zlu60fomtoiq41cigtigddvnejvh4vjjfm0i1sh8) | O'Reilly | oreilly.com | 11-Apr-2017 |
 | [Test Driving Docker Functions as a Service (FaaS)](https://www.brianchristner.io/test-driving-docker-function-as-a-service-faas/) | Brian Christner | brianchristner.io | 10-Apr-2017 |
