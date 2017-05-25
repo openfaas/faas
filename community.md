@@ -4,7 +4,7 @@
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
-| [Whaleless!](http://gluecon.com/#agenda) | Amir Chaudhry | GlueCon, CO | 26-May-2017 |
+| [Whaleless!](http://gluecon.com/#agenda) ([slides](https://speakerdeck.com/amirmc/whaleless-doing-serverless-with-docker)) | Amir Chaudhry | GlueCon, CO | 26-May-2017 |
 | [MakerShift: Build Your own Serverless functions w/ FaaS](https://www.makershift.io/)| Austin Frey | Harrisburg, PA | 6-May-2017 |
 | [Dockercon closing keynote - Cool Hacks](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/) | Alex Ellis | Dockercon, Austin | 20-April-2017 |
 | [TechLancaster](http://techlancaster.com/meetup)| Austin Frey | Lancaster, PA | 18-April-2017 |
