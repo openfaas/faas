@@ -18,6 +18,11 @@ type CreateFunctionRequest struct {
 
 	// EnvVars provides overrides for functions.
 	EnvVars map[string]string `json:"envVars"`
+
+	// RegistryAuth is the registry authentication (optional)
+	// in the same encoded format as Docker native credentials
+	// (see ~/.docker/config.json)
+	RegistryAuth string `json:"registryAuth,omitempty"`
 }
 
 type DeleteFunctionRequest struct {
