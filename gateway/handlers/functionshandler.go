@@ -5,19 +5,24 @@ package handlers
 
 import (
 	"context"
+	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	"io/ioutil"
 
 	"github.com/alexellis/faas/gateway/metrics"
 	"github.com/alexellis/faas/gateway/requests"
+	"github.com/docker/distribution/reference"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/api/types/swarm"
 	"github.com/docker/docker/client"
+	"github.com/docker/docker/registry"
 	"github.com/prometheus/client_golang/prometheus"
 	io_prometheus_client "github.com/prometheus/client_model/go"
 )
@@ -160,6 +165,16 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 		// w.WriteHeader(http.StatusNotImplemented)
 
 		options := types.ServiceCreateOptions{}
+		if len(request.RegistryAuth) > 0 {
+			auth, err := BuildEncodedAuthConfig(request.RegistryAuth, request.Image)
+			if err != nil {
+				log.Println("Error while building registry auth configuration", err)
+				w.WriteHeader(http.StatusBadRequest)
+				w.Write([]byte("Invalid registry auth"))
+				return
+			}
+			options.EncodedRegistryAuth = auth
+		}
 		spec := makeSpec(&request)
 
 		response, err := c.ServiceCreate(context.Background(), spec, options)
@@ -207,4 +222,44 @@ func makeSpec(request *requests.CreateFunctionRequest) swarm.ServiceSpec {
 	}
 
 	return spec
+}
+
+func BuildEncodedAuthConfig(basicAuthB64 string, dockerImage string) (string, error) {
+	// extract registry server address
+	distributionRef, err := reference.ParseNormalizedNamed(dockerImage)
+	if err != nil {
+		return "", err
+	}
+	repoInfo, err := registry.ParseRepositoryInfo(distributionRef)
+	if err != nil {
+		return "", err
+	}
+	// extract registry user & password
+	user, password, err := userPasswordFromBasicAuth(basicAuthB64)
+	if err != nil {
+		return "", err
+	}
+	// build encoded registry auth config
+	buf, err := json.Marshal(types.AuthConfig{
+		Username:      user,
+		Password:      password,
+		ServerAddress: repoInfo.Index.Name,
+	})
+	if err != nil {
+		return "", err
+	}
+	return base64.URLEncoding.EncodeToString(buf), nil
+}
+
+func userPasswordFromBasicAuth(basicAuthB64 string) (string, string, error) {
+	c, err := base64.StdEncoding.DecodeString(basicAuthB64)
+	if err != nil {
+		return "", "", err
+	}
+	cs := string(c)
+	s := strings.IndexByte(cs, ':')
+	if s < 0 {
+		return "", "", errors.New("Invalid basic auth")
+	}
+	return cs[:s], cs[s+1:], nil
 }

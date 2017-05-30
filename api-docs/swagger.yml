@@ -155,6 +155,9 @@ definitions:
         items:
           type: "string"
         description: "Overrides to environmental variables"
+      registryAuth:
+        type: "string"
+        description: "Private registry base64-encoded basic auth (as present in ~/.docker/config.json)"
 externalDocs:
   description: "More documentation available on Github"
   url: "http://docs.get-faas.com"
