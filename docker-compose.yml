@@ -15,7 +15,7 @@ services:
         deploy:
             placement:
                 constraints: [node.role == manager]
- 
+
     prometheus:
         image: functions/prometheus:1.5.2 # Mirrors version 1.5.2 of quay.io/prometheus/prometheus:latest
         volumes:
@@ -66,6 +66,9 @@ services:
         environment:
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints: [node.platform.OS == linux]
 
     # Pass a username as an argument to find how many images user has pushed to Docker Hub.
     hubstats:
@@ -79,6 +82,9 @@ services:
         environment:
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints: [node.platform.OS == linux]
 
     # Node.js gives OS info about the node (Host)
     nodeinfo:
@@ -92,6 +98,9 @@ services:
         environment:
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints: [node.platform.OS == linux]
 
     # Uses `cat` to echo back response, fastest function to execute.
     echoit:
@@ -106,6 +115,9 @@ services:
             fprocess: "cat"
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints: [node.platform.OS == linux]
 
     # Counts words in request with `wc` utility
     wordcount:
@@ -121,6 +133,9 @@ services:
             fprocess: "wc"
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints: [node.platform.OS == linux]
 
     # Calculates base64 representation of request body.
     base64:
@@ -135,6 +150,9 @@ services:
             fprocess: "base64"
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints: [node.platform.OS == linux]
 
     # Decodes base64 representation of request body.
     decodebase64:
@@ -149,6 +167,9 @@ services:
             fprocess: "base64 -d"
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints: [node.platform.OS == linux]
 
     # Converts body in (markdown format) -> (html)
     markdown:
@@ -162,6 +183,9 @@ services:
         environment:
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints: [node.platform.OS == linux]
 
 networks:
     functions:
