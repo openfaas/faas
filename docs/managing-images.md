@@ -1,5 +1,14 @@
 # Managing images
 
+Any Docker images you build for your FaaS functions need to be accessible by any Docker Swarm worker or manager in your cluster. The only exception is during development - when you may have a single-node cluster and the image is in your local image library.
+
+All images should be pushed to either a private repository or the Docker Hub:
+
+* Manually built FaaS images
+* Images build with the FaaS-CLI
+
+Repositories that need authentication will require configuration when deploying your FaaS functions.
+
 ## Using private Docker registries
 
 FaaS supports running functions from Docker images in private Docker registries.
@@ -19,11 +28,20 @@ curl -XPOST /system/functions -d {
 ```
 
 Base64-encoded basic auth can be resolved using your registry username and password:
+
 ````
-echo -n "user:password" | base64
+$ echo -n "user:password" | base64
 ````
 
-You can also find it in your `~/.docker/config.json` Docker credentials store, as a result of the `docker login` command:
+or (to prevent tracking in `history` command):
+
+```
+$ base64 -
+(type in) user:password (hit control+D twice)
+```
+
+You can also find this string your `~/.docker/config.json` file. Docker stores credentials here after you run the `docker login` command:
+
 ```
 cat ~/.docker/config.json
 {
