@@ -2,3 +2,4 @@ fwatchdog
 fwatchdog-armhf
 **/node_modules/
 **/*.DS_Store
+.vscode

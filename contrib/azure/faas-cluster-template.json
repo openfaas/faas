@@ -1,0 +1,575 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "masterPrefix": {
+      "type": "string",
+      "defaultValue": "master",
+      "metadata": {
+        "description": "Master node(s) name prefix"
+      }
+    },
+    "masterCount": {
+      "type": "int",
+      "defaultValue": 1,
+      "metadata": {
+        "description": "Number of master VM instances (1,3 or 5)"
+      },
+      "allowedValues": [
+        1,
+        3,
+        5
+      ]
+    },
+    "masterSize": {
+      "type": "string",
+      "defaultValue": "Standard_DS1_v2",
+      "metadata": {
+        "description": "Master instance size"
+      },
+      "allowedValues": [
+        "Standard_DS1_v2",
+        "Standard_DS2_v2",
+        "Standard_DS3_v2",
+        "Standard_DS4_v2",
+        "Standard_F1",
+        "Standard_F2"
+      ]
+    },
+    "agentPrefix": {
+      "type": "string",
+      "defaultValue": "agents"
+    },
+    "agentCount": {
+      "type": "int",
+      "metadata": {
+        "description": "Number of agent VM instances (100 or less)."
+      },
+      "defaultValue": 2,
+      "minValue": 1,
+      "maxValue": 100
+    },
+    "agentSize": {
+      "type": "string",
+      "defaultValue": "Standard_DS1_v2",
+      "metadata": {
+        "description": "Agent instance size"
+      },
+      "allowedValues": [
+        "Standard_DS1_v2",
+        "Standard_DS2_v2",
+        "Standard_DS3_v2",
+        "Standard_DS4_v2",
+        "Standard_F1",
+        "Standard_F2"
+      ]
+    },
+    "adminUsername": {
+      "type": "string",
+      "defaultValue": "cluster",
+      "metadata": {
+        "description": "Admin username on all VMs."
+      }
+    },
+    "adminPublicKey": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "ssh public key for connecting to VMs."
+      }
+    },
+    "masterCustomData": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Base64 encoded, multi-line string to pass to Ubuntu cloud-init"
+      }
+    },
+    "agentCustomData": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Base64 encoded, multi-line string to pass to Ubuntu cloud-init"
+      }
+    },
+    "asFDCount": {
+      "type": "int",
+      "defaultValue": 3,
+      "metadata": {
+        "description": "Master Availability Set Fault Domains"
+      }
+    },
+    "asUDCount": {
+      "type": "int",
+      "defaultValue": 5,
+      "metadata": {
+        "description": "Master Availability Set Update Domains"
+      }
+    },
+    "saType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Premium_LRS"
+      ]
+    },
+    "diskSizeGB": {
+      "type": "int",
+      "defaultValue": 20,
+      "allowedValues": [
+        20,
+        50,
+        100
+      ]
+    }
+  },
+  "variables": {
+    "diagsName": "[toLower(substring(concat(parameters('masterPrefix'), 'diag',  uniqueString(resourceGroup().id)), 0, 16))]",
+    "natStartPort": 50000,
+    "natEndPort": 50099,
+    "natBackendPort": 22
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[variables('diagsName')]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "accountType": "Standard_LRS"
+      }
+    },
+    {
+      "comments": "Virtual Network",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "cluster",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.0.0.0/8"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "masters",
+            "properties": {
+              "addressPrefix": "10.1.0.0/16"
+            }
+          },
+          {
+            "name": "agents",
+            "properties": {
+              "addressPrefix": "10.2.0.0/16"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "comments": "Master Node(s)",
+      "type": "Microsoft.Compute/virtualMachines",
+      "copy": {
+        "name": "masters",
+        "count": "[parameters('masterCount')]"
+      },
+      "name": "[concat(parameters('masterPrefix'),copyIndex())]",
+      "apiVersion": "2016-04-30-preview",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "osProfile": {
+          "computerName": "[concat(parameters('masterPrefix'),copyIndex())]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "customData": "[parameters('masterCustomData')]",
+          "linuxConfiguration": {
+            "disablePasswordAuthentication": true,
+            "ssh": {
+              "publicKeys": [
+                {
+                  "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
+                  "keyData": "[parameters('adminPublicKey')]"
+                }
+              ]
+            }
+          }
+        },
+        "hardwareProfile": {
+          "vmSize": "[parameters('masterSize')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "16.04.0-LTS",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "[concat(parameters('masterPrefix'),copyIndex())]",
+            "managedDisk": {
+              "storageAccountType": "[parameters('saType')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage",
+            "diskSizeGB": "[parameters('diskSizeGB')]"
+          },
+          "dataDisks": []
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('masterPrefix'),copyIndex()))]"
+            }
+          ]
+        },
+        "availabilitySet": {
+          "id": "[resourceId('Microsoft.Compute/availabilitySets', 'masters')]"
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true,
+            "storageUri": "[concat('https', '://', variables('diagsName'), '.blob.core.windows.net')]"
+          }
+        }
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', parameters('masterPrefix'), copyIndex())]",
+        "[concat('Microsoft.Compute/availabilitySets/', 'masters')]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('diagsName'))]"
+      ]
+    },
+    {
+      "comments": "Agent ScaleSet",
+      "type": "Microsoft.Compute/virtualMachineScaleSets",
+      "name": "[parameters('agentPrefix')]",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2016-04-30-preview",
+      "dependsOn": [
+        "[concat('Microsoft.Network/loadBalancers/', parameters('agentPrefix'))]",
+        "[concat('Microsoft.Storage/storageAccounts/', variables('diagsName'))]"
+      ],
+      "sku": {
+        "name": "[parameters('agentSize')]",
+        "tier": "Standard",
+        "capacity": "[parameters('agentCount')]"
+      },
+      "properties": {
+        "overprovision": "false",
+        "upgradePolicy": {
+          "mode": "Manual"
+        },
+        "virtualMachineProfile": {
+          "osProfile": {
+            "computerNamePrefix": "[parameters('agentPrefix')]",
+            "adminUsername": "[parameters('adminUsername')]",
+            "customData": "[parameters('agentCustomData')]",
+            "linuxConfiguration": {
+              "disablePasswordAuthentication": true,
+              "ssh": {
+                "publicKeys": [
+                  {
+                    "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
+                    "keyData": "[parameters('adminPublicKey')]"
+                  }
+                ]
+              }
+            }
+          },
+          "storageProfile": {
+            "osDisk": {
+              "managedDisk": {
+                "storageAccountType": "[parameters('saType')]"
+              },
+              "caching": "ReadWrite",
+              "createOption": "FromImage",
+              "diskSizeGB": "[parameters('diskSizeGB')]"
+            },
+            "imageReference": {
+              "publisher": "Canonical",
+              "offer": "UbuntuServer",
+              "sku": "16.04.0-LTS",
+              "version": "latest"
+            }
+          },
+          "diagnosticsProfile": {
+            "bootDiagnostics": {
+              "enabled": true,
+              "storageUri": "[concat('https', '://', variables('diagsName'), '.blob.core.windows.net')]"
+            }
+          },
+          "networkProfile": {
+            "networkInterfaceConfigurations": [
+              {
+                "name": "[parameters('agentPrefix')]",
+                "properties": {
+                  "primary": true,
+                  "ipConfigurations": [
+                    {
+                      "name": "[concat(parameters('agentPrefix'),'IpConfig')]",
+                      "properties": {
+                        "subnet": {
+                          "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', 'cluster', '/subnets/', 'agents')]"
+                        },
+                        "loadBalancerBackendAddressPools": [
+                          {
+                            "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', parameters('agentPrefix'), '/backendAddressPools/', 'agentPool')]"
+                          }
+                        ],
+                        "loadBalancerInboundNatPools": [
+                          {
+                            "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', parameters('agentPrefix'), '/inboundNatPools/', 'sshPool')]"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "comments": "Autoscale Settings",
+      "type": "microsoft.insights/autoscalesettings",
+      "name": "[parameters('agentPrefix')]",
+      "apiVersion": "2014-04-01",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "profiles": [
+          {
+            "name": "DefaultProfile",
+            "capacity": {
+              "minimum": "1",
+              "maximum": "10",
+              "default": "1"
+            },
+            "rules": [
+              {
+                "metricTrigger": {
+                  "metricName": "Percentage CPU",
+                  "metricNamespace": "",
+                  "metricResourceUri": "[resourceId('Microsoft.Compute/virtualMachineScaleSets', parameters('agentPrefix'))]",
+                  "timeGrain": "PT1M",
+                  "statistic": "Average",
+                  "timeWindow": "PT5M",
+                  "timeAggregation": "Average",
+                  "operator": "GreaterThan",
+                  "threshold": 75
+                },
+                "scaleAction": {
+                  "direction": "Increase",
+                  "type": "ChangeCount",
+                  "value": "1",
+                  "cooldown": "PT1M"
+                }
+              },
+              {
+                "metricTrigger": {
+                  "metricName": "Percentage CPU",
+                  "metricNamespace": "",
+                  "metricResourceUri": "[resourceId('Microsoft.Compute/virtualMachineScaleSets', parameters('agentPrefix'))]",
+                  "timeGrain": "PT1M",
+                  "statistic": "Average",
+                  "timeWindow": "PT5M",
+                  "timeAggregation": "Average",
+                  "operator": "LessThan",
+                  "threshold": 25
+                },
+                "scaleAction": {
+                  "direction": "Decrease",
+                  "type": "ChangeCount",
+                  "value": "1",
+                  "cooldown": "PT1M"
+                }
+              }
+            ]
+          }
+        ],
+        "enabled": true,
+        "name": "[parameters('agentPrefix')]",
+        "targetResourceUri": "[resourceId('Microsoft.Compute/virtualMachineScaleSets', parameters('agentPrefix'))]"
+      },
+      "resources": [],
+      "dependsOn": [
+        "[resourceId('Microsoft.Compute/virtualMachineScaleSets', parameters('agentPrefix'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Compute/availabilitySets",
+      "name": "masters",
+      "apiVersion": "2016-04-30-preview",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "managed": "true",
+        "platformFaultDomainCount": "[parameters('asFDCount')]",
+        "platformUpdateDomainCount": "[parameters('asUDCount')]"
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "copy": {
+        "name": "clusterMasterNetworkInterfaces",
+        "count": "[parameters('masterCount')]"
+      },
+      "name": "[concat(parameters('masterPrefix'),copyIndex())]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "primary": true,
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "subnet": {
+                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', 'cluster'), '/subnets/', 'masters')]"
+              },
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "[concat('10.1.0.',add(10,copyIndex()))]",
+              "publicIpAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIpAddresses', concat(parameters('masterPrefix'), copyIndex()))]"
+              }
+            }
+          }
+        ],
+        "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat(parameters('masterPrefix'), copyIndex()))]"
+        }
+      },
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', 'cluster')]",
+        "[concat('Microsoft.Network/publicIpAddresses/', parameters('masterPrefix'), copyIndex())]",
+        "[concat('Microsoft.Network/networkSecurityGroups/', parameters('masterPrefix'), copyIndex())]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[concat(parameters('masterPrefix'), copyIndex())]",
+      "copy": {
+        "name": "clusterMasterPublicIPAddresses",
+        "count": "[parameters('masterCount')]"
+      },
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "dnsSettings": {
+          "domainNameLabel": "[concat(resourceGroup().name, '-', parameters('masterPrefix'), copyIndex())]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[parameters('agentPrefix')]",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "dnsSettings": {
+          "domainNameLabel": "[concat(resourceGroup().name, '-', parameters('agentPrefix'),'-lb')]"
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Network/loadBalancers",
+      "name": "[parameters('agentPrefix')]",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/',parameters('agentPrefix'))]"
+      ],
+      "properties": {
+        "frontendIPConfigurations": [
+          {
+            "name": "LoadBalancerFrontEnd",
+            "properties": {
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('agentPrefix'))]"
+              }
+            }
+          }
+        ],
+        "backendAddressPools": [
+          {
+            "name": "agentPool"
+          }
+        ],
+        "inboundNatPools": [
+          {
+            "name": "sshPool",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[concat(resourceId('Microsoft.Network/loadBalancers',parameters('agentPrefix')),'/frontendIPConfigurations/loadBalancerFrontEnd')]"
+              },
+              "protocol": "tcp",
+              "frontendPortRangeStart": "[variables('natStartPort')]",
+              "frontendPortRangeEnd": "[variables('natEndPort')]",
+              "backendPort": "[variables('natBackendPort')]"
+            }
+          }
+        ],
+        "loadBalancingRules": [
+          {
+            "name": "httpRule",
+            "properties": {
+              "frontendIPConfiguration": {
+                "id": "[concat(resourceId('Microsoft.Network/loadBalancers',parameters('agentPrefix')),'/frontendIPConfigurations/loadBalancerFrontEnd')]"
+              },
+              "backendAddressPool": {
+                "id": "[concat(resourceId('Microsoft.Network/loadBalancers',parameters('agentPrefix')),'/backendAddressPools/agentPool')]"
+              },
+              "protocol": "Tcp",
+              "frontendPort": 80,
+              "backendPort": 80,
+              "enableFloatingIP": false,
+              "idleTimeoutInMinutes": 5,
+              "probe": {
+                "id": "[concat(resourceId('Microsoft.Network/loadBalancers',parameters('agentPrefix')),'/probes/tcpProbe')]"
+              }
+            }
+          }
+        ],
+        "probes": [
+          {
+            "name": "tcpProbe",
+            "properties": {
+              "protocol": "Tcp",
+              "port": 22,
+              "intervalInSeconds": 10,
+              "numberOfProbes": 10
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "copy": {
+        "name": "clusterMasterNetworkSecurityGroup",
+        "count": "[parameters('masterCount')]"
+      },
+      "name": "[concat(parameters('masterPrefix'), copyIndex())]",
+      "apiVersion": "2015-06-15",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "default-allow-ssh",
+            "properties": {
+              "priority": 1000,
+              "sourceAddressPrefix": "*",
+              "protocol": "Tcp",
+              "destinationPortRange": "22",
+              "access": "Allow",
+              "direction": "Inbound",
+              "sourcePortRange": "*",
+              "destinationAddressPrefix": "*"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
