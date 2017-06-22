@@ -17,7 +17,7 @@ services:
                 constraints: [node.role == manager]
  
     prometheus:
-        image: functions/prometheus:1.5.2 # Mirrors version 1.5.2 of quay.io/prometheus/prometheus:latest
+        image: functions/prometheus-legacy:1.5.2 # Mirrors version 1.5.2 of quay.io/prometheus/prometheus:latest
         volumes:
             - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
             - ./prometheus/alert.rules:/etc/prometheus/alert.rules
