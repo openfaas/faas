@@ -30,5 +30,11 @@ scrape_configs:
 
   - job_name: "gateway"
     scrape_interval: 5s
-    static_configs:
-      - targets: ['gateway:8080']
+    dns_sd_configs:
+      - names: ['tasks.gateway']
+        port: 8080
+        type: A
+        refresh_interval: 5s
+
+
+
