@@ -4,6 +4,7 @@
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [TechXLR8 - XLR8 your cloud with Docker and Serverless FaaS](https://www.slideshare.net/AlexEllis11/techxlr8-xlr8-your-cloud-with-docker-and-serverless-faas) | Alex Ellis | London, UK | 13-June-2017 |
 | [Whaleless!](http://gluecon.com/#agenda) ([slides](https://speakerdeck.com/amirmc/whaleless-doing-serverless-with-docker)) | Amir Chaudhry | GlueCon, CO | 26-May-2017 |
 | [MakerShift: Build Your own Serverless functions w/ FaaS](https://www.makershift.io/)| Austin Frey | Harrisburg, PA | 6-May-2017 |
 | [Dockercon closing keynote - Cool Hacks](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/) | Alex Ellis | Dockercon, Austin | 20-April-2017 |
@@ -17,6 +18,7 @@
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Ship Serverless FaaS functions with ease](http://blog.alexellis.io/build-and-deploy-with-faas/) | Alex Ellis | alexellis.io | 25-Jun-2017 |
 | [Functions as a Service - deploying functions to Docker Swarm via CLI](https://dev.to/developius/functions-as-a-service---deploying-functions-to-docker-swarm-via-a-cli) |  Finnian Anderson | dev.to | 18 May 2017 |
 | [Create a Morse Code serverless FaaS function in Quick Basic](http://jmkhael.io/code-a-morse-serverless-function-in-quick-basic-with-faas-and-docker/) | Johnny Mkhael | jmkhael.io | 8 May 2017 |
 | ["Serverless"? On my own servers?](http://jmkhael.io/serverless-and-on-my-own-servers/) | Johnny Mkhael | jmkhael.io | 4 May 2017 |
