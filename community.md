@@ -4,6 +4,7 @@
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [From Zero to Serverless with FaaS - Fusion meet-up](https://www.eventbrite.com/e/fusion-meetup-birmingham-june-2017-tickets-35370655583?aff=es2) | Alex Ellis | Birmingham, UK | 20 June 2017 |
 | [TechXLR8 - XLR8 your cloud with Docker and Serverless FaaS](https://www.slideshare.net/AlexEllis11/techxlr8-xlr8-your-cloud-with-docker-and-serverless-faas) | Alex Ellis | London, UK | 13-June-2017 |
 | [Whaleless!](http://gluecon.com/#agenda) ([slides](https://speakerdeck.com/amirmc/whaleless-doing-serverless-with-docker)) | Amir Chaudhry | GlueCon, CO | 26-May-2017 |
 | [MakerShift: Build Your own Serverless functions w/ FaaS](https://www.makershift.io/)| Austin Frey | Harrisburg, PA | 6-May-2017 |
@@ -18,6 +19,7 @@
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Sysdig newsletter](http://go.sysdig.com/webmail/231542/29878667/a2cfc2b92d460d3516188054c1f63e6ecdd7eac458f992f37bbe96acb8d83a78) | Sysdig | sysdig.com | 28-Jun-2017|
 | [Ship Serverless FaaS functions with ease](http://blog.alexellis.io/build-and-deploy-with-faas/) | Alex Ellis | alexellis.io | 25-Jun-2017 |
 | [Functions as a Service - deploying functions to Docker Swarm via CLI](https://dev.to/developius/functions-as-a-service---deploying-functions-to-docker-swarm-via-a-cli) |  Finnian Anderson | dev.to | 18 May 2017 |
 | [Create a Morse Code serverless FaaS function in Quick Basic](http://jmkhael.io/code-a-morse-serverless-function-in-quick-basic-with-faas-and-docker/) | Johnny Mkhael | jmkhael.io | 8 May 2017 |
