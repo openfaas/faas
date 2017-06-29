@@ -19,6 +19,7 @@
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Old and new - ASCII art and serverless](http://jmkhael.io/create-a-serverless-ascii-banner-with-faas/) | Johnny Mkhael | jmkhael.io | 29-Jun-2017|
 | [Sysdig newsletter](http://go.sysdig.com/webmail/231542/29878667/a2cfc2b92d460d3516188054c1f63e6ecdd7eac458f992f37bbe96acb8d83a78) | Sysdig | sysdig.com | 28-Jun-2017|
 | [Ship Serverless FaaS functions with ease](http://blog.alexellis.io/build-and-deploy-with-faas/) | Alex Ellis | alexellis.io | 25-Jun-2017 |
 | [Functions as a Service - deploying functions to Docker Swarm via CLI](https://dev.to/developius/functions-as-a-service---deploying-functions-to-docker-swarm-via-a-cli) |  Finnian Anderson | dev.to | 18 May 2017 |
@@ -27,7 +28,7 @@
 [Ship Serverless Functions to your Docker Swarm with FaaS](https://finnian.io/blog/ship-serverless-functions-to-your-docker-swarm-with-faas/) | Finnian Anderson | finnian.io | 2 May 2017 |
 | [O’Reilly Systems Engineering and Operations newsletter](http://post.oreilly.com/form/oreilly/viewhtml/9z1zlu60fomtoiq41cigtigddvnejvh4vjjfm0i1sh8) | O'Reilly | oreilly.com | 11-Apr-2017 |
 | [Test Driving Docker Functions as a Service (FaaS)](https://www.brianchristner.io/test-driving-docker-function-as-a-service-faas/) | Brian Christner | brianchristner.io | 10-Apr-2017 |
-| [[cncf-toc] The Cloud-Nativity of Serverless](https://lists.cncf.io/pipermail/cncf-toc/2017-March/000781.html) | CNCF mailing-list | cncf.io | 31-May 2017 
+| [[cncf-toc] The Cloud-Nativity of Serverless](https://lists.cncf.io/pipermail/cncf-toc/2017-March/000781.html) | CNCF mailing-list | cncf.io | 31-May 2017
 | [Open source project uses Docker for serverless computing](http://www.infoworld.com/article/3184757/open-source-tools/open-source-project-uses-docker-for-serverless-computing.html#tk.twt_ifw)| Serdar Yegulalp  | InfoWorld.com   | 27-Mar-2017 |
 | [Docker-awesome curated projects](https://github.com/veggiemonk/awesome-docker#serverless) | Julien Bisconti | Github.com | 23-Mar-2017 |
 | [Functions as a Service (FaaS) in French](http://blog.alexellis.io/fonction-service/) | Alex Ellis | alexellis.io | 13-Jan-2017 |
