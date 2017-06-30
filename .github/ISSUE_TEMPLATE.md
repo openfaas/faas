@@ -1,10 +1,10 @@
 <!--- Provide a general summary of the issue in the Title above -->
 
-## Expected Behavior
+## Expected Behaviour
 <!--- If you're describing a bug, tell us what should happen -->
 <!--- If you're suggesting a change/improvement, tell us how it should work -->
 
-## Current Behavior
+## Current Behaviour
 <!--- If describing a bug, tell us what happens instead of the expected behavior -->
 <!--- If suggesting a change/improvement, explain the difference from current behavior -->
 
@@ -26,7 +26,7 @@
 
 ## Your Environment
 <!--- Include as many relevant details about the environment you experienced the bug in -->
-* Docker version `docker version` (e.g. Docker 17.0.03 ):
+* Docker version `docker version` (e.g. Docker 17.0.05 ):
 
 * Operating System and version (e.g. Linux, Windows, MacOS):
 
