@@ -147,13 +147,10 @@ func main() {
 		return
 	}
 
-	readTimeout := time.Duration(config.readTimeout) * time.Second
-	writeTimeout := time.Duration(config.writeTimeout) * time.Second
-
 	s := &http.Server{
 		Addr:           ":8080",
-		ReadTimeout:    readTimeout,
-		WriteTimeout:   writeTimeout,
+		ReadTimeout:    config.readTimeout,
+		WriteTimeout:   config.writeTimeout,
 		MaxHeaderBytes: 1 << 20,
 	}
 
