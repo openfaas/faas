@@ -4,7 +4,6 @@ import (
 	"context"
 	"log"
 	"net/http"
-	"time"
 
 	"github.com/Sirupsen/logrus"
 	faasHandlers "github.com/alexellis/faas/gateway/handlers"
@@ -20,6 +19,13 @@ func main() {
 	logger := logrus.Logger{}
 	logrus.SetFormatter(&logrus.TextFormatter{})
 
+	osEnv := OsEnv{}
+	readConfig := ReadConfig{}
+	config := readConfig.Read(osEnv)
+
+	log.Printf("HTTP Read Timeout: %s", config.readTimeout)
+	log.Printf("HTTP Write Timeout: %s", config.writeTimeout)
+
 	var dockerClient *client.Client
 	var err error
 	dockerClient, err = client.NewEnvClient()
@@ -30,7 +36,7 @@ func main() {
 	if err != nil {
 		log.Fatal("Error with Docker server.\n", err)
 	}
-	log.Printf("API version: %s, %s\n", dockerVersion.APIVersion, dockerVersion.Version)
+	log.Printf("Docker API version: %s, %s\n", dockerVersion.APIVersion, dockerVersion.Version)
 
 	metricsOptions := metrics.BuildMetricsOptions()
 	metrics.RegisterMetrics(metricsOptions)
@@ -61,14 +67,12 @@ func main() {
 
 	r.Handle("/", http.RedirectHandler("/ui/", http.StatusMovedPermanently)).Methods("GET")
 
-	readTimeout := 8 * time.Second
-	writeTimeout := 8 * time.Second
 	tcpPort := 8080
 
 	s := &http.Server{
 		Addr:           fmt.Sprintf(":%d", tcpPort),
-		ReadTimeout:    readTimeout,
-		WriteTimeout:   writeTimeout,
+		ReadTimeout:    config.readTimeout,
+		WriteTimeout:   config.writeTimeout,
 		MaxHeaderBytes: http.DefaultMaxHeaderBytes, // 1MB - can be overridden by setting Server.MaxHeaderBytes.
 		Handler:        r,
 	}
