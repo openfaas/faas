@@ -25,6 +25,32 @@ func (e EnvBucket) Getenv(key string) string {
 func (e EnvBucket) Setenv(key string, value string) {
 	e.Items[key] = value
 }
+
+func TestRead_CgiHeaders_OverideFalse(t *testing.T) {
+	defaults := NewEnvBucket()
+	readConfig := ReadConfig{}
+	defaults.Setenv("cgi_headers", "false")
+
+	config := readConfig.Read(defaults)
+
+	if config.cgiHeaders != false {
+		t.Logf("cgiHeaders should have been false (via env)")
+		t.Fail()
+	}
+}
+
+func TestRead_CgiHeaders_DefaultIsTrueConfig(t *testing.T) {
+	defaults := NewEnvBucket()
+	readConfig := ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.cgiHeaders != true {
+		t.Logf("cgiHeaders should have been true (unspecified)")
+		t.Fail()
+	}
+}
+
 func TestRead_WriteDebug_DefaultIsTrueConfig(t *testing.T) {
 	defaults := NewEnvBucket()
 	readConfig := ReadConfig{}
@@ -132,6 +158,20 @@ func TestRead_ReadAndWriteTimeoutConfig(t *testing.T) {
 	}
 	if (config.writeTimeout) != time.Duration(60)*time.Second {
 		t.Logf("writeTimeout incorrect, got: %d\n", config.writeTimeout)
+		t.Fail()
+	}
+}
+
+func TestRead_ExecTimeoutConfig(t *testing.T) {
+	defaults := NewEnvBucket()
+	defaults.Setenv("exec_timeout", "3")
+
+	readConfig := ReadConfig{}
+	config := readConfig.Read(defaults)
+
+	want := time.Duration(3) * time.Second
+	if (config.execTimeout) != want {
+		t.Logf("readTimeout incorrect, got: %d - want: %s\n", config.execTimeout, want)
 		t.Fail()
 	}
 }
