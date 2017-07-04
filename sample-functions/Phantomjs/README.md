@@ -2,7 +2,12 @@
 
 [Phantomjs](http://phantomjs.org) is a headless web-browser used for scraping and automation testing. This function will scrape a web-page with the JavaScript sent in through the function.
 
-Example usage:
+Once a function has been deployed to FaaS using the UI or one of the other methods you can invoke it with a JavaScript Phantomjs file.
+
+**Image name:** `functions/base:phantomjs`
+
+
+**Example usage:**
 
 ```
 $ time curl --data-binary @cnn.js http://localhost:8080/function/phantomjs
