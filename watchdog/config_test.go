@@ -26,7 +26,7 @@ func (e EnvBucket) Setenv(key string, value string) {
 	e.Items[key] = value
 }
 
-func TestRead_CgiHeaders_OverideFalse(t *testing.T) {
+func TestRead_CgiHeaders_OverrideFalse(t *testing.T) {
 	defaults := NewEnvBucket()
 	readConfig := ReadConfig{}
 	defaults.Setenv("cgi_headers", "false")
