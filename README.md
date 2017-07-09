@@ -9,8 +9,8 @@ FaaS is a framework for building serverless functions with Docker which has firs
 
 * Ease of use through UI portal and *one-click* install
 * CLI available with YAML format for templating and defining functions
-* Write functions in any language for Linux or Windows
-* Portable - runs on your own hardware, or any cloud
+* Write functions in any language for Linux or Windows and package in Docker/OCI image format
+* Portable - runs on existing hardware or public/private cloud
 * Auto-scales as demand increases
 
 ## Overview of FaaS
@@ -67,10 +67,15 @@ functions:
 
 ```
 $ faas-cli -action build -f ./urlping.yaml
+```
+*Build a Docker image using the Python handler in `./sample/url_ping`*
+
+```
 $ faas-cli -action deploy -f ./urlping.yaml
 ```
+*Deploy the new image to the gateway defined in the YAML file.*
 
-*Build a Docker image using the Python handler in `./sample/url_ping`*
+> If your gateway is remote or part of a multi-host Swarm - you can also use the CLI to push your image to a remote registry or the Hub with `faas-cli -action push`
 
 ```
 $ curl -d "https://cli.get-faas.com" http://localhost:8080/function/url_ping/
