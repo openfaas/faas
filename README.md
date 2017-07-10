@@ -86,9 +86,9 @@ https://cli.get-faas.com => 200
 
 [Sample functions](https://github.com/alexellis/faas/tree/master/sample-functions) are available in the Github repository in a range of programming languages.
 
-### Get started with FaaS 
+## Get started with FaaS 
 
-## Closing Keynote at Dockercon 2017
+### Closing Keynote at Dockercon 2017
 
 Functions as a Service or FaaS was a winner in the Cool Hacks contest for Dockercon 2017.
 
@@ -100,7 +100,7 @@ If you'd like to find the functions I used in the demos head over to the [faas-d
 
 This is my original blog post on FaaS from Janurary: [Functions as a Service blog post](http://blog.alexellis.io/functions-as-a-service/)
 
-## TestDrive
+### TestDrive
 
 A one-line script is provided to help you get started quickly. You can test-drive FaaS with a set of sample functions as defined in the provided [docker-compose.yml](https://github.com/alexellis/faas/blob/master/docker-compose.yml) file. 
 
