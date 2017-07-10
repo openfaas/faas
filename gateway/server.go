@@ -23,8 +23,8 @@ func main() {
 	readConfig := ReadConfig{}
 	config := readConfig.Read(osEnv)
 
-	log.Printf("HTTP Read Timeout: %s", config.readTimeout)
-	log.Printf("HTTP Write Timeout: %s", config.writeTimeout)
+	log.Printf("HTTP Read Timeout: %s", config.ReadTimeout)
+	log.Printf("HTTP Write Timeout: %s", config.WriteTimeout)
 
 	var dockerClient *client.Client
 	var err error
@@ -71,8 +71,8 @@ func main() {
 
 	s := &http.Server{
 		Addr:           fmt.Sprintf(":%d", tcpPort),
-		ReadTimeout:    config.readTimeout,
-		WriteTimeout:   config.writeTimeout,
+		ReadTimeout:    config.ReadTimeout,
+		WriteTimeout:   config.WriteTimeout,
 		MaxHeaderBytes: http.DefaultMaxHeaderBytes, // 1MB - can be overridden by setting Server.MaxHeaderBytes.
 		Handler:        r,
 	}

@@ -48,14 +48,14 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 	readTimeout := parseIntValue(hasEnv.Getenv("read_timeout"), 8)
 	writeTimeout := parseIntValue(hasEnv.Getenv("write_timeout"), 8)
 
-	cfg.readTimeout = time.Duration(readTimeout) * time.Second
-	cfg.writeTimeout = time.Duration(writeTimeout) * time.Second
+	cfg.ReadTimeout = time.Duration(readTimeout) * time.Second
+	cfg.WriteTimeout = time.Duration(writeTimeout) * time.Second
 
 	return cfg
 }
 
 // GatewayConfig for the process.
 type GatewayConfig struct {
-	readTimeout  time.Duration
-	writeTimeout time.Duration
+	ReadTimeout  time.Duration
+	WriteTimeout time.Duration
 }

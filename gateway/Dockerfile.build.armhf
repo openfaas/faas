@@ -17,8 +17,6 @@ COPY handlers       handlers
 
 COPY server.go      .
 COPY readconfig.go  .
-COPY config_test.go .
 
-RUN go test && \
-    go test -v ./tests && \
+RUN go test -v ./tests && \
     CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
