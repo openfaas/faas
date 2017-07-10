@@ -47,7 +47,7 @@ def handle(req):
 $ curl -sSL cli.get-faas.com | sudo sh
 ```
 
-*The faas-cli is also available on `brew`*
+*Install the faas-cli which is also available on `brew`*
 
 Define your functions in YAML - or deploy via the API Gateway's UI.
 
