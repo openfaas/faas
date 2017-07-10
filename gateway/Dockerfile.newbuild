@@ -10,7 +10,6 @@ COPY requests       requests
 COPY tests          tests
 COPY server.go      .
 COPY readconfig.go  .
-COPY config_test.go .
 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gateway .
 
