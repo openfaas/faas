@@ -49,6 +49,13 @@ $ curl -sSL cli.get-faas.com | sudo sh
 
 *Install the faas-cli which is also available on `brew`*
 
+Clone the samples and templates from Github:
+
+```
+$ git clone https://github.coma/alexellis/faas-cli
+$ cd faas-cli
+```
+
 Define your functions in YAML - or deploy via the API Gateway's UI.
 
 ```
