@@ -17,11 +17,7 @@ services:
                 constraints: [node.role == manager]
  
     prometheus:
-        image: functions/prometheus-legacy:1.5.2 # Mirrors version 1.5.2 of quay.io/prometheus/prometheus:latest
-        volumes:
-            - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-            - ./prometheus/alert.rules:/etc/prometheus/alert.rules
-
+        image: functions/prometheus:latest  # autobuild from Dockerfile in repo.
         command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
         ports:
             - 9090:9090
@@ -37,7 +33,7 @@ services:
                 constraints: [node.role == manager]
 
     alertmanager:
-        image: quay.io/prometheus/alertmanager
+        image: functions/alertmanager:latest    # autobuild from Dockerfile in repo.
         environment:
             no_proxy: "gateway"
         volumes:
@@ -82,7 +78,7 @@ services:
 
     # Node.js gives OS info about the node (Host)
     nodeinfo:
-        image: alexellis2/faas-nodeinfo:latest
+        image: functions/nodeinfo:latest
         labels:
             function: "true"
         depends_on:
