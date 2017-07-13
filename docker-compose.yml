@@ -36,8 +36,8 @@ services:
         image: functions/alertmanager:latest    # autobuild from Dockerfile in repo.
         environment:
             no_proxy: "gateway"
-        volumes:
-            - ./prometheus/alertmanager.yml:/alertmanager.yml
+#        volumes:
+#            - ./prometheus/alertmanager.yml:/alertmanager.yml
         command:
             - '-config.file=/alertmanager.yml'
         networks:
