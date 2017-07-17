@@ -2,6 +2,8 @@
 
 FaaS is a framework for building serverless functions on Docker Swarm Mode with first class metrics. Any UNIX process can be packaged as a function in FaaS enabling you to consume a range of web events without repetitive boiler-plate coding.
 
+> It would help the project if you could **Star** the Github repository. This helps support the FaaS project which is free and Open Source Software.
+
 ### This is a Quickstart guide for the [FaaS functions as a Service](https://github.com/alexellis/faas/) project
 
 > A Docker stack file with a number of sample functions is provided so that you can get up and running within minutes. You can also clone the code to hack on it or package your own functions.
@@ -118,7 +120,11 @@ Creating a function via the UI:
 
 Once the create button is clicked, faas will provision a new Docker Swarm service. The newly created function will shortly be available in the list of functions on the left hand side of the UI.
 
-**Option 3: Programatically through a HTTP POST to the API Gateway**
+**Option 3: via the FaaS CLI**
+
+The FaaS CLI can be used to build functions very quickly though the use of templates. See more details on the FaaS CLI [here](https://github.com/alexellis/faas-cli).
+
+**Option 4: Programatically through a HTTP POST to the API Gateway**
 
 A HTTP post can also be sent via `curl` etc to the endpoint used by the UI (HTTP post to `/system/functions`)
 
@@ -155,7 +161,6 @@ No support through UI at the moment, but the Docker CLI supports this:
 ```
 $ docker service rm func_echoit
 ```
-
 
 ### Exploring the functions with `curl`
 
