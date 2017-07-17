@@ -1,4 +1,6 @@
-### Contributing
+## Contributing
+
+### Guidelines
 
 Here are a few guidelines for contributing:
 
@@ -8,7 +10,19 @@ Here are a few guidelines for contributing:
 
 * Please always provide a summary of what you changed, how you did it and how it can be tested.
 
-#### License
+### Community
+
+This project is written in Golang but many of the community contributions so far have been through blogging, speaking engagements, helping to test and drive the backlog of FaaS. If you'd like to help in any way then that would be more than welcome whatever your level of experience.
+
+#### Community file
+
+The [community.md](https://github.com/alexellis/faas/blob/master/community.md) file highlights blogs, talks and code repos with example FaaS functions and usages. Please send a Pull Request if you are doing something cool with FaaS.
+
+#### Slack
+
+There is an invite-only Slack community which you are welcome to join to discuss FaaS, IoT and Raspberry Pi projects. All that is needed is an email address. Get in touch with Alex Ellis.
+
+### License
 
 This project is licensed under the MIT License.
 
@@ -68,4 +82,3 @@ If you set your `user.name` and `user.email` git configs, you can sign your
 commit automatically with `git commit -s`.
 
 * Please sign your commits with `git commit -s` so that commits are traceable.
-
