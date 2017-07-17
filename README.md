@@ -8,7 +8,7 @@ FaaS is a framework for building serverless functions with Docker which has firs
 **Highlights**
 
 * Ease of use through UI portal and *one-click* install
-* CLI available with YAML format for templating and defining functions
+* [CLI](http://github.com/alexellis/faas-cli) available with YAML format for templating and defining functions
 * Write functions in any language for Linux or Windows and package in Docker/OCI image format
 * Portable - runs on existing hardware or public/private cloud
 * Auto-scales as demand increases
@@ -30,11 +30,9 @@ FaaS is a framework for building serverless functions with Docker which has firs
 
 ### CLI
 
-Any container or process in a Docker container can be a serverless function in FaaS. Using the FaaS CLI you can deploy your functions or quickly create new functions from templates such as Node.js or Python.
+Any container or process in a Docker container can be a serverless function in FaaS. Using the [FaaS CLI](http://github.com/alexellis/faas-cli) you can deploy your functions or quickly create new functions from templates such as Node.js or Python.
 
 **CLI walk-through**
-
-> It would help the project if you could **Star** the Github repository. This helps support the FaaS project which is free and Open Source Software.
 
 Let's have a quick look at an example function `url_ping` which connects to a remote web server and returns the HTTP code from the response. It's written in Python.
 
