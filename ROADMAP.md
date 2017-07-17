@@ -45,7 +45,9 @@ Most items are detailed [via Github issues](https://github.com/alexellis/faas/is
 
 Must have
 
+* New logo - graphic icon and text
 * Asynchronous / long-running tasks
+* Website / landing page
 
 Should have
 
