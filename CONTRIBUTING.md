@@ -18,6 +18,10 @@ This project is written in Golang but many of the community contributions so far
 
 The [community.md](https://github.com/alexellis/faas/blob/master/community.md) file highlights blogs, talks and code repos with example FaaS functions and usages. Please send a Pull Request if you are doing something cool with FaaS.
 
+#### Roadmap
+
+Checkout the [roadmap](https://github.com/alexellis/faas/blob/master/ROADMAP.md) and [open issues](https://github.com/alexellis/faas/issues).
+
 #### Slack
 
 There is an invite-only Slack community which you are welcome to join to discuss FaaS, IoT and Raspberry Pi projects. All that is needed is an email address. Get in touch with Alex Ellis.
