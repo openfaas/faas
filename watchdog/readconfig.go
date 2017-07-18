@@ -78,6 +78,7 @@ func (ReadConfig) Read(hasEnv HasEnv) WatchdogConfig {
 	cfg.suppressLock = parseBoolValue(hasEnv.Getenv("suppress_lock"))
 
 	cfg.contentType = hasEnv.Getenv("content_type")
+	cfg.cgiBody = parseBoolValue(hasEnv.Getenv("cgi_body"))
 
 	return cfg
 }
@@ -114,4 +115,7 @@ type WatchdogConfig struct {
 
 	// contentType forces a specific pre-defined value for all responses
 	contentType string
+
+	// cgiBody re-writes all text before first \n\n as HTTP headers
+	cgiBody bool
 }
