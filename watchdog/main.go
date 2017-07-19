@@ -153,8 +153,9 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 		out, err = targetCmd.CombinedOutput()
 
 		if config.cgiBody {
-			out, cgiResponse = modulateCgiBody(out)
-			fmt.Println(cgiResponse)
+			var cgiResponse1 cgiResponse
+			out, cgiResponse1 = modulateCgiBody(out)
+			fmt.Println(cgiResponse1)
 		}
 	}()
 
@@ -173,10 +174,10 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 			w.WriteHeader(http.StatusInternalServerError)
 			response := bytes.NewBufferString(err.Error())
 			w.Write(response.Bytes())
-            w.Write([]byte("\n"))
-            if len(out) > 0 {
-                w.Write(out)
-            }
+			w.Write([]byte("\n"))
+			if len(out) > 0 {
+				w.Write(out)
+			}
 			ri.headerWritten = true
 		}
 		return
