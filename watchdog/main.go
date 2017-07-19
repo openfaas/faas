@@ -103,7 +103,13 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 		if buildInputErr != nil {
 			ri.headerWritten = true
 			w.WriteHeader(http.StatusBadRequest)
+			// I.e. "exit code 1"
 			w.Write([]byte(buildInputErr.Error()))
+
+			// Verbose message - i.e. stack trace
+			w.Write([]byte("\n"))
+			w.Write(out)
+
 			return
 		}
 	}
@@ -167,6 +173,10 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 			w.WriteHeader(http.StatusInternalServerError)
 			response := bytes.NewBufferString(err.Error())
 			w.Write(response.Bytes())
+            w.Write([]byte("\n"))
+            if len(out) > 0 {
+                w.Write(out)
+            }
 			ri.headerWritten = true
 		}
 		return
