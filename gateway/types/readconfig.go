@@ -1,6 +1,8 @@
-package main
+package types
 
 import (
+	"log"
+	"net/url"
 	"os"
 	"strconv"
 	"time"
@@ -51,11 +53,25 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 	cfg.ReadTimeout = time.Duration(readTimeout) * time.Second
 	cfg.WriteTimeout = time.Duration(writeTimeout) * time.Second
 
+	if len(hasEnv.Getenv("functions_provider_url")) > 0 {
+		var err error
+		cfg.FunctionsProviderURL, err = url.Parse(hasEnv.Getenv("functions_provider_url"))
+		if err != nil {
+			log.Fatal("If functions_provider_url is provided, then it should be a valid URL.", err)
+		}
+	}
+
 	return cfg
 }
 
 // GatewayConfig for the process.
 type GatewayConfig struct {
-	ReadTimeout  time.Duration
-	WriteTimeout time.Duration
+	ReadTimeout          time.Duration
+	WriteTimeout         time.Duration
+	FunctionsProviderURL *url.URL
+}
+
+// UseExternalProvider decide whether to bypass built-in Docker Swarm engine
+func (g *GatewayConfig) UseExternalProvider() bool {
+	return g.FunctionsProviderURL != nil
 }
