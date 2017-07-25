@@ -1,0 +1,16 @@
+ALERT service_down
+  IF up == 0
+
+ALERT APIHighInvocationRate
+  IF sum ( rate(gateway_function_invocation_total{code="200"}[10s]) ) by (function_name) > 5 
+  FOR 5s
+  LABELS {
+    service = "gateway",
+    severity = "major",
+    value = "{{$value}}"
+  }
+  ANNOTATIONS {
+    summary = "High invocation total on {{ $labels.instance }}",
+    description =  "High invocation total on {{ $labels.instance }}"
+  } 
+
