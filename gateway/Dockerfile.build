@@ -1,13 +1,5 @@
 FROM golang:1.7.5
 
-#RUN go get -d github.com/docker/docker/api/types \
-#   && go get -d github.com/docker/docker/api/types/filters \
-#   && go get -d github.com/docker/docker/api/types/swarm \
-#   && go get -d github.com/docker/docker/client \
-#   && go get github.com/gorilla/mux \
-#   && go get github.com/prometheus/client_golang/prometheus
-#RUN go get -d github.com/Sirupsen/logrus
-
 WORKDIR /go/src/github.com/alexellis/faas/gateway
 
 COPY vendor         vendor
@@ -17,7 +9,7 @@ COPY metrics        metrics
 COPY requests       requests
 COPY tests          tests
 COPY server.go      .
-COPY readconfig.go  .
+COPY types          types
 
 RUN go test -v ./tests && \
     CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .

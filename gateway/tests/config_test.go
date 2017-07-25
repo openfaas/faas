@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	gateway "github.com/alexellis/faas/gateway"
+	"github.com/alexellis/faas/gateway/types"
 )
 
 type EnvBucket struct {
@@ -28,9 +28,21 @@ func (e EnvBucket) Setenv(key string, value string) {
 	e.Items[key] = value
 }
 
+func TestRead_UseExternalProvider_Defaults(t *testing.T) {
+	defaults := NewEnvBucket()
+	readConfig := types.ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.UseExternalProvider() != false {
+		t.Log("Default for UseExternalProvider should be false")
+		t.Fail()
+	}
+}
+
 func TestRead_EmptyTimeoutConfig(t *testing.T) {
 	defaults := NewEnvBucket()
-	readConfig := gateway.ReadConfig{}
+	readConfig := types.ReadConfig{}
 
 	config := readConfig.Read(defaults)
 
@@ -49,7 +61,7 @@ func TestRead_ReadAndWriteTimeoutConfig(t *testing.T) {
 	defaults.Setenv("read_timeout", "10")
 	defaults.Setenv("write_timeout", "60")
 
-	readConfig := gateway.ReadConfig{}
+	readConfig := types.ReadConfig{}
 	config := readConfig.Read(defaults)
 
 	if (config.ReadTimeout) != time.Duration(10)*time.Second {
