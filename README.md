@@ -142,8 +142,8 @@ Highlights:
 
 * New: FaaS CLI and easy install via `curl` and `brew`
 * New: Windows function support
-* Planned: Kubernetes support
-* Planned: Asynchronous FaaS functions via NATS Streaming
+* In testing: Kubernetes support via [FaaS-netes](https://github.com/alexellis/faas-netes) plugin
+* In development: Asynchronous/long-running FaaS functions via NATS Streaming [Test it now](https://gist.github.com/alexellis/62dad83b11890962ba49042afe258bb1)
 
 Example of a Grafana dashboard linked to FaaS showing auto-scaling live in action:
 
