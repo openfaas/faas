@@ -15,7 +15,7 @@ FaaS is a framework for building serverless functions with Docker which has firs
 
 ## Overview of FaaS
 
-![Stack](http://blog.alexellis.io/content/images/2017/04/faas_hi.png)
+![Stack](https://pbs.twimg.com/media/DFrkF4NXoAAJwN2.jpg)
 
 ### Function Watchdog
 
