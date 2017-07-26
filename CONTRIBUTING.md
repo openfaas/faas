@@ -5,8 +5,9 @@
 Here are a few guidelines for contributing:
 
 * If you have found a bug please raise an issue and fill out the whole template.
+* Don't raise PRs for typos, these aren't necessary - just raise an Issue
 * If you would like to contribute to the codebase please raise an issue to propose the change and fill out the whole template.
-* If the documentation can be improved / translated etc please raise an issue to discuss. PRs for changing one or two typos aren't necessary.
+* If the documentation can be improved / translated etc please raise an issue to discuss. 
 
 * Please always provide a summary of what you changed, how you did it and how it can be tested.
 
