@@ -22,9 +22,9 @@ FaaS is a framework for building serverless functions with Docker which has firs
 * You can make any Docker image into a serverless function by adding the *Function Watchdog* (a tiny Golang HTTP server)
 * The *Function Watchdog* is the entrypoint allowing HTTP requests to be forwarded to the target process via STDIN. The response is sent back to the caller by writing to STDOUT from your application.
 
-### Gateway 
+### Gateway
 
-* The API Gateway provides an external route into your functions and collects Cloud Native metrics through Prometheus. 
+* The API Gateway provides an external route into your functions and collects Cloud Native metrics through Prometheus.
 * Your API Gateway will scale functions according to demand by altering the service replica count in Docker's Swarm API.
 * A UI is baked in allowing you to invoke functions in your browser and create new ones as needed.
 
@@ -54,7 +54,7 @@ $ curl -sSL cli.get-faas.com | sudo sh
 Clone the samples and templates from Github:
 
 ```
-$ git clone https://github.coma/alexellis/faas-cli
+$ git clone https://github.com/alexellis/faas-cli
 $ cd faas-cli
 ```
 
@@ -95,7 +95,7 @@ https://cli.get-faas.com => 200
 
 [Sample functions](https://github.com/alexellis/faas/tree/master/sample-functions) are available in the Github repository in a range of programming languages.
 
-## Get started with FaaS 
+## Get started with FaaS
 
 ### Closing Keynote at Dockercon 2017
 
@@ -111,13 +111,13 @@ This is my original blog post on FaaS from Janurary: [Functions as a Service blo
 
 ### TestDrive
 
-A one-line script is provided to help you get started quickly. You can test-drive FaaS with a set of sample functions as defined in the provided [docker-compose.yml](https://github.com/alexellis/faas/blob/master/docker-compose.yml) file. 
+A one-line script is provided to help you get started quickly. You can test-drive FaaS with a set of sample functions as defined in the provided [docker-compose.yml](https://github.com/alexellis/faas/blob/master/docker-compose.yml) file.
 
 Use your own laptop or the free community-run Docker playground: play-with-docker.com.
 
 <!--
 [![Try in PWD](https://cdn.rawgit.com/play-with-docker/stacks/cff22438/assets/images/button.png)](http://play-with-docker.com?stack=https://raw.githubusercontent.com/alexellis/faas/master/docker-compose.yml&stack_name=func)
-> This doesn't work since it won't clone the Prometheus and AlertManager config. 
+> This doesn't work since it won't clone the Prometheus and AlertManager config.
 -->
 
 ### [Begin the TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md)
