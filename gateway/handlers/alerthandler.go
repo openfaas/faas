@@ -115,16 +115,16 @@ func MakeAlertHandler(sq ServiceQuery) http.HandlerFunc {
 		errors := handleAlerts(&req, sq)
 		if len(errors) > 0 {
 			log.Println(errors)
-			w.WriteHeader(http.StatusInternalServerError)
-
 			var errorOutput string
 			for d, err := range errors {
 				errorOutput += fmt.Sprintf("[%d] %s\n", d, err)
 			}
+			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(errorOutput))
-		} else {
-			w.WriteHeader(http.StatusOK)
+			return
 		}
+
+		w.WriteHeader(http.StatusOK)
 	}
 }
 
