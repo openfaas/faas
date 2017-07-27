@@ -143,7 +143,6 @@ func makeHandler(proxy *httputil.ReverseProxy, metrics *metrics.MetricOptions) h
 			metrics.GatewayFunctionsHistogram.WithLabelValues(service).Observe(seconds)
 			code := writeAdapter.GetHeaderCode()
 			metrics.GatewayFunctionInvocation.With(prometheus.Labels{"function_name": service, "code": strconv.Itoa(code)}).Inc()
-
 		}
 	}
 }
