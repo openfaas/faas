@@ -77,7 +77,7 @@ func main() {
 	} else {
 		faasHandlers.Proxy = internalHandlers.MakeProxy(metricsOptions, true, dockerClient, &logger)
 		faasHandlers.RoutelessProxy = internalHandlers.MakeProxy(metricsOptions, true, dockerClient, &logger)
-		faasHandlers.Alert = internalHandlers.MakeAlertHandler(dockerClient)
+		faasHandlers.Alert = internalHandlers.MakeAlertHandler(internalHandlers.NewSwarmServiceQuery(dockerClient))
 		faasHandlers.ListFunctions = internalHandlers.MakeFunctionReader(metricsOptions, dockerClient)
 		faasHandlers.DeployFunction = internalHandlers.MakeNewFunctionHandler(metricsOptions, dockerClient)
 		faasHandlers.DeleteFunction = internalHandlers.MakeDeleteFunctionHandler(metricsOptions, dockerClient)
