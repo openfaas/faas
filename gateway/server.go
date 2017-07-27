@@ -14,6 +14,7 @@ import (
 	"github.com/Sirupsen/logrus"
 	internalHandlers "github.com/alexellis/faas/gateway/handlers"
 	"github.com/alexellis/faas/gateway/metrics"
+	"github.com/alexellis/faas/gateway/plugin"
 	"github.com/alexellis/faas/gateway/types"
 	"github.com/docker/docker/client"
 	"github.com/prometheus/client_golang/prometheus"
@@ -69,7 +70,9 @@ func main() {
 
 		faasHandlers.Proxy = makeHandler(reverseProxy, &metricsOptions)
 		faasHandlers.RoutelessProxy = makeHandler(reverseProxy, &metricsOptions)
-		faasHandlers.Alert = makeHandler(reverseProxy, &metricsOptions)
+
+		faasHandlers.Alert = internalHandlers.MakeAlertHandler(plugin.NewExternalServiceQuery(*config.FunctionsProviderURL))
+
 		faasHandlers.ListFunctions = makeHandler(reverseProxy, &metricsOptions)
 		faasHandlers.DeployFunction = makeHandler(reverseProxy, &metricsOptions)
 		faasHandlers.DeleteFunction = makeHandler(reverseProxy, &metricsOptions)
