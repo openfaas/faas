@@ -120,58 +120,20 @@ func main() {
 	log.Fatal(s.ListenAndServe())
 }
 
-// WriteAdapter adapts a ResponseWriter
-type WriteAdapter struct {
-	Writer     http.ResponseWriter
-	HttpResult *HttpResult
-}
-type HttpResult struct {
-	HeaderCode int
-}
-
-//NewWriteAdapter create a new NewWriteAdapter
-func NewWriteAdapter(w http.ResponseWriter) WriteAdapter {
-	return WriteAdapter{Writer: w, HttpResult: &HttpResult{}}
-}
-
-//Header adapts Header
-func (w WriteAdapter) Header() http.Header {
-	return w.Writer.Header()
-}
-
-// Write adapts Write
-func (w WriteAdapter) Write(data []byte) (int, error) {
-	return w.Writer.Write(data)
-}
-
-// WriteHeader adapts WriteHeader
-func (w WriteAdapter) WriteHeader(i int) {
-	w.Writer.WriteHeader(i)
-	w.HttpResult.HeaderCode = i
-	fmt.Println("GetHeaderCode before", w.HttpResult.HeaderCode)
-}
-
-// GetHeaderCode result from WriteHeader
-func (w *WriteAdapter) GetHeaderCode() int {
-	return w.HttpResult.HeaderCode
-}
-
 func makeHandler(proxy *httputil.ReverseProxy, metrics *metrics.MetricOptions) http.HandlerFunc {
-	// return func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		uri := r.URL.String()
 
 		log.Printf("Forwarding [%s] to %s", r.Method, r.URL.String())
 		start := time.Now()
 
-		writeAdapter := NewWriteAdapter(w)
+		writeAdapter := types.NewWriteAdapter(w)
 		proxy.ServeHTTP(writeAdapter, r)
 
 		seconds := time.Since(start).Seconds()
 		fmt.Printf("[%d] took %f seconds\n", writeAdapter.GetHeaderCode(), seconds)
 
 		forward := "/function/"
-		// fmt.Println(uri)
 		if len(uri) > len(forward) && strings.Index(uri, forward) == 0 {
 			fmt.Println("function=", uri[len(forward):])
 			service := uri[len(forward):]
@@ -180,8 +142,5 @@ func makeHandler(proxy *httputil.ReverseProxy, metrics *metrics.MetricOptions) h
 			metrics.GatewayFunctionInvocation.With(prometheus.Labels{"function_name": service, "code": strconv.Itoa(code)}).Inc()
 
 		}
-
-		// metricsOptions.
 	}
-	// }
 }
