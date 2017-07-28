@@ -14,6 +14,10 @@ type HasEnv interface {
 type ReadConfig struct {
 }
 
+func isBoolValueSet(val string) bool {
+	return len(val) > 0
+}
+
 func parseBoolValue(val string) bool {
 	if val == "true" {
 		return true
@@ -37,12 +41,15 @@ func parseIntValue(val string) int {
 func (ReadConfig) Read(hasEnv HasEnv) WatchdogConfig {
 	cfg := WatchdogConfig{
 		writeDebug: true,
+		cgiHeaders: true,
 	}
 
 	cfg.faasProcess = hasEnv.Getenv("fprocess")
 
 	readTimeout := parseIntValue(hasEnv.Getenv("read_timeout"))
 	writeTimeout := parseIntValue(hasEnv.Getenv("write_timeout"))
+
+	cfg.execTimeout = time.Duration(parseIntValue(hasEnv.Getenv("exec_timeout"))) * time.Second
 
 	if readTimeout == 0 {
 		readTimeout = 5
@@ -55,11 +62,15 @@ func (ReadConfig) Read(hasEnv HasEnv) WatchdogConfig {
 	cfg.readTimeout = time.Duration(readTimeout) * time.Second
 	cfg.writeTimeout = time.Duration(writeTimeout) * time.Second
 
-	if len(hasEnv.Getenv("write_debug")) > 0 {
-		cfg.writeDebug = parseBoolValue(hasEnv.Getenv("write_debug"))
+	writeDebugEnv := hasEnv.Getenv("write_debug")
+	if isBoolValueSet(writeDebugEnv) {
+		cfg.writeDebug = parseBoolValue(writeDebugEnv)
 	}
 
-	cfg.cgiHeaders = parseBoolValue(hasEnv.Getenv("cgi_headers"))
+	cgiHeadersEnv := hasEnv.Getenv("cgi_headers")
+	if isBoolValueSet(cgiHeadersEnv) {
+		cfg.cgiHeaders = parseBoolValue(cgiHeadersEnv)
+	}
 
 	cfg.marshalRequest = parseBoolValue(hasEnv.Getenv("marshal_request"))
 	cfg.debugHeaders = parseBoolValue(hasEnv.Getenv("debug_headers"))
@@ -73,15 +84,23 @@ func (ReadConfig) Read(hasEnv HasEnv) WatchdogConfig {
 
 // WatchdogConfig for the process.
 type WatchdogConfig struct {
+
+	// HTTP read timeout
 	readTimeout time.Duration
 
+	// HTTP write timeout
 	writeTimeout time.Duration
+
 	// faasProcess is the process to exec
 	faasProcess string
+
+	// duration until the faasProcess will be killed
+	execTimeout time.Duration
 
 	// writeDebug write console stdout statements to the container
 	writeDebug bool
 
+	// marshal header and body via JSON
 	marshalRequest bool
 
 	// cgiHeaders will make environmental variables available with all the HTTP headers.

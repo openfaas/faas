@@ -1,9 +1,18 @@
-## Community: events and usage of FaaS
+## FaaS Community
+
+Welcome to the FaaS community page where you can find:
+
+* Events
+* Blog posts and write-ups
+* Repos - projects / samples / use cases
+
+> It would be great to hear from you espcially if you have any of the above and want to share it with the rest of the community. Pull Request or submit a Github Issue.
 
 ### Events 2017
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Zero to Serverless in 60 secs - Open Source Summit North America](http://events.linuxfoundation.org/events/open-source-summit-north-america/program/schedule) | Alex Ellis | LA, USA | 11-14 Sept 2017 |
 | [From Zero to Serverless with FaaS - Fusion meet-up](https://www.eventbrite.com/e/fusion-meetup-birmingham-june-2017-tickets-35370655583?aff=es2) | Alex Ellis | Birmingham, UK | 20 June 2017 |
 | [TechXLR8 - XLR8 your cloud with Docker and Serverless FaaS](https://www.slideshare.net/AlexEllis11/techxlr8-xlr8-your-cloud-with-docker-and-serverless-faas) | Alex Ellis | London, UK | 13-June-2017 |
 | [Whaleless!](http://gluecon.com/#agenda) ([slides](https://speakerdeck.com/amirmc/whaleless-doing-serverless-with-docker)) | Amir Chaudhry | GlueCon, CO | 26-May-2017 |
@@ -26,6 +35,8 @@
 | [Create a Morse Code serverless FaaS function in Quick Basic](http://jmkhael.io/code-a-morse-serverless-function-in-quick-basic-with-faas-and-docker/) | Johnny Mkhael | jmkhael.io | 8 May 2017 |
 | ["Serverless"? On my own servers?](http://jmkhael.io/serverless-and-on-my-own-servers/) | Johnny Mkhael | jmkhael.io | 4 May 2017 |
 [Ship Serverless Functions to your Docker Swarm with FaaS](https://finnian.io/blog/ship-serverless-functions-to-your-docker-swarm-with-faas/) | Finnian Anderson | finnian.io | 2 May 2017 |
+| [Docker + Serverless = FaaS (Functions As A Service)](http://lukeangel.co/cross-platform/docker-servless-faas-functions-as-a-service/) | Luke Angel | lukeangel.co | 28-Apr-2017 |
+| [Serverless for private clouds](https://medium.com/@pfernandom/serverless-for-private-clouds-or-managing-the-server-for-a-serverless-app-f9321e45a910) | Pedro Fernando Marquez Soto | medium.com | 30-Apr-2017 |
 | [O’Reilly Systems Engineering and Operations newsletter](http://post.oreilly.com/form/oreilly/viewhtml/9z1zlu60fomtoiq41cigtigddvnejvh4vjjfm0i1sh8) | O'Reilly | oreilly.com | 11-Apr-2017 |
 | [Test Driving Docker Functions as a Service (FaaS)](https://www.brianchristner.io/test-driving-docker-function-as-a-service-faas/) | Brian Christner | brianchristner.io | 10-Apr-2017 |
 | [[cncf-toc] The Cloud-Nativity of Serverless](https://lists.cncf.io/pipermail/cncf-toc/2017-March/000781.html) | CNCF mailing-list | cncf.io | 31-May 2017
@@ -35,7 +46,7 @@
 | [Functions as a Service (FaaS)](http://blog.alexellis.io/functions-as-a-service/) | Alex Ellis | alexellis.io | 4-Jan-2017 |
 
 
-### Projects / Use cases
+### Repos - projects / samples / use cases
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
 | [Twitter, Elastic Search and Alexa stack of functions](https://github.com/alexellis/journey-expert/tree/master/tweetstash) | Alex Ellis | github.com | 24-Apr-2017 |

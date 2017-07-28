@@ -10,12 +10,13 @@ RUN go get -d github.com/Sirupsen/logrus
 
 WORKDIR /go/src/github.com/alexellis/faas/gateway
 
-COPY metrics	metrics
-COPY requests	requests
-COPY tests	tests
-COPY handlers	handlers
+COPY metrics        metrics
+COPY requests       requests
+COPY tests          tests
+COPY handlers       handlers
 
-COPY server.go	.
+COPY server.go      .
+COPY readconfig.go  .
 
 RUN go test -v ./tests && \
     CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
