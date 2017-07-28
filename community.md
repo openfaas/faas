@@ -28,6 +28,7 @@ Welcome to the FaaS community page where you can find:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Kittens vs Tarsiers - an introduction to serverless machine learning](http://jmkhael.io/kittens-vs-tarsiers-an-introduction-to-serverless-machine-learning/) | Johnny Mkhael | jmkhael.io | 24-Jul-2017|
 | [Old and new - ASCII art and serverless](http://jmkhael.io/create-a-serverless-ascii-banner-with-faas/) | Johnny Mkhael | jmkhael.io | 29-Jun-2017|
 | [Sysdig newsletter](http://go.sysdig.com/webmail/231542/29878667/a2cfc2b92d460d3516188054c1f63e6ecdd7eac458f992f37bbe96acb8d83a78) | Sysdig | sysdig.com | 28-Jun-2017|
 | [Ship Serverless FaaS functions with ease](http://blog.alexellis.io/build-and-deploy-with-faas/) | Alex Ellis | alexellis.io | 25-Jun-2017 |
