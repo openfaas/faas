@@ -111,7 +111,7 @@ This is my original blog post on FaaS from Janurary: [Functions as a Service blo
 
 ### TestDrive
 
-A one-line script is provided to help you get started quickly. You can test-drive FaaS with a set of sample functions as defined in the provided [docker-compose.yml](https://github.com/alexellis/faas/blob/master/docker-compose.yml) file.
+A one-line script is provided to help you get started quickly. You can test-drive FaaS on Docker Swarm with a set of sample functions as defined in the provided [docker-compose.yml](https://github.com/alexellis/faas/blob/master/docker-compose.yml) file. Alternatively if you have a Kubernetes cluster you can [start here](https://github.com/alexellis/faas-netes).
 
 Use your own laptop or the free community-run Docker playground: play-with-docker.com.
 
@@ -120,7 +120,7 @@ Use your own laptop or the free community-run Docker playground: play-with-docke
 > This doesn't work since it won't clone the Prometheus and AlertManager config.
 -->
 
-### [Begin the TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md)
+### [Begin the TestDrive with Docker Swarm](https://github.com/alexellis/faas/blob/master/TestDrive.md)
 
 Here is a screenshot of the API gateway portal - designed for ease of use.
 
