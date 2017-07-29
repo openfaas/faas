@@ -8,9 +8,9 @@ FaaS is a framework for building serverless functions with Docker which has firs
 **Highlights**
 
 * Ease of use through UI portal and *one-click* install
-* [CLI](http://github.com/alexellis/faas-cli) available with YAML format for templating and defining functions
 * Write functions in any language for Linux or Windows and package in Docker/OCI image format
-* Portable - runs on existing hardware or public/private cloud
+* Portable - runs on existing hardware or public/private cloud - [Kubernetes](https://github.com/alexellis/faas-netes) or Docker Swarm
+* [CLI](http://github.com/alexellis/faas-cli) available with YAML format for templating and defining functions
 * Auto-scales as demand increases
 
 ## Overview of FaaS
@@ -25,7 +25,7 @@ FaaS is a framework for building serverless functions with Docker which has firs
 ### Gateway
 
 * The API Gateway provides an external route into your functions and collects Cloud Native metrics through Prometheus.
-* Your API Gateway will scale functions according to demand by altering the service replica count in Docker's Swarm API.
+* Your API Gateway will scale functions according to demand by altering the service replica count in the Docker Swarm or Kubernetes API.
 * A UI is baked in allowing you to invoke functions in your browser and create new ones as needed.
 
 ### CLI
@@ -140,9 +140,9 @@ FaaS is written in Golang and is MIT licensed - contributions are welcomed wheth
 
 Highlights:
 
+* New: Kubernetes support via [FaaS-netes](https://github.com/alexellis/faas-netes) plugin
 * New: FaaS CLI and easy install via `curl` and `brew`
 * New: Windows function support
-* In testing: Kubernetes support via [FaaS-netes](https://github.com/alexellis/faas-netes) plugin
 * In development: Asynchronous/long-running FaaS functions via NATS Streaming [Test it now](https://gist.github.com/alexellis/62dad83b11890962ba49042afe258bb1)
 
 Example of a Grafana dashboard linked to FaaS showing auto-scaling live in action:
