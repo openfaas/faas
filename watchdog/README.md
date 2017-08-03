@@ -5,7 +5,9 @@ The FaaS watchdog is designed to marshal a HTTP request between your public HTTP
 
 Every FaaS function should embed this binary and uses it as its entrypoint. It is in effect a tiny web-server or shim that will fork your desired process for every HTTP request.
 
-Creating a function:
+![](https://pbs.twimg.com/media/DGScDblUIAAo4H-.jpg:large)
+
+Create a new function:
 
 - [x] Use an existing or a new Docker image
 - [x] Add the fwatchdog binary from the [Releases page](https://github.com/alexellis/faas/releases) via `curl` or `ADD https://`
