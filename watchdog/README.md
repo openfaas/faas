@@ -1,21 +1,33 @@
 Watchdog
 ==========
 
-The FaaS watchdog is designed to marshal a HTTP request between your public HTTP URL and a individual function.
-
-Every FaaS function should embed this binary and uses it as its entrypoint. It is in effect a tiny web-server or shim that will fork your desired process for every HTTP request.
+The watchdog provides an unmanged and generic interface between the outside world and your function. Its job is to marshal a HTTP request accepted on the API Gateway and to invoke your chosen appliaction. The watchdog is a tiny Golang webserver - see the diagram below for how this process works.
 
 ![](https://pbs.twimg.com/media/DGScDblUIAAo4H-.jpg:large)
 
-Create a new function:
+>  Above: a tiny web-server or shim that forks your desired process for every incoming HTTP request
 
-- [x] Use an existing or a new Docker image
+Every function needs to embed this binary and use it as its `ENTRYPOINT` or `CMD`, in effect it is the init process for your container. Once your process is forked the watchdog passses in the HTTP request via `stdin` and reads a HTTP response via `stdout`. This means your process does not need to know anything about the web or HTTP.
+
+Here's how to create a new function:
+
+**Create a function via the CLI**
+
+The FaaS CLI will allow you to abstract all Docker knowledge away, you just have to write a handler file in one of the supported runtimes.
+
+[Read a tutorial on the FaaS CLI](https://github.com/alexellis/faas-cli)
+
+**Package your function**
+
+Here's how to package your function if you don't want to use the CLI or have existing binaries or images:
+
+- [x] Use an existing or a new Docker image as base image `FROM`
 - [x] Add the fwatchdog binary from the [Releases page](https://github.com/alexellis/faas/releases) via `curl` or `ADD https://`
 - [x] Set an `fprocess` environmental variable with the function you want to run for each request
 - [x] Expose port 8080
 - [x] Set the `CMD` to `fwatchdog`
 
-Example Dockerfile:
+Example Dockerfile for an `echo` function:
 
 ```
 FROM alpine:3.5
@@ -29,9 +41,9 @@ ENV fprocess="/bin/cat"
 CMD ["fwatchdog"]
 ```
 
-**Implementing the a healthcheck**
+**Implementing a Docker healthcheck**
 
-Docker swarm will keep your function out of the DNS-RR / IPVS pool if the task (container) is not healthy.
+A Docker Healthcheck is not required but is best practice. It will make sure that the watchdog is ready to accept a request before forwarding requests via the API Gateway. If the function or watchdog runs into an unrecoverable issue Swarm will also be able to restart the container.
 
 Here is an example of the `echo` function implementing a healthcheck with a 5-second checking interval.
 
@@ -43,15 +55,15 @@ ENV fprocess="cat /etc/hostname"
 HEALTHCHECK --interval=5s CMD [ -e /tmp/.lock ] || exit 1
 ```
 
-The watchdog process creates a .lock file in `/tmp/` on starting its internal Golang HTTP server. `[ -e file_name ]` is shell to check if a file exists.
+The watchdog process creates a .lock file in `/tmp/` on starting its internal Golang HTTP server. `[ -e file_name ]` is shell to check if a file exists. With Windows Containers this is an invalid path so you may want to set the `suppress_lock` environmental variable.
 
-Swarm tutorial on Healthchecks:
+Read my Docker Swarm tutorial on Healthchecks:
 
  * [Test-drive Docker Healthcheck in 10 minutes](http://blog.alexellis.io/test-drive-healthcheck/)
 
 **Environmental overrides:**
 
-A number of environmental overrides can be added for additional flexibility and options:
+The watchdog can be configured through environmental variables. You must always specifiy an `fprocess` variable.
 
 | Option                 | Usage             |
 |------------------------|--------------|
@@ -116,6 +128,8 @@ With a body:
 
 Without a body:
 * GET
+
+> The API Gateway currently supports the POST route for functions.
 
 **Content-Type of request/response**
 
