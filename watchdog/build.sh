@@ -12,4 +12,6 @@ fi
 
 docker create --name buildoutput functions/watchdog:build echo
 docker cp buildoutput:/go/src/github.com/alexellis/faas/watchdog/watchdog ./fwatchdog
+docker cp buildoutput:/go/src/github.com/alexellis/faas/watchdog/watchdog-armhf ./fwatchdog-armhf
+
 docker rm buildoutput

@@ -9,5 +9,7 @@ COPY requesthandler_test.go .
 COPY types types
 
 RUN go test
+
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o watchdog .
 
+RUN GOARM=6 GOARCH=arm CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o watchdog-armhf .
