@@ -46,7 +46,7 @@ def handle(req):
 *handler.py*
 
 ```
-$ curl -sSL cli.get-faas.com | sudo sh
+$ curl -sSL https://cli.openfaas.com | sudo sh
 ```
 
 *Install the faas-cli which is also available on `brew`*
@@ -87,11 +87,11 @@ $ faas-cli -action deploy -f ./urlping.yaml
 > If your gateway is remote or part of a multi-host Swarm - you can also use the CLI to push your image to a remote registry or the Hub with `faas-cli -action push`
 
 ```
-$ curl -d "https://cli.get-faas.com" http://localhost:8080/function/url_ping/
-https://cli.get-faas.com => 200
+$ curl -d "https://cli.openfaas.com" http://localhost:8080/function/url_ping/
+https://cli.openfaas.com => 200
 ```
 
-*Test out the function with the URL https://cli.get-faas.com => 200*
+*Test out the function with the URL https://cli.openfaas.com => 200*
 
 [Sample functions](https://github.com/alexellis/faas/tree/master/sample-functions) are available in the Github repository in a range of programming languages.
 
