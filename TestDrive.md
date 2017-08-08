@@ -20,7 +20,7 @@ This one-shot script clones the code, initialises Docker swarm mode and then dep
 # docker swarm init --advertise-addr eth0 && \
   git clone https://github.com/alexellis/faas && \
   cd faas && \
-  git checkout 0.5.6b-alpha && \
+  git checkout 0.6.0 && \
   ./deploy_stack.sh && \
   docker service ls
 ```
@@ -42,7 +42,7 @@ Some of the sample functions are:
 * Node Info (nodeinfo) function - gives you the OS architecture and detailled info about the CPUS (Node.js)
 * Webhook stasher function (webhookstash) - saves webhook body into container's filesystem - even binaries (Golang)
 
-New functions:
+Newly added sample functions:
 
 * Hello world in - [Java/.NET core/Python/Node/Go and more](https://github.com/alexellis/faas/tree/master/sample-functions/BaseFunctions)
 * [Resize images with Image Magick](https://github.com/alexellis/faas/tree/master/sample-functions/ResizeImageMagick)
@@ -50,7 +50,7 @@ New functions:
 
 ### Invoke the sample functions with curl or Postman:
 
-Head over to the [Github repo to fork the code](https://github.com/alexellis/faas), or read on to see the input/output from the sample functions.
+Head over to the [Github and Star the project](https://github.com/alexellis/faas), or read on to see the input/output from the sample functions.
 
 ### Working with the sample functions
 
