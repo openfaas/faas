@@ -28,6 +28,7 @@ Welcome to the FaaS community page where you can find:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+[Time2Code: Functions as Service and Code as a Function](https://medium.com/@JockDaRock/time2code-functions-as-service-and-code-as-a-function-3d9125fc49fb) | Jock Reed | medium.com/@JockDaRock | 4-Aug-2017|
 | [FaaS complete walk-through on Kubernetes (video)](https://www.youtube.com/watch?v=0DbrLsUvaso) | Alex Ellis | youtube.com | 28-Jul-2017 |
 | [Kittens vs Tarsiers - an introduction to serverless machine learning](http://jmkhael.io/kittens-vs-tarsiers-an-introduction-to-serverless-machine-learning/) | Johnny Mkhael | jmkhael.io | 24-Jul-2017|
 | [Old and new - ASCII art and serverless](http://jmkhael.io/create-a-serverless-ascii-banner-with-faas/) | Johnny Mkhael | jmkhael.io | 29-Jun-2017|
@@ -51,6 +52,7 @@ Welcome to the FaaS community page where you can find:
 ### Repos - projects / samples / use cases
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| [Time2Code](https://github.com/JockDaRock/Time2Code) | Jock Reed | github.com | 9-Aug-2017 |
 | [FaaS-netes - Kubernetes backend for FaaS](https://github.com/alexellis/faas-netes) | Alex Ellis | github.com | 25-Jul-2017 |
 | [Twitter, Elastic Search and Alexa stack of functions](https://github.com/alexellis/journey-expert/tree/master/tweetstash) | Alex Ellis | github.com | 24-Apr-2017 |
 | [Dockercon FaaS demos including Alexa/Github](https://github.com/alexellis/faas-dockercon) | Alex Ellis | github.com | 14-Apr-2017 |
