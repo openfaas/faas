@@ -28,6 +28,7 @@ Welcome to the FaaS community page where you can find:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+[Time2Code: Functions as Service and Code as a Function](https://medium.com/@JockDaRock/time2code-functions-as-service-and-code-as-a-function-3d9125fc49fb) | Jock Reed | medium.com/@JockDaRock | 4-Aug-2017|
 | [FaaS complete walk-through on Kubernetes (video)](https://www.youtube.com/watch?v=0DbrLsUvaso) | Alex Ellis | youtube.com | 28-Jul-2017 |
 | [Kittens vs Tarsiers - an introduction to serverless machine learning](http://jmkhael.io/kittens-vs-tarsiers-an-introduction-to-serverless-machine-learning/) | Johnny Mkhael | jmkhael.io | 24-Jul-2017|
 | [Old and new - ASCII art and serverless](http://jmkhael.io/create-a-serverless-ascii-banner-with-faas/) | Johnny Mkhael | jmkhael.io | 29-Jun-2017|
@@ -51,6 +52,7 @@ Welcome to the FaaS community page where you can find:
 ### Repos - projects / samples / use cases
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| [Time2Code](https://github.com/JockDaRock/Time2Code) | Jock Reed | github.com | 9-Aug-2017 |
 | [FaaS-netes - Kubernetes backend for FaaS](https://github.com/alexellis/faas-netes) | Alex Ellis | github.com | 25-Jul-2017 |
 | [Twitter, Elastic Search and Alexa stack of functions](https://github.com/alexellis/journey-expert/tree/master/tweetstash) | Alex Ellis | github.com | 24-Apr-2017 |
 | [Dockercon FaaS demos including Alexa/Github](https://github.com/alexellis/faas-dockercon) | Alex Ellis | github.com | 14-Apr-2017 |
@@ -59,3 +61,4 @@ Welcome to the FaaS community page where you can find:
 | [Github - ascii art generator](https://github.com/developius/faas-node-ascii) | Finnian Anderson | [developius/faas-node-ascii](https://github.com/developius/faas-node-ascii) | 17-April-2017 |
 | [Github - URL Shortener](https://github.com/developius/faas-node-url-shortener) | Finnian Anderson | [developius/faas-node-url-shortener](https://github.com/developius/faas-node-url-shortener) | 19-April-2017 |
 | [Github - fibonacci numbers up to N](https://github.com/developius/faas-python-fib/) | Finnian Anderson | [developius/faas-python-fib/](https://github.com/developius/faas-python-fib/) | 19-April-2017 |
+
