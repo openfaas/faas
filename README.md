@@ -111,11 +111,23 @@ This is my original blog post on FaaS from January: [Functions as a Service blog
 
 ### TestDrive
 
-A one-line script is provided to help you get started quickly. You can test-drive FaaS on Docker Swarm with a set of sample functions as defined in the provided [docker-compose.yml](https://github.com/alexellis/faas/blob/master/docker-compose.yml) file. Alternatively if you have a Kubernetes cluster you can [start here](https://github.com/alexellis/faas-netes).
+**Docker Playground**
 
-Use your own laptop or the free community-run Docker playground: play-with-docker.com (PWD) with the button below:
+You can quickly start FaaS on Docker Swarm online using the community-run Docker playground: play-with-docker.com (PWD) by clicking the button below:
 
 [![Try in PWD](https://cdn.rawgit.com/play-with-docker/stacks/cff22438/assets/images/button.png)](http://play-with-docker.com?stack=https://raw.githubusercontent.com/alexellis/faas/master/docker-compose.yml&stack_name=func)
+
+**Docker Swarm**
+
+A set of one-line scripts are provided to help you quickly test-drive FaaS on Docker Swarm with a set of sample functions as defined in the provided [docker-compose.yml](https://github.com/alexellis/faas/blob/master/docker-compose.yml) file.
+
+- `deploy_stack.sh` - for OSX/Linux on x86_64
+- `deploy_stack.armhf.sh` - for Linux on ARM (Raspberry Pi for example)
+- `deploy_stack.ps1` - for Windows
+
+**Kubernetes**
+
+Alternatively if you have a Kubernetes cluster you can [start here](https://github.com/alexellis/faas-netes).
 
 ### [Begin the TestDrive with Docker Swarm](https://github.com/alexellis/faas/blob/master/TestDrive.md)
 
