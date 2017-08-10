@@ -51,6 +51,7 @@ Welcome to the FaaS community page where you can find:
 ### Repos - projects / samples / use cases
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| [Img2ANSI - GIF/PNG/JPG to ANSI art converter](https://github.com/johnmccabe/faas-img2ansi/) | John McCabe | github.com | 10-August-2017 |
 | [FaaS-netes - Kubernetes backend for FaaS](https://github.com/alexellis/faas-netes) | Alex Ellis | github.com | 25-Jul-2017 |
 | [Twitter, Elastic Search and Alexa stack of functions](https://github.com/alexellis/journey-expert/tree/master/tweetstash) | Alex Ellis | github.com | 24-Apr-2017 |
 | [Dockercon FaaS demos including Alexa/Github](https://github.com/alexellis/faas-dockercon) | Alex Ellis | github.com | 14-Apr-2017 |
