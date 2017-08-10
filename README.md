@@ -107,7 +107,7 @@ If you'd like to find the functions I used in the demos head over to the [faas-d
 
 **Background story**
 
-This is my original blog post on FaaS from Janurary: [Functions as a Service blog post](http://blog.alexellis.io/functions-as-a-service/)
+This is my original blog post on FaaS from January: [Functions as a Service blog post](http://blog.alexellis.io/functions-as-a-service/)
 
 ### TestDrive
 
