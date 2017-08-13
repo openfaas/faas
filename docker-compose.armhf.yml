@@ -7,7 +7,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:latest-armhf
+        image: functions/gateway-armhf:0.6.0
         networks:
             - functions
         deploy:
