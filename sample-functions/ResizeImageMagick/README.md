@@ -13,8 +13,7 @@ Use this FaaS function to resize an image with ImageMagick.
 * Option 2 - use the [faas-cli](https://github.com/alexellis/faas-cli/) (experimental)
 
 ```
-# curl -SL https://github.com/alexellis/faas-cli/releases/download/0.1-alpha/faas-cli-macos > faas-cli
-# chmod +x ./faas-cli
+# curl -sSL https://get.openfaas.com | sudo sh
 
 # ./faas-cli -action=deploy -image=functions/resizer -name=resizer \
   -fprocess="convert - -resize 50% fd:1"
