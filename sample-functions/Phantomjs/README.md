@@ -6,6 +6,18 @@ Once a function has been deployed to FaaS using the UI or one of the other metho
 
 **Image name:** `functions/base:phantomjs`
 
+You can use the existing Docker image that is managed through this project.
+
+Create the function through the FaaS CLI:
+
+```
+# curl -sSL https://get.openfaas.com | sudo sh
+
+# faas-cli -action=deploy -image=functions/base:phantomjs -name=phantomjs \
+  -fprocess="phantomjs /dev/stdin"
+200 OK
+URL: http://localhost:8080/function/phantomjs
+```
 
 **Example usage:**
 
