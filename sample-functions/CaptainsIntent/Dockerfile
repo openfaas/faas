@@ -1,5 +1,5 @@
 FROM alpine:latest
-RUN apk --update add nodejs
+RUN apk --update add nodejs nodejs-npm
 
 ADD https://github.com/alexellis/faas/releases/download/v0.5-alpha/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog

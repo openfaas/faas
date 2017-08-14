@@ -1,8 +1,9 @@
-FROM armhf/alpine:3.5
+FROM arm32v6/alpine:3.6
 
-ADD https://github.com/alexellis/faas/releases/download/v0.3-alpha/fwatchdog-armhf /usr/bin/fwatchdog
+ADD https://github.com/alexellis/faas/releases/download/0.6.0/fwatchdog-armhf /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
 
 # Populate example here
 # ENV fprocess="wc -l"
+HEALTHCHECK --interval=5s CMD [ -e /tmp/.lock ] || exit 1
 CMD ["fwatchdog"]

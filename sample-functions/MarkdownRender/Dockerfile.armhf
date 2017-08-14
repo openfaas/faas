@@ -1,6 +1,6 @@
-FROM armhf/alpine:3.5
+FROM arm32v6/alpine:3.6
 
-ADD https://github.com/alexellis/faas/releases/download/0.5.4-alpha/fwatchdog-armhf /usr/bin/fwatchdog
+ADD https://github.com/alexellis/faas/releases/download/0.6.0/fwatchdog-armhf /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
 
 WORKDIR /root/
