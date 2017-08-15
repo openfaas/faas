@@ -1,29 +1,36 @@
 ## Functions as a Service (FaaS)
 
-FaaS is a framework for building serverless functions on Docker with first class support for metrics. Any UNIX process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
+[![Build
+Status](https://travis-ci.org/alexellis/faas.svg?branch=master)](https://travis-ci.org/alexellis/faas)
 
-## Concept
+FaaS is a framework for building serverless functions with Docker which has first class support for metrics. Any process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
 
-* Each container has a watchdog process that hosts a web server allowing a post request to be forwarded to a desired process via STDIN. The response is sent back to the caller via STDOUT.
+**Highlights**
 
-* The API Gateway provides an external route into your functions and collects metrics in Prometheus. The gateway will scale functions according to demand by mangaging Docker Swarm replicas as throughput increases. A UI is baked in allowing you to invoke functions in your browser and create new ones as needed.
-
-## FaaS Stack
-
-FaaS is an open-source project written in Golang and licensed under the MIT license.
-
-![Stack](http://blog.alexellis.io/content/images/2017/04/faas_hi.png)
-
-**Highlights:**
-
-* Ease of use through UI portal
-* Setup a working environment with one script
-* Portable - runs on any hardware supported by Docker
-
-* Any process that can run in Docker can be a serverless function
-
-* Baked-in Prometheus metrics and logging
+* Ease of use through UI portal and *one-click* install
+* Write functions in any language for Linux or Windows and package in Docker/OCI image format
+* Portable - runs on existing hardware or public/private cloud - [Kubernetes](https://github.com/alexellis/faas-netes) or Docker Swarm
+* [CLI](http://github.com/alexellis/faas-cli) available with YAML format for templating and defining functions
 * Auto-scales as demand increases
+
+## Overview of FaaS
+
+![Stack](https://pbs.twimg.com/media/DFrkF4NXoAAJwN2.jpg)
+
+### Function Watchdog
+
+* You can make any Docker image into a serverless function by adding the *Function Watchdog* (a tiny Golang HTTP server)
+* The *Function Watchdog* is the entrypoint allowing HTTP requests to be forwarded to the target process via STDIN. The response is sent back to the caller by writing to STDOUT from your application.
+
+### Gateway
+
+* The API Gateway provides an external route into your functions and collects Cloud Native metrics through Prometheus.
+* Your API Gateway will scale functions according to demand by altering the service replica count in the Docker Swarm or Kubernetes API.
+* A UI is baked in allowing you to invoke functions in your browser and create new ones as needed.
+
+### CLI
+
+Any container or process in a Docker container can be a serverless function in FaaS. Using the [FaaS CLI](http://github.com/alexellis/faas-cli) you can deploy your functions or quickly create new functions from templates such as Node.js or Python.
 
 ## Notable mentions
 
@@ -41,7 +48,7 @@ Serdar Yegulalp	Senior Technical Writer covered FaaS in a write-up looking at se
 
 [Open source project uses Docker for serverless computing](http://www.infoworld.com/article/3184757/open-source-tools/open-source-project-uses-docker-for-serverless-computing.html#tk.twt_ifw)
 
-### Community activity
+### Online community
 
 There is also a community being built around FaaS with talks, demos and sample functions being built out.
 
