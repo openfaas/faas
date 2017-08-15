@@ -1,10 +1,16 @@
-## FaaS Community
+## OpenFaaS Community
 
-Welcome to the FaaS community page where you can find:
+Welcome to the OpenFaaS community page where you can find:
 
 * Events
 * Blog posts and write-ups
 * Repos - projects / samples / use cases
+
+There are three main Github repos
+
+* FaaS - the main repo for the Docker Swarm integration, samples and documentation
+* [FaaS-netes](http://github.com/alexellis/faas-netes) - the Kubernetes back-end for FaaS
+* [FaaS-cli](http://github.com/alexellis/faas-cli) - the user-facing CLI for templating and deploying functions
 
 > It would be great to hear from you espcially if you have any of the above and want to share it with the rest of the community. Pull Request or submit a Github Issue.
 
