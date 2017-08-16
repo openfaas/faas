@@ -12,6 +12,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 
 	"io/ioutil"
 
@@ -147,7 +148,7 @@ func MakeDeleteFunctionHandler(metricsOptions metrics.MetricOptions, c *client.C
 }
 
 // MakeNewFunctionHandler creates a new function (service) inside the swarm network.
-func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Client) http.HandlerFunc {
+func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Client, maxRestarts uint64) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		body, _ := ioutil.ReadAll(r.Body)
@@ -175,7 +176,7 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 			}
 			options.EncodedRegistryAuth = auth
 		}
-		spec := makeSpec(&request)
+		spec := makeSpec(&request, maxRestarts)
 
 		response, err := c.ServiceCreate(context.Background(), spec, options)
 		if err != nil {
@@ -185,17 +186,19 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 	}
 }
 
-func makeSpec(request *requests.CreateFunctionRequest) swarm.ServiceSpec {
-	max := uint64(1)
+func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64) swarm.ServiceSpec {
 
 	nets := []swarm.NetworkAttachmentConfig{
 		{Target: request.Network},
 	}
+	restartDelay := time.Second * 5
+
 	spec := swarm.ServiceSpec{
 		TaskTemplate: swarm.TaskSpec{
 			RestartPolicy: &swarm.RestartPolicy{
-				MaxAttempts: &max,
-				Condition:   swarm.RestartPolicyConditionNone,
+				MaxAttempts: &maxRestarts,
+				Condition:   swarm.RestartPolicyConditionAny,
+				Delay:       &restartDelay,
 			},
 			ContainerSpec: swarm.ContainerSpec{
 				Image:  request.Image,
