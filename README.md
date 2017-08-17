@@ -159,3 +159,5 @@ Example of a Grafana dashboard linked to FaaS showing auto-scaling live in actio
 ![](https://pbs.twimg.com/media/C9caE6CXUAAX_64.jpg:large)
 
 Sample dashboard JSON file available [here](https://github.com/alexellis/faas/blob/master/contrib/grafana.json)
+
+Thanks for visiting
