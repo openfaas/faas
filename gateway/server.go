@@ -12,6 +12,7 @@ import (
 	"fmt"
 
 	"github.com/Sirupsen/logrus"
+	natsHandler "github.com/alexellis/faas-nats/handler"
 	internalHandlers "github.com/alexellis/faas/gateway/handlers"
 	"github.com/alexellis/faas/gateway/metrics"
 	"github.com/alexellis/faas/gateway/plugin"
@@ -29,6 +30,12 @@ type handlerSet struct {
 	ListFunctions  http.HandlerFunc
 	Alert          http.HandlerFunc
 	RoutelessProxy http.HandlerFunc
+
+	// QueuedProxy - queue work and return synchronous response
+	QueuedProxy http.HandlerFunc
+
+	// AsyncReport - report a defered execution result
+	AsyncReport http.HandlerFunc
 }
 
 func main() {
@@ -87,6 +94,19 @@ func main() {
 		faasHandlers.DeployFunction = internalHandlers.MakeNewFunctionHandler(metricsOptions, dockerClient, maxRestarts)
 		faasHandlers.DeleteFunction = internalHandlers.MakeDeleteFunctionHandler(metricsOptions, dockerClient)
 
+		if config.UseNATS() {
+			log.Println("Async enabled: Using NATS Streaming.")
+			natsQueue, queueErr := natsHandler.CreateNatsQueue(*config.NATSAddress, *config.NATSPort)
+			if queueErr != nil {
+				log.Fatalln(queueErr)
+			}
+
+			faasHandlers.QueuedProxy = internalHandlers.MakeQueuedProxy(metricsOptions, true, dockerClient, &logger, natsQueue)
+			faasHandlers.AsyncReport = internalHandlers.MakeAsyncReport(metricsOptions)
+		}
+
+		// faasHandlers.AsyncFunction = internalHandlers.
+
 		// This could exist in a separate process - records the replicas of each swarm service.
 		functionLabel := "function"
 		metrics.AttachSwarmWatcher(dockerClient, metricsOptions, functionLabel)
@@ -102,6 +122,13 @@ func main() {
 	r.HandleFunc("/system/functions", faasHandlers.ListFunctions).Methods("GET")
 	r.HandleFunc("/system/functions", faasHandlers.DeployFunction).Methods("POST")
 	r.HandleFunc("/system/functions", faasHandlers.DeleteFunction).Methods("DELETE")
+
+	if faasHandlers.QueuedProxy != nil {
+		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}/", faasHandlers.QueuedProxy).Methods("POST")
+		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}", faasHandlers.QueuedProxy).Methods("POST")
+
+		r.HandleFunc("/system/async-report", faasHandlers.AsyncReport)
+	}
 
 	fs := http.FileServer(http.Dir("./assets/"))
 	r.PathPrefix("/ui/").Handler(http.StripPrefix("/ui", fs)).Methods("GET")

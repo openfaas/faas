@@ -76,3 +76,10 @@ type Function struct {
 	InvocationCount float64 `json:"invocationCount"` // TODO: shouldn't this be int64?
 	Replicas        uint64  `json:"replicas"`
 }
+
+// AsyncReport is the report from a function executed on a queue worker.
+type AsyncReport struct {
+	FunctionName string  `json:"name"`
+	StatusCode   int     `json:"statusCode"`
+	TimeTaken    float64 `json:"timeTaken"`
+}
