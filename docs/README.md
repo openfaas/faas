@@ -1,4 +1,4 @@
-## Functions as a Service (FaaS)
+## Functions as a Service (OpenFaaS)
 
 [![Build
 Status](https://travis-ci.org/alexellis/faas.svg?branch=master)](https://travis-ci.org/alexellis/faas)
@@ -13,7 +13,9 @@ FaaS is a framework for building serverless functions with Docker which has firs
 * [CLI](http://github.com/alexellis/faas-cli) available with YAML format for templating and defining functions
 * Auto-scales as demand increases
 
-## Overview of FaaS
+![https://blog.alexellis.io/content/images/2017/08/faas_side.png](https://blog.alexellis.io/content/images/2017/08/faas_side.png)
+
+## Overview of OpenFaaS
 
 ![Stack](https://pbs.twimg.com/media/DFrkF4NXoAAJwN2.jpg)
 
@@ -56,19 +58,32 @@ There is also a community being built around FaaS with talks, demos and sample f
 
 ## Getting started
 
-**Test Drive FaaS**
+**Test Drive OpenFaaS**
 
 You can [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md) FaaS on your laptop in 60 seconds, or deploy to a free online Docker playground. Find out more in the [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md).
 
 You can dive straight into the [sample functions here](https://github.com/alexellis/faas/blob/master/sample-functions/README.md). You'll find hello-world examples for the most common programming languages including: Golang, DotNet Core, Java, NodeJS, Python even BusyBox.
 
-There is even CLI called [faas-cli](https://github.com/alexellis/faas-cli/) which lets you speed up development by creating functions from templates for [Node.js](https://github.com/alexellis/faas-cli/blob/master/test_node.sh) or [Python](https://github.com/alexellis/faas-cli/blob/master/test_python.sh). You can also use the CLI to deploy to your own FaaS API Gateway with a single command.
+The [faas-cli](https://github.com/alexellis/faas-cli/) lets you speed up development by creating functions from templates for:
 
-**Contribute to FaaS**
+* [Node.js](https://github.com/alexellis/faas-cli/blob/master/test_node.sh)
+* [Python](https://github.com/alexellis/faas-cli/blob/master/test_python.sh)
+* Ruby
+* CSharp
+
+..or whatever langauge you can create your own template for.
+
+You can also use the CLI to deploy to your own FaaS API Gateway with a single command.
+
+**Contribute to OpenFaaS**
 
 FaaS enables you to run your serverless functions in whatever language you like, wherever you like - for however long you need.
 
 Contributions to the project are welcome - please send in issues and questions through Github.
 
 [See issues and PRs](https://github.com/alexellis/faas/issues)
+
+*What about the name?*
+
+FaaS is becoming OpenFaas, see more here: [Issue 123](https://github.com/alexellis/faas/issues/123)
 
