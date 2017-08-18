@@ -58,6 +58,18 @@ There is also a community being built around FaaS with talks, demos and sample f
 
 ## Getting started
 
+**Jump straight in**
+
+Run your first function in 10-15 minutes with this *new* guide.
+
+[Your first serverless Python function with OpenFaaS](https://blog.alexellis.io/introducing-functions-as-a-service/)
+
+**Introducing OpenFaaS blog post**
+
+Read up on the background, the top 3 highlighted features and what's coming next:
+
+[Introducing Functions as a Service (FaaS)](https://blog.alexellis.io/introducing-functions-as-a-service/)
+
 **Test Drive OpenFaaS**
 
 You can [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md) FaaS on your laptop in 60 seconds, or deploy to a free online Docker playground. Find out more in the [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md).
