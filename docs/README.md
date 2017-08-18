@@ -3,6 +3,8 @@
 [![Build
 Status](https://travis-ci.org/alexellis/faas.svg?branch=master)](https://travis-ci.org/alexellis/faas)
 
+![https://blog.alexellis.io/content/images/2017/08/faas_side.png](https://blog.alexellis.io/content/images/2017/08/faas_side.png)
+
 FaaS is a framework for building serverless functions with Docker which has first class support for metrics. Any process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
 
 **Highlights**
@@ -12,8 +14,6 @@ FaaS is a framework for building serverless functions with Docker which has firs
 * Portable - runs on existing hardware or public/private cloud - [Kubernetes](https://github.com/alexellis/faas-netes) or Docker Swarm
 * [CLI](http://github.com/alexellis/faas-cli) available with YAML format for templating and defining functions
 * Auto-scales as demand increases
-
-![https://blog.alexellis.io/content/images/2017/08/faas_side.png](https://blog.alexellis.io/content/images/2017/08/faas_side.png)
 
 ## Overview of OpenFaaS
 
