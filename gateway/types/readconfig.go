@@ -64,6 +64,21 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 		}
 	}
 
+	faasNATSAddress := hasEnv.Getenv("faas_nats_address")
+	if len(faasNATSAddress) > 0 {
+		cfg.NATSAddress = &faasNATSAddress
+	}
+
+	faasNATSPort := hasEnv.Getenv("faas_nats_port")
+	if len(faasNATSPort) > 0 {
+		port, err := strconv.Atoi(faasNATSPort)
+		if err == nil {
+			cfg.NATSPort = &port
+		} else {
+			log.Println("faas_nats_port invalid number: " + faasNATSPort)
+		}
+	}
+
 	return cfg
 }
 
@@ -72,6 +87,14 @@ type GatewayConfig struct {
 	ReadTimeout          time.Duration
 	WriteTimeout         time.Duration
 	FunctionsProviderURL *url.URL
+	NATSAddress          *string
+	NATSPort             *int
+}
+
+// UseNATS Use NATSor not
+func (g *GatewayConfig) UseNATS() bool {
+	return g.NATSPort != nil &&
+		g.NATSAddress != nil
 }
 
 // UseExternalProvider decide whether to bypass built-in Docker Swarm engine

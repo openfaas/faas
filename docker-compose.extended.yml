@@ -5,15 +5,45 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:0.6.1 
+        image: functions/gateway:latest-dev
         networks:
             - functions
         environment:
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
+            faas_nats_address: "nats"
+            faas_nats_port: 4222
         deploy:
             placement:
                 constraints: [node.role == manager]
- 
+        # Start Add for NATS Streaming
+        depends_on:
+            - nats
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 20
+                window: 380s
+    nats:
+        image: nats-streaming:0.5.0
+        ports:
+            - 4222:4222
+            - 8222:8222
+        command: "--store memory --cluster_id faas-cluster"
+        networks:
+            - functions
+    queue-worker:
+        image: functions/queue-worker:latest-dev
+        networks:
+            - functions
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 20
+                window: 380s
+    # End
+
     prometheus:
         image: functions/prometheus:latest  # autobuild from Dockerfile in repo.
         command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
@@ -48,22 +78,9 @@ services:
 
     # Sample functions go here.
 
-    # Service label of "function" allows functions to show up in UI on http://gateway:8080/
-    webhookstash:
-        image: functions/webhookstash:latest
-        labels:
-            function: "true"
-        depends_on:
-            - gateway
-        networks:
-            - functions
-        environment:
-            no_proxy: "gateway"
-            https_proxy: $https_proxy
-
     # Pass a username as an argument to find how many images user has pushed to Docker Hub.
     hubstats:
-        image: functions/hubstats:latest 
+        image: alexellis2/faas-dockerhubstats:latest
         labels:
             function: "true"
         depends_on:
@@ -98,62 +115,6 @@ services:
             - functions
         environment:
             fprocess: "cat"
-            no_proxy: "gateway"
-            https_proxy: $https_proxy
-
-    # Counts words in request with `wc` utility
-    wordcount:
-        image: functions/alpine:health
-        labels:
-            function: "true"
-            com.faas.max_replicas: "10"
-        depends_on:
-            - gateway
-        networks:
-            - functions
-        environment:
-            fprocess: "wc"
-            no_proxy: "gateway"
-            https_proxy: $https_proxy
-
-    # Calculates base64 representation of request body.
-    base64:
-        image: functions/alpine:health
-        labels:
-            function: "true"
-        depends_on:
-            - gateway
-        networks:
-            - functions
-        environment:
-            fprocess: "base64"
-            no_proxy: "gateway"
-            https_proxy: $https_proxy
-
-    # Decodes base64 representation of request body.
-    decodebase64:
-        image: functions/alpine:health
-        labels:
-            function: "true"
-        depends_on:
-            - gateway
-        networks:
-            - functions
-        environment:
-            fprocess: "base64 -d"
-            no_proxy: "gateway"
-            https_proxy: $https_proxy
-
-    # Converts body in (markdown format) -> (html)
-    markdown:
-        image: alexellis2/faas-markdownrender:latest
-        labels:
-            function: "true"
-        depends_on:
-            - gateway
-        networks:
-            - functions
-        environment:
             no_proxy: "gateway"
             https_proxy: $https_proxy
 
