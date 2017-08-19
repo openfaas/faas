@@ -98,23 +98,20 @@ func main() {
 		faasHandlers.ListFunctions = internalHandlers.MakeFunctionReader(metricsOptions, dockerClient)
 		faasHandlers.DeployFunction = internalHandlers.MakeNewFunctionHandler(metricsOptions, dockerClient, maxRestarts)
 		faasHandlers.DeleteFunction = internalHandlers.MakeDeleteFunctionHandler(metricsOptions, dockerClient)
-
-		if config.UseNATS() {
-			log.Println("Async enabled: Using NATS Streaming.")
-			natsQueue, queueErr := natsHandler.CreateNatsQueue(*config.NATSAddress, *config.NATSPort)
-			if queueErr != nil {
-				log.Fatalln(queueErr)
-			}
-
-			faasHandlers.QueuedProxy = internalHandlers.MakeQueuedProxy(metricsOptions, true, dockerClient, &logger, natsQueue)
-			faasHandlers.AsyncReport = internalHandlers.MakeAsyncReport(metricsOptions)
-		}
-
-		// faasHandlers.AsyncFunction = internalHandlers.
-
 		// This could exist in a separate process - records the replicas of each swarm service.
 		functionLabel := "function"
 		metrics.AttachSwarmWatcher(dockerClient, metricsOptions, functionLabel)
+	}
+
+	if config.UseNATS() {
+		log.Println("Async enabled: Using NATS Streaming.")
+		natsQueue, queueErr := natsHandler.CreateNatsQueue(*config.NATSAddress, *config.NATSPort)
+		if queueErr != nil {
+			log.Fatalln(queueErr)
+		}
+
+		faasHandlers.QueuedProxy = internalHandlers.MakeQueuedProxy(metricsOptions, true, &logger, natsQueue)
+		faasHandlers.AsyncReport = internalHandlers.MakeAsyncReport(metricsOptions)
 	}
 
 	r := mux.NewRouter()

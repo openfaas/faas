@@ -8,12 +8,11 @@ import (
 	"github.com/Sirupsen/logrus"
 	"github.com/alexellis/faas/gateway/metrics"
 	"github.com/alexellis/faas/gateway/queue"
-	"github.com/docker/docker/client"
 	"github.com/gorilla/mux"
 )
 
 // MakeQueuedProxy accepts work onto a queue
-func MakeQueuedProxy(metrics metrics.MetricOptions, wildcard bool, client *client.Client, logger *logrus.Logger, canQueueRequests queue.CanQueueRequests) http.HandlerFunc {
+func MakeQueuedProxy(metrics metrics.MetricOptions, wildcard bool, logger *logrus.Logger, canQueueRequests queue.CanQueueRequests) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 
