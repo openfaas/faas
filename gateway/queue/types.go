@@ -8,7 +8,7 @@ type Request struct {
 	Header      http.Header
 	Body        []byte
 	Method      string
-	CallbackURL url.URL
+	CallbackURL *url.URL
 	QueryString string
 	Function    string
 }

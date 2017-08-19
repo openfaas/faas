@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/alexellis/faas/gateway/metrics"
@@ -20,23 +21,43 @@ func MakeQueuedProxy(metrics metrics.MetricOptions, wildcard bool, logger *logru
 
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte(err.Error()))
 			return
 		}
 
-		w.WriteHeader(http.StatusAccepted)
 		vars := mux.Vars(r)
 		name := vars["name"]
+
+		callbackURLHeader := r.Header.Get("X-Callback-URL")
+		var callbackURL *url.URL
+
+		if len(callbackURLHeader) > 0 {
+			urlVal, urlErr := url.Parse(callbackURLHeader)
+			if urlErr != nil {
+				w.WriteHeader(http.StatusBadRequest)
+				w.Write([]byte(urlErr.Error()))
+				return
+			}
+
+			callbackURL = urlVal
+		}
 		req := &queue.Request{
 			Function:    name,
 			Body:        body,
 			Method:      r.Method,
 			QueryString: r.URL.RawQuery,
 			Header:      r.Header,
+			CallbackURL: callbackURL,
 		}
 
 		err = canQueueRequests.Queue(req)
 		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(err.Error()))
 			fmt.Println(err)
+			return
 		}
+		w.WriteHeader(http.StatusAccepted)
+
 	}
 }
