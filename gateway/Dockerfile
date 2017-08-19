@@ -1,4 +1,4 @@
-FROM golang:1.7.5
+FROM golang:1.7.5 as build
 WORKDIR /go/src/github.com/alexellis/faas/gateway
 
 COPY vendor         vendor
@@ -22,7 +22,7 @@ EXPOSE 8080
 ENV http_proxy      ""
 ENV https_proxy     ""
 
-COPY --from=0 /go/src/github.com/alexellis/faas/gateway/gateway    .
+COPY --from=build /go/src/github.com/alexellis/faas/gateway/gateway    .
 
 COPY assets     assets
 
