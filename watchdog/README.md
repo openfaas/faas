@@ -9,13 +9,17 @@ The watchdog provides an unmanged and generic interface between the outside worl
 
 Every function needs to embed this binary and use it as its `ENTRYPOINT` or `CMD`, in effect it is the init process for your container. Once your process is forked the watchdog passses in the HTTP request via `stdin` and reads a HTTP response via `stdout`. This means your process does not need to know anything about the web or HTTP.
 
-Here's how to create a new function:
+## Create a new function the easy way
 
 **Create a function via the CLI**
 
-The FaaS CLI will allow you to abstract all Docker knowledge away, you just have to write a handler file in one of the supported runtimes.
+The easiest way to create a function is to use a template and the FaaS CLI. The CLI allows you to abstract all Docker knowledge away, you just have to write a handler file in one of the supported programming languages.
 
-[Read a tutorial on the FaaS CLI](https://github.com/alexellis/faas-cli)
+* [Your first serverless Python function with OpenFaaS](https://blog.alexellis.io/first-faas-python-function/)
+
+* [Read a tutorial on the FaaS CLI](https://github.com/alexellis/faas-cli)
+
+## Delve deeper
 
 **Package your function**
 
