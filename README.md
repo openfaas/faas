@@ -38,7 +38,7 @@ Any container or process in a Docker container can be a serverless function in F
 
 Let's have a quick look at an example function `url_ping` which connects to a remote web server and returns the HTTP code from the response. It's written in Python.
 
-```
+```python
 import requests
 
 def handle(req):
@@ -62,7 +62,7 @@ $ cd faas-cli
 
 Define your functions in YAML - or deploy via the API Gateway's UI.
 
-```
+```yaml
 provider:
   name: faas
   gateway: http://localhost:8080
