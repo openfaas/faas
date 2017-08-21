@@ -36,6 +36,7 @@ There are three main Github repos
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [Your Serverless Raspberry Pi cluster with Docker](https://blog.alexellis.io/your-serverless-raspberry-pi-cluster/) | Alex Ellis | alexellis.io | 20-Aug-2017 |
+| [Your first serverless .NET function with OpenFaaS](https://medium.com/@rorpage/your-first-serverless-net-function-with-openfaas-27573017dedb) | Rob Page | medium.com | 19-Aug-2017 |
 | [Your first serverless Python function with OpenFaaS](https://blog.alexellis.io/first-faas-python-function/) | Alex Ellis | alexellis.io | 11-Aug-2017 |
 | [Introducing Functions as a Service - OpenFaaS](https://blog.alexellis.io/introducing-functions-as-a-service/) | Alex Ellis | alexellis.io | 08-Aug-2017 |
 | [Time2Code code-editor](https://github.com/JockDaRock/Time2Code) | Jock Reed | github.com | 9-Aug-2017 |
