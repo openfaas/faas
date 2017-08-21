@@ -37,7 +37,7 @@ There are three main Github repos
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [Your Serverless Raspberry Pi cluster with Docker](https://blog.alexellis.io/your-serverless-raspberry-pi-cluster/) | Alex Ellis | alexellis.io | 20-Aug-2017 |
 | [Your first serverless Python function with OpenFaaS](https://blog.alexellis.io/first-faas-python-function/) | Alex Ellis | alexellis.io | 11-Aug-2017 |
-| **[Introducing Functions as a Service (FaaS)](Introducing Functions as a Service (FaaS))** | Alex Ellis | alexellis.io | 08-Aug-2017 |
+| [Introducing Functions as a Service - OpenFaaS](https://blog.alexellis.io/introducing-functions-as-a-service/) | Alex Ellis | alexellis.io | 08-Aug-2017 |
 | [Time2Code code-editor](https://github.com/JockDaRock/Time2Code) | Jock Reed | github.com | 9-Aug-2017 |
 | [FaaS complete walk-through on Kubernetes (video)](https://www.youtube.com/watch?v=0DbrLsUvaso) | Alex Ellis | youtube.com | 28-Jul-2017 |
 | [Kittens vs Tarsiers - an introduction to serverless machine learning](http://jmkhael.io/kittens-vs-tarsiers-an-introduction-to-serverless-machine-learning/) | Johnny Mkhael | jmkhael.io | 24-Jul-2017|
