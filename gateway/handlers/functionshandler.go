@@ -44,47 +44,6 @@ func getCounterValue(service string, code string, metricsOptions *metrics.Metric
 	return invocations
 }
 
-// MakeFunctionReader gives a summary of Function structs with Docker service stats overlaid with Prometheus counters.
-func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-
-		serviceFilter := filters.NewArgs()
-
-		options := types.ServiceListOptions{
-			Filters: serviceFilter,
-		}
-
-		services, err := c.ServiceList(context.Background(), options)
-		if err != nil {
-			fmt.Println(err)
-		}
-
-		// TODO: Filter only "faas" functions (via metadata?)
-		var functions []requests.Function
-
-		for _, service := range services {
-
-			if len(service.Spec.TaskTemplate.ContainerSpec.Labels["function"]) > 0 {
-				invocations := getCounterValue(service.Spec.Name, "200", &metricsOptions) +
-					getCounterValue(service.Spec.Name, "500", &metricsOptions)
-
-				f := requests.Function{
-					Name:            service.Spec.Name,
-					Image:           service.Spec.TaskTemplate.ContainerSpec.Image,
-					InvocationCount: invocations,
-					Replicas:        *service.Spec.Mode.Replicated.Replicas,
-				}
-				functions = append(functions, f)
-			}
-		}
-
-		functionBytes, _ := json.Marshal(functions)
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(200)
-		w.Write(functionBytes)
-	}
-}
-
 func MakeDeleteFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Client) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 

@@ -17,7 +17,7 @@
             <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-whiteframe="4" layout="column">
 
                 <md-toolbar class="md-theme-indigo">
-                    <h1 class="md-toolbar-tools">FaaS Gateway</h1>
+                    <h1 class="md-toolbar-tools"><img src="icon.png" alt="OpenFaaS Icon" width="60px" height="60px" class="md-avatar"/>&nbsp; OpenFaaS Portal</h1>
                 </md-toolbar>
 
                 <md-content layout-padding>
@@ -55,8 +55,8 @@
                         <md-card-title-text>
 
                             <span class="md-headline">
-                      {{function.name}}
-                    </span>
+                                {{function.name}}
+                            </span>
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-icon-float md-block">
                                     <label>Replicas</label>
@@ -72,6 +72,12 @@
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Image</label>
                                     <input ng-model="function.image" type="text" readonly="readonly">
+                                </md-input-container>
+                            </div>
+                            <div layout-gt-sm="row" ng-show="function.envProcess">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Watchdog process</label>
+                                    <input ng-model="function.envProcess" type="text" readonly="readonly">
                                 </md-input-container>
                             </div>
                             <md-card-title-text>
