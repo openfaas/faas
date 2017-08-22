@@ -6,6 +6,13 @@ For an overview of features in August 2017 read the following post:
 
 * [Introducing Functions as a Service (FaaS)](https://blog.alexellis.io/introducing-functions-as-a-service/)
 
+## GitHub repos:
+
+* https://github.com/alexellis/faas
+* https://github.com/alexellis/faas-netes
+* https://github.com/alexellis/faas-cli
+* https://github.com/open-faas/nats-queue-worker
+
 ### The API Gateway
 
 This container acts in a similar way to the API Gateway on AWS. Requests can be made to this endpoint with a JSON body.
