@@ -28,7 +28,7 @@ func MakeQueuedProxy(metrics metrics.MetricOptions, wildcard bool, logger *logru
 		vars := mux.Vars(r)
 		name := vars["name"]
 
-		callbackURLHeader := r.Header.Get("X-Callback-URL")
+		callbackURLHeader := r.Header.Get("X-Callback-Url")
 		var callbackURL *url.URL
 
 		if len(callbackURLHeader) > 0 {
