@@ -2,11 +2,15 @@
 
 ## 1. Current features
 
+For an overview of features in August 2017 read the following post:
+
+* [Introducing Functions as a Service (FaaS)](https://blog.alexellis.io/introducing-functions-as-a-service/)
+
 ### The API Gateway
 
 This container acts in a similar way to the API Gateway on AWS. Requests can be made to this endpoint with a JSON body.
 
-Completed features:
+Some of the more recent Completed Features:
 
 * UI for viewing and testing functions deployed through stack
 * Auto-scaling of replicas as load increases
@@ -21,6 +25,11 @@ Completed features:
 * Native CLI for templating/building and deploying functions
 * Windows support for watchdog back-end - so that Windows executables can be used in a multi-OS swarm
 * Enforcing function execution time in seconds.
+* Python, Node.js, Ruby and CSharp code templates for the CLI
+* Delete function in CLI
+* Developer guide for CSharp
+* Developer guide for Python
+* Kubernetes support
 
 **Incoming requests and routing**
 
@@ -45,32 +54,43 @@ Most items are detailed [via Github issues](https://github.com/alexellis/faas/is
 
 Must have
 
-* New logo - graphic icon and text
-* Asynchronous / long-running tasks
-* Website / landing page
+* Re-branding to OpenFaaS
+ * New logo - graphic icon and text (in progress)
+ * Website / landing page (in progress)
+* Asynchronous / long-running tasks (PR in testing)
 
 Should have
 
-* Kubernetes support
-* AARCH64 (64-bit ARM) port
-* Basic auth for /system endpoints (probably via reverse proxy)
+* AARCH64 (64-bit ARM) port (dependent on Docker release schedule)
+* Integration with a reverse proxy - such as Traefik or Kong
+ * Basic auth for /system endpoints (probably via reverse proxy)
+* CLI - list functions / query function info
+* OS constraints in the deploy function API
+* Healthchecks for functions deployed on Kubernetes 
 
 Could have
 
+* Built-in Docker registry with default configuration
+* Docker image builder (remote service)
 * Function store - list of useful predefined functions
 * Supporting request parameters
 * Configurable memory limits via "new function" pop-up (already supported by Docker compose stack)
 
 Nice to have
 
+* Developer Cloud guide:
+ * for Digital Ocean
+ * for Packet
+ 
+* Developer guide for your first Node.js function
+* Developer guide to using functions together - via pipes on client, or a "director" function on server
+
+* Documentation on using CRON / JenkinsCI for invoking functions on a timed basis
+
 * Guide for termination through NGinx or built-in TLS termination
 * Guide for basic authentication over HTTPs (set up externally through NGinx etc)
 * CRIU - (Checkpoint/Restore In Userspace) for warm-loading serverless tasks with a high start-up cost/latency.
 * Deeper tests coverage and integration tests
-
-## 3. Development and Contributing
-
-If you would like to consume the project with your own functions then you can use the public images and the supplied `docker stack` file as a template (docker-compose.yml)
 
 ### Contributing
 
