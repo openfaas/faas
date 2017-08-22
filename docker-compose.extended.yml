@@ -33,7 +33,7 @@ services:
         networks:
             - functions
     queue-worker:
-        image: functions/queue-worker:latest-dev
+        image: functions/queue-worker:0.1
         networks:
             - functions
         deploy:

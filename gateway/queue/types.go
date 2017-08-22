@@ -8,9 +8,9 @@ type Request struct {
 	Header      http.Header
 	Body        []byte
 	Method      string
-	CallbackURL *url.URL
 	QueryString string
 	Function    string
+	CallbackURL *url.URL `json:"CallbackUrl"`
 }
 
 // CanQueueRequests can take on asynchronous requests
