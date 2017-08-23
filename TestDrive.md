@@ -2,11 +2,11 @@
 
 FaaS is a framework for building serverless functions on Docker Swarm Mode with first class metrics. Any UNIX process can be packaged as a function in FaaS enabling you to consume a range of web events without repetitive boiler-plate coding.
 
-> It would help the project if you could **Star** the Github repository. This helps support the FaaS project which is free and Open Source Software.
+Please support the project and put a **Star** on the repo.
 
-### This is a Quickstart guide for the [FaaS functions as a Service](https://github.com/alexellis/faas/) project
+**Overview**
 
-> A Docker stack file with a number of sample functions is provided so that you can get up and running within minutes. You can also clone the code to hack on it or package your own functions.
+A Docker stack file with a number of sample functions is provided so that you can get up and running within minutes. You can also clone the code to hack on it or package your own functions.
 
 The guide makes use of a free testing/cloud service, but if you want to try it on your own laptop just follow the guide in the README file on Github. There is also a [blog post](http://blog.alexellis.io/functions-as-a-service/) that goes into the background of the project.
 
@@ -42,7 +42,7 @@ Some of the sample functions are:
 * Node Info (nodeinfo) function - gives you the OS architecture and detailled info about the CPUS (Node.js)
 * Webhook stasher function (webhookstash) - saves webhook body into container's filesystem - even binaries (Golang)
 
-Newly added sample functions:
+Newly added sample functions (not included in the sample stack)
 
 * Hello world in - [Java/.NET core/Python/Node/Go and more](https://github.com/alexellis/faas/tree/master/sample-functions/BaseFunctions)
 * [Resize images with Image Magick](https://github.com/alexellis/faas/tree/master/sample-functions/ResizeImageMagick)
@@ -83,7 +83,25 @@ nnlzo6u3pilg  func_prometheus.1  quay.io/prometheus/prometheus:latest   moby  Ru
 
 * Your functions can be accessed via the gateway UI or read on for `curl`
 
-## Packaging your own function
+## Building functions from templates and the CLI
+
+The following guides show how to use the CLI and code templates to build functions.
+
+Using a template means you only have to write a handler file in your chosen programming language such as:
+
+* Ruby
+* Node.js
+* Python
+* CSharp
+* Or propose a template for another programming languae
+
+Guides:
+
+* [Your first serverless Python function with OpenFaaS](https://blog.alexellis.io/first-faas-python-function/)
+
+* [Your first serverless .NET / C# function with OpenFaaS](https://medium.com/@rorpage/your-first-serverless-net-function-with-openfaas-27573017dedb)
+
+## Packaging a custom Docker image
 
 Read the developer guide:
 
@@ -95,13 +113,9 @@ The original blog post also walks through creating a function:
 
 ## Add new functions to FaaS at runtime
 
-* Experimental options
+**Option 1: via the FaaS CLI**
 
-[FaaS CLI as documented here](https://github.com/alexellis/faas/tree/master/sample-functions/ResizeImageMagick)
-
-**Option 1: Through docker-compose.yml stack file** 
-
-Edit the docker-compose stack file, then run ./deploy_stack.sh - this will only update changed/added services, not existing ones.
+The FaaS CLI can be used to build functions very quickly though the use of templates. See more details on the FaaS CLI [here](https://github.com/alexellis/faas-cli).
 
 **Option 2: via FaaS UI portal**
 
@@ -120,9 +134,9 @@ Creating a function via the UI:
 
 Once the create button is clicked, faas will provision a new Docker Swarm service. The newly created function will shortly be available in the list of functions on the left hand side of the UI.
 
-**Option 3: via the FaaS CLI**
+**Option 3: Through docker-compose.yml stack file** 
 
-The FaaS CLI can be used to build functions very quickly though the use of templates. See more details on the FaaS CLI [here](https://github.com/alexellis/faas-cli).
+Edit the docker-compose stack file, then run ./deploy_stack.sh - this will only update changed/added services, not existing ones.
 
 **Option 4: Programatically through a HTTP POST to the API Gateway**
 
@@ -156,7 +170,7 @@ curl localhost:8080/system/functions -d '
 
 ### Delete a function at runtime
 
-No support through UI at the moment, but the Docker CLI supports this:
+You can delete a function through the FaaS-CLI or with the Docker CLI
 
 ```
 $ docker service rm func_echoit
