@@ -15,21 +15,10 @@ Use this FaaS function to resize an image with ImageMagick.
 ```
 # curl -sSL https://get.openfaas.com | sudo sh
 
-# ./faas-cli -action=deploy -image=functions/resizer -name=resizer \
+# faas-cli -action=deploy -image=functions/resizer -name=resizer \
   -fprocess="convert - -resize 50% fd:1"
 200 OK
 URL: http://localhost:8080/function/resizer
-```
-
-* Option 3 - use `curl` to deploy the function 
-```
-$ curl -s --fail localhost:8080/system/functions -d \
-'{ 
-   "service": "resizer",
-   "image": "functions/resizer",
-   "envProcess": "convert - -resize 50% fd:1",
-   "network": "func_functions"
-   }'
 ```
 
 **Resize a picture by 50%**
