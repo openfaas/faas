@@ -150,10 +150,10 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 			w.WriteHeader(http.StatusInternalServerError)
 			response := bytes.NewBufferString(err.Error())
 			w.Write(response.Bytes())
-            w.Write([]byte("\n"))
-            if len(out) > 0 {
-                w.Write(out)
-            }
+			w.Write([]byte("\n"))
+			if len(out) > 0 {
+				w.Write(out)
+			}
 			ri.headerWritten = true
 		}
 		return
@@ -194,9 +194,10 @@ func getAdditionalEnvs(config *WatchdogConfig, r *http.Request, method string) [
 	if config.cgiHeaders {
 		envs = os.Environ()
 		for k, v := range r.Header {
-			kv := fmt.Sprintf("Http_%s=%s", k, v[0])
+			kv := fmt.Sprintf("Http_%s=%s", strings.Replace(k, "-", "_", -1), v[0])
 			envs = append(envs, kv)
 		}
+
 		envs = append(envs, fmt.Sprintf("Http_Method=%s", method))
 
 		if len(r.URL.RawQuery) > 0 {
