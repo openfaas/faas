@@ -26,7 +26,7 @@ Checkout the [roadmap](https://github.com/alexellis/faas/blob/master/ROADMAP.md)
 
 #### Slack
 
-There is an invite-only Slack community which you are welcome to join to discuss FaaS, IoT and Raspberry Pi projects. All that is needed is an email address. Get in touch with Alex Ellis.
+There is an Slack community which you are welcome to join to discuss FaaS, IoT and Raspberry Pi projects. Ping [Alex Ellis](https://github.com/alexellis) with your email address so that an invite can be sent out.
 
 ### License
 
