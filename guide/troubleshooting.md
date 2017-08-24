@@ -78,6 +78,20 @@ $ docker swarm logs --tail 100 <function>
 $ docker swarm ps --no-trunc=true <function>
 ```
 
+### Stop and remove OpenFaaS
+
+```
+$ docker stack rm func
+```
+
+If you have additional services / functions remove the remaining ones like this:
+
+```
+$ docker service ls -q|xargs docker service rm
+```
+
+*Use with caution*
+
 ## Kubernetes
 
 ### List all functions
@@ -98,3 +112,8 @@ $ kubectl logs deploy/<function>
 $ kubectl describe deploy/<function>
 ```
 
+### Remove the OpenFaaS deployment
+
+```
+$ kubectl delete -f faas.yml,monitoring.yml,rbac.yml
+```
