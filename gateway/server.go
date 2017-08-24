@@ -77,6 +77,8 @@ func main() {
 		faasHandlers.DeployFunction = makeHandler(reverseProxy, &metricsOptions)
 		faasHandlers.DeleteFunction = makeHandler(reverseProxy, &metricsOptions)
 
+		metrics.AttachExternalWatcher(*config.FunctionsProviderURL, metricsOptions, "func", time.Second*5)
+
 	} else {
 		maxRestarts := uint64(5)
 
