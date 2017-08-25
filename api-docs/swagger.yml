@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   description: FaaS API documentation
-  version: 0.5.4
+  version: 0.6.1
   title: FaaS API Gateway
   license:
     name: MIT
