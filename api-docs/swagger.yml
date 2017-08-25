@@ -1,82 +1,82 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
-  description: "FaaS API documentation"
-  version: "0.5.4"
-  title: "FaaS API Gateway"
+  description: FaaS API documentation
+  version: 0.5.4
+  title: FaaS API Gateway
   license:
-    name: "MIT"
-basePath: "/"
+    name: MIT
+basePath: /
 schemes:
-- "http"
+  - http
 paths:
   /system/functions:
     get:
-      summary: "Get a list of deployed functions with: stats and image digest"
-      description: ""
+      summary: 'Get a list of deployed functions with: stats and image digest'
+      description: ''
       consumes:
-      - "application/json"
+        - application/json
       produces:
-      - "application/json"
+        - application/json
       responses:
-        200:
-          description: "List of deployed functions."
+        '200':
+          description: List of deployed functions.
           examples:
-           application/json: |-
-            [
-              {"name":"func_payroll","image":"alexellis2/faas-payroll:latest@sha256:0bc2773613c76d9ee4906bf3887ea2527f135cb7a0d0f430743e7c6712949709","invocationCount":16,"replicas":1},
-              {"name":"func_fanclub","image":"alexellis2/fanclub:18-04-2017@sha256:37bb3fabee7e36abab7e6250bb7d13c9ab66e983782b35200470fe2a3aa14daa","invocationCount":1125,"replicas":1}
-            ]
+            application/json: |-
+              [
+                {"name":"func_payroll","image":"alexellis2/faas-payroll:latest@sha256:0bc2773613c76d9ee4906bf3887ea2527f135cb7a0d0f430743e7c6712949709","invocationCount":16,"replicas":1},
+                {"name":"func_fanclub","image":"alexellis2/fanclub:18-04-2017@sha256:37bb3fabee7e36abab7e6250bb7d13c9ab66e983782b35200470fe2a3aa14daa","invocationCount":1125,"replicas":1}
+              ]
     post:
-      summary: "Deploy a new function."
-      description: ""
+      summary: Deploy a new function.
+      description: ''
       consumes:
-      - "application/json"
+        - application/json
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Function to deploy"
-        required: true
-        schema:
-          $ref: "#/definitions/CreateFunctionRequest"
+        - in: body
+          name: body
+          description: Function to deploy
+          required: true
+          schema:
+            $ref: '#/definitions/CreateFunctionRequest'
       responses:
-        200:
-          description: "OK"
+        '200':
+          description: OK
     delete:
-      summary: "Remove a deployed function."
-      description: ""
+      summary: Remove a deployed function.
+      description: ''
       consumes:
-      - "application/json"
+        - application/json
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Function to delete"
-        required: true
-        schema:
-          $ref: "#/definitions/DeleteFunctionRequest"
+        - in: body
+          name: body
+          description: Function to delete
+          required: true
+          schema:
+            $ref: '#/definitions/DeleteFunctionRequest'
       responses:
-        200:
-          description: "OK"
-        404:
-          description: "Function not found in gateway"
+        '200':
+          description: OK
+        '404':
+          description: Function not found in gateway
   /system/alert:
     post:
-      summary: "Event-sink for AlertManager, for auto-scaling"
-      description: "Internal use for AlertManager, requires valid AlertManager alert JSON"
+      summary: 'Event-sink for AlertManager, for auto-scaling'
+      description: 'Internal use for AlertManager, requires valid AlertManager alert JSON'
       consumes:
-      - "application/json"
+        - application/json
       produces:
-      - "application/json"
+        - application/json
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Function to delete"
-        schema:
-          type: object
-          example: |-
+        - in: body
+          name: body
+          description: Function to delete
+          schema:
+            type: object
+            example: |-
               {"receiver": "scale-up",
                 "status": "firing",
                 "alerts": [{
@@ -124,41 +124,74 @@ paths:
                 "groupKey": 18195285354214864953
               }
       responses:
-        200:
-          description: "Alert handled successfully"
-        500:
-          description: "Internal error with swarm or request JSON invalid"
+        '200':
+          description: Alert handled successfully
+        '500':
+          description: Internal error with swarm or request JSON invalid
+  /async-function/{functionName}:
+    post:
+      summary: 'Invoke a function asynchronously in OpenFaaS - coming in PR 131'
+      parameters:
+        - in: path
+          name: functionName
+          description: Function name
+          type: string
+          required: true
+      responses:
+        '202':
+          description: Request accepted and queued
+        '500':
+          description: Internal server or queue error
+        '404':
+          description: Requested function not found
+  /function/{functionName}:
+    post:
+      summary: 'Invoke a function defined in OpenFaaS'
+      parameters:
+        - in: path
+          name: functionName
+          description: Function name
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Value returned from function
+        '500':
+          description: Error connecting to function
+        '404':
+          description: Function not found
 definitions:
   DeleteFunctionRequest:
-    type: "object"
+    type: object
     properties:
       functionName:
-        type: "string"
-        description: "Name of deployed function"
+        type: string
+        description: Name of deployed function
   CreateFunctionRequest:
-    type: "object"
+    type: object
     properties:
       service:
-        type: "string"
-        description: "Name of deployed function"
+        type: string
+        description: Name of deployed function
       network:
-        type: "string"
-        description: "Docker swarm network, usually func_functions"
+        type: string
+        description: 'Docker swarm network, usually func_functions'
       image:
-        type: "string"
-        description: "Docker image in accessible registry"
+        type: string
+        description: Docker image in accessible registry
       envProcess:
-        type: "string"
-        description: "Process for watchdog to fork"
+        type: string
+        description: Process for watchdog to fork
       envVars:
-        type: "array"
+        type: array
         items:
-          type: "string"
-        description: "Overrides to environmental variables"
+          type: string
+        description: Overrides to environmental variables
       registryAuth:
-        type: "string"
-        description: "Private registry base64-encoded basic auth (as present in ~/.docker/config.json)"
+        type: string
+        description: >-
+          Private registry base64-encoded basic auth (as present in
+          ~/.docker/config.json)
 externalDocs:
-  description: "More documentation available on Github"
-  url: "http://docs.get-faas.com"
-  
+  description: More documentation available on Github
+  url: 'https://github.com/alexellis/faas'
