@@ -40,6 +40,8 @@ Any container or process in a Docker container can be a serverless function in F
 
 **CLI walk-through**
 
+Once you [have set up OpenFaaS](https://github.com/alexellis/faas#get-started-with-openfaas) you can follow these instructions:
+
 Let's have a quick look at an example function `url-ping` which connects to a remote web server and returns the HTTP code from the response. It's written in Python.
 
 ```python
