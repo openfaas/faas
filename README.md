@@ -36,7 +36,7 @@ Any container or process in a Docker container can be a serverless function in F
 
 **CLI walk-through**
 
-Let's have a quick look at an example function `url_ping` which connects to a remote web server and returns the HTTP code from the response. It's written in Python.
+Let's have a quick look at an example function `url-ping` which connects to a remote web server and returns the HTTP code from the response. It's written in Python.
 
 ```python
 import requests
@@ -68,28 +68,28 @@ provider:
   gateway: http://localhost:8080
 
 functions:
-  url_ping:
+  url-ping:
     lang: python
-    handler: ./sample/url_ping
+    handler: ./sample/url-ping
     image: alexellis2/faas-urlping
 ```
 
-*Example function YAML file - `urlping.yaml`*
+*Example function YAML file - `url-ping.yaml`*
 
 ```
-$ faas-cli -action build -f ./urlping.yaml
+$ faas-cli -action build -f ./url-ping.yaml
 ```
-*Build a Docker image using the Python handler in `./sample/url_ping`*
+*Build a Docker image using the Python handler in `./sample/url-ping`*
 
 ```
-$ faas-cli -action deploy -f ./urlping.yaml
+$ faas-cli -action deploy -f ./url-ping.yaml
 ```
 *Deploy the new image to the gateway defined in the YAML file.*
 
 > If your gateway is remote or part of a multi-host Swarm - you can also use the CLI to push your image to a remote registry or the Hub with `faas-cli -action push`
 
 ```
-$ curl -d "https://cli.openfaas.com" http://localhost:8080/function/url_ping/
+$ curl -d "https://cli.openfaas.com" http://localhost:8080/function/url-ping/
 https://cli.openfaas.com => 200
 ```
 
