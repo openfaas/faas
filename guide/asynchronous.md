@@ -3,12 +3,14 @@
 By default functions are accessed synchronously via the following route:
 
 ```
-$ http://gateway/function/{function_name}
+$ curl --data "message" http://gateway/function/{function_name}
 ```
 
-![](https://user-images.githubusercontent.com/6358735/29469107-cbc38c88-843e-11e7-9516-c0dd33bab63b.png)
+As of [PR #131](https://github.com/alexellis/faas/pull/131) asynchronous invocation is available for testing.
 
-As of PR #131 asynchronous invocation is available for testing.
+*Logical flow for synchronous functions:*
+
+![](https://user-images.githubusercontent.com/6358735/29469107-cbc38c88-843e-11e7-9516-c0dd33bab63b.png)
 
 ## Why use Asynchronous processing?
 
@@ -18,7 +20,7 @@ As of PR #131 asynchronous invocation is available for testing.
 
 * Consume a large batch of work within a few seconds and let it process at its own pace
 
-## How does it work?
+## How does async work?
 
 Here is a conceptual diagram
 
@@ -26,7 +28,7 @@ Here is a conceptual diagram
 
 * [queue-worker](https://github.com/open-faas/nats-queue-worker)
 
-## Deploy the Asynchronous stack
+## Deploy the async stack
 
 The reference implementation for asychronous processing uses NATS Streaming, but you are free to extend OpenFaaS and write your own [queue-worker](https://github.com/open-faas/nats-queue-worker).
 
