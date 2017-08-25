@@ -72,7 +72,7 @@ The watchdog can be configured through environmental variables. You must always 
 | Option                 | Usage             |
 |------------------------|--------------|
 | `fprocess`             | The process to invoke for each function call. This must be a UNIX binary and accept input via STDIN and output via STDOUT.  |
-| `cgi_headers`          | HTTP headers from request are made available through environmental variables - `Http_X-Served-By` etc. See section: *Handling headers* for more detail. Enabled by default. |
+| `cgi_headers`          | HTTP headers from request are made available through environmental variables - `Http_X_Served_By` etc. See section: *Handling headers* for more detail. Enabled by default. |
 | `marshal_requests`     | Instead of re-directing the raw HTTP body into your fprocess, it will first be marshalled into JSON. Use this if you need to work with HTTP headers and do not want to use environmental variables via the `cgi_headers` flag. |
 | `content_type`         | Force a specific Content-Type response for all responses. |
 | `write_timeout`        | HTTP timeout for writing a response body from your function (in seconds)  |
@@ -83,9 +83,16 @@ The watchdog can be configured through environmental variables. You must always 
 
 ## Advanced / tuning
 
-**Handling headers**
+**Working with HTTP headers**
 
-You can get hold of the HTTP headers by enabling the `cgi_headers` environmental variable.
+Headers and other request information are injected into environmental variables in the following format:
+
+The `X-Forwarded-By` header becomes available as `Http_X_Forwarded_By`
+
+* `Http_Method` - GET/POST etc
+* `Http_Query` - Querystring value
+
+> This behaviour is enabled by the `cgi_headers` environmental variable which is enabled by default.
 
 Here's an example of a POST request with an additional header and a query-string.
 
@@ -99,9 +106,9 @@ $ curl "localhost:8080?q=serverless&page=1" -X POST -H X-Forwarded-By:http://my.
 This is what you'd see if you had set your `fprocess` to `env` on a Linux system:
 
 ```
-Http_User-Agent=curl/7.43.0
+Http_User_Agent=curl/7.43.0
 Http_Accept=*/*
-Http_X-Forwarded-By=http://my.vpn.com
+Http_X_Forwarded_By=http://my.vpn.com
 Http_Method=POST
 Http_Query=q=serverless&page=1
 ```
@@ -115,7 +122,7 @@ $ curl "localhost:8080?action=quote&qty=1&productId=105"
 The output from the watchdog would be:
 
 ```
-Http_User-Agent=curl/7.43.0
+Http_User_Agent=curl/7.43.0
 Http_Accept=*/*
 Http_Method=GET
 Http_Query=action=quote&qty=1&productId=105
