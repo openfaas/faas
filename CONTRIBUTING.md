@@ -4,13 +4,13 @@
 
 Here are a few guidelines for contributing:
 
-* If you would like to contribute to the codebase **please raise an issue to propose the change** and fill out the whole template.
+* If you would like to contribute to the codebase **please make an issue titled Proposal: ...**
+* Please use the supplied template for issues and pull requests.
 
-* If you have found a bug please raise an issue and fill out the whole template.
 * Don't raise PRs for typos, these aren't necessary - just raise an Issue
 * If the documentation can be improved / translated etc please raise an issue to discuss. 
 
-* Please always provide a summary of what you changed, how you did it and how it can be tested.
+* Please always provide a summary of what you changed, how you did it and how it can be tested by project maintainers. 
 
 ### Community
 
