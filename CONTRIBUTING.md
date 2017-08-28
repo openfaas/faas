@@ -2,15 +2,35 @@
 
 ### Guidelines
 
-Here are a few guidelines for contributing:
+Guidelines for contributing.
 
-* If you would like to contribute to the codebase **please make an issue titled Proposal: ...**
-* Please use the supplied template for issues and pull requests.
+**I've found a typo**
 
-* Don't raise PRs for typos, these aren't necessary - just raise an Issue
-* If the documentation can be improved / translated etc please raise an issue to discuss. 
+* A Pull Request is not necessary. Raise an [Issue](https://github.com/alexellis/faas/issues) and we'll fix it as soon as we can. 
 
-* Please always provide a summary of what you changed, how you did it and how it can be tested by project maintainers. 
+**I have a [great] idea**
+
+The OpenFaaS maintainers would like to make OpenFaaS the best it can be and we can't do it alone. Our time is limited so we'd like to make sure we agree on the proposed work before you spend time doing it. Saying "no" is hard which is why we'd rather say "yes" ahead of time.
+
+What makes a good proposal?
+
+* A quick summary
+* Pros + Cons
+* Effort required
+* Screenshots or CLI examples
+
+**Paperwork for Pull Requests**
+
+Please read this whole guide and make sure you agree to our DCO agreement (included below):
+
+* Sign-off your commits
+* Use the whole template for issues and pull requests
+* Always give instructions for testing
+ * Give us CLI commands and output or screenshots where you can 
+
+**Questions/suggestions/support needed**
+
+Please raise an Issue or email alex@openfaas.com for an invitation to our Slack community.
 
 ### Community
 
