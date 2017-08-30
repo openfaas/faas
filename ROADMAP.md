@@ -11,7 +11,7 @@ For an overview of features in August 2017 read the following post:
 * https://github.com/alexellis/faas
 * https://github.com/alexellis/faas-netes
 * https://github.com/alexellis/faas-cli
-* https://github.com/open-faas/nats-queue-worker
+* https://github.com/openfaas/nats-queue-worker
 
 ### The API Gateway
 
