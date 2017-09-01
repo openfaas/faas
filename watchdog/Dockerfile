@@ -6,8 +6,8 @@ COPY main.go        .
 COPY readconfig.go  .
 COPY config_test.go .
 COPY requesthandler_test.go .
-COPY fastForkRequestHandler.go  .
-COPY requestHandler.go   .
+#COPY fastForkRequestHandler.go  .
+#COPY requestHandler.go   .
 COPY types types
 
 RUN go test
