@@ -5,15 +5,16 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:0.6.2
+        image: functions/gateway:0.6.3
         networks:
             - functions
         environment:
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
         deploy:
             placement:
-                constraints: [node.role == manager]
- 
+                constraints:
+                    - 'node.role == manager'
+                    - 'node.platform.os == linux'
     prometheus:
         image: functions/prometheus:latest  # autobuild from Dockerfile in repo.
         command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
@@ -28,7 +29,9 @@ services:
             - functions
         deploy:
             placement:
-                constraints: [node.role == manager]
+                constraints:
+                    - 'node.role == manager'
+                    - 'node.platform.os == linux'
 
     alertmanager:
         image: functions/alertmanager:latest    # autobuild from Dockerfile in repo.
@@ -44,8 +47,9 @@ services:
             - 9093:9093
         deploy:
             placement:
-                constraints: [node.role == manager]
-
+                constraints:
+                    - 'node.role == manager'
+                    - 'node.platform.os == linux'
     # Sample functions go here.
 
     # Service label of "function" allows functions to show up in UI on http://gateway:8080/
@@ -60,6 +64,10 @@ services:
         environment:
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
 
     # Pass a username as an argument to find how many images user has pushed to Docker Hub.
     hubstats:
@@ -73,6 +81,11 @@ services:
         environment:
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
 
     # Node.js gives OS info about the node (Host)
     nodeinfo:
@@ -86,6 +99,11 @@ services:
         environment:
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
 
     # Uses `cat` to echo back response, fastest function to execute.
     echoit:
@@ -100,6 +118,11 @@ services:
             fprocess: "cat"
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
 
     # Counts words in request with `wc` utility
     wordcount:
@@ -115,6 +138,11 @@ services:
             fprocess: "wc"
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
 
     # Calculates base64 representation of request body.
     base64:
@@ -129,6 +157,11 @@ services:
             fprocess: "base64"
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
 
     # Decodes base64 representation of request body.
     decodebase64:
@@ -143,6 +176,10 @@ services:
             fprocess: "base64 -d"
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
 
     # Converts body in (markdown format) -> (html)
     markdown:
@@ -156,6 +193,10 @@ services:
         environment:
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
 
 networks:
     functions:

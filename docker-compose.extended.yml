@@ -5,16 +5,13 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:0.6.2 
+        image: functions/gateway:0.6.3 
         networks:
             - functions
         environment:
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
             faas_nats_address: "nats"
             faas_nats_port: 4222
-        deploy:
-            placement:
-                constraints: [node.role == manager]
         # Start Add for NATS Streaming
         depends_on:
             - nats
@@ -24,6 +21,11 @@ services:
                 delay: 5s
                 max_attempts: 20
                 window: 380s
+            placement:
+                constraints:
+                    - 'node.role == manager'
+                    - 'node.platform.os == linux'
+
     nats:
         image: nats-streaming:0.5.0
         ports:
@@ -32,6 +34,11 @@ services:
         command: "--store memory --cluster_id faas-cluster"
         networks:
             - functions
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
     queue-worker:
         image: functions/queue-worker:0.1
         networks:
@@ -42,6 +49,10 @@ services:
                 delay: 5s
                 max_attempts: 20
                 window: 380s
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
     # End
 
     prometheus:
@@ -58,7 +69,9 @@ services:
             - functions
         deploy:
             placement:
-                constraints: [node.role == manager]
+                constraints:
+                    - 'node.role == manager'
+                    - 'node.platform.os == linux'
 
     alertmanager:
         image: functions/alertmanager:latest    # autobuild from Dockerfile in repo.
@@ -74,7 +87,9 @@ services:
             - 9093:9093
         deploy:
             placement:
-                constraints: [node.role == manager]
+                constraints: 
+                    - 'node.role == manager'
+                    - 'node.platform.os == linux'
 
     # Sample functions go here.
 
@@ -90,6 +105,10 @@ services:
         environment:
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
 
     # Node.js gives OS info about the node (Host)
     nodeinfo:
@@ -103,6 +122,10 @@ services:
         environment:
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
 
     # Uses `cat` to echo back response, fastest function to execute.
     echoit:
@@ -117,6 +140,10 @@ services:
             fprocess: "cat"
             no_proxy: "gateway"
             https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
 
 networks:
     functions:
