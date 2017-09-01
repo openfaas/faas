@@ -16,6 +16,8 @@ import (
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/client"
+	"github.com/prometheus/client_golang/prometheus"
+	io_prometheus_client "github.com/prometheus/client_model/go"
 )
 
 // MakeFunctionReader gives a summary of Function structs with Docker service stats overlaid with Prometheus counters.
@@ -67,4 +69,20 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 		w.WriteHeader(200)
 		w.Write(functionBytes)
 	}
+}
+
+func getCounterValue(service string, code string, metricsOptions *metrics.MetricOptions) float64 {
+
+	metric, err := metricsOptions.GatewayFunctionInvocation.
+		GetMetricWith(prometheus.Labels{"function_name": service, "code": code})
+
+	if err != nil {
+		return 0
+	}
+
+	// Get the metric's value from ProtoBuf interface (idea via Julius Volz)
+	var protoMetric io_prometheus_client.Metric
+	metric.Write(&protoMetric)
+	invocations := protoMetric.GetCounter().GetValue()
+	return invocations
 }

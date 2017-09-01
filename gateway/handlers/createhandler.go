@@ -1,6 +1,3 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
 package handlers
 
 import (
@@ -9,102 +6,20 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
 	"time"
 
-	"io/ioutil"
-
 	"github.com/alexellis/faas/gateway/metrics"
 	"github.com/alexellis/faas/gateway/requests"
 	"github.com/docker/distribution/reference"
 	"github.com/docker/docker/api/types"
-	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/api/types/swarm"
 	"github.com/docker/docker/client"
 	"github.com/docker/docker/registry"
-	"github.com/prometheus/client_golang/prometheus"
-	io_prometheus_client "github.com/prometheus/client_model/go"
 )
-
-func getCounterValue(service string, code string, metricsOptions *metrics.MetricOptions) float64 {
-
-	metric, err := metricsOptions.GatewayFunctionInvocation.
-		GetMetricWith(prometheus.Labels{"function_name": service, "code": code})
-
-	if err != nil {
-		return 0
-	}
-
-	// Get the metric's value from ProtoBuf interface (idea via Julius Volz)
-	var protoMetric io_prometheus_client.Metric
-	metric.Write(&protoMetric)
-	invocations := protoMetric.GetCounter().GetValue()
-	return invocations
-}
-
-func MakeDeleteFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Client) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-
-		req := requests.DeleteFunctionRequest{}
-		defer r.Body.Close()
-		reqData, _ := ioutil.ReadAll(r.Body)
-		unmarshalErr := json.Unmarshal(reqData, &req)
-
-		if (len(req.FunctionName) == 0) || unmarshalErr != nil {
-			log.Printf("Error parsing request to remove service: %s\n", unmarshalErr)
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-
-		log.Printf("Attempting to remove service %s\n", req.FunctionName)
-
-		serviceFilter := filters.NewArgs()
-		options := types.ServiceListOptions{
-			Filters: serviceFilter,
-		}
-
-		services, err := c.ServiceList(context.Background(), options)
-		if err != nil {
-			fmt.Println(err)
-		}
-
-		// TODO: Filter only "faas" functions (via metadata?)
-		var serviceIDs []string
-		for _, service := range services {
-			isFunction := len(service.Spec.TaskTemplate.ContainerSpec.Labels["function"]) > 0
-
-			if isFunction && req.FunctionName == service.Spec.Name {
-				serviceIDs = append(serviceIDs, service.ID)
-			}
-		}
-
-		log.Println(len(serviceIDs))
-		if len(serviceIDs) == 0 {
-			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(fmt.Sprintf("No such service found: %s.", req.FunctionName)))
-			return
-		}
-
-		var serviceRemoveErrors []error
-		for _, serviceID := range serviceIDs {
-			err := c.ServiceRemove(context.Background(), serviceID)
-			if err != nil {
-				serviceRemoveErrors = append(serviceRemoveErrors, err)
-			}
-		}
-
-		if len(serviceRemoveErrors) > 0 {
-			log.Printf("Error(s) removing service: %s\n", req.FunctionName)
-			log.Println(serviceRemoveErrors)
-			w.WriteHeader(http.StatusInternalServerError)
-		} else {
-			w.WriteHeader(http.StatusOK)
-		}
-
-	}
-}
 
 // MakeNewFunctionHandler creates a new function (service) inside the swarm network.
 func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Client, maxRestarts uint64) http.HandlerFunc {
@@ -146,6 +61,7 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 }
 
 func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64) swarm.ServiceSpec {
+	linuxOnlyConstraints := []string{"node.platform.os == linux"}
 
 	nets := []swarm.NetworkAttachmentConfig{
 		{Target: request.Network},
@@ -164,6 +80,9 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64) swarm
 				Labels: map[string]string{"function": "true"},
 			},
 			Networks: nets,
+			Placement: &swarm.Placement{
+				Constraints: linuxOnlyConstraints,
+			},
 		},
 		Annotations: swarm.Annotations{
 			Name: request.Service,
