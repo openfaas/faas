@@ -13,3 +13,4 @@ Each one will read the request from the watchdog then print it back resulting in
 | Java                   | functions/base:openjdk-8u121-jdk-alpine | OpenJDK built on Alpine Linux |
 | Dotnet Core            | functions/base:dotnet-sdk               | Microsoft dotnet core SDK |
 | Busybox / shell        | functions/alpine:latest            | Busybox contains useful binaries which can be turned into a FaaS function such as `sha512sum` or `cat` |
+| R                      | functions/base:R-3.4.1-alpine           | R lang ready on Alpine Linux           |
