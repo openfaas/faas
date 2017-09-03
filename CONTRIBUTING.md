@@ -10,25 +10,26 @@ Guidelines for contributing.
 
 **I have a [great] idea**
 
-The OpenFaaS maintainers would like to make OpenFaaS the best it can be and we can't do it alone. Our time is limited so we'd like to make sure we agree on the proposed work before you spend time doing it. Saying "no" is hard which is why we'd rather say "yes" ahead of time.
+The OpenFaaS maintainers would like to make OpenFaaS the best it can be and welcome new contributions that align with the project's goals. Our time is limited so we'd like to make sure we agree on the proposed work before you spend time doing it. Saying "no" is hard which is why we'd rather say "yes" ahead of time.
 
 What makes a good proposal?
 
-* A quick summary
+* Brief summary including motivation/context
+* Any design changes
 * Pros + Cons
 * Effort required
-* Screenshots or CLI examples
+* Mock-up screenshots or examples of how the CLI would work
 
 **Paperwork for Pull Requests**
 
 Please read this whole guide and make sure you agree to our DCO agreement (included below):
 
 * Sign-off your commits
-* Use the whole template for issues and pull requests
+* Complete the whole template for issues and pull requests
 * Always give instructions for testing
  * Give us CLI commands and output or screenshots where you can 
 
-**Questions/suggestions/support needed**
+**I have a question, a suggestion or need help**
 
 Please raise an Issue or email alex@openfaas.com for an invitation to our Slack community.
 
