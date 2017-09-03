@@ -7,7 +7,13 @@ We support two orchestration platforms or "backends":
 * Docker Swarm
 * Kubernetes
 
+There is also community work in-progress to support:
+
+* Rancher/Cattle
+
 The Docker Swarm support is built-into the faas repo, but the Kubernetes support is provided by a microservice in the [faas-netes](https://github.com/alexellis/faas-netes) repo.
+
+If you're thinking of writing a new back-end we'd love to hear about it and help you, so please get in touch with alex@openfaas.com. Existing implementations (like OpenFaaS) are written in Golang and this provides a level of consistency across the projects.
 
 ### I need a backend for X
 
@@ -27,6 +33,16 @@ If you would like to write your own back-end for `X` then you can write your own
 In order to support a new back end you will write a new "external_provider" and configure this on the API Gateway. The API Gateway will then proxy any requests to your new microservice. The first "external_provider" was the Kubernetes implementation [faas-netes](https://github.com/alexellis/faas-netes):
 
 ![](https://camo.githubusercontent.com/c250e0dc975e50b6fae3fc84ba5cdc0274bc305c/68747470733a2f2f7062732e7477696d672e636f6d2f6d656469612f44466837692d5a586b41415a6b77342e6a70673a6c61726765)
+
+Deploy a function - through the built-in Swarm support or through faas-netes
+
+![](https://pbs.twimg.com/media/DIyFFnsXkAAa5Gj.jpg)
+
+Invoke your function - through the built-in Swarm or via faas-netes
+
+![](https://pbs.twimg.com/media/DIyFFnqXgAAMyCh.jpg)
+
+Find out more about the [watchdog here](https://github.com/alexellis/faas/tree/master/watchdog).
 
 ### Automatically compatible OpenFaaS
 
