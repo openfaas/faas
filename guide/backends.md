@@ -1,6 +1,8 @@
-## OpenFaaS backends
+## OpenFaaS backends guide
 
 OpenFaaS is a framework for building serverless functions with containers and running them at scale.
+
+> Bring Serverless OpenFaaS functions to your favourite container platform.
 
 We support two orchestration platforms or "backends":
 
