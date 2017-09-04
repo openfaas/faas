@@ -62,6 +62,12 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 
 func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64) swarm.ServiceSpec {
 	linuxOnlyConstraints := []string{"node.platform.os == linux"}
+	constraints := []string{}
+	if request.Constraints != nil && len(request.Constraints) > 0 {
+		constraints = request.Constraints
+	} else {
+		constraints = linuxOnlyConstraints
+	}
 
 	nets := []swarm.NetworkAttachmentConfig{
 		{Target: request.Network},
@@ -81,7 +87,7 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64) swarm
 			},
 			Networks: nets,
 			Placement: &swarm.Placement{
-				Constraints: linuxOnlyConstraints,
+				Constraints: constraints,
 			},
 		},
 		Annotations: swarm.Annotations{
@@ -105,6 +111,7 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64) swarm
 	return spec
 }
 
+// BuildEncodedAuthConfig for private registry
 func BuildEncodedAuthConfig(basicAuthB64 string, dockerImage string) (string, error) {
 	// extract registry server address
 	distributionRef, err := reference.ParseNormalizedNamed(dockerImage)
