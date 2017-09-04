@@ -7,10 +7,11 @@ package requests
 type CreateFunctionRequest struct {
 	// Service corresponds to a Docker Service
 	Service string `json:"service"`
+
 	// Image corresponds to a Docker image
 	Image string `json:"image"`
 
-	// Network is a Docker overlay network in Swarm - the default value is func_functions
+	// Network is specific to Docker Swarm - default overlay network is: func_functions
 	Network string `json:"network"`
 
 	// EnvProcess corresponds to the fprocess variable for your container watchdog.
@@ -23,40 +24,23 @@ type CreateFunctionRequest struct {
 	// in the same encoded format as Docker native credentials
 	// (see ~/.docker/config.json)
 	RegistryAuth string `json:"registryAuth,omitempty"`
+
+	// Constraints are specific to back-end orchestration platform
+	Constraints []string `json:"constraints"`
 }
 
+// DeleteFunctionRequest delete a deployed function
 type DeleteFunctionRequest struct {
 	FunctionName string `json:"functionName"`
 }
 
-type AlexaSessionApplication struct {
-	ApplicationId string `json:"applicationId"`
-}
-
-type AlexaSession struct {
-	SessionId   string                  `json:"sessionId"`
-	Application AlexaSessionApplication `json:"application"`
-}
-
-type AlexaIntent struct {
-	Name string `json:"name"`
-}
-
-type AlexaRequest struct {
-	Intent AlexaIntent `json:"intent"`
-}
-
-// AlexaRequestBody top-level request produced by Alexa SDK
-type AlexaRequestBody struct {
-	Session AlexaSession `json:"session"`
-	Request AlexaRequest `json:"request"`
-}
-
+// PrometheusInnerAlertLabel PrometheusInnerAlertLabel
 type PrometheusInnerAlertLabel struct {
 	AlertName    string `json:"alertname"`
 	FunctionName string `json:"function_name"`
 }
 
+// PrometheusInnerAlert PrometheusInnerAlert
 type PrometheusInnerAlert struct {
 	Status string                    `json:"status"`
 	Labels PrometheusInnerAlertLabel `json:"labels"`
