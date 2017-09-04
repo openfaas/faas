@@ -12,6 +12,7 @@ COPY types types
 
 RUN go test
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o watchdog . \
-    && GOARM=6 GOARCH=arm CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o watchdog-armhf . \
-    && GOOS=windows CGO_ENABLED=0 go build -a -installsuffix cgo -o watchdog.exe .
+# Stripping via -ldflags "-s -w" 
+RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-s -w" -installsuffix cgo -o watchdog . \
+    && GOARM=6 GOARCH=arm CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-s -w" -installsuffix cgo -o watchdog-armhf . \
+    && GOOS=windows CGO_ENABLED=0 go build -a -ldflags "-s -w" -installsuffix cgo -o watchdog.exe .
