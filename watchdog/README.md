@@ -151,6 +151,10 @@ By default the watchdog will match the response of your function to the "Content
 
 To override the Content-Type of all your responses set the `content_type` environmental variable.
 
+**I don't want to use the watchdog**
+
+This is an unsupported use-case for the OpenFaaS project however if your container exposes HTTP POST on port 8080 then the OpenFaaS API gateway and other tooling will manage your container.
+
 **Tuning auto-scaling**
 
 Auto-scaling starts at 1 replica and steps up in blocks of 5:
