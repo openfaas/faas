@@ -160,7 +160,7 @@ Highlights:
 * New: Kubernetes support via [FaaS-netes](https://github.com/alexellis/faas-netes) plugin
 * New: FaaS CLI and easy install via `curl` and `brew`
 * New: Windows function support
-* In development: Asynchronous/long-running OpenFaaS functions via [NATS Streaming](https://nats.io/documentation/streaming/nats-streaming-intro/) - [Test it using this guide](https://gist.github.com/alexellis/62dad83b11890962ba49042afe258bb1)
+* New: Asynchronous/long-running OpenFaaS functions via [NATS Streaming](https://nats.io/documentation/streaming/nats-streaming-intro/) - [Follow this guide](https://github.com/alexellis/faas/blob/master/guide/asynchronous.md)
 
 Example of a Grafana dashboard linked to OpenFaaS showing auto-scaling live in action:
 
