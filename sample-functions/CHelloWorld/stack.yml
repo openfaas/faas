@@ -1,0 +1,9 @@
+provider:
+  name: faas
+  gateway: http://localhost:8080
+
+functions:
+  helloc:
+    lang: Dockerfile
+    handler: ./src
+    image: alexellis/helloc
