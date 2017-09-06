@@ -33,6 +33,10 @@ Please read this whole guide and make sure you agree to our DCO agreement (inclu
 
 Please raise an Issue or email alex@openfaas.com for an invitation to our Slack community.
 
+**I need to add a dependency**
+
+We are using the `vndr` tool across all projects. Get [started here](https://github.com/LK4D4/vndr).
+
 ### Community
 
 This project is written in Golang but many of the community contributions so far have been through blogging, speaking engagements, helping to test and drive the backlog of FaaS. If you'd like to help in any way then that would be more than welcome whatever your level of experience.
