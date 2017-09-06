@@ -8,7 +8,7 @@ Welcome to the OpenFaaS community page where you can find:
 
 There are three main Github repos
 
-* FaaS - the main repo for the Docker Swarm integration, samples and documentation
+* FaaS - the main OpenFaaS repo for the Docker Swarm integration, samples and documentation
 * [FaaS-netes](http://github.com/alexellis/faas-netes) - the Kubernetes back-end for FaaS
 * [FaaS-cli](http://github.com/alexellis/faas-cli) - the user-facing CLI for templating and deploying functions
 
@@ -18,15 +18,15 @@ There are three main Github repos
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
-| [Time2Code: Functions as Service and Code as a Function](https://medium.com/@JockDaRock/time2code-functions-as-service-and-code-as-a-function-3d9125fc49fb) | Jock Reed | medium.com/@JockDaRock | 4-Aug-2017|
 | [Zero to Serverless in 60 secs - Open Source Summit North America](http://events.linuxfoundation.org/events/open-source-summit-north-america/program/schedule) | Alex Ellis | LA, USA | 11-14 Sept 2017 |
+| [FaaS and Furious @ Cloud Native - London](https://www.slideshare.net/AlexEllis11/openfaas-serverless-framework-for-docker-and-kubernetes-london) | Alex Ellis | London, UK | 06 Sept 2017 |
 | [From Zero to Serverless with FaaS - Fusion meet-up](https://www.eventbrite.com/e/fusion-meetup-birmingham-june-2017-tickets-35370655583?aff=es2) | Alex Ellis | Birmingham, UK | 20 June 2017 |
 | [TechXLR8 - XLR8 your cloud with Docker and Serverless FaaS](https://www.slideshare.net/AlexEllis11/techxlr8-xlr8-your-cloud-with-docker-and-serverless-faas) | Alex Ellis | London, UK | 13-June-2017 |
 | [Whaleless!](http://gluecon.com/#agenda) ([slides](https://speakerdeck.com/amirmc/whaleless-doing-serverless-with-docker)) | Amir Chaudhry | GlueCon, CO | 26-May-2017 |
-| [MakerShift: Build Your own Serverless functions w/ FaaS](https://www.makershift.io/)| Austin Frey | Harrisburg, PA | 6-May-2017 |
+| [MakerShift: Build Your own Serverless functions w/ FaaS](https://www.makershift.io/)| Austin Frey | Harrisburg, PA | 06-May-2017 |
 | [Dockercon closing keynote - Cool Hacks](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/) | Alex Ellis | Dockercon, Austin | 20-April-2017 |
 | [TechLancaster](http://techlancaster.com/meetup)| Austin Frey | Lancaster, PA | 18-April-2017 |
-| [ETH Polymese](https://www.polymesse.ch/current-presentations.html)| Brian Christner   | Zürich   | 4-April-2017 |
+| [ETH Polymese](https://www.polymesse.ch/current-presentations.html)| Brian Christner   | Zürich   | 04-April-2017 |
 | [Operationalizing Containers](http://www.rackspace-inform.eu/dispatcher/action?wlmsac=t1ejSDdh1hygBurJJANV)| Brian Christner   | Zürich   | 5-April-2017 |
 | [FaaS on Hacker News](https://news.ycombinator.com/item?id=13920588)| Alex Ellis   | Online   | 22-Mar-2017 |
 
@@ -35,11 +35,15 @@ There are three main Github repos
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Morning coffee with the OpenFaaS CLI](https://blog.alexellis.io/quickstart-openfaas-cli/) | Alex Ellis | alexellis.io | 05-Sep-2017 |
+| [OpenFaaS on Rancher](https://medium.com/cloud-academy-inc/openfaas-on-rancher-684650cc078e) | Alex Ellis | medium.com | 02-Sep-2017 |
+| [OpenFaaS accelerates serverless Java with AfterBurn](https://blog.alexellis.io/openfaas-serverless-acceleration/) | Alex Ellis | alexellis.io | 01-Sep-2017 |
+| [OpenFaaS presents to CNCF Serverless workgroup](https://blog.alexellis.io/openfaas-cncf-workgroup/) | Alex Ellis | alexellis.io | 29-Aug-2017 |
 | [Your Serverless Raspberry Pi cluster with Docker](https://blog.alexellis.io/your-serverless-raspberry-pi-cluster/) | Alex Ellis | alexellis.io | 20-Aug-2017 |
 | [Your first serverless .NET function with OpenFaaS](https://medium.com/@rorpage/your-first-serverless-net-function-with-openfaas-27573017dedb) | Rob Page | medium.com | 19-Aug-2017 |
 | [Your first serverless Python function with OpenFaaS](https://blog.alexellis.io/first-faas-python-function/) | Alex Ellis | alexellis.io | 11-Aug-2017 |
 | [Introducing Functions as a Service - OpenFaaS](https://blog.alexellis.io/introducing-functions-as-a-service/) | Alex Ellis | alexellis.io | 08-Aug-2017 |
-| [Time2Code code-editor](https://github.com/JockDaRock/Time2Code) | Jock Reed | github.com | 9-Aug-2017 |
+| [Time2Code: Functions as Service and Code as a Function](https://medium.com/@JockDaRock/time2code-functions-as-service-and-code-as-a-function-3d9125fc49fb) | Jock Reed | medium.com/@JockDaRock | 4-Aug-2017|
 | [FaaS complete walk-through on Kubernetes (video)](https://www.youtube.com/watch?v=0DbrLsUvaso) | Alex Ellis | youtube.com | 28-Jul-2017 |
 | [Kittens vs Tarsiers - an introduction to serverless machine learning](http://jmkhael.io/kittens-vs-tarsiers-an-introduction-to-serverless-machine-learning/) | Johnny Mkhael | jmkhael.io | 24-Jul-2017|
 | [Old and new - ASCII art and serverless](http://jmkhael.io/create-a-serverless-ascii-banner-with-faas/) | Johnny Mkhael | jmkhael.io | 29-Jun-2017|
