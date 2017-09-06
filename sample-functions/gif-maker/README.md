@@ -8,7 +8,7 @@ Testing:
 ```
 $ docker build -t alexellis/gif-maker .
 $ faas-cli deploy --fprocess="./entry.sh" \
-  --image gif-maker --name gif-maker
+  --image alexellis/gif-maker --name gif-maker
 
 # wait a little
 
