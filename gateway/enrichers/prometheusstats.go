@@ -11,7 +11,7 @@ import (
 )
 
 // AddPrometheusMetrics TODO
-func AddPrometheusMetrics(host string, port int) EnricherFunc {
+func PrometheusMetrics(host string, port int) EnricherFunc {
 	return func(h func(http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request) {
 		return func(w http.ResponseWriter, r *http.Request) {
 			h(&PrometheusStatsResponseWriter{
