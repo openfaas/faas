@@ -47,7 +47,7 @@ func TestHandler_HasCustomHeaderInFunction_WithCgi_Mode(t *testing.T) {
 
 	read, _ := ioutil.ReadAll(rr.Body)
 	val := string(read)
-	if strings.Index(val, "Http_Custom_Header") == -1 {
+	if !strings.Contains(val, "Http_Custom_Header") {
 		t.Errorf("'env' should printed: Http_Custom_Header, got: %s\n", val)
 
 	}
@@ -83,7 +83,7 @@ func TestHandler_DoesntHaveCustomHeaderInFunction_WithoutCgi_Mode(t *testing.T) 
 
 	read, _ := ioutil.ReadAll(rr.Body)
 	val := string(read)
-	if strings.Index(val, "Http_Custom_Header") != -1 {
+	if strings.Contains(val, "Http_Custom_Header") {
 		t.Errorf("'env' should not have printed: Http_Custom_Header, got: %s\n", val)
 
 	}

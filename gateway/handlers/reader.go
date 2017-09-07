@@ -42,7 +42,7 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 				var envProcess string
 
 				for _, env := range service.Spec.TaskTemplate.ContainerSpec.Env {
-					if strings.Index(env, "fprocess=") > -1 {
+					if strings.Contains(env, "fprocess=") {
 						envProcess = env[len("fprocess="):]
 					}
 				}
