@@ -4,6 +4,7 @@ WORKDIR /go/src/github.com/alexellis/faas/gateway
 COPY vendor         vendor
 
 COPY handlers       handlers
+COPY enrichers      enrichers
 COPY metrics        metrics
 COPY requests       requests
 COPY tests          tests

@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-
 	"strings"
 
 	"github.com/alexellis/faas/gateway/metrics"
@@ -41,6 +40,7 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 		for _, service := range services {
 
 			if len(service.Spec.TaskTemplate.ContainerSpec.Labels["function"]) > 0 {
+
 				invocations := getCounterValue(service.Spec.Name, "200", &metricsOptions) +
 					getCounterValue(service.Spec.Name, "500", &metricsOptions)
 
@@ -85,4 +85,16 @@ func getCounterValue(service string, code string, metricsOptions *metrics.Metric
 	metric.Write(&protoMetric)
 	invocations := protoMetric.GetCounter().GetValue()
 	return invocations
+}
+
+type VectorQueryResponse struct {
+	Data struct {
+		Result []struct {
+			Metric struct {
+				Code         string `json:"code"`
+				FunctionName string `json:"function_name"`
+			}
+			Value []interface{} `json:"value"`
+		}
+	}
 }

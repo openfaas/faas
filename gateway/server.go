@@ -16,6 +16,7 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	natsHandler "github.com/alexellis/faas-nats/handler"
+	"github.com/alexellis/faas/gateway/enrichers"
 	internalHandlers "github.com/alexellis/faas/gateway/handlers"
 	"github.com/alexellis/faas/gateway/metrics"
 	"github.com/alexellis/faas/gateway/plugin"
@@ -121,7 +122,7 @@ func main() {
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/", faasHandlers.Proxy)
 
 	r.HandleFunc("/system/alert", faasHandlers.Alert)
-	r.HandleFunc("/system/functions", faasHandlers.ListFunctions).Methods("GET")
+	r.HandleFunc("/system/functions", enrichers.Add(faasHandlers.ListFunctions, enrichers.PrometheusMetrics(config.PrometheusHost, config.PrometheusPort))).Methods("GET")
 	r.HandleFunc("/system/functions", faasHandlers.DeployFunction).Methods("POST")
 	r.HandleFunc("/system/functions", faasHandlers.DeleteFunction).Methods("DELETE")
 
