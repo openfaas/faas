@@ -7,11 +7,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"log"
 	"net/http"
-	"os"
-	"strconv"
 	"strings"
 
 	"github.com/alexellis/faas/gateway/metrics"
@@ -27,8 +23,6 @@ import (
 func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		client := http.Client{}
-
 		serviceFilter := filters.NewArgs()
 
 		options := types.ServiceListOptions{
@@ -43,55 +37,18 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 		// TODO: Filter only "faas" functions (via metadata?)
 		var functions []requests.Function
 
-		req, reqErr := http.NewRequest("GET", "http://prometheus:9090/api/v1/query/?query=gateway_function_invocation_total", nil)
-		if reqErr != nil {
-			log.Println(reqErr)
-		}
-		res, getErr := client.Do(req)
-		if getErr != nil {
-			fmt.Fprintln(os.Stderr, getErr)
-			return
-		}
-		defer res.Body.Close()
-		bytesOut, readErr := ioutil.ReadAll(res.Body)
-		if readErr != nil {
-			fmt.Fprintln(os.Stderr, readErr)
-		}
-
-		fmt.Println(string(bytesOut))
-
-		var values VectorQueryResponse
-
-		unmarshalErr := json.Unmarshal(bytesOut, &values)
-		if unmarshalErr != nil {
-			fmt.Fprintln(os.Stderr, unmarshalErr)
-		}
-
 		for _, service := range services {
 
 			if len(service.Spec.TaskTemplate.ContainerSpec.Labels["function"]) > 0 {
+
+				invocations := getCounterValue(service.Spec.Name, "200", &metricsOptions) +
+					getCounterValue(service.Spec.Name, "500", &metricsOptions)
 
 				var envProcess string
 
 				for _, env := range service.Spec.TaskTemplate.ContainerSpec.Env {
 					if strings.Index(env, "fprocess=") > -1 {
 						envProcess = env[len("fprocess="):]
-					}
-				}
-
-				var invocations float64
-				for _, result := range values.Data.Result {
-					if service.Spec.Name == result.Metric.FunctionName {
-						val := result.Value[1]
-						switch val.(type) {
-						case string:
-							f, strconvErr := strconv.ParseFloat(val.(string), 64)
-							if err != nil {
-								fmt.Fprintln(os.Stderr, strconvErr)
-								continue
-							}
-							invocations = invocations + f
-						}
 					}
 				}
 
