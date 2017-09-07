@@ -73,3 +73,81 @@ func TestRead_ReadAndWriteTimeoutConfig(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestRead_UseNATSDefaultsToOff(t *testing.T) {
+	defaults := NewEnvBucket()
+	readConfig := types.ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.UseNATS() == true {
+		t.Log("NATS is supposed to be off by default")
+		t.Fail()
+	}
+}
+
+func TestRead_UseNATS(t *testing.T) {
+	defaults := NewEnvBucket()
+	defaults.Setenv("faas_nats_address", "nats")
+	defaults.Setenv("faas_nats_port", "6222")
+	readConfig := types.ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.UseNATS() == false {
+		t.Log("NATS was requested in config, but not enabled.")
+		t.Fail()
+	}
+}
+
+func TestRead_UseNATSBadPort(t *testing.T) {
+
+	defaults := NewEnvBucket()
+	defaults.Setenv("faas_nats_address", "nats")
+	defaults.Setenv("faas_nats_port", "6fff")
+	readConfig := types.ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.UseNATS() == true {
+		t.Log("NATS had bad config, should not be enabled.")
+		t.Fail()
+	}
+}
+
+func TestRead_PrometheusNonDefaults(t *testing.T) {
+	defaults := NewEnvBucket()
+	defaults.Setenv("faas_prometheus_host", "prom1")
+	defaults.Setenv("faas_prometheus_port", "9999")
+	readConfig := types.ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.PrometheusHost != "prom1" {
+		t.Logf("config.PrometheusHost, want: %s, got: %s\n", "prom1", config.PrometheusHost)
+		t.Fail()
+	}
+
+	if config.PrometheusPort != 9999 {
+		t.Logf("config.PrometheusHost, want: %d, got: %d\n", 9999, config.PrometheusPort)
+		t.Fail()
+	}
+}
+
+func TestRead_PrometheusDefaults(t *testing.T) {
+	defaults := NewEnvBucket()
+
+	readConfig := types.ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.PrometheusHost != "prometheus" {
+		t.Logf("config.PrometheusHost, want: %s, got: %s\n", "prometheus", config.PrometheusHost)
+		t.Fail()
+	}
+
+	if config.PrometheusPort != 9090 {
+		t.Logf("config.PrometheusHost, want: %d, got: %d\n", 9090, config.PrometheusPort)
+		t.Fail()
+	}
+}

@@ -16,8 +16,6 @@ import (
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/client"
-	"github.com/prometheus/client_golang/prometheus"
-	io_prometheus_client "github.com/prometheus/client_model/go"
 )
 
 // MakeFunctionReader gives a summary of Function structs with Docker service stats overlaid with Prometheus counters.
@@ -41,8 +39,10 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 		for _, service := range services {
 
 			if len(service.Spec.TaskTemplate.ContainerSpec.Labels["function"]) > 0 {
-				invocations := getCounterValue(service.Spec.Name, "200", &metricsOptions) +
-					getCounterValue(service.Spec.Name, "500", &metricsOptions)
+
+				// Ping counters
+				// getCounterValue(service.Spec.Name, "200", &metricsOptions)
+				// getCounterValue(service.Spec.Name, "500", &metricsOptions)
 
 				var envProcess string
 
@@ -55,7 +55,7 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 				f := requests.Function{
 					Name:            service.Spec.Name,
 					Image:           service.Spec.TaskTemplate.ContainerSpec.Image,
-					InvocationCount: invocations,
+					InvocationCount: 0,
 					Replicas:        *service.Spec.Mode.Replicated.Replicas,
 					EnvProcess:      envProcess,
 				}
@@ -71,18 +71,18 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 	}
 }
 
-func getCounterValue(service string, code string, metricsOptions *metrics.MetricOptions) float64 {
+// func getCounterValue(service string, code string, metricsOptions *metrics.MetricOptions) float64 {
 
-	metric, err := metricsOptions.GatewayFunctionInvocation.
-		GetMetricWith(prometheus.Labels{"function_name": service, "code": code})
+// 	metric, err := metricsOptions.GatewayFunctionInvocation.
+// 		GetMetricWith(prometheus.Labels{"function_name": service, "code": code})
 
-	if err != nil {
-		return 0
-	}
+// 	if err != nil {
+// 		return 0
+// 	}
 
-	// Get the metric's value from ProtoBuf interface (idea via Julius Volz)
-	var protoMetric io_prometheus_client.Metric
-	metric.Write(&protoMetric)
-	invocations := protoMetric.GetCounter().GetValue()
-	return invocations
-}
+// 	// Get the metric's value from ProtoBuf interface (idea via Julius Volz)
+// 	var protoMetric io_prometheus_client.Metric
+// 	metric.Write(&protoMetric)
+// 	invocations := protoMetric.GetCounter().GetValue()
+// 	return invocations
+// }
