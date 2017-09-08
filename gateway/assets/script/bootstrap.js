@@ -4,8 +4,8 @@
 
 var app = angular.module('faasGateway', ['ngMaterial']);
 
-app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$mdDialog', 
-        function($scope, $log, $http, $location, $timeout, $mdDialog) {
+app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$mdDialog', '$mdToast',
+        function($scope, $log, $http, $location, $timeout, $mdDialog, $mdToast) {
     $scope.functions = [];
     $scope.invocationRequest = "";
     $scope.invocationResponse = "";
@@ -22,9 +22,19 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
     };
 
     $scope.invocation.request = ""
+
     setInterval(function() {
         refreshData();
     }, 1000);
+
+    $scope.showPostInvokedToast = function(val) {
+        $mdToast.show(
+            $mdToast.simple()
+                .textContent(val)
+                .position("top right")
+                .hideDelay(500)
+        );
+    };
 
     $scope.fireRequest = function() {
 
@@ -35,18 +45,24 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
             headers: { "Content-Type": $scope.invocation.contentType == "json" ? "application/json" : "text/plain" },
             responseType: $scope.invocation.contentType
         };
+        $scope.invocationResponse = "";
+        $scope.invocationStatus = null;
 
         $http(options)
             .then(function(response) {
                 if($scope.invocation && $scope.invocation.contentType == "json") {
                     $scope.invocationResponse = JSON.stringify(response.data, -1, "  ");
+        
                 } else {
-                    $scope.invocationResponse = response.data;
+                    $scope.invocationResponse = response.data;    
                 }
                 $scope.invocationStatus = response.status;
+                $scope.showPostInvokedToast("Success");
             }).catch(function(error1) {
                 $scope.invocationResponse = error1.statusText + "\n" + error1.data;
                 $scope.invocationStatus = error1.status;
+
+                $scope.showPostInvokedToast("Error");
             });
     };
 

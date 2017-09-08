@@ -3,7 +3,6 @@
 export eTAG="latest-dev"
 echo $1
 if [ $1 ] ; then
-  echo "set this"
   eTAG=$1
 fi
 
