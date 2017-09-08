@@ -19,7 +19,7 @@ There are three main Github repos
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [Zero to Serverless in 60 secs - Open Source Summit North America](http://events.linuxfoundation.org/events/open-source-summit-north-america/program/schedule) | Alex Ellis | LA, USA | 11-14 Sept 2017 |
-| [FaaS and Furious @ Cloud Native - London](https://www.slideshare.net/AlexEllis11/openfaas-serverless-framework-for-docker-and-kubernetes-london) | Alex Ellis | London, UK | 06 Sept 2017 |
+| [FaaS and Furious - CloudNativeLon (Vimeo)](https://skillsmatter.com/skillscasts/10813-faas-and-furious-0-to-serverless-in-60-seconds-anywhere) | Alex Ellis | London, UK | 06 Sept 2017 |
 | [From Zero to Serverless with FaaS - Fusion meet-up](https://www.eventbrite.com/e/fusion-meetup-birmingham-june-2017-tickets-35370655583?aff=es2) | Alex Ellis | Birmingham, UK | 20 June 2017 |
 | [TechXLR8 - XLR8 your cloud with Docker and Serverless FaaS](https://www.slideshare.net/AlexEllis11/techxlr8-xlr8-your-cloud-with-docker-and-serverless-faas) | Alex Ellis | London, UK | 13-June-2017 |
 | [Whaleless!](http://gluecon.com/#agenda) ([slides](https://speakerdeck.com/amirmc/whaleless-doing-serverless-with-docker)) | Amir Chaudhry | GlueCon, CO | 26-May-2017 |
