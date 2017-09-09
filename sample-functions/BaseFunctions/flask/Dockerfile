@@ -1,13 +1,12 @@
 FROM python:2.7-alpine
 
+WORKDIR /root/
+COPY requirements.txt   .
+RUN pip install -r requirements.txt
+
 ADD ./fwatchdog /usr/bin
 # ADD https://github.com/alexellis/faas/releases/download/0.5.7c-alpha/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
-
-WORKDIR /root/
-
-
-RUN pip install flask
 
 ENV fprocess="python handler.py"
 
