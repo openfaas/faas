@@ -2,12 +2,17 @@
 from wsgiref.handlers import CGIHandler
 from flask import render_template
 from flask import Flask
+import os
+from flask import request
 
 app = Flask(__name__)
 
 @app.route('/')
 def hello(name=None):
-    return render_template('hello.html', name=name)
+    if "name" in request.args:
+        return render_template('hello.html', name=request.args["name"])
+    else:
+        return render_template('hello.html', name="stranger")
 
 class ProxyFix(object):
     def __init__(self, app):
@@ -19,7 +24,7 @@ class ProxyFix(object):
         environ['REQUEST_METHOD'] = "GET"
         environ['SCRIPT_NAME'] = ""
         environ['PATH_INFO'] = "/"
-        environ['QUERY_STRING'] = ""
+        environ['QUERY_STRING'] = os.getenv("Http_Query", default="/")
         environ['SERVER_PROTOCOL'] = "HTTP/1.1"
         return self.app(environ, start_response)
 
