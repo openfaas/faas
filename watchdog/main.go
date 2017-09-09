@@ -148,13 +148,14 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 		}()
 	}
 
+	var cgiResponse1 cgiResponse
 	go func() {
 		defer wg.Done()
 		out, err = targetCmd.CombinedOutput()
 
 		if config.cgiBody {
-			out, cgiResponse = modulateCgiBody(out)
-			fmt.Println(cgiResponse)
+			out, cgiResponse1 = modulateCgiBody(out)
+			fmt.Println(cgiResponse1)
 		}
 	}()
 
