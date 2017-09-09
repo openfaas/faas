@@ -48,6 +48,24 @@ type requestInfo struct {
 	headerWritten bool
 }
 
+// Status: 200 OK
+// Content-Type: text/html; charset=utf-8
+// Content-Length: 74
+type cgiResponse struct {
+	contentType string
+}
+
+func modulateCgiBody(out []byte) ([]byte, cgiResponse) {
+	st := string(out)
+	sep := "\r\n\r\n"
+	index := strings.Index(st, sep)
+	if index > -1 {
+		return []byte(st[index+len(sep):]), cgiResponse{}
+	}
+
+	return out, cgiResponse{}
+}
+
 func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request, method string, hasBody bool) {
 	startTime := time.Now()
 
@@ -133,6 +151,11 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 	go func() {
 		defer wg.Done()
 		out, err = targetCmd.CombinedOutput()
+
+		if config.cgiBody {
+			out, cgiResponse = modulateCgiBody(out)
+			fmt.Println(cgiResponse)
+		}
 	}()
 
 	wg.Wait()
