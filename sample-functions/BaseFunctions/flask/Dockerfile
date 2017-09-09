@@ -13,6 +13,8 @@ ENV fprocess="python handler.py"
 
 COPY handler.py .
 COPY templates templates
+ENV cgi_body=true
+ENV cgi_headers=true
 
 HEALTHCHECK --interval=1s CMD [ -e /tmp/.lock ] || exit 1
 
