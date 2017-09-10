@@ -18,6 +18,7 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/alexellis/faas/gateway/metrics"
+	"github.com/alexellis/faas/gateway/requests"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/client"
@@ -90,8 +91,13 @@ func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.Metric
 
 	if exists {
 		defer trackTime(time.Now(), metrics, name)
+
+		forwardReq := requests.NewForwardRequest(r.Method, *r.URL)
+
+		fmt.Println("forwardReq: ", forwardReq)
+
 		requestBody, _ := ioutil.ReadAll(r.Body)
-		invokeService(w, r, metrics, name, requestBody, logger, proxyClient)
+		invokeService(w, r, metrics, name, forwardReq, requestBody, logger, proxyClient)
 	}
 }
 
@@ -104,7 +110,7 @@ func lookupSwarmService(serviceName string, c *client.Client) (bool, error) {
 	return len(services) > 0, err
 }
 
-func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, requestBody []byte, logger *logrus.Logger, proxyClient *http.Client) {
+func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, forwardReq requests.ForwardRequest, requestBody []byte, logger *logrus.Logger, proxyClient *http.Client) {
 	stamp := strconv.FormatInt(time.Now().Unix(), 10)
 
 	defer func(when time.Time) {
@@ -131,7 +137,7 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 			addr = entries[index].String()
 		}
 	}
-	url := fmt.Sprintf("http://%s:%d/", addr, watchdogPort)
+	url := forwardReq.ToURL(addr, watchdogPort)
 
 	contentType := r.Header.Get("Content-Type")
 	fmt.Printf("[%s] Forwarding request [%s] to: %s\n", stamp, contentType, url)
