@@ -3,7 +3,6 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/alexellis/faas)](https://goreportcard.com/report/github.com/alexellis/faas) [![Build
 Status](https://travis-ci.org/alexellis/faas.svg?branch=master)](https://travis-ci.org/alexellis/faas) [![GoDoc](https://godoc.org/github.com/alexellis/faas?status.svg)](https://godoc.org/github.com/alexellis/faas)
 
-
 ![OpenFaaS](https://blog.alexellis.io/content/images/2017/08/faas_side.png)
 
 OpenFaaS is a framework for building serverless functions with Docker which has first class support for metrics. Any process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
