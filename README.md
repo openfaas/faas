@@ -1,6 +1,6 @@
 ## Functions as a Service (OpenFaaS)
 
-[![Build
+[![Go Report Card](https://goreportcard.com/badge/github.com/alexellis/faas)](https://goreportcard.com/report/github.com/alexellis/faas) [![Build
 Status](https://travis-ci.org/alexellis/faas.svg?branch=master)](https://travis-ci.org/alexellis/faas)
 
 ![OpenFaaS](https://blog.alexellis.io/content/images/2017/08/faas_side.png)
