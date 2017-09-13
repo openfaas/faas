@@ -10,6 +10,9 @@ COPY requesthandler_test.go .
 #COPY requestHandler.go   .
 COPY types types
 
+# Run a gofmt and exclude all vendored code.
+RUN gofmt -l -d $(find . -type f -name '*.go' -not -path "./vendor/*")
+
 RUN go test
 
 # Stripping via -ldflags "-s -w" 
