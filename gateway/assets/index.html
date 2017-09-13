@@ -54,9 +54,17 @@
                     <md-card-title>
                         <md-card-title-text>
 
-                            <span class="md-headline">
-                                {{function.name}}
-                            </span>
+                            <div layout="row" layout-align="space-between">
+                                <span class="md-headline">
+                                    {{function.name}}
+                                </span>
+
+                                <md-button ng-click="deleteFunction()" class="md-icon-button" aria-label="Delete">
+                                  <md-tooltip md-direction="left">Delete</md-tooltip>
+                                  <md-icon md-svg-icon="img/icons/ic_delete_black.svg"></md-icon>
+                                </md-button>
+
+                            </div>
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-icon-float md-block">
                                     <label>Replicas</label>
