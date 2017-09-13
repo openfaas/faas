@@ -5,11 +5,12 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:0.6.3
+        image: functions/gateway:latest-dev
         networks:
             - functions
         environment:
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
+            faas_function_filters: "hello=world"
         deploy:
             placement:
                 constraints:
@@ -82,6 +83,8 @@ services:
             no_proxy: "gateway"
             https_proxy: $https_proxy
         deploy:
+            labels:
+                hello: "world"
             placement:
                 constraints:
                     - 'node.platform.os == linux'

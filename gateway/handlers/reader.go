@@ -19,10 +19,13 @@ import (
 )
 
 // MakeFunctionReader gives a summary of Function structs with Docker service stats overlaid with Prometheus counters.
-func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) http.HandlerFunc {
+func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client, serviceLabelFilters []string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		serviceFilter := filters.NewArgs()
+		for _, labelFilter := range serviceLabelFilters {
+			serviceFilter.Add("label", labelFilter)
+		}
 
 		options := types.ServiceListOptions{
 			Filters: serviceFilter,

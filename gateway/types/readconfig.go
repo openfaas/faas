@@ -8,6 +8,7 @@ import (
 	"net/url"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -97,6 +98,9 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 		cfg.PrometheusHost = prometheusHost
 	}
 
+	funcFilters := hasEnv.Getenv("faas_function_filters")
+	cfg.FunctionFilters = strings.Split(funcFilters, ",")
+
 	return cfg
 }
 
@@ -109,6 +113,7 @@ type GatewayConfig struct {
 	NATSPort             *int
 	PrometheusHost       string
 	PrometheusPort       int
+	FunctionFilters      []string
 }
 
 // UseNATS Use NATSor not
