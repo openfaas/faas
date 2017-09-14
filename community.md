@@ -67,6 +67,7 @@ There are three main Github repos
 ### Repos - projects / samples / use cases
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| [Github - Reverse geocoding](https://github.com/lucj/faas-reverse-geocoding) | Luc Juggery | github.com/lucj/faas-reverse-geocoding | 14-September-2017 |
 | [QR Code](https://github.com/faas-and-furious/qrcode) | John McCabe | github.com | 18-August-2017 |
 | [Img2ANSI - GIF/PNG/JPG to ANSI art converter](https://github.com/johnmccabe/faas-img2ansi/) | John McCabe | github.com | 10-August-2017 |
 | [FaaS-netes - Kubernetes backend for FaaS](https://github.com/alexellis/faas-netes) | Alex Ellis | github.com | 25-Jul-2017 |
@@ -77,4 +78,3 @@ There are three main Github repos
 | [Github - ascii art generator](https://github.com/developius/faas-node-ascii) | Finnian Anderson | [developius/faas-node-ascii](https://github.com/developius/faas-node-ascii) | 17-April-2017 |
 | [Github - URL Shortener](https://github.com/developius/faas-node-url-shortener) | Finnian Anderson | [developius/faas-node-url-shortener](https://github.com/developius/faas-node-url-shortener) | 19-April-2017 |
 | [Github - fibonacci numbers up to N](https://github.com/developius/faas-python-fib/) | Finnian Anderson | [developius/faas-python-fib/](https://github.com/developius/faas-python-fib/) | 19-April-2017 |
-| [Github - Reverse geocoding](https://github.com/lucj/faas-reverse-geocoding) | Luc Juggery | github.com/lucj/faas-reverse-geocoding | 14-September-2017 |
