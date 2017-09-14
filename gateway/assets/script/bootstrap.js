@@ -151,5 +151,38 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
         showDialog();
     };
 
+    $scope.deleteFunction = function($event) {
+        var confirm = $mdDialog.confirm()
+            .title('Delete Function')
+            .textContent('Are you sure you want to delete ' + $scope.selectedFunction.name + '?')
+            .ariaLabel('Delete function')
+            .targetEvent($event)
+            .ok('OK')
+            .cancel('Cancel');
+
+        $mdDialog.show(confirm)
+            .then(function() {
+                var options = {
+                    url: "/system/functions",
+                    data: {
+                        functionName: $scope.selectedFunction.name
+                    },
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json"},
+                    responseType: "json"
+                };
+
+                return $http(options);
+            }).then(function(){
+                $scope.showPostInvokedToast("Success");
+            }).catch(function(err) {
+                if (err) {
+                    // show error toast only if there actually is an err.
+                    // because hitting 'Cancel' also rejects the promise.
+                  $scope.showPostInvokedToast("Error");
+                }
+            });
+    };
+
     fetch();
 }]);

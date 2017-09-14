@@ -8,8 +8,6 @@ import (
 	"log"
 	"net/http"
 	"net/http/httputil"
-	"strconv"
-	"strings"
 	"time"
 
 	"fmt"
@@ -21,7 +19,6 @@ import (
 	"github.com/alexellis/faas/gateway/plugin"
 	"github.com/alexellis/faas/gateway/types"
 	"github.com/docker/docker/client"
-	"github.com/prometheus/client_golang/prometheus"
 
 	"github.com/gorilla/mux"
 )
@@ -78,14 +75,13 @@ func main() {
 
 		reverseProxy := httputil.NewSingleHostReverseProxy(config.FunctionsProviderURL)
 
-		faasHandlers.Proxy = makeHandler(reverseProxy, &metricsOptions)
-		faasHandlers.RoutelessProxy = makeHandler(reverseProxy, &metricsOptions)
-
-		faasHandlers.Alert = internalHandlers.MakeAlertHandler(plugin.NewExternalServiceQuery(*config.FunctionsProviderURL))
-
-		faasHandlers.ListFunctions = makeHandler(reverseProxy, &metricsOptions)
-		faasHandlers.DeployFunction = makeHandler(reverseProxy, &metricsOptions)
-		faasHandlers.DeleteFunction = makeHandler(reverseProxy, &metricsOptions)
+		faasHandlers.Proxy = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
+		faasHandlers.RoutelessProxy = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
+		faasHandlers.ListFunctions = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
+		faasHandlers.DeployFunction = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
+		faasHandlers.DeleteFunction = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
+		alertHandler := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL)
+		faasHandlers.Alert = internalHandlers.MakeAlertHandler(alertHandler)
 
 		metrics.AttachExternalWatcher(*config.FunctionsProviderURL, metricsOptions, "func", time.Second*5)
 
@@ -94,10 +90,12 @@ func main() {
 
 		faasHandlers.Proxy = internalHandlers.MakeProxy(metricsOptions, true, dockerClient, &logger)
 		faasHandlers.RoutelessProxy = internalHandlers.MakeProxy(metricsOptions, true, dockerClient, &logger)
-		faasHandlers.Alert = internalHandlers.MakeAlertHandler(internalHandlers.NewSwarmServiceQuery(dockerClient))
 		faasHandlers.ListFunctions = internalHandlers.MakeFunctionReader(metricsOptions, dockerClient)
 		faasHandlers.DeployFunction = internalHandlers.MakeNewFunctionHandler(metricsOptions, dockerClient, maxRestarts)
 		faasHandlers.DeleteFunction = internalHandlers.MakeDeleteFunctionHandler(metricsOptions, dockerClient)
+
+		faasHandlers.Alert = internalHandlers.MakeAlertHandler(internalHandlers.NewSwarmServiceQuery(dockerClient))
+
 		// This could exist in a separate process - records the replicas of each swarm service.
 		functionLabel := "function"
 		metrics.AttachSwarmWatcher(dockerClient, metricsOptions, functionLabel)
@@ -154,28 +152,4 @@ func main() {
 	}
 
 	log.Fatal(s.ListenAndServe())
-}
-
-func makeHandler(proxy *httputil.ReverseProxy, metrics *metrics.MetricOptions) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		uri := r.URL.String()
-
-		log.Printf("Forwarding [%s] to %s", r.Method, r.URL.String())
-		start := time.Now()
-
-		writeAdapter := types.NewWriteAdapter(w)
-		proxy.ServeHTTP(writeAdapter, r)
-
-		seconds := time.Since(start).Seconds()
-		fmt.Printf("[%d] took %f seconds\n", writeAdapter.GetHeaderCode(), seconds)
-
-		forward := "/function/"
-		if len(uri) > len(forward) && strings.Index(uri, forward) == 0 {
-			fmt.Println("function=", uri[len(forward):])
-			service := uri[len(forward):]
-			metrics.GatewayFunctionsHistogram.WithLabelValues(service).Observe(seconds)
-			code := writeAdapter.GetHeaderCode()
-			metrics.GatewayFunctionInvocation.With(prometheus.Labels{"function_name": service, "code": strconv.Itoa(code)}).Inc()
-		}
-	}
 }
