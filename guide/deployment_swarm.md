@@ -21,7 +21,7 @@ Then copy any join token commands you see and run them on your worker nodes.
 ```
 $ git clone https://github.com/alexellis/faas && \
   cd faas && \
-  git checkout 0.6.0 && \
+  git checkout 0.6.5 && \
   ./deploy_stack.sh
 ```
 
