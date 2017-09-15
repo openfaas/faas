@@ -38,10 +38,11 @@ What makes a good proposal?
 
 Please read this whole guide and make sure you agree to our DCO agreement (included below):
 
-* Sign-off your commits
+* Sign-off your commits 
 * Complete the whole template for issues and pull requests
+* [Reference addressed issues](https://help.github.com/articles/closing-issues-using-keywords/) in the PR description & commit messages - use 'Fixes #IssueNo' 
 * Always give instructions for testing
- * Give us CLI commands and output or screenshots where you can 
+* Give us CLI commands and output or screenshots where you can 
 
 **I have a question, a suggestion or need help**
 
