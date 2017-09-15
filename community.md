@@ -35,8 +35,9 @@ There are three main Github repos
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Integrating OpenFaaS and GraphQL](https://medium.com/@kenfdev/integrating-openfaas-and-graphql-experimental-1870bd22f2a) | Ken Fukuyama | medium.com/@kenfdev | 10-Sep-2017 |
 | [Morning coffee with the OpenFaaS CLI](https://blog.alexellis.io/quickstart-openfaas-cli/) | Alex Ellis | alexellis.io | 05-Sep-2017 |
-| [OpenFaaS on Rancher](https://medium.com/cloud-academy-inc/openfaas-on-rancher-684650cc078e) | Alex Ellis | medium.com | 02-Sep-2017 |
+| [OpenFaaS on Rancher](https://medium.com/cloud-academy-inc/openfaas-on-rancher-684650cc078e) | Ken Fukuyama | medium.com/@kenfdev | 02-Sep-2017 |
 | [OpenFaaS accelerates serverless Java with AfterBurn](https://blog.alexellis.io/openfaas-serverless-acceleration/) | Alex Ellis | alexellis.io | 01-Sep-2017 |
 | [OpenFaaS presents to CNCF Serverless workgroup](https://blog.alexellis.io/openfaas-cncf-workgroup/) | Alex Ellis | alexellis.io | 29-Aug-2017 |
 | [Your Serverless Raspberry Pi cluster with Docker](https://blog.alexellis.io/your-serverless-raspberry-pi-cluster/) | Alex Ellis | alexellis.io | 20-Aug-2017 |
