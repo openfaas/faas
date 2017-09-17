@@ -54,6 +54,9 @@ This binary fwatchdog acts as a watchdog for your function. Features:
 * Spawns process set in `fprocess` ENV variable for each HTTP connection
 * Only lets processes run for set duration i.e. 500ms, 2s, 3s.
 * Language/binding independent - can invoke any UNIX process, including built-ins such as `wc` or `cat`
+* Asynchronous / long-running tasks via NATS Streaming
+* CLI - invoke / list functions / query function info
+* OS constraints in the deploy function API
 
 ## 2. Future items
 
@@ -64,15 +67,12 @@ Must have
 * Re-branding to OpenFaaS
  * New logo - graphic icon and text (in progress)
  * Website / landing page (in progress)
-* Asynchronous / long-running tasks (PR in testing)
 
 Should have
 
 * AARCH64 (64-bit ARM) port (dependent on Docker release schedule)
 * Integration with a reverse proxy - such as Traefik or Kong
  * Basic auth for /system endpoints (probably via reverse proxy)
-* CLI - list functions / query function info
-* OS constraints in the deploy function API
 * Healthchecks for functions deployed on Kubernetes 
 
 Could have
@@ -80,7 +80,7 @@ Could have
 * Built-in Docker registry with default configuration
 * Docker image builder (remote service)
 * Function store - list of useful predefined functions
-* Supporting request parameters
+* Supporting request parameters via route
 * Configurable memory limits via "new function" pop-up (already supported by Docker compose stack)
 
 Nice to have
