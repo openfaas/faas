@@ -36,7 +36,10 @@ Some of the more recent Completed Features:
 * Delete function in CLI
 * Developer guide for CSharp
 * Developer guide for Python
-* Kubernetes support
+* **Kubernetes support**
+* Asynchronous / long-running tasks via NATS Streaming
+* CLI - invoke / list functions / query function info
+* OS constraints in the deploy function API
 
 **Incoming requests and routing**
 
@@ -54,9 +57,6 @@ This binary fwatchdog acts as a watchdog for your function. Features:
 * Spawns process set in `fprocess` ENV variable for each HTTP connection
 * Only lets processes run for set duration i.e. 500ms, 2s, 3s.
 * Language/binding independent - can invoke any UNIX process, including built-ins such as `wc` or `cat`
-* Asynchronous / long-running tasks via NATS Streaming
-* CLI - invoke / list functions / query function info
-* OS constraints in the deploy function API
 
 ## 2. Future items
 
@@ -82,6 +82,7 @@ Could have
 * Function store - list of useful predefined functions
 * Supporting request parameters via route
 * Configurable memory limits via "new function" pop-up (already supported by Docker compose stack)
+* Scale to zero 0/0 replicas
 
 Nice to have
 
