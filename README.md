@@ -123,7 +123,7 @@ A set of one-line scripts are provided to help you quickly test-drive OpenFaaS o
 
 **Kubernetes**
 
-Alternatively if you have a Kubernetes cluster you can [start here](https://github.com/alexellis/faas-netes).
+Alternatively if you have a Kubernetes cluster you can [start here](https://github.com/alexellis/faas/blob/master/guide/deployment_k8s.md).
 
 ### [Begin the TestDrive with Docker Swarm](https://github.com/alexellis/faas/blob/master/TestDrive.md)
 
