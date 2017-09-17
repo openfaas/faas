@@ -105,18 +105,6 @@ https://cli.openfaas.com => 200
 
 ## Get started with OpenFaaS
 
-### Closing Keynote at Dockercon 2017
-
-Functions as a Service or FaaS was a winner in the Cool Hacks contest for Dockercon 2017.
-
-* [Watch my FaaS keynote at Dockercon 2017](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/)
-
-If you'd like to find the functions I used in the demos head over to the [faas-dockercon](https://github.com/alexellis/faas-dockercon/) repository.
-
-**Background story**
-
-This is my original blog post on FaaS from January: [Functions as a Service blog post](http://blog.alexellis.io/functions-as-a-service/)
-
 ### TestDrive
 
 **Docker Playground**
@@ -143,6 +131,30 @@ Here is a screenshot of the API gateway portal - designed for ease of use.
 
 ![Portal](https://pbs.twimg.com/media/C7bkpZbWwAAnKsx.jpg)
 
+## Find out more about OpenFaaS
+
+### SkillsMatter video presentation
+
+Great overview of OpenFaaS features, users and roadmap
+
+* [HD Video](https://skillsmatter.com/skillscasts/10813-faas-and-furious-0-to-serverless-in-60-seconds-anywhere)
+
+### OpenFaaS presents to CNCF Serverless workgroup
+
+* [Video and blog post](https://blog.alexellis.io/openfaas-cncf-workgroup/)
+
+### Closing Keynote at Dockercon 2017
+
+Functions as a Service or FaaS was a winner in the Cool Hacks contest for Dockercon 2017.
+
+* [Watch my FaaS keynote at Dockercon 2017](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/)
+
+If you'd like to find the functions I used in the demos head over to the [faas-dockercon](https://github.com/alexellis/faas-dockercon/) repository.
+
+**Background story**
+
+This is my original blog post on FaaS from January: [Functions as a Service blog post](http://blog.alexellis.io/functions-as-a-service/)
+
 ### Community
 
 Have you written a blog about OpenFaaS? Send a Pull Request to the community page below.
@@ -151,9 +163,18 @@ Have you written a blog about OpenFaaS? Send a Pull Request to the community pag
 
 If you'd like to join OpenFaaS community Slack channel to chat with contributors or get some help - then send a Tweet to [@alexellisuk](https://twitter.com/alexellisuk/) or email alex@openfaas.com.
 
-## Roadmap and contributing
+## Governance
 
-OpenFaaS is written in Golang and is MIT licensed - contributions are welcomed whether that means providing feedback, testing existing and new feature or hacking on the source. To get started you can checkout the [roadmap and contribution guide](https://github.com/alexellis/faas/blob/master/ROADMAP.md) or [browse the open issues on Github](https://github.com/alexellis/faas/issues).
+OpenFaaS is an independent project created by Alex Ellis which is now being built by a growing community of contributors.
+
+### Roadmap and contributing
+
+OpenFaaS is written in Golang and is MIT licensed - contributions are welcomed whether that means providing feedback, testing existing and new feature or hacking on the source.
+
+To get started you can read the [roadmap](https://github.com/alexellis/faas/blob/master/ROADMAP.md) and [contribution guide](https://github.com/alexellis/faas/blob/master/CONTRIBUTING.md) or:
+
+* [Browse FaaS issues on Github](https://github.com/alexellis/faas/issues).
+* [Browse FaaS-CLI issues on Github](https://github.com/alexellis/faas-cli/issues).
 
 Highlights:
 
@@ -161,6 +182,22 @@ Highlights:
 * New: FaaS CLI and easy install via `curl` and `brew`
 * New: Windows function support
 * New: Asynchronous/long-running OpenFaaS functions via [NATS Streaming](https://nats.io/documentation/streaming/nats-streaming-intro/) - [Follow this guide](https://github.com/alexellis/faas/blob/master/guide/asynchronous.md)
+
+### How do I become a contributor?
+
+Anyone is invited to contribute to the project in-line with the [contribution guide](https://github.com/alexellis/faas/blob/master/CONTRIBUTING.md) - you can also read the guide for ideas on how to get involved. We invite new contributors to join our Slack community. We would also ask you to propose any changes or contributions ahead of time, especially when there is no issue or proposal alredy tracking it.
+
+### How do I become a maintainer?
+
+Maintainers help with:
+* Fixing, testing and triaging issues
+* Joining contributor meetings and supporting new contributors
+* Testing and reviewing pull requests
+* Offering other project support and strategical advice
+
+Varying levels of write access are made available via our project bot [Derek](https://github.com/alexellis/derek) to help regular contributors transition to maintainers.
+
+### Other
 
 Example of a Grafana dashboard linked to OpenFaaS showing auto-scaling live in action:
 
