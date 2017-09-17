@@ -27,10 +27,12 @@ func makeFastForkRequestHandler(config *WatchdogConfig) func(http.ResponseWriter
 	if writeErr != nil {
 		log.Fatalln(writeErr)
 	}
+
 	readPiper, readPipeErr := process.StdoutPipe()
 	if readPipeErr != nil {
 		log.Fatalln(readPipeErr)
 	}
+
 	readPipe = &readPiper
 	mutex = &sync.Mutex{}
 
@@ -86,7 +88,7 @@ func makeFastForkRequestHandler(config *WatchdogConfig) func(http.ResponseWriter
 				defer processRes.Body.Close()
 			}
 
-			log.Println("processRes len[", processRes.ContentLength, "]")
+			log.Printf("r.len=[%d] processRes.len=[%d]\n", r.ContentLength, processRes.ContentLength)
 
 			var bodyErr error
 			bodyBytes, bodyErr = ioutil.ReadAll(processRes.Body)
@@ -95,7 +97,9 @@ func makeFastForkRequestHandler(config *WatchdogConfig) func(http.ResponseWriter
 			}
 
 			w.WriteHeader(processRes.StatusCode)
-			log.Println("bodyBytes:", string(bodyBytes), " len [", len(bodyBytes), "]")
+			log.Printf("r.len=[%d] processRes.len=[%d] bodyBytes.len=[%d]\n", r.ContentLength, processRes.ContentLength, len(bodyBytes))
+
+			// log.Println("bodyBytes:", string(bodyBytes), " len [", len(bodyBytes), "]")
 
 			_, writeErr := w.Write(bodyBytes)
 			if writeErr != nil {
