@@ -18,20 +18,20 @@ Below is a demo of how you could use Kong as an authentication layer for OpenFaa
 
 ## Setup Kong
 
-    docker run -d --name kong-database \
-                  -p 5432:5432 \
-                  -e "POSTGRES_USER=kong" \
-                  -e "POSTGRES_DB=kong" \
-                  postgres:9.4
+    docker service create --network func_functions --detach=false \
+        --name kong-database \
+        -p 5432:5432 \
+        -e "POSTGRES_USER=kong" \
+        -e "POSTGRES_DB=kong" \
+        postgres:9.4
 
-    docker run --rm \
-        --link kong-database:kong-database \
+    docker service create --network func_functions --detach=false \
+        --restart-condition=none --name=kong-migrations \
         -e "KONG_DATABASE=postgres" \
         -e "KONG_PG_HOST=kong-database" \
         kong:latest kong migrations up
 
-    docker run -d --name kong \
-        --link kong-database:kong-database \
+    docker service create --network func_functions --name kong \
         -e "KONG_DATABASE=postgres" \
         -e "KONG_PG_HOST=kong-database" \
         -e "KONG_PROXY_ACCESS_LOG=/dev/stdout" \
@@ -45,20 +45,19 @@ Below is a demo of how you could use Kong as an authentication layer for OpenFaa
         kong:latest
 
 
-## Get a route to the OpenFaaS server
-
-    FAASTHOST=`hostname -i`
-
-
 ## Put Kong in front of a single function
 
-    sleep 5   # wait for Kong to be ready
+    echo Waiting for Kong to be ready
+    until $(curl --output /dev/null --silent --head --fail http://localhost:8001); do
+        printf '.'
+        sleep 2
+    done
 
     curl -i -X POST \
       --url http://localhost:8001/apis/ \
       --data 'name=echoit' \
       --data 'uris=/echo' \
-      --data 'upstream_url=http://'$FAASTHOST':8080/function/func_echoit'
+      --data 'upstream_url=http://gateway:8080/function/func_echoit'
 
     curl localhost:8000/echo -d 'hello there'
 
@@ -68,7 +67,7 @@ Below is a demo of how you could use Kong as an authentication layer for OpenFaa
       --url http://localhost:8001/apis/ \
       --data 'name=functions' \
       --data 'uris=/functs' \
-      --data 'upstream_url=http://'$FAASTHOST':8080/function'
+      --data 'upstream_url=http://gateway:8080/function'
 
     curl localhost:8000/functs/func_echoit -d 'hello there'
 
