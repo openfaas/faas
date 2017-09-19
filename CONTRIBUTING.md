@@ -52,6 +52,20 @@ Please raise an Issue or email alex@openfaas.com for an invitation to our Slack 
 
 We are using the `vndr` tool across all projects. Get [started here](https://github.com/LK4D4/vndr).
 
+**How do I become a maintainer?**
+
+Maintainers are well-known contributors who help with:
+* Fixing, testing and triaging issues
+* Joining contributor meetings and supporting new contributors
+* Testing and reviewing pull requests
+* Offering other project support and strategical advice
+
+Varying levels of write access are made available via our project bot [Derek](https://github.com/alexellis/derek) to help regular contributors transition to maintainers.
+
+**Governance**
+
+OpenFaaS is an independent project created by Alex Ellis which is now being built by a growing community of contributors.
+
 ### Community
 
 This project is written in Golang but many of the community contributions so far have been through blogging, speaking engagements, helping to test and drive the backlog of FaaS. If you'd like to help in any way then that would be more than welcome whatever your level of experience.
