@@ -55,6 +55,9 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 		response, err := c.ServiceCreate(context.Background(), spec, options)
 		if err != nil {
 			log.Println(err)
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte("Deployment error: " + err.Error()))
+			return
 		}
 		log.Println(response.ID, response.Warnings)
 	}
