@@ -187,16 +187,6 @@ Highlights:
 
 Anyone is invited to contribute to the project in-line with the [contribution guide](https://github.com/alexellis/faas/blob/master/CONTRIBUTING.md) - you can also read the guide for ideas on how to get involved. We invite new contributors to join our Slack community. We would also ask you to propose any changes or contributions ahead of time, especially when there is no issue or proposal alredy tracking it.
 
-### How do I become a maintainer?
-
-Maintainers help with:
-* Fixing, testing and triaging issues
-* Joining contributor meetings and supporting new contributors
-* Testing and reviewing pull requests
-* Offering other project support and strategical advice
-
-Varying levels of write access are made available via our project bot [Derek](https://github.com/alexellis/derek) to help regular contributors transition to maintainers.
-
 ### Other
 
 Example of a Grafana dashboard linked to OpenFaaS showing auto-scaling live in action:
