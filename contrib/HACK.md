@@ -35,7 +35,7 @@ Now you can run the gateway as its own container and bind-mount in the HTML asse
 
 ```
 $ docker run -v `pwd`/gateway/assets:/root/assets -v "/var/run/docker.sock:/var/run/docker.sock" \
--p 8080:8080 --network=func_functions -itd functions/gateway:latest-dev
+-p 8080:8080 --network=func_functions -d functions/gateway:latest-dev
 ```
 
 Now deploy the rest of the stack with: `./deploy_stack.sh`.
