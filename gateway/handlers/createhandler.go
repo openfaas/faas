@@ -30,6 +30,7 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 		request := requests.CreateFunctionRequest{}
 		err := json.Unmarshal(body, &request)
 		if err != nil {
+			log.Println("Error parsing request:", err)
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
@@ -43,7 +44,7 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 		if len(request.RegistryAuth) > 0 {
 			auth, err := BuildEncodedAuthConfig(request.RegistryAuth, request.Image)
 			if err != nil {
-				log.Println("Error while building registry auth configuration", err)
+				log.Println("Error building registry auth configuration:", err)
 				w.WriteHeader(http.StatusBadRequest)
 				w.Write([]byte("Invalid registry auth"))
 				return
@@ -54,7 +55,7 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 
 		response, err := c.ServiceCreate(context.Background(), spec, options)
 		if err != nil {
-			log.Println(err)
+			log.Println("Error creating service:", err)
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte("Deployment error: " + err.Error()))
 			return
