@@ -46,8 +46,9 @@ func TestCreate_ValidRequest(t *testing.T) {
 		t.Fail()
 	}
 
-	if code != http.StatusOK {
-		t.Errorf("Got HTTP code: %d, want %d\n", code, http.StatusOK)
+	expectedErrorCode := http.StatusOK
+	if code != expectedErrorCode {
+		t.Errorf("Got HTTP code: %d, want %d\n", code, expectedErrorCode)
 		return
 	}
 
