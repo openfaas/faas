@@ -8,35 +8,26 @@ import (
 	"net/http"
 	"strings"
 	"testing"
+
+	"github.com/alexellis/faas/gateway/requests"
 )
 
-type PostFunctionRequest struct {
-	Image      string `json:"image"`
-	EnvProcess string `json:"envProcess"`
-	Network    string `json:"network"`
-	Service    string `json:"service"`
-}
-
-type DeleteFunctionRequest struct {
-	FunctionName string `json:"functionName"`
-}
-
-func createFunction(request PostFunctionRequest) (string, int, error) {
+func createFunction(request requests.CreateFunctionRequest) (string, int, error) {
 	marshalled, _ := json.Marshal(request)
 	return fireRequest("http://localhost:8080/system/functions", http.MethodPost, string(marshalled))
 }
 
 func deleteFunction(name string) (string, int, error) {
-	marshalled, _ := json.Marshal(DeleteFunctionRequest{name})
+	marshalled, _ := json.Marshal(requests.DeleteFunctionRequest{name})
 	return fireRequest("http://localhost:8080/system/functions", http.MethodDelete, string(marshalled))
 }
 
 func TestCreate_ValidRequest(t *testing.T) {
-	request := PostFunctionRequest{
-		"functions/resizer",
-		"",
-		"func_functions",
-		"test_resizer",
+	request := requests.CreateFunctionRequest{
+		Service:    "test_resizer",
+		Image:      "functions/resizer",
+		Network:    "func_functions",
+		EnvProcess: "",
 	}
 
 	_, code, err := createFunction(request)
@@ -56,11 +47,11 @@ func TestCreate_ValidRequest(t *testing.T) {
 }
 
 func TestCreate_InvalidImage(t *testing.T) {
-	request := PostFunctionRequest{
-		"a b c",
-		"",
-		"func_functions",
-		"test_resizer",
+	request := requests.CreateFunctionRequest{
+		Service:    "test_resizer",
+		Image:      "a b c",
+		Network:    "func_functions",
+		EnvProcess: "",
 	}
 
 	body, code, err := createFunction(request)
@@ -84,11 +75,11 @@ func TestCreate_InvalidImage(t *testing.T) {
 }
 
 func TestCreate_InvalidNetwork(t *testing.T) {
-	request := PostFunctionRequest{
-		"functions/resizer",
-		"",
-		"non_existent_network",
-		"test_resizer",
+	request := requests.CreateFunctionRequest{
+		Service:    "test_resizer",
+		Image:      "functions/resizer",
+		Network:    "non_existent_network",
+		EnvProcess: "",
 	}
 
 	body, code, err := createFunction(request)
