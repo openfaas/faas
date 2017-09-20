@@ -2,95 +2,195 @@
 
 [Kong](https://getkong.org) is an API gateway that provides features such as security, logging, and rate limiting. By putting this in front of OpenFaaS you can quickly get access to these things and a lot more via [the many other plugins written](https://getkong.org/plugins/) for it.
 
-Below is a demo of how you could use Kong as an authentication layer for OpenFaaS. You should be able to paste this all (from its Markdown source) into [Play With Docker](http://labs.play-with-docker.com/) to see it in action.
+Below is a demo of how you could use Kong as an authentication layer for OpenFaaS.
 
 ## Setup OpenFaaS
 
-    docker swarm init --advertise-addr $(hostname -i)
-    git clone https://github.com/alexellis/faas
-    cd faas
-    ./deploy_stack.sh
+```
+$ docker swarm init --advertise-addr $(hostname -i)
 
-## Check that one of the sample functions works
+$ git clone https://github.com/alexellis/faas && \
+  cd faas && \
+  ./deploy_stack.sh
+```
 
-    curl localhost:8080/function/func_echoit -d 'hello world'
+Check that one of the sample functions works
 
+```
+$ curl localhost:8080/function/func_echoit -d 'hello world'
+hello world
+```
 
 ## Setup Kong
+```
+$ docker service create --network func_functions --detach=false \
+      --name kong-database \
+      -p 5432:5432 \
+      -e "POSTGRES_USER=kong" \
+      -e "POSTGRES_DB=kong" \
+      postgres:9.4
 
-    docker service create --network func_functions --detach=false \
-        --name kong-database \
-        -p 5432:5432 \
-        -e "POSTGRES_USER=kong" \
-        -e "POSTGRES_DB=kong" \
-        postgres:9.4
+$ docker service create --network func_functions --detach=false \
+      --restart-condition=none --name=kong-migrations \
+      -e "KONG_DATABASE=postgres" \
+      -e "KONG_PG_HOST=kong-database" \
+      kong:latest kong migrations up
 
-    docker service create --network func_functions --detach=false \
-        --restart-condition=none --name=kong-migrations \
-        -e "KONG_DATABASE=postgres" \
-        -e "KONG_PG_HOST=kong-database" \
-        kong:latest kong migrations up
+$ docker service create --network func_functions --name kong \
+      -e "KONG_DATABASE=postgres" \
+      -e "KONG_PG_HOST=kong-database" \
+      -e "KONG_PROXY_ACCESS_LOG=/dev/stdout" \
+      -e "KONG_ADMIN_ACCESS_LOG=/dev/stdout" \
+      -e "KONG_PROXY_ERROR_LOG=/dev/stderr" \
+      -e "KONG_ADMIN_ERROR_LOG=/dev/stderr" \
+      -p 8000:8000 \
+      -p 8443:8443 \
+      -p 8001:8001 \
+      -p 8444:8444 \
+      kong:latest
+```
 
-    docker service create --network func_functions --name kong \
-        -e "KONG_DATABASE=postgres" \
-        -e "KONG_PG_HOST=kong-database" \
-        -e "KONG_PROXY_ACCESS_LOG=/dev/stdout" \
-        -e "KONG_ADMIN_ACCESS_LOG=/dev/stdout" \
-        -e "KONG_PROXY_ERROR_LOG=/dev/stderr" \
-        -e "KONG_ADMIN_ERROR_LOG=/dev/stderr" \
-        -p 8000:8000 \
-        -p 8443:8443 \
-        -p 8001:8001 \
-        -p 8444:8444 \
-        kong:latest
+See that Kong us up and running
+```
+$ curl -i localhost:8001
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+Access-Control-Allow-Origin: *
+...
+```
 
+## Use Kong to secure OpenFaaS
 
-## Put Kong in front of a single function
+Proxy OpenFaaS's functions through Kong
+```
+$ curl -i -X POST \
+    --url http://localhost:8001/apis/ \
+    --data 'name=function' \
+    --data 'uris=/function' \
+    --data 'upstream_url=http://gateway:8080/function'
 
-    echo Waiting for Kong to be ready
-    until $(curl --output /dev/null --silent --head --fail http://localhost:8001); do
-        printf '.'
-        sleep 2
-    done
+$ curl localhost:8000/function/func_echoit -d 'hello world'
+hello world
+```
 
-    curl -i -X POST \
-      --url http://localhost:8001/apis/ \
-      --data 'name=echoit' \
-      --data 'uris=/echo' \
-      --data 'upstream_url=http://gateway:8080/function/func_echoit'
-
-    curl localhost:8000/echo -d 'hello there'
-
-## or put Kong in front of all the functions
-
-    curl -i -X POST \
-      --url http://localhost:8001/apis/ \
-      --data 'name=functions' \
-      --data 'uris=/functs' \
-      --data 'upstream_url=http://gateway:8080/function'
-
-    curl localhost:8000/functs/func_echoit -d 'hello there'
-
-
-## Add a some auth with a Kong plugin
-
-    curl -i -X POST \
-      --url http://localhost:8001/apis/echoit/plugins/ \
-      --data 'name=key-auth'
-
-    curl -i -X POST \
-      --url http://localhost:8001/consumers/ \
-      --data "username=jdoe"
-
-    curl -i -X POST \
-      --url http://localhost:8001/consumers/jdoe/key-auth/ \
-      --data 'key=longsecretkey'
+In order to benefit from the security Kong gives you, you should make sure only to expose Kong's public port (in this case its 8000) through your firewall. If you keep 8080 exposed, then the security Kong gives you can be circumvented.
 
 
-## Verify the plugin worked
+### Require basic authentication
 
-    curl localhost:8000/echo -d 'hello there'   # no key specified
+Enable the basic-auth plugin in Kong
 
-    curl localhost:8000/echo -d 'hello there' --header "apikey: badkey"
+```
+$ curl -X POST http://localhost:8001/plugins \
+    --data "name=basic-auth" \
+    --data "config.hide_credentials=true"
+```
 
-    curl localhost:8000/echo -d 'hello there' --header "apikey: longsecretkey"
+Create a consumer with credentials
+
+```
+$ curl -d "username=aladdin" http://localhost:8001/consumers/
+
+$ curl -X POST http://localhost:8001/consumers/aladdin/basic-auth \
+    --data "username=aladdin" \
+    --data "password=OpenSesame"
+```
+
+Verify that authentication works
+
+```
+$ curl localhost:8000/function/func_echoit -d 'hello world'
+{"message":"Unauthorized"}
+
+$ curl localhost:8000/function/func_echoit -d 'hello world' \
+    -H 'Authorization: Basic xxxxxx'
+{"message":"Invalid authentication credentials"}
+
+$ echo -n aladdin:OpenSesame | base64
+YWxhZGRpbjpPcGVuU2VzYW1l
+
+$ curl localhost:8000/function/func_echoit -d 'hello world' \
+    -H 'Authorization: Basic YWxhZGRpbjpPcGVuU2VzYW1l'
+hello world
+```
+
+Now lets expose the /ui directory so we can securely use the web GUI
+
+```
+$ curl -i -X POST \
+    --url http://localhost:8001/apis/ \
+    --data 'name=ui' \
+    --data 'uris=/ui' \
+    --data 'upstream_url=http://gateway:8080/ui'
+
+```
+
+Additionally we need to expose /system/functions since the UI makes Ajax requests to it
+
+```
+$ curl -i -X POST \
+    --url http://localhost:8001/apis/ \
+    --data 'name=system-functions' \
+    --data 'uris=/system/functions' \
+    --data 'upstream_url=http://gateway:8080/system/functions'
+```
+
+Verify that the UI is secure
+
+```
+$ curl -i localhost:8000/ui/ \
+    -H 'Authorization: Basic YWxhZGRpbjpPcGVuU2VzYW1l'
+
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+...
+```
+
+Or visit http://localhost:8000/ui/ in your browser where you will be asked for credentials.
+
+### Add SSL
+
+Basic authentication does not protect from man in the middle attacks, so lets add SSL to encrypt the communication.
+
+Create a cert. Here in the demo, we are creating selfsigned certs, but in production you should skip this step and use your existing certificates (or get some from Lets Encrypt).
+```
+$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout /tmp/selfsigned.key -out /tmp/selfsigned.pem \
+  -subj "/C=US/ST=CA/L=L/O=OrgName/OU=IT Department/CN=example.com"
+```
+
+Add cert to Kong
+
+```
+$ curl -i -X POST http://localhost:8001/certificates \
+    -F "cert=@/tmp/selfsigned.pem" \
+    -F "key=@/tmp/selfsigned.key" \
+    -F "snis=example.com"
+
+HTTP/1.1 201 Created
+...
+
+```
+
+Use the cert to secure OpenFaaS
+
+```
+$ curl -i -X POST http://localhost:8001/apis \
+    -d "name=ssl-api" \
+    -d "upstream_url=http://gateway:8080" \
+    -d "hosts=example.com"
+HTTP/1.1 201 Created
+...
+
+```
+
+Verify that the cert is now in use. Note the '-k' parameter is just here to work around the fact that we are using self signed certs.
+```
+$ curl -k https://localhost:8443/function/func_echoit \
+  -d 'hello world' -H 'Authorization: Basic YWxhZGRpbjpPcGVuU2VzYW1l'
+hello world
+
+```
+
+At this point you might want to either hide port 8000 on your firewall and expose port 8443. Or enable [https_only](https://getkong.org/docs/0.11.x/proxy/#the-https_only-property) which is used to notify clients to upgrade to https from http.
