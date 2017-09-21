@@ -13,11 +13,24 @@
 <body ng-controller="home">
     <div layout="column" ng-cloak>
 
+        <md-toolbar class="md-theme-indigo" hide-gt-sm>
+            <div class="md-toolbar-tools">
+              <md-button ng-click="toggleSideNav()" class="md-icon-button" aria-label="Menu">
+                <md-icon md-svg-icon="img/icons/ic_menu_white.svg"></md-icon>
+              </md-button>
+            </div>
+        </md-toolbar>
         <section id="popupContainer" layout="row" flex>
             <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-whiteframe="4" layout="column">
 
                 <md-toolbar class="md-theme-indigo">
-                    <h1 class="md-toolbar-tools"><img src="icon.png" alt="OpenFaaS Icon" width="60px" height="60px" class="md-avatar"/>&nbsp; OpenFaaS Portal</h1>
+                    <div class="md-toolbar-tools">
+                      <img src="icon.png" alt="OpenFaaS Icon" width="60px" height="60px" class="md-avatar"/>
+                      <h1 style="flex: 1 1 auto;">&nbsp; OpenFaaS Portal</h1>
+                      <md-button ng-click="toggleSideNav()" class="md-icon-button" aria-label="Back" hide-gt-sm>
+                        <md-icon md-svg-icon="img/icons/ic_arrow_back_white.svg"></md-icon>
+                      </md-button>
+                    </div>
                 </md-toolbar>
 
                 <md-content layout-padding>
