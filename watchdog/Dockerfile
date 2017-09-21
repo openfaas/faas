@@ -1,4 +1,4 @@
-FROM golang:1.7.5
+FROM golang:1.8.3
 RUN mkdir -p /go/src/github.com/alexellis/faas/watchdog
 WORKDIR /go/src/github.com/alexellis/faas/watchdog
 
@@ -18,4 +18,5 @@ RUN go test
 # Stripping via -ldflags "-s -w" 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-s -w" -installsuffix cgo -o watchdog . \
     && GOARM=6 GOARCH=arm CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-s -w" -installsuffix cgo -o watchdog-armhf . \
+    && GOARCH=arm64 CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-s -w" -installsuffix cgo -o watchdog-arm64 . \
     && GOOS=windows CGO_ENABLED=0 go build -a -ldflags "-s -w" -installsuffix cgo -o watchdog.exe .
