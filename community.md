@@ -35,6 +35,8 @@ There are three main Github repos
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFaaS on Azure (Swarm)](https://blogs.technet.microsoft.com/livedevopsinjapan/2017/09/21/openfaas-on-azure-swarm/) | Tsuyoshi Ushio | technet.microsoft.com | 21-Sep-2017 |
+| [OpenFaaS on ACS (Kubernetes)](https://blogs.technet.microsoft.com/livedevopsinjapan/2017/09/19/open-faas-on-acs-kubernetes/) | Tsuyoshi Ushio | technet.microsoft.com | 19-Sep-2017 |
 | [Integrating OpenFaaS and GraphQL](https://medium.com/@kenfdev/integrating-openfaas-and-graphql-experimental-1870bd22f2a) | Ken Fukuyama | medium.com/@kenfdev | 10-Sep-2017 |
 | [Morning coffee with the OpenFaaS CLI](https://blog.alexellis.io/quickstart-openfaas-cli/) | Alex Ellis | alexellis.io | 05-Sep-2017 |
 | [OpenFaaS on Rancher](https://medium.com/cloud-academy-inc/openfaas-on-rancher-684650cc078e) | Ken Fukuyama | medium.com/@kenfdev | 02-Sep-2017 |
