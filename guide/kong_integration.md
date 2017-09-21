@@ -1,4 +1,4 @@
-# Using Kong as an API gateway for OpenFaaS
+# Securing OpenFaaS with Kong
 
 [Kong](https://getkong.org) is an API gateway that provides features such as security, logging, and rate limiting. By putting this in front of OpenFaaS you can quickly get access to these things and a lot more via [the many other plugins written](https://getkong.org/plugins/) for it.
 
@@ -23,40 +23,39 @@ hello world
 
 ## Setup Kong
 ```
-$ docker service create --network func_functions --detach=false \
-      --name kong-database \
-      -p 5432:5432 \
-      -e "POSTGRES_USER=kong" \
-      -e "POSTGRES_DB=kong" \
-      postgres:9.4
+$ docker service create --name kong-database \
+    --network func_functions --detach=false \
+    -e "POSTGRES_USER=kong" \
+    -e "POSTGRES_DB=kong" \
+    -e "POSTGRES_PASSWORD=secretpassword" \
+    postgres:9.4
 
-$ docker service create --network func_functions --detach=false \
-      --restart-condition=none --name=kong-migrations \
-      -e "KONG_DATABASE=postgres" \
-      -e "KONG_PG_HOST=kong-database" \
-      kong:latest kong migrations up
+$ docker service create --name=kong-migrations \
+    --network func_functions --detach=false --restart-condition=none \
+    -e "KONG_DATABASE=postgres" \
+    -e "KONG_PG_HOST=kong-database" \
+    -e "KONG_PG_PASSWORD=secretpassword" \
+    kong:latest kong migrations up
 
-$ docker service create --network func_functions --name kong \
-      -e "KONG_DATABASE=postgres" \
-      -e "KONG_PG_HOST=kong-database" \
-      -e "KONG_PROXY_ACCESS_LOG=/dev/stdout" \
-      -e "KONG_ADMIN_ACCESS_LOG=/dev/stdout" \
-      -e "KONG_PROXY_ERROR_LOG=/dev/stderr" \
-      -e "KONG_ADMIN_ERROR_LOG=/dev/stderr" \
-      -p 8000:8000 \
-      -p 8443:8443 \
-      -p 8001:8001 \
-      -p 8444:8444 \
-      kong:latest
+$ docker service create --name kong \
+    --network func_functions --detach=false \
+    -e "KONG_DATABASE=postgres" \
+    -e "KONG_PG_HOST=kong-database" \
+    -e "KONG_PG_PASSWORD=secretpassword" \
+    -e "KONG_PROXY_ACCESS_LOG=/dev/stdout" \
+    -e "KONG_ADMIN_ACCESS_LOG=/dev/stdout" \
+    -e "KONG_PROXY_ERROR_LOG=/dev/stderr" \
+    -e "KONG_ADMIN_ERROR_LOG=/dev/stderr" \
+    -p 8000:8000 \
+    -p 8443:8443 \
+    -p 8001:8001 \
+    kong:latest
 ```
 
 See that Kong us up and running
 ```
 $ curl -i localhost:8001
-HTTP/1.1 200 OK
-Content-Type: application/json; charset=utf-8
-Connection: keep-alive
-Access-Control-Allow-Origin: *
+HTTP/1.1 200
 ...
 ```
 
@@ -123,7 +122,6 @@ $ curl -i -X POST \
     --data 'name=ui' \
     --data 'uris=/ui' \
     --data 'upstream_url=http://gateway:8080/ui'
-
 ```
 
 Additionally we need to expose /system/functions since the UI makes Ajax requests to it
@@ -147,7 +145,7 @@ Content-Type: text/html; charset=utf-8
 ...
 ```
 
-Or visit http://localhost:8000/ui/ in your browser where you will be asked for credentials.
+Now visit http://localhost:8000/ui/ in your browser where you will be asked for credentials.
 
 ### Add SSL
 
@@ -170,7 +168,6 @@ $ curl -i -X POST http://localhost:8001/certificates \
 
 HTTP/1.1 201 Created
 ...
-
 ```
 
 Use the cert to secure OpenFaaS
@@ -182,7 +179,6 @@ $ curl -i -X POST http://localhost:8001/apis \
     -d "hosts=example.com"
 HTTP/1.1 201 Created
 ...
-
 ```
 
 Verify that the cert is now in use. Note the '-k' parameter is just here to work around the fact that we are using self signed certs.
@@ -190,7 +186,10 @@ Verify that the cert is now in use. Note the '-k' parameter is just here to work
 $ curl -k https://localhost:8443/function/func_echoit \
   -d 'hello world' -H 'Authorization: Basic YWxhZGRpbjpPcGVuU2VzYW1l'
 hello world
-
 ```
 
-At this point you might want to either hide port 8000 on your firewall and expose port 8443. Or enable [https_only](https://getkong.org/docs/0.11.x/proxy/#the-https_only-property) which is used to notify clients to upgrade to https from http.
+## Configure your firewall
+
+Between OpenFaaS and Kong a lot of ports are exposed on your host machine. In the end it is best to only expose either 8000 or 8443 out of your network depending if you added SSL or not.
+
+Another option is to expose both and enable [https_only](https://getkong.org/docs/0.11.x/proxy/#the-https_only-property) which is used to notify clients to upgrade to https from http.
