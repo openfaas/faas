@@ -35,6 +35,7 @@ There are three main Github repos
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Get OpenFaaS running on Azure Container Service with Kubernetes](https://gist.github.com/danigian/e6097fad36f03c476a69e6c44fde074f) | Daniele Antonio Maggio | twitter.com/danigian | 21-Sep-2017 |
 | [OpenFaaS on Azure (Swarm)](https://blogs.technet.microsoft.com/livedevopsinjapan/2017/09/21/openfaas-on-azure-swarm/) | Tsuyoshi Ushio | technet.microsoft.com | 21-Sep-2017 |
 | [OpenFaaS on ACS (Kubernetes)](https://blogs.technet.microsoft.com/livedevopsinjapan/2017/09/19/open-faas-on-acs-kubernetes/) | Tsuyoshi Ushio | technet.microsoft.com | 19-Sep-2017 |
 | [Integrating OpenFaaS and GraphQL](https://medium.com/@kenfdev/integrating-openfaas-and-graphql-experimental-1870bd22f2a) | Ken Fukuyama | medium.com/@kenfdev | 10-Sep-2017 |
@@ -70,6 +71,7 @@ There are three main Github repos
 ### Repos - projects / samples / use cases
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| [Azure Storage and Azure Service Bus Queues Trigger for OpenFaaS on Kubernetes](https://github.com/danigian/Azure-Queues-Trigger-OpenFaaS) | Daniele Antonio Maggio | github.com/danigian/Azure-Queues-Trigger-OpenFaaS | 21-September-2017 |
 | [Github - Reverse geocoding](https://github.com/lucj/faas-reverse-geocoding) | Luc Juggery | github.com/lucj/faas-reverse-geocoding | 14-September-2017 |
 | [QR Code](https://github.com/faas-and-furious/qrcode) | John McCabe | github.com | 18-August-2017 |
 | [Img2ANSI - GIF/PNG/JPG to ANSI art converter](https://github.com/johnmccabe/faas-img2ansi/) | John McCabe | github.com | 10-August-2017 |
