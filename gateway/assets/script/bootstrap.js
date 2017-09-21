@@ -4,14 +4,18 @@
 
 var app = angular.module('faasGateway', ['ngMaterial']);
 
-app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$mdDialog', '$mdToast',
-        function($scope, $log, $http, $location, $timeout, $mdDialog, $mdToast) {
+app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav',
+        function($scope, $log, $http, $location, $timeout, $mdDialog, $mdToast, $mdSidenav) {
     $scope.functions = [];
     $scope.invocationRequest = "";
     $scope.invocationResponse = "";
     $scope.invocationStatus = "";
     $scope.invocation = {
         contentType: "text"
+    };
+
+    $scope.toggleSideNav = function() {
+        $mdSidenav('left').toggle();
     };
 
     $scope.functionTemplate = {
