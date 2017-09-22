@@ -30,11 +30,12 @@ type handlerSet struct {
 	ListFunctions  http.HandlerFunc
 	Alert          http.HandlerFunc
 	RoutelessProxy http.HandlerFunc
+	UpdateFunction http.HandlerFunc
 
 	// QueuedProxy - queue work and return synchronous response
 	QueuedProxy http.HandlerFunc
 
-	// AsyncReport - report a defered execution result
+	// AsyncReport - report a deferred execution result
 	AsyncReport http.HandlerFunc
 }
 
@@ -80,12 +81,16 @@ func main() {
 		faasHandlers.ListFunctions = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
 		faasHandlers.DeployFunction = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
 		faasHandlers.DeleteFunction = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
+		faasHandlers.UpdateFunction = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
+
 		alertHandler := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL)
 		faasHandlers.Alert = internalHandlers.MakeAlertHandler(alertHandler)
 
 		metrics.AttachExternalWatcher(*config.FunctionsProviderURL, metricsOptions, "func", time.Second*5)
 
 	} else {
+
+		// How many times to reschedule a function.
 		maxRestarts := uint64(5)
 
 		faasHandlers.Proxy = internalHandlers.MakeProxy(metricsOptions, true, dockerClient, &logger)
@@ -93,6 +98,7 @@ func main() {
 		faasHandlers.ListFunctions = internalHandlers.MakeFunctionReader(metricsOptions, dockerClient)
 		faasHandlers.DeployFunction = internalHandlers.MakeNewFunctionHandler(metricsOptions, dockerClient, maxRestarts)
 		faasHandlers.DeleteFunction = internalHandlers.MakeDeleteFunctionHandler(metricsOptions, dockerClient)
+		faasHandlers.UpdateFunction = internalHandlers.MakeUpdateFunctionHandler(metricsOptions, dockerClient, maxRestarts)
 
 		faasHandlers.Alert = internalHandlers.MakeAlertHandler(internalHandlers.NewSwarmServiceQuery(dockerClient))
 
@@ -124,6 +130,7 @@ func main() {
 	r.HandleFunc("/system/functions", listFunctions).Methods("GET")
 	r.HandleFunc("/system/functions", faasHandlers.DeployFunction).Methods("POST")
 	r.HandleFunc("/system/functions", faasHandlers.DeleteFunction).Methods("DELETE")
+	r.HandleFunc("/system/functions", faasHandlers.UpdateFunction).Methods("UPDATE")
 
 	if faasHandlers.QueuedProxy != nil {
 		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}/", faasHandlers.QueuedProxy).Methods("POST")
