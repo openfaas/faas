@@ -1,4 +1,4 @@
-# Securing OpenFaaS with Kong
+# Integrating OpenFaaS with Kong
 
 [Kong](https://getkong.org) is an API gateway that provides features such as security, logging, and rate limiting. By putting this in front of OpenFaaS you can quickly get access to these things and a lot more via [the many other plugins written](https://getkong.org/plugins/) for it.
 
@@ -25,6 +25,7 @@ hello world
 ```
 $ docker service create --name kong-database \
     --network func_functions --detach=false \
+    --constraint 'node.role == manager' \
     -e "POSTGRES_USER=kong" \
     -e "POSTGRES_DB=kong" \
     -e "POSTGRES_PASSWORD=secretpassword" \
@@ -39,6 +40,7 @@ $ docker service create --name=kong-migrations \
 
 $ docker service create --name kong \
     --network func_functions --detach=false \
+    --constraint 'node.role == manager' \
     -e "KONG_DATABASE=postgres" \
     -e "KONG_PG_HOST=kong-database" \
     -e "KONG_PG_PASSWORD=secretpassword" \
@@ -48,13 +50,16 @@ $ docker service create --name kong \
     -e "KONG_ADMIN_ERROR_LOG=/dev/stderr" \
     -p 8000:8000 \
     -p 8443:8443 \
-    -p 8001:8001 \
     kong:latest
 ```
 
-See that Kong us up and running
+Create a curl command alias so we can talk to the Kong admin without exposing its ports to the network.
 ```
-$ curl -i localhost:8001
+$ alias kong_admin_curl='docker exec $(docker ps -q -f name="kong\.") curl'
+```
+See that Kong admin is up and running
+```
+$ kong_admin_curl -i localhost:8001
 HTTP/1.1 200
 ...
 ```
@@ -63,7 +68,7 @@ HTTP/1.1 200
 
 Proxy OpenFaaS's functions through Kong
 ```
-$ curl -i -X POST \
+$ kong_admin_curl -X POST \
     --url http://localhost:8001/apis/ \
     --data 'name=function' \
     --data 'uris=/function' \
@@ -73,15 +78,12 @@ $ curl localhost:8000/function/func_echoit -d 'hello world'
 hello world
 ```
 
-In order to benefit from the security Kong gives you, you should make sure only to expose Kong's public port (in this case its 8000) through your firewall. If you keep 8080 exposed, then the security Kong gives you can be circumvented.
-
-
 ### Require basic authentication
 
 Enable the basic-auth plugin in Kong
 
 ```
-$ curl -X POST http://localhost:8001/plugins \
+$ kong_admin_curl -X POST http://localhost:8001/plugins \
     --data "name=basic-auth" \
     --data "config.hide_credentials=true"
 ```
@@ -89,9 +91,9 @@ $ curl -X POST http://localhost:8001/plugins \
 Create a consumer with credentials
 
 ```
-$ curl -d "username=aladdin" http://localhost:8001/consumers/
+$ kong_admin_curl -d "username=aladdin" http://localhost:8001/consumers/
 
-$ curl -X POST http://localhost:8001/consumers/aladdin/basic-auth \
+$ kong_admin_curl -X POST http://localhost:8001/consumers/aladdin/basic-auth \
     --data "username=aladdin" \
     --data "password=OpenSesame"
 ```
@@ -117,7 +119,7 @@ hello world
 Now lets expose the /ui directory so we can securely use the web GUI
 
 ```
-$ curl -i -X POST \
+$ kong_admin_curl -i -X POST \
     --url http://localhost:8001/apis/ \
     --data 'name=ui' \
     --data 'uris=/ui' \
@@ -127,7 +129,7 @@ $ curl -i -X POST \
 Additionally we need to expose /system/functions since the UI makes Ajax requests to it
 
 ```
-$ curl -i -X POST \
+$ kong_admin_curl -i -X POST \
     --url http://localhost:8001/apis/ \
     --data 'name=system-functions' \
     --data 'uris=/system/functions' \
@@ -161,19 +163,19 @@ $ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 Add cert to Kong
 
 ```
-$ curl -i -X POST http://localhost:8001/certificates \
-    -F "cert=@/tmp/selfsigned.pem" \
-    -F "key=@/tmp/selfsigned.key" \
+$ kong_admin_curl -X POST http://localhost:8001/certificates \
+    -F "cert=$(cat /tmp/selfsigned.pem)" \
+    -F "key=$(cat /tmp/selfsigned.key)" \
     -F "snis=example.com"
 
 HTTP/1.1 201 Created
 ...
 ```
 
-Use the cert to secure OpenFaaS
+Put the cert in front OpenFaaS
 
 ```
-$ curl -i -X POST http://localhost:8001/apis \
+$ kong_admin_curl -i -X POST http://localhost:8001/apis \
     -d "name=ssl-api" \
     -d "upstream_url=http://gateway:8080" \
     -d "hosts=example.com"
@@ -184,12 +186,13 @@ HTTP/1.1 201 Created
 Verify that the cert is now in use. Note the '-k' parameter is just here to work around the fact that we are using self signed certs.
 ```
 $ curl -k https://localhost:8443/function/func_echoit \
-  -d 'hello world' -H 'Authorization: Basic YWxhZGRpbjpPcGVuU2VzYW1l'
+  -d 'hello world' -H 'Host: example.com '\
+  -H 'Authorization: Basic YWxhZGRpbjpPcGVuU2VzYW1l'
 hello world
 ```
 
 ## Configure your firewall
 
-Between OpenFaaS and Kong a lot of ports are exposed on your host machine. In the end it is best to only expose either 8000 or 8443 out of your network depending if you added SSL or not.
+Between OpenFaaS and Kong a lot of ports are exposed on your host machine. Most importantly you should hide port 8080 since that is where OpenFaaS's functions live which you were trying to secure in the first place. In the end it is best to only expose either 8000 or 8443 out of your network depending if you added SSL or not.
 
-Another option is to expose both and enable [https_only](https://getkong.org/docs/0.11.x/proxy/#the-https_only-property) which is used to notify clients to upgrade to https from http.
+Another option concerning port 8000 is to expose both 8000 and 8443 and enable [https_only](https://getkong.org/docs/latest/proxy/#the-https_only-property) which is used to notify clients to upgrade to https from http.
