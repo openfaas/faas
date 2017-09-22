@@ -18,6 +18,7 @@ There are three main Github repos
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| Tech Weekly @ UNiDAYS - Alex Young introduces OpenFaaS | Alex Young | Nottingham, UK | 12-Oct-2017 |
 | [Zero to Serverless in 60 secs - Open Source Summit North America](http://events.linuxfoundation.org/events/open-source-summit-north-america/program/schedule) | Alex Ellis | LA, USA | 11-14 Sept 2017 |
 | [FaaS and Furious - CloudNativeLon (Vimeo)](https://skillsmatter.com/skillscasts/10813-faas-and-furious-0-to-serverless-in-60-seconds-anywhere) | Alex Ellis | London, UK | 06 Sept 2017 |
 | [From Zero to Serverless with FaaS - Fusion meet-up](https://www.eventbrite.com/e/fusion-meetup-birmingham-june-2017-tickets-35370655583?aff=es2) | Alex Ellis | Birmingham, UK | 20 June 2017 |
