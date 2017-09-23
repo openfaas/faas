@@ -67,11 +67,21 @@ There are three main Github repos
 | [Functions as a Service (FaaS) in French](http://blog.alexellis.io/fonction-service/) | Alex Ellis | alexellis.io | 13-Jan-2017 |
 | [Functions as a Service (FaaS)](http://blog.alexellis.io/functions-as-a-service/) | Alex Ellis | alexellis.io | 4-Jan-2017 |
 
+### Third-party integrations / OpenFaaS providers
+| Project name and description                                         | Author     | Site      | Status      |
+|----------------------------------------------------------------------|------------|-----------|-------------|
+| [faas-netes](https://github.com/alexellis/faas-nets) - Kubernetes provider | OpenFaaS | github.com | Supported |
+| [faas-nomad](https://github.com/hashicorp/faas-nomad) - Nomad provider | Hashicorp | github.com | Incubation  |
+| [faas-rancher](https://github.com/kenfdev/faas-rancher) - Rancher/Cattle provider | Ken Fukuyama | github.com | Incubation |
+| [faas-hyper](https://github.com/hyperhq/faas-hyper) - Hyper.sh provider | Hyper | github.com | Incubation |
+| [faas-guardian](https://github.com/nwright-nz/openfaas-guardian-backend) - Guardian provider | Nigel Wright | github.com | Inception |
+| [faas-ecs](https://github.com/stack360/faas-ecs) - Huawei | Xicheng Chang | github.com | Inception |
 
 ### Repos - projects / samples / use cases
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
-| [Github - Reverse geocoding](https://github.com/lucj/faas-reverse-geocoding) | Luc Juggery | github.com/lucj/faas-reverse-geocoding | 14-September-2017 |
+| [faas-pipeline](https://github.com/getlazy/faas-pipeline) - OpenFaaS function composition | Ivan Erceg | github.com | 23-September-2017 |
+| [Github - Reverse geocoding](https://github.com/lucj/faas-reverse-geocoding) | Luc Juggery | github.com | 14-September-2017 |
 | [QR Code](https://github.com/faas-and-furious/qrcode) | John McCabe | github.com | 18-August-2017 |
 | [Img2ANSI - GIF/PNG/JPG to ANSI art converter](https://github.com/johnmccabe/faas-img2ansi/) | John McCabe | github.com | 10-August-2017 |
 | [FaaS-netes - Kubernetes backend for FaaS](https://github.com/alexellis/faas-netes) | Alex Ellis | github.com | 25-Jul-2017 |
