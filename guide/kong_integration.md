@@ -1,10 +1,17 @@
-# Integrating OpenFaaS with Kong
+# Integrate Kong with your OpenFaaS cluster
 
 [Kong](https://getkong.org) is an API gateway that provides features such as security, logging, and rate limiting. By putting this in front of OpenFaaS you can quickly get access to these things and a lot more via [the many other plugins written](https://getkong.org/plugins/) for it.
 
 Below is a demo of how you could use Kong as an authentication layer for OpenFaaS.
 
 ## Setup OpenFaaS
+
+If you haven't already setup OpenFaaS then you can follow one of the deployment guides available here:
+
+* [Docker Swarm](https://github.com/alexellis/faas/blob/master/guide/deployment_swarm.md)
+* [Kubernetes](https://github.com/alexellis/faas/blob/master/guide/deployment_k8s.md)
+
+Here is a quick reference for Docker Swarm:
 
 ```
 $ docker swarm init --advertise-addr $(hostname -i)
@@ -22,6 +29,11 @@ hello world
 ```
 
 ## Setup Kong
+
+Kong stores its configuration in Postgres, so we'll create a Postgres and Kong service then run a one-off migration too.
+
+Deploy Postgres and optionally set the `POSTGRES_PASSWORD`
+
 ```
 $ docker service create --name kong-database \
     --network func_functions --detach=false \
@@ -30,14 +42,22 @@ $ docker service create --name kong-database \
     -e "POSTGRES_DB=kong" \
     -e "POSTGRES_PASSWORD=secretpassword" \
     postgres:9.4
+```
 
+Now we will use the Kong image to populate default configuration in the Postgres database:
+
+```
 $ docker service create --name=kong-migrations \
     --network func_functions --detach=false --restart-condition=none \
     -e "KONG_DATABASE=postgres" \
     -e "KONG_PG_HOST=kong-database" \
     -e "KONG_PG_PASSWORD=secretpassword" \
     kong:latest kong migrations up
+```
 
+The last service is Kong itself:
+
+```
 $ docker service create --name kong \
     --network func_functions --detach=false \
     --constraint 'node.role == manager' \
@@ -53,7 +73,12 @@ $ docker service create --name kong \
     kong:latest
 ```
 
-Create a curl command alias so we can talk to the Kong admin without exposing its ports to the network.
+**Doing things the right way**
+
+Kong has an admin port with you can expose by adding `-p 8001:8001`. In this guide we will hide the port from the off-set so that if you do not have a firewall configured yet, there is less risk of someone gaining access.
+
+Create a `curl` command alias so we can talk to the Kong admin without exposing its ports to the network.
+
 ```
 $ alias kong_admin_curl='docker exec $(docker ps -q -f name="kong\.") curl'
 ```
