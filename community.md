@@ -78,6 +78,9 @@ There are three main Github repos
 | [faas-ecs](https://github.com/stack360/faas-ecs) - Huawei | Xicheng Chang | github.com | Inception |
 
 ### Repos - projects / samples / use cases
+
+You can also find cool projects or submit your own to the [faas-and-furious organisation](https://github.com/faas-and-furious). Contact Alex for details on how.
+
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
 | [faas-pipeline](https://github.com/getlazy/faas-pipeline) - OpenFaaS function composition | Ivan Erceg | github.com | 23-September-2017 |
