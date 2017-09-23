@@ -92,13 +92,15 @@ func main() {
 
 		// How many times to reschedule a function.
 		maxRestarts := uint64(5)
+		// Delay between container restarts
+		restartDelay := time.Second * 5
 
 		faasHandlers.Proxy = internalHandlers.MakeProxy(metricsOptions, true, dockerClient, &logger)
 		faasHandlers.RoutelessProxy = internalHandlers.MakeProxy(metricsOptions, false, dockerClient, &logger)
 		faasHandlers.ListFunctions = internalHandlers.MakeFunctionReader(metricsOptions, dockerClient)
-		faasHandlers.DeployFunction = internalHandlers.MakeNewFunctionHandler(metricsOptions, dockerClient, maxRestarts)
+		faasHandlers.DeployFunction = internalHandlers.MakeNewFunctionHandler(metricsOptions, dockerClient, maxRestarts, restartDelay)
 		faasHandlers.DeleteFunction = internalHandlers.MakeDeleteFunctionHandler(metricsOptions, dockerClient)
-		faasHandlers.UpdateFunction = internalHandlers.MakeUpdateFunctionHandler(metricsOptions, dockerClient, maxRestarts)
+		faasHandlers.UpdateFunction = internalHandlers.MakeUpdateFunctionHandler(metricsOptions, dockerClient, maxRestarts, restartDelay)
 
 		faasHandlers.Alert = internalHandlers.MakeAlertHandler(internalHandlers.NewSwarmServiceQuery(dockerClient))
 
@@ -130,7 +132,7 @@ func main() {
 	r.HandleFunc("/system/functions", listFunctions).Methods("GET")
 	r.HandleFunc("/system/functions", faasHandlers.DeployFunction).Methods("POST")
 	r.HandleFunc("/system/functions", faasHandlers.DeleteFunction).Methods("DELETE")
-	r.HandleFunc("/system/functions", faasHandlers.UpdateFunction).Methods("UPDATE")
+	r.HandleFunc("/system/functions", faasHandlers.UpdateFunction).Methods("PUT")
 
 	if faasHandlers.QueuedProxy != nil {
 		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}/", faasHandlers.QueuedProxy).Methods("POST")
