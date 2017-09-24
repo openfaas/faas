@@ -37,6 +37,7 @@ There are three main Github repos
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [A Serverless GraphQL Blog in 60 Seconds with OpenFaaS](https://medium.com/@kenfdev/a-serverless-graphql-blog-in-60-seconds-with-openfaas-aaedd566b1f3) | Ken Fukuyama | medium.com/@kenfdev | 24-Sep-2017 |
 | [Create your own DownNotifier with OpenFaaS](http://jmkhael.io/downnotifier-site-pinger/)| Johnny Mkhael | jmkhael.io | 22-Sep-2017|
 | [OpenFaaS on Azure (Swarm)](https://blogs.technet.microsoft.com/livedevopsinjapan/2017/09/21/openfaas-on-azure-swarm/) | Tsuyoshi Ushio | technet.microsoft.com | 21-Sep-2017 |
 | [OpenFaaS on ACS (Kubernetes)](https://blogs.technet.microsoft.com/livedevopsinjapan/2017/09/19/open-faas-on-acs-kubernetes/) | Tsuyoshi Ushio | technet.microsoft.com | 19-Sep-2017 |
