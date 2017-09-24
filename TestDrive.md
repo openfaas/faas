@@ -1,6 +1,6 @@
-## OpenFaaS - Functions as a Service - TestDrive
+## OpenFaaS - TestDrive
 
-FaaS is a framework for building serverless functions on Docker Swarm and Kubernetes with first class metrics. Any UNIX process can be packaged as a function in FaaS enabling you to consume a range of web events without repetitive boiler-plate coding.
+OpenFaaS (or Functions as a Service) is a framework for building serverless functions on Docker Swarm and Kubernetes with first class metrics. Any UNIX process can be packaged as a function in FaaS enabling you to consume a range of web events without repetitive boiler-plate coding.
 
 > Please support the project and put a **Star** on the repo.
 
