@@ -17,7 +17,7 @@ OpenFaaS (Functions as a Service) is a framework for building serverless functio
 
 ## Governance
 
-OpenFaaS is an independent project created by Alex Ellis which is now being built and shaped by a growing community of contributors.
+OpenFaaS is an independent project created by [Alex Ellis](https://www.alexellis.io) which is now being built and shaped by a growing community of contributors. Project website: [openfaas.com](https://www.openfaas.com).
 
 ## Overview of OpenFaaS
 
