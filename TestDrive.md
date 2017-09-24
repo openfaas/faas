@@ -1,8 +1,8 @@
-## Functions as a Service - TestDrive
+## OpenFaaS - TestDrive
 
-FaaS is a framework for building serverless functions on Docker Swarm Mode with first class metrics. Any UNIX process can be packaged as a function in FaaS enabling you to consume a range of web events without repetitive boiler-plate coding.
+OpenFaaS (or Functions as a Service) is a framework for building serverless functions on Docker Swarm and Kubernetes with first class metrics. Any UNIX process can be packaged as a function in FaaS enabling you to consume a range of web events without repetitive boiler-plate coding.
 
-Please support the project and put a **Star** on the repo.
+> Please support the project and put a **Star** on the repo.
 
 **Overview**
 
@@ -18,7 +18,7 @@ This one-shot script clones the code, initialises Docker swarm mode and then dep
 
 ```
 # docker swarm init --advertise-addr eth0 && \
-  git clone https://github.com/alexellis/faas && \
+  git clone https://github.com/openfaas/faas && \
   cd faas && \
   git checkout 0.6.6-beta && \
   ./deploy_stack.sh && \

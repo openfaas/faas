@@ -1,19 +1,23 @@
-## Functions as a Service (OpenFaaS)
+## OpenFaaS - Functions as a Service
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/alexellis/faas)](https://goreportcard.com/report/github.com/alexellis/faas) [![Build
-Status](https://travis-ci.org/alexellis/faas.svg?branch=master)](https://travis-ci.org/alexellis/faas) [![GoDoc](https://godoc.org/github.com/alexellis/faas?status.svg)](https://godoc.org/github.com/alexellis/faas)
+[![Go Report Card](https://goreportcard.com/badge/github.com/openfaas/faas)](https://goreportcard.com/report/github.com/openfaas/faas) [![Build
+Status](https://travis-ci.org/openfaas/faas.svg?branch=master)](https://travis-ci.org/openfaas/faas) [![GoDoc](https://godoc.org/github.com/openfaas/faas?status.svg)](https://godoc.org/github.com/openfaas/faas)
 
 ![OpenFaaS](https://blog.alexellis.io/content/images/2017/08/faas_side.png)
 
-OpenFaaS is a framework for building serverless functions with Docker which has first class support for metrics. Any process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
+OpenFaaS (Functions as a Service) is a framework for building serverless functions with Docker which has first class support for metrics. Any process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
 
 **Highlights**
 
 * Ease of use through UI portal and *one-click* install
 * Write functions in any language for Linux or Windows and package in Docker/OCI image format
-* Portable - runs on existing hardware or public/private cloud - [Kubernetes](https://github.com/alexellis/faas-netes) or Docker Swarm
+* Portable - runs on existing hardware or public/private cloud - [Kubernetes](https://github.com/alexellis/faas-netes) and Docker Swarm native
 * [CLI](http://github.com/alexellis/faas-cli) available with YAML format for templating and defining functions
 * Auto-scales as demand increases
+
+## Governance
+
+OpenFaaS is an independent project created by [Alex Ellis](https://www.alexellis.io) which is now being built and shaped by a growing community of contributors. Project website: [openfaas.com](https://www.openfaas.com).
 
 ## Overview of OpenFaaS
 
@@ -162,10 +166,6 @@ Have you written a blog about OpenFaaS? Send a Pull Request to the community pag
 * [Read blogs/articles and find events about OpenFaaS](https://github.com/alexellis/faas/blob/master/community.md)
 
 If you'd like to join OpenFaaS community Slack channel to chat with contributors or get some help - then send a Tweet to [@alexellisuk](https://twitter.com/alexellisuk/) or email alex@openfaas.com.
-
-## Governance
-
-OpenFaaS is an independent project created by Alex Ellis which is now being built by a growing community of contributors.
 
 ### Roadmap and contributing
 
