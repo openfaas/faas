@@ -32,7 +32,7 @@ real    0m8.729s
 
 This script visits the front page of CNN and once it is fully loaded - scrapes the title.
 
-See [cnn.js](https://github.com/alexellis/faas/tree/master/sample-functions/Phantomjs/cnn.js) as an example of a Phantomjs script.
+See [cnn.js](https://github.com/openfaas/faas/tree/master/sample-functions/Phantomjs/cnn.js) as an example of a Phantomjs script.
 
-Another example script [feedly_subscribers.js](https://github.com/alexellis/faas/tree/master/sample-functions/Phantomjs/feedly_subscribers.js) gives the count of subscribers for an RSS Feed registered on Feedly.
+Another example script [feedly_subscribers.js](https://github.com/openfaas/faas/tree/master/sample-functions/Phantomjs/feedly_subscribers.js) gives the count of subscribers for an RSS Feed registered on Feedly.
 

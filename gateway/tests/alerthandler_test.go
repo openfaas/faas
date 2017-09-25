@@ -6,7 +6,7 @@ package tests
 import (
 	"testing"
 
-	"github.com/alexellis/faas/gateway/handlers"
+	"github.com/openfaas/faas/gateway/handlers"
 )
 
 func TestScale1to5(t *testing.T) {
