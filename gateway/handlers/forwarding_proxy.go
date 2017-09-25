@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/alexellis/faas/gateway/metrics"
-	"github.com/alexellis/faas/gateway/types"
+	"github.com/openfaas/faas/gateway/metrics"
+	"github.com/openfaas/faas/gateway/types"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

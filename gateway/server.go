@@ -13,12 +13,12 @@ import (
 	"fmt"
 
 	"github.com/Sirupsen/logrus"
-	natsHandler "github.com/alexellis/faas-nats/handler"
-	internalHandlers "github.com/alexellis/faas/gateway/handlers"
-	"github.com/alexellis/faas/gateway/metrics"
-	"github.com/alexellis/faas/gateway/plugin"
-	"github.com/alexellis/faas/gateway/types"
 	"github.com/docker/docker/client"
+	internalHandlers "github.com/openfaas/faas/gateway/handlers"
+	"github.com/openfaas/faas/gateway/metrics"
+	"github.com/openfaas/faas/gateway/plugin"
+	"github.com/openfaas/faas/gateway/types"
+	natsHandler "github.com/openfaas/nats-queue-worker/handler"
 
 	"github.com/gorilla/mux"
 )

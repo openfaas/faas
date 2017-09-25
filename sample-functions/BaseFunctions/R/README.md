@@ -9,7 +9,7 @@ Use this FaaS function using R.
 
 -   Option 1 - click *Create a new function* on the FaaS UI
 
--   Option 2 - use the [faas-cli](https://github.com/alexellis/faas-cli/) (experimental)
+-   Option 2 - use the [faas-cli](https://github.com/openfaas/faas-cli/) (experimental)
 
 <!-- -->
 

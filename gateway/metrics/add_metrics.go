@@ -9,7 +9,7 @@ import (
 	"net/http/httptest"
 	"strconv"
 
-	"github.com/alexellis/faas/gateway/requests"
+	"github.com/openfaas/faas/gateway/requests"
 )
 
 func makeClient() http.Client {

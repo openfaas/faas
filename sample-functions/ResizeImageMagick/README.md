@@ -1,6 +1,6 @@
 ## functions/resizer
 
-![](https://github.com/alexellis/faas/blob/master/sample-functions/ResizeImageMagick/gordon.png)
+![](https://github.com/openfaas/faas/blob/master/sample-functions/ResizeImageMagick/gordon.png)
 
 Use this FaaS function to resize an image with ImageMagick.
 
@@ -10,7 +10,7 @@ Use this FaaS function to resize an image with ImageMagick.
 
 * Option 1 - click *Create a new function* on the FaaS UI
 
-* Option 2 - use the [faas-cli](https://github.com/alexellis/faas-cli/) (experimental)
+* Option 2 - use the [faas-cli](https://github.com/openfaas/faas-cli/) (experimental)
 
 ```
 # curl -sSL https://get.openfaas.com | sudo sh
