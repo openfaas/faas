@@ -20,13 +20,13 @@ $ docker service ls
 ### Find a function's logs
 
 ```
-$ docker swarm logs --tail 100 <function>
+$ docker service logs --tail 100 <function>
 ```
 
 ### Find out if a function failed to start
 
 ```
-$ docker swarm ps --no-trunc=true <function>
+$ docker service ps --no-trunc=true <function>
 ```
 
 ### Stop and remove OpenFaaS
