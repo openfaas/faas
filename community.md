@@ -84,7 +84,7 @@ There are three main Github repos
 | [faas-hyper](https://github.com/hyperhq/faas-hyper) - Hyper.sh provider | Hyper | github.com | Incubation |
 | [faas-guardian](https://github.com/nwright-nz/openfaas-guardian-backend) - Guardian provider | Nigel Wright | github.com | Inception |
 | [faas-ecs](https://github.com/stack360/faas-ecs) - Huawei | Xicheng Chang | github.com | Inception |
-| [faas-dcos](https://github.com/realbot/faas-dcos) - DCOS provider | Alberto Quario | github.com | Inception  |
+| [faas-dcos](https://github.com/realbot/faas-dcos) - DCOS provider | Alberto Quario | github.com | Incubation  |
 
 ### Repos - projects / samples / use cases
 
