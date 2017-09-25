@@ -8,6 +8,7 @@ Testing:
 ```
 $ docker build -t alexellis/gif-maker .
 $ faas-cli deploy --fprocess="./entry.sh" \
+  --env read_timeout=60 --env write_timeout=60 \
   --image alexellis/gif-maker --name gif-maker
 
 # wait a little
