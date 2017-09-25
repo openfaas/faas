@@ -10,7 +10,7 @@ import (
 
 	"encoding/json"
 
-	"github.com/alexellis/faas/gateway/requests"
+	"github.com/openfaas/faas/gateway/requests"
 )
 
 // TestUnmarshallAlert is an exploratory test from TDD'ing the struct to parse a Prometheus alert

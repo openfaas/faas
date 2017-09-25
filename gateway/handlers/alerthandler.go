@@ -13,9 +13,9 @@ import (
 
 	"fmt"
 
-	"github.com/alexellis/faas/gateway/requests"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
+	"github.com/openfaas/faas/gateway/requests"
 )
 
 // DefaultMaxReplicas is the amount of replicas a service will auto-scale up to.

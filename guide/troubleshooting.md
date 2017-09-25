@@ -114,7 +114,7 @@ Within the CLI directory for instance:
 Build the samples:
 
 ```
-$ git clone https://github.com/alexellis/faas-cli && \
+$ git clone https://github.com/openfaas/faas-cli && \
   cd faas-cli
 $ faas-cli -action build -f ./samples.yml
 ```

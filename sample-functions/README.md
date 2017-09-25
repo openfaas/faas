@@ -2,7 +2,7 @@
 
 For examples of hello-world in different programming languages see inside the BaseFunctions folder:
 
-* [Base Functions](https://github.com/alexellis/faas/tree/master/sample-functions/BaseFunctions)
+* [Base Functions](https://github.com/openfaas/faas/tree/master/sample-functions/BaseFunctions)
 
 ## Demo functions from closing keynote @ Dockercon
 
@@ -11,7 +11,7 @@ For examples of hello-world in different programming languages see inside the Ba
 
 ## Sample functions from the FaaS stack
 
-> Also see the [community page](https://github.com/alexellis/faas/blob/master/community.md) for functions created by FaaS users and contributors.
+> Also see the [community page](https://github.com/openfaas/faas/blob/master/community.md) for functions created by FaaS users and contributors.
 
 Here is a list of the sample functions included this repository.
 

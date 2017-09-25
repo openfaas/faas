@@ -211,4 +211,4 @@ definitions:
           ~/.docker/config.json)
 externalDocs:
   description: More documentation available on Github
-  url: 'https://github.com/alexellis/faas'
+  url: 'https://github.com/openfaas/faas'
