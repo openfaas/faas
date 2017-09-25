@@ -111,25 +111,25 @@ https://cli.openfaas.com => 200
 
 ### TestDrive
 
+**Docker Swarm**
+
+The deployment guide for Docker Swarm contains a simple one-line command to get you up and running in around 60 seconds. It also includes a set of sample functions which you can use with the TestDrive instructions below.
+
+[Deployment guide for Docker Swarm](https://github.com/openfaas/faas/blob/master/guide/deployment_swarm.md)
+
+**Kubernetes**
+
+OpenFaaS is Kubernetes-native - you can follow the [deployment guide here](https://github.com/alexellis/faas/blob/master/guide/deployment_k8s.md).
+
 **Docker Playground**
 
 You can quickly start OpenFaaS on Docker Swarm online using the community-run Docker playground: play-with-docker.com (PWD) by clicking the button below:
 
 [![Try in PWD](https://cdn.rawgit.com/play-with-docker/stacks/cff22438/assets/images/button.png)](http://play-with-docker.com?stack=https://raw.githubusercontent.com/alexellis/faas/master/docker-compose.yml&stack_name=func)
 
-**Docker Swarm**
+#### Begin the TestDrive
 
-A set of one-line scripts are provided to help you quickly test-drive OpenFaaS on Docker Swarm with a set of sample functions as defined in the provided [docker-compose.yml](https://github.com/alexellis/faas/blob/master/docker-compose.yml) file.
-
-- `deploy_stack.sh` - for OSX/Linux on x86_64
-- `deploy_stack.armhf.sh` - for Linux on ARM (Raspberry Pi for example)
-- `deploy_stack.ps1` - for Windows
-
-**Kubernetes**
-
-Alternatively if you have a Kubernetes cluster you can [start here](https://github.com/alexellis/faas/blob/master/guide/deployment_k8s.md).
-
-### [Begin the TestDrive with Docker Swarm](https://github.com/alexellis/faas/blob/master/TestDrive.md)
+* [Begin the TestDrive with Docker Swarm](https://github.com/alexellis/faas/blob/master/TestDrive.md)
 
 Here is a screenshot of the API gateway portal - designed for ease of use.
 
