@@ -18,8 +18,6 @@ There are three main Github repos
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
-| [Docker Belfast Meetup](https://www.meetup.com/Docker-Belfast/) | John McCabe | Belfast, Northern Ireland | 31-Oct-2017 |
-| [Belfast Gophers Meetup](https://www.meetup.com/Belfast-Gophers/) | John McCabe | Belfast, Northern Ireland | 26-Oct-2017 |
 | Tech Weekly @ UNiDAYS - Alex Young introduces OpenFaaS | Alex Young | Nottingham, UK | 12-Oct-2017 |
 | [OpenFaaS @ JeffConf Milan](https://milan.jeffconf.com/speakers) | Alex Ellis | Milan, Italy | 29-Sept-2017 |
 | [Zero to Serverless in 60 secs - Open Source Summit North America](http://events.linuxfoundation.org/events/open-source-summit-north-america/program/schedule) | Alex Ellis | LA, USA | 11-14 Sept 2017 |
@@ -41,9 +39,9 @@ There are three main Github repos
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [A Serverless GraphQL Blog in 60 Seconds with OpenFaaS](https://medium.com/@kenfdev/a-serverless-graphql-blog-in-60-seconds-with-openfaas-aaedd566b1f3) | Ken Fukuyama | medium.com/@kenfdev | 24-Sep-2017 |
 | [Create your own DownNotifier with OpenFaaS](http://jmkhael.io/downnotifier-site-pinger/)| Johnny Mkhael | jmkhael.io | 22-Sep-2017|
+| [Get OpenFaaS running on Azure Container Service with Kubernetes](https://gist.github.com/danigian/e6097fad36f03c476a69e6c44fde074f) | Daniele Antonio Maggio | twitter.com/danigian | 21-Sep-2017 |
 | [OpenFaaS on Azure (Swarm)](https://blogs.technet.microsoft.com/livedevopsinjapan/2017/09/21/openfaas-on-azure-swarm/) | Tsuyoshi Ushio | technet.microsoft.com | 21-Sep-2017 |
 | [OpenFaaS on ACS (Kubernetes)](https://blogs.technet.microsoft.com/livedevopsinjapan/2017/09/19/open-faas-on-acs-kubernetes/) | Tsuyoshi Ushio | technet.microsoft.com | 19-Sep-2017 |
-| [OpenFaaS on Civo (Kubernetes)](https://www.civo.com/learn/kubernetes-and-openfaas-using-terraform) | Andy Jeffries | civo.com | 18-Sep-2017 |
 | [Integrating OpenFaaS and GraphQL](https://medium.com/@kenfdev/integrating-openfaas-and-graphql-experimental-1870bd22f2a) | Ken Fukuyama | medium.com/@kenfdev | 10-Sep-2017 |
 | [Morning coffee with the OpenFaaS CLI](https://blog.alexellis.io/quickstart-openfaas-cli/) | Alex Ellis | alexellis.io | 05-Sep-2017 |
 | [OpenFaaS on Rancher](https://medium.com/cloud-academy-inc/openfaas-on-rancher-684650cc078e) | Ken Fukuyama | medium.com/@kenfdev | 02-Sep-2017 |
@@ -90,7 +88,8 @@ You can also find cool projects or submit your own to the [faas-and-furious orga
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
 | [faas-pipeline](https://github.com/getlazy/faas-pipeline) - OpenFaaS function composition | Ivan Erceg | github.com | 23-September-2017 |
-| [Github - Reverse geocoding](https://github.com/lucj/faas-reverse-geocoding) | Luc Juggery | github.com | 14-September-2017 |
+| [Azure Storage and Azure Service Bus Queues Trigger for OpenFaaS on Kubernetes](https://github.com/danigian/Azure-Queues-Trigger-OpenFaaS) | Daniele Antonio Maggio | github.com/danigian/Azure-Queues-Trigger-OpenFaaS | 21-September-2017 |
+| [Github - Reverse geocoding](https://github.com/lucj/faas-reverse-geocoding) | Luc Juggery | github.com/lucj/faas-reverse-geocoding | 14-September-2017 |
 | [QR Code](https://github.com/faas-and-furious/qrcode) | John McCabe | github.com | 18-August-2017 |
 | [Img2ANSI - GIF/PNG/JPG to ANSI art converter](https://github.com/johnmccabe/faas-img2ansi/) | John McCabe | github.com | 10-August-2017 |
 | [FaaS-netes - Kubernetes backend for FaaS](https://github.com/alexellis/faas-netes) | Alex Ellis | github.com | 25-Jul-2017 |
