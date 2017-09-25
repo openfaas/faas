@@ -50,7 +50,7 @@ def handler(st):
 
 ### Function Director pattern
 
-In the Function Director pattern - we create a "wrapper function" which pipes the result of function call A into function call B then returns the value to the caller. This saves on bandwidth and latency vs. client-side piping:
+In the Function Director pattern - we create a "wrapper function" which can then either pipes the result of function call A into function call B or compose the results of A and B before returning a result. This approach saves on bandwidth and latency vs. client-side piping and means you can version both your connector and the functions involved.
 
 Take our previous example:
 
@@ -71,3 +71,11 @@ def handler(req):
 
     print("Slack result: " + str(slack_result.status_code))
 ```
+
+Practical example:
+
+GitHub sends a "star" event to tweetfanclub function, tweetfanclub uses get-avatar to download the user's profile picture - stores that in an S3 bucket, then invokes tweetstargazer which tweets the image. A polaroid effect is added by a "polaroid" function.
+
+This example uses a mix of regular binaries such as ImageMagick and Python handlers generated with the FaaS-CLI.
+
+* [GitHub to Twitter Fanclub](https://github.com/alexellis/faas-twitter-fanclub/blob/master/README.md)
