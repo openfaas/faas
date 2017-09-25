@@ -12,4 +12,5 @@ before_install:
 
 script:
     - sh build.sh
-
+    # Invoke ci script too
+    - sh contrib/ci.sh
