@@ -42,11 +42,13 @@ Any container or process in a Docker container can be a serverless function in F
 
 > The CLI is effectively a RESTful client for the API Gateway.
 
-**CLI walk-through**
+When you have OpenFaaS configured you can [get started with the CLI here](https://blog.alexellis.io/quickstart-openfaas-cli/)
 
-Once you [have set up OpenFaaS](https://github.com/alexellis/faas#get-started-with-openfaas) you can follow these instructions:
+### Function examples
 
-Let's have a quick look at an example function `url-ping` which connects to a remote web server and returns the HTTP code from the response. It's written in Python.
+You can generate new functions using the FaaS-CLI and built-in templates or use any binary for Windows or Linux in a Docker container.
+
+* Python example:
 
 ```python
 import requests
@@ -57,55 +59,18 @@ def handle(req):
 ```
 *handler.py*
 
+* Node.js example:
+
+```js
+"use strict"
+
+module.exports = (callback, context) => {
+    callback(null, {"message": "You said: " + context})
+}
 ```
-$ curl -sSL https://cli.openfaas.com | sudo sh
-```
+*handler.js*
 
-*Install the faas-cli which is also available on `brew`*
-
-Clone the samples and templates from Github:
-
-```
-$ git clone https://github.com/alexellis/faas-cli
-$ cd faas-cli
-```
-
-Define your functions in YAML - or deploy via the API Gateway's UI.
-
-```yaml
-provider:
-  name: faas
-  gateway: http://localhost:8080
-
-functions:
-  url-ping:
-    lang: python
-    handler: ./sample/url-ping
-    image: alexellis2/faas-urlping
-```
-
-*Example function YAML file - `url-ping.yaml`*
-
-```
-$ faas-cli -action build -f ./url-ping.yaml
-```
-*Build a Docker image using the Python handler in `./sample/url-ping`*
-
-```
-$ faas-cli -action deploy -f ./url-ping.yaml
-```
-*Deploy the new image to the gateway defined in the YAML file.*
-
-> If your gateway is remote or part of a multi-host Swarm - you can also use the CLI to push your image to a remote registry or the Hub with `faas-cli -action push`
-
-```
-$ curl -d "https://cli.openfaas.com" http://localhost:8080/function/url-ping/
-https://cli.openfaas.com => 200
-```
-
-*Test out the function with the URL https://cli.openfaas.com => 200*
-
-[Sample functions](https://github.com/alexellis/faas/tree/master/sample-functions) are available in the Github repository in a range of programming languages.
+Other [Sample functions](https://github.com/alexellis/faas/tree/master/sample-functions) are available in the Github repository in a range of programming languages.
 
 ## Get started with OpenFaaS
 
@@ -113,7 +78,7 @@ https://cli.openfaas.com => 200
 
 **Docker Swarm**
 
-The deployment guide for Docker Swarm contains a simple one-line command to get you up and running in around 60 seconds. It also includes a set of sample functions which you can use with the TestDrive instructions below.
+The deployment guide for Docker Swarm contains a simple one-line command to get you up and running in around 60 seconds. It also includes a set of [sample functions](https://github.com/alexellis/faas/tree/master/sample-functions) which you can use with the TestDrive instructions below.
 
 [Deployment guide for Docker Swarm](https://github.com/openfaas/faas/blob/master/guide/deployment_swarm.md)
 
