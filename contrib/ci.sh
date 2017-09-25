@@ -1,12 +1,17 @@
 #!/bin/bash
 
-docker swarm init --advertise-addr=$(hostname -i)
+docker swarm init --advertise-addr=127.0.0.1
 
 ./deploy_stack.sh
 
 cd ..
 
 echo $GOPATH
+
+
+# Fix-up
+mkdir -p $GOPATH/src/github.com/alexellis/
+cp -r faas $GOPATH/src/github.com/alexellis/
 
 mkdir -p $GOPATH/src/github.com/openfaas/
 cp -r faas $GOPATH/src/github.com/openfaas/
