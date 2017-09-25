@@ -7,3 +7,5 @@ docker swarm init --advertise-addr=$(hostname -i)
 git clone https://github.com/openfaas/certify-incubator
 cd certify-incubator && \
    make
+
+exit 0
