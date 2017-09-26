@@ -18,6 +18,7 @@ There are three main Github repos
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Docker Belfast Meetup](https://www.meetup.com/Docker-Belfast/) | John McCabe | Belfast, Northern Ireland | 31-Oct-2017 |
 | Tech Weekly @ UNiDAYS - Alex Young introduces OpenFaaS | Alex Young | Nottingham, UK | 12-Oct-2017 |
 | [OpenFaaS @ JeffConf Milan](https://milan.jeffconf.com/speakers) | Alex Ellis | Milan, Italy | 29-Sept-2017 |
 | [Zero to Serverless in 60 secs - Open Source Summit North America](http://events.linuxfoundation.org/events/open-source-summit-north-america/program/schedule) | Alex Ellis | LA, USA | 11-14 Sept 2017 |
