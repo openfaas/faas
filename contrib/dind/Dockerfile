@@ -1,7 +1,7 @@
 FROM docker:dind
 WORKDIR /root/
 RUN apk --no-cache add git && \
-  git clone https://github.com/alexellis/faas
+  git clone https://github.com/openfaas/faas
 WORKDIR /root/faas/
 
 

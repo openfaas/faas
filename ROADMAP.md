@@ -8,9 +8,9 @@ For an overview of features in August 2017 read the following post:
 
 ## GitHub repos:
 
-* https://github.com/alexellis/faas
-* https://github.com/alexellis/faas-netes
-* https://github.com/alexellis/faas-cli
+* https://github.com/openfaas/faas
+* https://github.com/openfaas/faas-netes
+* https://github.com/openfaas/faas-cli
 * https://github.com/openfaas/nats-queue-worker
 
 ### The API Gateway
@@ -61,7 +61,7 @@ This binary fwatchdog acts as a watchdog for your function. Features:
 
 ## 2. Future items
 
-Most items are detailed [via Github issues](https://github.com/alexellis/faas/issues).
+Most items are detailed [via Github issues](https://github.com/openfaas/faas/issues).
 
 Native support is available for Docker Swarm and Kubernetes using primitive API objects in each orchestration platform.
 
@@ -125,4 +125,4 @@ Internal research is also being done for the ACI / K8s-connector.
 
 ### Contributing
 
-Please see [CONTRIBUTING.md](https://github.com/alexellis/faas/blob/master/CONTRIBUTING.md).
+Please see [CONTRIBUTING.md](https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md).

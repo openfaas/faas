@@ -78,4 +78,4 @@ GitHub sends a "star" event to tweetfanclub function, tweetfanclub uses get-avat
 
 This example uses a mix of regular binaries such as ImageMagick and Python handlers generated with the FaaS-CLI.
 
-* [GitHub to Twitter Fanclub](https://github.com/alexellis/faas-twitter-fanclub/blob/master/README.md)
+* [GitHub to Twitter Fanclub](https://github.com/openfaas/faas-twitter-fanclub/blob/master/README.md)

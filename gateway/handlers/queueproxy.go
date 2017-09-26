@@ -10,8 +10,8 @@ import (
 	"net/url"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/alexellis/faas/gateway/metrics"
-	"github.com/alexellis/faas/gateway/queue"
+	"github.com/openfaas/faas/gateway/metrics"
+	"github.com/openfaas/faas/gateway/queue"
 	"github.com/gorilla/mux"
 )
 

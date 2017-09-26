@@ -17,7 +17,7 @@ The easiest way to create a function is to use a template and the FaaS CLI. The 
 
 * [Your first serverless Python function with OpenFaaS](https://blog.alexellis.io/first-faas-python-function/)
 
-* [Read a tutorial on the FaaS CLI](https://github.com/alexellis/faas-cli)
+* [Read a tutorial on the FaaS CLI](https://github.com/openfaas/faas-cli)
 
 ## Delve deeper
 
@@ -26,7 +26,7 @@ The easiest way to create a function is to use a template and the FaaS CLI. The 
 Here's how to package your function if you don't want to use the CLI or have existing binaries or images:
 
 - [x] Use an existing or a new Docker image as base image `FROM`
-- [x] Add the fwatchdog binary from the [Releases page](https://github.com/alexellis/faas/releases) via `curl` or `ADD https://`
+- [x] Add the fwatchdog binary from the [Releases page](https://github.com/openfaas/faas/releases) via `curl` or `ADD https://`
 - [x] Set an `fprocess` environmental variable with the function you want to run for each request
 - [x] Expose port 8080
 - [x] Set the `CMD` to `fwatchdog`
@@ -36,7 +36,7 @@ Example Dockerfile for an `echo` function:
 ```
 FROM alpine:3.5
 
-ADD https://github.com/alexellis/faas/releases/download/v0.5-alpha/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/v0.5-alpha/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
 # Define your UNIX binary here

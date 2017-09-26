@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/alexellis/faas/watchdog/types"
+	"github.com/openfaas/faas/watchdog/types"
 )
 
 func handle(header http.Header, body []byte) {
