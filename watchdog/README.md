@@ -79,6 +79,8 @@ The watchdog can be configured through environmental variables. You must always 
 | `read_timeout`         | HTTP timeout for reading the payload from the client caller (in seconds) |
 | `suppress_lock`        | The watchdog will attempt to write a lockfile to /tmp/ for swarm healthchecks - set this to true to disable behaviour. |
 | `exec_timeout`         | Hard timeout for process exec'd for each incoming request (in seconds). Disabled if set to 0. |
+| `port`                 | The watchdog is designed to be run on a known port of 8080, but you can override it with this variable |
+| `afterburn`            | Enable experimental afterburn mode which re-uses the same process for every request instead of forking per request. (read notes below) |
  
 
 ## Advanced / tuning
@@ -151,10 +153,6 @@ By default the watchdog will match the response of your function to the "Content
 
 To override the Content-Type of all your responses set the `content_type` environmental variable.
 
-**I don't want to use the watchdog**
-
-This is an unsupported use-case for the OpenFaaS project however if your container exposes HTTP POST on port 8080 then the OpenFaaS API gateway and other tooling will manage your container.
-
 **Tuning auto-scaling**
 
 Auto-scaling starts at 1 replica and steps up in blocks of 5:
@@ -171,3 +169,35 @@ com.faas.max_replicas: "10"
 ```
 
 If you want to disable scaling, set the `com.faas.max_replicas` value to `"1"`.
+
+### Optimizing for performance
+
+**Use async**
+
+If your `fprocess` has significant start-up latency then you may want to use [asynchronous processing](https://github.com/alexellis/faas/blob/master/guide/asynchronous.md).
+
+**Process batches of data**
+
+Instead of processing a single record, you can pass in an array of records to be processed in a batch by your application. This means that instead of incurring the cost to fork per record - you will only have to take the hit once per batch. This method can be combined with the async approach.
+
+**Afterburn**
+
+*Afterburn* is an OpenFaaS technique for re-using the same forked process. Let's say you have a Java function which takes 2 seconds to load and 0.5s per request. Each request would take 2.5s since you're paying for the loading time and processing time. Fast Fork allows you to load the process once then process many requests. Your first call will still take 2.5s, but subsequent ones would take 0.5s only providing a huge boost.
+
+Afterburn should be considered *experimental* and will require your client application to read and write in the HTTP protocol over `stdin` and `stdout`. Examples will be provided for common languages but if you can't wait to try it - you can write the code into the function. Here is the pseudo-code:
+
+```
+http_header = read_stdin( until \r\n )
+
+content_length = http_header.content_length
+
+if content_length != null && content_length > 0
+   body = read_body_from_stdin(content_length)
+
+   result = function(body)
+   write_stdout(result)
+else
+   result = function(null)
+   write_stdout(result)
+end
+```
