@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/alexellis/faas/gateway/metrics"
+	"github.com/openfaas/faas/gateway/metrics"
 	"github.com/docker/docker/client"
 )
 

@@ -44,13 +44,13 @@ Some of the sample functions are:
 
 Newly added sample functions (not included in the sample stack)
 
-* Hello world in - [Java/.NET core/Python/Node/Go and more](https://github.com/alexellis/faas/tree/master/sample-functions/BaseFunctions)
-* [Resize images with Image Magick](https://github.com/alexellis/faas/tree/master/sample-functions/ResizeImageMagick)
-* [Function protected by API key in HTTP Header](https://github.com/alexellis/faas/tree/master/sample-functions/ApiKeyProtected)
+* Hello world in - [Java/.NET core/Python/Node/Go and more](https://github.com/openfaas/faas/tree/master/sample-functions/BaseFunctions)
+* [Resize images with Image Magick](https://github.com/openfaas/faas/tree/master/sample-functions/ResizeImageMagick)
+* [Function protected by API key in HTTP Header](https://github.com/openfaas/faas/tree/master/sample-functions/ApiKeyProtected)
 
 ### Invoke the sample functions with curl or Postman:
 
-Head over to the [Github and Star the project](https://github.com/alexellis/faas), or read on to see the input/output from the sample functions.
+Head over to the [Github and Star the project](https://github.com/openfaas/faas), or read on to see the input/output from the sample functions.
 
 ### Working with the sample functions
 
@@ -105,7 +105,7 @@ Guides:
 
 Read the developer guide:
 
-* [Packaging a function](https://github.com/alexellis/faas/blob/master/DEV.md)
+* [Packaging a function](https://github.com/openfaas/faas/blob/master/DEV.md)
 
 The original blog post also walks through creating a function:
 
@@ -115,7 +115,7 @@ The original blog post also walks through creating a function:
 
 **Option 1: via the FaaS CLI**
 
-The FaaS CLI can be used to build functions very quickly though the use of templates. See more details on the FaaS CLI [here](https://github.com/alexellis/faas-cli).
+The FaaS CLI can be used to build functions very quickly though the use of templates. See more details on the FaaS CLI [here](https://github.com/openfaas/faas-cli).
 
 **Option 2: via FaaS UI portal**
 

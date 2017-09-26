@@ -15,7 +15,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/alexellis/faas/watchdog/types"
+	"github.com/openfaas/faas/watchdog/types"
 )
 
 func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error) {

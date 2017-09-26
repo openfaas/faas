@@ -10,8 +10,8 @@ echo $GOPATH
 
 
 # Fix-up
-mkdir -p $GOPATH/src/github.com/alexellis/
-cp -r faas $GOPATH/src/github.com/alexellis/
+mkdir -p $GOPATH/src/github.com/openfaas/
+cp -r faas $GOPATH/src/github.com/openfaas/
 
 mkdir -p $GOPATH/src/github.com/openfaas/
 cp -r faas $GOPATH/src/github.com/openfaas/

@@ -16,8 +16,8 @@ import (
 
 	"io/ioutil"
 
-	"github.com/alexellis/faas/gateway/handlers"
-	"github.com/alexellis/faas/gateway/requests"
+	"github.com/openfaas/faas/gateway/handlers"
+	"github.com/openfaas/faas/gateway/requests"
 )
 
 // NewExternalServiceQuery proxies service queries to external plugin via HTTP

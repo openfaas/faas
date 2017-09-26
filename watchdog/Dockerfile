@@ -1,6 +1,6 @@
 FROM golang:1.8.3
-RUN mkdir -p /go/src/github.com/alexellis/faas/watchdog
-WORKDIR /go/src/github.com/alexellis/faas/watchdog
+RUN mkdir -p /go/src/github.com/openfaas/faas/watchdog
+WORKDIR /go/src/github.com/openfaas/faas/watchdog
 
 COPY main.go        .
 COPY readconfig.go  .
