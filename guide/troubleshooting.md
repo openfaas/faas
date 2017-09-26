@@ -17,16 +17,18 @@ Checklist:
 $ docker service ls
 ```
 
+You are looking for 1/1 for the replica count of each service listed.
+
 ### Find a function's logs
 
 ```
-$ docker service logs --tail 100 <function>
+$ docker service logs --tail 100 FUNCTION
 ```
 
 ### Find out if a function failed to start
 
 ```
-$ docker service ps --no-trunc=true <function>
+$ docker service ps --no-trunc=true FUNCTION
 ```
 
 ### Stop and remove OpenFaaS
@@ -38,7 +40,7 @@ $ docker stack rm func
 If you have additional services / functions remove the remaining ones like this:
 
 ```
-$ docker service ls -q|xargs docker service rm
+$ docker service ls -q | xargs docker service rm
 ```
 
 *Use with caution*
@@ -54,19 +56,25 @@ $ kubectl get deploy
 ### Find a function's logs
 
 ```
-$ kubectl logs deploy/<function>
+$ kubectl logs deploy/FUNCTION
 ```
 
 ### Find out if a function failed to start
 
 ```
-$ kubectl describe deploy/<function>
+$ kubectl describe deploy/FUNCTION
 ```
 
 ### Remove the OpenFaaS deployment
 
 ```
 $ kubectl delete -f faas.yml,monitoring.yml,rbac.yml
+```
+
+If you're using the async stack remove it this way:
+
+```
+$ kubectl delete -f faas.async.yml,monitoring.yml,rbac.yml,nats.yml
 ```
 
 ## Timeouts
@@ -83,7 +91,7 @@ For the gateway set the following environmental variables:
 
 ### Debug your function without deploying it
 
-Here's an example of how you can deploy a function without using an orchestrator - it's useful for testing:
+Here's an example of how you can deploy a function without using an orchestrator and the API gateeway. It is especially useful for testing:
 
 ```
 $ docker run --name debug-alpine \
