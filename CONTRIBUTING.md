@@ -42,7 +42,11 @@ Please read this whole guide and make sure you agree to our DCO agreement (inclu
 * Complete the whole template for issues and pull requests
 * [Reference addressed issues](https://help.github.com/articles/closing-issues-using-keywords/) in the PR description & commit messages - use 'Fixes #IssueNo' 
 * Always give instructions for testing
-* Give us CLI commands and output or screenshots where you can 
+* Provide us CLI commands and output or screenshots where you can 
+
+**Unit testing with Golang**
+
+Please follow style guide on [this blog post](https://blog.alexellis.io/golang-writing-unit-tests/) from [The Go Programming Language](https://www.amazon.co.uk/Programming-Language-Addison-Wesley-Professional-Computing/dp/0134190440)
 
 **I have a question, a suggestion or need help**
 
