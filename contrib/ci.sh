@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 docker swarm init --advertise-addr=127.0.0.1
 
 ./deploy_stack.sh

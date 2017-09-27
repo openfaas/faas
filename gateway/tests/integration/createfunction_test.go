@@ -6,19 +6,19 @@ package inttests
 import (
 	"encoding/json"
 	"net/http"
-	"strings"
 	"testing"
 
 	"github.com/alexellis/faas/gateway/requests"
+	"github.com/stretchr/testify/assert"
 )
 
-func createFunction(request requests.CreateFunctionRequest) (string, int, error) {
+func createFunction(request requests.CreateFunctionRequest) (string, int) {
 	marshalled, _ := json.Marshal(request)
 	return fireRequest("http://localhost:8080/system/functions", http.MethodPost, string(marshalled))
 }
 
-func deleteFunction(name string) (string, int, error) {
-	marshalled, _ := json.Marshal(requests.DeleteFunctionRequest{name})
+func deleteFunction(name string) (string, int) {
+	marshalled, _ := json.Marshal(requests.DeleteFunctionRequest{FunctionName: name})
 	return fireRequest("http://localhost:8080/system/functions", http.MethodDelete, string(marshalled))
 }
 
@@ -30,18 +30,9 @@ func TestCreate_ValidRequest(t *testing.T) {
 		EnvProcess: "",
 	}
 
-	_, code, err := createFunction(request)
+	_, code := createFunction(request)
 
-	if err != nil {
-		t.Log(err)
-		t.Fail()
-	}
-
-	expectedErrorCode := http.StatusOK
-	if code != expectedErrorCode {
-		t.Errorf("Got HTTP code: %d, want %d\n", code, expectedErrorCode)
-		return
-	}
+	assert.Equal(t, http.StatusOK, code)
 
 	deleteFunction("test_resizer")
 }
@@ -54,24 +45,10 @@ func TestCreate_InvalidImage(t *testing.T) {
 		EnvProcess: "",
 	}
 
-	body, code, err := createFunction(request)
+	body, code := createFunction(request)
 
-	if err != nil {
-		t.Log(err)
-		t.Fail()
-	}
-
-	expectedErrorCode := http.StatusBadRequest
-	if code != expectedErrorCode {
-		t.Errorf("Got HTTP code: %d, want %d\n", code, expectedErrorCode)
-		return
-	}
-
-	expectedErrorSlice := "is not a valid repository/tag"
-	if !strings.Contains(body, expectedErrorSlice) {
-		t.Errorf("Error message %s does not contain: %s\n", body, expectedErrorSlice)
-		return
-	}
+	assert.Equal(t, http.StatusBadRequest, code)
+	assert.Contains(t, body, "is not a valid repository/tag")
 }
 
 func TestCreate_InvalidNetwork(t *testing.T) {
@@ -82,36 +59,15 @@ func TestCreate_InvalidNetwork(t *testing.T) {
 		EnvProcess: "",
 	}
 
-	body, code, err := createFunction(request)
+	body, code := createFunction(request)
 
-	if err != nil {
-		t.Log(err)
-		t.Fail()
-	}
-
-	expectedErrorCode := http.StatusBadRequest
-	if code != expectedErrorCode {
-		t.Errorf("Got HTTP code: %d, want %d\n", code, expectedErrorCode)
-		return
-	}
-
-	expectedErrorSlice := "network non_existent_network not found"
-	if !strings.Contains(body, expectedErrorSlice) {
-		t.Errorf("Error message %s does not contain: %s\n", body, expectedErrorSlice)
-		return
-	}
+	assert.Equal(t, http.StatusBadRequest, code)
+	assert.Contains(t, body, "network non_existent_network not found")
 }
 
 func TestCreate_InvalidJson(t *testing.T) {
 	reqBody := `not json`
-	_, code, err := fireRequest("http://localhost:8080/system/functions", http.MethodPost, reqBody)
+	_, code := fireRequest("http://localhost:8080/system/functions", http.MethodPost, reqBody)
 
-	if err != nil {
-		t.Log(err)
-		t.Fail()
-	}
-
-	if code != http.StatusBadRequest {
-		t.Errorf("Got HTTP code: %d, want %d\n", code, http.StatusBadRequest)
-	}
+	assert.Equal(t, http.StatusBadRequest, code)
 }
