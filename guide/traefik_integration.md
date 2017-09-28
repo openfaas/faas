@@ -79,17 +79,16 @@ the appropriate labels.
         deploy:
             labels:
                 - traefik.port=8080
-                - traefik.frontend.rule=PathPrefixStrip:/openfaas
+                - traefik.frontend.rule=PathPrefix:/ui,/system,/function
                 - traefik.frontend.auth.basic=user:$$apr1$$MU....4XHRJ3. #copy/paste the contents of password.txt here
 ...
 ```
 Rather than publicly exposing port 8080, the added `traefik.port` label will
 make the gateway service available to Traefik on port 8080, but not
 publicly. Requests will now pass through Traefik and be forwarded on. The
-`PathPrefixStrip` property adds the ability to add different routes to
-different services. Adding the path prefix but stripping
-it as a request is passed to the appropriate service makes the `/system` and `/function` paths
-available by including the `/openfaas` prefix. The `basic.auth` label should
+`PathPrefix` property adds the ability to add different routes to
+different services. Adding `/ui,/system,/function` allows for routing to all the
+Gateway endpoints. The `basic.auth` label should
 include the username and the hashed password. Remember to escape any special
 characters, so if the password contains a `$`, you can escape it by
 doubling up `$$` just like the above.
@@ -104,11 +103,73 @@ $ ./deploy_stack.yml
 #### Test
 
 ```
-$ curl -u user:password -X POST
-https://localhost/openfaas/function/func_echoit -d "hello
-OpenFaaS"
+$ curl -u user:password -X POST http://localhost/openfaas/function/func_echoit -d "hello OpenFaaS"
 hello OpenFaaS
-$curl -X POST
-http://localhost/openfaas/function/func_echoit -d "hello OpenFaaS"
+$curl -X POST http://localhost/openfaas/function/func_echoit -d "hello OpenFaaS"
 401 Unauthorized
 ```
+Visit the browser UI at `http://localhost/openfaas`. You should
+be greeted with a login alert.
+
+## Configure Traefik with SSL Support
+
+#### Update Traefik configuration
+
+Traefik makes it extremely easy to add SSL support using
+LetsEncrypt. Add `443` to the list of ports in the `traefik`
+service, add the following flags to the command property
+of the `traefik` service in the `docker-compose.yml` file,
+and add a new `acme` volume under the `volumes` property.
+```
+# docker-compose.yml
+version: "3.2"
+services:
+    traefik:
+        command: -c --docker=true
+            --docker.swarmmode=true
+            --docker.domain=traefik
+            --docker.watch=true
+            --web=true
+            --debug=true
+            --defaultEntryPoints='http,https'
+            --acme=true
+            --acme.domains='<your-domain.com, <www.your-domain-com>'
+            --acme.email=your-email@email.com
+            --acme.ondemand=true
+            --acme.onhostrule=true
+            --acme.storage=/etc/traefik/acme/acme.json
+            --entryPoints='Name:https Address::443 TLS'
+            --entryPoints='Name:http Address::80'
+        ports:
+            - 80:80
+            - 8080:8080
+            - 443:443
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock
+            - "acme:/etc/traefik/acme"
+...
+```
+
+At the bottom of the `docker-compose.yml` file, add a new
+named volume.
+```
+volumes:
+    acme:
+# end of file
+```
+
+#### Re-Deploy the OpenFaaS service
+```
+$ ./deploy_stack.sh
+```
+
+#### Test
+```
+$ curl -u user:password -X POST https://your-domain.com/openfaas/function/func_echoit -d "hello OpenFaaS"
+hello OpenFaaS
+$curl -X POST https://your-domain.com/openfaas/function/func_echoit -d "hello OpenFaaS"
+401 Unauthorized
+```
+
+Visit the browser UI at `https://your-domain.com/openfaas`. You should
+be greeted with a login alert.
