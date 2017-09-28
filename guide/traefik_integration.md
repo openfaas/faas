@@ -103,12 +103,12 @@ $ ./deploy_stack.yml
 #### Test
 
 ```
-$ curl -u user:password -X POST http://localhost/openfaas/function/func_echoit -d "hello OpenFaaS"
+$ curl -u user:password -X POST http://localhost/function/func_echoit -d "hello OpenFaaS"
 hello OpenFaaS
-$curl -X POST http://localhost/openfaas/function/func_echoit -d "hello OpenFaaS"
+$curl -X POST http://localhost/function/func_echoit -d "hello OpenFaaS"
 401 Unauthorized
 ```
-Visit the browser UI at `http://localhost/openfaas`. You should
+Visit the browser UI at `http://localhost/ui/`. You should
 be greeted with a login alert.
 
 ## Configure Traefik with SSL Support
@@ -165,11 +165,11 @@ $ ./deploy_stack.sh
 
 #### Test
 ```
-$ curl -u user:password -X POST https://your-domain.com/openfaas/function/func_echoit -d "hello OpenFaaS"
+$ curl -u user:password -X POST https://your-domain.com/function/func_echoit -d "hello OpenFaaS"
 hello OpenFaaS
-$curl -X POST https://your-domain.com/openfaas/function/func_echoit -d "hello OpenFaaS"
+$curl -X POST https://your-domain.com/function/func_echoit -d "hello OpenFaaS"
 401 Unauthorized
 ```
 
-Visit the browser UI at `https://your-domain.com/openfaas`. You should
+Visit the browser UI at `https://your-domain.com/ui/`. You should
 be greeted with a login alert.
