@@ -1,7 +1,11 @@
 #!/bin/sh
 
-# Below makes use of "builder pattern" so that binary is extracted separate
-# from the golang runtime/SDK
+export arch=$(uname -m)
+
+if [ "$arch" = "armv7l" ] ; then
+    echo "Build not supported on $arch, use cross-build."
+    exit 1
+fi
 
 if [ ! $http_proxy == "" ] 
 then

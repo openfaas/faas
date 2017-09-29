@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"sync"
 	"time"
@@ -252,13 +253,11 @@ func main() {
 
 	http.HandleFunc("/", makeRequestHandler(&config))
 
-	if config.suppressLock == false {
-		path := "/tmp/.lock"
-		log.Printf("Writing lock-file to: %s\n", path)
-		writeErr := ioutil.WriteFile(path, []byte{}, 0660)
-		if writeErr != nil {
-			log.Panicf("Cannot write %s. To disable lock-file set env suppress_lock=true.\n Error: %s.\n", path, writeErr.Error())
-		}
+	path := filepath.Join(os.TempDir(), ".lock")
+	log.Printf("Writing lock-file to: %s\n", path)
+	writeErr := ioutil.WriteFile(path, []byte{}, 0660)
+	if writeErr != nil {
+		log.Panicf("Cannot write %s. To disable lock-file set env suppress_lock=true.\n Error: %s.\n", path, writeErr.Error())
 	}
 	log.Fatal(s.ListenAndServe())
 }

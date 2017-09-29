@@ -71,7 +71,7 @@ services:
 
     # Pass a username as an argument to find how many images user has pushed to Docker Hub.
     hubstats:
-        image: functions/hubstats:latest 
+        image: functions/hubstats:latest
         labels:
             function: "true"
         depends_on:

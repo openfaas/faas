@@ -14,3 +14,11 @@ script:
     - sh build.sh
     # Invoke ci script too
     - sh contrib/ci.sh
+after_success:
+    - if [[ "$TRAVIS_TAG" != null ]]; then 
+        docker tag functions/gateway:latest-dev $DOCKER_USERNAME/gateway:latest;
+        docker tag $DOCKER_USERNAME/gateway:latest $DOCKER_USERNAME/gateway:$TRAVIS_TAG;
+        docker login -u=\"$DOCKER_USERNAME\" -p=\"$DOCKER_PASSWORD\";
+        docker push $DOCKER_USERNAME/gateway:latest;
+        docker push $DOCKER_USERNAME/gateway:$TRAVIS_TAG;
+        fi
