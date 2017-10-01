@@ -29,9 +29,9 @@ This one-shot script clones the code, initialises Docker swarm mode and then dep
 
 > If you are not testing on play-with-docker then remove `--advertise-addr eth0` from first line of the script.
 
-* Now that everything's deployed take note of the two DNS entries at the top of the screen.
+* Now that everything's deployed take note of the two DNS entries at the top of the screen (the round links '9090' and '8080' highlighted in the screenshot below).
 
-![](https://pbs.twimg.com/media/C1wDi_tXUAIphu-.jpg)
+[![C1w_Di_t_XUAIphu-.jpg](https://s25.postimg.org/xiohxgz6n/C1w_Di_t_XUAIphu-.jpg)](https://postimg.org/image/n8m2y89az/)
 
 ## Sample functions
 
