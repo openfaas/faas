@@ -85,12 +85,22 @@ You can access the sample functions via the command line with a HTTP POST reques
 
 ```
 $ echo "# Test *Drive*"| faas-cli invoke func_markdown
+<h1>Test <em>Drive</em></h1>
 ```
 
 * List your functions
 
 ```
 $ faas-cli list
+Function                        Invocations     Replicas
+func_echoit                     0               1
+func_base64                     0               1
+func_decodebase64               0               1
+func_markdown                   3               1
+func_nodeinfo                   0               1
+func_wordcount                  0               1
+func_hubstats                   0               1
+func_webhookstash               0               1
 ```
 
 **UI portal:**
