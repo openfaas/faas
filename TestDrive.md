@@ -61,11 +61,11 @@ Here are a few of the functions:
 
 We will also install the OpenFaaS CLI which can be used to create, list, invoke and remove functions.
 
-```
+```shell
 $ curl -sL cli.openfaas.com | sh
-``` 
+```
 
-On your own machine change `| sh` to `| sudo sh`, for MacOS you can just use `brew install faas-cli`.
+On your own machine change ` | sh` to ` | sudo sh`, for MacOS you can just use `brew install faas-cli`.
 
 * Find out what you can do
 
