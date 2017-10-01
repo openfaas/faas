@@ -7,6 +7,8 @@ Status](https://travis-ci.org/openfaas/faas.svg?branch=master)](https://travis-c
 
 OpenFaaS (Functions as a Service) is a framework for building serverless functions with Docker which has first class support for metrics. Any process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
 
+[![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/fold_left.svg?style=social&label=Follow%20%40open_faas)](https://twitter.com/open_faas)
+
 **Highlights**
 
 * Ease of use through UI portal and *one-click* install
