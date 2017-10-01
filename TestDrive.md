@@ -61,11 +61,11 @@ Here are a few of the functions:
 
 We will also install the OpenFaaS CLI which can be used to create, list, invoke and remove functions.
 
-```shell
-$ curl -sL cli.openfaas.com | sh
 ```
+$ curl -sL cli.openfaas.com | sh
+``` 
 
-On your own machine change ` | sh` to ` | sudo sh`, for MacOS you can just use `brew install faas-cli`.
+On your own machine change `| sh` to `| sudo sh`, for MacOS you can just use `brew install faas-cli`.
 
 * Find out what you can do
 
@@ -84,23 +84,13 @@ You can access the sample functions via the command line with a HTTP POST reques
 * Invoke the markdown function with the CLI:
 
 ```
-$ echo "# Test *Drive*"| faas-cli invoke --name func_markdown
-<h1>Test <em>Drive</em></h1>
+$ echo "# Test *Drive*"| faas-cli invoke func_markdown
 ```
 
 * List your functions
 
 ```
 $ faas-cli list
-Function                        Invocations     Replicas
-func_echoit                     0               1
-func_base64                     0               1
-func_decodebase64               0               1
-func_markdown                   3               1
-func_nodeinfo                   0               1
-func_wordcount                  0               1
-func_hubstats                   0               1
-func_webhookstash               0               1
 ```
 
 **UI portal:**
