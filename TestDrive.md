@@ -44,7 +44,7 @@ This one-shot script clones the code, sets up a Docker Swarm master node then de
 * 8080 - the API Gateway and OpenFaaS UI
 * 9090 - the Prometheus metrics endpoint
 
-![](https://pbs.twimg.com/media/C1wDi_tXUAIphu-.jpg)
+![](https://user-images.githubusercontent.com/6358735/31058899-b34f2108-a6f3-11e7-853c-6669ffacd320.jpg)
 
 ## Sample functions
 
