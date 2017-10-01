@@ -5,7 +5,6 @@ package main
 
 import (
 	"bytes"
-	"path/filepath"
 	"fmt"
 	"io/ioutil"
 	"log"
