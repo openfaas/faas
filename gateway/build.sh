@@ -1,8 +1,8 @@
 #!/bin/sh
 
 export eTAG="latest-dev"
-echo $1
-if [ $1 ] ; then
+echo "$1"
+if [ "$1" ] ; then
   eTAG=$1
 fi
 
