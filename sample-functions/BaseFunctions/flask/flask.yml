@@ -1,0 +1,9 @@
+provider:
+  name: faas
+  gateway: http://localhost:8080
+
+functions:
+  flask:
+    lang: Dockerfile
+    handler: ./handler
+    image: alexellis2/flask
