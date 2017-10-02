@@ -88,3 +88,9 @@ You can also use the CLI like this:
 $ echo -n "" | faas-cli invoke --gateway http://kubernetes-ip:31112 --name nodeinfo
 $ echo -n "verbose" | faas-cli invoke --gateway http://kubernetes-ip:31112 --name nodeinfo
 ```
+
+## Helm chart
+
+A Helm chart is provided below with experimental support.
+
+* [OpenFaaS Helm chart](https://github.com/openfaas/faas-netes/blob/master/HELM.md)
