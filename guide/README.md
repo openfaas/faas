@@ -3,6 +3,8 @@ OpenFaaS guides
 
 This page is collating our key blog posts, tutorials and guides while we prepare a dedicated site for documentation. For other queries please get in touch for a Slack invite or ping [@open_faas](https://twitter.com/open_faas) on Twitter.
 
+Suggestions for new topics are welcome. Please also check the [Issue tracker](https://github.com/openfaas/faas/issues).
+
 ## Beginner guides
 
 * [Kubernetes deployment](https://github.com/openfaas/faas/blob/master/guide/deployment_k8s.md)
