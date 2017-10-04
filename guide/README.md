@@ -1,5 +1,7 @@
-OpenFaaS guides:
-========================
+OpenFaaS guides
+================
+
+This page is collating our key blog posts, tutorials and guides while we prepare a dedicated site for documentation. For other queries please get in touch for a Slack invite or ping [@open_faas](https://twitter.com/open_faas) on Twitter.
 
 ## Beginner guides
 
