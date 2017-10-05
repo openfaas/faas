@@ -65,6 +65,11 @@ func (ReadConfig) Read(hasEnv HasEnv) WatchdogConfig {
 	cfg.readTimeout = time.Duration(readTimeout) * time.Second
 	cfg.writeTimeout = time.Duration(writeTimeout) * time.Second
 
+	readDebugEnv := hasEnv.Getenv("read_debug")
+	if isBoolValueSet(readDebugEnv) {
+		cfg.readDebug = parseBoolValue(readDebugEnv)
+	}
+
 	writeDebugEnv := hasEnv.Getenv("write_debug")
 	if isBoolValueSet(writeDebugEnv) {
 		cfg.writeDebug = parseBoolValue(writeDebugEnv)
@@ -102,6 +107,9 @@ type WatchdogConfig struct {
 
 	// writeDebug write console stdout statements to the container
 	writeDebug bool
+
+	// readDebug print out request body
+	readDebug bool
 
 	// marshal header and body via JSON
 	marshalRequest bool

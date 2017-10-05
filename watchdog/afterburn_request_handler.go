@@ -2,6 +2,8 @@ package main
 
 import (
 	"bufio"
+	"bytes"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -51,21 +53,32 @@ func makeAfterburnRequestHandler(config *WatchdogConfig) func(http.ResponseWrite
 
 		wgCount := 1
 
+		if config.readDebug {
+			fmt.Printf("Header: %s\n", r.Header)
+			reqBody, _ := ioutil.ReadAll(r.Body)
+			defer r.Body.Close()
+
+			r.Body = ioutil.NopCloser(bytes.NewBuffer(reqBody))
+
+			fmt.Printf("Body: %s\n", reqBody)
+		}
+
 		log.Println(">> Lock mutex")
 		mutex.Lock()
 
 		wg.Add(wgCount)
 
 		go func(p *exec.Cmd) {
-			log.Println("Writing to pipe", p)
+			log.Println("Writing to process pipe")
 
 			r.Write(*writePipe)
-			log.Println("Writing to pipe 2")
+			log.Println("Written to process pipe")
 
 			defer wg.Done()
 		}(process)
+
 		wg.Wait()
-		log.Println("Waited")
+		log.Println("Synchronizing")
 
 		wg.Add(wgCount)
 
@@ -105,15 +118,20 @@ func makeAfterburnRequestHandler(config *WatchdogConfig) func(http.ResponseWrite
 			if writeErr != nil {
 				log.Println(writeErr)
 			}
+			if config.writeDebug {
+				fmt.Printf("Response: %s", string(bodyBytes))
+			}
+
 			// defer processRes.Body.Close()
 			defer wg.Done()
 		}()
+
 		log.Println("Waiting again")
 		wg.Wait()
-		log.Println("Waiting again done")
 
 		log.Println("<< Unlock mutex")
 		mutex.Unlock()
+		log.Println(">> Mutex unlocked")
 
 		// w.Write(bodyBytes)
 	}
