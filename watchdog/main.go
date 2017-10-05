@@ -11,11 +11,12 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"sync"
 	"time"
 
-	"github.com/alexellis/faas/watchdog/types"
+	"github.com/openfaas/faas/watchdog/types"
 )
 
 func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error) {
@@ -200,8 +201,9 @@ func getAdditionalEnvs(config *WatchdogConfig, r *http.Request, method string) [
 
 		envs = append(envs, fmt.Sprintf("Http_Method=%s", method))
 
-		if len(r.URL.RawQuery) > 0 {
-			envs = append(envs, fmt.Sprintf("Http_Query=%s", r.URL.RawQuery))
+		log.Println(r.URL.String())
+		if len(r.URL.String()) > 0 {
+			envs = append(envs, fmt.Sprintf("Http_Query=%s", r.URL.String()))
 		}
 	}
 
@@ -251,13 +253,11 @@ func main() {
 
 	http.HandleFunc("/", makeRequestHandler(&config))
 
-	if config.suppressLock == false {
-		path := "/tmp/.lock"
-		log.Printf("Writing lock-file to: %s\n", path)
-		writeErr := ioutil.WriteFile(path, []byte{}, 0660)
-		if writeErr != nil {
-			log.Panicf("Cannot write %s. To disable lock-file set env suppress_lock=true.\n Error: %s.\n", path, writeErr.Error())
-		}
+	path := filepath.Join(os.TempDir(), ".lock")
+	log.Printf("Writing lock-file to: %s\n", path)
+	writeErr := ioutil.WriteFile(path, []byte{}, 0660)
+	if writeErr != nil {
+		log.Panicf("Cannot write %s. To disable lock-file set env suppress_lock=true.\n Error: %s.\n", path, writeErr.Error())
 	}
 	log.Fatal(s.ListenAndServe())
 }

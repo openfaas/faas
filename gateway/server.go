@@ -8,20 +8,17 @@ import (
 	"log"
 	"net/http"
 	"net/http/httputil"
-	"strconv"
-	"strings"
 	"time"
 
 	"fmt"
 
 	"github.com/Sirupsen/logrus"
-	natsHandler "github.com/alexellis/faas-nats/handler"
-	internalHandlers "github.com/alexellis/faas/gateway/handlers"
-	"github.com/alexellis/faas/gateway/metrics"
-	"github.com/alexellis/faas/gateway/plugin"
-	"github.com/alexellis/faas/gateway/types"
 	"github.com/docker/docker/client"
-	"github.com/prometheus/client_golang/prometheus"
+	internalHandlers "github.com/openfaas/faas/gateway/handlers"
+	"github.com/openfaas/faas/gateway/metrics"
+	"github.com/openfaas/faas/gateway/plugin"
+	"github.com/openfaas/faas/gateway/types"
+	natsHandler "github.com/openfaas/nats-queue-worker/handler"
 
 	"github.com/gorilla/mux"
 )
@@ -33,11 +30,12 @@ type handlerSet struct {
 	ListFunctions  http.HandlerFunc
 	Alert          http.HandlerFunc
 	RoutelessProxy http.HandlerFunc
+	UpdateFunction http.HandlerFunc
 
 	// QueuedProxy - queue work and return synchronous response
 	QueuedProxy http.HandlerFunc
 
-	// AsyncReport - report a defered execution result
+	// AsyncReport - report a deferred execution result
 	AsyncReport http.HandlerFunc
 }
 
@@ -78,26 +76,34 @@ func main() {
 
 		reverseProxy := httputil.NewSingleHostReverseProxy(config.FunctionsProviderURL)
 
-		faasHandlers.Proxy = makeHandler(reverseProxy, &metricsOptions)
-		faasHandlers.RoutelessProxy = makeHandler(reverseProxy, &metricsOptions)
+		faasHandlers.Proxy = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
+		faasHandlers.RoutelessProxy = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
+		faasHandlers.ListFunctions = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
+		faasHandlers.DeployFunction = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
+		faasHandlers.DeleteFunction = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
+		faasHandlers.UpdateFunction = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
 
-		faasHandlers.Alert = internalHandlers.MakeAlertHandler(plugin.NewExternalServiceQuery(*config.FunctionsProviderURL))
-
-		faasHandlers.ListFunctions = makeHandler(reverseProxy, &metricsOptions)
-		faasHandlers.DeployFunction = makeHandler(reverseProxy, &metricsOptions)
-		faasHandlers.DeleteFunction = makeHandler(reverseProxy, &metricsOptions)
+		alertHandler := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL)
+		faasHandlers.Alert = internalHandlers.MakeAlertHandler(alertHandler)
 
 		metrics.AttachExternalWatcher(*config.FunctionsProviderURL, metricsOptions, "func", time.Second*5)
 
 	} else {
+
+		// How many times to reschedule a function.
 		maxRestarts := uint64(5)
+		// Delay between container restarts
+		restartDelay := time.Second * 5
 
 		faasHandlers.Proxy = internalHandlers.MakeProxy(metricsOptions, true, dockerClient, &logger)
-		faasHandlers.RoutelessProxy = internalHandlers.MakeProxy(metricsOptions, true, dockerClient, &logger)
-		faasHandlers.Alert = internalHandlers.MakeAlertHandler(internalHandlers.NewSwarmServiceQuery(dockerClient))
+		faasHandlers.RoutelessProxy = internalHandlers.MakeProxy(metricsOptions, false, dockerClient, &logger)
 		faasHandlers.ListFunctions = internalHandlers.MakeFunctionReader(metricsOptions, dockerClient)
-		faasHandlers.DeployFunction = internalHandlers.MakeNewFunctionHandler(metricsOptions, dockerClient, maxRestarts)
+		faasHandlers.DeployFunction = internalHandlers.MakeNewFunctionHandler(metricsOptions, dockerClient, maxRestarts, restartDelay)
 		faasHandlers.DeleteFunction = internalHandlers.MakeDeleteFunctionHandler(metricsOptions, dockerClient)
+		faasHandlers.UpdateFunction = internalHandlers.MakeUpdateFunctionHandler(metricsOptions, dockerClient, maxRestarts, restartDelay)
+
+		faasHandlers.Alert = internalHandlers.MakeAlertHandler(internalHandlers.NewSwarmServiceQuery(dockerClient))
+
 		// This could exist in a separate process - records the replicas of each swarm service.
 		functionLabel := "function"
 		metrics.AttachSwarmWatcher(dockerClient, metricsOptions, functionLabel)
@@ -114,6 +120,8 @@ func main() {
 		faasHandlers.AsyncReport = internalHandlers.MakeAsyncReport(metricsOptions)
 	}
 
+	listFunctions := metrics.AddMetricsHandler(faasHandlers.ListFunctions, config.PrometheusHost, config.PrometheusPort)
+
 	r := mux.NewRouter()
 
 	// r.StrictSlash(false)	// This didn't work, so register routes twice.
@@ -121,9 +129,10 @@ func main() {
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/", faasHandlers.Proxy)
 
 	r.HandleFunc("/system/alert", faasHandlers.Alert)
-	r.HandleFunc("/system/functions", faasHandlers.ListFunctions).Methods("GET")
+	r.HandleFunc("/system/functions", listFunctions).Methods("GET")
 	r.HandleFunc("/system/functions", faasHandlers.DeployFunction).Methods("POST")
 	r.HandleFunc("/system/functions", faasHandlers.DeleteFunction).Methods("DELETE")
+	r.HandleFunc("/system/functions", faasHandlers.UpdateFunction).Methods("PUT")
 
 	if faasHandlers.QueuedProxy != nil {
 		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}/", faasHandlers.QueuedProxy).Methods("POST")
@@ -152,28 +161,4 @@ func main() {
 	}
 
 	log.Fatal(s.ListenAndServe())
-}
-
-func makeHandler(proxy *httputil.ReverseProxy, metrics *metrics.MetricOptions) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		uri := r.URL.String()
-
-		log.Printf("Forwarding [%s] to %s", r.Method, r.URL.String())
-		start := time.Now()
-
-		writeAdapter := types.NewWriteAdapter(w)
-		proxy.ServeHTTP(writeAdapter, r)
-
-		seconds := time.Since(start).Seconds()
-		fmt.Printf("[%d] took %f seconds\n", writeAdapter.GetHeaderCode(), seconds)
-
-		forward := "/function/"
-		if len(uri) > len(forward) && strings.Index(uri, forward) == 0 {
-			fmt.Println("function=", uri[len(forward):])
-			service := uri[len(forward):]
-			metrics.GatewayFunctionsHistogram.WithLabelValues(service).Observe(seconds)
-			code := writeAdapter.GetHeaderCode()
-			metrics.GatewayFunctionInvocation.With(prometheus.Labels{"function_name": service, "code": strconv.Itoa(code)}).Inc()
-		}
-	}
 }

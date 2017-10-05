@@ -12,8 +12,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/alexellis/faas/gateway/metrics"
-	"github.com/alexellis/faas/gateway/requests"
+	"github.com/openfaas/faas/gateway/metrics"
+	"github.com/openfaas/faas/gateway/requests"
 	"github.com/docker/distribution/reference"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/swarm"
@@ -21,8 +21,10 @@ import (
 	"github.com/docker/docker/registry"
 )
 
+var linuxOnlyConstraints = []string{"node.platform.os == linux"}
+
 // MakeNewFunctionHandler creates a new function (service) inside the swarm network.
-func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Client, maxRestarts uint64) http.HandlerFunc {
+func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Client, maxRestarts uint64, restartDelay time.Duration) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		body, _ := ioutil.ReadAll(r.Body)
@@ -30,6 +32,7 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 		request := requests.CreateFunctionRequest{}
 		err := json.Unmarshal(body, &request)
 		if err != nil {
+			log.Println("Error parsing request:", err)
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
@@ -43,30 +46,37 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 		if len(request.RegistryAuth) > 0 {
 			auth, err := BuildEncodedAuthConfig(request.RegistryAuth, request.Image)
 			if err != nil {
-				log.Println("Error while building registry auth configuration", err)
+				log.Println("Error building registry auth configuration:", err)
 				w.WriteHeader(http.StatusBadRequest)
 				w.Write([]byte("Invalid registry auth"))
 				return
 			}
 			options.EncodedRegistryAuth = auth
 		}
-		spec := makeSpec(&request, maxRestarts)
+		spec := makeSpec(&request, maxRestarts, restartDelay)
 
 		response, err := c.ServiceCreate(context.Background(), spec, options)
 		if err != nil {
-			log.Println(err)
+			log.Println("Error creating service:", err)
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte("Deployment error: " + err.Error()))
+			return
 		}
 		log.Println(response.ID, response.Warnings)
 	}
 }
 
-func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64) swarm.ServiceSpec {
-	linuxOnlyConstraints := []string{"node.platform.os == linux"}
+func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, restartDelay time.Duration) swarm.ServiceSpec {
+	constraints := []string{}
+	if request.Constraints != nil && len(request.Constraints) > 0 {
+		constraints = request.Constraints
+	} else {
+		constraints = linuxOnlyConstraints
+	}
 
 	nets := []swarm.NetworkAttachmentConfig{
 		{Target: request.Network},
 	}
-	restartDelay := time.Second * 5
 
 	spec := swarm.ServiceSpec{
 		TaskTemplate: swarm.TaskSpec{
@@ -81,7 +91,7 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64) swarm
 			},
 			Networks: nets,
 			Placement: &swarm.Placement{
-				Constraints: linuxOnlyConstraints,
+				Constraints: constraints,
 			},
 		},
 		Annotations: swarm.Annotations{
@@ -90,13 +100,7 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64) swarm
 	}
 
 	// TODO: request.EnvProcess should only be set if it's not nil, otherwise we override anything in the Docker image already
-	var env []string
-	if len(request.EnvProcess) > 0 {
-		env = append(env, fmt.Sprintf("fprocess=%s", request.EnvProcess))
-	}
-	for k, v := range request.EnvVars {
-		env = append(env, fmt.Sprintf("%s=%s", k, v))
-	}
+	env := buildEnv(request.EnvProcess, request.EnvVars)
 
 	if len(env) > 0 {
 		spec.TaskTemplate.ContainerSpec.Env = env
@@ -105,6 +109,18 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64) swarm
 	return spec
 }
 
+func buildEnv(envProcess string, envVars map[string]string) []string {
+	var env []string
+	if len(envProcess) > 0 {
+		env = append(env, fmt.Sprintf("fprocess=%s", envProcess))
+	}
+	for k, v := range envVars {
+		env = append(env, fmt.Sprintf("%s=%s", k, v))
+	}
+	return env
+}
+
+// BuildEncodedAuthConfig for private registry
 func BuildEncodedAuthConfig(basicAuthB64 string, dockerImage string) (string, error) {
 	// extract registry server address
 	distributionRef, err := reference.ParseNormalizedNamed(dockerImage)

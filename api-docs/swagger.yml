@@ -43,6 +43,23 @@ paths:
       responses:
         '200':
           description: OK
+    put:
+      summary: Update a function.
+      description: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Function to update
+          required: true
+          schema:
+            $ref: '#/definitions/CreateFunctionRequest'
+      responses:
+        '200':
+          description: OK
     delete:
       summary: Remove a deployed function.
       description: ''
@@ -194,4 +211,4 @@ definitions:
           ~/.docker/config.json)
 externalDocs:
   description: More documentation available on Github
-  url: 'https://github.com/alexellis/faas'
+  url: 'https://github.com/openfaas/faas'

@@ -6,7 +6,7 @@ import (
 
 	"encoding/json"
 
-	"github.com/alexellis/faas/gateway/queue"
+	"github.com/openfaas/faas/gateway/queue"
 	"github.com/nats-io/go-nats-streaming"
 )
 

@@ -48,7 +48,10 @@ func parseIntValue(val string, fallback int) int {
 
 // Read fetches config from environmental variables.
 func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
-	cfg := GatewayConfig{}
+	cfg := GatewayConfig{
+		PrometheusHost: "prometheus",
+		PrometheusPort: 9090,
+	}
 
 	readTimeout := parseIntValue(hasEnv.Getenv("read_timeout"), 8)
 	writeTimeout := parseIntValue(hasEnv.Getenv("write_timeout"), 8)
@@ -79,6 +82,21 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 		}
 	}
 
+	prometheusPort := hasEnv.Getenv("faas_prometheus_port")
+	if len(prometheusPort) > 0 {
+		prometheusPortVal, err := strconv.Atoi(prometheusPort)
+		if err != nil {
+			log.Println("Invalid port for faas_prometheus_port")
+		} else {
+			cfg.PrometheusPort = prometheusPortVal
+		}
+	}
+
+	prometheusHost := hasEnv.Getenv("faas_prometheus_host")
+	if len(prometheusHost) > 0 {
+		cfg.PrometheusHost = prometheusHost
+	}
+
 	return cfg
 }
 
@@ -89,6 +107,8 @@ type GatewayConfig struct {
 	FunctionsProviderURL *url.URL
 	NATSAddress          *string
 	NATSPort             *int
+	PrometheusHost       string
+	PrometheusPort       int
 }
 
 // UseNATS Use NATSor not

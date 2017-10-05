@@ -49,3 +49,8 @@ md-input-container .md-errors-spacer {
 .monospace {
   font-family: 'Roboto Mono', monospace;
 }
+
+.validation-error {
+	color: red;
+	height: 52px;
+}

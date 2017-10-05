@@ -4,14 +4,18 @@
 
 var app = angular.module('faasGateway', ['ngMaterial']);
 
-app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$mdDialog', 
-        function($scope, $log, $http, $location, $timeout, $mdDialog) {
+app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav',
+        function($scope, $log, $http, $location, $timeout, $mdDialog, $mdToast, $mdSidenav) {
     $scope.functions = [];
     $scope.invocationRequest = "";
     $scope.invocationResponse = "";
     $scope.invocationStatus = "";
     $scope.invocation = {
         contentType: "text"
+    };
+
+    $scope.toggleSideNav = function() {
+        $mdSidenav('left').toggle();
     };
 
     $scope.functionTemplate = {
@@ -22,9 +26,19 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
     };
 
     $scope.invocation.request = ""
+
     setInterval(function() {
         refreshData();
     }, 1000);
+
+    var showPostInvokedToast = function(message, duration) {
+        $mdToast.show(
+            $mdToast.simple()
+                .textContent(message)
+                .position("top right")
+                .hideDelay(duration || 500)
+        );
+    };
 
     $scope.fireRequest = function() {
 
@@ -35,6 +49,8 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
             headers: { "Content-Type": $scope.invocation.contentType == "json" ? "application/json" : "text/plain" },
             responseType: $scope.invocation.contentType
         };
+        $scope.invocationResponse = "";
+        $scope.invocationStatus = null;
 
         $http(options)
             .then(function(response) {
@@ -44,9 +60,12 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
                     $scope.invocationResponse = response.data;
                 }
                 $scope.invocationStatus = response.status;
+                showPostInvokedToast("Success");
             }).catch(function(error1) {
                 $scope.invocationResponse = error1.statusText + "\n" + error1.data;
                 $scope.invocationStatus = error1.status;
+
+                showPostInvokedToast("Error");
             });
     };
 
@@ -90,17 +109,17 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
         }
     };
 
-    var showDialog=function($event) {
-       var parentEl = angular.element(document.body);
-       $mdDialog.show({
-         parent: parentEl,
-         targetEvent: $event,
-         templateUrl: "newfunction.html",
-         locals: {
-           item: $scope.functionTemplate
-         },
-         controller: DialogController
-      });
+    var showDialog = function($event) {
+        var parentEl = angular.element(document.body);
+        $mdDialog.show({
+            parent: parentEl,
+            targetEvent: $event,
+            templateUrl: "newfunction.html",
+            locals: {
+                item: $scope.functionTemplate
+            },
+            controller: DialogController
+        });
     };
 
     var DialogController = function($scope, $mdDialog, item) {
@@ -114,25 +133,60 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
                 url: "/system/functions",
                 data: $scope.item,
                 method: "POST",
-                headers: { "Content-Type": "application/json"},
-                responseType: "json"
+                headers: { "Content-Type": "application/json" },
+                responseType: "text"
             };
 
             $http(options)
                 .then(function(response) {
-                    $scope.invocationResponse = response.data;
-                    $scope.invocationStatus = response.status;
+                    item.image = "";
+                    item.service = "";
+                    item.envProcess = "";
+                    item.network = "";
+                    $scope.validationError = "";
+                    $scope.closeDialog();
+                    showPostInvokedToast("Function created");
                 }).catch(function(error1) {
-                    $scope.invocationResponse = error1;
-                    $scope.invocationStatus = null;
+                    $scope.validationError = error1.data;
                 });
-            console.log($scope.item);
-            $scope.closeDialog();
         };
     };
 
     $scope.newFunction = function() {
         showDialog();
+    };
+
+    $scope.deleteFunction = function($event) {
+        var confirm = $mdDialog.confirm()
+            .title('Delete Function')
+            .textContent('Are you sure you want to delete ' + $scope.selectedFunction.name + '?')
+            .ariaLabel('Delete function')
+            .targetEvent($event)
+            .ok('OK')
+            .cancel('Cancel');
+
+        $mdDialog.show(confirm)
+            .then(function() {
+                var options = {
+                    url: "/system/functions",
+                    data: {
+                        functionName: $scope.selectedFunction.name
+                    },
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json"},
+                    responseType: "json"
+                };
+
+                return $http(options);
+            }).then(function(){
+                showPostInvokedToast("Success");
+            }).catch(function(err) {
+                if (err) {
+                    // show error toast only if there actually is an err.
+                    // because hitting 'Cancel' also rejects the promise.
+                    showPostInvokedToast("Error");
+                }
+            });
     };
 
     fetch();

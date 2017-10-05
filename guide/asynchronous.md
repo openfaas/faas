@@ -6,7 +6,7 @@ By default functions are accessed synchronously via the following route:
 $ curl --data "message" http://gateway/function/{function_name}
 ```
 
-As of [PR #131](https://github.com/alexellis/faas/pull/131) asynchronous invocation is available for testing.
+As of [PR #131](https://github.com/openfaas/faas/pull/131) asynchronous invocation is available for testing.
 
 *Logical flow for synchronous functions:*
 
@@ -74,4 +74,4 @@ Hard timeout:
 
 To make use of these just add them to your Dockerfile when needed as ENV variables.
 
-> [Function watchdog reference](https://github.com/alexellis/faas/tree/master/watchdog)
+> [Function watchdog reference](https://github.com/openfaas/faas/tree/master/watchdog)

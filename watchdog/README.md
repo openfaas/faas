@@ -1,7 +1,7 @@
 Watchdog
 ==========
 
-The watchdog provides an unmanged and generic interface between the outside world and your function. Its job is to marshal a HTTP request accepted on the API Gateway and to invoke your chosen appliaction. The watchdog is a tiny Golang webserver - see the diagram below for how this process works.
+The watchdog provides an unmanaged and generic interface between the outside world and your function. Its job is to marshal a HTTP request accepted on the API Gateway and to invoke your chosen appliaction. The watchdog is a tiny Golang webserver - see the diagram below for how this process works.
 
 ![](https://pbs.twimg.com/media/DGScDblUIAAo4H-.jpg:large)
 
@@ -17,7 +17,7 @@ The easiest way to create a function is to use a template and the FaaS CLI. The 
 
 * [Your first serverless Python function with OpenFaaS](https://blog.alexellis.io/first-faas-python-function/)
 
-* [Read a tutorial on the FaaS CLI](https://github.com/alexellis/faas-cli)
+* [Read a tutorial on the FaaS CLI](https://github.com/openfaas/faas-cli)
 
 ## Delve deeper
 
@@ -26,7 +26,7 @@ The easiest way to create a function is to use a template and the FaaS CLI. The 
 Here's how to package your function if you don't want to use the CLI or have existing binaries or images:
 
 - [x] Use an existing or a new Docker image as base image `FROM`
-- [x] Add the fwatchdog binary from the [Releases page](https://github.com/alexellis/faas/releases) via `curl` or `ADD https://`
+- [x] Add the fwatchdog binary from the [Releases page](https://github.com/openfaas/faas/releases) via `curl` or `ADD https://`
 - [x] Set an `fprocess` environmental variable with the function you want to run for each request
 - [x] Expose port 8080
 - [x] Set the `CMD` to `fwatchdog`
@@ -36,7 +36,7 @@ Example Dockerfile for an `echo` function:
 ```
 FROM alpine:3.5
 
-ADD https://github.com/alexellis/faas/releases/download/v0.5-alpha/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/v0.5-alpha/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
 # Define your UNIX binary here
@@ -150,6 +150,10 @@ By default the watchdog will match the response of your function to the "Content
 * If your client sends a JSON post with a Content-Type of `text/plain` this will be matched automatically in the response too
 
 To override the Content-Type of all your responses set the `content_type` environmental variable.
+
+**I don't want to use the watchdog**
+
+This is an unsupported use-case for the OpenFaaS project however if your container exposes HTTP POST on port 8080 then the OpenFaaS API gateway and other tooling will manage your container.
 
 **Tuning auto-scaling**
 

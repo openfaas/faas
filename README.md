@@ -1,19 +1,26 @@
-## Functions as a Service (OpenFaaS)
+## OpenFaaS - Functions as a Service
 
-[![Build
-Status](https://travis-ci.org/alexellis/faas.svg?branch=master)](https://travis-ci.org/alexellis/faas)
+[![Go Report Card](https://goreportcard.com/badge/github.com/openfaas/faas)](https://goreportcard.com/report/github.com/openfaas/faas) [![Build
+Status](https://travis-ci.org/openfaas/faas.svg?branch=master)](https://travis-ci.org/openfaas/faas) [![GoDoc](https://godoc.org/github.com/openfaas/faas?status.svg)](https://godoc.org/github.com/openfaas/faas)
+[![OpenFaaS](https://img.shields.io/badge/openfaas-serverless-blue.svg)](https://www.openfaas.com)
 
-![OpenFaaS](https://blog.alexellis.io/content/images/2017/08/faas_side.png)
+![OpenFaaS Logo](https://blog.alexellis.io/content/images/2017/08/faas_side.png)
 
-OpenFaaS is a framework for building serverless functions with Docker which has first class support for metrics. Any process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
+OpenFaaS (Functions as a Service) is a framework for building serverless functions with Docker which has first class support for metrics. Any process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
+
+[![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/fold_left.svg?style=social&label=Follow%20%40open_faas)](https://twitter.com/open_faas)
 
 **Highlights**
 
 * Ease of use through UI portal and *one-click* install
 * Write functions in any language for Linux or Windows and package in Docker/OCI image format
-* Portable - runs on existing hardware or public/private cloud - [Kubernetes](https://github.com/alexellis/faas-netes) or Docker Swarm
-* [CLI](http://github.com/alexellis/faas-cli) available with YAML format for templating and defining functions
+* Portable - runs on existing hardware or public/private cloud - [Kubernetes](https://github.com/openfaas/faas-netes) and Docker Swarm native
+* [CLI](http://github.com/openfaas/faas-cli) available with YAML format for templating and defining functions
 * Auto-scales as demand increases
+
+## Governance
+
+OpenFaaS is an independent project created by [Alex Ellis](https://www.alexellis.io) which is now being built and shaped by a growing community of contributors. Project website: [openfaas.com](https://www.openfaas.com).
 
 ## Overview of OpenFaaS
 
@@ -30,19 +37,21 @@ OpenFaaS is a framework for building serverless functions with Docker which has 
 * Your API Gateway will scale functions according to demand by altering the service replica count in the Docker Swarm or Kubernetes API.
 * A UI is baked in allowing you to invoke functions in your browser and create new ones as needed.
 
-> The API Gateway is a RESTful micro-service and you can view the [Swagger docs here](https://github.com/alexellis/faas/tree/master/api-docs).
+> The API Gateway is a RESTful micro-service and you can view the [Swagger docs here](https://github.com/openfaas/faas/tree/master/api-docs).
 
 ### CLI
 
-Any container or process in a Docker container can be a serverless function in FaaS. Using the [FaaS CLI](http://github.com/alexellis/faas-cli) you can deploy your functions or quickly create new functions from templates such as Node.js or Python.
+Any container or process in a Docker container can be a serverless function in FaaS. Using the [FaaS CLI](http://github.com/openfaas/faas-cli) you can deploy your functions or quickly create new functions from templates such as Node.js or Python.
 
 > The CLI is effectively a RESTful client for the API Gateway.
 
-**CLI walk-through**
+When you have OpenFaaS configured you can [get started with the CLI here](https://blog.alexellis.io/quickstart-openfaas-cli/)
 
-Once you [have set up OpenFaaS](https://github.com/alexellis/faas#get-started-with-openfaas) you can follow these instructions:
+### Function examples
 
-Let's have a quick look at an example function `url-ping` which connects to a remote web server and returns the HTTP code from the response. It's written in Python.
+You can generate new functions using the FaaS-CLI and built-in templates or use any binary for Windows or Linux in a Docker container.
+
+* Python example:
 
 ```python
 import requests
@@ -53,57 +62,58 @@ def handle(req):
 ```
 *handler.py*
 
+* Node.js example:
+
+```js
+"use strict"
+
+module.exports = (callback, context) => {
+    callback(null, {"message": "You said: " + context})
+}
 ```
-$ curl -sSL https://cli.openfaas.com | sudo sh
-```
+*handler.js*
 
-*Install the faas-cli which is also available on `brew`*
-
-Clone the samples and templates from Github:
-
-```
-$ git clone https://github.com/alexellis/faas-cli
-$ cd faas-cli
-```
-
-Define your functions in YAML - or deploy via the API Gateway's UI.
-
-```yaml
-provider:
-  name: faas
-  gateway: http://localhost:8080
-
-functions:
-  url-ping:
-    lang: python
-    handler: ./sample/url-ping
-    image: alexellis2/faas-urlping
-```
-
-*Example function YAML file - `url-ping.yaml`*
-
-```
-$ faas-cli -action build -f ./url-ping.yaml
-```
-*Build a Docker image using the Python handler in `./sample/url-ping`*
-
-```
-$ faas-cli -action deploy -f ./url-ping.yaml
-```
-*Deploy the new image to the gateway defined in the YAML file.*
-
-> If your gateway is remote or part of a multi-host Swarm - you can also use the CLI to push your image to a remote registry or the Hub with `faas-cli -action push`
-
-```
-$ curl -d "https://cli.openfaas.com" http://localhost:8080/function/url-ping/
-https://cli.openfaas.com => 200
-```
-
-*Test out the function with the URL https://cli.openfaas.com => 200*
-
-[Sample functions](https://github.com/alexellis/faas/tree/master/sample-functions) are available in the Github repository in a range of programming languages.
+Other [Sample functions](https://github.com/openfaas/faas/tree/master/sample-functions) are available in the Github repository in a range of programming languages.
 
 ## Get started with OpenFaaS
+
+### TestDrive
+
+**Docker Swarm**
+
+The deployment guide for Docker Swarm contains a simple one-line command to get you up and running in around 60 seconds. It also includes a set of [sample functions](https://github.com/openfaas/faas/tree/master/sample-functions) which you can use with the TestDrive instructions below.
+
+[Deployment guide for Docker Swarm](https://github.com/openfaas/faas/blob/master/guide/deployment_swarm.md)
+
+**Kubernetes**
+
+OpenFaaS is Kubernetes-native - you can follow the [deployment guide here](https://github.com/openfaas/faas/blob/master/guide/deployment_k8s.md).
+
+**Docker Playground**
+
+You can quickly start OpenFaaS on Docker Swarm online using the community-run Docker playground: play-with-docker.com (PWD) by clicking the button below:
+
+[![Try in PWD](https://cdn.rawgit.com/play-with-docker/stacks/cff22438/assets/images/button.png)](http://play-with-docker.com?stack=https://raw.githubusercontent.com/openfaas/faas/master/docker-compose.yml&stack_name=func)
+
+#### Begin the TestDrive
+
+* [Begin the TestDrive with Docker Swarm](https://github.com/openfaas/faas/blob/master/TestDrive.md)
+
+Here is a screenshot of the API gateway portal - designed for ease of use.
+
+![Portal](https://pbs.twimg.com/media/C7bkpZbWwAAnKsx.jpg)
+
+## Find out more about OpenFaaS
+
+### SkillsMatter video presentation
+
+Great overview of OpenFaaS features, users and roadmap
+
+* [HD Video](https://skillsmatter.com/skillscasts/10813-faas-and-furious-0-to-serverless-in-60-seconds-anywhere)
+
+### OpenFaaS presents to CNCF Serverless workgroup
+
+* [Video and blog post](https://blog.alexellis.io/openfaas-cncf-workgroup/)
 
 ### Closing Keynote at Dockercon 2017
 
@@ -117,53 +127,38 @@ If you'd like to find the functions I used in the demos head over to the [faas-d
 
 This is my original blog post on FaaS from January: [Functions as a Service blog post](http://blog.alexellis.io/functions-as-a-service/)
 
-### TestDrive
-
-**Docker Playground**
-
-You can quickly start OpenFaaS on Docker Swarm online using the community-run Docker playground: play-with-docker.com (PWD) by clicking the button below:
-
-[![Try in PWD](https://cdn.rawgit.com/play-with-docker/stacks/cff22438/assets/images/button.png)](http://play-with-docker.com?stack=https://raw.githubusercontent.com/alexellis/faas/master/docker-compose.yml&stack_name=func)
-
-**Docker Swarm**
-
-A set of one-line scripts are provided to help you quickly test-drive OpenFaaS on Docker Swarm with a set of sample functions as defined in the provided [docker-compose.yml](https://github.com/alexellis/faas/blob/master/docker-compose.yml) file.
-
-- `deploy_stack.sh` - for OSX/Linux on x86_64
-- `deploy_stack.armhf.sh` - for Linux on ARM (Raspberry Pi for example)
-- `deploy_stack.ps1` - for Windows
-
-**Kubernetes**
-
-Alternatively if you have a Kubernetes cluster you can [start here](https://github.com/alexellis/faas-netes).
-
-### [Begin the TestDrive with Docker Swarm](https://github.com/alexellis/faas/blob/master/TestDrive.md)
-
-Here is a screenshot of the API gateway portal - designed for ease of use.
-
-![Portal](https://pbs.twimg.com/media/C7bkpZbWwAAnKsx.jpg)
-
 ### Community
 
 Have you written a blog about OpenFaaS? Send a Pull Request to the community page below.
 
-* [Read blogs/articles and find events about OpenFaaS](https://github.com/alexellis/faas/blob/master/community.md)
+* [Read blogs/articles and find events about OpenFaaS](https://github.com/openfaas/faas/blob/master/community.md)
 
 If you'd like to join OpenFaaS community Slack channel to chat with contributors or get some help - then send a Tweet to [@alexellisuk](https://twitter.com/alexellisuk/) or email alex@openfaas.com.
 
-## Roadmap and contributing
+### Roadmap and contributing
 
-OpenFaaS is written in Golang and is MIT licensed - contributions are welcomed whether that means providing feedback, testing existing and new feature or hacking on the source. To get started you can checkout the [roadmap and contribution guide](https://github.com/alexellis/faas/blob/master/ROADMAP.md) or [browse the open issues on Github](https://github.com/alexellis/faas/issues).
+OpenFaaS is written in Golang and is MIT licensed - contributions are welcomed whether that means providing feedback, testing existing and new feature or hacking on the source.
+
+To get started you can read the [roadmap](https://github.com/openfaas/faas/blob/master/ROADMAP.md) and [contribution guide](https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md) or:
+
+* [Browse FaaS issues on Github](https://github.com/openfaas/faas/issues).
+* [Browse FaaS-CLI issues on Github](https://github.com/openfaas/faas-cli/issues).
 
 Highlights:
 
-* New: Kubernetes support via [FaaS-netes](https://github.com/alexellis/faas-netes) plugin
+* New: Kubernetes support via [FaaS-netes](https://github.com/openfaas/faas-netes) plugin
 * New: FaaS CLI and easy install via `curl` and `brew`
 * New: Windows function support
-* In development: Asynchronous/long-running OpenFaaS functions via [NATS Streaming](https://nats.io/documentation/streaming/nats-streaming-intro/) - [Test it using this guide](https://gist.github.com/alexellis/62dad83b11890962ba49042afe258bb1)
+* New: Asynchronous/long-running OpenFaaS functions via [NATS Streaming](https://nats.io/documentation/streaming/nats-streaming-intro/) - [Follow this guide](https://github.com/openfaas/faas/blob/master/guide/asynchronous.md)
+
+### How do I become a contributor?
+
+Anyone is invited to contribute to the project in-line with the [contribution guide](https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md) - you can also read the guide for ideas on how to get involved. We invite new contributors to join our Slack community. We would also ask you to propose any changes or contributions ahead of time, especially when there is no issue or proposal alredy tracking it.
+
+### Other
 
 Example of a Grafana dashboard linked to OpenFaaS showing auto-scaling live in action:
 
 ![](https://pbs.twimg.com/media/C9caE6CXUAAX_64.jpg:large)
 
-Sample dashboard JSON file available [here](https://github.com/alexellis/faas/blob/master/contrib/grafana.json)
+Sample dashboard JSON file available [here](https://github.com/openfaas/faas/blob/master/contrib/grafana.json)
