@@ -1,4 +1,4 @@
-FROM golang:1.7.5 as build
+FROM golang:1.8.3 as build
 WORKDIR /go/src/github.com/openfaas/faas/gateway
 
 COPY vendor         vendor
