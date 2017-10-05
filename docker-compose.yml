@@ -1,4 +1,4 @@
-version: "3.2"
+version: "3.3"
 services:
     gateway:
         volumes:
@@ -201,5 +201,4 @@ services:
 networks:
     functions:
         driver: overlay
-        # Docker does not support this option yet - maybe create outside of the stack and reference as "external"?
-        #attachable: true
+        attachable: true
