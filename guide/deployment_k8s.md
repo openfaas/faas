@@ -89,6 +89,19 @@ $ echo -n "" | faas-cli invoke --gateway http://kubernetes-ip:31112 --name nodei
 $ echo -n "verbose" | faas-cli invoke --gateway http://kubernetes-ip:31112 --name nodeinfo
 ```
 
+## Asynchronous functions
+
+Asynchronous invocation works by queuing requests with NATS Streaminig.
+
+Deploy the asynchronous stack like this:
+
+```
+$ cd faas-netes
+$ kubectl apply -f ./faas.async.yml,nats.yml,monitoring.yml,rbac.yml
+```
+
+* See also: [Asynchronous function guide](https://github.com/openfaas/faas/blob/master/guide/asynchronous.md)
+
 ## Helm chart
 
 A Helm chart is provided below with experimental support.
