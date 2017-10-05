@@ -4,6 +4,10 @@
 
 ## Kubernetes
 
+OpenFaaS is Kubernetes-native and uses *Deployments* and *Services*. For more detail check out the ["faas-netes" repository](https://github.com/openfaas/faas-netes).
+
+> For deploying on a cloud that supports Kubernetes *LoadBalancers* you may also want to apply the configuration in: `cloud/lb.yml`.
+
 ### Build a cluster
 
 You can start evaluating FaaS and building functions on your laptop or on a VM (cloud or on-prem).
