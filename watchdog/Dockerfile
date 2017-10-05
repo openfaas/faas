@@ -11,9 +11,9 @@ COPY requesthandler_test.go .
 COPY types types
 
 # Run a gofmt and exclude all vendored code.
-RUN gofmt -l -d $(find . -type f -name '*.go' -not -path "./vendor/*")
+RUN test -z "$(gofmt -l $(find . -type f -name '*.go' -not -path "./vendor/*"))"
 
-RUN go test
+RUN go test -v ./...
 
 # Stripping via -ldflags "-s -w" 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-s -w" -installsuffix cgo -o watchdog . \
