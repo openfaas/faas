@@ -21,6 +21,8 @@ Suggestions for new topics are welcome. Please also check the [Issue tracker](ht
 
 * [Hardening OpenFaaS with Kong & TLS](https://github.com/openfaas/faas/blob/master/guide/kong_integration.md)
 
+* WIP [Debugging Functions](https://github.com/openfaas/faas/issues/223)
+
 ## Blog posts and tutorials
 
 ### Hands-on with Node.js / Python
