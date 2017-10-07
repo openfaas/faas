@@ -174,7 +174,7 @@ If you want to disable scaling, set the `com.faas.max_replicas` value to `"1"`.
 
 **Use async**
 
-If your `fprocess` has significant start-up latency then you may want to use [asynchronous processing](https://github.com/alexellis/faas/blob/master/guide/asynchronous.md).
+If your `fprocess` has significant start-up latency then you may want to use [asynchronous processing](https://github.com/openfaas/faas/blob/master/guide/asynchronous.md).
 
 **Process batches of data**
 
