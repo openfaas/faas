@@ -25,9 +25,11 @@ Suggestions for new topics are welcome. Please also check the [Issue tracker](ht
 
 ## Blog posts and tutorials
 
-### Hands-on with Node.js / Python
+### Hands-on with Node.js / Go / Python
 
 * [Morning coffee with the OpenFaaS CLI](https://blog.alexellis.io/quickstart-openfaas-cli/)
+
+* [Build a Serverless Golang Function with OpenFaaS](https://blog.alexellis.io/serverless-golang-with-openfaas/)
 
 * [Your first serverless Python function with OpenFaaS](https://blog.alexellis.io/first-faas-python-function/)
 
