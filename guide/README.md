@@ -7,19 +7,21 @@ Suggestions for new topics are welcome. Please also check the [Issue tracker](ht
 
 ## Deployment guides (start here)
 
-* [Kubernetes deployment](https://github.com/openfaas/faas/blob/master/guide/deployment_k8s.md)
+* [Kubernetes deployment](deployment_k8s.md)
 
-* [Docker Swarm deployment](https://github.com/openfaas/faas/blob/master/guide/deployment_swarm.md)
+* [Docker Swarm deployment](deployment_swarm.md)
+
+* [DigitalOcean deployment (with Swarm)](deployment_digitalocean.md)
 
 ## Intermediate
 
-* [Chaining functions](https://github.com/openfaas/faas/blob/master/guide/chaining_functions.md)
+* [Chaining functions](chaining_functions.md)
 
-* [Troubleshooting](https://github.com/openfaas/faas/blob/master/guide/troubleshooting.md)
+* [Troubleshooting](troubleshooting.md)
 
-* [Asynchronous functions with NATS Streaming](https://github.com/openfaas/faas/blob/master/guide/asynchronous.md)
+* [Asynchronous functions with NATS Streaming](asynchronous.md)
 
-* [Hardening OpenFaaS with Kong & TLS](https://github.com/openfaas/faas/blob/master/guide/kong_integration.md)
+* [Hardening OpenFaaS with Kong & TLS](kong_integration.md)
 
 * WIP [Debugging Functions](https://github.com/openfaas/faas/issues/223)
 
@@ -53,4 +55,4 @@ Suggestions for new topics are welcome. Please also check the [Issue tracker](ht
 
 ## Extend OpenFaaS
 
-* [Build a third-party provider](https://github.com/openfaas/faas/blob/master/guide/backends.md)
+* [Build a third-party provider](backends.md)
