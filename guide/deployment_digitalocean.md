@@ -122,13 +122,3 @@ Click `Create Load Balancer` and after a few minutes your balancer will be avail
 You can now access the OpenFaaS Gateway, Prometheus dashboard and all functions via the load balanced IP address. For example from the balancer above:
 - Gateway: http://45.55.124.29:8080
 - Prometheus: http://45.55.124.29:9090
-
-## Costs
-
-The costs of running your own OpenFaaS platform on DigitalOcean depend on how resiliant you want it to be, from the simplest single node deployment, to a three node swarm behind a load balancer.
-
-| Deployment Type | Resources | Monthly Cost | Hourly Cost |
-| --------------- | --------- | ------------ | ----------- |
-| Single Node Swarm | 1x 512MB/1CPU Droplet | $5 | < 1 cent |
-| Three Node Swarm | 3x 512MB/1CPU Droplet | $15 | ~ 2 cent |
-| Three Node Swarm with Load Balancer | 3x 512MB/1CPU Droplet + Balancer | $35 | ~ 5 cent |
