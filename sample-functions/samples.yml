@@ -18,10 +18,10 @@ functions:
     handler: ./CaptainsIntent
     image: functions/captainsintent:latest
 
-  catservice:
+  echo:
     lang: Dockerfile
-    handler: ./catservice
-    image: functions/catservice:latest
+    handler: ./echo
+    image: functions/faas-echo:latest
 
   ChangeColorIntent:
     lang: Dockerfile
