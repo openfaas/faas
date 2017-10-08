@@ -89,8 +89,8 @@ Your function will appear after a few seconds and you can click "Invoke"
 You can also use the CLI like this:
 
 ```
-$ echo -n "" | faas-cli invoke --gateway http://kubernetes-ip:31112 --name nodeinfo
-$ echo -n "verbose" | faas-cli invoke --gateway http://kubernetes-ip:31112 --name nodeinfo
+$ echo -n "" | faas-cli invoke --gateway http://kubernetes-ip:31112 nodeinfo
+$ echo -n "verbose" | faas-cli invoke --gateway http://kubernetes-ip:31112 nodeinfo
 ```
 
 ## Asynchronous functions

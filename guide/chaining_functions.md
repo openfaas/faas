@@ -18,8 +18,8 @@ $ curl -d "# test" localhost:8080/function/markdown | \
 You could also do this via code, or through the `faas-cli`:
 
 ```
-$ echo "test" | faas-cli invoke --name markdown | \
-faas-cli invoke --name slack
+$ echo "test" | faas-cli invoke markdown | \
+faas-cli invoke slack
 ```
 
 ## Server-side access via gateway
