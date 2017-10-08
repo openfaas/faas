@@ -3,17 +3,17 @@ provider:
   gateway: http://localhost:8080  # can be a remote server
 
 functions:
-  AlpineFunction:
+  alpinefunction:
     lang: Dockerfile
     handler: ./AlpineFunction
     image: functions/alpine:0.6.5
 
-  ApiKeyProtected:
+  apikeyprotected:
     lang: Dockerfile
     handler: ./AlpineFunction
-    image: functions/api-key-protected:latest
+    image: functions/api_key_protected:latest
 
-  CaptainsIntent:
+  captainsintent:
     lang: Dockerfile
     handler: ./CaptainsIntent
     image: functions/captainsintent:latest
@@ -21,64 +21,64 @@ functions:
   echo:
     lang: Dockerfile
     handler: ./echo
-    image: functions/faas-echo:latest
+    image: functions/faas_echo:latest
 
-  ChangeColorIntent:
+  changecolorintent:
     lang: Dockerfile
     handler: ./ChangeColorIntent
-    image: functions/alexa-leds:latest
+    image: functions/alexa_leds:latest
 
-  CHelloWorld:
+  chelloworld:
     lang: Dockerfile
     handler: ./CHelloWorld/src
     image: functions/helloc:latest
 
-  DockerHubStats:
+  dockerhubstats:
     lang: Dockerfile
     handler: ./DockerHubStats
     image: functions/hubstats:latest
 
-  gif-maker:
+  gif_maker:
     lang: Dockerfile
-    handler: ./gif-maker
-    image: functions/gif-maker:latest
+    handler: ./gif_maker
+    image: functions/gif_maker:latest
 
-  HostnameIntent:
+  hostnameintent:
     lang: Dockerfile
     handler: ./HostnameIntent
-    image: functions/hostname-intent:latest
+    image: functions/hostname_intent:latest
 
-  MarkdownRender:
+  markdownrender:
     lang: Dockerfile
     handler: ./MarkdownRender
-    image: functions/markdown-render:latest
+    image: functions/markdown_render:latest
 
-  NodeInfo:
+  nodeinfo:
     lang: Dockerfile
     handler: ./NodeInfo
-    image: functions/node-info:latest
+    image: functions/node_info:latest
 
-  Phantomjs:
+  phantomjs:
     lang: Dockerfile
     handler: ./Phantomjs
     image: functions/phantomjs:latest
 
-  ResizeImageMagick:
+  resizeimagemagick:
     lang: Dockerfile
     handler: ./ResizeImageMagick
     image: functions/resizer:latest
 
-  SentimentAnalysis:
+  sentimentanalysis:
     lang: Dockerfile
     handler: ./SentimentAnalysis
     image: functions/sentimentanalysis:latest
 
-  WebhookStash:
+  webhookstash:
     lang: Dockerfile
     handler: ./WebhookStash
     image: functions/webhookstash:latest
 
-  WordCountFunction:
+  wordcountfunction:
     lang: Dockerfile
     handler: ./WordCountFunction
     image: functions/wordcount:latest
