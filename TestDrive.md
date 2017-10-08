@@ -84,7 +84,7 @@ You can access the sample functions via the command line with a HTTP POST reques
 * Invoke the markdown function with the CLI:
 
 ```
-$ echo "# Test *Drive*"| faas-cli invoke --name func_markdown
+$ echo "# Test *Drive*"| faas-cli invoke func_markdown
 <h1>Test <em>Drive</em></h1>
 ```
 
