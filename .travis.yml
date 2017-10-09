@@ -19,3 +19,15 @@ after_success:
         docker login -u=$DOCKER_USERNAME -p=$DOCKER_PASSWORD;
         docker push $DOCKER_NS/gateway:$TRAVIS_TAG;
         fi
+deploy:
+  provider: releases
+  api_key:
+      secure: "XSwuWxddw6Stz/ZtrfQJBovTL7ZyQM8kf7zCtzS6Pl1gatgpa/E/ZflVICgEArGZu2Ipaj8TfOJjQ0cgZlA3MSt+DxNXpZjHJbeids+GFQd+/xuxvyUDI9mCabE2hLM0Drqy4Psro2Rz8S995cIoCmAZM5FpGQ2xgjy6c2cIpeO1F3wnLExTe+TLBBYOP2yEdkLNem12EOnomsCnmG0Cq15nJKq0zOZ1dzIIOhKTY/9poH0s3W3lpbXYYVLGhRJ6GENwX1+HX7yM71AOAYPdXF4AV5p1jVCI74c1tnUGgysYzo9CHIgB4RME6ElJrYzOA9bBBX5mHPmwvTkfUmt2Dp/Oq4ZhqWKfAp4dFjEV2iZpKg4V8+neeiLlgHnTHur/tCxBJLywH+FuoLMghKjs10wT6gAeKa098cEJzXrnRxwRa/jHOIMJLi5BflbfS1QbjHaQMrdHgQCwQlj2ZpBcCM/MWrOgeWT72o6gAfeg4r4Gzj0MHlKr82LCY27QVUeit1iodUL2eODd6DURgt8jfRVOjEgATrV0xewsTp2ENHWccxpqfceGAjyUow6HLhjNvBHwcaUgMjTp2oAUPIDCqVp7oXyOEoHy27hyNEqxHCh0MjPY/HDoW1I+1vhBH47xewbLgNrxeT7Znm+SO6q5Ak0OIWcf/5vfLOOq3BOImno="
+  file: 
+  - fwatchdog
+  - fwatchdog-armhf
+  - fwatchdog-arm64
+  - fwatchdog.exe
+  skip_cleanup: true
+  on:
+    tags: true
