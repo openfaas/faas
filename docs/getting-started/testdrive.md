@@ -1,10 +1,23 @@
 # OpenFaaS - TestDrive
 
+
 OpenFaaS (or Functions as a Service) is a framework for building serverless functions on Docker Swarm and Kubernetes with first class metrics. Any UNIX process can be packaged as a function in FaaS enabling you to consume a range of web events without repetitive boiler-plate coding.
 
 > Please support the project and put a **Star** on the repo.
 
-# Overview
+
+## Begin the TestDrive
+
+* [Begin the TestDrive with Docker Swarm](https://github.com/openfaas/faas/blob/master/TestDrive.md)
+
+Here is a screenshot of the API gateway portal - designed for ease of use.
+
+![Portal](https://pbs.twimg.com/media/C7bkpZbWwAAnKsx.jpg)
+
+
+
+
+## Overview
 
 We have provided several sample functions which are built-into the *Docker Stack* file we deploy during the test drive. You'll be up and running in a few minutes and invoking functions via the Web UI or `curl`. When you're ready to deploy your own function click "Create Function" in the UI or head over to the CLI tutorial:
 

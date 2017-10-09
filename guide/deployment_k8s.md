@@ -12,11 +12,12 @@ These instructions are for a development environment. If you plan to expose Open
 
 OpenFaaS is Kubernetes-native and uses *Deployments*, *Service*s and *Secret*s. For more detail check out the ["faas-netes" repository](https://github.com/openfaas/faas-netes).
 
-> For deploying on a cloud that supports Kubernetes *LoadBalancers* you may also want to apply the configuration in: `cloud/lb.yml`.
+!!! note
+    For deploying on a cloud that supports Kubernetes *LoadBalancers* you may also want to apply the configuration in: `cloud/lb.yml`.
 
 ### 1.0 Build a cluster
 
-You can start evaluating FaaS and building functions on your laptop or on a VM (cloud or on-prem).
+If you do not already have a Kubernetes cluster follow this guide to deploy one so you can start evaluating OpenFaaS and building functions on your laptop or on a VM (cloud or on-prem).
 
 * [10 minute guides for minikube / kubeadm](https://blog.alexellis.io/tag/learn-k8s/)
 
@@ -36,19 +37,38 @@ A Helm chart is provided `faas-netes` repository. Follow the link below then com
 
 This step assumes you are running `kubectl` on a master host.
 
-* Clone the code
+### Standard Stack
 
+Normal non-async OpenFaaS deployments can be carried out like this:
+
+1. Clone the [Faas-Netes](https://github.com/openfaas/faas-netes) repository.
 ```
 $ git clone https://github.com/openfaas/faas-netes
+```
+2. Deploy the OpenFaaS stack.
+```
+$ cd faas-netes
+$ kubectl apply -f ./faas.yml,monitoring.yml,rbac.yml
 ```
 
 Deploy a synchronous or asynchronous stack. If you're using OpenFaaS for the first time we recommend the synchronous stack. The asynchronous stack also includes NATS Streaming for queuing.
 
 * Deploy the synchronous stack
+### Async Stack
 
+Alternatively OpenFaaS can be deployed with support for asynchronous invocation like this:
+
+!!! Note
+    Asynchronous invocation works by queuing requests with [NATS](https://nats.io/) Streaming. See also: [Asynchronous function guide](https://github.com/openfaas/faas/blob/master/guide/asynchronous.md)
+
+1. Clone the [Faas-Netes](https://github.com/openfaas/faas-netes) repository.
+```
+$ git clone https://github.com/openfaas/faas-netes
+```
+2. Deploy the OpenFaaS stack with asynchronous invocation support.
 ```
 $ cd faas-netes
-$ kubectl apply -f ./faas.yml,monitoring.yml,rbac.yml
+$ kubectl apply -f ./faas.async.yml,nats.yml,monitoring.yml,rbac.yml
 ```
 
 Or
@@ -73,6 +93,9 @@ After deploying OpenFaaS you can start using one of the guides or blog posts to 
 You can also watch a complete walk-through of OpenFaaS on Kubernetes which demonstrates auto-scaling in action and how to use the Prometheus UI. [Video walk-through](https://www.youtube.com/watch?v=0DbrLsUvaso).
 
 **Connect to the UI**
+### Deployed
+
+That's it. You now have OpenFaaS deployed.
 
 For simplicity the default configuration uses NodePorts rather than an IngressController (which is more complicated to setup).
 
@@ -81,13 +104,14 @@ For simplicity the default configuration uses NodePorts rather than an IngressCo
 | API Gateway / UI  | 31112    |
 | Prometheus        | 31119    |
 
-> If you're an advanced Kubernetes user, you can add an IngressController to your stack and remove the NodePort assignments.
+!!! note
+    If you're an advanced Kubernetes user, you can add an IngressController to your stack and remove the NodePort assignments.
 
-* Deploy a sample function
+## Deploy a function
 
 There are currently no sample functions built into this stack, but we can deploy them quickly via the UI or FaaS-CLI.
 
-**Use the CLI**
+### Using the CLI
 
 * Install the CLI 
 
@@ -105,19 +129,21 @@ Edit samples.yml and change your gateway URL from `localhost:8080` to `kubernete
 
 i.e.
 
-```
+```yaml
 provider:  
   name: faas
   gateway: http://192.168.4.95:31112
 ```
 
 Now deploy the samples:
+**Learn about the CLI**
 
 ```
 $ faas-cli deploy -f samples.yml
 ```
 
 > The `faas-cli` also supports an override of `--gateway http://...` for example:
+**Build your first Python function**
 
 ```
 $ faas-cli deploy -f samples.yml --gateway http://127.0.0.1:31112
@@ -155,6 +181,12 @@ c6ee9e33cf5c6715a1d148fd73f7318884b41adcb916021e2bc0e800a5c5dd97f5142178f6ae88c8
 [Your first serverless Python function with OpenFaaS](https://blog.alexellis.io/first-faas-python-function/)
 
 **Use the UI**
+```bash
+$ git clone https://github.com/openfaas/faas-cli && \
+  faas-cli deploy -f samples.yml
+```
+
+### Using the UI
 
 The UI is exposed on NodePort 31112.
 
@@ -167,13 +199,24 @@ Click "New Function" and fill it out with the following:
 | fProcess   | node main.js                 |
 | Network    | default                      |
 
-* Test the function
+## Test the function
 
 Your function will appear after a few seconds and you can click "Invoke"
 
 The function can also be invoked through the CLI:
 
+```bash
+$ echo -n "" | faas-cli invoke --gateway http://kubernetes-ip:31112 \
+                               --name nodeinfo
+$ echo -n "verbose" | faas-cli invoke --gateway http://kubernetes-ip:31112 \
+                                      --name nodeinfo
 ```
 $ echo -n "" | faas-cli invoke --gateway http://kubernetes-ip:31112 nodeinfo
 $ echo -n "verbose" | faas-cli invoke --gateway http://kubernetes-ip:31112 nodeinfo
 ```
+
+## Helm chart
+
+A Helm chart is provided below with experimental support.
+
+* [OpenFaaS Helm chart](https://github.com/openfaas/faas-netes/blob/master/HELM.md)

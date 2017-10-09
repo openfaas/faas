@@ -1,5 +1,4 @@
-Watchdog
-==========
+# Watchdog
 
 The watchdog provides an unmanaged and generic interface between the outside world and your function. Its job is to marshal a HTTP request accepted on the API Gateway and to invoke your chosen appliaction. The watchdog is a tiny Golang webserver - see the diagram below for how this process works.
 
@@ -19,17 +18,15 @@ The easiest way to create a function is to use a template and the FaaS CLI. The 
 
 * [Read a tutorial on the FaaS CLI](https://github.com/openfaas/faas-cli)
 
-## Delve deeper
-
-**Package your function**
+## Package your function
 
 Here's how to package your function if you don't want to use the CLI or have existing binaries or images:
 
-- [x] Use an existing or a new Docker image as base image `FROM`
-- [x] Add the fwatchdog binary from the [Releases page](https://github.com/openfaas/faas/releases) via `curl` or `ADD https://`
-- [x] Set an `fprocess` environmental variable with the function you want to run for each request
-- [x] Expose port 8080
-- [x] Set the `CMD` to `fwatchdog`
+- Use an existing or a new Docker image as base image `FROM`
+- Add the fwatchdog binary from the [Releases page](https://github.com/openfaas/faas/releases) via `curl` or `ADD https://`
+- Set an `fprocess` environmental variable with the function you want to run for each request
+- Expose port `8080`
+- Set the `CMD` to `fwatchdog`
 
 Example Dockerfile for an `echo` function:
 
@@ -45,7 +42,7 @@ ENV fprocess="/bin/cat"
 CMD ["fwatchdog"]
 ```
 
-**Implementing a Docker healthcheck**
+## Implementing a Docker Healthcheck
 
 A Docker Healthcheck is not required but is best practice. It will make sure that the watchdog is ready to accept a request before forwarding requests via the API Gateway. If the function or watchdog runs into an unrecoverable issue Swarm will also be able to restart the container.
 
@@ -65,7 +62,7 @@ Read my Docker Swarm tutorial on Healthchecks:
 
  * [Test-drive Docker Healthcheck in 10 minutes](http://blog.alexellis.io/test-drive-healthcheck/)
 
-**Environmental overrides:**
+## Environmental Overrides:
 
 The watchdog can be configured through environmental variables. You must always specifiy an `fprocess` variable.
 
@@ -82,9 +79,9 @@ The watchdog can be configured through environmental variables. You must always 
 | `write_debug`          | Write all output, error messages, and additional information to the logs. Default is false. |
  
 
-## Advanced / tuning
+## Advanced / Tuning
 
-**Working with HTTP headers**
+### Working with HTTP Headers
 
 Headers and other request information are injected into environmental variables in the following format:
 
@@ -102,7 +99,8 @@ Here's an example of a POST request with an additional header and a query-string
 $ cgi_headers=true fprocess=env ./watchdog &
 2017/06/23 17:02:58 Writing lock-file to: /tmp/.lock
 
-$ curl "localhost:8080?q=serverless&page=1" -X POST -H X-Forwarded-By:http://my.vpn.com
+$ curl -X POST "localhost:8080?q=serverless&page=1" \
+    -H X-Forwarded-By:http://my.vpn.com
 ```
 
 This is what you'd see if you had set your `fprocess` to `env` on a Linux system:
@@ -132,19 +130,20 @@ Http_Query=action=quote&qty=1&productId=105
 
 You can now use HTTP state from within your application to make decisions.
 
-**HTTP methods**
+### HTTP Methods
 
 The HTTP methods supported for the watchdog are:
 
 With a body:
-* POST, PUT, DELETE, UPDATE
+* `POST`, `PUT`, `DELETE`, `UPDATE`
 
 Without a body:
-* GET
+* `GET`
 
-> The API Gateway currently supports the POST route for functions.
+!!! info
+    The API Gateway currently supports the POST route for functions.
 
-**Content-Type of request/response**
+### Content-Type of Request/Response
 
 By default the watchdog will match the response of your function to the "Content-Type" of the client.
 
@@ -153,11 +152,11 @@ By default the watchdog will match the response of your function to the "Content
 
 To override the Content-Type of all your responses set the `content_type` environmental variable.
 
-**I don't want to use the watchdog**
+### I don't want to use the watchdog
 
-This is an unsupported use-case for the OpenFaaS project however if your container exposes HTTP POST on port 8080 then the OpenFaaS API gateway and other tooling will manage your container.
+This is an unsupported use-case for the OpenFaaS project however if your container exposes HTTP POST on port `8080` then the OpenFaaS API gateway and other tooling will manage your container.
 
-**Tuning auto-scaling**
+### Tuning Auto-scaling
 
 Auto-scaling starts at 1 replica and steps up in blocks of 5:
 
@@ -173,3 +172,9 @@ com.faas.max_replicas: "10"
 ```
 
 If you want to disable scaling, set the `com.faas.max_replicas` value to `"1"`.
+
+## Contribute to the Watchdog
+
+To contribute to the OpenFaaS Watchdog component checkout the "./build.sh" scripts and acompanying Dockerfiles.
+
+* [Roadmap and Contributing](https://github.com/openfaas/faas/blob/master/ROADMAP.md)
