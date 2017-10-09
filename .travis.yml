@@ -15,7 +15,7 @@ script:
     - sh contrib/ci.sh
 after_success:
     - if [ ! -s "$TRAVIS_TAG" ] ; then 
-        docker tag $DOCKER_USERNAME/gateway:latest-dev $DOCKER_USERNAME/gateway:$TRAVIS_TAG;
+        docker tag $DOCKER_NS/gateway:latest-dev $DOCKER_NS/gateway:$TRAVIS_TAG;
         docker login -u=$DOCKER_USERNAME -p=$DOCKER_PASSWORD;
-        docker push $DOCKER_USERNAME/gateway:$TRAVIS_TAG;
+        docker push $DOCKER_NS/gateway:$TRAVIS_TAG;
         fi
