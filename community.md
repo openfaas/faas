@@ -1,4 +1,4 @@
-## OpenFaaS Community
+# OpenFaaS Community
 
 Welcome to the OpenFaaS community page where you can find:
 
@@ -6,15 +6,31 @@ Welcome to the OpenFaaS community page where you can find:
 * Blog posts and write-ups
 * Repos - projects / samples / use cases
 
-There are three main Github repos
+!!! note
+    It would be great to hear from you espcially if you have any of the above and want to share it with the rest of the community. Pull Request or submit a Github Issue.
 
-* FaaS - the main OpenFaaS repo for the Docker Swarm integration, samples and documentation
-* [FaaS-netes](http://github.com/openfaas/faas-netes) - the Kubernetes back-end for FaaS
-* [FaaS-cli](http://github.com/openfaas/faas-cli) - the user-facing CLI for templating and deploying functions
+## Repositories
 
-> It would be great to hear from you espcially if you have any of the above and want to share it with the rest of the community. Pull Request or submit a Github Issue.
+The project consists of three main Github repos
 
-### Events 2017
+* [github.com/openfaas/faas](https://github.com/openfaas/faas)
+
+    Main OpenFaaS repo for the Docker Swarm integration, samples and documentation
+
+* [github.com/openfaas/faas-netes](https://github.com/openfaas/faas-netes)
+
+    Kubernetes back-end for FaaS
+
+* [github.com/openfaas/faas-cli](https://github.com/openfaas/faas-cli)
+
+    CLI for templating and interacting with functions and the gateway
+
+
+## Slack
+
+If you'd like to join OpenFaaS community Slack channel to chat with contributors or get some help - then send a Tweet to [@alexellisuk](https://twitter.com/alexellisuk/) or email alex@openfaas.com.
+
+## Events 2017
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
@@ -36,7 +52,7 @@ There are three main Github repos
 | [Operationalizing Containers](http://www.rackspace-inform.eu/dispatcher/action?wlmsac=t1ejSDdh1hygBurJJANV)| Brian Christner   | Zürich   | 5-April-2017 |
 | [FaaS on Hacker News](https://news.ycombinator.com/item?id=13920588)| Alex Ellis   | Online   | 22-Mar-2017 |
 
-### Industry awards and mentions
+## Industry awards and mentions
 | Award/Mention                                          | Author(s)       | Source     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [OpenFaaS: Package any Binary or Code as a Serverless Function](https://thenewstack.io/openfaas-put-serverless-function-container/) | Joab Jackson | The New Stack | 9-Oct-2017 |
@@ -45,7 +61,7 @@ There are three main Github repos
 | [Open source project uses Docker for serverless computing](http://www.infoworld.com/article/3184757/open-source-tools/open-source-project-uses-docker-for-serverless-computing.html#tk.twt_ifw)| Serdar Yegulalp  | InfoWorld (from IDG)  | 27-Mar-2017 |
 
 
-### Blog posts and write-ups
+## Blog posts and write-ups
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
@@ -87,7 +103,7 @@ There are three main Github repos
 | [Functions as a Service (FaaS) in French](http://blog.alexellis.io/fonction-service/) | Alex Ellis | alexellis.io | 13-Jan-2017 |
 | [Functions as a Service (FaaS)](http://blog.alexellis.io/functions-as-a-service/) | Alex Ellis | alexellis.io | 4-Jan-2017 |
 
-### Third-party integrations / OpenFaaS providers
+## Third-party integrations / OpenFaaS providers
 | Project name and description                                         | Author     | Site      | Status      |
 |----------------------------------------------------------------------|------------|-----------|-------------|
 | [faas-netes](https://github.com/openfaas/faas-netes) - Kubernetes provider | OpenFaaS | github.com | Supported |
@@ -98,7 +114,7 @@ There are three main Github repos
 | [faas-ecs](https://github.com/stack360/faas-ecs) - Huawei | Xicheng Chang | github.com | Inception |
 | [faas-dcos](https://github.com/realbot/faas-dcos) - DCOS provider | Alberto Quario | github.com | Inception  |
 
-### Repos - projects / samples / use cases
+## Repos - projects / samples / use cases
 
 You can also find cool projects or submit your own to the [faas-and-furious organisation](https://github.com/faas-and-furious). Contact Alex for details on how.
 
