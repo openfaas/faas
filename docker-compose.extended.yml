@@ -5,7 +5,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:0.6.3 
+        image: functions/gateway:0.6.6b
         networks:
             - functions
         environment:
@@ -87,7 +87,7 @@ services:
             - 9093:9093
         deploy:
             placement:
-                constraints: 
+                constraints:
                     - 'node.role == manager'
                     - 'node.platform.os == linux'
 
@@ -95,7 +95,7 @@ services:
 
     # Pass a username as an argument to find how many images user has pushed to Docker Hub.
     hubstats:
-        image: alexellis2/faas-dockerhubstats:latest
+        image: alexellis2/faas-dockerhubstats:latest0d0cc708600eb671a314af802d71e0417369311c
         labels:
             function: "true"
         depends_on:

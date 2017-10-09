@@ -51,7 +51,7 @@ Follow the tutorials below, but change your gateway URL from `localhost:8080` to
 i.e.
 
 ```
-provider:  
+provider:
   name: faas
   gateway: http://192.168.4.95:31112
 ```
