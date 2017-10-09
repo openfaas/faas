@@ -1,3 +1,5 @@
+# Swagger API
+
 ## Exploring or editing the Swagger API documentation
 
 The `swagger.yml` file can be viewed and edited in the Swagger UI.

@@ -1,3 +1,9 @@
+# API Gateway
+
+To work on the OpenFaaS API Gateway component checkout the "./build.sh" scripts and acompanying Dockerfiles.
+
+* [Roadmap and Contributing](https://github.com/openfaas/faas/blob/master/ROADMAP.md)
+
 ## Build a development API Gateway
 
 1. Build a new development Docker image:
