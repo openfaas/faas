@@ -5,9 +5,9 @@ WORKDIR /go/src/github.com/openfaas/faas/watchdog
 COPY main.go        .
 COPY readconfig.go  .
 COPY config_test.go .
-COPY requesthandler_test.go .
-#COPY fastForkRequestHandler.go  .
-#COPY requestHandler.go   .
+COPY request_handler_test.go .
+COPY afterburn_request_handler.go  .
+COPY request_handler.go   .
 COPY types types
 
 # Run a gofmt and exclude all vendored code.
