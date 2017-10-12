@@ -26,7 +26,7 @@ $ git clone https://github.com/openfaas/faas-netes
 
 ```
 $ cd faas-netes
-$ kubectl apply -f ./faas.yml,monitoring.yml,rbac.yml
+$ kubectl apply -f ./faas.yml,monitoring-config.yml,monitoring.yml,rbac.yml
 ```
 
 That's it. You now have OpenFaaS deployed.
@@ -101,7 +101,7 @@ Deploy the asynchronous stack like this:
 
 ```
 $ cd faas-netes
-$ kubectl apply -f ./faas.async.yml,nats.yml,monitoring.yml,rbac.yml
+$ kubectl apply -f ./faas.async.yml,nats.yml,monitoring-config.yml,monitoring.yml,rbac.yml
 ```
 
 * See also: [Asynchronous function guide](https://github.com/openfaas/faas/blob/master/guide/asynchronous.md)
