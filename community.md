@@ -101,6 +101,7 @@ You can also find cool projects or submit your own to the [faas-and-furious orga
 
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| [Label-based Triggers for OpenFaaS](https://github.com/ucalgary/ftrigger) | King Chung Huang | [ucalgary/ftrigger](https://github.com/ucalgary/ftrigger) | 13-October-2017
 | [Azure Storage and Azure Service Bus Queues Trigger for OpenFaaS on Kubernetes](https://github.com/danigian/Azure-Queues-Trigger-OpenFaaS) | Daniele Antonio Maggio | github.com/danigian/Azure-Queues-Trigger-OpenFaaS | 24-September-2017 |
 | [faas-pipeline](https://github.com/getlazy/faas-pipeline) - OpenFaaS function composition | Ivan Erceg | github.com | 23-September-2017 |
 | [Github - Reverse geocoding](https://github.com/lucj/faas-reverse-geocoding) | Luc Juggery | github.com | 14-September-2017 |
