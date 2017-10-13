@@ -225,6 +225,10 @@ definitions:
         items:
           type: string
         description: Overrides to environmental variables
+      secrets:
+        type: array
+        items:
+          type: string
       registryAuth:
         type: string
         description: >-
