@@ -15,6 +15,7 @@ import (
 
 	"github.com/docker/distribution/reference"
 	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/api/types/swarm"
 	"github.com/docker/docker/client"
 	"github.com/docker/docker/registry"
@@ -51,7 +52,13 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 			options.EncodedRegistryAuth = auth
 		}
 
-		spec := makeSpec(&request, maxRestarts, restartDelay)
+		spec, err := makeSpec(c, &request, maxRestarts, restartDelay)
+		if err != nil {
+			log.Println(err)
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte("Deployment error: " + err.Error()))
+			return
+		}
 
 		response, err := c.ServiceCreate(context.Background(), spec, options)
 		if err != nil {
@@ -64,7 +71,8 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 	}
 }
 
-func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, restartDelay time.Duration) swarm.ServiceSpec {
+func makeSpec(c *client.Client, request *requests.CreateFunctionRequest, maxRestarts uint64, restartDelay time.Duration) (swarm.ServiceSpec, error) {
+	linuxOnlyConstraints := []string{"node.platform.os == linux"}
 	constraints := []string{}
 
 	if request.Constraints != nil && len(request.Constraints) > 0 {
@@ -92,6 +100,11 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, resta
 		},
 	}
 
+	secrets, err := makeSecretsArray(c, request.Secrets)
+	if err != nil {
+		return swarm.ServiceSpec{}, err
+	}
+
 	spec := swarm.ServiceSpec{
 		Annotations: swarm.Annotations{
 			Name:   request.Service,
@@ -104,8 +117,9 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, resta
 				Delay:       &restartDelay,
 			},
 			ContainerSpec: swarm.ContainerSpec{
-				Image:  request.Image,
-				Labels: labels,
+				Image:   request.Image,
+				Labels:  labels,
+				Secrets: secrets,
 			},
 			Networks:  nets,
 			Resources: resources,
@@ -127,7 +141,7 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, resta
 		spec.TaskTemplate.ContainerSpec.Env = env
 	}
 
-	return spec
+	return spec, nil
 }
 
 func buildEnv(envProcess string, envVars map[string]string) []string {
@@ -232,4 +246,64 @@ func getMinReplicas(request *requests.CreateFunctionRequest) *uint64 {
 		}
 	}
 	return &replicas
+}
+
+func makeSecretsArray(c *client.Client, secretNames []string) ([]*swarm.SecretReference, error) {
+	values := []*swarm.SecretReference{}
+
+	if len(secretNames) == 0 {
+		return values, nil
+	}
+
+	requestedSecrets := make(map[string]bool)
+	ctx := context.Background()
+
+	// query the Swarm for the requested secret ids, these are required to complete
+	// the spec
+	args := filters.NewArgs()
+	for _, name := range secretNames {
+		args.Add("name", name)
+	}
+
+	secrets, err := c.SecretList(ctx, types.SecretListOptions{
+		Filters: args,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	// create map of matching secrets for easy lookup
+	foundSecrets := make(map[string]string)
+	for _, secret := range secrets {
+		foundSecrets[secret.Spec.Annotations.Name] = secret.ID
+	}
+
+	// mimics the simple syntax for `docker service create --secret foo`
+	// and the code is based on the docker cli
+	for _, secretName := range secretNames {
+		if _, exists := requestedSecrets[secretName]; exists {
+			return nil, fmt.Errorf("duplicate secret target for %s not allowed", secretName)
+		}
+
+		id, ok := foundSecrets[secretName]
+		if !ok {
+			return nil, fmt.Errorf("secret not found: %s", secretName)
+		}
+
+		options := &swarm.SecretReference{
+			File: &swarm.SecretReferenceFileTarget{
+				UID:  "0",
+				GID:  "0",
+				Mode: 0444,
+				Name: secretName,
+			},
+			SecretID:   id,
+			SecretName: secretName,
+		}
+
+		requestedSecrets[secretName] = true
+		values = append(values, options)
+	}
+
+	return values, nil
 }
