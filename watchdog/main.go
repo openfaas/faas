@@ -145,6 +145,8 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 		if config.writeDebug == true {
 			log.Printf("Success=%t, Error=%s\n", targetCmd.ProcessState.Success(), err.Error())
 			log.Printf("Out=%s\n", out)
+		} else {
+			log.Printf("An Error Occurred\n")
 		}
 
 		if ri.headerWritten == false {
@@ -162,6 +164,8 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 
 	if config.writeDebug == true {
 		os.Stdout.Write(out)
+	} else {
+		log.Printf("Wrote %d Bytes\n", len(out))
 	}
 
 	if len(config.contentType) > 0 {
