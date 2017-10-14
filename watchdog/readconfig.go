@@ -43,7 +43,7 @@ func parseIntValue(val string) int {
 // Read fetches config from environmental variables.
 func (ReadConfig) Read(hasEnv HasEnv) WatchdogConfig {
 	cfg := WatchdogConfig{
-		writeDebug: true,
+		writeDebug: false,
 		cgiHeaders: true,
 	}
 
