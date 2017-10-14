@@ -79,6 +79,7 @@ The watchdog can be configured through environmental variables. You must always 
 | `read_timeout`         | HTTP timeout for reading the payload from the client caller (in seconds) |
 | `suppress_lock`        | The watchdog will attempt to write a lockfile to /tmp/ for swarm healthchecks - set this to true to disable behaviour. |
 | `exec_timeout`         | Hard timeout for process exec'd for each incoming request (in seconds). Disabled if set to 0. |
+| `write_debug`          | Write all output, error messages, and additional information to the logs. Default is false. |
  
 
 ## Advanced / tuning
