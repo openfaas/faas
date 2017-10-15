@@ -147,7 +147,7 @@ paths:
           description: Internal error with swarm or request JSON invalid
   /async-function/{functionName}:
     post:
-      summary: 'Invoke a function asynchronously in OpenFaaS - coming in PR 131'
+      summary: 'Invoke a function asynchronously in OpenFaaS'
       parameters:
         - in: path
           name: functionName
