@@ -1,0 +1,224 @@
+version: "3.2"
+services:
+    gateway:
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+        ports:
+            - 8080:8080
+        image: ${REGISTRY_SLASH}functions/gateway${COLON_ETAG}
+        networks:
+            - functions
+        environment:
+            dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
+            faas_kafka_brokers: kafka1:19092,kafka2:19092
+            faas_queue_topics: faas-request # ,other-topics
+        # Start Add for NATS Streaming
+        depends_on:
+            - kafka1
+            - kafka2
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 20
+                window: 380s
+            placement:
+                constraints:
+                    - 'node.role == manager'
+                    - 'node.platform.os == linux'
+
+    # zookeeper
+    zk1:
+        image: ${REGISTRY_SLASH}confluentinc/cp-zookeeper:3.3.0
+        networks:
+            - functions
+        environment:
+            ZOOKEEPER_SERVER_ID: 1
+            ZOOKEEPER_CLIENT_PORT: 22181
+        ports:
+            - "22181:22181"
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
+    # kafka brokers
+    kafka1:
+        image: ${REGISTRY_SLASH}confluentinc/cp-kafka:3.3.0
+        networks:
+            - functions
+        depends_on:
+            - zk1
+        environment:
+            KAFKA_BROKER_ID: 1
+            KAFKA_ZOOKEEPER_CONNECT: zk1:22181
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:19092
+            KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+            # only single kafka broker, so set replica-factor to 1, default 3 
+            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
+    kafka2:
+        image: ${REGISTRY_SLASH}confluentinc/cp-kafka:3.3.0
+        networks:
+            - functions
+        depends_on:
+            - zk1
+        environment:
+            KAFKA_BROKER_ID: 2
+            KAFKA_ZOOKEEPER_CONNECT: zk1:22181
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:19092
+            KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+            # only single kafka broker, so set replica-factor to 1, default 3 
+            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
+    # add kafka topic "faas-request" with desired partitions and replicas
+    addtopics:
+        image: ${REGISTRY_SLASH}confluentinc/cp-kafka:3.3.0
+        networks:
+            - functions
+        depends_on:
+            - zk1
+        deploy:
+            restart_policy:
+                condition: none  #run just once
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+        environment:
+            topics: faas-request # ,other-topics
+            num_partitions: 10
+            num_replicas: 1
+            kafka_brokers: kafka1,kafka2
+            kafka_port: 19092
+            zookeeper_server: zk1:22181
+        #wait for all kafka brokers up and create topics
+        command: sh -c 'IFS=,; for brok in $$kafka_brokers;do while ! nc -z $$brok $$kafka_port;do echo "wait for kafka brokers...";sleep 2;done; done; for topic in $$topics; do while ! kafka-topics --zookeeper $$zookeeper_server --create --topic $$topic --partitions $$num_partitions --replication-factor $$num_replicas; do sleep 1; done; done'
+
+    kafka-queue-worker:
+        image: ${REGISTRY_SLASH}functions/kafka-queue-worker${COLON_ETAG}
+        networks:
+            - functions
+        environment:
+            faas_kafka_brokers: kafka1:19092,kafka2:19092
+            faas_queue_topics: faas-request # ,other-topics
+        depends_on:
+            - kafka1
+            - kafka2
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 20
+                window: 380s
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
+    # End
+
+    prometheus:
+        image: ${REGISTRY_SLASH}functions/prometheus:latest  # autobuild from Dockerfile in repo.
+        command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
+        ports:
+            - 9090:9090
+        depends_on:
+            - gateway
+            - alertmanager
+        environment:
+            no_proxy: "gateway"
+        networks:
+            - functions
+        deploy:
+            placement:
+                constraints:
+                    - 'node.role == manager'
+                    - 'node.platform.os == linux'
+
+    alertmanager:
+        image: ${REGISTRY_SLASH}functions/alertmanager:latest    # autobuild from Dockerfile in repo.
+        environment:
+            no_proxy: "gateway"
+#        volumes:
+#            - ./prometheus/alertmanager.yml:/alertmanager.yml
+        command:
+            - '-config.file=/alertmanager.yml'
+        networks:
+            - functions
+        ports:
+            - 9093:9093
+        deploy:
+            placement:
+                constraints: 
+                    - 'node.role == manager'
+                    - 'node.platform.os == linux'
+
+    # Sample functions go here.
+
+    # Uses `cat` to echo back response, fastest function to execute.
+    echoit:
+        image: ${REGISTRY_SLASH}functions/alpine:health
+        labels:
+            function: "true"
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
+            fprocess: "cat"
+            no_proxy: "gateway"
+            https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
+    # Calculates base64 representation of request body.
+    base64:
+        image: ${REGISTRY_SLASH}functions/alpine:health
+        labels:
+            function: "true"
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
+            fprocess: "base64"
+            no_proxy: "gateway"
+            https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
+    # Decodes base64 representation of request body.
+    decodebase64:
+        image: ${REGISTRY_SLASH}functions/alpine:health
+        labels:
+            function: "true"
+        depends_on:
+            - gateway
+        networks:
+            - functions
+        environment:
+            fprocess: "base64 -d"
+            no_proxy: "gateway"
+            https_proxy: $https_proxy
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
+networks:
+    functions:
+        #driver: overlay
+        external: true
+        # Docker does not support this option yet - maybe create outside of the stack and reference as "external"?
+        #attachable: true

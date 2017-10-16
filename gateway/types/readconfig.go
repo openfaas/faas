@@ -9,6 +9,7 @@ import (
 	"os"
 	"strconv"
 	"time"
+	"strings"
 )
 
 // OsEnv implements interface to wrap os.Getenv
@@ -82,6 +83,33 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 		}
 	}
 
+	faasKafkaBrokers := hasEnv.Getenv("faas_kafka_brokers")
+	if len(faasKafkaBrokers) > 0 {
+		brokers := strings.Split(faasKafkaBrokers,",")
+		//cleanup
+		for i:=0;i<len(brokers); {
+			if len(brokers[i])==0 {
+				brokers=append(brokers[:i],brokers[i+1:]...)
+			} else {
+				i++
+			}
+		}
+		cfg.KafkaBrokers = &brokers
+	}
+
+	faasQueueTopics := hasEnv.Getenv("faas_queue_topics")
+	if len(faasQueueTopics) > 0 {
+		topics := strings.Split(faasQueueTopics,",")
+		for i:=0;i<len(topics); {
+			if len(topics[i])==0 {
+				topics=append(topics[:i],topics[i+1:]...)
+			} else {
+				i++
+			}
+		}
+		cfg.QueueTopics = &topics
+	}
+
 	prometheusPort := hasEnv.Getenv("faas_prometheus_port")
 	if len(prometheusPort) > 0 {
 		prometheusPortVal, err := strconv.Atoi(prometheusPort)
@@ -107,6 +135,8 @@ type GatewayConfig struct {
 	FunctionsProviderURL *url.URL
 	NATSAddress          *string
 	NATSPort             *int
+	KafkaBrokers         *[]string
+	QueueTopics          *[]string
 	PrometheusHost       string
 	PrometheusPort       int
 }
@@ -115,6 +145,12 @@ type GatewayConfig struct {
 func (g *GatewayConfig) UseNATS() bool {
 	return g.NATSPort != nil &&
 		g.NATSAddress != nil
+}
+
+// Use Kafka or not
+func (g *GatewayConfig) UseKafka() bool {
+	return g.KafkaBrokers != nil &&
+		g.QueueTopics != nil
 }
 
 // UseExternalProvider decide whether to bypass built-in Docker Swarm engine
