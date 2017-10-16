@@ -5,7 +5,7 @@ This page is a collection of our key blog posts, tutorials and guides while we p
 
 Suggestions for new topics are welcome. Please also check the [Issue tracker](https://github.com/openfaas/faas/issues).
 
-## Beginner guides
+## Deployment guides (start here)
 
 * [Kubernetes deployment](https://github.com/openfaas/faas/blob/master/guide/deployment_k8s.md)
 
