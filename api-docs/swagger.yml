@@ -147,7 +147,10 @@ paths:
           description: Internal error with swarm or request JSON invalid
   '/async-function/{functionName}':
     post:
-      summary: Invoke a function asynchronously in OpenFaaS
+      summary: 'Invoke a function asynchronously in OpenFaaS'
+      description: >-
+        ### This endpoint requires NATS streaming.
+        See https://github.com/openfaas/faas/blob/master/guide/asynchronous.md.
       parameters:
         - in: path
           name: functionName
