@@ -12,7 +12,6 @@ services:
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
             faas_kafka_brokers: kafka1:19092,kafka2:19092
             faas_queue_topics: faas-request # ,other-topics
-        # Start Add for NATS Streaming
         depends_on:
             - kafka1
             - kafka2
@@ -53,8 +52,9 @@ services:
             KAFKA_BROKER_ID: 1
             KAFKA_ZOOKEEPER_CONNECT: zk1:22181
             KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:19092
+            # don't use auto-gen topic, create topics with desired partitions & replicas at below
             KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
-            # only single kafka broker, so set replica-factor to 1, default 3 
+            # set replica-factor to 1 (default 3) since we have less than 3 brokers 
             KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
         deploy:
             placement:
@@ -71,8 +71,9 @@ services:
             KAFKA_BROKER_ID: 2
             KAFKA_ZOOKEEPER_CONNECT: zk1:22181
             KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:19092
+            # don't use auto-gen topic, create topics with desired partitions & replicas at below
             KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
-            # only single kafka broker, so set replica-factor to 1, default 3 
+            # set replica-factor to 1 (default 3) since we have less than 3 brokers 
             KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
         deploy:
             placement:
@@ -173,42 +174,6 @@ services:
             - functions
         environment:
             fprocess: "cat"
-            no_proxy: "gateway"
-            https_proxy: $https_proxy
-        deploy:
-            placement:
-                constraints:
-                    - 'node.platform.os == linux'
-
-    # Calculates base64 representation of request body.
-    base64:
-        image: ${REGISTRY_SLASH}functions/alpine:health
-        labels:
-            function: "true"
-        depends_on:
-            - gateway
-        networks:
-            - functions
-        environment:
-            fprocess: "base64"
-            no_proxy: "gateway"
-            https_proxy: $https_proxy
-        deploy:
-            placement:
-                constraints:
-                    - 'node.platform.os == linux'
-
-    # Decodes base64 representation of request body.
-    decodebase64:
-        image: ${REGISTRY_SLASH}functions/alpine:health
-        labels:
-            function: "true"
-        depends_on:
-            - gateway
-        networks:
-            - functions
-        environment:
-            fprocess: "base64 -d"
             no_proxy: "gateway"
             https_proxy: $https_proxy
         deploy:
