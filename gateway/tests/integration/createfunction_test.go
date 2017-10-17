@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/openfaas/faas/gateway/requests"
+	"github.com/docker/docker/api/types/mount"
 )
 
 func createFunction(request requests.CreateFunctionRequest) (string, int, error) {
@@ -27,6 +28,43 @@ func TestCreate_ValidRequest(t *testing.T) {
 		Service:    "test_resizer",
 		Image:      "functions/resizer",
 		Network:    "func_functions",
+		EnvProcess: "",
+	}
+
+	_, code, err := createFunction(request)
+
+	if err != nil {
+		t.Log(err)
+		t.Fail()
+	}
+
+	expectedErrorCode := http.StatusOK
+	if code != expectedErrorCode {
+		t.Errorf("Got HTTP code: %d, want %d\n", code, expectedErrorCode)
+		return
+	}
+
+	deleteFunction("test_resizer")
+}
+
+func TestCreate_ValidMountRequest(t *testing.T) {
+	mounts := []mount.Mount{
+		mount.Mount{
+			Type: "volume",
+			Source: "Test1",
+			Target: "/tmp",
+		},
+		mount.Mount{
+			Type: "bind",
+			Source: "/tmp",
+			Target: "/tmp",
+		},
+	}
+	request := requests.CreateFunctionRequest{
+		Service:    "test_resizer",
+		Image:      "functions/resizer",
+		Network:    "func_functions",
+		Mounts:		mounts,
 		EnvProcess: "",
 	}
 
