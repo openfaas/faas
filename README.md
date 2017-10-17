@@ -159,6 +159,8 @@ Anyone is invited to contribute to the project in-line with the [contribution gu
 
 Example of a Grafana dashboard linked to OpenFaaS showing auto-scaling live in action:
 
-![](https://pbs.twimg.com/media/C9caE6CXUAAX_64.jpg:large)
+Example of a Grafana dashboard linked to OpenFaaS showing auto-scaling live in action:
 
-Sample dashboard JSON file available [here](https://github.com/openfaas/faas/blob/master/contrib/grafana.json)
+![](https://pbs.twimg.com/media/DMABeymW0AA_lBs.jpg:large)
+
+Sample dashboard available directly from Grafana [here](https://grafana.com/dashboards/3434)
