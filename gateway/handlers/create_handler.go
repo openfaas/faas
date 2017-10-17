@@ -53,13 +53,15 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 			options.EncodedRegistryAuth = auth
 		}
 
-		spec, err := makeSpec(c, &request, maxRestarts, restartDelay)
+		secrets, err := makeSecretsArray(c, request.Secrets)
 		if err != nil {
 			log.Println(err)
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte("Deployment error: " + err.Error()))
 			return
 		}
+
+		spec := makeSpec(&request, maxRestarts, restartDelay, secrets)
 
 		response, err := c.ServiceCreate(context.Background(), spec, options)
 		if err != nil {
@@ -72,8 +74,7 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 	}
 }
 
-func makeSpec(c *client.Client, request *requests.CreateFunctionRequest, maxRestarts uint64, restartDelay time.Duration) (swarm.ServiceSpec, error) {
-	linuxOnlyConstraints := []string{"node.platform.os == linux"}
+func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, restartDelay time.Duration, secrets []*swarm.SecretReference) swarm.ServiceSpec {
 	constraints := []string{}
 
 	if request.Constraints != nil && len(request.Constraints) > 0 {
@@ -99,11 +100,6 @@ func makeSpec(c *client.Client, request *requests.CreateFunctionRequest, maxRest
 		{
 			Target: request.Network,
 		},
-	}
-
-	secrets, err := makeSecretsArray(c, request.Secrets)
-	if err != nil {
-		return swarm.ServiceSpec{}, err
 	}
 
 	spec := swarm.ServiceSpec{
@@ -142,7 +138,7 @@ func makeSpec(c *client.Client, request *requests.CreateFunctionRequest, maxRest
 		spec.TaskTemplate.ContainerSpec.Env = env
 	}
 
-	return spec, nil
+	return spec
 }
 
 func buildEnv(envProcess string, envVars map[string]string) []string {
