@@ -229,6 +229,7 @@ definitions:
         type: array
         items:
           type: string
+        description: An array of names of secrets that are required to be loaded from the Docker Swarm.
       registryAuth:
         type: string
         description: >-
