@@ -19,6 +19,7 @@ import (
 	"github.com/docker/docker/api/types/swarm"
 	"github.com/docker/docker/client"
 	"github.com/docker/docker/registry"
+
 )
 
 var linuxOnlyConstraints = []string{"node.platform.os == linux"}
@@ -88,6 +89,7 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, resta
 			ContainerSpec: swarm.ContainerSpec{
 				Image:  request.Image,
 				Labels: map[string]string{"function": "true"},
+				Mounts: request.Mounts,
 			},
 			Networks: nets,
 			Placement: &swarm.Placement{

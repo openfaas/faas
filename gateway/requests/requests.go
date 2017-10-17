@@ -3,6 +3,8 @@
 
 package requests
 
+import  "github.com/docker/docker/api/types/mount"
+
 // CreateFunctionRequest create a function in the swarm.
 type CreateFunctionRequest struct {
 	// Service corresponds to a Docker Service
@@ -30,6 +32,9 @@ type CreateFunctionRequest struct {
 
 	// Secrets list of secrets to be made available to function
 	Secrets []string `json:"secrets"`
+
+	// Mounts to be mounted by the container running the function
+	Mounts []mount.Mount `json:"mounts,omitempty"`
 }
 
 // DeleteFunctionRequest delete a deployed function
