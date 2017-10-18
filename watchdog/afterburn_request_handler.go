@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"os/exec"
 	"strings"
 	"sync"
@@ -34,6 +35,16 @@ func makeAfterburnRequestHandler(config *WatchdogConfig) func(http.ResponseWrite
 	if readPipeErr != nil {
 		log.Fatalln(readPipeErr)
 	}
+
+	errPiper, errPipeErr := process.StderrPipe()
+	if errPipeErr != nil {
+		log.Fatalln(errPipeErr)
+	}
+
+	// stderr := NewCapturingPassThroughWriter(os.Stderr)
+	go func() {
+		io.Copy(os.Stdout, errPiper)
+	}()
 
 	readPipe = &readPiper
 	mutex = &sync.Mutex{}
