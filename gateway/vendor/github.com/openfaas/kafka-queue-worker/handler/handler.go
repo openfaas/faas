@@ -110,9 +110,9 @@ func waitforBrokersTopics(brokers []string, topics []string) {
 		time.Sleep(2*time.Second)
 	}
 	fmt.Println("Kafka brokers up")
-	count := len(topics)
 LOOP_TOPIC:
 	for {
+		count := len(topics)
 		tops,err := client.Topics()
 		if tops!=nil && err==nil {
 			for _,t1 := range tops {
