@@ -168,9 +168,12 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	clientHeader := w.Header()
 	copyHeaders(&clientHeader, &response.Header)
 
-	// TODO: copyHeaders removes the need for this line - test removal.
-	// Match header for strict services
-	w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
+	header := response.Header.Get("Content-Type")
+	if len(header) > 0 {
+		w.Header().Set("Content-Type", response.Header.Get("Content-Type"))
+	} else {
+		w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
+	}
 
 	writeHead(service, metrics, http.StatusOK, w)
 	w.Write(responseBody)
