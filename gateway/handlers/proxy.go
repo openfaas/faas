@@ -168,14 +168,22 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	clientHeader := w.Header()
 	copyHeaders(&clientHeader, &response.Header)
 
-	header := response.Header.Get("Content-Type")
-	if len(header) > 0 {
-		w.Header().Set("Content-Type", response.Header.Get("Content-Type"))
+	responseHeader := response.Header.Get("Content-Type")
+	requestHeader := r.Header.Get("Content-Type")
+	defaultHeader := "text/plain"
+	contentTypeField := "Content-Type"
+
+	fmt.Printf("Req %s Res %s\n", requestHeader, responseHeader)
+
+	if len(responseHeader) > 0 {
+		w.Header().Set(contentTypeField, responseHeader)
+	} else if len(requestHeader) > 0 {
+		w.Header().Set(contentTypeField, requestHeader)
 	} else {
-		w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
+		w.Header().Set(contentTypeField, defaultHeader)
 	}
 
-	writeHead(service, metrics, http.StatusOK, w)
+	writeHead(service, metrics, response.StatusCode, w)
 	w.Write(responseBody)
 }
 
