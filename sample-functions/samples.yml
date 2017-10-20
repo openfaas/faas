@@ -11,7 +11,7 @@ functions:
   apikeyprotected:
     lang: Dockerfile
     handler: ./AlpineFunction
-    image: functions/api-key-protected:latest
+    image: functions/api_key_protected:latest
 
   captainsintent:
     lang: Dockerfile
@@ -21,12 +21,12 @@ functions:
   echo:
     lang: Dockerfile
     handler: ./echo
-    image: functions/faas-echo:latest
+    image: functions/faas_echo:latest
 
   changecolorintent:
     lang: Dockerfile
     handler: ./ChangeColorIntent
-    image: functions/alexa-leds:latest
+    image: functions/alexa_leds:latest
 
   chelloworld:
     lang: Dockerfile
@@ -38,25 +38,25 @@ functions:
     handler: ./DockerHubStats
     image: functions/hubstats:latest
 
-  gif-maker:
+  gif_maker:
     lang: Dockerfile
-    handler: ./gif-maker
-    image: functions/gif-maker:latest
+    handler: ./gif_maker
+    image: functions/gif_maker:latest
 
   hostnameintent:
     lang: Dockerfile
     handler: ./HostnameIntent
-    image: functions/hostname-intent:latest
+    image: functions/hostname_intent:latest
 
   markdownrender:
     lang: Dockerfile
     handler: ./MarkdownRender
-    image: functions/markdown-render:latest
+    image: functions/markdown_render:latest
 
   nodeinfo:
     lang: Dockerfile
     handler: ./NodeInfo
-    image: functions/node-info:latest
+    image: functions/node_info:latest
 
   phantomjs:
     lang: Dockerfile
