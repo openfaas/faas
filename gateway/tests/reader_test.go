@@ -18,6 +18,7 @@ import (
 
 type testServiceApiClient struct {
 	serviceListServices []swarm.Service
+	serviceListTasks    []swarm.Task
 	serviceListError    error
 }
 
@@ -54,7 +55,30 @@ func (c testServiceApiClient) TaskInspectWithRaw(ctx context.Context, taskID str
 }
 
 func (c testServiceApiClient) TaskList(ctx context.Context, options types.TaskListOptions) ([]swarm.Task, error) {
-	return []swarm.Task{}, nil
+	return c.serviceListTasks, c.serviceListError
+}
+
+// testNodeApiClient
+
+type testNodeApiClient struct {
+	nodeListNodes []swarm.Node
+	nodeListError error
+}
+
+func (c testNodeApiClient) NodeInspectWithRaw(ctx context.Context, nodeID string) (swarm.Node, []byte, error) {
+	return swarm.Node{}, []byte{}, nil
+}
+
+func (c testNodeApiClient) NodeList(ctx context.Context, options types.NodeListOptions) ([]swarm.Node, error) {
+	return c.nodeListNodes, c.nodeListError
+}
+
+func (c testNodeApiClient) NodeRemove(ctx context.Context, nodeID string, options types.NodeRemoveOptions) error {
+	return nil
+}
+
+func (c testNodeApiClient) NodeUpdate(ctx context.Context, nodeID string, version swarm.Version, node swarm.NodeSpec) error {
+	return nil
 }
 
 func TestReaderSuccessReturnsOK(t *testing.T) {
@@ -62,8 +86,13 @@ func TestReaderSuccessReturnsOK(t *testing.T) {
 	c := &testServiceApiClient{
 		serviceListServices: []swarm.Service{},
 		serviceListError:    nil,
+		serviceListTasks:    nil,
 	}
-	handler := handlers.MakeFunctionReader(m, c)
+	n := &testNodeApiClient{
+		nodeListNodes: []swarm.Node{},
+		nodeListError: nil,
+	}
+	handler := handlers.MakeFunctionReader(m, c, n)
 
 	w := httptest.NewRecorder()
 	r := &http.Request{}
@@ -81,8 +110,13 @@ func TestReaderSuccessReturnsJsonContent(t *testing.T) {
 	c := &testServiceApiClient{
 		serviceListServices: []swarm.Service{},
 		serviceListError:    nil,
+		serviceListTasks:    nil,
 	}
-	handler := handlers.MakeFunctionReader(m, c)
+	n := &testNodeApiClient{
+		nodeListNodes: []swarm.Node{},
+		nodeListError: nil,
+	}
+	handler := handlers.MakeFunctionReader(m, c, n)
 
 	w := httptest.NewRecorder()
 	r := &http.Request{}
@@ -100,8 +134,14 @@ func TestReaderSuccessReturnsCorrectBodyWithZeroFunctions(t *testing.T) {
 	c := &testServiceApiClient{
 		serviceListServices: []swarm.Service{},
 		serviceListError:    nil,
+		serviceListTasks:    nil,
 	}
-	handler := handlers.MakeFunctionReader(m, c)
+	n := &testNodeApiClient{
+		nodeListNodes: []swarm.Node{},
+		nodeListError: nil,
+	}
+
+	handler := handlers.MakeFunctionReader(m, c, n)
 
 	w := httptest.NewRecorder()
 	r := &http.Request{}
@@ -148,8 +188,13 @@ func TestReaderSuccessReturnsCorrectBodyWithOneFunction(t *testing.T) {
 	c := &testServiceApiClient{
 		serviceListServices: services,
 		serviceListError:    nil,
+		serviceListTasks:    nil,
 	}
-	handler := handlers.MakeFunctionReader(m, c)
+	n := &testNodeApiClient{
+		nodeListNodes: []swarm.Node{},
+		nodeListError: nil,
+	}
+	handler := handlers.MakeFunctionReader(m, c, n)
 
 	w := httptest.NewRecorder()
 	r := &http.Request{}
@@ -176,13 +221,113 @@ func TestReaderSuccessReturnsCorrectBodyWithOneFunction(t *testing.T) {
 	}
 }
 
+func TestReaderSuccessReturnsCorrectBodyWithOneFunctionVerbose(t *testing.T) {
+	replicas := uint64(1)
+	labels := map[string]string{
+		"function": "bar",
+	}
+
+	services := []swarm.Service{
+		swarm.Service{
+			Spec: swarm.ServiceSpec{
+				Mode: swarm.ServiceMode{
+					Replicated: &swarm.ReplicatedService{
+						Replicas: &replicas,
+					},
+				},
+				Annotations: swarm.Annotations{
+					Name:   "bar",
+					Labels: labels,
+				},
+				TaskTemplate: swarm.TaskSpec{
+					ContainerSpec: swarm.ContainerSpec{
+						Env: []string{
+							"fprocess=bar",
+						},
+						Image:  "foo/bar:latest",
+						Labels: labels,
+					},
+				},
+			},
+		},
+	}
+	m := metrics.MetricOptions{}
+	tasks := []swarm.Task{
+		swarm.Task{
+			NodeID: "manager",
+			Annotations: swarm.Annotations{
+				Name:   "testTask",
+				Labels: map[string]string{},
+			},
+			Spec: swarm.TaskSpec{},
+			Status: swarm.TaskStatus{
+				State: swarm.TaskStateRunning,
+			},
+		},
+	}
+	nodes := []swarm.Node{
+		swarm.Node{
+			ID: "manager",
+			Spec: swarm.NodeSpec{
+				Annotations: swarm.Annotations{
+					Name:   "testNode",
+					Labels: map[string]string{},
+				},
+				Role:         "manager",
+				Availability: "active",
+			},
+		},
+	}
+	c := &testServiceApiClient{
+		serviceListServices: services,
+		serviceListError:    nil,
+		serviceListTasks:    tasks,
+	}
+	n := &testNodeApiClient{
+		nodeListNodes: nodes,
+		nodeListError: nil,
+	}
+	handler := handlers.MakeFunctionReader(m, c, n)
+
+	w := httptest.NewRecorder()
+	r, err := http.NewRequest("GET", "system/functions?v=true", nil)
+	if err != nil {
+		t.Fatalf("Error creating get request: %v\n", err)
+	}
+	handler.ServeHTTP(w, r)
+
+	functions := []requests.Function{
+		requests.Function{
+			Name:            "bar",
+			Image:           "foo/bar:latest",
+			InvocationCount: 0,
+			Replicas:        1,
+			ReplicaCount:    1,
+			EnvProcess:      "bar",
+			Labels: &map[string]string{
+				"function": "bar",
+			},
+		},
+	}
+	marshalled, _ := json.Marshal(functions)
+	expected := string(marshalled)
+	if w.Body.String() != expected {
+		t.Errorf("handler returned wrong body: got %v want %v",
+			w.Body.String(), expected)
+	}
+}
+
 func TestReaderErrorReturnsInternalServerError(t *testing.T) {
 	m := metrics.MetricOptions{}
 	c := &testServiceApiClient{
 		serviceListServices: nil,
 		serviceListError:    errors.New("error"),
 	}
-	handler := handlers.MakeFunctionReader(m, c)
+	n := &testNodeApiClient{
+		nodeListNodes: nil,
+		nodeListError: errors.New("error"),
+	}
+	handler := handlers.MakeFunctionReader(m, c, n)
 
 	w := httptest.NewRecorder()
 	r := &http.Request{}
@@ -201,7 +346,11 @@ func TestReaderErrorReturnsCorrectBody(t *testing.T) {
 		serviceListServices: nil,
 		serviceListError:    errors.New("error"),
 	}
-	handler := handlers.MakeFunctionReader(m, c)
+	n := &testNodeApiClient{
+		nodeListNodes: nil,
+		nodeListError: errors.New("error"),
+	}
+	handler := handlers.MakeFunctionReader(m, c, n)
 
 	w := httptest.NewRecorder()
 	r := &http.Request{}

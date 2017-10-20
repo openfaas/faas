@@ -13,22 +13,29 @@ import (
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
+	"github.com/docker/docker/api/types/swarm"
 	"github.com/docker/docker/client"
 	"github.com/openfaas/faas/gateway/metrics"
 	"github.com/openfaas/faas/gateway/requests"
 )
 
 // MakeFunctionReader gives a summary of Function structs with Docker service stats overlaid with Prometheus counters.
-func MakeFunctionReader(metricsOptions metrics.MetricOptions, c client.ServiceAPIClient) http.HandlerFunc {
+func MakeFunctionReader(metricsOptions metrics.MetricOptions, serviceClient client.ServiceAPIClient, nodeClient client.NodeAPIClient) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
+		verbose := false
+
+		if r.URL != nil {
+			verbose = queryIsNotFalse(r, "v")
+		}
 		serviceFilter := filters.NewArgs()
 
 		options := types.ServiceListOptions{
 			Filters: serviceFilter,
 		}
 
-		services, err := c.ServiceList(context.Background(), options)
+		ctx := context.Background()
+		services, err := serviceClient.ServiceList(ctx, options)
 		if err != nil {
 			log.Println("Error getting service list:", err)
 			w.WriteHeader(http.StatusInternalServerError)
@@ -39,6 +46,11 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c client.ServiceAP
 		// TODO: Filter only "faas" functions (via metadata?)
 		functions := []requests.Function{}
 
+		var running map[string]int
+		if verbose {
+			running = getReplicaInfo(serviceClient, nodeClient, services, ctx)
+		}
+
 		for _, service := range services {
 
 			if len(service.Spec.TaskTemplate.ContainerSpec.Labels["function"]) > 0 {
@@ -47,11 +59,17 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c client.ServiceAP
 				// Required (copy by value)
 				labels := service.Spec.Annotations.Labels
 
+				var replicaCount int
+				if _, ok := running[service.ID]; ok {
+					replicaCount = running[service.ID]
+				}
+
 				f := requests.Function{
 					Name:            service.Spec.Name,
 					Image:           service.Spec.TaskTemplate.ContainerSpec.Image,
 					InvocationCount: 0,
 					Replicas:        *service.Spec.Mode.Replicated.Replicas,
+					ReplicaCount:    replicaCount,
 					EnvProcess:      envProcess,
 					Labels:          &labels,
 				}
@@ -77,4 +95,42 @@ func getEnvProcess(envVars []string) string {
 	}
 
 	return value
+}
+
+func getReplicaInfo(serviceClient client.ServiceAPIClient, nodeClient client.NodeAPIClient, services []swarm.Service, ctx context.Context) map[string]int {
+	// Begin replica info section
+	taskFilter := filters.NewArgs()
+
+	taskFilter.Add("_up-to-date", "true")
+	tasks, err := serviceClient.TaskList(ctx, types.TaskListOptions{Filters: taskFilter})
+	if err != nil {
+		log.Println(err)
+	}
+
+	nodes, err := nodeClient.NodeList(ctx, types.NodeListOptions{})
+	if err != nil {
+		log.Println(err)
+	}
+
+	activeNodes := make(map[string]struct{})
+	for _, n := range nodes {
+		if n.Status.State != swarm.NodeStateDown {
+			activeNodes[n.ID] = struct{}{}
+		}
+	}
+
+	running := map[string]int{}
+	for _, task := range tasks {
+		if _, nodeActive := activeNodes[task.NodeID]; nodeActive && task.Status.State == swarm.TaskStateRunning {
+			running[task.ServiceID]++
+		}
+	}
+
+	//log.Printf("running: %v\n", running)
+	return running
+}
+
+func queryIsNotFalse(r *http.Request, k string) bool {
+	s := strings.ToLower(strings.TrimSpace(r.FormValue(k)))
+	return !(s == "" || s == "0" || s == "no" || s == "false" || s == "none")
 }

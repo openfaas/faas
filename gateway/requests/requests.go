@@ -55,6 +55,7 @@ type Function struct {
 	Image           string  `json:"image"`
 	InvocationCount float64 `json:"invocationCount"` // TODO: shouldn't this be int64?
 	Replicas        uint64  `json:"replicas"`
+	ReplicaCount    int     `json:"replicaCount"`
 	EnvProcess      string  `json:"envProcess"`
 
 	// Labels are metadata for functions which may be used by the
