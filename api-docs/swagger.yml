@@ -149,7 +149,7 @@ paths:
     post:
       summary: 'Invoke a function asynchronously in OpenFaaS'
       description: >-
-        ### This endpoint requires NATS streaming.
+        ### This endpoint requires the asynchronous stack.
         See https://github.com/openfaas/faas/blob/master/guide/asynchronous.md.
       parameters:
         - in: path
