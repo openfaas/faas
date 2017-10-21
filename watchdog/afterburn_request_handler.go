@@ -8,9 +8,12 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"sync"
+	"time"
 )
 
 func makeAfterburnRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.Request) {
@@ -46,6 +49,8 @@ func makeAfterburnRequestHandler(config *WatchdogConfig) func(http.ResponseWrite
 		}
 		log.Println("Process completed running.")
 	}()
+
+	go monitorProcess(process, 1*time.Second)
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		var bodyBytes []byte
@@ -134,5 +139,27 @@ func makeAfterburnRequestHandler(config *WatchdogConfig) func(http.ResponseWrite
 		log.Println(">> Mutex unlocked")
 
 		// w.Write(bodyBytes)
+	}
+}
+
+// monitorProcess monitors the child process and removes the lock file if the
+// process dies. This causes the scheduler to restart the container
+func monitorProcess(childProcess *exec.Cmd, tickerDuration time.Duration) {
+	healthChecker := time.NewTicker(tickerDuration)
+	for range healthChecker.C {
+		// log.Println("Checking process health")
+		if childProcess != nil && childProcess.ProcessState != nil && childProcess.ProcessState.Exited() {
+
+			log.Printf("Process died, removing .lock file.\n")
+
+			path := filepath.Join(os.TempDir(), ".lock")
+			removeErr := os.Remove(path)
+
+			if removeErr != nil {
+				log.Printf("Error removing lock-file %s", removeErr)
+			}
+			healthChecker.Stop()
+			return
+		}
 	}
 }
