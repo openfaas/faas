@@ -75,7 +75,7 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, resta
 	}
 	labels := map[string]string{"function": "true"}
 	if request.Labels != nil {
-		for k, v := range request.Labels {
+		for k, v := range *request.Labels {
 			labels[k] = v
 		}
 	}
