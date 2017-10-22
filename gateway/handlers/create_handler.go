@@ -82,6 +82,12 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, resta
 	} else {
 		constraints = linuxOnlyConstraints
 	}
+	labels := map[string]string{"function": "true"}
+	if request.Labels != nil {
+		for k, v := range request.Labels {
+			labels[k] = v
+		}
+	}
 
 	labels := map[string]string{
 		"com.openfaas.function": request.Service,
@@ -128,6 +134,10 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, resta
 			Replicated: &swarm.ReplicatedService{
 				Replicas: getMinReplicas(request),
 			},
+		},
+		Annotations: swarm.Annotations{
+			Name:   request.Service,
+			Labels: labels,
 		},
 	}
 
