@@ -30,6 +30,10 @@ type CreateFunctionRequest struct {
 
 	// Secrets list of secrets to be made available to function
 	Secrets []string `json:"secrets"`
+
+	// Labels are metadata for functions which may be used by the
+	// back-end for making scheduling or routing decisions
+	Labels *map[string]string `json:"labels"`
 }
 
 // DeleteFunctionRequest delete a deployed function

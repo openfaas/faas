@@ -12,13 +12,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/openfaas/faas/gateway/metrics"
-	"github.com/openfaas/faas/gateway/requests"
 	"github.com/docker/distribution/reference"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/swarm"
 	"github.com/docker/docker/client"
 	"github.com/docker/docker/registry"
+	"github.com/openfaas/faas/gateway/metrics"
+	"github.com/openfaas/faas/gateway/requests"
 )
 
 var linuxOnlyConstraints = []string{"node.platform.os == linux"}
@@ -73,6 +73,12 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, resta
 	} else {
 		constraints = linuxOnlyConstraints
 	}
+	labels := map[string]string{"function": "true"}
+	if request.Labels != nil {
+		for k, v := range request.Labels {
+			labels[k] = v
+		}
+	}
 
 	nets := []swarm.NetworkAttachmentConfig{
 		{Target: request.Network},
@@ -87,7 +93,7 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, resta
 			},
 			ContainerSpec: swarm.ContainerSpec{
 				Image:  request.Image,
-				Labels: map[string]string{"function": "true"},
+				Labels: labels,
 			},
 			Networks: nets,
 			Placement: &swarm.Placement{
@@ -95,7 +101,8 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, resta
 			},
 		},
 		Annotations: swarm.Annotations{
-			Name: request.Service,
+			Name:   request.Service,
+			Labels: labels,
 		},
 	}
 
