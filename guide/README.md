@@ -41,6 +41,8 @@ Suggestions for new topics are welcome. Please also check the [Issue tracker](ht
 
 * [OpenFaaS presents to CNCF Serverless workgroup](https://blog.alexellis.io/openfaas-cncf-workgroup/)
 
+* [An Introduction to Serverless DevOps with OpenFaaS](https://hackernoon.com/an-introduction-to-serverless-devops-with-openfaas-b978ab0eb2b)
+
 ### Hands-on with containers as functions
 
 * [Serverless sorcery with ImageMagick](https://blog.alexellis.io/serverless-imagemagick/)

@@ -49,6 +49,7 @@ There are three main Github repos
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [An Introduction to Serverless DevOps with OpenFaaS](https://hackernoon.com/an-introduction-to-serverless-devops-with-openfaas-b978ab0eb2b) | Ken Fukuyama | medium.com/@kenfdev | 22-Oct-2017 |
 | [My First Pull Request To OpenFaaS](https://hackernoon.com/my-first-pull-request-to-openfaas-a-major-open-source-project-d0c823790691) | Burton Rheutan | hackernoon.com/@rheutan7 | 10-Oct-2017 |
 | [Deploying a Serverless Youtube-To-Gif Telegram bot with OpenFaaS](https://medium.com/@ericstoekl/deploying-a-serverless-youtube-to-gif-telegram-bot-with-openfaas-2b78d1e9ae6) | Eric Stoekl | medium.com/@ericstoekl | 25-Sep-2017 |
 | [A Serverless GraphQL Blog in 60 Seconds with OpenFaaS](https://medium.com/@kenfdev/a-serverless-graphql-blog-in-60-seconds-with-openfaas-aaedd566b1f3) | Ken Fukuyama | medium.com/@kenfdev | 24-Sep-2017 |
