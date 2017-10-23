@@ -15,11 +15,11 @@ This creates a Docker image with the name `functions/gateway:latest-dev`, but if
 
 Test. Repeat.
 
-## Hack on the UI for the API Gateway
+## Work on the UI the quick way
 
-To hack on the UI without rebuilding the gateway mount the assets in a bind-mount like this:
+Working on the UI with the procedure above could take up to a minute to iterate between changing code and testing the changes. This section of the post shows how to bind-mount the UI assets into the API gateway as a separate container.
 
-Remove the Docker stack, then create the faas network as "attachable":
+Remove the Docker stack, then re-define the faas network as "attachable":
 
 ```
 $ docker stack rm func
@@ -35,11 +35,14 @@ networks:
             name: func_functions
 ```
 
-Now you can run the gateway as its own container and bind-mount in the HTML assets.
-
-```
-$ docker run -v `pwd`/gateway/assets:/root/assets -v "/var/run/docker.sock:/var/run/docker.sock" \
--p 8080:8080 --network=func_functions -d functions/gateway:latest-dev
-```
-
 Now deploy the rest of the stack with: `./deploy_stack.sh`.
+
+Now you can run the gateway as its own container via `docker run` and bind-mount in the HTML assets.
+
+```
+$ docker service rm func_gateway
+$ docker run --name func_gateway -v `pwd`/gateway/assets:/root/assets \
+  -v "/var/run/docker.sock:/var/run/docker.sock" \
+  -p 8080:8080 --network=func_functions \
+  -d functions/gateway:latest-dev
+```
