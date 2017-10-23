@@ -2,6 +2,8 @@
 
 ### Guidelines
 
+
+
 Guidelines for contributing.
 
 **How can I get involved?**
@@ -91,6 +93,15 @@ Email: alex@openfaas.com - please send in a one-liner about yourself so we can g
 ### License
 
 This project is licensed under the MIT License.
+
+#### Copyright notice
+
+Please add a Copyright notice to new files you add where this is not already present:
+
+```
+// Copyright (c) OpenFaaS Authors 2017. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+```
 
 #### Sign your work
 

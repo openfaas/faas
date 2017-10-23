@@ -1,11 +1,11 @@
-version: "3.2"
+version: "3.3"
 services:
     gateway:
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:0.6.3 
+        image: functions/gateway:0.6.6d
         networks:
             - functions
         environment:
@@ -148,5 +148,4 @@ services:
 networks:
     functions:
         driver: overlay
-        # Docker does not support this option yet - maybe create outside of the stack and reference as "external"?
-        #attachable: true
+        attachable: true

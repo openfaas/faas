@@ -51,32 +51,19 @@ func TestRead_CgiHeaders_DefaultIsTrueConfig(t *testing.T) {
 	}
 }
 
-func TestRead_WriteDebug_DefaultIsTrueConfig(t *testing.T) {
+func TestRead_WriteDebug_DefaultIsFalseConfig(t *testing.T) {
 	defaults := NewEnvBucket()
 	readConfig := ReadConfig{}
-
-	config := readConfig.Read(defaults)
-
-	if config.writeDebug != true {
-		t.Logf("writeDebug should have been true (unspecified)")
-		t.Fail()
-	}
-}
-
-func TestRead_WriteDebug_FalseOverrideConfig(t *testing.T) {
-	defaults := NewEnvBucket()
-	readConfig := ReadConfig{}
-	defaults.Setenv("write_debug", "false")
 
 	config := readConfig.Read(defaults)
 
 	if config.writeDebug != false {
-		t.Logf("writeDebug should have been false (specified)")
+		t.Logf("writeDebug should have been false (unspecified)")
 		t.Fail()
 	}
 }
 
-func TestRead_WriteDebug_TrueConfig(t *testing.T) {
+func TestRead_WriteDebug_TrueOverrideConfig(t *testing.T) {
 	defaults := NewEnvBucket()
 	readConfig := ReadConfig{}
 	defaults.Setenv("write_debug", "true")
@@ -85,6 +72,19 @@ func TestRead_WriteDebug_TrueConfig(t *testing.T) {
 
 	if config.writeDebug != true {
 		t.Logf("writeDebug should have been true (specified)")
+		t.Fail()
+	}
+}
+
+func TestRead_WriteDebug_FlaseConfig(t *testing.T) {
+	defaults := NewEnvBucket()
+	readConfig := ReadConfig{}
+	defaults.Setenv("write_debug", "false")
+
+	config := readConfig.Read(defaults)
+
+	if config.writeDebug != false {
+		t.Logf("writeDebug should have been false (specified)")
 		t.Fail()
 	}
 }

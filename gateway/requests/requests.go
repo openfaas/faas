@@ -35,6 +35,10 @@ type CreateFunctionRequest struct {
 
 	// Mounts to be mounted by the container running the function
 	Mounts []mount.Mount `json:"mounts,omitempty"`
+	
+        // Labels are metadata for functions which may be used by the
+	// back-end for making scheduling or routing decisions
+	Labels *map[string]string `json:"labels"`
 }
 
 // DeleteFunctionRequest delete a deployed function
