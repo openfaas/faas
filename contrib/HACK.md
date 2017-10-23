@@ -1,15 +1,19 @@
 ## Build a development API Gateway
 
-Create `functions/gateway:latest-dev`
+1. Build a new development Docker image:
 
 ```
 $ cd gateway/
 $ ./build.sh
 ```
 
-Now edit the gateway service in your `docker-compose.yml` file and deploy the stack.
+This creates a Docker image with the name `functions/gateway:latest-dev`, but if you want to use something else then pass the tag as an argument to the `./build.sh` script. I.e. `./build.sh labels-pr`.
 
-If you want to use an overridden name then pass in the tag to the `./build.sh` script such as `./build.sh test-1`.
+3. Now edit the Docker image for the `gateway` service in your `docker-compose.yml` file.
+
+4. Redeploy the stack.
+
+Test. Repeat.
 
 ## Hack on the UI for the API Gateway
 
