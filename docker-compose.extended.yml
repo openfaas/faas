@@ -5,7 +5,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:0.6.6d
+        image: functions/gateway:0.6.7
         networks:
             - functions
         environment:
@@ -129,7 +129,7 @@ services:
 
     # Uses `cat` to echo back response, fastest function to execute.
     echoit:
-        image: functions/alpine:health
+        image: functions/alpine:latest
         labels:
             function: "true"
         depends_on:
