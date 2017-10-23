@@ -168,12 +168,29 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	clientHeader := w.Header()
 	copyHeaders(&clientHeader, &response.Header)
 
-	// TODO: copyHeaders removes the need for this line - test removal.
-	// Match header for strict services
-	w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
+	defaultHeader := "text/plain"
 
-	writeHead(service, metrics, http.StatusOK, w)
+	w.Header().Set("Content-Type", GetContentType(response.Header, r.Header, defaultHeader))
+
+	writeHead(service, metrics, response.StatusCode, w)
 	w.Write(responseBody)
+}
+
+// GetContentType resolves the correct Content-Tyoe for a proxied function
+func GetContentType(request http.Header, proxyResponse http.Header, defaultValue string) string {
+	responseHeader := proxyResponse.Get("Content-Type")
+	requestHeader := request.Get("Content-Type")
+
+	var headerContentType string
+	if len(responseHeader) > 0 {
+		headerContentType = responseHeader
+	} else if len(requestHeader) > 0 {
+		headerContentType = requestHeader
+	} else {
+		headerContentType = defaultValue
+	}
+
+	return headerContentType
 }
 
 func copyHeaders(destination *http.Header, source *http.Header) {

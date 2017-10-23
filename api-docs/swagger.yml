@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   description: FaaS API documentation
-  version: 0.6.1
+  version: 0.6.5
   title: FaaS API Gateway
   license:
     name: MIT
@@ -145,38 +145,56 @@ paths:
           description: Alert handled successfully
         '500':
           description: Internal error with swarm or request JSON invalid
-  /async-function/{functionName}:
+  '/async-function/{functionName}':
     post:
-      summary: 'Invoke a function asynchronously in OpenFaaS'
+      summary: Invoke a function asynchronously in OpenFaaS
       parameters:
         - in: path
           name: functionName
           description: Function name
           type: string
           required: true
+        - in: body
+          name: input
+          description: (Optional) data to pass to function
+          schema:
+            type: string
+            format: binary
+            example:
+              '{"hello": "world"}'
+          required: false
       responses:
         '202':
           description: Request accepted and queued
-        '500':
-          description: Internal server or queue error
         '404':
           description: Requested function not found
-  /function/{functionName}:
+        '500':
+          description: Internal server error
+  '/function/{functionName}':
     post:
-      summary: 'Invoke a function defined in OpenFaaS'
+      summary: Invoke a function defined in OpenFaaS
       parameters:
         - in: path
           name: functionName
           description: Function name
           type: string
           required: true
+        - in: body
+          name: input
+          description: (Optional) data to pass to function
+          schema:
+            type: string
+            format: binary
+            example:
+              '{"hello": "world"}'
+          required: false
       responses:
         '200':
           description: Value returned from function
-        '500':
-          description: Error connecting to function
         '404':
           description: Function not found
+        '500':
+          description: Error connecting to function
 definitions:
   DeleteFunctionRequest:
     type: object

@@ -162,6 +162,8 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 
 	if config.writeDebug == true {
 		os.Stdout.Write(out)
+	} else {
+		log.Printf("Wrote %d Bytes\n", len(out))
 	}
 
 	if len(config.contentType) > 0 {

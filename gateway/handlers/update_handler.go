@@ -93,6 +93,13 @@ func updateSpec(request *requests.CreateFunctionRequest, spec *swarm.ServiceSpec
 		"function": "true",
 		"uid":      fmt.Sprintf("%d", time.Now().Nanosecond()),
 	}
+
+	if request.Labels != nil {
+		for k, v := range *request.Labels {
+			spec.TaskTemplate.ContainerSpec.Labels[k] = v
+		}
+	}
+
 	spec.TaskTemplate.Networks = nets
 	spec.TaskTemplate.Placement = &swarm.Placement{
 		Constraints: constraints,
