@@ -115,6 +115,46 @@ func TestRead_UseNATSBadPort(t *testing.T) {
 	}
 }
 
+func TestRead_UseKafkaDefaultsToOff(t *testing.T) {
+	defaults := NewEnvBucket()
+	readConfig := types.ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.UseKafka() == true {
+		t.Log("Kafka is supposed to be off by default")
+		t.Fail()
+	}
+}
+
+func TestRead_UseKafka(t *testing.T) {
+	defaults := NewEnvBucket()
+	defaults.Setenv("faas_kafka_brokers", "kafka1:19092,kafka2:19092")
+	defaults.Setenv("faas_queue_topics", "request,response")
+	readConfig := types.ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.UseKafka() == false {
+		t.Log("Kafka was requested in config, but not enabled.")
+		t.Fail()
+	}
+}
+
+func TestRead_UseKafkaMissingTopic(t *testing.T) {
+
+	defaults := NewEnvBucket()
+	defaults.Setenv("faas_kafka_brokers", "kafka1:19092")
+	readConfig := types.ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.UseKafka() == true {
+		t.Log("Kafka topic is not provisioned, should not be enabled.")
+		t.Fail()
+	}
+}
+
 func TestRead_PrometheusNonDefaults(t *testing.T) {
 	defaults := NewEnvBucket()
 	defaults.Setenv("faas_prometheus_host", "prom1")

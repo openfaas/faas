@@ -19,6 +19,7 @@ import (
 	"github.com/openfaas/faas/gateway/plugin"
 	"github.com/openfaas/faas/gateway/types"
 	natsHandler "github.com/openfaas/nats-queue-worker/handler"
+	kafkaHandler "github.com/openfaas/kafka-queue-worker/handler"
 
 	"github.com/gorilla/mux"
 )
@@ -117,6 +118,16 @@ func main() {
 		}
 
 		faasHandlers.QueuedProxy = internalHandlers.MakeQueuedProxy(metricsOptions, true, &logger, natsQueue)
+		faasHandlers.AsyncReport = internalHandlers.MakeAsyncReport(metricsOptions)
+	} else if config.UseKafka() {
+		log.Println("Async enabled: Using Kafka Streaming.")
+		kafkaQueue, queueErr := kafkaHandler.CreateKafkaQueue(*config.KafkaBrokers, *config.QueueTopics)
+		if queueErr != nil {
+			log.Fatalln(queueErr)
+		}
+		defer kafkaQueue.Shutdown()
+
+		faasHandlers.QueuedProxy = internalHandlers.MakeQueuedProxy(metricsOptions, true, &logger, kafkaQueue)
 		faasHandlers.AsyncReport = internalHandlers.MakeAsyncReport(metricsOptions)
 	}
 
