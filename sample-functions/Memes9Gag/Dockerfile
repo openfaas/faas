@@ -3,13 +3,13 @@ MAINTAINER mlabouardy <mohamed@labouardy.com>
 WORKDIR /go/src/github.com/mlabouardy/Memes9Gag
 RUN go get -d -v github.com/mlabouardy/9gag
 COPY handler.go .
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o handler .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 ADD https://github.com/openfaas/faas/releases/download/0.5.1-alpha/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 WORKDIR /root/
-COPY --from=builder /go/src/github.com/mlabouardy/Memes9Gag/handler .
-ENV fprocess="/root/handler"
+COPY --from=builder /go/src/github.com/mlabouardy/Memes9Gag/app .
+ENV fprocess="/root/app"
 CMD ["fwatchdog"]
