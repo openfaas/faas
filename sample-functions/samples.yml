@@ -53,6 +53,11 @@ functions:
     handler: ./MarkdownRender
     image: functions/markdown-render:latest
 
+  memes-9gag:
+    lang: Dockerfile
+    handler: ./Memes9Gag
+    image: functions/memes-9gag:latest
+
   nodeinfo:
     lang: Dockerfile
     handler: ./NodeInfo
@@ -82,4 +87,3 @@ functions:
     lang: Dockerfile
     handler: ./WordCountFunction
     image: functions/wordcount:latest
-
