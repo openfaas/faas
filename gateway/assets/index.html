@@ -115,10 +115,11 @@
                             </span>
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-sm>
-                                    <button ng-click="fireRequest()" class="md-raised md-button md-ink-ripple" type="button">
+                                    <button ng-click="fireRequest()" class="md-raised md-button md-ink-ripple" type="button" ng-disabled="invocationInProgress">
                                         <span class="ng-scope">Invoke</span><div class="md-ripple-container"></div>
                                     </button>
                                 </md-input-container>
+                                <md-progress-circular md-mode="indeterminate" ng-show="invocationInProgress"></md-progress-circular>
                             </div>
 
                             <div layout-gt-sm="row">

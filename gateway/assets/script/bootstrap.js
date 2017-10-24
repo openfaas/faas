@@ -7,6 +7,7 @@ var app = angular.module('faasGateway', ['ngMaterial']);
 app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav',
         function($scope, $log, $http, $location, $timeout, $mdDialog, $mdToast, $mdSidenav) {
     $scope.functions = [];
+    $scope.invocationInProgress = false;
     $scope.invocationRequest = "";
     $scope.invocationResponse = "";
     $scope.invocationStatus = "";
@@ -41,7 +42,6 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
     };
 
     $scope.fireRequest = function() {
-
         var options = {
             url: "/function/" + $scope.selectedFunction.name,
             data: $scope.invocation.request,
@@ -49,6 +49,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
             headers: { "Content-Type": $scope.invocation.contentType == "json" ? "application/json" : "text/plain" },
             responseType: $scope.invocation.contentType
         };
+        $scope.invocationInProgress = true;
         $scope.invocationResponse = "";
         $scope.invocationStatus = null;
 
@@ -59,9 +60,11 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
                 } else {
                     $scope.invocationResponse = response.data;
                 }
+                $scope.invocationInProgress = false;
                 $scope.invocationStatus = response.status;
                 showPostInvokedToast("Success");
             }).catch(function(error1) {
+                $scope.invocationInProgress = false;
                 $scope.invocationResponse = error1.statusText + "\n" + error1.data;
                 $scope.invocationStatus = error1.status;
 
@@ -105,6 +108,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
             $scope.invocation.request = "";
             $scope.invocationResponse = "";
             $scope.invocationStatus = "";
+            $scope.invocationInProgress = false;
             $scope.invocation.contentType = "text";
         }
     };
