@@ -1,0 +1,9 @@
+provider:
+  name: faas
+  gateway: http://localhost:8080
+
+functions:
+  helloc:
+    lang: Dockerfile
+    handler: ./function
+    image: mlabouardy/memes-9gag
