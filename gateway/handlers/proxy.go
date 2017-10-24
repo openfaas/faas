@@ -45,13 +45,12 @@ func MakeProxy(metrics metrics.MetricOptions, wildcard bool, client *client.Clie
 	return func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 
-		switch r.Method {
-		case "POST", "GET":
+		if r.Method == "POST" {
 			logger.Infoln(r.Header)
 
-			xFunctionHeader := r.Header["X-Function"]
-			if len(xFunctionHeader) > 0 {
-				logger.Infoln(xFunctionHeader)
+			xfunctionHeader := r.Header["X-Function"]
+			if len(xfunctionHeader) > 0 {
+				logger.Infoln(xfunctionHeader)
 			}
 
 			// getServiceName
@@ -60,8 +59,8 @@ func MakeProxy(metrics metrics.MetricOptions, wildcard bool, client *client.Clie
 				vars := mux.Vars(r)
 				name := vars["name"]
 				serviceName = name
-			} else if len(xFunctionHeader) > 0 {
-				serviceName = xFunctionHeader[0]
+			} else if len(xfunctionHeader) > 0 {
+				serviceName = xfunctionHeader[0]
 			}
 
 			if len(serviceName) > 0 {
@@ -70,8 +69,8 @@ func MakeProxy(metrics metrics.MetricOptions, wildcard bool, client *client.Clie
 				w.WriteHeader(http.StatusBadRequest)
 				w.Write([]byte("Provide an x-function header or valid route /function/function_name."))
 			}
-			break
-		default:
+
+		} else {
 			w.WriteHeader(http.StatusMethodNotAllowed)
 		}
 	}
@@ -141,8 +140,7 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	contentType := r.Header.Get("Content-Type")
 	fmt.Printf("[%s] Forwarding request [%s] to: %s\n", stamp, contentType, url)
 
-	method := r.Method
-	request, err := http.NewRequest(method, url, bytes.NewReader(requestBody))
+	request, err := http.NewRequest("POST", url, bytes.NewReader(requestBody))
 
 	copyHeaders(&request.Header, &r.Header)
 
