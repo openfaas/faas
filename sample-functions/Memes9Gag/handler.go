@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -16,5 +17,6 @@ func main() {
 	}
 	gag9 := gag9.New()
 	memes := gag9.FindByTag(string(tag))
-	fmt.Println(memes)
+	rawJson, _ := json.Marshal(memes)
+	fmt.Println(string(rawJson))
 }
