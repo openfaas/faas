@@ -85,6 +85,7 @@ There are three main Github repos
 | [Docker-awesome curated projects](https://github.com/veggiemonk/awesome-docker#serverless) | Julien Bisconti | Github.com | 23-Mar-2017 |
 | [Functions as a Service (FaaS) in French](http://blog.alexellis.io/fonction-service/) | Alex Ellis | alexellis.io | 13-Jan-2017 |
 | [Functions as a Service (FaaS)](http://blog.alexellis.io/functions-as-a-service/) | Alex Ellis | alexellis.io | 4-Jan-2017 |
+| [Build a Serverless Memes Function with OpenFaaS](https://medium.com/@mlabouardy/build-a-serverless-memes-function-with-openfaas-f4210a53abe8) | Mohamed Labouardy | medium.com/@mlabouardy | 24-Oct-2017 |
 
 ### Third-party integrations / OpenFaaS providers
 | Project name and description                                         | Author     | Site      | Status      |
