@@ -8,7 +8,7 @@ Below is a demo of how you could use Kong as an authentication layer for OpenFaa
 
 In this demo we will be using minikube. If you have Kubernetes and kubectl installed already you can skip this section.
 
-The following instructions were coppied from the [Kubernetes documentation](https://kubernetes.io/docs/tasks/tools/install-minikube/).
+The following instructions were copied from the [Kubernetes documentation](https://kubernetes.io/docs/tasks/tools/install-minikube/).
 
 ```
 $ curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x ./kubectl &&	mv ./kubectl /usr/local/bin/kubectl
@@ -20,7 +20,7 @@ $ minikube start
 
 ## Setup OpenFaaS
 
-The following instructions were coppied from the [OpenFaaS Kubernetes guide](https://github.com/openfaas/faas/blob/master/guide/deployment_k8s.md).
+The following instructions were copied from the [OpenFaaS Kubernetes guide](https://github.com/openfaas/faas/blob/master/guide/deployment_k8s.md).
 ```
 $ git clone https://github.com/openfaas/faas-netes && \
     cd faas-netes && \
@@ -181,7 +181,7 @@ Now visit http://192.168.99.100:30726/ui/ in your browser where you will be aske
 
 Basic authentication does not protect from man in the middle attacks, so lets add SSL to encrypt the communication.
 
-Create a cert. Here in the demo, we are creating selfsigned certs, but in production you should skip this step and use your existing certificates (or get some from Lets Encrypt).
+Create a cert. Here in the demo, we are creating self signed certs, but in production you should skip this step and use your existing certificates (or get some from Lets Encrypt).
 ```
 $ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
   -keyout /tmp/selfsigned.key -out /tmp/selfsigned.pem \
