@@ -3,7 +3,7 @@ provider:
   gateway: http://localhost:8080
 
 functions:
-  helloc:
+  memes-9gag:
     lang: Dockerfile
     handler: ./function
     image: mlabouardy/memes-9gag
