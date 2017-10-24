@@ -1,11 +1,11 @@
 version: "3.3"
 services:
     gateway:
+        image: functions/gateway:0.6.7
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:0.6.7
         networks:
             - functions
         environment:
@@ -16,15 +16,20 @@ services:
                     - 'node.role == manager'
                     - 'node.platform.os == linux'
     prometheus:
-        image: functions/prometheus:latest  # autobuild from Dockerfile in repo.
-        command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
-        ports:
-            - 9090:9090
-        depends_on:
-            - gateway
-            - alertmanager
+        image: functions/prometheus:latest
         environment:
             no_proxy: "gateway"
+        configs:
+          - source: prometheus_config
+            target: /etc/prometheus/prometheus.yml
+          - source: prometheus_rules
+            target: /etc/prometheus/alert.rules
+        command:
+          - '-config.file=/etc/prometheus/prometheus.yml'
+          - '-storage.local.path=/prometheus'
+          - '-alertmanager.url=http://alertmanager:9093'
+        ports:
+            - 9090:9090
         networks:
             - functions
         deploy:
@@ -32,13 +37,13 @@ services:
                 constraints:
                     - 'node.role == manager'
                     - 'node.platform.os == linux'
-
     alertmanager:
-        image: functions/alertmanager:latest    # autobuild from Dockerfile in repo.
+        image: functions/alertmanager:latest
         environment:
             no_proxy: "gateway"
-#        volumes:
-#            - ./prometheus/alertmanager.yml:/alertmanager.yml
+        configs:
+          - source: alertmanager_config
+            target: /alertmanager.yml
         command:
             - '-config.file=/alertmanager.yml'
         networks:
@@ -57,8 +62,6 @@ services:
         image: functions/webhookstash:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -74,8 +77,6 @@ services:
         image: functions/hubstats:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -92,8 +93,6 @@ services:
         image: functions/nodeinfo:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -110,8 +109,6 @@ services:
         image: functions/alpine:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -130,8 +127,6 @@ services:
         labels:
             function: "true"
             com.faas.max_replicas: "10"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -149,8 +144,6 @@ services:
         image: functions/alpine:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -168,8 +161,6 @@ services:
         image: functions/alpine:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -186,8 +177,6 @@ services:
         image: alexellis2/faas-markdownrender:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -202,3 +191,11 @@ networks:
     functions:
         driver: overlay
         attachable: true
+
+configs:
+    prometheus_config:
+        file: ./prometheus/prometheus.yml
+    prometheus_rules:
+        file: ./prometheus/alert.rules
+    alertmanager_config:
+        file: ./prometheus/alertmanager.yml
