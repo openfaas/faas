@@ -68,13 +68,13 @@ $ kubectl describe deploy/FUNCTION
 ### Remove the OpenFaaS deployment
 
 ```
-$ kubectl delete -f faas.yml,monitoring.yml,rbac.yml
+$ kubectl delete -f faas.yml,monitoring-config.yml,monitoring.yml,rbac.yml
 ```
 
 If you're using the async stack remove it this way:
 
 ```
-$ kubectl delete -f faas.async.yml,monitoring.yml,rbac.yml,nats.yml
+$ kubectl delete -f faas.async.yml,monitoring-config.yml,monitoring.yml,rbac.yml,nats.yml
 ```
 
 ## Timeouts
