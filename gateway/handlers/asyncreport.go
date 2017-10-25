@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"time"
 
 	"github.com/openfaas/faas/gateway/metrics"
 	"github.com/openfaas/faas/gateway/requests"
@@ -22,5 +23,9 @@ func MakeAsyncReport(metrics metrics.MetricOptions) http.HandlerFunc {
 		json.Unmarshal(bytesOut, &report)
 
 		trackInvocation(report.FunctionName, metrics, report.StatusCode)
+
+		var taken time.Duration
+		taken = time.Duration(report.TimeTaken)
+		trackTimeExact(taken, metrics, report.FunctionName)
 	}
 }
