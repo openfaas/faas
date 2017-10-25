@@ -220,3 +220,7 @@ func trackTime(then time.Time, metrics metrics.MetricOptions, name string) {
 	since := time.Since(then)
 	metrics.GatewayFunctionsHistogram.WithLabelValues(name).Observe(since.Seconds())
 }
+
+func trackTimeExact(duration time.Duration, metrics metrics.MetricOptions, name string) {
+	metrics.GatewayFunctionsHistogram.WithLabelValues(name).Observe(float64(duration))
+}
