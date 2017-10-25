@@ -2,8 +2,6 @@
 
 ### Guidelines
 
-
-
 Guidelines for contributing.
 
 **How can I get involved?**
@@ -67,6 +65,10 @@ Maintainers are well-known contributors who help with:
 * Offering other project support and strategical advice
 
 Varying levels of write access are made available via our project bot [Derek](https://github.com/alexellis/derek) to help regular contributors transition to maintainers.
+
+**How do I work with Derek the bot?**
+
+If you have been added to the MAINTAINERS file in the root of an OpenFaaS repository then you can help us manage our community and contributions by issuing comments on Issues and Pull Requests. See [Derek](https://github.com/alexellis/derek) for available commands.
 
 **Governance**
 
