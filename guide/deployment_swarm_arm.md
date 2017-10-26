@@ -1,10 +1,30 @@
 # Deployment guide for Docker Swarm on ARM
 
-> Note: The best place to start if you're new to OpenFaaS is the README file in the [faas](https://github.com/openfaas/faas/blob/master/README.md) or [faas-netes](https://github.com/openfaas/faas-netes/blob/master/README.md) repo.
+> Note: The best place to start if you're new to OpenFaaS is the README file in the [openfaas/faas](https://github.com/openfaas/faas/blob/master/README.md) repository.
 
-When running OpenFaaS on ARM a key consideration is that we need to use ARM based images for our functions; this is as simple as swapping the function's Dockerfile, all other function assets remain the same.
+## 32-bit ARM (armhf) - i.e. Raspberry Pi 2 or 3
 
-## Initialize Swarm Mode
+**OpenFaaS and Cloud Native Services**
+
+Special Docker images are required for hardware other than a 64-bit PC, most projects do not yet provide these so we have custom versions of the following:
+
+* Prometheus
+* AlertManager
+
+The OpenFaaS containers are built manually on a Raspberry Pi 2 or 3:
+
+* Gateway
+* Faas-netesd
+
+NATS Streaming is not yet available, but we expect it to be around November 2017.
+
+The function watchdog is cross-compiled through our CI process on a 64-bit PC.
+
+**Functions on armhf**
+
+When running OpenFaaS on ARM a key consideration is that we need to use arm base Docker images for our functions. Normally this means just swapping out the `FROM` instruction and the function code can stay the same.
+
+### Initialize Swarm Mode
 
 You can create a single-host Docker Swarm on your ARM device with a single command. You don't need any additional software to Docker 17.05 or greater.
 
@@ -26,7 +46,7 @@ It's also important to pass the `--advertise-addr` string to any hosts which hav
 
 > Note: check whether you need to enable firewall rules for the [Docker Swarm ports listed here](https://docs.docker.com/engine/swarm/swarm-tutorial/).
 
-## Deploy the stack
+### Deploy the stack
 
 Clone OpenFaaS and then checkout the latest stable release:
 
@@ -39,7 +59,7 @@ $ git clone https://github.com/openfaas/faas && \
 
 `./deploy_stack.armhf.sh` can be run at any time and includes a set of sample functions. You can read more about these in the [TestDrive document](https://github.com/openfaas/faas/blob/master/TestDrive.md)
 
-## Test out the UI
+### Test out the UI
 
 Within a few seconds (or minutes if on a poor WiFi connection) the API gateway and sample functions will be pulled into your local Docker library and you will be able to access the UI at:
 
@@ -47,7 +67,7 @@ http://localhost:8080
 
 > If you find that `localhost` times out then try to force an IPv4 address such as http://127.0.0.1:8080.
 
-## Grab the CLI
+### Grab the CLI
 
 The FaaS-CLI is an OpenFaaS client through which you can build, push, deploy and invoke your functions.  One command is all you need download and install the FaaS-CLI appropriate to your architecture:
 
@@ -73,7 +93,7 @@ A successful installation should yield a response similar to this:
  Version: 0.4.18c
 ```  
 
-## Using the CLI
+### Using the CLI
 
 As mentioned at the start of the guide, when running OpenFaaS on ARM a key consideration is the use of ARM based images for our functions; this is as simple as swapping the function's Dockerfile.
 We'll adapt the content of an [earlier blog](https://blog.alexellis.io/quickstart-openfaas-cli/) to demonstrate.
@@ -113,7 +133,11 @@ Here is where the important Dockerfile 'patching' takes place.  We need to take 
 
 ```
 cp ./template/node-armhf/Dockerfile ./template/node/
+cp ./template/go-armhf/Dockerfile ./template/go/
+cp ./template/python-armhf/Dockerfile ./template/python/
 ```
+
+At the time of writing you can also patch the `go` and `python` templates using the method above.
 
 With the ARM `Dockerfile` in place we are almost ready to build as we normally would.  Before we do, quickly edit `callme.yml` changing the image line to reflect your username and tag in the architecture - `alexellis/callme:armhf`
 
@@ -139,13 +163,24 @@ $ faas-cli build -f callme.yml
  [0] < Builder done.
 ```
 
-Use the CLI to push the newly built function to Docker Hub:
+Let's look at the 1st step in the Docker build:
+
+`FROM arm32v6/alpine:3.6`
+
+The main difference between running on a PC and running on an arm device is that the Dockerfile for our function used an arm base image.
+
+Now use the CLI to push the newly built function to Docker Hub:
+
 ```
 $ faas-cli push -f callme.yml
 ```
 
-## Deploy
-Deploying is the act of adding the function into your OpenFaaS API gateway
+If you have a single-node Swarm you won't need to push your image to the Docker Hub.
+
+### Deploy
+
+Deploy your function using the CLI. The CLI will call into the RESTful API on the OpenFaaS Gateway.
+
 ```
 $ faas-cli deploy -f callme.yml
  Deploying: callme.  
@@ -154,10 +189,20 @@ $ faas-cli deploy -f callme.yml
  200 OK  
  URL: http://localhost:8080/function/callme 
 ```
-> If you find that `localhost` times out, or the response mentions `[::1]` then try to force an IPv4 address such as http://127.0.0.1:8080.
 
-## Invoke
+**Timing out?**
+If you find that `localhost` times out, or the response mentions `[::1]` then try to force an IPv4 address such as http://127.0.0.1:8080:
+
+```
+$ faas-cli deploy -f callme.yml --gateway http://127.0.0.1:8080
+```
+
+Alternatively edit your /etc/hosts file and remove the entry for [::1] and localhost.
+
+### Invoke the function
+
 Test your newly deploy function on ARM:
+
 ```
 $ faas-cli invoke callme
  Reading from STDIN - hit (Control + D) to stop.  
@@ -165,3 +210,13 @@ $ faas-cli invoke callme
 
  {"status":"done"}
  ```
+
+## Deploy on Swarm with 64-bit ARM (aarch64)
+
+The work for For 64-bit ARM or the `aarch64` architecture is currently in testing/development.
+
+See the equivalent files as above with the arm64 suffix.
+
+```
+$ docker stack deploy -c docker-compose.arm64.yml
+```
