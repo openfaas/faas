@@ -16,15 +16,21 @@ You can start evaluating FaaS and building functions on your laptop or on a VM (
 
 * [10 minute guides for minikube / kubeadm](https://blog.alexellis.io/tag/learn-k8s/)
 
+Additional information on [setting up Kubernetes](https://kubernetes.io/docs/setup/pick-right-solution/).
+
+### 1.1 Pick helm or YAML files for deployment
+
 If you'd like to use helm follow the instructions in 2.0a and then come back here, otherwise follow 2.0b to use plain `kubectl`.
 
 ### 2.0a Deploy with Helm
 
-A Helm chart is provided `faas-netes` repo.
+A Helm chart is provided `faas-netes` repository. Follow the link below then come back to this guide.
 
 * [OpenFaaS Helm chart](https://github.com/openfaas/faas-netes/blob/master/HELM.md)
 
 ### 2.0b Deploy OpenFaaS
+
+This step assumes you are running `kubectl` on a master host.
 
 * Clone the code
 
@@ -32,16 +38,31 @@ A Helm chart is provided `faas-netes` repo.
 $ git clone https://github.com/openfaas/faas-netes
 ```
 
-* Deploy the services
+Deploy a synchronous or asynchronous stack. If you're using OpenFaaS for the first time we recommend the synchronous stack. The asynchronous stack also includes NATS Streaming for queuing.
+
+* Deploy the synchronous stack
 
 ```
 $ cd faas-netes
 $ kubectl apply -f ./faas.yml,monitoring.yml,rbac.yml
 ```
 
+Or
+
+* Deploy the asynchronous stack
+
+```
+$ cd faas-netes
+$ kubectl apply -f ./faas.async.yml,nats.yml,monitoring.yml,rbac.yml
+```
+
+Asynchronous invocation works by queuing requests with NATS Streaming. An alternative implementation is available with Kafka in an [open PR](https://github.com/openfaas/faas/pull/311).
+
+* See also: [Asynchronous function guide](https://github.com/openfaas/faas/blob/master/guide/asynchronous.md)
+
 ### 3.0 Use OpenFaaS
 
-That's it. You now have OpenFaaS deployed.
+After deploying OpenFaaS you can start using one of the guides or blog posts to create Serverless functions or test [community functions](https://github.com/openfaas/faas/blob/master/community.md).
 
 ![](https://camo.githubusercontent.com/72f71cb0b0f6cae1c84f5a40ad57b7a9e389d0b7/68747470733a2f2f7062732e7477696d672e636f6d2f6d656469612f44466b5575483158734141744e4a362e6a70673a6d656469756d)
 
@@ -146,22 +167,9 @@ Click "New Function" and fill it out with the following:
 
 Your function will appear after a few seconds and you can click "Invoke"
 
-You can also use the CLI like this:
+The function can also be invoked through the CLI:
 
 ```
 $ echo -n "" | faas-cli invoke --gateway http://kubernetes-ip:31112 nodeinfo
 $ echo -n "verbose" | faas-cli invoke --gateway http://kubernetes-ip:31112 nodeinfo
 ```
-
-## Asynchronous functions
-
-Asynchronous invocation works by queuing requests with NATS Streaming. An alternative implementation is available with Kafka in an [open PR](https://github.com/openfaas/faas/pull/311).
-
-Deploy the asynchronous stack like this (or use the helm chart with the async override)
-
-```
-$ cd faas-netes
-$ kubectl apply -f ./faas.async.yml,nats.yml,monitoring.yml,rbac.yml
-```
-
-* See also: [Asynchronous function guide](https://github.com/openfaas/faas/blob/master/guide/asynchronous.md)
