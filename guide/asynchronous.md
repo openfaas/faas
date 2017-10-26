@@ -24,9 +24,11 @@ As of [PR #131](https://github.com/openfaas/faas/pull/131) asynchronous invocati
 
 Here is a conceptual diagram
 
-![](https://user-images.githubusercontent.com/6358735/29469109-cc03c244-843e-11e7-9dfd-a540799dac28.png)
+<img width="1440" alt="screen shot 2017-10-26 at 15 55 19" src="https://user-images.githubusercontent.com/6358735/32060206-047eb75c-ba66-11e7-94d3-1343ea1811db.png">
 
-* [queue-worker](https://github.com/open-faas/nats-queue-worker)
+You can also use asynchronous calls with a callback URL
+
+<img width="1440" alt="screen shot 2017-10-26 at 15 55 06" src="https://user-images.githubusercontent.com/6358735/32060205-04545692-ba66-11e7-9e6d-b800a07b9bf5.png">
 
 ## Deploy the async stack
 
