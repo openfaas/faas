@@ -2,7 +2,7 @@
 
 > Note: The best place to start is the README file in the faas or faas-netes repo.
 
-This guide is for deployment to a vanilla Kubernetes 1.8 cluster running on Linux hosts. It is not a hand-book, please see the set of guides available at [openfaas/guide](https://github.com/openfaas/faas/tree/master/guide).
+This guide is for deployment to a vanilla Kubernetes 1.8 cluster running on Linux hosts. It is not a hand-book, please see the set of guides and blogs posts available at [openfaas/guide](https://github.com/openfaas/faas/tree/master/guide).
 
 ## Kubernetes
 
@@ -24,7 +24,6 @@ A Helm chart is provided `faas-netes` repo.
 
 * [OpenFaaS Helm chart](https://github.com/openfaas/faas-netes/blob/master/HELM.md)
 
-
 ### 2.0b Deploy OpenFaaS
 
 * Clone the code
@@ -40,7 +39,7 @@ $ cd faas-netes
 $ kubectl apply -f ./faas.yml,monitoring.yml,rbac.yml
 ```
 
-### 3.0
+### 3.0 Use OpenFaaS
 
 That's it. You now have OpenFaaS deployed.
 
@@ -156,7 +155,7 @@ $ echo -n "verbose" | faas-cli invoke --gateway http://kubernetes-ip:31112 nodei
 
 ## Asynchronous functions
 
-Asynchronous invocation works by queuing requests with NATS Streaminig.
+Asynchronous invocation works by queuing requests with NATS Streaming. An alternative implementation is available with Kafka in an [open PR](https://github.com/openfaas/faas/pull/311).
 
 Deploy the asynchronous stack like this (or use the helm chart with the async override)
 
