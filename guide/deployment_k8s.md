@@ -44,6 +44,12 @@ $ kubectl apply -f ./faas.yml,monitoring.yml,rbac.yml
 
 That's it. You now have OpenFaaS deployed.
 
+![](https://camo.githubusercontent.com/72f71cb0b0f6cae1c84f5a40ad57b7a9e389d0b7/68747470733a2f2f7062732e7477696d672e636f6d2f6d656469612f44466b5575483158734141744e4a362e6a70673a6d656469756d)
+
+You can also watch a complete walk-through of OpenFaaS on Kubernetes which demonstrates auto-scaling in action and how to use the Prometheus UI. [Video walk-through](https://www.youtube.com/watch?v=0DbrLsUvaso).
+
+**Connect to the UI**
+
 For simplicity the default configuration uses NodePorts rather than an IngressController (which is more complicated to setup).
 
 | Service           | TCP port |
