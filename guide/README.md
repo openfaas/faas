@@ -51,7 +51,7 @@ Suggestions for new topics are welcome. Please also check the [Issue tracker](ht
 
 * [Serverless sorcery with ImageMagick](https://blog.alexellis.io/serverless-imagemagick/)
 
-### Fine-tuning
+### Fine-tuning / high-throughput
 
 * [OpenFaaS accelerates serverless Java with AfterBurn](https://blog.alexellis.io/openfaas-serverless-acceleration/)
 
