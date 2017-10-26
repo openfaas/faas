@@ -11,11 +11,11 @@ import (
 
 	"strings"
 
-	"github.com/openfaas/faas/gateway/metrics"
-	"github.com/openfaas/faas/gateway/requests"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/client"
+	"github.com/openfaas/faas/gateway/metrics"
+	"github.com/openfaas/faas/gateway/requests"
 )
 
 // MakeFunctionReader gives a summary of Function structs with Docker service stats overlaid with Prometheus counters.

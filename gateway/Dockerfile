@@ -13,9 +13,12 @@ COPY queue          queue
 COPY plugin         plugin
 COPY server.go      .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gateway .
+# Run a gofmt and exclude all vendored code.
+RUN test -z "$(gofmt -l $(find . -type f -name '*.go' -not -path "./vendor/*"))" \
+    && go test $(go list ./... | grep -v integration | grep -v /vendor/ | grep -v /template/) -cover \
+    && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gateway .
 
-FROM alpine:latest
+FROM alpine:3.6
 WORKDIR /root/
 
 EXPOSE 8080
