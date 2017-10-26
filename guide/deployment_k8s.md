@@ -2,7 +2,7 @@
 
 > Note: The best place to start is the README file in the faas or faas-netes repo.
 
-This guide is for deployment to a vanilla Kubernetes 1.8 cluster running on Linux hosts.
+This guide is for deployment to a vanilla Kubernetes 1.8 cluster running on Linux hosts. It is not a hand-book, please see the set of guides available at [openfaas/guide](https://github.com/openfaas/faas/tree/master/guide).
 
 ## Kubernetes
 
@@ -15,6 +15,8 @@ OpenFaaS is Kubernetes-native and uses *Deployments*, *Service*s and *Secret*s. 
 You can start evaluating FaaS and building functions on your laptop or on a VM (cloud or on-prem).
 
 * [10 minute guides for minikube / kubeadm](https://blog.alexellis.io/tag/learn-k8s/)
+
+If you'd like to use helm follow the instructions in 2.0a and then come back here, otherwise follow 2.0b to use plain `kubectl`.
 
 ### 2.0a Deploy with Helm
 
