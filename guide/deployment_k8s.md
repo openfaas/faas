@@ -2,19 +2,28 @@
 
 > Note: The best place to start is the README file in the faas or faas-netes repo.
 
+This guide is for deployment to a vanilla Kubernetes 1.8 cluster running on Linux hosts.
+
 ## Kubernetes
 
-OpenFaaS is Kubernetes-native and uses *Deployments* and *Services*. For more detail check out the ["faas-netes" repository](https://github.com/openfaas/faas-netes).
+OpenFaaS is Kubernetes-native and uses *Deployments*, *Service*s and *Secret*s. For more detail check out the ["faas-netes" repository](https://github.com/openfaas/faas-netes).
 
 > For deploying on a cloud that supports Kubernetes *LoadBalancers* you may also want to apply the configuration in: `cloud/lb.yml`.
 
-### Build a cluster
+### 1.0 Build a cluster
 
 You can start evaluating FaaS and building functions on your laptop or on a VM (cloud or on-prem).
 
-* [10 minute guides for minikube / kubeadm](https://blog.alexellis.io/tag/k8s/)
+* [10 minute guides for minikube / kubeadm](https://blog.alexellis.io/tag/learn-k8s/)
 
-### Deploy OpenFaaS
+### 2.0a Deploy with Helm
+
+A Helm chart is provided `faas-netes` repo.
+
+* [OpenFaaS Helm chart](https://github.com/openfaas/faas-netes/blob/master/HELM.md)
+
+
+### 2.0b Deploy OpenFaaS
 
 * Clone the code
 
@@ -28,6 +37,8 @@ $ git clone https://github.com/openfaas/faas-netes
 $ cd faas-netes
 $ kubectl apply -f ./faas.yml,monitoring.yml,rbac.yml
 ```
+
+### 3.0
 
 That's it. You now have OpenFaaS deployed.
 
@@ -46,7 +57,19 @@ There are currently no sample functions built into this stack, but we can deploy
 
 **Use the CLI**
 
-Follow the tutorials below, but change your gateway URL from `localhost:8080` to `kubernetes-node-ip:31112`
+* Install the CLI 
+
+```
+$ curl -sL cli.openfaas.com | sudo sh
+```
+
+Then clone some samples to deploy on your cluster.
+
+```
+$ git clone https://github.com/openfaas/faas-cli
+```
+
+Edit samples.yml and change your gateway URL from `localhost:8080` to `kubernetes-node-ip:31112`.
 
 i.e.
 
@@ -54,6 +77,41 @@ i.e.
 provider:  
   name: faas
   gateway: http://192.168.4.95:31112
+```
+
+Now deploy the samples:
+
+```
+$ faas-cli deploy -f samples.yml
+```
+
+> The `faas-cli` also supports an override of `--gateway http://...` for example:
+
+```
+$ faas-cli deploy -f samples.yml --gateway http://127.0.0.1:31112
+```
+
+List the functions:
+
+```
+$ faas-cli list -f samples.yml
+
+or
+
+$ faas-cli list  --gateway http://127.0.0.1:31112
+Function                      	Invocations    	Replicas
+inception                     	0              	1    
+nodejs-echo                   	0              	1    
+ruby-echo                     	0              	1    
+shrink-image                  	0              	1    
+stronghash                    	2              	1
+```
+
+Invoke a function:
+
+```
+$ echo -n Test | faas-cli invoke stronghash --gateway http://127.0.0.1:31112
+c6ee9e33cf5c6715a1d148fd73f7318884b41adcb916021e2bc0e800a5c5dd97f5142178f6ae88c8fdd98e1afb0ce4c8d2c54b5f37b30b7da1997bb33b0b8a31  -
 ```
 
 * Learn about the CLI
@@ -64,14 +122,9 @@ provider:
 
 [Your first serverless Python function with OpenFaaS](https://blog.alexellis.io/first-faas-python-function/)
 
-You can also deploy the samples from the [FaaS-cli](https://github.com/openfaas/faas-cli), but change the gateway address as above.
-
-```
-$ git clone https://github.com/openfaas/faas-cli && \
-  faas-cli deploy -f samples.yml
-```
-
 **Use the UI**
+
+The UI is exposed on NodePort 31112.
 
 Click "New Function" and fill it out with the following:
 
@@ -97,7 +150,7 @@ $ echo -n "verbose" | faas-cli invoke --gateway http://kubernetes-ip:31112 nodei
 
 Asynchronous invocation works by queuing requests with NATS Streaminig.
 
-Deploy the asynchronous stack like this:
+Deploy the asynchronous stack like this (or use the helm chart with the async override)
 
 ```
 $ cd faas-netes
@@ -105,9 +158,3 @@ $ kubectl apply -f ./faas.async.yml,nats.yml,monitoring.yml,rbac.yml
 ```
 
 * See also: [Asynchronous function guide](https://github.com/openfaas/faas/blob/master/guide/asynchronous.md)
-
-## Helm chart
-
-A Helm chart is provided below with experimental support.
-
-* [OpenFaaS Helm chart](https://github.com/openfaas/faas-netes/blob/master/HELM.md)
