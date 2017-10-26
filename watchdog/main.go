@@ -5,9 +5,13 @@ package main
 
 import (
 	"bytes"
+	"encoding/base64"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
+	"mime"
+	"mime/multipart"
 	"net/http"
 	"os"
 	"os/exec"
@@ -28,6 +32,43 @@ func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error)
 		defer r.Body.Close()
 	}
 
+	mediaType, params, err := mime.ParseMediaType(r.Header.Get("Content-Type"))
+	if strings.HasPrefix(mediaType, "multipart/form-data") {
+		formJson := map[string]types.FormPart{}
+		mr := multipart.NewReader(r.Body, params["boundary"])
+		for {
+			p, err := mr.NextPart()
+			if err == io.EOF {
+				break
+			}
+			if err != nil {
+				log.Fatal(err)
+			}
+			slurp, err := ioutil.ReadAll(p)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			fp := types.FormPart{}
+
+			if binaryMimeType(p.Header.Get("Content-Type")) {
+				fp.Value = base64.StdEncoding.EncodeToString(slurp)
+				fp.Encoded = true
+			} else {
+				fp.Value = string(slurp)
+				fp.Encoded = false
+			}
+
+			if p.FileName() != "" {
+				fp.Filename = p.FileName()
+			}
+
+			formJson[p.FormName()] = fp
+		}
+
+		return types.MarshalForm(formJson, &r.Header)
+	}
+
 	requestBytes, err = ioutil.ReadAll(r.Body)
 	if config.marshalRequest {
 		marshalRes, marshalErr := types.MarshalRequest(requestBytes, &r.Header)
@@ -37,6 +78,22 @@ func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error)
 		res = requestBytes
 	}
 	return res, err
+}
+
+func binaryMimeType(contentType string) bool {
+	binaryMimeTypes := []string{
+		"application/octet-stream",
+		"application/pdf",
+		"image/",
+		"audio/",
+		"video/",
+	}
+	for _, mimeTypePrefix := range binaryMimeTypes {
+		if strings.HasPrefix(contentType, mimeTypePrefix) {
+			return true
+		}
+	}
+	return false
 }
 
 func debugHeaders(source *http.Header, direction string) {
