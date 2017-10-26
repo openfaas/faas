@@ -3,6 +3,8 @@ OpenFaaS guides
 
 This page is a collection of our key blog posts, tutorials and guides while we prepare a [dedicated site](https://github.com/openfaas/faas/issues/253) for documentation. For other queries please get in touch for a Slack invite or ping [@openfaas](https://twitter.com/openfaas) on Twitter.
 
+> There is a PR underway for the new [documentation site](https://github.com/openfaas/faas/pull/274)
+
 Suggestions for new topics are welcome. Please also check the [Issue tracker](https://github.com/openfaas/faas/issues).
 
 ## Deployment guides (start here)
@@ -22,6 +24,8 @@ Suggestions for new topics are welcome. Please also check the [Issue tracker](ht
 * [Asynchronous functions with NATS Streaming](asynchronous.md)
 
 * [Hardening OpenFaaS with Kong & TLS](kong_integration.md)
+
+* [Reference documentation for Function Watchdog](../watchdog/)
 
 * WIP [Debugging Functions](https://github.com/openfaas/faas/issues/223)
 
