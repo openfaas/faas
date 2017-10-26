@@ -6,7 +6,7 @@ package handlers
 import (
 	"context"
 	"encoding/json"
-	"fmt"
+	"log"
 	"net/http"
 
 	"strings"
@@ -19,7 +19,7 @@ import (
 )
 
 // MakeFunctionReader gives a summary of Function structs with Docker service stats overlaid with Prometheus counters.
-func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) http.HandlerFunc {
+func MakeFunctionReader(metricsOptions metrics.MetricOptions, c client.ServiceAPIClient) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		serviceFilter := filters.NewArgs()
@@ -30,11 +30,14 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 
 		services, err := c.ServiceList(context.Background(), options)
 		if err != nil {
-			fmt.Println(err)
+			log.Println("Error getting service list:", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("Error getting service list"))
+			return
 		}
 
 		// TODO: Filter only "faas" functions (via metadata?)
-		var functions []requests.Function
+		functions := []requests.Function{}
 
 		for _, service := range services {
 
