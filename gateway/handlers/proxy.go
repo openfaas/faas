@@ -93,8 +93,7 @@ func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.Metric
 		defer trackTime(time.Now(), metrics, name)
 		forwardReq := requests.NewForwardRequest(r.Method, *r.URL)
 
-		requestBody, _ := ioutil.ReadAll(r.Body)
-		invokeService(w, r, metrics, name, forwardReq, requestBody, logger, proxyClient)
+		invokeService(w, r, metrics, name, forwardReq, logger, proxyClient)
 	}
 }
 
@@ -107,7 +106,7 @@ func lookupSwarmService(serviceName string, c *client.Client) (bool, error) {
 	return len(services) > 0, err
 }
 
-func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, forwardReq requests.ForwardRequest, requestBody []byte, logger *logrus.Logger, proxyClient *http.Client) {
+func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, forwardReq requests.ForwardRequest, logger *logrus.Logger, proxyClient *http.Client) {
 	stamp := strconv.FormatInt(time.Now().Unix(), 10)
 
 	defer func(when time.Time) {
@@ -140,7 +139,7 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	contentType := r.Header.Get("Content-Type")
 	fmt.Printf("[%s] Forwarding request [%s] to: %s\n", stamp, contentType, url)
 
-	request, err := http.NewRequest("POST", url, bytes.NewReader(requestBody))
+	request, _ := http.NewRequest("POST", url, r.Body)
 
 	copyHeaders(&request.Header, &r.Header)
 
