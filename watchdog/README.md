@@ -91,7 +91,8 @@ Headers and other request information are injected into environmental variables 
 The `X-Forwarded-By` header becomes available as `Http_X_Forwarded_By`
 
 * `Http_Method` - GET/POST etc
-* `Http_Query` - Querystring value
+* `Http_Query` - QueryString value
+* `Http_ContentLength` - gives the total content-length of the incoming HTTP request received by the watchdog.
 
 > This behaviour is enabled by the `cgi_headers` environmental variable which is enabled by default.
 
