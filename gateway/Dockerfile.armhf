@@ -10,7 +10,8 @@ COPY requests       requests
 COPY tests          tests
 COPY server.go      .
 COPY types          types
-COPY plugin  plugin
+COPY plugin  	    plugin
+COPY queue  	    queue
 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gateway .
 
