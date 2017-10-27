@@ -41,7 +41,9 @@ OpenFaaS is an independent project created by [Alex Ellis](https://www.alexellis
 
 ### CLI
 
-Any container or process in a Docker container can be a serverless function in FaaS. Using the [FaaS CLI](http://github.com/openfaas/faas-cli) you can deploy your functions or quickly create new functions from templates such as Node.js or Python.
+Any container or process in a Docker container can be a serverless function in FaaS. Using the [FaaS CLI](http://github.com/openfaas/faas-cli) you can deploy your functions quickly.
+
+Create new functions from templates for Node.js, Python, [Go](https://blog.alexellis.io/serverless-golang-with-openfaas/) and many more. If you can't find a suitable template you can also use a Dockerfile.
 
 > The CLI is effectively a RESTful client for the API Gateway.
 
