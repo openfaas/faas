@@ -202,6 +202,7 @@ func getAdditionalEnvs(config *WatchdogConfig, r *http.Request, method string) [
 		}
 
 		envs = append(envs, fmt.Sprintf("Http_Method=%s", method))
+		envs = append(envs, fmt.Sprintf("Http_ContentLength=%d", r.ContentLength))
 
 		if config.writeDebug {
 			log.Println("Query ", r.URL.RawQuery)
