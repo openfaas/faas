@@ -153,7 +153,7 @@ Highlights:
 
 ### How do I become a contributor?
 
-Anyone is invited to contribute to the project in-line with the [contribution guide](https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md) - you can also read the guide for ideas on how to get involved. We invite new contributors to join our Slack community. We would also ask you to propose any changes or contributions ahead of time, especially when there is no issue or proposal alredy tracking it.
+Anyone is invited to contribute to the project in-line with the [contribution guide](https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md) - you can also read the guide for ideas on how to get involved. We invite new contributors to join our Slack community. We would also ask you to propose any changes or contributions ahead of time, especially when there is no issue or proposal already tracking it.
 
 ### Other
 
