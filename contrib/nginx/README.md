@@ -1,3 +1,18 @@
+### Basic auth in 5 seconds
+
+This guide shows you how to protect your cluster with "Basic Auth" which involves setting a username
+and password. This method will prevent tampering but for production usage will also need TLS
+enabling. Free TLS certificates can be generated with LetsEncrypt.
+
+Steps:
+
+* Generate a password file
+* Push file into secret store
+* Unexpose the gateway
+* Create an Nginx proxy container with the new secret
+
+* Test it out.
+
 ### Create a .htaccess:
 
 ```
@@ -39,12 +54,12 @@ q70h0nsj9odbtv12vrsijcutx   openfaas_htpasswd                       13 seconds a
 $ docker service update func_gateway --publish-rm 8080
 ```
 
-### Build an Nginx container
+### Build an Nginx container (optional)
 
-Build gwnginx from contrib directory. 
+Build gwnginx from contrib directory if you need customizations.
 
 ```
-$ docker build -t gwnginx .
+$ docker build -t alexellis/gwnginx:0.1 .
 ```
 
 ### Launch nginx
