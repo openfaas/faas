@@ -12,16 +12,8 @@ import (
 	"github.com/openfaas/faas/gateway/requests"
 )
 
-func makeClient() http.Client {
-	// Fine-tune the client to fail fast.
-	return http.Client{}
-}
-
 // AddMetricsHandler wraps a http.HandlerFunc with Prometheus metrics
-func AddMetricsHandler(handler http.HandlerFunc, host string, port int) http.HandlerFunc {
-	client := makeClient()
-
-	prometheusQuery := NewPrometheusQuery(host, port, &client)
+func AddMetricsHandler(handler http.HandlerFunc, fetchQuery FetchQuery) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// log.Printf("Calling upstream for function info\n")
 
@@ -55,10 +47,13 @@ func AddMetricsHandler(handler http.HandlerFunc, host string, port int) http.Han
 		// log.Printf("Querying Prometheus API\n")
 		// `sum(gateway_function_invocation_total{function_name=~".*", code=~".*"}) by (function_name, code)`)
 		expr := "sum(gateway_function_invocation_total%7Bfunction_name%3D~%22.*%22%2C+code%3D~%22.*%22%7D)+by+(function_name%2C+code)"
-		results, fetchErr := prometheusQuery.Fetch(expr)
+		results, fetchErr := fetchQuery.Fetch(expr)
 		if fetchErr != nil {
 			log.Printf("Error querying Prometheus API: %s\n", fetchErr.Error())
 
+			if contentType := recorder.Header().Get("Content-Type"); contentType != "" {
+				w.Header().Set("Content-Type", contentType)
+			}
 			w.WriteHeader(http.StatusOK)
 			w.Write(upstreamBody)
 			return
@@ -72,7 +67,9 @@ func AddMetricsHandler(handler http.HandlerFunc, host string, port int) http.Han
 			return
 		}
 
-		// log.Printf("Writing bytesOut: %s\n", bytesOut)
+		if contentType := recorder.Header().Get("Content-Type"); contentType != "" {
+			w.Header().Set("Content-Type", contentType)
+		}
 		w.WriteHeader(http.StatusOK)
 		w.Write(bytesOut)
 	}
