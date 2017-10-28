@@ -33,14 +33,37 @@ ID                          NAME                DRIVER              CREATED     
 q70h0nsj9odbtv12vrsijcutx   openfaas_htpasswd                       13 seconds ago      13 seconds ago
 ```
 
-### Launch nginx
+### Remove the exposed port on the gateway
+
+```
+$ docker service update func_gateway --publish-rm 8080
+```
+
+### Build an Nginx container
 
 Build gwnginx from contrib directory. 
 
 ```
+$ docker build -t gwnginx .
+```
+
+### Launch nginx
+
+Deploy Nginx
+
+```
 $ docker service rm gwnginx ; \
  docker service create --network=func_functions \
-   --secret openfaas_htpasswd --publish 8081:8080 --name gwnginx gwnginx 
+   --secret openfaas_htpasswd \
+   --publish 8080:8080 --name gwnginx gwnginx 
 ```
+
+### Connect to the UI
+
+You can now connect to the UI on port 8080. If you use a web-browser you will be prompted for a password.
+
+**API/CLI**
+
+The API will require Basic Auth but can stil be used with `curl`. We have work under testing to support basic auth inside the `faas-cli` natively.
 
 
