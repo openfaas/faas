@@ -1,4 +1,4 @@
-package tests
+package handlers
 
 import (
 	"encoding/json"
@@ -10,7 +10,6 @@ import (
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/swarm"
-	"github.com/openfaas/faas/gateway/handlers"
 	"github.com/openfaas/faas/gateway/metrics"
 	"github.com/openfaas/faas/gateway/requests"
 	"golang.org/x/net/context"
@@ -63,7 +62,7 @@ func TestReaderSuccessReturnsOK(t *testing.T) {
 		serviceListServices: []swarm.Service{},
 		serviceListError:    nil,
 	}
-	handler := handlers.MakeFunctionReader(m, c)
+	handler := MakeFunctionReader(m, c)
 
 	w := httptest.NewRecorder()
 	r := &http.Request{}
@@ -82,7 +81,7 @@ func TestReaderSuccessReturnsJsonContent(t *testing.T) {
 		serviceListServices: []swarm.Service{},
 		serviceListError:    nil,
 	}
-	handler := handlers.MakeFunctionReader(m, c)
+	handler := MakeFunctionReader(m, c)
 
 	w := httptest.NewRecorder()
 	r := &http.Request{}
@@ -101,7 +100,7 @@ func TestReaderSuccessReturnsCorrectBodyWithZeroFunctions(t *testing.T) {
 		serviceListServices: []swarm.Service{},
 		serviceListError:    nil,
 	}
-	handler := handlers.MakeFunctionReader(m, c)
+	handler := MakeFunctionReader(m, c)
 
 	w := httptest.NewRecorder()
 	r := &http.Request{}
@@ -146,7 +145,7 @@ func TestReaderSuccessReturnsCorrectBodyWithOneFunction(t *testing.T) {
 		serviceListServices: services,
 		serviceListError:    nil,
 	}
-	handler := handlers.MakeFunctionReader(m, c)
+	handler := MakeFunctionReader(m, c)
 
 	w := httptest.NewRecorder()
 	r := &http.Request{}
@@ -175,7 +174,7 @@ func TestReaderErrorReturnsInternalServerError(t *testing.T) {
 		serviceListServices: nil,
 		serviceListError:    errors.New("error"),
 	}
-	handler := handlers.MakeFunctionReader(m, c)
+	handler := MakeFunctionReader(m, c)
 
 	w := httptest.NewRecorder()
 	r := &http.Request{}
@@ -194,7 +193,7 @@ func TestReaderErrorReturnsCorrectBody(t *testing.T) {
 		serviceListServices: nil,
 		serviceListError:    errors.New("error"),
 	}
-	handler := handlers.MakeFunctionReader(m, c)
+	handler := MakeFunctionReader(m, c)
 
 	w := httptest.NewRecorder()
 	r := &http.Request{}
