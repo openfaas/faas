@@ -2,6 +2,10 @@
 
 In this guide we will be using the `docker-machine` tool to provision a number of Docker Swarm nodes then we'll connect them together and deploy OpenFaaS. Before you get started - sign up to [Digital Ocean here to get free credits](https://m.do.co/c/8d4e75e9886f). Once you've signed up come back to the tutorial. 
 
+### A foreword on security
+
+These instructions are for a development environment. If you plan to expose OpenFaaS on the public Internet you need to enable basic authentication with a proxy such as Kong or Traefik at a minimum. TLS is also highly recomended and freely available with LetsEncrypt.org. [Kong guide](https://github.com/openfaas/faas/blob/master/guide/kong_integration.md) [Traefik guide](https://github.com/openfaas/faas/blob/master/guide/traefik_integration.md).
+
 ## Create DigitalOcean API Access Token
 
 Follow the [DigitalOcean instructions here](https://www.digitalocean.com/community/tutorials/how-to-use-the-digitalocean-api-v2#how-to-generate-a-personal-access-token) to create a Personal Access Token with **Read** and **Write** permissions, give the token a descriptive name for example `openfaas-getting-started`.
