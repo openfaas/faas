@@ -2,6 +2,10 @@
 
 > Note: The best place to start is the README file in the faas or faas-netes repo.
 
+### A foreword on security
+
+These instructions are for a development environment. If you plan to expose OpenFaaS on the public Internet you need to enable basic authentication with a proxy such as Kong or Traefik at a minimum. TLS is also highly recomended and freely available with LetsEncrypt.org. [Kong guide](https://github.com/openfaas/faas/blob/master/guide/kong_integration.md) [Traefik guide](https://github.com/openfaas/faas/blob/master/guide/traefik_integration.md).
+
 ## Initialize Swarm Mode
 
 You can create a single-host Docker Swarm on your laptop with a single command. You don't need any additional software to Docker 17.05 or greater. You can also run these commands on a Linux VM or cloud host.
