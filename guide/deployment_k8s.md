@@ -4,6 +4,10 @@
 
 This guide is for deployment to a vanilla Kubernetes 1.8 cluster running on Linux hosts. It is not a hand-book, please see the set of guides and blogs posts available at [openfaas/guide](https://github.com/openfaas/faas/tree/master/guide).
 
+### A foreword on security
+
+These instructions are for a development environment. If you plan to expose OpenFaaS on the public Internet you need to enable basic authentication with a proxy such as Kong or Traefik at a minimum. TLS is also highly recomended and freely available with LetsEncrypt.org. [Kong guide](https://github.com/openfaas/faas/blob/master/guide/kong_integration.md) [Traefik guide](https://github.com/openfaas/faas/blob/master/guide/traefik_integration.md).
+
 ## Kubernetes
 
 OpenFaaS is Kubernetes-native and uses *Deployments*, *Service*s and *Secret*s. For more detail check out the ["faas-netes" repository](https://github.com/openfaas/faas-netes).
