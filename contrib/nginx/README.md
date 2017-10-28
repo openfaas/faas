@@ -70,7 +70,8 @@ Deploy Nginx
 $ docker service rm gwnginx ; \
  docker service create --network=func_functions \
    --secret openfaas_htpasswd \
-   --publish 8080:8080 --name gwnginx gwnginx 
+   --publish 8080:8080 \
+   --name gwnginx alexellis/gwnginx:0.1 
 ```
 
 ### Connect to the UI
