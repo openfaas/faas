@@ -9,6 +9,10 @@ Suggestions for new topics are welcome. Please also check the [Issue tracker](ht
 
 ## Deployment guides (start here)
 
+### A foreword on security
+
+These instructions are for a development environment. If you plan to expose OpenFaaS on the public Internet you need to enable basic authentication with a proxy such as Kong or Traefik at a minimum. TLS is also highly recomended and freely available with LetsEncrypt.org. [Kong guide](https://github.com/openfaas/faas/blob/master/guide/kong_integration.md) [Traefik guide](https://github.com/openfaas/faas/blob/master/guide/traefik_integration.md).
+
 * [Kubernetes deployment](deployment_k8s.md)
 
 * [Docker Swarm deployment](deployment_swarm.md)
