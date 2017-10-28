@@ -7,6 +7,10 @@ import (
 	"net/http"
 )
 
+type FetchQuery interface {
+	Fetch(query string) (*VectorQueryResponse, error)
+}
+
 // PrometheusQuery a PrometheusQuery
 type PrometheusQuery struct {
 	Port   int
@@ -15,16 +19,16 @@ type PrometheusQuery struct {
 }
 
 // NewPrometheusQuery create a NewPrometheusQuery
-func NewPrometheusQuery(host string, port int, client *http.Client) PrometheusQuery {
+func NewPrometheusQuery(host string, port int) PrometheusQuery {
 	return PrometheusQuery{
-		Client: client,
+		Client: &http.Client{},
 		Host:   host,
 		Port:   port,
 	}
 }
 
 // Fetch queries aggregated stats
-func (q *PrometheusQuery) Fetch(query string) (*VectorQueryResponse, error) {
+func (q PrometheusQuery) Fetch(query string) (*VectorQueryResponse, error) {
 
 	req, reqErr := http.NewRequest("GET", fmt.Sprintf("http://%s:%d/api/v1/query/?query=%s", q.Host, q.Port, query), nil)
 	if reqErr != nil {
