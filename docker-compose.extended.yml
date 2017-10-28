@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.2"
 services:
     gateway:
         volumes:
@@ -148,4 +148,4 @@ services:
 networks:
     functions:
         driver: overlay
-        attachable: true
+        #attachable: true
