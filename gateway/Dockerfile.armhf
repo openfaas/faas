@@ -13,9 +13,9 @@ COPY types          types
 COPY plugin  	    plugin
 COPY queue  	    queue
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gateway .
+RUN GOARM=6 CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gateway .
 
-FROM armhf/alpine:latest
+FROM alpine:3.6
 WORKDIR /root/
 
 EXPOSE 8080
