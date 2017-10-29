@@ -1,0 +1,13 @@
+FROM arm32v6/alpine:3.6
+
+RUN apk --no-cache add imagemagick
+
+ADD https://github.com/openfaas/faas/releases/download/0.6.0/fwatchdog-armhf /usr/bin/fwatchdog
+RUN chmod +x /usr/bin/fwatchdog
+
+ENV fprocess "convert - -resize 50% fd:1"
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=1s CMD [ -e /tmp/.lock ] || exit 1
+CMD [ "/usr/bin/fwatchdog"]

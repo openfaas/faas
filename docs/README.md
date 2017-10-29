@@ -1,29 +1,38 @@
-## Functions as a Service (FaaS)
+## Functions as a Service (OpenFaaS)
 
-FaaS is a framework for building serverless functions on Docker with first class support for metrics. Any UNIX process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
+[![Build
+Status](https://travis-ci.org/openfaas/faas.svg?branch=master)](https://travis-ci.org/openfaas/faas)
 
-## Concept
+![https://blog.alexellis.io/content/images/2017/08/faas_side.png](https://blog.alexellis.io/content/images/2017/08/faas_side.png)
 
-* Each container has a watchdog process that hosts a web server allowing a post request to be forwarded to a desired process via STDIN. The response is sent back to the caller via STDOUT.
+FaaS is a framework for building serverless functions with Docker which has first class support for metrics. Any process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
 
-* The API Gateway provides an external route into your functions and collects metrics in Prometheus. The gateway will scale functions according to demand by mangaging Docker Swarm replicas as throughput increases. A UI is baked in allowing you to invoke functions in your browser and create new ones as needed.
+**Highlights**
 
-## FaaS Stack
-
-FaaS is an open-source project written in Golang and licensed under the MIT license.
-
-![Stack](http://blog.alexellis.io/content/images/2017/04/faas_hi.png)
-
-**Highlights:**
-
-* Ease of use through UI portal
-* Setup a working environment with one script
-* Portable - runs on any hardware supported by Docker
-
-* Any process that can run in Docker can be a serverless function
-
-* Baked-in Prometheus metrics and logging
+* Ease of use through UI portal and *one-click* install
+* Write functions in any language for Linux or Windows and package in Docker/OCI image format
+* Portable - runs on existing hardware or public/private cloud - [Kubernetes](https://github.com/openfaas/faas-netes) or Docker Swarm
+* [CLI](http://github.com/openfaas/faas-cli) available with YAML format for templating and defining functions
 * Auto-scales as demand increases
+
+## Overview of OpenFaaS
+
+![Stack](https://pbs.twimg.com/media/DFrkF4NXoAAJwN2.jpg)
+
+### Function Watchdog
+
+* You can make any Docker image into a serverless function by adding the *Function Watchdog* (a tiny Golang HTTP server)
+* The *Function Watchdog* is the entrypoint allowing HTTP requests to be forwarded to the target process via STDIN. The response is sent back to the caller by writing to STDOUT from your application.
+
+### Gateway
+
+* The API Gateway provides an external route into your functions and collects Cloud Native metrics through Prometheus.
+* Your API Gateway will scale functions according to demand by altering the service replica count in the Docker Swarm or Kubernetes API.
+* A UI is baked in allowing you to invoke functions in your browser and create new ones as needed.
+
+### CLI
+
+Any container or process in a Docker container can be a serverless function in FaaS. Using the [FaaS CLI](http://github.com/openfaas/faas-cli) you can deploy your functions or quickly create new functions from templates such as Node.js or Python.
 
 ## Notable mentions
 
@@ -41,27 +50,52 @@ Serdar Yegulalp	Senior Technical Writer covered FaaS in a write-up looking at se
 
 [Open source project uses Docker for serverless computing](http://www.infoworld.com/article/3184757/open-source-tools/open-source-project-uses-docker-for-serverless-computing.html#tk.twt_ifw)
 
-### Community activity
+### Online community
 
 There is also a community being built around FaaS with talks, demos and sample functions being built out.
 
-[Find out about community activity](https://github.com/alexellis/faas/blob/master/community.md)
+[Find out about community activity](https://github.com/openfaas/faas/blob/master/community.md)
 
 ## Getting started
 
-**Test Drive FaaS**
+**Jump straight in**
 
-You can [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md) FaaS on your laptop in 60 seconds, or deploy to a free online Docker playground. Find out more in the [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md).
+Run your first function in 10-15 minutes with this *new* guide.
 
-You can dive straight into the [sample functions here](https://github.com/alexellis/faas/blob/master/sample-functions/README.md). You'll find hello-world examples for the most common programming languages including: Golang, DotNet Core, Java, NodeJS, Python even BusyBox.
+[Your first serverless Python function with OpenFaaS](https://blog.alexellis.io/introducing-functions-as-a-service/)
 
-There is even CLI called [faas-cli](https://github.com/alexellis/faas-cli/) which lets you speed up development by creating functions from templates for [Node.js](https://github.com/alexellis/faas-cli/blob/master/test_node.sh) or [Python](https://github.com/alexellis/faas-cli/blob/master/test_python.sh). You can also use the CLI to deploy to your own FaaS API Gateway with a single command.
+**Introducing OpenFaaS blog post**
 
-**Contribute to FaaS**
+Read up on the background, the top 3 highlighted features and what's coming next:
+
+[Introducing Functions as a Service (FaaS)](https://blog.alexellis.io/introducing-functions-as-a-service/)
+
+**Test Drive OpenFaaS**
+
+You can [TestDrive](https://github.com/openfaas/faas/blob/master/TestDrive.md) FaaS on your laptop in 60 seconds, or deploy to a free online Docker playground. Find out more in the [TestDrive](https://github.com/openfaas/faas/blob/master/TestDrive.md).
+
+You can dive straight into the [sample functions here](https://github.com/openfaas/faas/blob/master/sample-functions/README.md). You'll find hello-world examples for the most common programming languages including: Golang, DotNet Core, Java, NodeJS, Python even BusyBox.
+
+The [faas-cli](https://github.com/openfaas/faas-cli/) lets you speed up development by creating functions from templates for:
+
+* [Node.js](https://github.com/openfaas/faas-cli/blob/master/test_node.sh)
+* [Python](https://github.com/openfaas/faas-cli/blob/master/test_python.sh)
+* Ruby
+* CSharp
+
+..or whatever langauge you can create your own template for.
+
+You can also use the CLI to deploy to your own FaaS API Gateway with a single command.
+
+**Contribute to OpenFaaS**
 
 FaaS enables you to run your serverless functions in whatever language you like, wherever you like - for however long you need.
 
 Contributions to the project are welcome - please send in issues and questions through Github.
 
-[See issues and PRs](https://github.com/alexellis/faas/issues)
+[See issues and PRs](https://github.com/openfaas/faas/issues)
+
+*What about the name?*
+
+FaaS is becoming OpenFaas, see more here: [Issue 123](https://github.com/openfaas/faas/issues/123)
 

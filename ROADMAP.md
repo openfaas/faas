@@ -2,11 +2,22 @@
 
 ## 1. Current features
 
+For an overview of features in August 2017 read the following post:
+
+* [Introducing Functions as a Service (FaaS)](https://blog.alexellis.io/introducing-functions-as-a-service/)
+
+## GitHub repos:
+
+* https://github.com/openfaas/faas
+* https://github.com/openfaas/faas-netes
+* https://github.com/openfaas/faas-cli
+* https://github.com/openfaas/nats-queue-worker
+
 ### The API Gateway
 
 This container acts in a similar way to the API Gateway on AWS. Requests can be made to this endpoint with a JSON body.
 
-Completed features:
+Some of the more recent Completed Features:
 
 * UI for viewing and testing functions deployed through stack
 * Auto-scaling of replicas as load increases
@@ -21,6 +32,27 @@ Completed features:
 * Native CLI for templating/building and deploying functions
 * Windows support for watchdog back-end - so that Windows executables can be used in a multi-OS swarm
 * Enforcing function execution time in seconds.
+* Python, Node.js, Ruby and CSharp code templates for the CLI
+* Delete function in CLI
+* Developer guide for CSharp
+* Developer guide for Python
+* **Kubernetes support**
+* Asynchronous / long-running tasks via NATS Streaming
+* CLI - invoke / list functions / query function info
+* OS constraints in the deploy function API
+* helm chart
+* Developer guide to using functions together - via pipes on client, or a "director" function on server
+* Developer guide for DigitalOcean
+* Re-branding to OpenFaaS
+ * New logo - graphic icon and text
+ * Website / landing page
+* Non-root Docker templates for the CLI
+* Integration with a reverse proxy - such as Traefik or Kong
+ * I.e. for TLS termination
+ * Basic auth for /system endpoints (probably via reverse proxy)
+* AARCH64 (64-bit ARM) port (dependent on Docker release schedule)
+* Healthchecks for functions deployed on Kubernetes
+* Supporting request parameters via query-string
 
 **Incoming requests and routing**
 
@@ -38,38 +70,60 @@ This binary fwatchdog acts as a watchdog for your function. Features:
 * Spawns process set in `fprocess` ENV variable for each HTTP connection
 * Only lets processes run for set duration i.e. 500ms, 2s, 3s.
 * Language/binding independent - can invoke any UNIX process, including built-ins such as `wc` or `cat`
+* Can also run Windows native binaries
 
-## 2. Future items
+## 2. Future/current work (subject to change)
 
-Most items are detailed [via Github issues](https://github.com/alexellis/faas/issues).
+If you need an up-to-date picture of what is current and ready-for-use please reach out to the OpenFaaS maintainers through our Slack comunity. Most items are detailed [via Github issues](https://github.com/openfaas/faas/issues).
+
+Native support is available for Docker Swarm and Kubernetes using primitive API objects in each orchestration platform.
 
 Must have
 
-* Asynchronous / long-running tasks
+* Dedicated blog site built from GitHub pages or Hugo
+* Developer Cloud guides:
+ * for Digital Ocean (done)
+ * for Packet
+ * for AWS
+* Developer guide for your first Node.js function
 
 Should have
 
-* Kubernetes support
-* AARCH64 (64-bit ARM) port
-* Basic auth for /system endpoints (probably via reverse proxy)
+* Certifier for third-party integrations - via e2e tests (in progress) 
+* AfterBurn - fork once, use many which removes almost all runtime latency - (Alpha available)
+* Kafka queue worker implementation (async currently available by NATS Streaming) - available in pending PR
+
+* Community templates for the FaaS-CLI (in progress)
+* Our own "timer" (aka cron) for invoking functions on a regular basis - or a guide for setting this up via Jenkins or CRON
 
 Could have
 
+* Multi-tenancy (in-progress for Kubernetes and Docker Swarm)
+* Progress animation for building Docker images via CLI
+* Built-in Docker registry with default configuration
+* Docker image builder (remote service)
 * Function store - list of useful predefined functions
-* Supporting request parameters
+* Supporting request parameters via route
 * Configurable memory limits via "new function" pop-up (already supported by Docker compose stack)
+* Scale to zero 0/0 replicas
+* Guide/proxy for Flask in a function
 
 Nice to have
 
-* Guide for termination through NGinx or built-in TLS termination
 * Guide for basic authentication over HTTPs (set up externally through NGinx etc)
-* CRIU - (Checkpoint/Restore In Userspace) for warm-loading serverless tasks with a high start-up cost/latency.
+* CRIU - (Checkpoint/Restore In Userspace) for starting serverless tasks with a high start-up cost/latency.
 * Deeper tests coverage and integration tests
+* Serverless Inc framework support - as a "provider" (in progress)
 
-## 3. Development and Contributing
+On-going integrations in addition to Swarm and K8s:
 
-If you would like to consume the project with your own functions then you can use the public images and the supplied `docker stack` file as a template (docker-compose.yml)
+* ECS - via Huawei
+* Nomad via Hashicorp
+* Hyper.sh via Hyper
+* Cattle / Rancher by community
+
+Internal research is also being done for the ACI / K8s-connector.
 
 ### Contributing
 
-Please see [CONTRIBUTING.md](https://github.com/alexellis/faas/blob/master/CONTRIBUTING.md).
+Please see [CONTRIBUTING.md](https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md).

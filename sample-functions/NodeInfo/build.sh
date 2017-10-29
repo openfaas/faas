@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t functions/nodeinfo .
+docker build --squash -t functions/nodeinfo .

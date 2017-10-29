@@ -11,11 +11,12 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"sync"
 	"time"
 
-	"github.com/alexellis/faas/watchdog/types"
+	"github.com/openfaas/faas/watchdog/types"
 )
 
 func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error) {
@@ -185,6 +186,8 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 
 	if config.writeDebug == true {
 		os.Stdout.Write(out)
+	} else {
+		log.Printf("Wrote %d Bytes\n", len(out))
 	}
 
 	if len(config.contentType) > 0 {
@@ -218,14 +221,26 @@ func getAdditionalEnvs(config *WatchdogConfig, r *http.Request, method string) [
 	if config.cgiHeaders {
 		envs = os.Environ()
 		for k, v := range r.Header {
-			kv := fmt.Sprintf("Http_%s=%s", k, v[0])
+			kv := fmt.Sprintf("Http_%s=%s", strings.Replace(k, "-", "_", -1), v[0])
 			envs = append(envs, kv)
 		}
+
 		envs = append(envs, fmt.Sprintf("Http_Method=%s", method))
 
+		if config.writeDebug {
+			log.Println("Query ", r.URL.RawQuery)
+		}
 		if len(r.URL.RawQuery) > 0 {
 			envs = append(envs, fmt.Sprintf("Http_Query=%s", r.URL.RawQuery))
 		}
+
+		if config.writeDebug {
+			log.Println("Path ", r.URL.Path)
+		}
+		if len(r.URL.Path) > 0 {
+			envs = append(envs, fmt.Sprintf("Http_Path=%s", r.URL.Path))
+		}
+
 	}
 
 	return envs
@@ -274,13 +289,11 @@ func main() {
 
 	http.HandleFunc("/", makeRequestHandler(&config))
 
-	if config.suppressLock == false {
-		path := "/tmp/.lock"
-		log.Printf("Writing lock-file to: %s\n", path)
-		writeErr := ioutil.WriteFile(path, []byte{}, 0660)
-		if writeErr != nil {
-			log.Panicf("Cannot write %s. To disable lock-file set env suppress_lock=true.\n Error: %s.\n", path, writeErr.Error())
-		}
+	path := filepath.Join(os.TempDir(), ".lock")
+	log.Printf("Writing lock-file to: %s\n", path)
+	writeErr := ioutil.WriteFile(path, []byte{}, 0660)
+	if writeErr != nil {
+		log.Panicf("Cannot write %s. To disable lock-file set env suppress_lock=true.\n Error: %s.\n", path, writeErr.Error())
 	}
 	log.Fatal(s.ListenAndServe())
 }

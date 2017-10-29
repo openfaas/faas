@@ -1,11 +1,12 @@
-FROM armhf/alpine:latest
-RUN apk --no-cache add nodejs
+FROM arm32v6/alpine:latest
+RUN apk --no-cache add nodejs nodejs-npm
 
-COPY fwatchdog-armhf /usr/bin/fwatchdog
+ADD https://github.com/openfaas/faas/releases/download/0.6.0/fwatchdog-armhf /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
 
 COPY package.json .
 COPY main.js .
 RUN npm i
 ENV fprocess="node main.js"
+HEALTHCHECK --interval=5s CMD [ -e /tmp/.lock ] || exit 1
 CMD ["fwatchdog"]

@@ -9,8 +9,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/alexellis/faas/gateway/handlers"
 	"github.com/docker/docker/api/types"
+	"github.com/openfaas/faas/gateway/handlers"
 )
 
 func TestBuildEncodedAuthConfig(t *testing.T) {

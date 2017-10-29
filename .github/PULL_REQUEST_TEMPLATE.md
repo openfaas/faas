@@ -6,6 +6,8 @@
 ## Motivation and Context
 <!--- Why is this change required? What problem does it solve? -->
 <!--- If it fixes an open issue, please link to the issue here. -->
+- [ ] I have raised an issue to propose this change ([required](https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md))
+
 
 ## How Has This Been Tested?
 <!--- Please describe in detail how you tested your changes. -->
@@ -23,7 +25,8 @@
 <!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
 - [ ] My code follows the code style of this project.
 - [ ] My change requires a change to the documentation.
-- [ ] I have signed-off my commits with `git commit -s`
 - [ ] I have updated the documentation accordingly.
+- [ ] I've read the [CONTRIBUTION](https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md) guide
+- [ ] I have signed-off my commits with `git commit -s`
 - [ ] I have added tests to cover my changes.
 - [ ] All new and existing tests passed.

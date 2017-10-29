@@ -1,23 +1,38 @@
 <html ng-app="faasGateway">
 
 <head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" />
+    <link href="https://fonts.googleapis.com/css?family=Rationale|Roboto+Mono|Roboto:300,400,400i,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
-    <!-- Angular Material CSS now available via Google CDN; version 1.0.7 used here -->
-    <link rel="stylesheet" href="style/angular-material.min.css">
-
     <link rel="stylesheet" href="style/bootstrap.css">
-
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="theme-color" content="#ffffff">
 </head>
 
 <body ng-controller="home">
     <div layout="column" ng-cloak>
 
+        <md-toolbar class="md-theme-indigo" hide-gt-sm>
+            <div class="md-toolbar-tools">
+              <md-button ng-click="toggleSideNav()" class="md-icon-button" aria-label="Menu">
+                <md-icon md-svg-icon="img/icons/ic_menu_white.svg"></md-icon>
+              </md-button>
+            </div>
+        </md-toolbar>
         <section id="popupContainer" layout="row" flex>
             <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-whiteframe="4" layout="column">
 
                 <md-toolbar class="md-theme-indigo">
-                    <h1 class="md-toolbar-tools">FaaS Gateway</h1>
+                    <div class="md-toolbar-tools">
+                      <a href="https://www.openfaas.com/" target="_blank"><img src="icon.png" alt="OpenFaaS Icon" width="60px" height="60px" class="md-avatar"/></a>
+                      <h1 style="flex: 1 1 auto;">&nbsp; OpenFaaS Portal</h1>
+                      <md-button ng-click="toggleSideNav()" class="md-icon-button" aria-label="Back" hide-gt-sm>
+                        <md-icon md-svg-icon="img/icons/ic_arrow_back_white.svg"></md-icon>
+                      </md-button>
+                    </div>
                 </md-toolbar>
 
                 <md-content layout-padding>
@@ -54,9 +69,17 @@
                     <md-card-title>
                         <md-card-title-text>
 
-                            <span class="md-headline">
-                      {{function.name}}
-                    </span>
+                            <div layout="row" layout-align="space-between">
+                                <span class="md-headline">
+                                    {{function.name}}
+                                </span>
+
+                                <md-button ng-click="deleteFunction()" class="md-icon-button" aria-label="Delete">
+                                  <md-tooltip md-direction="left">Delete</md-tooltip>
+                                  <md-icon md-svg-icon="img/icons/ic_delete_black.svg"></md-icon>
+                                </md-button>
+
+                            </div>
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-icon-float md-block">
                                     <label>Replicas</label>
@@ -74,6 +97,12 @@
                                     <input ng-model="function.image" type="text" readonly="readonly">
                                 </md-input-container>
                             </div>
+                            <div layout-gt-sm="row" ng-show="function.envProcess">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Watchdog process</label>
+                                    <input ng-model="function.envProcess" type="text" readonly="readonly">
+                                </md-input-container>
+                            </div>
                             <md-card-title-text>
                     </md-card-title>
                 </md-card>
@@ -82,14 +111,15 @@
                         <md-card-title-text>
 
                             <span class="md-headline">
-                  Invoke function
-                </span>
+                                Invoke function
+                            </span>
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-sm>
-                                    <button ng-click="fireRequest()" class="md-raised md-button md-ink-ripple" type="button">
-                      <span class="ng-scope">Invoke</span><div class="md-ripple-container"></div>
-                    </button>
+                                    <button ng-click="fireRequest()" class="md-raised md-button md-ink-ripple" type="button" ng-disabled="invocationInProgress">
+                                        <span class="ng-scope">Invoke</span><div class="md-ripple-container"></div>
+                                    </button>
                                 </md-input-container>
+                                <md-progress-circular md-mode="indeterminate" ng-show="invocationInProgress"></md-progress-circular>
                             </div>
 
                             <div layout-gt-sm="row">
@@ -104,7 +134,7 @@
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Request body</label>
-                                    <textarea ng-model="invocation.request" cols="80" rows="4"></textarea>
+                                    <textarea ng-model="invocation.request" class="monospace" cols="80" rows="4"></textarea>
                                 </md-input-container>
                             </div>
                             <div layout-gt-sm="row">
@@ -116,7 +146,7 @@
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Response body</label>
-                                    <textarea ng-model="invocationResponse" cols="80" rows=10></textarea>
+                                    <textarea ng-model="invocationResponse" class="monospace" cols="80" rows=10></textarea>
                                 </md-input-container>
                             </div>
                             <md-card-title-text>

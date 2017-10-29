@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Rationale');
-
-
 /*Taken from PWD, remove styles not used.*/
 
 .selected button {
@@ -47,4 +44,13 @@ md-input-container {
 md-input-container .md-errors-spacer {
     height: 0;
     min-height: 0;
+}
+
+.monospace {
+  font-family: 'Roboto Mono', monospace;
+}
+
+.validation-error {
+	color: red;
+	height: 52px;
 }

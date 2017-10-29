@@ -17,11 +17,12 @@ import (
 	"os"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/alexellis/faas/gateway/metrics"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/client"
 	"github.com/gorilla/mux"
+	"github.com/openfaas/faas/gateway/metrics"
+	"github.com/openfaas/faas/gateway/requests"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
@@ -75,19 +76,6 @@ func MakeProxy(metrics metrics.MetricOptions, wildcard bool, client *client.Clie
 	}
 }
 
-func writeHead(service string, metrics metrics.MetricOptions, code int, w http.ResponseWriter) {
-	w.WriteHeader(code)
-
-	metrics.GatewayFunctionInvocation.With(prometheus.Labels{"function_name": service, "code": strconv.Itoa(code)}).Inc()
-
-	// metrics.GatewayFunctionInvocation.WithLabelValues(service).Add(1)
-}
-
-func trackTime(then time.Time, metrics metrics.MetricOptions, name string) {
-	since := time.Since(then)
-	metrics.GatewayFunctionsHistogram.WithLabelValues(name).Observe(since.Seconds())
-}
-
 func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, name string, c *client.Client, logger *logrus.Logger, proxyClient *http.Client) {
 	exists, err := lookupSwarmService(name, c)
 
@@ -103,8 +91,10 @@ func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.Metric
 
 	if exists {
 		defer trackTime(time.Now(), metrics, name)
+		forwardReq := requests.NewForwardRequest(r.Method, *r.URL)
+
 		requestBody, _ := ioutil.ReadAll(r.Body)
-		invokeService(w, r, metrics, name, requestBody, logger, proxyClient)
+		invokeService(w, r, metrics, name, forwardReq, requestBody, logger, proxyClient)
 	}
 }
 
@@ -117,7 +107,7 @@ func lookupSwarmService(serviceName string, c *client.Client) (bool, error) {
 	return len(services) > 0, err
 }
 
-func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, requestBody []byte, logger *logrus.Logger, proxyClient *http.Client) {
+func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, forwardReq requests.ForwardRequest, requestBody []byte, logger *logrus.Logger, proxyClient *http.Client) {
 	stamp := strconv.FormatInt(time.Now().Unix(), 10)
 
 	defer func(when time.Time) {
@@ -144,7 +134,8 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 			addr = entries[index].String()
 		}
 	}
-	url := fmt.Sprintf("http://%s:%d/", addr, watchdogPort)
+
+	url := forwardReq.ToURL(addr, watchdogPort)
 
 	contentType := r.Header.Get("Content-Type")
 	fmt.Printf("[%s] Forwarding request [%s] to: %s\n", stamp, contentType, url)
@@ -177,12 +168,29 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	clientHeader := w.Header()
 	copyHeaders(&clientHeader, &response.Header)
 
-	// TODO: copyHeaders removes the need for this line - test removal.
-	// Match header for strict services
-	w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
+	defaultHeader := "text/plain"
 
-	writeHead(service, metrics, http.StatusOK, w)
+	w.Header().Set("Content-Type", GetContentType(response.Header, r.Header, defaultHeader))
+
+	writeHead(service, metrics, response.StatusCode, w)
 	w.Write(responseBody)
+}
+
+// GetContentType resolves the correct Content-Tyoe for a proxied function
+func GetContentType(request http.Header, proxyResponse http.Header, defaultValue string) string {
+	responseHeader := proxyResponse.Get("Content-Type")
+	requestHeader := request.Get("Content-Type")
+
+	var headerContentType string
+	if len(responseHeader) > 0 {
+		headerContentType = responseHeader
+	} else if len(requestHeader) > 0 {
+		headerContentType = requestHeader
+	} else {
+		headerContentType = defaultValue
+	}
+
+	return headerContentType
 }
 
 func copyHeaders(destination *http.Header, source *http.Header) {
@@ -196,4 +204,23 @@ func copyHeaders(destination *http.Header, source *http.Header) {
 func randomInt(min, max int) int {
 	rand.Seed(time.Now().Unix())
 	return rand.Intn(max-min) + min
+}
+
+func writeHead(service string, metrics metrics.MetricOptions, code int, w http.ResponseWriter) {
+	w.WriteHeader(code)
+
+	trackInvocation(service, metrics, code)
+}
+
+func trackInvocation(service string, metrics metrics.MetricOptions, code int) {
+	metrics.GatewayFunctionInvocation.With(prometheus.Labels{"function_name": service, "code": strconv.Itoa(code)}).Inc()
+}
+
+func trackTime(then time.Time, metrics metrics.MetricOptions, name string) {
+	since := time.Since(then)
+	metrics.GatewayFunctionsHistogram.WithLabelValues(name).Observe(since.Seconds())
+}
+
+func trackTimeExact(duration time.Duration, metrics metrics.MetricOptions, name string) {
+	metrics.GatewayFunctionsHistogram.WithLabelValues(name).Observe(float64(duration))
 }
