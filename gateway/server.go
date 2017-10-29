@@ -120,7 +120,8 @@ func main() {
 		faasHandlers.AsyncReport = internalHandlers.MakeAsyncReport(metricsOptions)
 	}
 
-	listFunctions := metrics.AddMetricsHandler(faasHandlers.ListFunctions, config.PrometheusHost, config.PrometheusPort)
+	prometheusQuery := metrics.NewPrometheusQuery(config.PrometheusHost, config.PrometheusPort, &http.Client{})
+	listFunctions := metrics.AddMetricsHandler(faasHandlers.ListFunctions, prometheusQuery)
 
 	r := mux.NewRouter()
 
