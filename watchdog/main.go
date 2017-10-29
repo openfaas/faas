@@ -1,6 +1,5 @@
 // Copyright (c) Alex Ellis 2017. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
 package main
 
 import (
@@ -53,28 +52,22 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 	startTime := time.Now()
 
 	parts := strings.Split(config.faasProcess, " ")
-
 	ri := &requestInfo{}
-
 	if config.debugHeaders {
 		debugHeaders(&r.Header, "in")
 	}
 
 	targetCmd := exec.Command(parts[0], parts[1:]...)
-
 	envs := getAdditionalEnvs(config, r, method)
 	if len(envs) > 0 {
 		targetCmd.Env = envs
 	}
 
 	writer, _ := targetCmd.StdinPipe()
-
 	var out []byte
 	var err error
 	var requestBody []byte
-
 	var wg sync.WaitGroup
-
 	wgCount := 2
 	if hasBody == false {
 		wgCount = 1
@@ -88,17 +81,13 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 			w.WriteHeader(http.StatusBadRequest)
 			// I.e. "exit code 1"
 			w.Write([]byte(buildInputErr.Error()))
-
 			// Verbose message - i.e. stack trace
 			w.Write([]byte("\n"))
 			w.Write(out)
-
 			return
 		}
 	}
-
 	wg.Add(wgCount)
-
 	var timer *time.Timer
 
 	if config.execTimeout > 0*time.Second {
@@ -169,7 +158,6 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 	if len(config.contentType) > 0 {
 		w.Header().Set("Content-Type", config.contentType)
 	} else {
-
 		// Match content-type of caller if no override specified.
 		clientContentType := r.Header.Get("Content-Type")
 		if len(clientContentType) > 0 {
@@ -200,25 +188,20 @@ func getAdditionalEnvs(config *WatchdogConfig, r *http.Request, method string) [
 			kv := fmt.Sprintf("Http_%s=%s", strings.Replace(k, "-", "_", -1), v[0])
 			envs = append(envs, kv)
 		}
-
 		envs = append(envs, fmt.Sprintf("Http_Method=%s", method))
-
 		if config.writeDebug {
 			log.Println("Query ", r.URL.RawQuery)
 		}
 		if len(r.URL.RawQuery) > 0 {
 			envs = append(envs, fmt.Sprintf("Http_Query=%s", r.URL.RawQuery))
 		}
-
 		if config.writeDebug {
 			log.Println("Path ", r.URL.Path)
 		}
 		if len(r.URL.Path) > 0 {
 			envs = append(envs, fmt.Sprintf("Http_Path=%s", r.URL.Path))
 		}
-
 	}
-
 	return envs
 }
 
@@ -238,7 +221,6 @@ func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.
 			break
 		default:
 			w.WriteHeader(http.StatusMethodNotAllowed)
-
 		}
 	}
 }
