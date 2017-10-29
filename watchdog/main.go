@@ -6,6 +6,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -19,22 +20,22 @@ import (
 	"github.com/openfaas/faas/watchdog/types"
 )
 
-func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error) {
-	var res []byte
-	var requestBytes []byte
+func buildFunctionInput(config *WatchdogConfig, r *http.Request) (io.Reader, error) {
+	var res io.Reader
+	var requestReader io.Reader
 	var err error
 
 	if r.Body != nil {
 		defer r.Body.Close()
 	}
 
-	requestBytes, err = ioutil.ReadAll(r.Body)
+	requestReader = r.Body
 	if config.marshalRequest {
-		marshalRes, marshalErr := types.MarshalRequest(requestBytes, &r.Header)
+		marshalRes, marshalErr := types.MarshalRequest(requestReader, &r.Header)
 		err = marshalErr
 		res = marshalRes
 	} else {
-		res = requestBytes
+		res = requestReader
 	}
 	return res, err
 }
@@ -71,7 +72,7 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 
 	var out []byte
 	var err error
-	var requestBody []byte
+	var requestBody io.Reader
 
 	var wg sync.WaitGroup
 
@@ -126,7 +127,7 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 		// Write to pipe in separate go-routine to prevent blocking
 		go func() {
 			defer wg.Done()
-			writer.Write(requestBody)
+			io.Copy(writer, requestBody)
 			writer.Close()
 		}()
 	}

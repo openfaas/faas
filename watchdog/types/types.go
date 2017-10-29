@@ -5,6 +5,8 @@ package types
 
 import (
 	"encoding/json"
+	"io"
+	"io/ioutil"
 	"net/http"
 	"os"
 )
@@ -33,14 +35,19 @@ func UnmarshalRequest(data []byte) (*MarshalReq, error) {
 	return &request, err
 }
 
-func MarshalRequest(data []byte, header *http.Header) ([]byte, error) {
+func MarshalRequest(data io.Reader, header *http.Header) (io.Reader, error) {
+	bs, err := ioutil.ReadAll(data)
+	if err != nil {
+		return nil, err
+	}
 	req := MarshalReq{
 		Body: MarshalBody{
-			Raw: data,
+			Raw: bs,
 		},
 		Header: *header,
 	}
-
-	res, marshalErr := json.Marshal(&req)
-	return res, marshalErr
+	r, w := io.Pipe()
+	encoder := json.NewEncoder(w)
+	go encoder.Encode(req)
+	return r, nil
 }
