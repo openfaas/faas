@@ -101,7 +101,7 @@ This project is licensed under the MIT License.
 Please add a Copyright notice to new files you add where this is not already present:
 
 ```
-// Copyright (c) OpenFaaS Authors 2017. All rights reserved.
+// Copyright (c) OpenFaaS Project 2017. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 ```
 
