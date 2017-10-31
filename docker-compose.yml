@@ -10,6 +10,9 @@ services:
             - functions
         environment:
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
+            read_timeout: 8
+            write_timeout: 8
+
         deploy:
             placement:
                 constraints:
