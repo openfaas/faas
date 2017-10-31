@@ -60,6 +60,8 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 		debugHeaders(&r.Header, "in")
 	}
 
+	log.Println("Forking fprocess.")
+
 	targetCmd := exec.Command(parts[0], parts[1:]...)
 
 	envs := getAdditionalEnvs(config, r, method)
@@ -160,10 +162,11 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 		return
 	}
 
+	var bytesWritten string
 	if config.writeDebug == true {
 		os.Stdout.Write(out)
 	} else {
-		log.Printf("Wrote %d Bytes\n", len(out))
+		bytesWritten = fmt.Sprintf("Wrote %d Bytes", len(out))
 	}
 
 	if len(config.contentType) > 0 {
@@ -177,8 +180,8 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 		}
 	}
 
+	execTime := time.Since(startTime).Seconds()
 	if ri.headerWritten == false {
-		execTime := time.Since(startTime).Seconds()
 		w.Header().Set("X-Duration-Seconds", fmt.Sprintf("%f", execTime))
 		ri.headerWritten = true
 		w.WriteHeader(200)
@@ -188,6 +191,11 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 	if config.debugHeaders {
 		header := w.Header()
 		debugHeaders(&header, "out")
+	}
+	if len(bytesWritten) > 0 {
+		log.Printf("%s - Duration: %f seconds", bytesWritten, execTime)
+	} else {
+		log.Printf("Duration: %f seconds", execTime)
 	}
 }
 
