@@ -6,17 +6,23 @@ Guidelines for contributing.
 
 **How can I get involved?**
 
-First of all, we'd love to welcome you into the our Slack community where we chat, exchange ideas and ask questions. See below for how to join.
+First of all, we'd love to welcome you into our Slack community where we exchange ideas, ask questions and chat about OpenFaaS, Raspberry Pi and other cloud-native technology. (*See below for how to join*)
 
 We have a number of areas where we can accept contributions:
 
 * Write Golang code for the CLI, Gateway or other providers
-* Write for our front-end UI
+* Write for our front-end UI (JS, HTML, CSS)
+* Write sample functions in any language
 * Review pull requests
+* Test out new features or work-in-progress
+* Get involved in design reviews and technical proof-of-concepts (PoCs)
+* Help us release and package OpenFaaS including the helm chart, compose files, kubectl YAML, marketplaces and stores
 * Manage, triage and research Issues and Pull Requests
 * Help our growing community feel at home
-* Create docs, guides and blogging
+* Create docs, guides and write blogs
 * Speak at meet-ups, conferences or by helping folks with OpenFaaS on Slack
+
+This is just a short list of ideas, if you have other ideas for contributing please make a suggestion.
 
 **I've found a typo**
 
