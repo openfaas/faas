@@ -116,6 +116,10 @@ func TestReaderSuccessReturnsCorrectBodyWithZeroFunctions(t *testing.T) {
 
 func TestReaderSuccessReturnsCorrectBodyWithOneFunction(t *testing.T) {
 	replicas := uint64(5)
+	labels := map[string]string{
+		"function": "bar",
+	}
+
 	services := []swarm.Service{
 		swarm.Service{
 			Spec: swarm.ServiceSpec{
@@ -125,17 +129,16 @@ func TestReaderSuccessReturnsCorrectBodyWithOneFunction(t *testing.T) {
 					},
 				},
 				Annotations: swarm.Annotations{
-					Name: "bar",
+					Name:   "bar",
+					Labels: labels,
 				},
 				TaskTemplate: swarm.TaskSpec{
 					ContainerSpec: swarm.ContainerSpec{
 						Env: []string{
 							"fprocess=bar",
 						},
-						Image: "foo/bar:latest",
-						Labels: map[string]string{
-							"function": "bar",
-						},
+						Image:  "foo/bar:latest",
+						Labels: labels,
 					},
 				},
 			},
@@ -159,6 +162,9 @@ func TestReaderSuccessReturnsCorrectBodyWithOneFunction(t *testing.T) {
 			InvocationCount: 0,
 			Replicas:        5,
 			EnvProcess:      "bar",
+			Labels: &map[string]string{
+				"function": "bar",
+			},
 		},
 	}
 	marshalled, _ := json.Marshal(functions)

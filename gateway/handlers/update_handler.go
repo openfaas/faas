@@ -81,33 +81,34 @@ func updateSpec(request *requests.CreateFunctionRequest, spec *swarm.ServiceSpec
 		constraints = linuxOnlyConstraints
 	}
 
-	nets := []swarm.NetworkAttachmentConfig{
-		{Target: request.Network},
-	}
-
 	spec.TaskTemplate.RestartPolicy.MaxAttempts = &maxRestarts
 	spec.TaskTemplate.RestartPolicy.Condition = swarm.RestartPolicyConditionAny
 	spec.TaskTemplate.RestartPolicy.Delay = &restartDelay
 	spec.TaskTemplate.ContainerSpec.Image = request.Image
 	spec.TaskTemplate.ContainerSpec.Labels = map[string]string{
-		"function": "true",
-		"uid":      fmt.Sprintf("%d", time.Now().Nanosecond()),
+		"function":              "true",
+		"com.openfaas.function": request.Service,
+		"com.openfaas.uid":      fmt.Sprintf("%d", time.Now().Nanosecond()),
 	}
 
 	if request.Labels != nil {
 		for k, v := range *request.Labels {
 			spec.TaskTemplate.ContainerSpec.Labels[k] = v
+			spec.Annotations.Labels[k] = v
 		}
 	}
 
-	spec.TaskTemplate.Networks = nets
+	spec.TaskTemplate.Networks = []swarm.NetworkAttachmentConfig{
+		{
+			Target: request.Network,
+		},
+	}
+
 	spec.TaskTemplate.Placement = &swarm.Placement{
 		Constraints: constraints,
 	}
 
-	spec.Annotations = swarm.Annotations{
-		Name: request.Service,
-	}
+	spec.Annotations.Name = request.Service
 
 	spec.RollbackConfig = &swarm.UpdateConfig{
 		FailureAction: "pause",
