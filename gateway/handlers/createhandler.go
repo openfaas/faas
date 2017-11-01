@@ -73,18 +73,30 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, resta
 	} else {
 		constraints = linuxOnlyConstraints
 	}
-	labels := map[string]string{"function": "true"}
+
+	labels := map[string]string{
+		"com.openfaas.function": request.Service,
+		"function":              "true", // backwards-compatible
+	}
+
 	if request.Labels != nil {
 		for k, v := range *request.Labels {
 			labels[k] = v
 		}
 	}
+	fmt.Println(labels)
 
 	nets := []swarm.NetworkAttachmentConfig{
-		{Target: request.Network},
+		{
+			Target: request.Network,
+		},
 	}
 
 	spec := swarm.ServiceSpec{
+		Annotations: swarm.Annotations{
+			Name:   request.Service,
+			Labels: labels,
+		},
 		TaskTemplate: swarm.TaskSpec{
 			RestartPolicy: &swarm.RestartPolicy{
 				MaxAttempts: &maxRestarts,
@@ -99,10 +111,6 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, resta
 			Placement: &swarm.Placement{
 				Constraints: constraints,
 			},
-		},
-		Annotations: swarm.Annotations{
-			Name:   request.Service,
-			Labels: labels,
 		},
 	}
 

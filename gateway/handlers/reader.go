@@ -50,12 +50,15 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c client.ServiceAP
 					}
 				}
 
+				// Required (copy by value)
+				labels := service.Spec.Annotations.Labels
 				f := requests.Function{
 					Name:            service.Spec.Name,
 					Image:           service.Spec.TaskTemplate.ContainerSpec.Image,
 					InvocationCount: 0,
 					Replicas:        *service.Spec.Mode.Replicated.Replicas,
 					EnvProcess:      envProcess,
+					Labels:          &labels,
 				}
 
 				functions = append(functions, f)
