@@ -141,7 +141,7 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	contentType := r.Header.Get("Content-Type")
 	fmt.Printf("[%s] Forwarding request [%s] to: %s\n", stamp, contentType, url)
 
-	request, err := http.NewRequest("POST", url, bytes.NewReader(requestBody))
+	request, err := http.NewRequest(r.Method, url, bytes.NewReader(requestBody))
 
 	copyHeaders(&request.Header, &r.Header)
 
