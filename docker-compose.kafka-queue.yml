@@ -5,7 +5,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: ${REGISTRY_SLASH}functions/gateway${COLON_ETAG}
+        image: functions/gateway:0.6.3
         networks:
             - functions
         environment:
@@ -26,63 +26,10 @@ services:
                     - 'node.role == manager'
                     - 'node.platform.os == linux'
 
-    # zookeeper
-    zk1:
-        image: ${REGISTRY_SLASH}confluentinc/cp-zookeeper:3.3.0
-        networks:
-            - functions
-        environment:
-            ZOOKEEPER_SERVER_ID: 1
-            ZOOKEEPER_CLIENT_PORT: 22181
-        ports:
-            - "22181:22181"
-        deploy:
-            placement:
-                constraints:
-                    - 'node.platform.os == linux'
-
-    # kafka brokers
-    kafka1:
-        image: ${REGISTRY_SLASH}confluentinc/cp-kafka:3.3.0
-        networks:
-            - functions
-        depends_on:
-            - zk1
-        environment:
-            KAFKA_BROKER_ID: 1
-            KAFKA_ZOOKEEPER_CONNECT: zk1:22181
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:19092
-            # don't use auto-gen topic, create topics with desired partitions & replicas at below
-            KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
-            # set replica-factor to 1 (default 3) since we have less than 3 brokers 
-            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-        deploy:
-            placement:
-                constraints:
-                    - 'node.platform.os == linux'
-
-    kafka2:
-        image: ${REGISTRY_SLASH}confluentinc/cp-kafka:3.3.0
-        networks:
-            - functions
-        depends_on:
-            - zk1
-        environment:
-            KAFKA_BROKER_ID: 2
-            KAFKA_ZOOKEEPER_CONNECT: zk1:22181
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:19092
-            # don't use auto-gen topic, create topics with desired partitions & replicas at below
-            KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
-            # set replica-factor to 1 (default 3) since we have less than 3 brokers 
-            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-        deploy:
-            placement:
-                constraints:
-                    - 'node.platform.os == linux'
 
     # add kafka topic "faas-request" with desired partitions and replicas
     addtopics:
-        image: ${REGISTRY_SLASH}confluentinc/cp-kafka:3.3.0
+        image: confluentinc/cp-kafka:3.3.0
         networks:
             - functions
         depends_on:
@@ -104,7 +51,7 @@ services:
         command: sh -c 'IFS=,; for brok in $$kafka_brokers;do while ! nc -z $$brok $$kafka_port;do echo "wait for kafka brokers...";sleep 2;done; done; for topic in $$topics; do while ! kafka-topics --zookeeper $$zookeeper_server --create --topic $$topic --partitions $$num_partitions --replication-factor $$num_replicas; do sleep 1; done; done'
 
     kafka-queue-worker:
-        image: ${REGISTRY_SLASH}functions/kafka-queue-worker${COLON_ETAG}
+        image: functions/kafka-queue-worker:latest
         networks:
             - functions
         environment:
@@ -126,7 +73,7 @@ services:
     # End
 
     prometheus:
-        image: ${REGISTRY_SLASH}functions/prometheus:latest  # autobuild from Dockerfile in repo.
+        image: functions/prometheus:latest  # autobuild from Dockerfile in repo.
         command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
         ports:
             - 9090:9090
@@ -144,7 +91,7 @@ services:
                     - 'node.platform.os == linux'
 
     alertmanager:
-        image: ${REGISTRY_SLASH}functions/alertmanager:latest    # autobuild from Dockerfile in repo.
+        image: functions/alertmanager:latest    # autobuild from Dockerfile in repo.
         environment:
             no_proxy: "gateway"
 #        volumes:
@@ -165,7 +112,7 @@ services:
 
     # Uses `cat` to echo back response, fastest function to execute.
     echoit:
-        image: ${REGISTRY_SLASH}functions/alpine:health
+        image: functions/alpine:health
         labels:
             function: "true"
         depends_on:
@@ -183,7 +130,4 @@ services:
 
 networks:
     functions:
-        #driver: overlay
         external: true
-        # Docker does not support this option yet - maybe create outside of the stack and reference as "external"?
-        #attachable: true

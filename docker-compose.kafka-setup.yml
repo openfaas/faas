@@ -1,0 +1,59 @@
+version: "3.2"
+services:
+    # zookeeper
+    zk1:
+        image: confluentinc/cp-zookeeper:3.3.0
+        networks:
+            - functions
+        environment:
+            ZOOKEEPER_SERVER_ID: 1
+            ZOOKEEPER_CLIENT_PORT: 22181
+        ports:
+            - "22181:22181"
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
+    # kafka brokers
+    kafka1:
+        image: confluentinc/cp-kafka:3.3.0
+        networks:
+            - functions
+        depends_on:
+            - zk1
+        environment:
+            KAFKA_BROKER_ID: 1
+            KAFKA_ZOOKEEPER_CONNECT: zk1:22181
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:19092
+            # don't use auto-gen topic, create topics with desired partitions & replicas at below
+            KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+            # set replica-factor to 1 (default 3) since we have less than 3 brokers 
+            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
+    kafka2:
+        image: confluentinc/cp-kafka:3.3.0
+        networks:
+            - functions
+        depends_on:
+            - zk1
+        environment:
+            KAFKA_BROKER_ID: 2
+            KAFKA_ZOOKEEPER_CONNECT: zk1:22181
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:19092
+            # don't use auto-gen topic, create topics with desired partitions & replicas at below
+            KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+            # set replica-factor to 1 (default 3) since we have less than 3 brokers 
+            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+        deploy:
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
+networks:
+    functions:
+        external: true
