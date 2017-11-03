@@ -22,6 +22,7 @@ There are three main Github repos
 | [Docker Belfast Meetup](https://www.meetup.com/Docker-Belfast/) | John McCabe | Belfast, Northern Ireland | 31-Oct-2017 |
 | [Belfast Gophers Meetup](https://www.meetup.com/Belfast-Gophers/) | John McCabe | Belfast, Northern Ireland | 26-Oct-2017 |
 | [Introduction to Serverless with OpenFaaS - Moby Summit](https://europe-2017.dockercon.com/moby-summit/) | Alex Ellis | Copenhagen | 19-Oct-2017 |
+| [Repainting the Past with Distributed Machine Learning and Docker - DockerCon EU](https://europe-2017.dockercon.com/agenda/#tab_title6) | Finnian Anderson & Oli Callaghan | Copenhagen | 18-Oct-2017 |
 | [Zero to Serverless in 60 secs - Dockercon EU](https://europe-2017.dockercon.com/agenda/#tab_title6) | Alex Ellis | Copenhagen | 17-Oct-2017 |
 | [Tech Weekly @ UNiDAYS - Alex Young introduces OpenFaaS](https://speakerdeck.com/nullseed/tech-weekly-at-unidays-alex-young-introduces-openfaas) | Alex Young | Nottingham, UK | 12-Oct-2017 |
 | [OpenFaaS @ JeffConf Milan](https://milan.jeffconf.com/speakers) | Alex Ellis | Milan, Italy | 29-Sept-2017 |
@@ -53,7 +54,9 @@ There are three main Github repos
 | [Build a Kubernetes Cluster w/ Raspberry Pi & .NET Core on OpenFaas](https://www.hanselman.com/blog/HowToBuildAKubernetesClusterWithARMRaspberryPiThenRunNETCoreOnOpenFaas.aspx) | Scott Hanselman | hanselman.com | 31-Oct-2017
 | [Kubernetes + OpenFaaS + runV + ARM64 Packet.net](https://medium.com/@resouer/kubernetes-openfaas-runv-arm64-packet-net-ea4c7b61c88f) | Harry Zhang | medium.com | 31-Oct-2017 |
 | [Build a Serverless Memes Function with OpenFaaS](https://medium.com/@mlabouardy/build-a-serverless-memes-function-with-openfaas-f4210a53abe8) | Mohamed Labouardy | medium.com/@mlabouardy | 24-Oct-2017 |
+| [Repainting the Past with Machine Learning and OpenFaaS](http://olicallaghan.com/post/repainting-the-past-with-machine-learning-and-openfaas) | Oli Callaghan | olicallaghan.com | 23-Oct-2017 |
 | [An Introduction to Serverless DevOps with OpenFaaS](https://hackernoon.com/an-introduction-to-serverless-devops-with-openfaas-b978ab0eb2b) | Ken Fukuyama | medium.com/@kenfdev | 22-Oct-2017 |
+| [Colourising Video with OpenFaaS Serverless Functions](https://finnian.io/blog/colourising-video-with-openfaas-serverless-functions/) | Finnian Anderson | finnian.io | 21-Oct-2017 |
 | [My First Pull Request To OpenFaaS](https://hackernoon.com/my-first-pull-request-to-openfaas-a-major-open-source-project-d0c823790691) | Burton Rheutan | hackernoon.com/@rheutan7 | 10-Oct-2017 |
 | [Deploying a Serverless Youtube-To-Gif Telegram bot with OpenFaaS](https://medium.com/@ericstoekl/deploying-a-serverless-youtube-to-gif-telegram-bot-with-openfaas-2b78d1e9ae6) | Eric Stoekl | medium.com/@ericstoekl | 25-Sep-2017 |
 | [A Serverless GraphQL Blog in 60 Seconds with OpenFaaS](https://medium.com/@kenfdev/a-serverless-graphql-blog-in-60-seconds-with-openfaas-aaedd566b1f3) | Ken Fukuyama | medium.com/@kenfdev | 24-Sep-2017 |
