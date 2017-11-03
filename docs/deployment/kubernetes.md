@@ -84,8 +84,6 @@ For simplicity the default configuration uses NodePorts rather than an IngressCo
 | API Gateway / UI  | 31112    |
 | Prometheus        | 31119    |
 
-    ssh -L 31112:127.0.0.1:31112 -N civo@185.136.233.12 -i ~/.ssh/keys/civo-nov-2017.id_rsa
-
 !!! tip "IngressController (Advanced Users)"
     If you're an advanced Kubernetes user, you can add an IngressController to your stack and remove the NodePort assignments.
 
