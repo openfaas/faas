@@ -21,55 +21,70 @@
 # Project information
 site_name: OpenFaaS
 site_description: OpenFaaS is a serverless framework for Docker & Kubernetes
-site_author: Alex Ellis
+site_author: OpenFaaS Authors
+site_url: https://www.openfaas.com/
+
 
 # Repository
 repo_name: openfaas/faas
-repo_url: https://github.com/johnmccabe/faas
+repo_url: https://github.com/openfaas/faas
+edit_uri: ""
 
 # edit_uri: edit/docs-revamp/docs/
-edit_uri: blob/docs-revamp/docs/
+# edit_uri: blob/docs-revamp/docs/
 
-remote_name: origin
-remote_branch: gh-pages
+# remote_name: origin
+# remote_branch: gh-pages
 
 # Theme and overrides, i.e. language partial
-theme: material
+theme:
+  name: material
 
-site_favicon: 'images/favicon.ico'
+  # Don't include MkDocs' JavaScript
+  include_search_page: false
+  search_index_only: true
 
-# Copyright
-copyright: 'Copyright &copy; 2017 Alex Ellis'
-
-# Options
-extra:
-  logo: 'images/logo.svg'
+  # Default values, taken from mkdocs_theme.yml
+  language: en
   feature:
     tabs: false
   palette:
     primary: blue
     accent: indigo
+  favicon: images/favicon.ico
+  logo: images/logo.svg
+
+# Copyright
+copyright: 'Copyright &copy; 2017 OpenFaaS Project'
+
+# Options
+extra:
+  search:
+    languages: 'en'
   social:
     - type: globe
-      link: http://openfaas.com
+      link: https://www.openfaas.com/
     - type: github-alt
       link: https://github.com/openfaas/faas
     - type: twitter
       link: https://twitter.com/openfaas
 
 extra_css:
-  - 'stylesheets/extra.css'
+  - stylesheets/extra.css
 
 # Extensions
 markdown_extensions:
   - markdown.extensions.admonition
-  - markdown.extensions.codehilite(guess_lang=false)
+  - markdown.extensions.codehilite:
+      guess_lang: false
   - markdown.extensions.def_list
   - markdown.extensions.footnotes
   - markdown.extensions.meta
-  - markdown.extensions.toc(permalink=true)
+  - markdown.extensions.toc:
+      permalink: true
   - pymdownx.arithmatex
-  - pymdownx.betterem(smart_enable=all)
+  - pymdownx.betterem:
+      smart_enable: all
   - pymdownx.caret
   - pymdownx.critic
   - pymdownx.details
@@ -80,20 +95,27 @@ markdown_extensions:
   - pymdownx.mark
   - pymdownx.smartsymbols
   - pymdownx.superfences
-  - pymdownx.tasklist(custom_checkbox=true)
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - pymdownx.tilde
 
 # Page tree
 pages:
-  - Introduction: index.md
+  - Overview: index.md
   - Getting Started:
-    - Deploy OpenFaaS: getting-started/index.md
-    - Deployment Guides:
-      - Docker Swarm: getting-started/docker-swarm.md
-      - Kubernetes: getting-started/kubernetes.md
-      - Play-with-Docker: getting-started/play-with-docker.md
-    - TestDrive OpenFaaS: getting-started/testdrive.md
+    - Part 1 - Deploy: getting-started/deploy.md
+    - Part 2 - OpenFaaS CLI: getting-started/testdrive.md
+    - Part 3 - Sample Functions: getting-started/sample_functions.md
+    - Part 4 - Create a Function: getting-started/testdrive.md
+    - Part 4 - Create a Function: getting-started/testdrive.md
   - Architecture: architecture.md
+  - Deployment Guides:
+    - Docker Swarm: deployment/swarm.md
+    - Kubernetes: deployment/kubernetes.md
+    - Play-with-Docker: deployment/play-with-docker.md
+  - Integration Guides:
+    - Kong: integrations/kong.md
+    - Traefik: integrations/traefik.md
   - Development:
     - API Gateway: developer/gateway.md
     - Dashboard UI: developer/dashboard.md
@@ -101,7 +123,7 @@ pages:
     - Functions: developer/functions.md
     - Swagger API: developer/swagger.md
     - Debugging: developer/debug.md
-  - RoadMap: roadmap.md
+    - Backends: developer/backends.md
+    - Function Chaining: developer/chaining_functions.md
   - Contributing: contributing.md
-  - Community: community.md
   
