@@ -121,6 +121,7 @@ pages:
     - Dashboard UI: developer/dashboard.md
     - Watchdog: developer/watchdog.md
     - Functions: developer/functions.md
+    - Asynchronous Functions: developer/asynchronous.md
     - Swagger API: developer/swagger.md
     - Debugging: developer/debug.md
     - Backends: developer/backends.md
