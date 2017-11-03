@@ -59,16 +59,6 @@ This one-shot script clones the code, sets up a Docker Swarm master node then de
 
 ![](https://user-images.githubusercontent.com/6358735/31058899-b34f2108-a6f3-11e7-853c-6669ffacd320.jpg)
 
-## Sample functions
-
-We have packaged some simple starter functions in the Docker stack, so as soon as you open the OpenFaaS UI you will see them listed down the left-hand side.
-
-Here are a few of the functions:
-
-* Markdown to HTML renderer (markdownrender) - takes .MD input and produces HTML (Golang)
-* Docker Hub Stats function (hubstats) - queries the count of images for a user on the Docker Hub (Golang)
-* Node Info (nodeinfo) function - gives you the OS architecture and detailled info about the CPUS (Node.js)
-* Webhook stasher function (webhookstash) - saves webhook body into container's filesystem - even binaries (Golang)
 
 ## Install FaaS-CLI
 
