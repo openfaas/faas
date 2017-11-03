@@ -16,6 +16,11 @@ services:
         depends_on:
             - nats
         deploy:
+            resources:
+                limits:
+                    memory: 50M
+                reservations:
+                    memory: 20M
             restart_policy:
                 condition: on-failure
                 delay: 5s
@@ -35,6 +40,11 @@ services:
         networks:
             - functions
         deploy:
+            resources:
+                limits:
+                    memory: 125M
+                reservations:
+                    memory: 50M
             placement:
                 constraints:
                     - 'node.platform.os == linux'
@@ -44,6 +54,11 @@ services:
         networks:
             - functions
         deploy:
+            resources:
+                limits:
+                    memory: 50M
+                reservations:
+                    memory: 20M
             restart_policy:
                 condition: on-failure
                 delay: 5s
@@ -54,6 +69,8 @@ services:
                     - 'node.platform.os == linux'
 
     # End
+
+    # Start monitoring
 
     prometheus:
         image: functions/prometheus:latest  # autobuild from Dockerfile in repo.
@@ -68,6 +85,11 @@ services:
         networks:
             - functions
         deploy:
+            resources:
+                limits:
+                    memory: 500M
+                reservations:
+                    memory: 200M
             placement:
                 constraints:
                     - 'node.role == manager'
@@ -77,8 +99,6 @@ services:
         image: functions/alertmanager:latest    # autobuild from Dockerfile in repo.
         environment:
             no_proxy: "gateway"
-#        volumes:
-#            - ./prometheus/alertmanager.yml:/alertmanager.yml
         command:
             - '-config.file=/alertmanager.yml'
         networks:
@@ -86,6 +106,11 @@ services:
         ports:
             - 9093:9093
         deploy:
+            resources:
+                limits:
+                    memory: 50M
+                reservations:
+                    memory: 20M
             placement:
                 constraints: 
                     - 'node.role == manager'
