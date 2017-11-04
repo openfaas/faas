@@ -54,6 +54,30 @@ services:
                 constraints:
                     - 'node.platform.os == linux'
 
+    # add kafka topic "faas-request" with desired partitions and replicas
+    addtopics:
+        image: confluentinc/cp-kafka:3.3.0
+        networks:
+            - functions
+        depends_on:
+            - zk1
+        deploy:
+            restart_policy:
+                condition: none  #run just once
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+        environment:
+            topics: faas-request # ,other-topics
+            num_partitions: 10
+            num_replicas: 1
+            kafka_brokers: kafka1,kafka2
+            kafka_port: 19092
+            zookeeper_server: zk1:22181
+        #wait for all kafka brokers up and create topics
+        command: sh -c 'IFS=,; for brok in $$kafka_brokers;do while ! nc -z $$brok $$kafka_port;do echo "wait for kafka brokers...";sleep 2;done; done; for topic in $$topics; do while ! kafka-topics --zookeeper $$zookeeper_server --create --topic $$topic --partitions $$num_partitions --replication-factor $$num_replicas; do sleep 1; done; done'
+
+
 networks:
     functions:
         external: true
