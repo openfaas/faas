@@ -274,11 +274,16 @@ func main() {
 
 	http.HandleFunc("/", makeRequestHandler(&config))
 
-	path := filepath.Join(os.TempDir(), ".lock")
-	log.Printf("Writing lock-file to: %s\n", path)
-	writeErr := ioutil.WriteFile(path, []byte{}, 0660)
-	if writeErr != nil {
-		log.Panicf("Cannot write %s. To disable lock-file set env suppress_lock=true.\n Error: %s.\n", path, writeErr.Error())
+	if config.suppressLock == false {
+		path := filepath.Join(os.TempDir(), ".lock")
+		log.Printf("Writing lock-file to: %s\n", path)
+		writeErr := ioutil.WriteFile(path, []byte{}, 0660)
+		if writeErr != nil {
+			log.Panicf("Cannot write %s. To disable lock-file set env suppress_lock=true.\n Error: %s.\n", path, writeErr.Error())
+		}
+	} else {
+		log.Println("Warning: \"suppress_lock\" is enabled. No automated health-checks will be in place for your function.")
 	}
+
 	log.Fatal(s.ListenAndServe())
 }
