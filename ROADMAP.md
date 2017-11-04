@@ -4,14 +4,20 @@
 
 For an overview of features in August 2017 read the following post:
 
-* [Introducing Functions as a Service (FaaS)](https://blog.alexellis.io/introducing-functions-as-a-service/)
+* [Introducing OpenFaaS (Functions as a Service)](https://blog.alexellis.io/introducing-functions-as-a-service/)
 
-## GitHub repos:
+For the latest updates see [blog.alexellis.io/tag/openfaas](https://blog.alexellis.io/tag/openfaas/)
+
+## Primary GitHub Organisation:
 
 * https://github.com/openfaas/faas
 * https://github.com/openfaas/faas-netes
 * https://github.com/openfaas/faas-cli
 * https://github.com/openfaas/nats-queue-worker
+
+## Incubator GitHub Organisation:
+
+* https://github.com/openfaas-incubator
 
 ### The API Gateway
 
@@ -53,6 +59,9 @@ Some of the more recent Completed Features:
 * AARCH64 (64-bit ARM) port (dependent on Docker release schedule)
 * Healthchecks for functions deployed on Kubernetes
 * Supporting request parameters via query-string
+* Custom end-to-end label support for functions
+* Supporting request parameters via route - QueryString / Path
+* Guide for basic authentication over HTTPs (set up externally through NGinx etc)
 
 **Incoming requests and routing**
 
@@ -87,42 +96,47 @@ Must have
  * for AWS
 * Developer guide for your first Node.js function
 
+* Configurable memory limits per function exposed through API
+* Certifier for third-party integrations - via e2e tests (in progress) 
+* Return stderr or link to stderr via function invocation (For VMWare / Mark Peek)
+* Community function templates for the FaaS-CLI (in progress)
+
 Should have
 
-* Certifier for third-party integrations - via e2e tests (in progress) 
+* Docker image builder as remote service based upon Moby
+* Kafka-Connector for the API Gateway
 * AfterBurn - fork once, use many which removes almost all runtime latency - (Alpha available)
 * Kafka queue worker implementation (async currently available by NATS Streaming) - available in pending PR
 
-* Community templates for the FaaS-CLI (in progress)
 * Our own "timer" (aka cron) for invoking functions on a regular basis - or a guide for setting this up via Jenkins or CRON
+* Guide/proxy for Flask in a function
+
 
 Could have
 
 * Multi-tenancy (in-progress for Kubernetes and Docker Swarm)
 * Progress animation for building Docker images via CLI
 * Built-in Docker registry with default configuration
-* Docker image builder (remote service)
+
 * Function store - list of useful predefined functions
-* Supporting request parameters via route
 * Configurable memory limits via "new function" pop-up (already supported by Docker compose stack)
 * Scale to zero 0/0 replicas
-* Guide/proxy for Flask in a function
+* Serverless Inc framework support - as a "provider" (in progress)
 
 Nice to have
 
-* Guide for basic authentication over HTTPs (set up externally through NGinx etc)
 * CRIU - (Checkpoint/Restore In Userspace) for starting serverless tasks with a high start-up cost/latency.
 * Deeper tests coverage and integration tests
-* Serverless Inc framework support - as a "provider" (in progress)
 
 On-going integrations in addition to Swarm and K8s:
 
 * ECS - via Huawei
-* Nomad via Hashicorp
+* Nomad via Hashicorp / Nic Jackson
 * Hyper.sh via Hyper
-* Cattle / Rancher by community
+* Cattle / Rancher by Ken in the community
+* DC/OS via Alberto in the community
 
-Internal research is also being done for the ACI / K8s-connector.
+Internal research is also being done for the ACI / AKS / K8s-connector.
 
 ### Contributing
 
