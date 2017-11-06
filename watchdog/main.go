@@ -25,8 +25,14 @@ func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error)
 	var requestBytes []byte
 	var err error
 
-	if r.Body != nil {
-		defer r.Body.Close()
+	if r.Body == nil {
+		return res, nil
+	}
+	defer r.Body.Close()
+
+	if err != nil {
+		log.Println(err)
+		return res, err
 	}
 
 	requestBytes, err = ioutil.ReadAll(r.Body)
@@ -37,6 +43,7 @@ func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error)
 	} else {
 		res = requestBytes
 	}
+
 	return res, err
 }
 
