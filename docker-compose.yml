@@ -10,9 +10,6 @@ services:
             - functions
         environment:
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
-        # Start Add for NATS Streaming
-        depends_on:
-            - nats
         deploy:
             resources:
                 limits:
