@@ -19,6 +19,7 @@ import (
 	"github.com/openfaas/faas/watchdog/types"
 )
 
+// buildFunctionInput for a GET method this is an empty byte array.
 func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error) {
 	var res []byte
 	var requestBytes []byte
@@ -49,7 +50,7 @@ type requestInfo struct {
 	headerWritten bool
 }
 
-func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request, method string, hasBody bool) {
+func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request, method string) {
 	startTime := time.Now()
 
 	parts := strings.Split(config.faasProcess, " ")
@@ -78,25 +79,20 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 	var wg sync.WaitGroup
 
 	wgCount := 2
-	if hasBody == false {
-		wgCount = 1
-	}
 
-	if hasBody {
-		var buildInputErr error
-		requestBody, buildInputErr = buildFunctionInput(config, r)
-		if buildInputErr != nil {
-			ri.headerWritten = true
-			w.WriteHeader(http.StatusBadRequest)
-			// I.e. "exit code 1"
-			w.Write([]byte(buildInputErr.Error()))
+	var buildInputErr error
+	requestBody, buildInputErr = buildFunctionInput(config, r)
+	if buildInputErr != nil {
+		ri.headerWritten = true
+		w.WriteHeader(http.StatusBadRequest)
+		// I.e. "exit code 1"
+		w.Write([]byte(buildInputErr.Error()))
 
-			// Verbose message - i.e. stack trace
-			w.Write([]byte("\n"))
-			w.Write(out)
+		// Verbose message - i.e. stack trace
+		w.Write([]byte("\n"))
+		w.Write(out)
 
-			return
-		}
+		return
 	}
 
 	wg.Add(wgCount)
@@ -123,16 +119,14 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 		}()
 	}
 
-	// Only write body if this is appropriate for the method.
-	if hasBody {
-		// Write to pipe in separate go-routine to prevent blocking
-		go func() {
-			defer wg.Done()
-			writer.Write(requestBody)
-			writer.Close()
-		}()
-	}
+	// Write to pipe in separate go-routine to prevent blocking
+	go func() {
+		defer wg.Done()
+		writer.Write(requestBody)
+		writer.Close()
+	}()
 
+	// Read the output from stdout/stderr and combine into one variable for output.
 	go func() {
 		defer wg.Done()
 		out, err = targetCmd.CombinedOutput()
@@ -238,12 +232,9 @@ func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.
 			"POST",
 			"PUT",
 			"DELETE",
-			"UPDATE":
-			pipeRequest(config, w, r, r.Method, true)
-			break
-		case
+			"UPDATE",
 			"GET":
-			pipeRequest(config, w, r, r.Method, false)
+			pipeRequest(config, w, r, r.Method)
 			break
 		default:
 			w.WriteHeader(http.StatusMethodNotAllowed)
