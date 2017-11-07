@@ -45,7 +45,14 @@ func MakeUpdateFunctionHandler(metricsOptions metrics.MetricOptions, c *client.C
 			return
 		}
 
-		updateSpec(&request, &service.Spec, maxRestarts, restartDelay)
+		secrets, err := makeSecretsArray(c, request.Secrets)
+		if err != nil {
+			log.Println(err)
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte("Deployment error: " + err.Error()))
+			return
+		}
+		updateSpec(&request, &service.Spec, maxRestarts, restartDelay, secrets)
 
 		updateOpts := types.ServiceUpdateOptions{}
 		updateOpts.RegistryAuthFrom = types.RegistryAuthFromSpec
@@ -72,7 +79,7 @@ func MakeUpdateFunctionHandler(metricsOptions metrics.MetricOptions, c *client.C
 	}
 }
 
-func updateSpec(request *requests.CreateFunctionRequest, spec *swarm.ServiceSpec, maxRestarts uint64, restartDelay time.Duration) {
+func updateSpec(request *requests.CreateFunctionRequest, spec *swarm.ServiceSpec, maxRestarts uint64, restartDelay time.Duration, secrets []*swarm.SecretReference) {
 
 	constraints := []string{}
 	if request.Constraints != nil && len(request.Constraints) > 0 {
@@ -103,6 +110,7 @@ func updateSpec(request *requests.CreateFunctionRequest, spec *swarm.ServiceSpec
 			Target: request.Network,
 		},
 	}
+	spec.TaskTemplate.ContainerSpec.Secrets = secrets
 
 	spec.TaskTemplate.Resources = buildResources(request)
 
