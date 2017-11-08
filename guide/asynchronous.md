@@ -61,7 +61,7 @@ $ kubectl -f apply ./faas.async.yml,nats.yml
 Functions do not need to be modified to work asynchronously, just use this alternate route:
 
 ```
-$ http://gateway/async-function/{function_name}
+http://gateway/async-function/{function_name}
 ```
 
 If you want the function to call another function or a different endpoint when it is finished then pass the `X-Callback-Url` header. This is optional.
