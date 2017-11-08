@@ -136,8 +136,8 @@ func main() {
 	r.HandleFunc("/system/functions", faasHandlers.UpdateFunction).Methods("PUT")
 
 	if faasHandlers.QueuedProxy != nil {
-		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}/", faasHandlers.QueuedProxy).Methods("POST")
-		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}", faasHandlers.QueuedProxy).Methods("POST")
+		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}/", faasHandlers.QueuedProxy).Methods("GET", "POST")
+		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}", faasHandlers.QueuedProxy).Methods("GET", "POST")
 
 		r.HandleFunc("/system/async-report", faasHandlers.AsyncReport)
 	}
