@@ -18,6 +18,10 @@ OpenFaaS (Functions as a Service) is a framework for building serverless functio
 * [CLI](http://github.com/openfaas/faas-cli) available with YAML format for templating and defining functions
 * Auto-scales as demand increases
 
+## Press-kit/media/swag
+
+For stickers, swag, media or press-kit information head over to: [openfaas/media](https://github.com/openfaas/media/blob/master/README.md)
+
 ## Governance
 
 OpenFaaS is an independent project created by [Alex Ellis](https://www.alexellis.io) which is now being built and shaped by a growing community of contributors. Project website: [openfaas.com](https://www.openfaas.com).
