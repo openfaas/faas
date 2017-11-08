@@ -1,12 +1,21 @@
 # Guide on Asynchronous processing
 
-By default functions are accessed synchronously via the following route:
+Asynchronous function calls can be queued up using the following route:
 
 ```
 $ curl --data "message" http://gateway/function/{function_name}
 ```
 
-As of [PR #131](https://github.com/openfaas/faas/pull/131) asynchronous invocation is available for testing.
+Summary of modes for calling functions via API Gateway:
+
+| Mode         | Method | URL                                            | Body | Headers  | Query string
+| -------------|--------|------------------------------------------------|------|--------- |------------------- |
+| Synchronous  | POST   | http://gateway/function/{function_name}        | Yes  | Yes      | Yes |
+| Synchronous  | GET    | http://gateway/function/{function_name}        | Yes  | Yes      | Yes |
+| Asynchronous | POST   | http://gateway/async-function/{function_name}  | Yes  | Yes      | Yes [#369](https://github.com/openfaas/faas/issues/369) |
+| Asynchronous | GET    | Not supported                                  | -    | -        | - |
+
+This work was carried out under [PR #131](https://github.com/openfaas/faas/pull/131).
 
 *Logical flow for synchronous functions:*
 
