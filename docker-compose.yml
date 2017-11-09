@@ -206,7 +206,7 @@ services:
 
     # Converts body in (markdown format) -> (html)
     markdown:
-        image: alexellis2/faas-markdownrender:latest
+        image: functions/markdown-render:latest
         labels:
             function: "true"
         depends_on:

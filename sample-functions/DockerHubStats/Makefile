@@ -1,9 +1,5 @@
 
-.PHONY: install image
+.PHONY: install
 
 install:
 	@go install .
-
-image:
-	@docker build -t alexellis2/dockerhub-stats .
-

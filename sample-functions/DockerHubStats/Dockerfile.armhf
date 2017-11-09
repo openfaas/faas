@@ -1,17 +1,25 @@
-FROM alexellis2/go-armhf:1.7.4
+FROM golang:1.9.2-alpine as builder
 
-MAINTAINER alexellis2@gmail.com
+MAINTAINER alex@openfaas.com
 ENTRYPOINT []
 
-RUN apk --no-cache add make
+RUN apk --no-cache add make curl \
+    && curl -sL https://github.com/openfaas/faas/releases/download/0.6.9/fwatchdog-armhf > /usr/bin/fwatchdog \
+    && chmod +x /usr/bin/fwatchdog
+
 WORKDIR /go/src/github.com/openfaas/faas/sample-functions/DockerHubStats
+
 COPY . /go/src/github.com/openfaas/faas/sample-functions/DockerHubStats
 
-RUN make
+RUN make install
 
-COPY ./fwatchdog /usr/bin
-RUN chmod +x /usr/bin/fwatchdog
+FROM alpine:3.6
 
-ENV fprocess "/go/bin/DockerHubStats"
+# Needed to reach the hub
+RUN apk --no-cache add ca-certificates 
 
-CMD [ "/usr/bin/fwatchdog"]
+COPY --from=builder /usr/bin/fwatchdog  /usr/bin/fwatchdog
+COPY --from=builder /go/bin/DockerHubStats  /usr/bin/DockerHubStats
+ENV fprocess "/usr/bin/DockerHubStats"
+
+CMD ["/usr/bin/fwatchdog"]
