@@ -120,7 +120,7 @@ services:
 
     # Pass a username as an argument to find how many images user has pushed to Docker Hub.
     hubstats:
-        image: alexellis2/faas-dockerhubstats:latest
+        image: functions/hubstats:latest
         labels:
             function: "true"
         depends_on:
@@ -131,6 +131,11 @@ services:
             no_proxy: "gateway"
             https_proxy: $https_proxy
         deploy:
+            resources:
+                limits:
+                    memory: 50M
+                reservations:
+                    memory: 20M
             placement:
                 constraints:
                     - 'node.platform.os == linux'
@@ -148,6 +153,11 @@ services:
             no_proxy: "gateway"
             https_proxy: $https_proxy
         deploy:
+            resources:
+                limits:
+                    memory: 50M
+                reservations:
+                    memory: 20M
             placement:
                 constraints:
                     - 'node.platform.os == linux'
@@ -166,6 +176,11 @@ services:
             no_proxy: "gateway"
             https_proxy: $https_proxy
         deploy:
+            resources:
+                limits:
+                    memory: 50M
+                reservations:
+                    memory: 20M
             placement:
                 constraints:
                     - 'node.platform.os == linux'
