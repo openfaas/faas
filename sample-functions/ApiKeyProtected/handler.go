@@ -4,21 +4,15 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
-	"strings"
+
+	"github.com/openfaas/faas/watchdog/types"
 )
 
-func handle(body []byte) {
-	key := os.Getenv("Http_X_Api_Key")
-
-	secretBytes, err := ioutil.ReadFile("/run/secrets/secret_api_key")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	secret := strings.TrimSpace(string(secretBytes))
-
-	if key == secret {
+func handle(header http.Header, body []byte) {
+	key := header.Get("X-Api-Key")
+	if key == os.Getenv("secret_api_key") {
 		fmt.Println("Unlocked the function!")
 	} else {
 		fmt.Println("Access denied!")
@@ -27,5 +21,9 @@ func handle(body []byte) {
 
 func main() {
 	bytes, _ := ioutil.ReadAll(os.Stdin)
-	handle(bytes)
+	req, err := types.UnmarshalRequest(bytes)
+	if err != nil {
+		log.Fatal(err)
+	}
+	handle(req.Header, req.Body.Raw)
 }
