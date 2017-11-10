@@ -12,9 +12,6 @@ services:
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
             faas_kafka_brokers: kafka1:19092,kafka2:19092
             faas_queue_topics: faas-request # ,other-topics
-        depends_on:
-            - kafka1
-            - kafka2
         deploy:
             restart_policy:
                 condition: on-failure
@@ -26,7 +23,6 @@ services:
                     - 'node.role == manager'
                     - 'node.platform.os == linux'
 
-
     kafka-queue-worker:
         image: functions/kafka-queue-worker:latest-dev
         networks:
@@ -34,9 +30,6 @@ services:
         environment:
             faas_kafka_brokers: kafka1:19092,kafka2:19092
             faas_queue_topics: faas-request # ,other-topics
-        depends_on:
-            - kafka1
-            - kafka2
         deploy:
             restart_policy:
                 condition: on-failure

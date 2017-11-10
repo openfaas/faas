@@ -75,8 +75,7 @@ services:
             kafka_port: 19092
             zookeeper_server: zk1:22181
         #wait for all kafka brokers up and create topics
-        command: sh -c 'IFS=,; for brok in $$kafka_brokers;do while ! nc -z $$brok $$kafka_port;do echo "wait for kafka brokers...";sleep 2;done; done; for topic in $$topics; do while ! kafka-topics --zookeeper $$zookeeper_server --create --topic $$topic --partitions $$num_partitions --replication-factor $$num_replicas; do sleep 1; done; done'
-
+        command: sh -c 'IFS=,; for brok in $$kafka_brokers;do while ! nc -z $$brok $$kafka_port;do echo "wait for kafka brokers...";sleep 1;done; done; for topic in $$topics; do while ! kafka-topics --zookeeper $$zookeeper_server --create --topic $$topic --partitions $$num_partitions --replication-factor $$num_replicas; do sleep 1; done; done'
 
 networks:
     functions:
