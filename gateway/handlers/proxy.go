@@ -7,7 +7,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"math/rand"
 	"net"
 	"net/http"
@@ -94,8 +94,7 @@ func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.Metric
 		defer trackTime(time.Now(), metrics, name)
 		forwardReq := requests.NewForwardRequest(r.Method, *r.URL)
 
-		requestBody, _ := ioutil.ReadAll(r.Body)
-		invokeService(w, r, metrics, name, forwardReq, requestBody, logger, proxyClient)
+		invokeService(w, r, metrics, name, forwardReq, logger, proxyClient)
 	}
 }
 
@@ -108,7 +107,7 @@ func lookupSwarmService(serviceName string, c *client.Client) (bool, error) {
 	return len(services) > 0, err
 }
 
-func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, forwardReq requests.ForwardRequest, requestBody []byte, logger *logrus.Logger, proxyClient *http.Client) {
+func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, forwardReq requests.ForwardRequest, logger *logrus.Logger, proxyClient *http.Client) {
 	stamp := strconv.FormatInt(time.Now().Unix(), 10)
 
 	defer func(when time.Time) {
@@ -141,27 +140,19 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	contentType := r.Header.Get("Content-Type")
 	fmt.Printf("[%s] Forwarding request [%s] to: %s\n", stamp, contentType, url)
 
-	request, err := http.NewRequest(r.Method, url, bytes.NewReader(requestBody))
+	if r.Body != nil {
+		defer r.Body.Close()
+	}
+
+	request, err := http.NewRequest(r.Method, url, r.Body)
 
 	copyHeaders(&request.Header, &r.Header)
-
-	defer request.Body.Close()
 
 	response, err := proxyClient.Do(request)
 	if err != nil {
 		logger.Infoln(err)
 		writeHead(service, metrics, http.StatusInternalServerError, w)
 		buf := bytes.NewBufferString("Can't reach service: " + service)
-		w.Write(buf.Bytes())
-		return
-	}
-
-	responseBody, readErr := ioutil.ReadAll(response.Body)
-	if readErr != nil {
-		fmt.Println(readErr)
-
-		writeHead(service, metrics, http.StatusInternalServerError, w)
-		buf := bytes.NewBufferString("Error reading response from service: " + service)
 		w.Write(buf.Bytes())
 		return
 	}
@@ -174,7 +165,9 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	w.Header().Set("Content-Type", GetContentType(response.Header, r.Header, defaultHeader))
 
 	writeHead(service, metrics, response.StatusCode, w)
-	w.Write(responseBody)
+	if response.Body != nil {
+		io.Copy(w, response.Body)
+	}
 }
 
 // GetContentType resolves the correct Content-Tyoe for a proxied function
