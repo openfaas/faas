@@ -67,16 +67,16 @@ type TaskSpec struct {
 	ForceUpdate uint64
 }
 
-// Resources represents resources (CPU/Memory).
-type Resources struct {
-	NanoCPUs    int64 `json:",omitempty"`
-	MemoryBytes int64 `json:",omitempty"`
-}
-
 // ResourceRequirements represents resources requirements.
 type ResourceRequirements struct {
 	Limits       *Resources `json:",omitempty"`
 	Reservations *Resources `json:",omitempty"`
+}
+
+// Resources represents resources (CPU/Memory).
+type Resources struct {
+	MemoryBytes int64 `json:",omitempty"`
+	// NanoCPUs    int64 `json:",omitempty"`
 }
 
 // Placement represents orchestration parameters.

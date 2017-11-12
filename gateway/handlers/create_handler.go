@@ -17,6 +17,7 @@ import (
 	"github.com/docker/docker/api/types/swarm"
 	"github.com/docker/docker/client"
 	"github.com/docker/docker/registry"
+	units "github.com/docker/go-units"
 	"github.com/openfaas/faas/gateway/metrics"
 	"github.com/openfaas/faas/gateway/requests"
 )
@@ -37,11 +38,6 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 			return
 		}
 
-		fmt.Println(request)
-
-		// TODO: review why this was here... debugging?
-		// w.WriteHeader(http.StatusNotImplemented)
-
 		options := types.ServiceCreateOptions{}
 		if len(request.RegistryAuth) > 0 {
 			auth, err := BuildEncodedAuthConfig(request.RegistryAuth, request.Image)
@@ -53,6 +49,7 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 			}
 			options.EncodedRegistryAuth = auth
 		}
+
 		spec := makeSpec(&request, maxRestarts, restartDelay)
 
 		response, err := c.ServiceCreate(context.Background(), spec, options)
@@ -68,6 +65,7 @@ func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Clie
 
 func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, restartDelay time.Duration) swarm.ServiceSpec {
 	constraints := []string{}
+
 	if request.Constraints != nil && len(request.Constraints) > 0 {
 		constraints = request.Constraints
 	} else {
@@ -84,7 +82,8 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, resta
 			labels[k] = v
 		}
 	}
-	fmt.Println(labels)
+
+	resources := buildResources(request)
 
 	nets := []swarm.NetworkAttachmentConfig{
 		{
@@ -107,7 +106,8 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, resta
 				Image:  request.Image,
 				Labels: labels,
 			},
-			Networks: nets,
+			Networks:  nets,
+			Resources: resources,
 			Placement: &swarm.Placement{
 				Constraints: constraints,
 			},
@@ -174,4 +174,40 @@ func userPasswordFromBasicAuth(basicAuthB64 string) (string, string, error) {
 		return "", "", errors.New("Invalid basic auth")
 	}
 	return cs[:s], cs[s+1:], nil
+}
+
+func ParseMemory(value string) (int64, error) {
+	return units.RAMInBytes(value)
+}
+
+func buildResources(request *requests.CreateFunctionRequest) *swarm.ResourceRequirements {
+	var resources *swarm.ResourceRequirements
+
+	if request.Requests != nil || request.Limits != nil {
+
+		resources = &swarm.ResourceRequirements{}
+		if request.Limits != nil {
+			memoryBytes, err := ParseMemory(request.Limits.Memory)
+			if err != nil {
+				log.Printf("Error parsing memory limit: %T", err)
+			}
+
+			resources.Limits = &swarm.Resources{
+				MemoryBytes: memoryBytes,
+			}
+		}
+
+		if request.Requests != nil {
+			memoryBytes, err := ParseMemory(request.Requests.Memory)
+			if err != nil {
+				log.Printf("Error parsing memory request: %T", err)
+			}
+
+			resources.Reservations = &swarm.Resources{
+				MemoryBytes: memoryBytes,
+			}
+
+		}
+	}
+	return resources
 }
