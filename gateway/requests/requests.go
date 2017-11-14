@@ -3,6 +3,8 @@
 
 package requests
 
+import  "github.com/docker/docker/api/types/mount"
+
 // CreateFunctionRequest create a function in the swarm.
 type CreateFunctionRequest struct {
 	// Service corresponds to a Docker Service
@@ -31,7 +33,10 @@ type CreateFunctionRequest struct {
 	// Secrets list of secrets to be made available to function
 	Secrets []string `json:"secrets"`
 
-	// Labels are metadata for functions which may be used by the
+	// Mounts to be mounted by the container running the function
+	Mounts []mount.Mount `json:"mounts,omitempty"`
+	
+        // Labels are metadata for functions which may be used by the
 	// back-end for making scheduling or routing decisions
 	Labels *map[string]string `json:"labels"`
 }

@@ -105,6 +105,7 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, resta
 			},
 			ContainerSpec: swarm.ContainerSpec{
 				Image:  request.Image,
+				Mounts: request.Mounts,
 				Labels: labels,
 			},
 			Networks: nets,
