@@ -25,6 +25,8 @@ These instructions are for a development environment. If you plan to expose Open
 
 * [Workflows / Chaining functions](chaining_functions.md)
 
+* [Interacting with other containers/services](interactions.md)
+
 * [Troubleshooting](troubleshooting.md)
 
 * [Asynchronous functions with NATS Streaming](asynchronous.md)
