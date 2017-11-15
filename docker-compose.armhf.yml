@@ -26,9 +26,6 @@ services:
         command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
         ports:
             - 9090:9090
-        depends_on:
-            - gateway
-            - alertmanager
         environment:
             no_proxy:   "gateway"
         networks:
@@ -59,8 +56,6 @@ services:
         image: functions/nodeinfo:latest-armhf
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -71,8 +66,6 @@ services:
         image: functions/markdownrender:latest-armhf
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -82,8 +75,6 @@ services:
         image: functions/alpine:latest-armhf
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -94,8 +85,6 @@ services:
         image: functions/alpine:latest-armhf
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:

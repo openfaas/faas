@@ -22,9 +22,6 @@ services:
         command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
         ports:
             - 9090:9090
-        depends_on:
-            - gateway
-            - alertmanager
         environment:
             no_proxy: "gateway"
         networks:
