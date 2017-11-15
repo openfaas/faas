@@ -6,7 +6,7 @@ Status](https://travis-ci.org/openfaas/faas.svg?branch=master)](https://travis-c
 
 ![OpenFaaS Logo](https://blog.alexellis.io/content/images/2017/08/faas_side.png)
 
-OpenFaaS (Functions as a Service) is a framework for building serverless functions with Docker which has first class support for metrics. Any process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
+OpenFaaS (Functions as a Service) is a framework for building serverless functions with Docker and Kubernetes which has first class support for metrics. Any process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
 
 [![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/fold_left.svg?style=social&label=Follow%20%40openfaas)](https://twitter.com/openfaas)
 
@@ -20,13 +20,15 @@ OpenFaaS (Functions as a Service) is a framework for building serverless functio
 
 ## Press-kit/media/swag
 
-For stickers, swag, media or press-kit information head over to: [openfaas/media](https://github.com/openfaas/media/blob/master/README.md)
+For stickers, swag, media or press-kit information head over to [openfaas/media](https://github.com/openfaas/media/blob/master/README.md)
 
 ## Governance
 
 OpenFaaS is an independent project created by [Alex Ellis](https://www.alexellis.io) which is now being built and shaped by a growing community of contributors. Project website: [openfaas.com](https://www.openfaas.com).
 
 ## Overview of OpenFaaS
+
+> Serverless Functions Made Simple.
 
 ![Stack](https://pbs.twimg.com/media/DFrkF4NXoAAJwN2.jpg)
 
