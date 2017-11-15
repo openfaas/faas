@@ -12,9 +12,6 @@ services:
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
             faas_nats_address: "nats"
             faas_nats_port: 4222
-        # Start Add for NATS Streaming
-        depends_on:
-            - nats
         deploy:
             resources:
                 limits:
@@ -77,9 +74,6 @@ services:
         command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
         ports:
             - 9090:9090
-        depends_on:
-            - gateway
-            - alertmanager
         environment:
             no_proxy: "gateway"
         networks:
@@ -123,8 +117,6 @@ services:
         image: functions/hubstats:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -145,8 +137,6 @@ services:
         image: functions/nodeinfo:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -167,8 +157,6 @@ services:
         image: functions/alpine:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:

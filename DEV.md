@@ -52,8 +52,6 @@ Update the Docker stack with this:
         image: alexellis2/faas-markdownrender:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
 ```
@@ -77,8 +75,6 @@ Update your Docker stack with this definition:
         image: alexellis2/faas-alpinefunction:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
