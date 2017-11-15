@@ -10,6 +10,9 @@ services:
         image: functions/gateway:0.6.9-armhf
         networks:
             - functions
+        environment:
+            read_timeout: 10    # set both here, and on your functions
+            write_timeout: 10   # set both here, and on your functions
         deploy:
             placement:
                 constraints: [node.role == manager]
