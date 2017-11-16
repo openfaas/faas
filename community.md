@@ -44,6 +44,7 @@ There are three main Github repos
 ### Industry awards and mentions
 | Award/Mention                                          | Author(s)       | Source     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFaaS added to CNCF Cloud Native Landscape - Serverless/Event-based](https://github.com/cncf/landscape/blob/master/landscape/CloudNativeLandscape_latest.jpg) | [Cloud Native Computing Foundation (CNCF)](https://www.cncf.io/) | Github | 23-Oct-2017 |
 | [OpenFaaS: Package any Binary or Code as a Serverless Function](https://thenewstack.io/openfaas-put-serverless-function-container/) | Joab Jackson | The New Stack | 9-Oct-2017 |
 | [Functions-as-a-Service Landscape](https://medium.com/memory-leak/this-year-gartner-added-serverless-to-its-hype-cycle-of-emerging-technologies-reflecting-the-5dfe43d818f0) | Astasia Myers | Redpoint Ventures | 4-Oct-2017 |
 | 🏆 [Bossie Award for Cloud Computing 2017](https://www.infoworld.com/article/3227920/cloud-computing/bossie-awards-2017-the-best-cloud-computing-software.html#slide7) |  Martin Heller, Andrew C. Oliver and Serdar Yegulalp| InfoWorld (from IDG) |  27-Sep-2017 |
