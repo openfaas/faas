@@ -83,6 +83,10 @@ module.exports = (callback, context) => {
 
 Other [Sample functions](https://github.com/openfaas/faas/tree/master/sample-functions) are available in the Github repository in a range of programming languages.
 
+## Documentation
+
+[View our guides](https://github.com/openfaas/faas/tree/master/guide) for documentation, deployment guides and tutorials.
+
 ## Get started with OpenFaaS
 
 ### TestDrive
