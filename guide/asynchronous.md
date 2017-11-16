@@ -3,7 +3,7 @@
 Asynchronous function calls can be queued up using the following route:
 
 ```
-$ curl --data "message" http://gateway/function/{function_name}
+$ curl --data "message" http://gateway/async-function/{function_name}
 ```
 
 Summary of modes for calling functions via API Gateway:
