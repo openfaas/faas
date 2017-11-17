@@ -10,7 +10,7 @@ services:
             - functions
         environment:
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
-            faas_kafka_brokers: kafka1:19092,kafka2:19092
+            faas_kafka_brokers: kafka1:9092,kafka2:9092
             faas_queue_topics: faas-request # ,other-topics
         deploy:
             restart_policy:
@@ -28,7 +28,7 @@ services:
         networks:
             - functions
         environment:
-            faas_kafka_brokers: kafka1:19092,kafka2:19092
+            faas_kafka_brokers: kafka1:9092,kafka2:9092
             faas_queue_topics: faas-request # ,other-topics
         deploy:
             restart_policy:

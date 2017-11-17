@@ -7,9 +7,9 @@ services:
             - functions
         environment:
             ZOOKEEPER_SERVER_ID: 1
-            ZOOKEEPER_CLIENT_PORT: 22181
+            ZOOKEEPER_CLIENT_PORT: 2181
         ports:
-            - "22181:22181"
+            - "2181:2181"
         deploy:
             placement:
                 constraints:
@@ -24,8 +24,8 @@ services:
             - zk1
         environment:
             KAFKA_BROKER_ID: 1
-            KAFKA_ZOOKEEPER_CONNECT: zk1:22181
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:19092
+            KAFKA_ZOOKEEPER_CONNECT: zk1:2181
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka1:9092
             # don't use auto-gen topic, create topics with desired partitions & replicas at below
             KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
             # set replica-factor to 1 (default 3) since we have less than 3 brokers 
@@ -43,8 +43,8 @@ services:
             - zk1
         environment:
             KAFKA_BROKER_ID: 2
-            KAFKA_ZOOKEEPER_CONNECT: zk1:22181
-            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:19092
+            KAFKA_ZOOKEEPER_CONNECT: zk1:2181
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:9092
             # don't use auto-gen topic, create topics with desired partitions & replicas at below
             KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
             # set replica-factor to 1 (default 3) since we have less than 3 brokers 
@@ -72,8 +72,8 @@ services:
             num_partitions: 10
             num_replicas: 1
             kafka_brokers: kafka1,kafka2
-            kafka_port: 19092
-            zookeeper_server: zk1:22181
+            kafka_port: 9092
+            zookeeper_server: zk1:2181
         #wait for all kafka brokers up and create topics
         command: sh -c 'IFS=,; for brok in $$kafka_brokers;do while ! nc -z $$brok $$kafka_port;do echo "wait for kafka brokers...";sleep 1;done; done; for topic in $$topics; do while ! kafka-topics --zookeeper $$zookeeper_server --create --topic $$topic --partitions $$num_partitions --replication-factor $$num_replicas; do sleep 1; done; done'
 
