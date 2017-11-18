@@ -59,8 +59,8 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
 
             $http(options)
                 .then(function(response) {
-                    if ($scope.invocation && $scope.invocation.contentType == "json") {
-                        $scope.invocationResponse = JSON.stringify(response.data, -1, "  ");
+                    if (typeof response.data == 'object') {
+                        $scope.invocationResponse = JSON.stringify(response.data, null, 2);
                     } else {
                         $scope.invocationResponse = response.data;
                     }
