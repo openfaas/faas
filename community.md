@@ -57,6 +57,8 @@ There are three main Github repos
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Getting started with OpenFaaS on minikube](https://medium.com/@alexellisuk/getting-started-with-openfaas-on-minikube-634502c7acdf) | Alex Ellis | medium.com | 18-Nov-2017
+| [OpenFaaS November Contributor Highlights](https://blog.alexellis.io/openfaas-contributors-highlights/) | Alex Ellis | alexellis.io | 15-Nov-2017 |
 | [Build a Kubernetes Cluster w/ Raspberry Pi & .NET Core on OpenFaas](https://www.hanselman.com/blog/HowToBuildAKubernetesClusterWithARMRaspberryPiThenRunNETCoreOnOpenFaas.aspx) | Scott Hanselman | hanselman.com | 31-Oct-2017
 | [Kubernetes + OpenFaaS + runV + ARM64 Packet.net](https://medium.com/@resouer/kubernetes-openfaas-runv-arm64-packet-net-ea4c7b61c88f) | Harry Zhang | medium.com | 31-Oct-2017 |
 | [Build a Serverless Memes Function with OpenFaaS](https://medium.com/@mlabouardy/build-a-serverless-memes-function-with-openfaas-f4210a53abe8) | Mohamed Labouardy | medium.com/@mlabouardy | 24-Oct-2017 |
