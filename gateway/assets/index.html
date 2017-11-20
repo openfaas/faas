@@ -36,7 +36,7 @@
                 </md-toolbar>
 
                 <md-content layout-padding>
-                    <md-button ng-click="newFunction()" ng-disabled="isFunctionBeingCreated" class="md-primary">Create New Function</md-button>
+                    <md-button ng-click="newFunction()" ng-disabled="isFunctionBeingCreated" class="md-primary">Deploy New Function</md-button>
 
                     <md-list>
                         <md-list-item ng-switch class="md-3-line" ng-click="showFunction(function)" ng-repeat="function in functions | orderBy: '-invocationCount'" ng-class="function.name == selectedFunction.name ? 'selected' : false">
@@ -99,7 +99,7 @@
                             </div>
                             <div layout-gt-sm="row" ng-show="function.envProcess">
                                 <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Watchdog process</label>
+                                    <label>Function process</label>
                                     <input ng-model="function.envProcess" type="text" readonly="readonly">
                                 </md-input-container>
                             </div>

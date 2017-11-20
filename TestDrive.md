@@ -6,7 +6,7 @@ OpenFaaS (or Functions as a Service) is a framework for building serverless func
 
 # Overview
 
-We have provided several sample functions which are built-into the *Docker Stack* file we deploy during the test drive. You'll be up and running in a few minutes and invoking functions via the Web UI or `curl`. When you're ready to deploy your own function click "Create Function" in the UI or head over to the CLI tutorial:
+We have provided several sample functions which are built-into the *Docker Stack* file we deploy during the test drive. You'll be up and running in a few minutes and invoking functions via the Web UI or `curl`. When you're ready to deploy your own function click "Deploy Function" in the UI or head over to the CLI tutorial:
 
 * [Morning coffee with the OpenFaaS CLI](https://blog.alexellis.io/quickstart-openfaas-cli/)
 

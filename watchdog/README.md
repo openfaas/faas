@@ -27,7 +27,7 @@ Here's how to package your function if you don't want to use the CLI or have exi
 
 - [x] Use an existing or a new Docker image as base image `FROM`
 - [x] Add the fwatchdog binary from the [Releases page](https://github.com/openfaas/faas/releases) via `curl` or `ADD https://`
-- [x] Set an `fprocess` environmental variable with the function you want to run for each request
+- [x] Set an `fprocess` (function process) environmental variable with the function you want to run for each request
 - [x] Expose port 8080
 - [x] Set the `CMD` to `fwatchdog`
 
@@ -71,7 +71,7 @@ The watchdog can be configured through environmental variables. You must always 
 
 | Option                 | Usage             |
 |------------------------|--------------|
-| `fprocess`             | The process to invoke for each function call. This must be a UNIX binary and accept input via STDIN and output via STDOUT.  |
+| `fprocess`             | The process to invoke for each function call (function process). This must be a UNIX binary and accept input via STDIN and output via STDOUT.  |
 | `cgi_headers`          | HTTP headers from request are made available through environmental variables - `Http_X_Served_By` etc. See section: *Handling headers* for more detail. Enabled by default. |
 | `marshal_requests`     | Instead of re-directing the raw HTTP body into your fprocess, it will first be marshalled into JSON. Use this if you need to work with HTTP headers and do not want to use environmental variables via the `cgi_headers` flag. |
 | `content_type`         | Force a specific Content-Type response for all responses. |
