@@ -85,7 +85,7 @@ $ faas-cli deploy -f ./hello-node.yml
 You should be all set to test out your function. You can do this on the
 command line with the `faas-cli invoke` command:
 ```
-$ echo hurray! | faas-cli invoke -f ./hello-node.yml --name hello-node
+$ echo hurray! | faas-cli invoke hello-node
 ```
 
 Listing all running functions can be done with the `list` command.
