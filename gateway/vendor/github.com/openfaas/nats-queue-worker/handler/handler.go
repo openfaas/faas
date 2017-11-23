@@ -1,12 +1,12 @@
 package handler
 
 import (
-	"fmt"
-	"log"
-
 	"encoding/json"
+	"log"
+	"os"
+	"fmt"
 
-	"github.com/openfaas/faas/gateway/queue"
+	"github.com/alexellis/faas/gateway/queue"
 	"github.com/nats-io/go-nats-streaming"
 )
 
@@ -22,7 +22,8 @@ func CreateNatsQueue(address string, port int) (*NatsQueue, error) {
 	natsURL := fmt.Sprintf("nats://%s:%d", address, port)
 	log.Printf("Opening connection to %s\n", natsURL)
 
-	clientID := "faas-publisher"
+	val, _ := os.Hostname()
+	clientID := "faas-publisher-" + val
 	clusterID := "faas-cluster"
 
 	nc, err := stan.Connect(clusterID, clientID, stan.NatsURL(natsURL))
