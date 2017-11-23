@@ -2,12 +2,12 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
-	"fmt"
 
-	"github.com/alexellis/faas/gateway/queue"
 	"github.com/nats-io/go-nats-streaming"
+	"github.com/openfaas/faas/gateway/queue"
 )
 
 // NatsQueue queue for work
