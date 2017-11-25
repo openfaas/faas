@@ -10,6 +10,8 @@
 * [ ] I have turned off `write_debug` and `read_debug` so that the logs for the function are kept sparse
 * [ ] I am monitoring / collecting logs from the core services and function under test
 * [ ] I am monitoring the system for feedback through Prometheus and / or Grafana - i.e. throughput and 200/500 errors
+* [ ] If running on Docker Swarm I've verified that I am using a proper HEALTHCHECK (read up more on watchdog readme)
+
 
 ### Common mistakes for performance-testing a project:
 
