@@ -17,9 +17,9 @@ services:
         deploy:
             resources:
                 limits:
-                    memory: 50M
+                    memory: 100M
                 reservations:
-                    memory: 20M
+                    memory: 50M
             restart_policy:
                 condition: on-failure
                 delay: 5s
