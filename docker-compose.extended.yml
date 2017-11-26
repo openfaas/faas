@@ -5,7 +5,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:0.6.9
+        image: functions/gateway:0.6.12
         networks:
             - functions
         environment:
@@ -31,7 +31,7 @@ services:
                     - 'node.platform.os == linux'
 
     nats:
-        image: nats-streaming:0.5.0
+        image: nats-streaming:0.6.0
         ports:
             - 4222:4222
             - 8222:8222
@@ -49,7 +49,7 @@ services:
                     - 'node.platform.os == linux'
 
     queue-worker:
-        image: functions/queue-worker:0.2
+        image: functions/queue-worker:0.4
         networks:
             - functions
         deploy:
