@@ -5,7 +5,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:0.6.9
+        image: functions/gateway:0.6.12
         networks:
             - functions
         environment:
