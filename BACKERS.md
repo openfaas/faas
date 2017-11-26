@@ -12,17 +12,20 @@ Become the first sponsor and have your logo on the [OpenFaaS homepage](https://w
 
 Listed by reward, followed by miscellaneous amounts. Names are (pending) until first pledge is taken by Patreon, this is at the start of each month.
 
-**Early Backers**
+**Early Backers (reward)**
 
-**OpenFaaS patrons**
+**OpenFaaS patrons (reward)**
 
-**OpenFaaS backers**
+**OpenFaaS fanclub (reward)**
+
+**OpenFaaS backers (reward)**
 
 * Eric Stoekl (pending)
 * Nic Jackson (pending)
 * Alex DeBrie (pending)
 * Johnny Mkhael (pending)
+* Finnian Anderson (pending)
 
 **Misc. amount**
 
-* Markus Fisher (pending)
+1 person (pending)
