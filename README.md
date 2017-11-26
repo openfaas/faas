@@ -18,6 +18,12 @@ OpenFaaS (Functions as a Service) is a framework for building serverless functio
 * [CLI](http://github.com/openfaas/faas-cli) available with YAML format for templating and defining functions
 * Auto-scales as demand increases
 
+## New: become an OpenFaaS backer or sponsor
+
+We need your support to keep delivering on Serverless Functions Made Simple so pledge to OpenFaaS and [become a backer or a sponsor](https://www.patreon.com/alexellis) with a unique set of rewards. Help us hit our goals and get to back a great project at the same time.
+
+View the [List of backers and sponsors](https://github.com/openfaas/faas/blob/master/BACKERS.md)
+
 ## Press-kit/media/swag
 
 For stickers, swag, media or press-kit information head over to [openfaas/media](https://github.com/openfaas/media/blob/master/README.md)
