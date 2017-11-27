@@ -14,11 +14,8 @@ Listed by reward, followed by miscellaneous amounts. Names are (pending) until f
 
 **Early Backers (reward)**
 
-* Wesley Kennedy
-
-**OpenFaaS patrons (reward)**
-
-**OpenFaaS fanclub (reward)**
+* José Roberto Almaráz Da Cunha Júnior (pending)
+* Wesley Kennedy (pending)
 
 **OpenFaaS backers (reward)**
 
@@ -27,7 +24,15 @@ Listed by reward, followed by miscellaneous amounts. Names are (pending) until f
 * Alex DeBrie (pending)
 * Johnny Mkhael (pending)
 * Finnian Anderson (pending)
-* Thom Toogood
+* Thom Toogood (pending)
+* Rafael Barbosa (pending)
+* Weston Steimel (pending)
+* Ram	Gopinathan (pending)
+* Michael	Herman (pending)
+
+**OpenFaaS patrons (reward)**
+
+**OpenFaaS fanclub (reward)**
 
 **Misc. amount**
 
