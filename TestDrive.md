@@ -242,7 +242,7 @@ The `-d` value passes in the argument for your function. This is read via STDIN 
 
 Grab OS, CPU and other info via a Node.js container using the `os` module.
 
-If you invoke this method in a while loop or with a load-generator tool then it will auto-scale to 5, 10, 15 and finally 20 replicas due to the load. You will then be able to see the various Docker containers responding with a different Hostname for each request as the work is distributed evenly.
+If you invoke this method in a while loop or with a load-generator tool then it will auto-scale to 5, 10, 15 and finally 25 replicas due to the load. You will then be able to see the various Docker containers responding with a different Hostname for each request as the work is distributed evenly.
 
 Here is a loop that can be used to invoke the function in a loop to trigger auto-scaling.
 ```
@@ -260,6 +260,14 @@ Platform: linux
 Arch: arm
 CPU count: 1
 Uptime: 776839
+```
+
+To control scaling behaviour you can set a min/max scale value with a label when deploying your function via the CLI or the API:
+
+```
+  labels:
+    "com.openfaas.scale.min": "5"
+    "com.openfaas.scale.max": "15"
 ```
 
 **Sample function: webhook stasher (webhookstash)**

@@ -22,7 +22,7 @@ import (
 const DefaultMaxReplicas = 20
 
 type ServiceQuery interface {
-	GetReplicas(service string) (currentReplicas uint64, maxReplicas uint64, err error)
+	GetReplicas(service string) (currentReplicas uint64, maxReplicas uint64, minReplicas uint64, err error)
 	SetReplicas(service string, count uint64) error
 }
 
@@ -39,30 +39,45 @@ type SwarmServiceQuery struct {
 }
 
 // GetReplicas replica count for function
-func (s SwarmServiceQuery) GetReplicas(serviceName string) (uint64, uint64, error) {
+func (s SwarmServiceQuery) GetReplicas(serviceName string) (uint64, uint64, uint64, error) {
 	var err error
 	var currentReplicas uint64
 	maxReplicas := uint64(DefaultMaxReplicas)
+	minReplicas := uint64(1)
+
 	opts := types.ServiceInspectOptions{
 		InsertDefaults: true,
 	}
 	service, _, err := s.c.ServiceInspectWithRaw(context.Background(), serviceName, opts)
 	if err == nil {
 		currentReplicas = *service.Spec.Mode.Replicated.Replicas
+		log.Println("service.Spec.Annotations.Labels ", service.Spec.Annotations.Labels)
+		log.Println("service.Spec.TaskTemplate.ContainerSpec.Labels ", service.Spec.TaskTemplate.ContainerSpec.Labels)
+		log.Println("service.Spec.Labels ", service.Spec.Labels)
 
-		replicaLabel := service.Spec.TaskTemplate.ContainerSpec.Labels["com.faas.max_replicas"]
+		minScale := service.Spec.Annotations.Labels["com.openfaas.scale.min"]
+		maxScale := service.Spec.Annotations.Labels["com.openfaas.scale.max"]
 
-		if len(replicaLabel) > 0 {
-			maxReplicasLabel, err := strconv.Atoi(replicaLabel)
+		if len(maxScale) > 0 {
+			labelValue, err := strconv.Atoi(maxScale)
 			if err != nil {
-				log.Printf("Bad replica count: %s, should be uint.\n", replicaLabel)
+				log.Printf("Bad replica count: %s, should be uint", maxScale)
 			} else {
-				maxReplicas = uint64(maxReplicasLabel)
+				maxReplicas = uint64(labelValue)
+			}
+		}
+
+		if len(minScale) > 0 {
+			labelValue, err := strconv.Atoi(maxScale)
+			if err != nil {
+				log.Printf("Bad replica count: %s, should be uint", minScale)
+			} else {
+				minReplicas = uint64(labelValue)
 			}
 		}
 	}
 
-	return currentReplicas, maxReplicas, err
+	return currentReplicas, maxReplicas, minReplicas, err
 }
 
 // SetReplicas update the replica count
@@ -145,16 +160,17 @@ func scaleService(alert requests.PrometheusInnerAlert, sq ServiceQuery) error {
 	serviceName := alert.Labels.FunctionName
 
 	if len(serviceName) > 0 {
-		currentReplicas, maxReplicas, getErr := sq.GetReplicas(serviceName)
+		currentReplicas, maxReplicas, minReplicas, getErr := sq.GetReplicas(serviceName)
 		if getErr == nil {
 			status := alert.Status
 
-			newReplicas := CalculateReplicas(status, currentReplicas, uint64(maxReplicas))
+			newReplicas := CalculateReplicas(status, currentReplicas, uint64(maxReplicas), minReplicas)
 
 			log.Printf("[Scale] function=%s %d => %d.\n", serviceName, currentReplicas, newReplicas)
 			if newReplicas == currentReplicas {
 				return nil
 			}
+
 			updateErr := sq.SetReplicas(serviceName, newReplicas)
 			if updateErr != nil {
 				err = updateErr
@@ -165,7 +181,7 @@ func scaleService(alert requests.PrometheusInnerAlert, sq ServiceQuery) error {
 }
 
 // CalculateReplicas decides what replica count to set depending on current/desired amount
-func CalculateReplicas(status string, currentReplicas uint64, maxReplicas uint64) uint64 {
+func CalculateReplicas(status string, currentReplicas uint64, maxReplicas uint64, minReplicas uint64) uint64 {
 	newReplicas := currentReplicas
 	const step = 5
 
@@ -181,7 +197,7 @@ func CalculateReplicas(status string, currentReplicas uint64, maxReplicas uint64
 			}
 		}
 	} else { // Resolved event.
-		newReplicas = 1
+		newReplicas = minReplicas
 	}
 	return newReplicas
 }

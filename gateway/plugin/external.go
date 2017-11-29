@@ -10,6 +10,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"strconv"
 	"time"
 
 	"fmt"
@@ -48,10 +49,8 @@ type ExternalServiceQuery struct {
 	ProxyClient http.Client
 }
 
-const maxReplicas = 40
-
 // GetReplicas replica count for function
-func (s ExternalServiceQuery) GetReplicas(serviceName string) (uint64, uint64, error) {
+func (s ExternalServiceQuery) GetReplicas(serviceName string) (uint64, uint64, uint64, error) {
 	var err error
 	function := requests.Function{}
 
@@ -73,9 +72,34 @@ func (s ExternalServiceQuery) GetReplicas(serviceName string) (uint64, uint64, e
 		}
 	}
 
-	max := uint64(maxReplicas)
+	maxReplicas := uint64(handlers.DefaultMaxReplicas)
+	minReplicas := uint64(1)
 
-	return function.Replicas, max, err
+	if function.Labels != nil {
+		labels := *function.Labels
+		minScale := labels["com.openfaas.scale.min"]
+		maxScale := labels["com.openfaas.scale.max"]
+
+		if len(minScale) > 0 {
+			labelValue, err := strconv.Atoi(minScale)
+			if err != nil {
+				log.Printf("Bad replica count: %s, should be uint", minScale)
+			} else {
+				minReplicas = uint64(labelValue)
+			}
+		}
+
+		if len(maxScale) > 0 {
+			labelValue, err := strconv.Atoi(maxScale)
+			if err != nil {
+				log.Printf("Bad replica count: %s, should be uint", maxScale)
+			} else {
+				maxReplicas = uint64(labelValue)
+			}
+		}
+	}
+
+	return function.Replicas, maxReplicas, minReplicas, err
 }
 
 // ScaleServiceRequest request scaling of replica
@@ -103,10 +127,12 @@ func (s ExternalServiceQuery) SetReplicas(serviceName string, count uint64) erro
 	defer req.Body.Close()
 	res, err := s.ProxyClient.Do(req)
 
-	defer res.Body.Close()
-
 	if err != nil {
 		log.Println(urlPath, err)
+	} else {
+		if res.Body != nil {
+			defer res.Body.Close()
+		}
 	}
 
 	if res.StatusCode != http.StatusOK {
