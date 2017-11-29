@@ -126,4 +126,8 @@ func updateSpec(request *requests.CreateFunctionRequest, spec *swarm.ServiceSpec
 	if len(env) > 0 {
 		spec.TaskTemplate.ContainerSpec.Env = env
 	}
+
+	if spec.Mode.Replicated != nil {
+		spec.Mode.Replicated.Replicas = getMinReplicas(request)
+	}
 }

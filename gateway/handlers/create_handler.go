@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -112,6 +113,11 @@ func makeSpec(request *requests.CreateFunctionRequest, maxRestarts uint64, resta
 				Constraints: constraints,
 			},
 		},
+		Mode: swarm.ServiceMode{
+			Replicated: &swarm.ReplicatedService{
+				Replicas: getMinReplicas(request),
+			},
+		},
 	}
 
 	// TODO: request.EnvProcess should only be set if it's not nil, otherwise we override anything in the Docker image already
@@ -210,4 +216,19 @@ func buildResources(request *requests.CreateFunctionRequest) *swarm.ResourceRequ
 		}
 	}
 	return resources
+}
+
+func getMinReplicas(request *requests.CreateFunctionRequest) *uint64 {
+	replicas := uint64(1)
+
+	if request.Labels != nil {
+		if val, exists := (*request.Labels)["com.openfaas.scale.min"]; exists {
+			value, err := strconv.Atoi(val)
+			if err != nil {
+				log.Println(err)
+			}
+			replicas = uint64(value)
+		}
+	}
+	return &replicas
 }
