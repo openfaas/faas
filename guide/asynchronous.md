@@ -52,8 +52,8 @@ $ ./deploy_extended.sh
 K8s:
 
 ```
-$ kubectl -f delete ./faas.yml
-$ kubectl -f apply ./faas.async.yml,nats.yml
+$ kubectl delete -f ./faas.yml
+$ kubectl apply -f./faas.async.yml,nats.yml
 ```
 
 ## Call a function
