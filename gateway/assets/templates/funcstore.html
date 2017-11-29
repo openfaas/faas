@@ -1,0 +1,25 @@
+<div layout="row" layout-align="center center" ng-show="$ctrl.message">
+    <p>{{ $ctrl.message }}</p>
+</div>
+<div ng-hide="$ctrl.message">
+    <md-input-container class="md-icon-float md-block">
+        <label>Search for Function</label>
+        <md-icon md-svg-src="img/icons/ic_search_black_24px.svg"></md-icon>
+        <input ng-model="$ctrl.searchText" type="text">
+    </md-input-container>
+    <div ng-if="$ctrl.loading" layout="row" layout-sm="column" layout-align="space-around">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+    <md-list ng-hide="$ctrl.loading">
+        <md-list-item class="md-3-line" ng-repeat="func in $ctrl.functions | filter:$ctrl.search" ng-click="$ctrl.select(func, $event)"
+            ng-class="func.name === $ctrl.selectedFunc.name ? 'selected' : false">
+            <img ng-if="func.icon" ng-src="{{func.icon}}" class="md-avatar" alt="{{func.name}}" style="border-radius: 0" />
+            <span ng-if="!func.icon" class="md-avatar">{{func.title | limitTo:1}}</span>
+            <div class="md-list-item-text" layout="column">
+                <h3>{{ func.title }}</h3>
+                <p>{{ func.description }}</p>
+            </div>
+            <md-divider md-inset ng-if="!$last"></md-divider>
+        </md-list-item>
+    </md-list>
+</div>

@@ -2,10 +2,11 @@
 // Copyright (c) Alex Ellis 2017. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-var app = angular.module('faasGateway', ['ngMaterial']);
+var app = angular.module('faasGateway', ['ngMaterial', 'faasGateway.funcStore']);
 
 app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav',
     function($scope, $log, $http, $location, $timeout, $mdDialog, $mdToast, $mdSidenav) {
+        var newFuncTabIdx = 0;
         $scope.functions = [];
         $scope.invocationInProgress = false;
         $scope.invocationRequest = "";
@@ -128,7 +129,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
             $mdDialog.show({
                 parent: parentEl,
                 targetEvent: $event,
-                templateUrl: "newfunction.html",
+                templateUrl: "templates/newfunction.html",
                 locals: {
                     item: $scope.functionTemplate
                 },
@@ -137,10 +138,32 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
         };
 
         var DialogController = function($scope, $mdDialog, item) {
+            $scope.selectedTabIdx = newFuncTabIdx;
             $scope.item = item;
+            $scope.selectedFunc = null;
             $scope.closeDialog = function() {
                 $mdDialog.hide();
             };
+
+            $scope.onFuncSelected = function(func) {
+                $scope.item.image = func.image;
+                $scope.item.service = func.name;
+                $scope.item.envProcess = func.fprocess;
+                $scope.item.network = func.network;
+                $scope.selectedFunc = func;
+            }
+            
+            $scope.onTabSelect = function(idx) {
+                newFuncTabIdx = idx;
+            }
+
+            $scope.onStoreTabDeselect = function() {
+                $scope.selectedFunc = null;
+            }
+
+            $scope.onManualTabDeselect = function() {
+                $scope.item = {};
+            }
 
             $scope.createFunc = function() {
                 var options = {
