@@ -8,7 +8,7 @@ COPY . /go/src/github.com/openfaas/faas/sample-functions/golang
 
 RUN go install
 
-ADD https://github.com/openfaas/faas/releases/download/v0.5-alpha/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/0.6.9/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
 ENV fprocess "/go/bin/golang"

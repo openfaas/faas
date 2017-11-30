@@ -1,12 +1,21 @@
 # Guide on Asynchronous processing
 
-By default functions are accessed synchronously via the following route:
+Asynchronous function calls can be queued up using the following route:
 
 ```
-$ curl --data "message" http://gateway/function/{function_name}
+$ curl --data "message" http://gateway:8080/async-function/{function_name}
 ```
 
-As of [PR #131](https://github.com/openfaas/faas/pull/131) asynchronous invocation is available for testing.
+Summary of modes for calling functions via API Gateway:
+
+| Mode         | Method | URL                                            | Body | Headers  | Query string
+| -------------|--------|------------------------------------------------|------|--------- |------------------- |
+| Synchronous  | POST   | http://gateway:8080/function/{function_name}        | Yes  | Yes      | Yes |
+| Synchronous  | GET    | http://gateway:8080/function/{function_name}        | Yes  | Yes      | Yes |
+| Asynchronous | POST   | http://gateway:8080/async-function/{function_name}  | Yes  | Yes      | Yes [#369](https://github.com/openfaas/faas/issues/369) |
+| Asynchronous | GET    | Not supported                                  | -    | -        | - |
+
+This work was carried out under [PR #131](https://github.com/openfaas/faas/pull/131).
 
 *Logical flow for synchronous functions:*
 
@@ -43,8 +52,8 @@ $ ./deploy_extended.sh
 K8s:
 
 ```
-$ kubectl -f delete ./faas.yml
-$ kubectl -f apply ./faas.async.yml,nats.yml
+$ kubectl delete -f ./faas.yml
+$ kubectl apply -f./faas.async.yml,nats.yml
 ```
 
 ## Call a function
@@ -52,14 +61,16 @@ $ kubectl -f apply ./faas.async.yml,nats.yml
 Functions do not need to be modified to work asynchronously, just use this alternate route:
 
 ```
-$ http://gateway/async-function/{function_name}
+http://gateway:8080/async-function/{function_name}
 ```
 
 If you want the function to call another function or a different endpoint when it is finished then pass the `X-Callback-Url` header. This is optional.
 
 ```
-$ curl http://gateway/async-function/{function_name} --data-binary @sample.json -H "X-Callback-Url: http://gateway/function/send2slack"
+$ curl http://gateway:8080/async-function/{function_name} --data-binary @sample.json -H "X-Callback-Url: http://gateway:8080/function/send2slack"
 ```
+
+You can also use the following site to setup a public endpoint for testing HTTP callbacks: [requestb.in](https://requestb.in)
 
 ## Extend function timeouts
 

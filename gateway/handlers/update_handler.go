@@ -104,6 +104,8 @@ func updateSpec(request *requests.CreateFunctionRequest, spec *swarm.ServiceSpec
 		},
 	}
 
+	spec.TaskTemplate.Resources = buildResources(request)
+
 	spec.TaskTemplate.Placement = &swarm.Placement{
 		Constraints: constraints,
 	}

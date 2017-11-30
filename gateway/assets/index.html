@@ -17,9 +17,9 @@
 
         <md-toolbar class="md-theme-indigo" hide-gt-sm>
             <div class="md-toolbar-tools">
-              <md-button ng-click="toggleSideNav()" class="md-icon-button" aria-label="Menu">
-                <md-icon md-svg-icon="img/icons/ic_menu_white.svg"></md-icon>
-              </md-button>
+                <md-button ng-click="toggleSideNav()" class="md-icon-button" aria-label="Menu">
+                    <md-icon md-svg-icon="img/icons/ic_menu_white.svg"></md-icon>
+                </md-button>
             </div>
         </md-toolbar>
         <section id="popupContainer" layout="row" flex>
@@ -27,16 +27,16 @@
 
                 <md-toolbar class="md-theme-indigo">
                     <div class="md-toolbar-tools">
-                      <a href="https://www.openfaas.com/" target="_blank"><img src="icon.png" alt="OpenFaaS Icon" width="60px" height="60px" class="md-avatar"/></a>
-                      <h1 style="flex: 1 1 auto;">&nbsp; OpenFaaS Portal</h1>
-                      <md-button ng-click="toggleSideNav()" class="md-icon-button" aria-label="Back" hide-gt-sm>
-                        <md-icon md-svg-icon="img/icons/ic_arrow_back_white.svg"></md-icon>
-                      </md-button>
+                        <a href="https://www.openfaas.com/" target="_blank"><img src="icon.png" alt="OpenFaaS Icon" width="60px" height="60px" class="md-avatar" /></a>
+                        <h1 style="flex: 1 1 auto;">&nbsp; OpenFaaS Portal</h1>
+                        <md-button ng-click="toggleSideNav()" class="md-icon-button" aria-label="Back" hide-gt-sm>
+                            <md-icon md-svg-icon="img/icons/ic_arrow_back_white.svg"></md-icon>
+                        </md-button>
                     </div>
                 </md-toolbar>
 
                 <md-content layout-padding>
-                    <md-button ng-click="newFunction()" ng-disabled="isFunctionBeingCreated" class="md-primary">Create New Function</md-button>
+                    <md-button ng-click="newFunction()" ng-disabled="isFunctionBeingCreated" class="md-primary">Deploy New Function</md-button>
 
                     <md-list>
                         <md-list-item ng-switch class="md-3-line" ng-click="showFunction(function)" ng-repeat="function in functions | orderBy: '-invocationCount'" ng-class="function.name == selectedFunction.name ? 'selected' : false">
@@ -75,8 +75,8 @@
                                 </span>
 
                                 <md-button ng-click="deleteFunction()" class="md-icon-button" aria-label="Delete">
-                                  <md-tooltip md-direction="left">Delete</md-tooltip>
-                                  <md-icon md-svg-icon="img/icons/ic_delete_black.svg"></md-icon>
+                                    <md-tooltip md-direction="left">Delete</md-tooltip>
+                                    <md-icon md-svg-icon="img/icons/ic_delete_black.svg"></md-icon>
                                 </md-button>
 
                             </div>
@@ -99,7 +99,7 @@
                             </div>
                             <div layout-gt-sm="row" ng-show="function.envProcess">
                                 <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Watchdog process</label>
+                                    <label>Function process</label>
                                     <input ng-model="function.envProcess" type="text" readonly="readonly">
                                 </md-input-container>
                             </div>
@@ -137,10 +137,15 @@
                                     <textarea ng-model="invocation.request" class="monospace" cols="80" rows="4"></textarea>
                                 </md-input-container>
                             </div>
+
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Response status</label>
                                     <input ng-model="invocationStatus" type="text" readonly="readonly">
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Round-trip (s)</label>
+                                    <input ng-model="roundTripDuration" type="text" readonly="readonly">
                                 </md-input-container>
                             </div>
                             <div layout-gt-sm="row">

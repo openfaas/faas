@@ -5,17 +5,19 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:0.6.9
+        image: functions/gateway:0.6.12
         networks:
             - functions
         environment:
+            read_timeout: 10    # set both here, and on your functions
+            write_timeout: 10   # set both here, and on your functions
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
         deploy:
             resources:
                 limits:
-                    memory: 50M
+                    memory: 100M
                 reservations:
-                    memory: 20M
+                    memory: 50M
             restart_policy:
                 condition: on-failure
                 delay: 5s
@@ -34,9 +36,6 @@ services:
         command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
         ports:
             - 9090:9090
-        depends_on:
-            - gateway
-            - alertmanager
         environment:
             no_proxy: "gateway"
         networks:
@@ -82,8 +81,6 @@ services:
         image: functions/webhookstash:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -99,8 +96,6 @@ services:
         image: functions/hubstats:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -117,8 +112,6 @@ services:
         image: functions/nodeinfo:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -135,8 +128,6 @@ services:
         image: functions/alpine:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -155,8 +146,6 @@ services:
         labels:
             function: "true"
             com.faas.max_replicas: "10"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -174,8 +163,6 @@ services:
         image: functions/alpine:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -193,8 +180,6 @@ services:
         image: functions/alpine:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -208,11 +193,9 @@ services:
 
     # Converts body in (markdown format) -> (html)
     markdown:
-        image: alexellis2/faas-markdownrender:latest
+        image: functions/markdown-render:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:

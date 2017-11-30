@@ -11,7 +11,7 @@ import (
 
 func main() {
 	input, _ := ioutil.ReadAll(os.Stdin)
-	unsafe := blackfriday.MarkdownCommon([]byte(input))
+	unsafe := blackfriday.Run([]byte(input), blackfriday.WithNoExtensions())
 	html := bluemonday.UGCPolicy().SanitizeBytes(unsafe)
 	fmt.Println(string(html))
 }

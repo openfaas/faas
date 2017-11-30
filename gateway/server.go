@@ -143,7 +143,12 @@ func main() {
 	}
 
 	fs := http.FileServer(http.Dir("./assets/"))
-	r.PathPrefix("/ui/").Handler(http.StripPrefix("/ui", fs)).Methods("GET")
+
+	// This URL allows access from the UI to the OpenFaaS store
+	allowedCORSHost := "raw.githubusercontent.com"
+	fsCORS := internalHandlers.DecorateWithCORS(fs, allowedCORSHost)
+
+	r.PathPrefix("/ui/").Handler(http.StripPrefix("/ui", fsCORS)).Methods("GET")
 
 	r.HandleFunc("/", faasHandlers.RoutelessProxy).Methods("POST")
 

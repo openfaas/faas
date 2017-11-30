@@ -23,7 +23,9 @@ These instructions are for a development environment. If you plan to expose Open
 
 ## Intermediate
 
-* [Chaining functions](chaining_functions.md)
+* [Workflows / Chaining functions](chaining_functions.md)
+
+* [Interacting with other containers/services](interactions.md)
 
 * [Troubleshooting](troubleshooting.md)
 

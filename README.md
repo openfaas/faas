@@ -1,12 +1,12 @@
-## OpenFaaS - Functions as a Service
+## OpenFaaS - Serverless Functions Made Simple
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/openfaas/faas)](https://goreportcard.com/report/github.com/openfaas/faas) [![Build
-Status](https://travis-ci.org/openfaas/faas.svg?branch=master)](https://travis-ci.org/openfaas/faas) [![GoDoc](https://godoc.org/github.com/openfaas/faas?status.svg)](https://godoc.org/github.com/openfaas/faas)
+Status](https://travis-ci.org/openfaas/faas.svg?branch=master)](https://travis-ci.org/openfaas/faas) [![GoDoc](https://godoc.org/github.com/openfaas/faas?status.svg)](https://godoc.org/github.com/openfaas/faas) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![OpenFaaS](https://img.shields.io/badge/openfaas-serverless-blue.svg)](https://www.openfaas.com)
 
 ![OpenFaaS Logo](https://blog.alexellis.io/content/images/2017/08/faas_side.png)
 
-OpenFaaS (Functions as a Service) is a framework for building serverless functions with Docker which has first class support for metrics. Any process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
+OpenFaaS (Functions as a Service) is a framework for building serverless functions with Docker and Kubernetes which has first class support for metrics. Any process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
 
 [![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/fold_left.svg?style=social&label=Follow%20%40openfaas)](https://twitter.com/openfaas)
 
@@ -18,11 +18,23 @@ OpenFaaS (Functions as a Service) is a framework for building serverless functio
 * [CLI](http://github.com/openfaas/faas-cli) available with YAML format for templating and defining functions
 * Auto-scales as demand increases
 
+## New: become an OpenFaaS backer or sponsor
+
+We need your support to keep delivering on Serverless Functions Made Simple so pledge to OpenFaaS and [become a backer or a sponsor](https://www.patreon.com/alexellis) with a unique set of rewards. Help us hit our goals and get to back a great project at the same time.
+
+View the [List of backers and sponsors](https://github.com/openfaas/faas/blob/master/BACKERS.md)
+
+## Press-kit/media/swag
+
+For stickers, swag, media or press-kit information head over to [openfaas/media](https://github.com/openfaas/media/blob/master/README.md)
+
 ## Governance
 
 OpenFaaS is an independent project created by [Alex Ellis](https://www.alexellis.io) which is now being built and shaped by a growing community of contributors. Project website: [openfaas.com](https://www.openfaas.com).
 
 ## Overview of OpenFaaS
+
+> Serverless Functions Made Simple.
 
 ![Stack](https://pbs.twimg.com/media/DFrkF4NXoAAJwN2.jpg)
 
@@ -76,6 +88,10 @@ module.exports = (callback, context) => {
 *handler.js*
 
 Other [Sample functions](https://github.com/openfaas/faas/tree/master/sample-functions) are available in the Github repository in a range of programming languages.
+
+## Documentation
+
+[View our guides](https://github.com/openfaas/faas/tree/master/guide) for documentation, deployment guides and tutorials.
 
 ## Get started with OpenFaaS
 

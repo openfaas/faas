@@ -5,10 +5,12 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:arm64-0.6.6-beta2
+        image: functions/gateway:0.6.9-arm64
         networks:
             - functions
         environment:
+            read_timeout: 10    # set both here, and on your functions
+            write_timeout: 10   # set both here, and on your functions
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
         deploy:
             placement:
@@ -20,9 +22,6 @@ services:
         command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
         ports:
             - 9090:9090
-        depends_on:
-            - gateway
-            - alertmanager
         environment:
             no_proxy: "gateway"
         networks:

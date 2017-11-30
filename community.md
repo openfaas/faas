@@ -19,6 +19,10 @@ There are three main Github repos
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [OpenFaaS @ KubeCon + CloudNativeCon](https://kccncna17.sched.com/event/CU6s/faas-and-furious-0-to-serverless-in-60-seconds-anywhere-alex-ellis-adp) | Alex Ellis | Austin, USA | 07-Dec-2017 |
+| [OpenFaaS presentation + Demo on Kubernetes @ Paris Serverless Meetup](https://www.meetup.com/fr-FR/Paris-Serverless-Architecture-Meetup/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 14-Nov-2017 |
+| [OpenFaaS - Serverless Functions Made Simple @ Docker Cambridge Meetup](https://www.meetup.com/docker-cambridge/events/243206434/) | Alex Ellis | Cambridge, UK | 20-Nov-2017 |
+| [OpenFaaS Demo at APIOps Meetup](https://www.meetup.com/APIOps-Tampere/) | [Sakari Hoisko](https://twitter.com/Chaggeus) | Tampere, Finland | 14-Nov-2017 |
+| [SecTalks Canberra: OpenFaaS + Security workshop](https://www.meetup.com/SecTalks-Canberra/events/241579721/) | Glenn Grant | Australia | 14-Nov-2017 |
 | [Docker Belfast Meetup](https://www.meetup.com/Docker-Belfast/) | John McCabe | Belfast, Northern Ireland | 31-Oct-2017 |
 | [Belfast Gophers Meetup](https://www.meetup.com/Belfast-Gophers/) | John McCabe | Belfast, Northern Ireland | 26-Oct-2017 |
 | [Introduction to Serverless with OpenFaaS - Moby Summit](https://europe-2017.dockercon.com/moby-summit/) | Alex Ellis | Copenhagen | 19-Oct-2017 |
@@ -39,8 +43,10 @@ There are three main Github repos
 | [FaaS on Hacker News](https://news.ycombinator.com/item?id=13920588)| Alex Ellis   | Online   | 22-Mar-2017 |
 
 ### Industry awards and mentions
+
 | Award/Mention                                          | Author(s)       | Source     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFaaS added to CNCF Cloud Native Landscape - Serverless/Event-based](https://github.com/cncf/landscape/blob/master/landscape/CloudNativeLandscape_latest.jpg) | [Cloud Native Computing Foundation (CNCF)](https://www.cncf.io/) | Github | 23-Oct-2017 |
 | [OpenFaaS: Package any Binary or Code as a Serverless Function](https://thenewstack.io/openfaas-put-serverless-function-container/) | Joab Jackson | The New Stack | 9-Oct-2017 |
 | [Functions-as-a-Service Landscape](https://medium.com/memory-leak/this-year-gartner-added-serverless-to-its-hype-cycle-of-emerging-technologies-reflecting-the-5dfe43d818f0) | Astasia Myers | Redpoint Ventures | 4-Oct-2017 |
 | 🏆 [Bossie Award for Cloud Computing 2017](https://www.infoworld.com/article/3227920/cloud-computing/bossie-awards-2017-the-best-cloud-computing-software.html#slide7) |  Martin Heller, Andrew C. Oliver and Serdar Yegulalp| InfoWorld (from IDG) |  27-Sep-2017 |
@@ -51,6 +57,11 @@ There are three main Github repos
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Unleash the Artist within you with Docker, Tensorflow and OpenFaaS](http://jmkhael.io/unleash-the-artist-within-tensorflow-and-openfaas/) | Johnny Mkhael  | jmkhael.io | 22-Nov-2017
+| [How to Deploy OpenFaaS Serverless PHP Functions](http://blog.gaiterjones.com/how-to-deploy-open-faas-serverless-php-functions/) | Gaiter Jones  | gaiterjones.com | 20-Nov-2017
+| [Getting started with OpenFaaS on minikube](https://medium.com/@alexellisuk/getting-started-with-openfaas-on-minikube-634502c7acdf) | Alex Ellis | medium.com | 18-Nov-2017
+| [OpenFaaS November Contributor Highlights](https://blog.alexellis.io/openfaas-contributors-highlights/) | Alex Ellis | alexellis.io | 15-Nov-2017 |
+| [How to start with OpenFaaS](http://panosgeorgiadis.com/blog/2017/11/08/how-to-start-with-openfaas/) | Panos Georgiadis | panosgeorgiadis.com | 08-Nov-2017 |
 | [Build a Kubernetes Cluster w/ Raspberry Pi & .NET Core on OpenFaas](https://www.hanselman.com/blog/HowToBuildAKubernetesClusterWithARMRaspberryPiThenRunNETCoreOnOpenFaas.aspx) | Scott Hanselman | hanselman.com | 31-Oct-2017
 | [Kubernetes + OpenFaaS + runV + ARM64 Packet.net](https://medium.com/@resouer/kubernetes-openfaas-runv-arm64-packet-net-ea4c7b61c88f) | Harry Zhang | medium.com | 31-Oct-2017 |
 | [Build a Serverless Memes Function with OpenFaaS](https://medium.com/@mlabouardy/build-a-serverless-memes-function-with-openfaas-f4210a53abe8) | Mohamed Labouardy | medium.com/@mlabouardy | 24-Oct-2017 |

@@ -6,7 +6,7 @@ functions:
   alpinefunction:
     lang: Dockerfile
     handler: ./AlpineFunction
-    image: functions/alpine:0.6.5
+    image: functions/alpine:0.6.9
 
   apikeyprotected:
     lang: Dockerfile
