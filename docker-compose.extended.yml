@@ -54,6 +54,9 @@ services:
         image: functions/queue-worker:0.4
         networks:
             - functions
+        environment:
+            max_inflight: "1"
+            ack_timeout: "30s"    # Max duration of any async task / request
         deploy:
             resources:
                 limits:
