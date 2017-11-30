@@ -107,7 +107,7 @@ The deployment guide for Docker Swarm contains a simple one-line command to get 
 
 OpenFaaS is Kubernetes-native - you can follow the [deployment guide here](https://github.com/openfaas/faas/blob/master/guide/deployment_k8s.md).
 
-<!-- The new login feature breaks the one-click deployment to PWD. 
+<!-- The new login feature breaks the one-click deployment to PWD.
 **Docker Playground**
 
 You can quickly start OpenFaaS on Docker Swarm online using the community-run Docker playground: play-with-docker.com (PWD) by clicking the button below:
@@ -122,6 +122,9 @@ You can quickly start OpenFaaS on Docker Swarm online using the community-run Do
 Here is a screenshot of the API gateway portal - designed for ease of use.
 
 ![Portal](https://pbs.twimg.com/media/C7bkpZbWwAAnKsx.jpg)
+
+You can deploy functions either manually or from the OpenFaaS store by clicking on the **Deploy New Function** button:
+<a href="https://pbs.twimg.com/media/DP3od15X4AEXoDI.jpg"><img src="https://pbs.twimg.com/media/DP3od15X4AEXoDI.jpg" width="800"></img></a>
 
 ## Find out more about OpenFaaS
 
