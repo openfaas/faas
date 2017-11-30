@@ -183,6 +183,4 @@ Example of a Grafana dashboards linked to OpenFaaS showing auto-scaling live in 
 ![](https://pbs.twimg.com/media/C9caE6CXUAAX_64.jpg:large)
 
 
-OpenFaaS Dashboard with new Grafana features [here](https://grafana.com/dashboards/3434)
-
-![](https://pbs.twimg.com/media/DMABeymW0AA_lBs.jpg:large)
+An alternative community dashboard is [available here](https://grafana.com/dashboards/3434)
