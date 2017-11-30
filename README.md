@@ -117,7 +117,7 @@ Here is a screenshot of the API gateway portal - designed for ease of use.
 
 ![Portal](https://pbs.twimg.com/media/C7bkpZbWwAAnKsx.jpg)
 
-You can also deploy functions either manually or from the OpenFaaS store by clicking on the **Deploy New Function** button:
+You can deploy functions either manually or from the OpenFaaS store by clicking on the **Deploy New Function** button:
 <a href="https://pbs.twimg.com/media/DP3od15X4AEXoDI.jpg"><img src="https://pbs.twimg.com/media/DP3od15X4AEXoDI.jpg" width="800"></img></a>
 
 ## Find out more about OpenFaaS
