@@ -12,6 +12,9 @@ We support two orchestration platforms or "backends":
 There is also community work in-progress to support:
 
 * Rancher/Cattle
+* Nomad
+* DCOS
+* Hyper.sh
 
 The Docker Swarm support is built-into the faas repo, but the Kubernetes support is provided by a microservice in the [faas-netes](https://github.com/openfaas/faas-netes) repo.
 
