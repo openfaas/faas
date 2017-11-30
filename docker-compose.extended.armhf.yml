@@ -27,9 +27,11 @@ services:
 
     nats:
         image: nats-streaming:0.6.0
-        ports:
-            - 4222:4222
-            - 8222:8222
+        # Uncomment the following port mappings if you wish to expose the 
+        # NATS client and/or management ports
+        # ports:
+        #     - 4222:4222
+        #     - 8222:8222
         command: "--store memory --cluster_id faas-cluster"
         networks:
             - functions
@@ -82,8 +84,10 @@ services:
             - '-config.file=/alertmanager.yml'
         networks:
             - functions
-        ports:
-            - 9093:9093
+        # Uncomment the following port mapping if you wish to expose the Prometheus
+        # Alertmanager UI.
+        # ports:
+        #     - 9093:9093
         deploy:
             placement:
                 constraints: [node.role == manager]
