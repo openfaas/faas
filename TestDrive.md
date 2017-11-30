@@ -111,7 +111,7 @@ View screenshot:
 
 <a href="https://pbs.twimg.com/media/C3hDUkyWEAEgciP.jpg"><img src="https://pbs.twimg.com/media/C3hDUkyWEAEgciP.jpg" width="800"></img></a>
 
-You can also deploy functions either manually or from the OpenFaaS store by clicking on the **Deploy New Function ** button:
+You can also deploy functions either manually or from the OpenFaaS store by clicking on the **Deploy New Function** button:
 <a href="https://pbs.twimg.com/media/DP3od15X4AEXoDI.jpg"><img src="https://pbs.twimg.com/media/DP3od15X4AEXoDI.jpg" width="800"></img></a>
 
 You can find out which services are deployed like this:
