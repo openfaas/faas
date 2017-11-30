@@ -31,6 +31,8 @@ These instructions are for a development environment. If you plan to expose Open
 
 * [Asynchronous functions with NATS Streaming](asynchronous.md)
 
+* [Submit a function to the OpenFaaS Function Store](https://github.com/openfaas/store)
+
 * [Hardening OpenFaaS with Kong & TLS](kong_integration.md)
 
 * [Reference documentation for Function Watchdog](../watchdog/)
