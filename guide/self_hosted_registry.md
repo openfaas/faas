@@ -142,28 +142,3 @@ See that the update works
 $ curl -X POST localhost:8080/function/hello-python
 Hello EARTH from 9dacd2333c1c
 ```
-
-## Scale it
-
-Start some replicas so there are functions spanning the swarm
-```
-$ docker service scale hello-python=3 --detach=false
-hello-python scaled to 3
-overall progress: 3 out of 3 tasks
-1/3: running
-2/3: running
-3/3: running
-
-$ docker service ls | grep hello-python
-oqvof6b9gpvl        hello-python        replicated          3/3                 localhost:5000/faas-hello-python:latest
-```
-
-Test the function across the swarm
-```
-$ curl -X POST localhost:8080/function/hello-python
-Hello earth from 9dacd2333c1c
-$ curl -X POST localhost:8080/function/hello-python
-Hello earth from 281c2858c673
-$ curl -X POST localhost:8080/function/hello-python
-Hello earth from 9dacd2333c1c
-```
