@@ -86,7 +86,7 @@ functions:
 Note that unlike the `envVars` in the first example, we do not provide the secret value, just a list of names: `"secrets": ["secret_api_key"]`. The secret value has already been securely stored in the Docker swarm.  One really great result of this type of configuration is that you can simplify your function code by always referencing the same secret name, no matter the environment, the only change is how the environments are configured.
 
 ## Advanced Swarm Secrets
-For various reasons, you might add a secret to the Swarm under a different name than you want to us in your function, e.g. if you are rotating a secret key. The Docker Swarm secret specification allows us some advanced configuration of secrets [by supplying a comma-separated value specifying the secret](https://docs.docker.com/engine/reference/commandline/service_create/#create-a-service-with-secrets).  The is best show in an example. Let's change the api key on our example function.
+For various reasons, you might add a secret to the Swarm under a different name than you want to use in your function, e.g. if you are rotating a secret key. The Docker Swarm secret specification allows us some advanced configuration of secrets [by supplying a comma-separated value specifying the secret](https://docs.docker.com/engine/reference/commandline/service_create/#create-a-service-with-secrets).  The is best show in an example. Let's change the api key on our example function.
 
 First add a new secret key
 
