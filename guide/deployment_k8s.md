@@ -22,6 +22,10 @@ You can start evaluating FaaS and building functions on your laptop or on a VM (
 
 Additional information on [setting up Kubernetes](https://kubernetes.io/docs/setup/pick-right-solution/).
 
+We have a special guide for minikube here:
+
+* [Getting started with OpenFaaS on minikube](https://medium.com/devopslinks/getting-started-with-openfaas-on-minikube-634502c7acdf)
+
 ### 1.1 Pick helm or YAML files for deployment
 
 If you'd like to use helm follow the instructions in 2.0a and then come back here, otherwise follow 2.0b to use plain `kubectl`.
