@@ -4,22 +4,24 @@
 package types
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 )
 
 // WriteAdapter adapts a ResponseWriter
 type WriteAdapter struct {
 	Writer     http.ResponseWriter
-	HttpResult *HttpResult
+	HTTPResult *HTTPResult
 }
-type HttpResult struct {
-	HeaderCode int
+
+// HTTPResult captures data from forwarded HTTP call
+type HTTPResult struct {
+	HeaderCode int // HeaderCode is the result of WriteHeader(int)
 }
 
 //NewWriteAdapter create a new NewWriteAdapter
 func NewWriteAdapter(w http.ResponseWriter) WriteAdapter {
-	return WriteAdapter{Writer: w, HttpResult: &HttpResult{}}
+	return WriteAdapter{Writer: w, HTTPResult: &HTTPResult{}}
 }
 
 //Header adapts Header
@@ -27,19 +29,20 @@ func (w WriteAdapter) Header() http.Header {
 	return w.Writer.Header()
 }
 
-// Write adapts Write
+// Write adapts Write for a straight pass-through
 func (w WriteAdapter) Write(data []byte) (int, error) {
 	return w.Writer.Write(data)
 }
 
 // WriteHeader adapts WriteHeader
-func (w WriteAdapter) WriteHeader(i int) {
-	w.Writer.WriteHeader(i)
-	w.HttpResult.HeaderCode = i
-	fmt.Println("GetHeaderCode before", w.HttpResult.HeaderCode)
+func (w WriteAdapter) WriteHeader(statusCode int) {
+	w.Writer.WriteHeader(statusCode)
+	w.HTTPResult.HeaderCode = statusCode
+
+	log.Printf("GetHeaderCode %d", w.HTTPResult.HeaderCode)
 }
 
 // GetHeaderCode result from WriteHeader
 func (w *WriteAdapter) GetHeaderCode() int {
-	return w.HttpResult.HeaderCode
+	return w.HTTPResult.HeaderCode
 }

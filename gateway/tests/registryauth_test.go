@@ -15,14 +15,14 @@ import (
 
 func TestBuildEncodedAuthConfig(t *testing.T) {
 	// custom repository with valid data
-	assertValidEncodedAuthConfig(t, "user", "password", "my.repository.com/user/imagename", "my.repository.com")
-	assertValidEncodedAuthConfig(t, "user", "weird:password:", "my.repository.com/user/imagename", "my.repository.com")
-	assertValidEncodedAuthConfig(t, "userWithNoPassword", "", "my.repository.com/user/imagename", "my.repository.com")
-	assertValidEncodedAuthConfig(t, "", "", "my.repository.com/user/imagename", "my.repository.com")
+	testValidEncodedAuthConfig(t, "user", "password", "my.repository.com/user/imagename", "my.repository.com")
+	testValidEncodedAuthConfig(t, "user", "weird:password:", "my.repository.com/user/imagename", "my.repository.com")
+	testValidEncodedAuthConfig(t, "userWithNoPassword", "", "my.repository.com/user/imagename", "my.repository.com")
+	testValidEncodedAuthConfig(t, "", "", "my.repository.com/user/imagename", "my.repository.com")
 
 	// docker hub default repository
-	assertValidEncodedAuthConfig(t, "user", "password", "user/imagename", "docker.io")
-	assertValidEncodedAuthConfig(t, "", "", "user/imagename", "docker.io")
+	testValidEncodedAuthConfig(t, "user", "password", "user/imagename", "docker.io")
+	testValidEncodedAuthConfig(t, "", "", "user/imagename", "docker.io")
 
 	// invalid base64 basic auth
 	assertEncodedAuthError(t, "invalidBasicAuth", "my.repository.com/user/imagename")
@@ -32,7 +32,7 @@ func TestBuildEncodedAuthConfig(t *testing.T) {
 	assertEncodedAuthError(t, b64BasicAuth("user", "password"), "invalid name")
 }
 
-func assertValidEncodedAuthConfig(t *testing.T, user, password, imageName, expectedRegistryHost string) {
+func testValidEncodedAuthConfig(t *testing.T, user, password, imageName, expectedRegistryHost string) {
 	encodedAuthConfig, err := handlers.BuildEncodedAuthConfig(b64BasicAuth(user, password), imageName)
 	if err != nil {
 		t.Log("Unexpected error while building auth config with correct values")
@@ -50,10 +50,12 @@ func assertValidEncodedAuthConfig(t *testing.T, user, password, imageName, expec
 		t.Log("Auth config username mismatch", user, authConfig.Username)
 		t.Fail()
 	}
+
 	if password != authConfig.Password {
 		t.Log("Auth config password mismatch", password, authConfig.Password)
 		t.Fail()
 	}
+
 	if expectedRegistryHost != authConfig.ServerAddress {
 		t.Log("Auth config registry server address mismatch", expectedRegistryHost, authConfig.ServerAddress)
 		t.Fail()

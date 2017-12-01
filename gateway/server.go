@@ -71,6 +71,7 @@ func main() {
 	metrics.RegisterMetrics(metricsOptions)
 
 	var faasHandlers handlerSet
+	servicePollInterval := time.Second * 5
 
 	if config.UseExternalProvider() {
 
@@ -86,7 +87,7 @@ func main() {
 		alertHandler := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL)
 		faasHandlers.Alert = internalHandlers.MakeAlertHandler(alertHandler)
 
-		metrics.AttachExternalWatcher(*config.FunctionsProviderURL, metricsOptions, "func", time.Second*5)
+		metrics.AttachExternalWatcher(*config.FunctionsProviderURL, metricsOptions, "func", servicePollInterval)
 
 	} else {
 
@@ -106,7 +107,7 @@ func main() {
 
 		// This could exist in a separate process - records the replicas of each swarm service.
 		functionLabel := "function"
-		metrics.AttachSwarmWatcher(dockerClient, metricsOptions, functionLabel)
+		metrics.AttachSwarmWatcher(dockerClient, metricsOptions, functionLabel, servicePollInterval)
 	}
 
 	if config.UseNATS() {

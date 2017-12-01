@@ -44,6 +44,7 @@ func MakeQueuedProxy(metrics metrics.MetricOptions, wildcard bool, logger *logru
 
 			callbackURL = urlVal
 		}
+
 		req := &queue.Request{
 			Function:    name,
 			Body:        body,
@@ -54,13 +55,14 @@ func MakeQueuedProxy(metrics metrics.MetricOptions, wildcard bool, logger *logru
 		}
 
 		err = canQueueRequests.Queue(req)
+
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
 			fmt.Println(err)
 			return
 		}
-		w.WriteHeader(http.StatusAccepted)
 
+		w.WriteHeader(http.StatusAccepted)
 	}
 }
