@@ -26,6 +26,8 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
+const watchdogPort = 8080
+
 // MakeProxy creates a proxy for HTTP web requests which can be routed to a function.
 func MakeProxy(metrics metrics.MetricOptions, wildcard bool, client *client.Client, logger *logrus.Logger) http.HandlerFunc {
 	proxyClient := http.Client{
@@ -123,8 +125,6 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 		dnsrr = true
 	}
 
-	watchdogPort := 8080
-
 	addr := service
 	// Use DNS-RR via tasks.servicename if enabled as override, otherwise VIP.
 	if dnsrr {
@@ -165,6 +165,7 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	w.Header().Set("Content-Type", GetContentType(response.Header, r.Header, defaultHeader))
 
 	writeHead(service, metrics, response.StatusCode, w)
+
 	if response.Body != nil {
 		io.Copy(w, response.Body)
 	}
@@ -188,10 +189,10 @@ func GetContentType(request http.Header, proxyResponse http.Header, defaultValue
 }
 
 func copyHeaders(destination *http.Header, source *http.Header) {
-	for k, vv := range *source {
-		vvClone := make([]string, len(vv))
-		copy(vvClone, vv)
-		(*destination)[k] = vvClone
+	for k, v := range *source {
+		vClone := make([]string, len(v))
+		copy(vClone, v)
+		(*destination)[k] = vClone
 	}
 }
 
@@ -207,14 +208,20 @@ func writeHead(service string, metrics metrics.MetricOptions, code int, w http.R
 }
 
 func trackInvocation(service string, metrics metrics.MetricOptions, code int) {
-	metrics.GatewayFunctionInvocation.With(prometheus.Labels{"function_name": service, "code": strconv.Itoa(code)}).Inc()
+	metrics.GatewayFunctionInvocation.With(
+		prometheus.Labels{"function_name": service,
+			"code": strconv.Itoa(code)}).Inc()
 }
 
 func trackTime(then time.Time, metrics metrics.MetricOptions, name string) {
 	since := time.Since(then)
-	metrics.GatewayFunctionsHistogram.WithLabelValues(name).Observe(since.Seconds())
+	metrics.GatewayFunctionsHistogram.
+		WithLabelValues(name).
+		Observe(since.Seconds())
 }
 
 func trackTimeExact(duration time.Duration, metrics metrics.MetricOptions, name string) {
-	metrics.GatewayFunctionsHistogram.WithLabelValues(name).Observe(float64(duration))
+	metrics.GatewayFunctionsHistogram.
+		WithLabelValues(name).
+		Observe(float64(duration))
 }

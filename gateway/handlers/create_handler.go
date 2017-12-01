@@ -135,6 +135,7 @@ func buildEnv(envProcess string, envVars map[string]string) []string {
 	if len(envProcess) > 0 {
 		env = append(env, fmt.Sprintf("fprocess=%s", envProcess))
 	}
+
 	for k, v := range envVars {
 		env = append(env, fmt.Sprintf("%s=%s", k, v))
 	}

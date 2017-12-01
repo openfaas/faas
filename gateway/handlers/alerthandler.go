@@ -21,6 +21,13 @@ import (
 // DefaultMaxReplicas is the amount of replicas a service will auto-scale up to.
 const DefaultMaxReplicas = 20
 
+// MinScaleLabel label indicating min scale for a function
+const MinScaleLabel = "com.openfaas.scale.min"
+
+// MaxScaleLabel label indicating max scale for a function
+const MaxScaleLabel = "com.openfaas.scale.max"
+
+// ServiceQuery provides interface for replica querying/setting
 type ServiceQuery interface {
 	GetReplicas(service string) (currentReplicas uint64, maxReplicas uint64, minReplicas uint64, err error)
 	SetReplicas(service string, count uint64) error
@@ -33,7 +40,7 @@ func NewSwarmServiceQuery(c *client.Client) ServiceQuery {
 	}
 }
 
-// SwarmServiceQuery Docker Swarm implementation
+// SwarmServiceQuery implementation for Docker Swarm
 type SwarmServiceQuery struct {
 	c *client.Client
 }
@@ -42,21 +49,21 @@ type SwarmServiceQuery struct {
 func (s SwarmServiceQuery) GetReplicas(serviceName string) (uint64, uint64, uint64, error) {
 	var err error
 	var currentReplicas uint64
+
 	maxReplicas := uint64(DefaultMaxReplicas)
 	minReplicas := uint64(1)
 
 	opts := types.ServiceInspectOptions{
 		InsertDefaults: true,
 	}
+
 	service, _, err := s.c.ServiceInspectWithRaw(context.Background(), serviceName, opts)
+
 	if err == nil {
 		currentReplicas = *service.Spec.Mode.Replicated.Replicas
-		log.Println("service.Spec.Annotations.Labels ", service.Spec.Annotations.Labels)
-		log.Println("service.Spec.TaskTemplate.ContainerSpec.Labels ", service.Spec.TaskTemplate.ContainerSpec.Labels)
-		log.Println("service.Spec.Labels ", service.Spec.Labels)
 
-		minScale := service.Spec.Annotations.Labels["com.openfaas.scale.min"]
-		maxScale := service.Spec.Annotations.Labels["com.openfaas.scale.max"]
+		minScale := service.Spec.Annotations.Labels[MinScaleLabel]
+		maxScale := service.Spec.Annotations.Labels[MaxScaleLabel]
 
 		if len(maxScale) > 0 {
 			labelValue, err := strconv.Atoi(maxScale)
@@ -98,12 +105,14 @@ func (s SwarmServiceQuery) SetReplicas(serviceName string, count uint64) error {
 			err = updateErr
 		}
 	}
+
 	return err
 }
 
 // MakeAlertHandler handles alerts from Prometheus Alertmanager
-func MakeAlertHandler(sq ServiceQuery) http.HandlerFunc {
+func MakeAlertHandler(service ServiceQuery) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+
 		log.Println("Alert received.")
 
 		body, readErr := ioutil.ReadAll(r.Body)
@@ -127,7 +136,7 @@ func MakeAlertHandler(sq ServiceQuery) http.HandlerFunc {
 			return
 		}
 
-		errors := handleAlerts(&req, sq)
+		errors := handleAlerts(&req, service)
 		if len(errors) > 0 {
 			log.Println(errors)
 			var errorOutput string
@@ -143,10 +152,10 @@ func MakeAlertHandler(sq ServiceQuery) http.HandlerFunc {
 	}
 }
 
-func handleAlerts(req *requests.PrometheusAlert, sq ServiceQuery) []error {
+func handleAlerts(req *requests.PrometheusAlert, service ServiceQuery) []error {
 	var errors []error
 	for _, alert := range req.Alerts {
-		if err := scaleService(alert, sq); err != nil {
+		if err := scaleService(alert, service); err != nil {
 			log.Println(err)
 			errors = append(errors, err)
 		}
@@ -155,12 +164,12 @@ func handleAlerts(req *requests.PrometheusAlert, sq ServiceQuery) []error {
 	return errors
 }
 
-func scaleService(alert requests.PrometheusInnerAlert, sq ServiceQuery) error {
+func scaleService(alert requests.PrometheusInnerAlert, service ServiceQuery) error {
 	var err error
 	serviceName := alert.Labels.FunctionName
 
 	if len(serviceName) > 0 {
-		currentReplicas, maxReplicas, minReplicas, getErr := sq.GetReplicas(serviceName)
+		currentReplicas, maxReplicas, minReplicas, getErr := service.GetReplicas(serviceName)
 		if getErr == nil {
 			status := alert.Status
 
@@ -171,7 +180,7 @@ func scaleService(alert requests.PrometheusInnerAlert, sq ServiceQuery) error {
 				return nil
 			}
 
-			updateErr := sq.SetReplicas(serviceName, newReplicas)
+			updateErr := service.SetReplicas(serviceName, newReplicas)
 			if updateErr != nil {
 				err = updateErr
 			}

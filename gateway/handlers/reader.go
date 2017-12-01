@@ -42,16 +42,11 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c client.ServiceAP
 		for _, service := range services {
 
 			if len(service.Spec.TaskTemplate.ContainerSpec.Labels["function"]) > 0 {
-				var envProcess string
-
-				for _, env := range service.Spec.TaskTemplate.ContainerSpec.Env {
-					if strings.Contains(env, "fprocess=") {
-						envProcess = env[len("fprocess="):]
-					}
-				}
+				envProcess := getEnvProcess(service.Spec.TaskTemplate.ContainerSpec.Env)
 
 				// Required (copy by value)
 				labels := service.Spec.Annotations.Labels
+
 				f := requests.Function{
 					Name:            service.Spec.Name,
 					Image:           service.Spec.TaskTemplate.ContainerSpec.Image,
@@ -67,7 +62,19 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c client.ServiceAP
 
 		functionBytes, _ := json.Marshal(functions)
 		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(200)
+		w.WriteHeader(http.StatusOK)
 		w.Write(functionBytes)
+
 	}
+}
+
+func getEnvProcess(envVars []string) string {
+	var value string
+	for _, env := range envVars {
+		if strings.Contains(env, "fprocess=") {
+			value = env[len("fprocess="):]
+		}
+	}
+
+	return value
 }

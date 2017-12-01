@@ -167,6 +167,7 @@ func TestReaderSuccessReturnsCorrectBodyWithOneFunction(t *testing.T) {
 			},
 		},
 	}
+
 	marshalled, _ := json.Marshal(functions)
 	expected := string(marshalled)
 	if w.Body.String() != expected {

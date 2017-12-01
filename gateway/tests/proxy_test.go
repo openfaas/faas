@@ -29,7 +29,6 @@ func Test_GetContentType_UsesRequest_WhenResponseEmpty(t *testing.T) {
 	if contentType != request.Get("Content-Type") {
 		t.Errorf("Got: %s, want: %s", contentType, request.Get("Content-Type"))
 	}
-
 }
 
 func Test_GetContentType_UsesDefaultWhenRequestResponseEmpty(t *testing.T) {
@@ -42,5 +41,4 @@ func Test_GetContentType_UsesDefaultWhenRequestResponseEmpty(t *testing.T) {
 	if contentType != "default" {
 		t.Errorf("Got: %s, want: %s", contentType, "default")
 	}
-
 }

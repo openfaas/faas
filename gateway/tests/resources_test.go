@@ -6,6 +6,8 @@ import (
 	"github.com/openfaas/faas/gateway/handlers"
 )
 
+// Test_ParseMemory exploratory testing to document how to convert
+// from Docker limits notation to bytes value.
 func Test_ParseMemory(t *testing.T) {
 	value := "512 m"
 

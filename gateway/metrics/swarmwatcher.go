@@ -15,8 +15,9 @@ import (
 
 // AttachSwarmWatcher adds a go-route to monitor the amount of service replicas in the swarm
 // matching a 'function' label.
-func AttachSwarmWatcher(dockerClient *client.Client, metricsOptions MetricOptions, label string) {
-	ticker := time.NewTicker(1 * time.Second)
+func AttachSwarmWatcher(dockerClient *client.Client, metricsOptions MetricOptions, label string, interval time.Duration) {
+	ticker := time.NewTicker(interval)
+
 	quit := make(chan struct{})
 
 	go func() {
@@ -47,5 +48,4 @@ func AttachSwarmWatcher(dockerClient *client.Client, metricsOptions MetricOption
 			}
 		}
 	}()
-
 }

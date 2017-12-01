@@ -55,15 +55,21 @@ func (s ExternalServiceQuery) GetReplicas(serviceName string) (uint64, uint64, u
 	function := requests.Function{}
 
 	urlPath := fmt.Sprintf("%ssystem/function/%s", s.URL.String(), serviceName)
-	req, _ := http.NewRequest("GET", urlPath, nil)
-	res, err := s.ProxyClient.Do(req)
-	if err != nil {
-		log.Println(urlPath, err)
-	}
 
-	if res.StatusCode == 200 {
+	req, _ := http.NewRequest(http.MethodGet, urlPath, nil)
+
+	res, err := s.ProxyClient.Do(req)
+
+	if err != nil {
+
+		log.Println(urlPath, err)
+	} else {
+
 		if res.Body != nil {
 			defer res.Body.Close()
+		}
+
+		if res.StatusCode == http.StatusOK {
 			bytesOut, _ := ioutil.ReadAll(res.Body)
 			err = json.Unmarshal(bytesOut, &function)
 			if err != nil {
@@ -77,8 +83,8 @@ func (s ExternalServiceQuery) GetReplicas(serviceName string) (uint64, uint64, u
 
 	if function.Labels != nil {
 		labels := *function.Labels
-		minScale := labels["com.openfaas.scale.min"]
-		maxScale := labels["com.openfaas.scale.max"]
+		minScale := labels[handlers.MinScaleLabel]
+		maxScale := labels[handlers.MaxScaleLabel]
 
 		if len(minScale) > 0 {
 			labelValue, err := strconv.Atoi(minScale)
@@ -123,7 +129,7 @@ func (s ExternalServiceQuery) SetReplicas(serviceName string, count uint64) erro
 	}
 
 	urlPath := fmt.Sprintf("%ssystem/scale-function/%s", s.URL.String(), serviceName)
-	req, _ := http.NewRequest("POST", urlPath, bytes.NewReader(requestBody))
+	req, _ := http.NewRequest(http.MethodPost, urlPath, bytes.NewReader(requestBody))
 	defer req.Body.Close()
 	res, err := s.ProxyClient.Do(req)
 
