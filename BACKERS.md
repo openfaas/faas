@@ -14,21 +14,23 @@ Listed by reward, followed by miscellaneous amounts. Names are (pending) until f
 
 **Early Backers (reward)**
 
-* José Roberto Almaráz Da Cunha Júnior (pending)
-* Wesley Kennedy (pending)
+* José Roberto Almaráz Da Cunha Júnior
+* Wesley Kennedy
+* Owen Dall Sotomayor
 
 **OpenFaaS backers (reward)**
 
-* Eric Stoekl (pending)
-* Nic Jackson (pending)
-* Alex DeBrie (pending)
-* Johnny Mkhael (pending)
-* Finnian Anderson (pending)
-* Thom Toogood (pending)
-* Rafael Barbosa (pending)
-* Weston Steimel (pending)
-* Ram	Gopinathan (pending)
-* Michael	Herman (pending)
+* Eric Stoekl
+* Nic Jackson
+* Alex DeBrie
+* Johnny Mkhael
+* Finnian Anderson
+* Thom Toogood
+* Rafael Barbosa
+* Weston Steimel
+* Ram	Gopinathan
+* Michael	Herman
+
 
 **OpenFaaS patrons (reward)**
 
@@ -36,4 +38,4 @@ Listed by reward, followed by miscellaneous amounts. Names are (pending) until f
 
 **Misc. amount**
 
-1 person (pending)
+1 person
