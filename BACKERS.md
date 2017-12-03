@@ -17,6 +17,7 @@ Listed by reward, followed by miscellaneous amounts. Names are (pending) until f
 * José Roberto Almaráz Da Cunha Júnior
 * Wesley Kennedy
 * Owen Dall Sotomayor
+* Glenn Grant (pending)
 
 **OpenFaaS backers (reward)**
 
@@ -30,7 +31,7 @@ Listed by reward, followed by miscellaneous amounts. Names are (pending) until f
 * Weston Steimel
 * Ram	Gopinathan
 * Michael	Herman
-
+* Cody De Arkland (pending)
 
 **OpenFaaS patrons (reward)**
 
