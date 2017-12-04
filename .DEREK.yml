@@ -8,6 +8,7 @@ maintainers:
  - itscaro
  - rorpage
  - kenfdev
+ - BurtonR
 
 features:
  - dco_check
