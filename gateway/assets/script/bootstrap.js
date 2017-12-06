@@ -26,7 +26,8 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
             image: "",
             envProcess: "",
             network: "",
-            service: ""
+            service: "",
+            envVars: {}
         };
 
         $scope.invocation.request = "";
@@ -150,6 +151,8 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
                 $scope.item.service = func.name;
                 $scope.item.envProcess = func.fprocess;
                 $scope.item.network = func.network;
+                $scope.item.envVars = func.environment;
+
                 $scope.selectedFunc = func;
             }
             
@@ -180,6 +183,8 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
                         item.service = "";
                         item.envProcess = "";
                         item.network = "";
+                        item.envVars = {};
+
                         $scope.validationError = "";
                         $scope.closeDialog();
                         showPostInvokedToast("Function created");
