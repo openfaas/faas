@@ -32,6 +32,7 @@ Listed by reward, followed by miscellaneous amounts. Names are (pending) until f
 * Ram	Gopinathan
 * Michael	Herman
 * Cody De Arkland (pending)
+* Richard Petersen-Hall (pending)
 
 **OpenFaaS patrons (reward)**
 
