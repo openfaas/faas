@@ -46,13 +46,19 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
         };
 
         $scope.fireRequest = function() {
+            var requestContentType = $scope.invocation.contentType == "json" ? "application/json" : "text/plain";
+            if ($scope.invocation.contentType == "binary") {
+                requestContentType = "binary/octet-stream";
+            }
+
             var options = {
                 url: "/function/" + $scope.selectedFunction.name,
                 data: $scope.invocation.request,
                 method: "POST",
-                headers: { "Content-Type": $scope.invocation.contentType == "json" ? "application/json" : "text/plain" },
+                headers: { "Content-Type": requestContentType },
                 responseType: $scope.invocation.contentType
             };
+            
             $scope.invocationInProgress = true;
             $scope.invocationResponse = "";
             $scope.invocationStatus = null;
@@ -60,12 +66,41 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
             $scope.invocationStart = new Date().getTime()
 
             $http(options)
-                .then(function(response) {
-                    if (typeof response.data == 'object') {
-                        $scope.invocationResponse = JSON.stringify(response.data, null, 2);
+                .success(function (data, status, headers) {
+                    console.log(headers());
+
+                    if($scope.invocation.contentType == "binary") {
+                        $scope.invocationResponse = "Bytes received: "+ data.length;
+
+                        var linkElement = document.createElement('a');
+                        try {
+                            var blob = new Blob([data], { type: "binary/octet-stream" });
+                            var url = window.URL.createObjectURL(blob);
+                            var filename = uuidv4();
+
+                            linkElement.setAttribute('href', url);
+                            linkElement.setAttribute("download", filename);
+                 
+                            var clickEvent = new MouseEvent("click", {
+                                "view": window,
+                                "bubbles": true,
+                                "cancelable": false
+                            });
+                            linkElement.dispatchEvent(clickEvent);
+                        } catch (ex) {
+                            console.log(ex);
+                            $scope.invocationResponse = ex;
+                        }
+
                     } else {
-                        $scope.invocationResponse = response.data;
+                        var response = {"data": data};
+                        if (typeof response.data == 'object') {
+                            $scope.invocationResponse = JSON.stringify(response.data, null, 2);
+                        } else {
+                            $scope.invocationResponse = response.data;
+                        }
                     }
+
                     $scope.invocationInProgress = false;
                     $scope.invocationStatus = response.status;
                     var now = new Date().getTime();
@@ -234,3 +269,10 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
         fetch();
     }
 ]);
+
+function uuidv4() {
+    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    )
+  }
+  
