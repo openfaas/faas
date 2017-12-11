@@ -5,7 +5,23 @@ The gateway will scale functions according to demand by altering the service rep
 
 Swagger docs: https://github.com/openfaas/faas/tree/master/api-docs
 
-**Environmental overrides:**
+## Logs
+
+Logs are available at the function level and can be accessed through Swarm or Kubernetes using native tooling. You can also install a Docker logging driver to aggregate your logs. By default functions will not write the request and response bodies to stdout. You can toggle this behaviour by setting `read_debug` for the request and `write_debug` for the response.
+
+## Tracing
+
+An "X-Call-Id" header is applied to every incoming call through the gateway and is usable for tracing and monitoring calls. We use a UUID for this string.
+
+Header:
+
+```
+X-Call-Id
+```
+
+Within a function this is available as `Http_X_Call_Id`.
+
+## Environmental overrides
 The gateway can be configured through the following environment variables: 
 
 | Option                 | Usage             |
