@@ -29,6 +29,8 @@ Notice that it is using the value of `NODE_ENV` from the stack file, the default
 
 
 ## Using Swarm Secrets
+_Note_: The examples in the following section require `faas-cli` version `>=0.5.1`.
+
 For sensitive value we can leverage the [Docker Swarm Secrets](https://docs.docker.com/engine/swarm/secrets/) feature to safely store and give our functions access to the needed values. Using secrets is a two step process.  Take the [ApiKeyProtected](../sample-functions/ApiKeyProtected) example function, when we deploy this function we provide a secret key that it uses to authenticate requests to it.  First we must add a secret to the swarm
 
 ```sh
