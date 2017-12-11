@@ -108,7 +108,7 @@ func main() {
 
 	prometheusQuery := metrics.NewPrometheusQuery(config.PrometheusHost, config.PrometheusPort, &http.Client{})
 	listFunctions := metrics.AddMetricsHandler(faasHandlers.ListFunctions, prometheusQuery)
-
+	faasHandlers.Proxy = internalHandlers.MakeCallIDMiddleware(faasHandlers.Proxy)
 	r := mux.NewRouter()
 
 	// r.StrictSlash(false)	// This didn't work, so register routes twice.
