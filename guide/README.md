@@ -37,6 +37,8 @@ These instructions are for a development environment. If you plan to expose Open
 
 * [Reference documentation for Function Watchdog](../watchdog/)
 
+* [An Introduction to Serverless DevOps with OpenFaaS](https://hackernoon.com/an-introduction-to-serverless-devops-with-openfaas-b978ab0eb2b)
+
 * WIP [Debugging Functions](https://github.com/openfaas/faas/issues/223)
 
 ## Blog posts and tutorials
