@@ -101,7 +101,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
                         if($scope.selectedFunction.labels) {
                             var ext = $scope.selectedFunction.labels["com.openfaas.ui.ext"];
                             if(ext && ext.length > 0 ) {
-                                filename = filename + "" + ext;
+                                filename = filename + "." + ext;
                             }
                         }
 
