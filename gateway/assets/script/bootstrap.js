@@ -27,7 +27,8 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
             envProcess: "",
             network: "",
             service: "",
-            envVars: {}
+            envVars: {},
+            labels: {}
         };
 
         $scope.invocation.request = "";
@@ -56,7 +57,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
                 data: $scope.invocation.request,
                 method: "POST",
                 headers: { "Content-Type": requestContentType },
-                responseType: $scope.invocation.contentType
+                responseType: $scope.invocation.contentType == "binary" ? "arraybuffer" : $scope.invocation.contentType
             };
             
             $scope.invocationInProgress = true;
@@ -65,44 +66,64 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
             $scope.roundTripDuration = "";
             $scope.invocationStart = new Date().getTime()
 
+
+            var tryDownload = function(data, filename) {
+                var caught;
+
+                var linkElement = document.createElement('a');
+                try {
+                    var blob = new Blob([data], { type: "binary/octet-stream" });
+                    var url = window.URL.createObjectURL(blob);
+
+                    linkElement.setAttribute('href', url);
+                    linkElement.setAttribute("download", filename);
+         
+                    var clickEvent = new MouseEvent("click", {
+                        "view": window,
+                        "bubbles": true,
+                        "cancelable": false
+                    });
+                    linkElement.dispatchEvent(clickEvent);
+                } catch (ex) {
+                    caught = ex;
+                }
+                return caught;
+            }
+
             $http(options)
                 .success(function (data, status, headers) {
-                    console.log(headers());
+
+                    var headerMap = headers();
 
                     if($scope.invocation.contentType == "binary") {
-                        $scope.invocationResponse = "Bytes received: "+ data.length;
+                        var filename = uuidv4();
 
-                        var linkElement = document.createElement('a');
-                        try {
-                            var blob = new Blob([data], { type: "binary/octet-stream" });
-                            var url = window.URL.createObjectURL(blob);
-                            var filename = uuidv4();
+                        if($scope.selectedFunction.labels) {
+                            var ext = $scope.selectedFunction.labels["com.openfaas.ui.ext"];
+                            if(ext && ext.length > 0 ) {
+                                filename = filename + "" + ext;
+                            }
+                        }
 
-                            linkElement.setAttribute('href', url);
-                            linkElement.setAttribute("download", filename);
-                 
-                            var clickEvent = new MouseEvent("click", {
-                                "view": window,
-                                "bubbles": true,
-                                "cancelable": false
-                            });
-                            linkElement.dispatchEvent(clickEvent);
-                        } catch (ex) {
-                            console.log(ex);
-                            $scope.invocationResponse = ex;
+                        var caught = tryDownload(data, filename);
+                        if(caught) {
+                            console.log(caught);                         
+                            $scope.invocationResponse = caught
+                        } else {
+                            $scope.invocationResponse = data.byteLength + " byte(s) received";
                         }
 
                     } else {
-                        var response = {"data": data};
-                        if (typeof response.data == 'object') {
-                            $scope.invocationResponse = JSON.stringify(response.data, null, 2);
+
+                        if (typeof data == 'object') {
+                            $scope.invocationResponse = JSON.stringify(data, null, 2);
                         } else {
-                            $scope.invocationResponse = response.data;
+                            $scope.invocationResponse = data;
                         }
                     }
 
                     $scope.invocationInProgress = false;
-                    $scope.invocationStatus = response.status;
+                    $scope.invocationStatus = status;
                     var now = new Date().getTime();
                     $scope.roundTripDuration = (now - $scope.invocationStart) / 1000;
                     showPostInvokedToast("Success");
@@ -187,6 +208,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
                 $scope.item.envProcess = func.fprocess;
                 $scope.item.network = func.network;
                 $scope.item.envVars = func.environment;
+                $scope.item.labels = func.labels;
 
                 $scope.selectedFunc = func;
             }
@@ -219,6 +241,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
                         item.envProcess = "";
                         item.network = "";
                         item.envVars = {};
+                        item.labels = {};
 
                         $scope.validationError = "";
                         $scope.closeDialog();
