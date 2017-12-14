@@ -27,6 +27,17 @@ type MarshalReq struct {
 	Body   MarshalBody `json:"body"`
 }
 
+type FormPart struct {
+	Value    string `json:"value"`
+	Filename string `json:"filename,omitempty"`
+	Encoded  bool   `json:"encoded"`
+}
+
+type Form struct {
+	Header http.Header         `json:"header"`
+	Form   map[string]FormPart `json:"form"`
+}
+
 func UnmarshalRequest(data []byte) (*MarshalReq, error) {
 	request := MarshalReq{}
 	err := json.Unmarshal(data, &request)
@@ -42,5 +53,21 @@ func MarshalRequest(data []byte, header *http.Header) ([]byte, error) {
 	}
 
 	res, marshalErr := json.Marshal(&req)
+	return res, marshalErr
+}
+
+func UnmarshalForm(data []byte) (*Form, error) {
+	form := new(Form)
+	err := json.Unmarshal(data, form)
+	return form, err
+}
+
+func MarshalForm(data map[string]FormPart, header *http.Header) ([]byte, error) {
+	form := Form{
+		Form:   data,
+		Header: *header,
+	}
+
+	res, marshalErr := json.Marshal(&form)
 	return res, marshalErr
 }
