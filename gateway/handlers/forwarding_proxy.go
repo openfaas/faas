@@ -1,20 +1,19 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
 	"net/http/httputil"
 	"strconv"
 	"strings"
 	"time"
 
+	"github.com/Sirupsen/logrus"
 	"github.com/openfaas/faas/gateway/metrics"
 	"github.com/openfaas/faas/gateway/types"
-	"github.com/prometheus/client_golang/prometheus"
 )
 
 // MakeForwardingProxyHandler create a handler which forwards HTTP requests
-func MakeForwardingProxyHandler(proxy *httputil.ReverseProxy, metrics *metrics.MetricOptions) http.HandlerFunc {
+func MakeForwardingProxyHandler(proxy *httputil.ReverseProxy, log *logrus.Logger, metrics metrics.Metrics) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		uri := r.URL.String()
 
@@ -24,7 +23,8 @@ func MakeForwardingProxyHandler(proxy *httputil.ReverseProxy, metrics *metrics.M
 		writeAdapter := types.NewWriteAdapter(w)
 		proxy.ServeHTTP(writeAdapter, r)
 
-		seconds := time.Since(start).Seconds()
+		d := time.Since(start)
+		seconds := d.Seconds()
 		log.Printf("< [%s] - %d took %f seconds\n", r.URL.String(),
 			writeAdapter.GetHeaderCode(), seconds)
 
@@ -34,15 +34,16 @@ func MakeForwardingProxyHandler(proxy *httputil.ReverseProxy, metrics *metrics.M
 
 			service := uri[len(forward):]
 
-			metrics.GatewayFunctionsHistogram.
-				WithLabelValues(service).
-				Observe(seconds)
+			metrics.GatewayFunctionsHistogram(
+				map[string]string{"function_name": service},
+				d,
+			)
 
 			code := strconv.Itoa(writeAdapter.GetHeaderCode())
-
-			metrics.GatewayFunctionInvocation.
-				With(prometheus.Labels{"function_name": service, "code": code}).
-				Inc()
+			metrics.GatewayFunctionInvocation(map[string]string{
+				"function_name": service,
+				"code":          code,
+			})
 		}
 	}
 }

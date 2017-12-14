@@ -23,13 +23,12 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/openfaas/faas/gateway/metrics"
 	"github.com/openfaas/faas/gateway/requests"
-	"github.com/prometheus/client_golang/prometheus"
 )
 
 const watchdogPort = 8080
 
 // MakeProxy creates a proxy for HTTP web requests which can be routed to a function.
-func MakeProxy(metrics metrics.MetricOptions, wildcard bool, client *client.Client, logger *logrus.Logger) http.HandlerFunc {
+func MakeProxy(metrics metrics.Metrics, wildcard bool, client *client.Client, logger *logrus.Logger) http.HandlerFunc {
 	proxyClient := http.Client{
 		Transport: &http.Transport{
 			Proxy: http.ProxyFromEnvironment,
@@ -53,7 +52,7 @@ func MakeProxy(metrics metrics.MetricOptions, wildcard bool, client *client.Clie
 
 			xFunctionHeader := r.Header["X-Function"]
 			if len(xFunctionHeader) > 0 {
-				logger.Infoln(xFunctionHeader)
+				logger.Debugln(xFunctionHeader)
 			}
 
 			// getServiceName
@@ -79,12 +78,12 @@ func MakeProxy(metrics metrics.MetricOptions, wildcard bool, client *client.Clie
 	}
 }
 
-func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, name string, c *client.Client, logger *logrus.Logger, proxyClient *http.Client) {
+func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.Metrics, name string, c *client.Client, logger *logrus.Logger, proxyClient *http.Client) {
 	exists, err := lookupSwarmService(name, c)
 
 	if err != nil || exists == false {
 		if err != nil {
-			logger.Infof("Could not resolve service: %s error: %s.", name, err)
+			logger.Errorf("Could not resolve service: %s error: %s.", name, err)
 		}
 
 		// TODO: Should record the 404/not found error in Prometheus.
@@ -93,7 +92,7 @@ func lookupInvoke(w http.ResponseWriter, r *http.Request, metrics metrics.Metric
 	}
 
 	if exists {
-		defer trackTime(time.Now(), metrics, name)
+		defer trackTime(time.Now(), logger, metrics, name)
 		forwardReq := requests.NewForwardRequest(r.Method, *r.URL)
 
 		invokeService(w, r, metrics, name, forwardReq, logger, proxyClient)
@@ -109,14 +108,11 @@ func lookupSwarmService(serviceName string, c *client.Client) (bool, error) {
 	return len(services) > 0, err
 }
 
-func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.MetricOptions, service string, forwardReq requests.ForwardRequest, logger *logrus.Logger, proxyClient *http.Client) {
+func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metrics, service string, forwardReq requests.ForwardRequest, logger *logrus.Logger, proxyClient *http.Client) {
 	stamp := strconv.FormatInt(time.Now().Unix(), 10)
 
 	defer func(when time.Time) {
-		seconds := time.Since(when).Seconds()
-
-		fmt.Printf("[%s] took %f seconds\n", stamp, seconds)
-		metrics.GatewayFunctionsHistogram.WithLabelValues(service).Observe(seconds)
+		trackTime(when, logger, metrics, service)
 	}(time.Now())
 
 	//TODO: inject setting rather than looking up each time.
@@ -138,7 +134,7 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 	url := forwardReq.ToURL(addr, watchdogPort)
 
 	contentType := r.Header.Get("Content-Type")
-	fmt.Printf("[%s] Forwarding request [%s] to: %s\n", stamp, contentType, url)
+	logger.Infof("[%s] Forwarding request [%s] to: %s\n", stamp, contentType, url)
 
 	if r.Body != nil {
 		defer r.Body.Close()
@@ -150,7 +146,8 @@ func invokeService(w http.ResponseWriter, r *http.Request, metrics metrics.Metri
 
 	response, err := proxyClient.Do(request)
 	if err != nil {
-		logger.Infoln(err)
+		logger.Errorln(err)
+
 		writeHead(service, metrics, http.StatusInternalServerError, w)
 		buf := bytes.NewBufferString("Can't reach service: " + service)
 		w.Write(buf.Bytes())
@@ -180,27 +177,36 @@ func randomInt(min, max int) int {
 	return rand.Intn(max-min) + min
 }
 
-func writeHead(service string, metrics metrics.MetricOptions, code int, w http.ResponseWriter) {
+func writeHead(service string, metrics metrics.Metrics, code int, w http.ResponseWriter) {
 	w.WriteHeader(code)
 
 	trackInvocation(service, metrics, code)
 }
 
-func trackInvocation(service string, metrics metrics.MetricOptions, code int) {
-	metrics.GatewayFunctionInvocation.With(
-		prometheus.Labels{"function_name": service,
-			"code": strconv.Itoa(code)}).Inc()
+func trackInvocation(service string, metrics metrics.Metrics, code int) {
+	metrics.GatewayFunctionInvocation(map[string]string{
+		"function_name": service,
+		"code":          strconv.Itoa(code),
+	})
 }
 
-func trackTime(then time.Time, metrics metrics.MetricOptions, name string) {
+func trackTime(then time.Time, logger *logrus.Logger, metrics metrics.Metrics, name string) {
 	since := time.Since(then)
-	metrics.GatewayFunctionsHistogram.
-		WithLabelValues(name).
-		Observe(since.Seconds())
+	metrics.GatewayFunctionsHistogram(map[string]string{
+		"function_name": name,
+	},
+		since,
+	)
+
+	logger.Infof("[%s] took %f seconds\n", name, since.Seconds())
 }
 
-func trackTimeExact(duration time.Duration, metrics metrics.MetricOptions, name string) {
-	metrics.GatewayFunctionsHistogram.
-		WithLabelValues(name).
-		Observe(float64(duration))
+func trackTimeExact(duration time.Duration, logger *logrus.Logger, metrics metrics.Metrics, name string) {
+	metrics.GatewayFunctionsHistogram(map[string]string{
+		"function_name": name,
+	},
+		duration,
+	)
+
+	logger.Infof("[%s] took %f seconds\n", name, duration.Seconds())
 }

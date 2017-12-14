@@ -1,7 +1,7 @@
 // Copyright (c) Alex Ellis 2017. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-package metrics
+package replicas
 
 import (
 	"encoding/json"
@@ -13,10 +13,12 @@ import (
 
 	"log"
 
+	"github.com/openfaas/faas/gateway/metrics"
 	"github.com/openfaas/faas/gateway/requests"
 )
 
-func AttachExternalWatcher(endpointURL url.URL, metricsOptions MetricOptions, label string, interval time.Duration) {
+// AttachExternalWatcher periodically calls the provider to determine function scale
+func AttachExternalWatcher(endpointURL url.URL, metricsOptions metrics.Metrics, label string, interval time.Duration) {
 	ticker := time.NewTicker(interval)
 	quit := make(chan struct{})
 	proxyClient := http.Client{
@@ -58,9 +60,10 @@ func AttachExternalWatcher(endpointURL url.URL, metricsOptions MetricOptions, la
 				}
 
 				for _, service := range services {
-					metricsOptions.ServiceReplicasCounter.
-						WithLabelValues(service.Name).
-						Set(float64(service.Replicas))
+					metricsOptions.ServiceReplicasCounter(
+						map[string]string{"function_name": service.Name},
+						float64(service.Replicas),
+					)
 				}
 
 				break

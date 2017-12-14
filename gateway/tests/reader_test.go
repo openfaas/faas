@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/swarm"
@@ -57,8 +58,25 @@ func (c testServiceApiClient) TaskList(ctx context.Context, options types.TaskLi
 	return []swarm.Task{}, nil
 }
 
+func createMockMetrics() metrics.Metrics {
+	mockedMetrics := &metrics.MetricsMock{
+		GatewayFunctionInvocationFunc: func(labels map[string]string) {
+			panic("TODO: mock out the GatewayFunctionInvocation method")
+		},
+		GatewayFunctionsHistogramFunc: func(labels map[string]string, duration time.Duration) {
+			panic("TODO: mock out the GatewayFunctionsHistogram method")
+		},
+		ServiceReplicasCounterFunc: func(labels map[string]string, replicas float64) {
+			panic("TODO: mock out the ServiceReplicasCounter method")
+		},
+	}
+
+	return mockedMetrics
+
+}
+
 func TestReaderSuccessReturnsOK(t *testing.T) {
-	m := metrics.MetricOptions{}
+	m := createMockMetrics()
 	c := &testServiceApiClient{
 		serviceListServices: []swarm.Service{},
 		serviceListError:    nil,
@@ -77,7 +95,7 @@ func TestReaderSuccessReturnsOK(t *testing.T) {
 }
 
 func TestReaderSuccessReturnsJsonContent(t *testing.T) {
-	m := metrics.MetricOptions{}
+	m := createMockMetrics()
 	c := &testServiceApiClient{
 		serviceListServices: []swarm.Service{},
 		serviceListError:    nil,
@@ -96,7 +114,7 @@ func TestReaderSuccessReturnsJsonContent(t *testing.T) {
 }
 
 func TestReaderSuccessReturnsCorrectBodyWithZeroFunctions(t *testing.T) {
-	m := metrics.MetricOptions{}
+	m := createMockMetrics()
 	c := &testServiceApiClient{
 		serviceListServices: []swarm.Service{},
 		serviceListError:    nil,
@@ -144,7 +162,8 @@ func TestReaderSuccessReturnsCorrectBodyWithOneFunction(t *testing.T) {
 			},
 		},
 	}
-	m := metrics.MetricOptions{}
+
+	m := createMockMetrics()
 	c := &testServiceApiClient{
 		serviceListServices: services,
 		serviceListError:    nil,
@@ -177,7 +196,7 @@ func TestReaderSuccessReturnsCorrectBodyWithOneFunction(t *testing.T) {
 }
 
 func TestReaderErrorReturnsInternalServerError(t *testing.T) {
-	m := metrics.MetricOptions{}
+	m := createMockMetrics()
 	c := &testServiceApiClient{
 		serviceListServices: nil,
 		serviceListError:    errors.New("error"),
@@ -196,7 +215,7 @@ func TestReaderErrorReturnsInternalServerError(t *testing.T) {
 }
 
 func TestReaderErrorReturnsCorrectBody(t *testing.T) {
-	m := metrics.MetricOptions{}
+	m := createMockMetrics()
 	c := &testServiceApiClient{
 		serviceListServices: nil,
 		serviceListError:    errors.New("error"),

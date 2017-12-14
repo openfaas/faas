@@ -9,12 +9,13 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/Sirupsen/logrus"
 	"github.com/openfaas/faas/gateway/metrics"
 	"github.com/openfaas/faas/gateway/requests"
 )
 
 // MakeAsyncReport makes a handler for asynchronous invocations to report back into.
-func MakeAsyncReport(metrics metrics.MetricOptions) http.HandlerFunc {
+func MakeAsyncReport(logger *logrus.Logger, metrics metrics.Metrics) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 
@@ -26,6 +27,6 @@ func MakeAsyncReport(metrics metrics.MetricOptions) http.HandlerFunc {
 
 		var taken time.Duration
 		taken = time.Duration(report.TimeTaken)
-		trackTimeExact(taken, metrics, report.FunctionName)
+		trackTimeExact(taken, logger, metrics, report.FunctionName)
 	}
 }
