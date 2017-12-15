@@ -97,7 +97,7 @@ doubling up `$$` just like the above.
 
 Redeploy OpenFaaS to update the service with the new changes.
 ```
-$ ./deploy_stack.yml
+$ ./deploy_stack.sh
 ```
 
 #### Test
