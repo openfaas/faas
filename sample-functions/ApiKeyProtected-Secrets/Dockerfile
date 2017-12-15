@@ -1,23 +1,26 @@
-FROM golang:1.7.5 as builder
-RUN mkdir -p /go/src/app
-COPY handler.go /go/src/app
-WORKDIR /go/src/app
+FROM golang:1.9.2-alpine as builder
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
+MAINTAINER alex@openfaas.com
+ENTRYPOINT []
 
+RUN apk --no-cache add make curl \
+    && curl -sL https://github.com/openfaas/faas/releases/download/0.6.9/fwatchdog > /usr/bin/fwatchdog \
+    && chmod +x /usr/bin/fwatchdog
 
-FROM alpine:latest
+WORKDIR /go/src/github.com/openfaas/faas/sample-functions/ApiKeyProtected
 
-WORKDIR /root/
+COPY handler.go .
+# COPY vendor vendor
 
-EXPOSE 8080
-ENV http_proxy      ""
-ENV https_proxy     ""
+RUN go install
 
-ADD https://github.com/alexellis/faas/releases/download/0.6.6d/fwatchdog /usr/bin
-RUN chmod +x /usr/bin/fwatchdog
+FROM alpine:3.6
 
-COPY --from=builder /go/src/app/app    .
+# Needed to reach the hub
+RUN apk --no-cache add ca-certificates 
 
-ENV fprocess="/root/app"
-CMD ["fwatchdog"]
+COPY --from=builder /usr/bin/fwatchdog  /usr/bin/fwatchdog
+COPY --from=builder /go/bin/ApiKeyProtected  /usr/bin/ApiKeyProtected
+ENV fprocess "/usr/bin/ApiKeyProtected"
+
+CMD ["/usr/bin/fwatchdog"]
