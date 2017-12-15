@@ -17,7 +17,7 @@ funcStoreModule.component('funcStore', {
         selectedFunc: '<',
         onSelected: '&',
     },
-    controller: ['FuncStoreService', '$mdDialog', function FuncStoreController(FuncStoreService, $mdDialog) {
+    controller: ['FuncStoreService', '$mdDialog', '$window', function FuncStoreController(FuncStoreService, $mdDialog, $window) {
         var self = this;
 
         this.storeUrl = 'https://raw.githubusercontent.com/openfaas/store/master/store.json';
@@ -68,6 +68,10 @@ funcStoreModule.component('funcStore', {
                 .ok('OK')
                 .targetEvent(event)
             );
+        }
+
+        this.openRepo = function (url) {
+            $window.open(url, '_blank');
         }
 
         this.loadStore();
