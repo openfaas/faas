@@ -67,3 +67,11 @@ span.md-avatar {
     background-color: #1398D6;
     color: white;
 }
+
+md-icon {
+    opacity: 0.6;
+}
+
+md-icon.link {
+    fill: #303AA5;
+}
