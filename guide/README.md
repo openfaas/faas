@@ -1,4 +1,4 @@
-OpenFaaS guides
+OpenFaaS guides & documentation
 ================
 
 This page is a collection of our key blog posts, tutorials and guides while we prepare a [dedicated site](https://github.com/openfaas/faas/issues/253) for documentation. For other queries please get in touch for a Slack invite or ping [@openfaas](https://twitter.com/openfaas) on Twitter.
@@ -32,6 +32,8 @@ These instructions are for a development environment. If you plan to expose Open
 * [Asynchronous functions with NATS Streaming](asynchronous.md)
 
 * [Submit a function to the OpenFaaS Function Store](https://github.com/openfaas/store)
+
+* [Secrets with OpenFaaS and Docker Swarm](https://github.com/openfaas/faas/blob/master/guide/secure_secret_management.md)
 
 * [Hardening OpenFaaS with Kong & TLS](kong_integration.md)
 
