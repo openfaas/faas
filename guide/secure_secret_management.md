@@ -1,8 +1,9 @@
-# Guide on using Docker Swarm Secrets with OpenFaaS
+# Secrets with OpenFaaS and Docker Swarm
 
 OpenFaaS deploys functions as Docker Swarm Services, as result there are several features that we can leverage to simplify the development and subsquent deployment of functions to hardened production environments.
 
 ## Using Environment Variables
+
 First, and least secure, is the ability to set environment variables at deploy time. For example, you might want to set the `NODE_ENV` or `DEBUG` variable.  Setting the `NODE_ENV` in the stack file `samples.yml`
 ```yaml
 provider:
@@ -29,6 +30,7 @@ Notice that it is using the value of `NODE_ENV` from the stack file, the default
 
 
 ## Using Swarm Secrets
+
 _Note_: The examples in the following section require `faas-cli` version `>=0.5.1`.
 
 For sensitive value we can leverage the [Docker Swarm Secrets](https://docs.docker.com/engine/swarm/secrets/) feature to safely store and give our functions access to the needed values. Using secrets is a two step process.  Take the [ApiKeyProtected](../sample-functions/ApiKeyProtected) example function, when we deploy this function we provide a secret key that it uses to authenticate requests to it.  First we must add a secret to the swarm
@@ -88,6 +90,7 @@ functions:
 Note that unlike the `envVars` in the first example, we do not provide the secret value, just a list of names: `"secrets": ["secret_api_key"]`. The secret value has already been securely stored in the Docker swarm.  One really great result of this type of configuration is that you can simplify your function code by always referencing the same secret name, no matter the environment, the only change is how the environments are configured.
 
 ## Advanced Swarm Secrets
+
 For various reasons, you might add a secret to the Swarm under a different name than you want to use in your function, e.g. if you are rotating a secret key. The Docker Swarm secret specification allows us some advanced configuration of secrets [by supplying a comma-separated value specifying the secret](https://docs.docker.com/engine/reference/commandline/service_create/#create-a-service-with-secrets).  The is best show in an example. Let's change the api key on our example function.
 
 First add a new secret key
