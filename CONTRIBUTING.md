@@ -32,13 +32,18 @@ This is just a short list of ideas, if you have other ideas for contributing ple
 
 The OpenFaaS maintainers would like to make OpenFaaS the best it can be and welcome new contributions that align with the project's goals. Our time is limited so we'd like to make sure we agree on the proposed work before you spend time doing it. Saying "no" is hard which is why we'd rather say "yes" ahead of time.
 
+**Please do not raise a proposal after doing the work - this is counter to the spirit of the project and we find it's easier to be objective that way**
+
 What makes a good proposal?
 
 * Brief summary including motivation/context
 * Any design changes
 * Pros + Cons
 * Effort required
+* Migration strategy / backwards-compatibility
 * Mock-up screenshots or examples of how the CLI would work
+
+If you are proposing a new tool or service please do due diligence. Does this tool already exist? Can we reuse it? For example: a timer / CRON-type scheduler for invoking functions. 
 
 **Paperwork for Pull Requests**
 
