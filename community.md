@@ -19,10 +19,11 @@ There are three main Github repos
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [OpenFaaS @ KubeCon + CloudNativeCon](https://kccncna17.sched.com/event/CU6s/faas-and-furious-0-to-serverless-in-60-seconds-anywhere-alex-ellis-adp) | Alex Ellis | Austin, USA | 07-Dec-2017 |
-| [OpenFaaS presentation + Demo on Kubernetes @ Paris Serverless Meetup](https://www.meetup.com/fr-FR/Paris-Serverless-Architecture-Meetup/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 14-Nov-2017 |
+| [Gophers, whales and.. clouds? Oh my! @ BSides Wellington](https://github.com/0xdevalias/gopherblazer#talks) | [Glenn 'devalias' Grant](https://twitter.com/_devalias) | Wellington, New Zealand | 23-Nov-2017 |
 | [OpenFaaS - Serverless Functions Made Simple @ Docker Cambridge Meetup](https://www.meetup.com/docker-cambridge/events/243206434/) | Alex Ellis | Cambridge, UK | 20-Nov-2017 |
+| [OpenFaaS presentation + Demo on Kubernetes @ Paris Serverless Meetup](https://www.meetup.com/fr-FR/Paris-Serverless-Architecture-Meetup/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 14-Nov-2017 |
 | [OpenFaaS Demo at APIOps Meetup](https://www.meetup.com/APIOps-Tampere/) | [Sakari Hoisko](https://twitter.com/Chaggeus) | Tampere, Finland | 14-Nov-2017 |
-| [SecTalks Canberra: OpenFaaS + Security workshop](https://www.meetup.com/SecTalks-Canberra/events/241579721/) | Glenn Grant | Australia | 14-Nov-2017 |
+| [HackFaaSter - Leveraging Docker and OpenFaaS for fun and offensive (security) profit @ SecTalks Canberra](https://github.com/0xdevalias/hack-FaaSter#talks) | [Glenn 'devalias' Grant](https://twitter.com/_devalias) | Australia | 14-Nov-2017 |
 | [Docker Belfast Meetup](https://www.meetup.com/Docker-Belfast/) | John McCabe | Belfast, Northern Ireland | 31-Oct-2017 |
 | [Belfast Gophers Meetup](https://www.meetup.com/Belfast-Gophers/) | John McCabe | Belfast, Northern Ireland | 26-Oct-2017 |
 | [Introduction to Serverless with OpenFaaS - Moby Summit](https://europe-2017.dockercon.com/moby-summit/) | Alex Ellis | Copenhagen | 19-Oct-2017 |
