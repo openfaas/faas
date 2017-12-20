@@ -6,20 +6,20 @@ package handlers
 import (
 	"context"
 	"encoding/json"
-	"fmt"
+	"log"
 	"net/http"
 
 	"strings"
 
-	"github.com/alexellis/faas/gateway/metrics"
-	"github.com/alexellis/faas/gateway/requests"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/client"
+	"github.com/openfaas/faas/gateway/metrics"
+	"github.com/openfaas/faas/gateway/requests"
 )
 
 // MakeFunctionReader gives a summary of Function structs with Docker service stats overlaid with Prometheus counters.
-func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) http.HandlerFunc {
+func MakeFunctionReader(metricsOptions metrics.MetricOptions, c client.ServiceAPIClient) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		serviceFilter := filters.NewArgs()
@@ -30,22 +30,22 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 
 		services, err := c.ServiceList(context.Background(), options)
 		if err != nil {
-			fmt.Println(err)
+			log.Println("Error getting service list:", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("Error getting service list"))
+			return
 		}
 
 		// TODO: Filter only "faas" functions (via metadata?)
-		var functions []requests.Function
+		functions := []requests.Function{}
 
 		for _, service := range services {
 
 			if len(service.Spec.TaskTemplate.ContainerSpec.Labels["function"]) > 0 {
-				var envProcess string
+				envProcess := getEnvProcess(service.Spec.TaskTemplate.ContainerSpec.Env)
 
-				for _, env := range service.Spec.TaskTemplate.ContainerSpec.Env {
-					if strings.Contains(env, "fprocess=") {
-						envProcess = env[len("fprocess="):]
-					}
-				}
+				// Required (copy by value)
+				labels := service.Spec.Annotations.Labels
 
 				f := requests.Function{
 					Name:            service.Spec.Name,
@@ -53,6 +53,7 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 					InvocationCount: 0,
 					Replicas:        *service.Spec.Mode.Replicated.Replicas,
 					EnvProcess:      envProcess,
+					Labels:          &labels,
 				}
 
 				functions = append(functions, f)
@@ -61,7 +62,19 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, c *client.Client) 
 
 		functionBytes, _ := json.Marshal(functions)
 		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(200)
+		w.WriteHeader(http.StatusOK)
 		w.Write(functionBytes)
+
 	}
+}
+
+func getEnvProcess(envVars []string) string {
+	var value string
+	for _, env := range envVars {
+		if strings.Contains(env, "fprocess=") {
+			value = env[len("fprocess="):]
+		}
+	}
+
+	return value
 }

@@ -102,13 +102,27 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 
 // GatewayConfig for the process.
 type GatewayConfig struct {
-	ReadTimeout          time.Duration
-	WriteTimeout         time.Duration
+
+	// HTTP timeout for reading a request from clients.
+	ReadTimeout time.Duration
+
+	// HTTP timeout for writing a response from functions.
+	WriteTimeout time.Duration
+
+	// URL for alternate functions provider.
 	FunctionsProviderURL *url.URL
-	NATSAddress          *string
-	NATSPort             *int
-	PrometheusHost       string
-	PrometheusPort       int
+
+	// Address of the NATS service. Required for async mode.
+	NATSAddress *string
+
+	// Port of the NATS Service. Required for async mode.
+	NATSPort *int
+
+	// Host to connect to Prometheus.
+	PrometheusHost string
+
+	// Port to connect to Prometheus.
+	PrometheusPort int
 }
 
 // UseNATS Use NATSor not

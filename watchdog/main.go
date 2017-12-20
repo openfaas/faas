@@ -11,20 +11,28 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"sync"
 	"time"
 
-	"github.com/alexellis/faas/watchdog/types"
+	"github.com/openfaas/faas/watchdog/types"
 )
 
+// buildFunctionInput for a GET method this is an empty byte array.
 func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error) {
 	var res []byte
 	var requestBytes []byte
 	var err error
 
-	if r.Body != nil {
-		defer r.Body.Close()
+	if r.Body == nil {
+		return res, nil
+	}
+	defer r.Body.Close()
+
+	if err != nil {
+		log.Println(err)
+		return res, err
 	}
 
 	requestBytes, err = ioutil.ReadAll(r.Body)
@@ -35,6 +43,7 @@ func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error)
 	} else {
 		res = requestBytes
 	}
+
 	return res, err
 }
 
@@ -48,7 +57,7 @@ type requestInfo struct {
 	headerWritten bool
 }
 
-func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request, method string, hasBody bool) {
+func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request, method string) {
 	startTime := time.Now()
 
 	parts := strings.Split(config.faasProcess, " ")
@@ -58,6 +67,8 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 	if config.debugHeaders {
 		debugHeaders(&r.Header, "in")
 	}
+
+	log.Println("Forking fprocess.")
 
 	targetCmd := exec.Command(parts[0], parts[1:]...)
 
@@ -75,25 +86,20 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 	var wg sync.WaitGroup
 
 	wgCount := 2
-	if hasBody == false {
-		wgCount = 1
-	}
 
-	if hasBody {
-		var buildInputErr error
-		requestBody, buildInputErr = buildFunctionInput(config, r)
-		if buildInputErr != nil {
-			ri.headerWritten = true
-			w.WriteHeader(http.StatusBadRequest)
-			// I.e. "exit code 1"
-			w.Write([]byte(buildInputErr.Error()))
+	var buildInputErr error
+	requestBody, buildInputErr = buildFunctionInput(config, r)
+	if buildInputErr != nil {
+		ri.headerWritten = true
+		w.WriteHeader(http.StatusBadRequest)
+		// I.e. "exit code 1"
+		w.Write([]byte(buildInputErr.Error()))
 
-			// Verbose message - i.e. stack trace
-			w.Write([]byte("\n"))
-			w.Write(out)
+		// Verbose message - i.e. stack trace
+		w.Write([]byte("\n"))
+		w.Write(out)
 
-			return
-		}
+		return
 	}
 
 	wg.Add(wgCount)
@@ -120,16 +126,14 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 		}()
 	}
 
-	// Only write body if this is appropriate for the method.
-	if hasBody {
-		// Write to pipe in separate go-routine to prevent blocking
-		go func() {
-			defer wg.Done()
-			writer.Write(requestBody)
-			writer.Close()
-		}()
-	}
+	// Write to pipe in separate go-routine to prevent blocking
+	go func() {
+		defer wg.Done()
+		writer.Write(requestBody)
+		writer.Close()
+	}()
 
+	// Read the output from stdout/stderr and combine into one variable for output.
 	go func() {
 		defer wg.Done()
 		out, err = targetCmd.CombinedOutput()
@@ -159,8 +163,11 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 		return
 	}
 
+	var bytesWritten string
 	if config.writeDebug == true {
 		os.Stdout.Write(out)
+	} else {
+		bytesWritten = fmt.Sprintf("Wrote %d Bytes", len(out))
 	}
 
 	if len(config.contentType) > 0 {
@@ -174,8 +181,8 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 		}
 	}
 
+	execTime := time.Since(startTime).Seconds()
 	if ri.headerWritten == false {
-		execTime := time.Since(startTime).Seconds()
 		w.Header().Set("X-Duration-Seconds", fmt.Sprintf("%f", execTime))
 		ri.headerWritten = true
 		w.WriteHeader(200)
@@ -185,6 +192,11 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 	if config.debugHeaders {
 		header := w.Header()
 		debugHeaders(&header, "out")
+	}
+	if len(bytesWritten) > 0 {
+		log.Printf("%s - Duration: %f seconds", bytesWritten, execTime)
+	} else {
+		log.Printf("Duration: %f seconds", execTime)
 	}
 }
 
@@ -199,11 +211,22 @@ func getAdditionalEnvs(config *WatchdogConfig, r *http.Request, method string) [
 		}
 
 		envs = append(envs, fmt.Sprintf("Http_Method=%s", method))
+		envs = append(envs, fmt.Sprintf("Http_ContentLength=%d", r.ContentLength))
 
-		log.Println(r.URL.String())
-		if len(r.URL.String()) > 0 {
-			envs = append(envs, fmt.Sprintf("Http_Query=%s", r.URL.String()))
+		if config.writeDebug {
+			log.Println("Query ", r.URL.RawQuery)
 		}
+		if len(r.URL.RawQuery) > 0 {
+			envs = append(envs, fmt.Sprintf("Http_Query=%s", r.URL.RawQuery))
+		}
+
+		if config.writeDebug {
+			log.Println("Path ", r.URL.Path)
+		}
+		if len(r.URL.Path) > 0 {
+			envs = append(envs, fmt.Sprintf("Http_Path=%s", r.URL.Path))
+		}
+
 	}
 
 	return envs
@@ -216,12 +239,9 @@ func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.
 			"POST",
 			"PUT",
 			"DELETE",
-			"UPDATE":
-			pipeRequest(config, w, r, r.Method, true)
-			break
-		case
+			"UPDATE",
 			"GET":
-			pipeRequest(config, w, r, r.Method, false)
+			pipeRequest(config, w, r, r.Method)
 			break
 		default:
 			w.WriteHeader(http.StatusMethodNotAllowed)
@@ -253,12 +273,15 @@ func main() {
 	http.HandleFunc("/", makeRequestHandler(&config))
 
 	if config.suppressLock == false {
-		path := "/tmp/.lock"
+		path := filepath.Join(os.TempDir(), ".lock")
 		log.Printf("Writing lock-file to: %s\n", path)
 		writeErr := ioutil.WriteFile(path, []byte{}, 0660)
 		if writeErr != nil {
 			log.Panicf("Cannot write %s. To disable lock-file set env suppress_lock=true.\n Error: %s.\n", path, writeErr.Error())
 		}
+	} else {
+		log.Println("Warning: \"suppress_lock\" is enabled. No automated health-checks will be in place for your function.")
 	}
+
 	log.Fatal(s.ListenAndServe())
 }

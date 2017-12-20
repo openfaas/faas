@@ -5,6 +5,7 @@ package requests
 
 // CreateFunctionRequest create a function in the swarm.
 type CreateFunctionRequest struct {
+
 	// Service corresponds to a Docker Service
 	Service string `json:"service"`
 
@@ -27,30 +28,25 @@ type CreateFunctionRequest struct {
 
 	// Constraints are specific to back-end orchestration platform
 	Constraints []string `json:"constraints"`
+
+	// Secrets list of secrets to be made available to function
+	Secrets []string `json:"secrets"`
+
+	// Labels are metadata for functions which may be used by the
+	// back-end for making scheduling or routing decisions
+	Labels *map[string]string `json:"labels"`
+
+	// Limits for function
+	Limits *FunctionResources `json:"limits"`
+
+	// Requests of resources requested by function
+	Requests *FunctionResources `json:"requests"`
 }
 
-// DeleteFunctionRequest delete a deployed function
-type DeleteFunctionRequest struct {
-	FunctionName string `json:"functionName"`
-}
-
-// PrometheusInnerAlertLabel PrometheusInnerAlertLabel
-type PrometheusInnerAlertLabel struct {
-	AlertName    string `json:"alertname"`
-	FunctionName string `json:"function_name"`
-}
-
-// PrometheusInnerAlert PrometheusInnerAlert
-type PrometheusInnerAlert struct {
-	Status string                    `json:"status"`
-	Labels PrometheusInnerAlertLabel `json:"labels"`
-}
-
-// PrometheusAlert as produced by AlertManager
-type PrometheusAlert struct {
-	Status   string                 `json:"status"`
-	Receiver string                 `json:"receiver"`
-	Alerts   []PrometheusInnerAlert `json:"alerts"`
+// FunctionResources Memory and CPU
+type FunctionResources struct {
+	Memory string `json:"memory"`
+	CPU    string `json:"cpu"`
 }
 
 // Function exported for system/functions endpoint
@@ -60,6 +56,10 @@ type Function struct {
 	InvocationCount float64 `json:"invocationCount"` // TODO: shouldn't this be int64?
 	Replicas        uint64  `json:"replicas"`
 	EnvProcess      string  `json:"envProcess"`
+
+	// Labels are metadata for functions which may be used by the
+	// back-end for making scheduling or routing decisions
+	Labels *map[string]string `json:"labels"`
 }
 
 // AsyncReport is the report from a function executed on a queue worker.
@@ -67,4 +67,9 @@ type AsyncReport struct {
 	FunctionName string  `json:"name"`
 	StatusCode   int     `json:"statusCode"`
 	TimeTaken    float64 `json:"timeTaken"`
+}
+
+// DeleteFunctionRequest delete a deployed function
+type DeleteFunctionRequest struct {
+	FunctionName string `json:"functionName"`
 }

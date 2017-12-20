@@ -1,7 +1,7 @@
 ## Functions as a Service (OpenFaaS)
 
 [![Build
-Status](https://travis-ci.org/alexellis/faas.svg?branch=master)](https://travis-ci.org/alexellis/faas)
+Status](https://travis-ci.org/openfaas/faas.svg?branch=master)](https://travis-ci.org/openfaas/faas)
 
 ![https://blog.alexellis.io/content/images/2017/08/faas_side.png](https://blog.alexellis.io/content/images/2017/08/faas_side.png)
 
@@ -11,8 +11,8 @@ FaaS is a framework for building serverless functions with Docker which has firs
 
 * Ease of use through UI portal and *one-click* install
 * Write functions in any language for Linux or Windows and package in Docker/OCI image format
-* Portable - runs on existing hardware or public/private cloud - [Kubernetes](https://github.com/alexellis/faas-netes) or Docker Swarm
-* [CLI](http://github.com/alexellis/faas-cli) available with YAML format for templating and defining functions
+* Portable - runs on existing hardware or public/private cloud - [Kubernetes](https://github.com/openfaas/faas-netes) or Docker Swarm
+* [CLI](http://github.com/openfaas/faas-cli) available with YAML format for templating and defining functions
 * Auto-scales as demand increases
 
 ## Overview of OpenFaaS
@@ -32,7 +32,7 @@ FaaS is a framework for building serverless functions with Docker which has firs
 
 ### CLI
 
-Any container or process in a Docker container can be a serverless function in FaaS. Using the [FaaS CLI](http://github.com/alexellis/faas-cli) you can deploy your functions or quickly create new functions from templates such as Node.js or Python.
+Any container or process in a Docker container can be a serverless function in FaaS. Using the [FaaS CLI](http://github.com/openfaas/faas-cli) you can deploy your functions or quickly create new functions from templates such as Node.js or Python.
 
 ## Notable mentions
 
@@ -54,7 +54,7 @@ Serdar Yegulalp	Senior Technical Writer covered FaaS in a write-up looking at se
 
 There is also a community being built around FaaS with talks, demos and sample functions being built out.
 
-[Find out about community activity](https://github.com/alexellis/faas/blob/master/community.md)
+[Find out about community activity](https://github.com/openfaas/faas/blob/master/community.md)
 
 ## Getting started
 
@@ -72,14 +72,14 @@ Read up on the background, the top 3 highlighted features and what's coming next
 
 **Test Drive OpenFaaS**
 
-You can [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md) FaaS on your laptop in 60 seconds, or deploy to a free online Docker playground. Find out more in the [TestDrive](https://github.com/alexellis/faas/blob/master/TestDrive.md).
+You can [TestDrive](https://github.com/openfaas/faas/blob/master/TestDrive.md) FaaS on your laptop in 60 seconds, or deploy to a free online Docker playground. Find out more in the [TestDrive](https://github.com/openfaas/faas/blob/master/TestDrive.md).
 
-You can dive straight into the [sample functions here](https://github.com/alexellis/faas/blob/master/sample-functions/README.md). You'll find hello-world examples for the most common programming languages including: Golang, DotNet Core, Java, NodeJS, Python even BusyBox.
+You can dive straight into the [sample functions here](https://github.com/openfaas/faas/blob/master/sample-functions/README.md). You'll find hello-world examples for the most common programming languages including: Golang, DotNet Core, Java, NodeJS, Python even BusyBox.
 
-The [faas-cli](https://github.com/alexellis/faas-cli/) lets you speed up development by creating functions from templates for:
+The [faas-cli](https://github.com/openfaas/faas-cli/) lets you speed up development by creating functions from templates for:
 
-* [Node.js](https://github.com/alexellis/faas-cli/blob/master/test_node.sh)
-* [Python](https://github.com/alexellis/faas-cli/blob/master/test_python.sh)
+* [Node.js](https://github.com/openfaas/faas-cli/blob/master/test_node.sh)
+* [Python](https://github.com/openfaas/faas-cli/blob/master/test_python.sh)
 * Ruby
 * CSharp
 
@@ -93,9 +93,9 @@ FaaS enables you to run your serverless functions in whatever language you like,
 
 Contributions to the project are welcome - please send in issues and questions through Github.
 
-[See issues and PRs](https://github.com/alexellis/faas/issues)
+[See issues and PRs](https://github.com/openfaas/faas/issues)
 
 *What about the name?*
 
-FaaS is becoming OpenFaas, see more here: [Issue 123](https://github.com/alexellis/faas/issues/123)
+FaaS is becoming OpenFaas, see more here: [Issue 123](https://github.com/openfaas/faas/issues/123)
 

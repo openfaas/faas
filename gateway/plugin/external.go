@@ -10,14 +10,15 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"strconv"
 	"time"
 
 	"fmt"
 
 	"io/ioutil"
 
-	"github.com/alexellis/faas/gateway/handlers"
-	"github.com/alexellis/faas/gateway/requests"
+	"github.com/openfaas/faas/gateway/handlers"
+	"github.com/openfaas/faas/gateway/requests"
 )
 
 // NewExternalServiceQuery proxies service queries to external plugin via HTTP
@@ -48,23 +49,27 @@ type ExternalServiceQuery struct {
 	ProxyClient http.Client
 }
 
-const maxReplicas = 40
-
 // GetReplicas replica count for function
-func (s ExternalServiceQuery) GetReplicas(serviceName string) (uint64, uint64, error) {
+func (s ExternalServiceQuery) GetReplicas(serviceName string) (uint64, uint64, uint64, error) {
 	var err error
 	function := requests.Function{}
 
 	urlPath := fmt.Sprintf("%ssystem/function/%s", s.URL.String(), serviceName)
-	req, _ := http.NewRequest("GET", urlPath, nil)
-	res, err := s.ProxyClient.Do(req)
-	if err != nil {
-		log.Println(urlPath, err)
-	}
 
-	if res.StatusCode == 200 {
+	req, _ := http.NewRequest(http.MethodGet, urlPath, nil)
+
+	res, err := s.ProxyClient.Do(req)
+
+	if err != nil {
+
+		log.Println(urlPath, err)
+	} else {
+
 		if res.Body != nil {
 			defer res.Body.Close()
+		}
+
+		if res.StatusCode == http.StatusOK {
 			bytesOut, _ := ioutil.ReadAll(res.Body)
 			err = json.Unmarshal(bytesOut, &function)
 			if err != nil {
@@ -73,9 +78,34 @@ func (s ExternalServiceQuery) GetReplicas(serviceName string) (uint64, uint64, e
 		}
 	}
 
-	max := uint64(maxReplicas)
+	maxReplicas := uint64(handlers.DefaultMaxReplicas)
+	minReplicas := uint64(1)
 
-	return function.Replicas, max, err
+	if function.Labels != nil {
+		labels := *function.Labels
+		minScale := labels[handlers.MinScaleLabel]
+		maxScale := labels[handlers.MaxScaleLabel]
+
+		if len(minScale) > 0 {
+			labelValue, err := strconv.Atoi(minScale)
+			if err != nil {
+				log.Printf("Bad replica count: %s, should be uint", minScale)
+			} else {
+				minReplicas = uint64(labelValue)
+			}
+		}
+
+		if len(maxScale) > 0 {
+			labelValue, err := strconv.Atoi(maxScale)
+			if err != nil {
+				log.Printf("Bad replica count: %s, should be uint", maxScale)
+			} else {
+				maxReplicas = uint64(labelValue)
+			}
+		}
+	}
+
+	return function.Replicas, maxReplicas, minReplicas, err
 }
 
 // ScaleServiceRequest request scaling of replica
@@ -99,14 +129,16 @@ func (s ExternalServiceQuery) SetReplicas(serviceName string, count uint64) erro
 	}
 
 	urlPath := fmt.Sprintf("%ssystem/scale-function/%s", s.URL.String(), serviceName)
-	req, _ := http.NewRequest("POST", urlPath, bytes.NewReader(requestBody))
+	req, _ := http.NewRequest(http.MethodPost, urlPath, bytes.NewReader(requestBody))
 	defer req.Body.Close()
 	res, err := s.ProxyClient.Do(req)
 
-	defer res.Body.Close()
-
 	if err != nil {
 		log.Println(urlPath, err)
+	} else {
+		if res.Body != nil {
+			defer res.Body.Close()
+		}
 	}
 
 	if res.StatusCode != http.StatusOK {

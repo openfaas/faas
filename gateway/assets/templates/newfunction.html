@@ -1,0 +1,71 @@
+<md-dialog id="newfunction-dialog" aria-label="List dialog" layout="column" flex="70">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Deploy A New Function</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeDialog()">
+            <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content class="md-padding">
+            <md-tabs md-dynamic-height md-border-bottom md-selected="selectedTabIdx">
+              <md-tab label="From Store" md-on-deselect="onStoreTabDeselect()" md-on-select="onTabSelect(0)">
+                <md-content class="md-padding">
+                  <func-store selected-func="selectedFunc" on-selected="onFuncSelected"></func-store>
+                </md-content>
+              </md-tab>
+              <md-tab label="Manually" md-on-deselect="onManualTabDeselect()" md-on-select="onTabSelect(1)">
+                <md-content class="md-padding">
+                    <div>
+                        <label><i>Use this form to test a function or the <a ng-href="https://github.com/openfaas/faas-cli">faas-cli</a> for more options.</i></label>
+                    </div>
+                    <label>Define the function below:</label>
+                    <form name="userForm">
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <md-tooltip md-direction="bottom">Docker image name and tag to use for function i.e. functions/alpine:latest</md-tooltip>
+                                <label>Docker image:</label>
+                                <input name="dockerImage" ng-model="item.image" required md-maxlength="200" minlength="2">
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <md-tooltip md-direction="bottom">Name of the function - must be a valid DNS entry</md-tooltip>
+                                <label>Function name:</label>
+                                <input name="serviceName" ng-model="item.service" required md-maxlength="200" minlength="2">
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <md-tooltip md-direction="bottom">Process to run as your function i.e. 'env' or 'shasum'. Ignore if using OpenFaaS templates</md-tooltip>
+                                <label>Function process (optional):</label>
+                                <input name="envProcess" ng-model="item.envProcess" md-maxlength="200" minlength="0">
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <md-tooltip md-direction="bottom">Docker Swarm network, not required for other providers. Default: func_functions</md-tooltip>
+                                <label>Network (Swarm):</label>
+                                <input name="network" ng-model="item.network" md-maxlength="200" minlength="0">
+                            </md-input-container>
+                        </div>
+                        <div class="validation-error" layout-gt-xs="row" layout-align="start end">
+                            <span ng-show="validationError">{{ validationError }}</span>
+                        </div>
+                    </form>
+                </md-content>
+              </md-tab>
+            </md-tabs>
+    </md-dialog-content>
+
+    <md-dialog-actions>
+        <md-button ng-click="closeDialog()" class="md-secondary">
+            Close Dialog
+        </md-button>
+        <md-button ng-click="createFunc()" class="md-primary">
+            Deploy
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

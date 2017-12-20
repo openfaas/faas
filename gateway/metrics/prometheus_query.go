@@ -14,6 +14,10 @@ type PrometheusQuery struct {
 	Client *http.Client
 }
 
+type PrometheusQueryFetcher interface {
+	Fetch(query string) (*VectorQueryResponse, error)
+}
+
 // NewPrometheusQuery create a NewPrometheusQuery
 func NewPrometheusQuery(host string, port int, client *http.Client) PrometheusQuery {
 	return PrometheusQuery{
@@ -24,16 +28,18 @@ func NewPrometheusQuery(host string, port int, client *http.Client) PrometheusQu
 }
 
 // Fetch queries aggregated stats
-func (q *PrometheusQuery) Fetch(query string) (*VectorQueryResponse, error) {
+func (q PrometheusQuery) Fetch(query string) (*VectorQueryResponse, error) {
 
-	req, reqErr := http.NewRequest("GET", fmt.Sprintf("http://%s:%d/api/v1/query/?query=%s", q.Host, q.Port, query), nil)
+	req, reqErr := http.NewRequest(http.MethodGet, fmt.Sprintf("http://%s:%d/api/v1/query/?query=%s", q.Host, q.Port, query), nil)
 	if reqErr != nil {
 		return nil, reqErr
 	}
+
 	res, getErr := q.Client.Do(req)
 	if getErr != nil {
 		return nil, getErr
 	}
+
 	defer res.Body.Close()
 	bytesOut, readErr := ioutil.ReadAll(res.Body)
 	if readErr != nil {

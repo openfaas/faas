@@ -5,29 +5,47 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:0.6.6-beta
+        image: functions/gateway:0.6.14
         networks:
             - functions
         environment:
+            read_timeout: 10    # set both here, and on your functions
+            write_timeout: 10   # set both here, and on your functions
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
         deploy:
+            resources:
+                limits:
+                    memory: 100M
+                reservations:
+                    memory: 50M
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 20
+                window: 380s
             placement:
                 constraints:
                     - 'node.role == manager'
                     - 'node.platform.os == linux'
+    # End
+
+    # Start monitoring
+
     prometheus:
         image: functions/prometheus:latest  # autobuild from Dockerfile in repo.
         command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
         ports:
             - 9090:9090
-        depends_on:
-            - gateway
-            - alertmanager
         environment:
             no_proxy: "gateway"
         networks:
             - functions
         deploy:
+            resources:
+                limits:
+                    memory: 500M
+                reservations:
+                    memory: 200M
             placement:
                 constraints:
                     - 'node.role == manager'
@@ -37,19 +55,25 @@ services:
         image: functions/alertmanager:latest    # autobuild from Dockerfile in repo.
         environment:
             no_proxy: "gateway"
-#        volumes:
-#            - ./prometheus/alertmanager.yml:/alertmanager.yml
         command:
             - '-config.file=/alertmanager.yml'
         networks:
             - functions
-        ports:
-            - 9093:9093
+        # Uncomment the following port mapping if you wish to expose the Prometheus
+        # Alertmanager UI.
+        # ports:
+        #     - 9093:9093
         deploy:
+            resources:
+                limits:
+                    memory: 50M
+                reservations:
+                    memory: 20M
             placement:
-                constraints:
+                constraints: 
                     - 'node.role == manager'
                     - 'node.platform.os == linux'
+
     # Sample functions go here.
 
     # Service label of "function" allows functions to show up in UI on http://gateway:8080/
@@ -57,8 +81,6 @@ services:
         image: functions/webhookstash:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -71,11 +93,9 @@ services:
 
     # Pass a username as an argument to find how many images user has pushed to Docker Hub.
     hubstats:
-        image: functions/hubstats:latest 
+        image: functions/hubstats:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -92,8 +112,6 @@ services:
         image: functions/nodeinfo:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -107,11 +125,9 @@ services:
 
     # Uses `cat` to echo back response, fastest function to execute.
     echoit:
-        image: functions/alpine:health
+        image: functions/alpine:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -126,12 +142,10 @@ services:
 
     # Counts words in request with `wc` utility
     wordcount:
-        image: functions/alpine:health
+        image: functions/alpine:latest
         labels:
             function: "true"
             com.faas.max_replicas: "10"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -146,11 +160,9 @@ services:
 
     # Calculates base64 representation of request body.
     base64:
-        image: functions/alpine:health
+        image: functions/alpine:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -165,11 +177,9 @@ services:
 
     # Decodes base64 representation of request body.
     decodebase64:
-        image: functions/alpine:health
+        image: functions/alpine:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -183,11 +193,9 @@ services:
 
     # Converts body in (markdown format) -> (html)
     markdown:
-        image: alexellis2/faas-markdownrender:latest
+        image: functions/markdown-render:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -201,5 +209,4 @@ services:
 networks:
     functions:
         driver: overlay
-        # Docker does not support this option yet - maybe create outside of the stack and reference as "external"?
         #attachable: true

@@ -1,7 +1,11 @@
 #!/bin/sh
 
-# Below makes use of "builder pattern" so that binary is extracted separate
-# from the golang runtime/SDK
+export arch=$(uname -m)
+
+if [ "$arch" = "armv7l" ] ; then
+    echo "Build not supported on $arch, use cross-build."
+    exit 1
+fi
 
 if [ ! $http_proxy == "" ] 
 then
@@ -12,10 +16,10 @@ fi
 
 docker create --name buildoutput functions/watchdog:build echo
 
-docker cp buildoutput:/go/src/github.com/alexellis/faas/watchdog/watchdog ./fwatchdog
-docker cp buildoutput:/go/src/github.com/alexellis/faas/watchdog/watchdog-armhf ./fwatchdog-armhf
-docker cp buildoutput:/go/src/github.com/alexellis/faas/watchdog/watchdog-arm64 ./fwatchdog-arm64
-docker cp buildoutput:/go/src/github.com/alexellis/faas/watchdog/watchdog.exe ./fwatchdog.exe
+docker cp buildoutput:/go/src/github.com/openfaas/faas/watchdog/watchdog ./fwatchdog
+docker cp buildoutput:/go/src/github.com/openfaas/faas/watchdog/watchdog-armhf ./fwatchdog-armhf
+docker cp buildoutput:/go/src/github.com/openfaas/faas/watchdog/watchdog-arm64 ./fwatchdog-arm64
+docker cp buildoutput:/go/src/github.com/openfaas/faas/watchdog/watchdog.exe ./fwatchdog.exe
 
 docker rm buildoutput
 

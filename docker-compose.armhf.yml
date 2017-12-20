@@ -7,9 +7,12 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway-armhf:0.6.0
+        image: functions/gateway:0.6.9-armhf
         networks:
             - functions
+        environment:
+            read_timeout: 10    # set both here, and on your functions
+            write_timeout: 10   # set both here, and on your functions
         deploy:
             placement:
                 constraints: [node.role == manager]
@@ -23,9 +26,6 @@ services:
         command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
         ports:
             - 9090:9090
-        depends_on:
-            - gateway
-            - alertmanager
         environment:
             no_proxy:   "gateway"
         networks:
@@ -45,8 +45,10 @@ services:
             - '-config.file=/alertmanager.yml'
         networks:
             - functions
-        ports:
-            - 9093:9093
+        # Uncomment the following port mapping if you wish to expose the Prometheus
+        # Alertmanager UI.
+        # ports:
+        #     - 9093:9093
         deploy:
             placement:
                 constraints: [node.role == manager]
@@ -56,8 +58,6 @@ services:
         image: functions/nodeinfo:latest-armhf
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -68,8 +68,6 @@ services:
         image: functions/markdownrender:latest-armhf
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -79,8 +77,6 @@ services:
         image: functions/alpine:latest-armhf
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -91,8 +87,6 @@ services:
         image: functions/alpine:latest-armhf
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:

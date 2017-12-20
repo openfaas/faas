@@ -1,12 +1,21 @@
 # Guide on Asynchronous processing
 
-By default functions are accessed synchronously via the following route:
+Asynchronous function calls can be queued up using the following route:
 
 ```
-$ curl --data "message" http://gateway/function/{function_name}
+$ curl --data "message" http://gateway:8080/async-function/{function_name}
 ```
 
-As of [PR #131](https://github.com/alexellis/faas/pull/131) asynchronous invocation is available for testing.
+Summary of modes for calling functions via API Gateway:
+
+| Mode         | Method | URL                                            | Body | Headers  | Query string
+| -------------|--------|------------------------------------------------|------|--------- |------------------- |
+| Synchronous  | POST   | http://gateway:8080/function/{function_name}        | Yes  | Yes      | Yes |
+| Synchronous  | GET    | http://gateway:8080/function/{function_name}        | Yes  | Yes      | Yes |
+| Asynchronous | POST   | http://gateway:8080/async-function/{function_name}  | Yes  | Yes      | Yes [#369](https://github.com/openfaas/faas/issues/369) |
+| Asynchronous | GET    | Not supported                                  | -    | -        | - |
+
+This work was carried out under [PR #131](https://github.com/openfaas/faas/pull/131).
 
 *Logical flow for synchronous functions:*
 
@@ -24,9 +33,11 @@ As of [PR #131](https://github.com/alexellis/faas/pull/131) asynchronous invocat
 
 Here is a conceptual diagram
 
-![](https://user-images.githubusercontent.com/6358735/29469109-cc03c244-843e-11e7-9dfd-a540799dac28.png)
+<img width="1440" alt="screen shot 2017-10-26 at 15 55 19" src="https://user-images.githubusercontent.com/6358735/32060206-047eb75c-ba66-11e7-94d3-1343ea1811db.png">
 
-* [queue-worker](https://github.com/open-faas/nats-queue-worker)
+You can also use asynchronous calls with a callback URL
+
+<img width="1440" alt="screen shot 2017-10-26 at 15 55 06" src="https://user-images.githubusercontent.com/6358735/32060205-04545692-ba66-11e7-9e6d-b800a07b9bf5.png">
 
 ## Deploy the async stack
 
@@ -41,8 +52,8 @@ $ ./deploy_extended.sh
 K8s:
 
 ```
-$ kubectl -f delete ./faas.yml
-$ kubectl -f apply ./faas.async.yml,nats.yml
+$ kubectl delete -f ./faas.yml
+$ kubectl apply -f./faas.async.yml,nats.yml
 ```
 
 ## Call a function
@@ -50,14 +61,16 @@ $ kubectl -f apply ./faas.async.yml,nats.yml
 Functions do not need to be modified to work asynchronously, just use this alternate route:
 
 ```
-$ http://gateway/async-function/{function_name}
+http://gateway:8080/async-function/{function_name}
 ```
 
 If you want the function to call another function or a different endpoint when it is finished then pass the `X-Callback-Url` header. This is optional.
 
 ```
-$ curl http://gateway/async-function/{function_name} --data-binary @sample.json -H "X-Callback-Url: http://gateway/function/send2slack"
+$ curl http://gateway:8080/async-function/{function_name} --data-binary @sample.json -H "X-Callback-Url: http://gateway:8080/function/send2slack"
 ```
+
+You can also use the following site to setup a public endpoint for testing HTTP callbacks: [requestb.in](https://requestb.in)
 
 ## Extend function timeouts
 
@@ -74,4 +87,4 @@ Hard timeout:
 
 To make use of these just add them to your Dockerfile when needed as ENV variables.
 
-> [Function watchdog reference](https://github.com/alexellis/faas/tree/master/watchdog)
+> [Function watchdog reference](https://github.com/openfaas/faas/tree/master/watchdog)

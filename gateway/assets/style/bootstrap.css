@@ -49,3 +49,29 @@ md-input-container .md-errors-spacer {
 .monospace {
   font-family: 'Roboto Mono', monospace;
 }
+
+.validation-error {
+	color: red;
+	height: 52px;
+}
+
+.primary-item .md-list-item-inner{
+    color: rgb(63,81,181);
+    font-weight: 500;
+}
+
+span.md-avatar {
+    font-weight: bold;
+    line-height: 40px;
+    text-align: center;
+    background-color: #1398D6;
+    color: white;
+}
+
+md-icon {
+    opacity: 0.6;
+}
+
+md-icon.link {
+    fill: #303AA5;
+}

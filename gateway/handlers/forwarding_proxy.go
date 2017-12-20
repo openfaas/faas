@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/alexellis/faas/gateway/metrics"
-	"github.com/alexellis/faas/gateway/types"
+	"github.com/openfaas/faas/gateway/metrics"
+	"github.com/openfaas/faas/gateway/types"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
@@ -25,7 +25,8 @@ func MakeForwardingProxyHandler(proxy *httputil.ReverseProxy, metrics *metrics.M
 		proxy.ServeHTTP(writeAdapter, r)
 
 		seconds := time.Since(start).Seconds()
-		log.Printf("< [%s] - %d took %f seconds\n", r.URL.String(), writeAdapter.GetHeaderCode(), seconds)
+		log.Printf("< [%s] - %d took %f seconds\n", r.URL.String(),
+			writeAdapter.GetHeaderCode(), seconds)
 
 		forward := "/function/"
 		if startsWith(uri, forward) {
@@ -39,7 +40,9 @@ func MakeForwardingProxyHandler(proxy *httputil.ReverseProxy, metrics *metrics.M
 
 			code := strconv.Itoa(writeAdapter.GetHeaderCode())
 
-			metrics.GatewayFunctionInvocation.With(prometheus.Labels{"function_name": service, "code": code}).Inc()
+			metrics.GatewayFunctionInvocation.
+				With(prometheus.Labels{"function_name": service, "code": code}).
+				Inc()
 		}
 	}
 }

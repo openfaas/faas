@@ -1,9 +1,0 @@
-FROM golang:1.7.5
-RUN mkdir -p /go/src/app
-COPY handler.go /go/src/app
-WORKDIR /go/src/app
-
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
-
-CMD ["echo"]
-

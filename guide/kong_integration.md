@@ -8,15 +8,15 @@ Below is a demo of how you could use Kong as an authentication layer for OpenFaa
 
 If you haven't already setup OpenFaaS then you can follow one of the deployment guides available here:
 
-* [Docker Swarm](https://github.com/alexellis/faas/blob/master/guide/deployment_swarm.md)
-* [Kubernetes](https://github.com/alexellis/faas/blob/master/guide/deployment_k8s.md)
+* [Docker Swarm](https://github.com/openfaas/faas/blob/master/guide/deployment_swarm.md)
+* [Kubernetes](https://github.com/openfaas/faas/blob/master/guide/deployment_k8s.md)
 
 Here is a quick reference for Docker Swarm:
 
 ```
 $ docker swarm init --advertise-addr $(hostname -i)
 
-$ git clone https://github.com/alexellis/faas && \
+$ git clone https://github.com/openfaas/faas && \
   cd faas && \
   ./deploy_stack.sh
 ```

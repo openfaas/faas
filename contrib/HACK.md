@@ -1,21 +1,25 @@
 ## Build a development API Gateway
 
-Create `functions/gateway:latest-dev`
+1. Build a new development Docker image:
 
 ```
 $ cd gateway/
 $ ./build.sh
 ```
 
-Now edit the gateway service in your `docker-compose.yml` file and deploy the stack.
+This creates a Docker image with the name `functions/gateway:latest-dev`, but if you want to use something else then pass the tag as an argument to the `./build.sh` script. I.e. `./build.sh labels-pr`.
 
-If you want to use an overridden name then pass in the tag to the `./build.sh` script such as `./build.sh test-1`.
+3. Now edit the Docker image for the `gateway` service in your `docker-compose.yml` file.
 
-## Hack on the UI for the API Gateway
+4. Redeploy the stack.
 
-To hack on the UI without rebuilding the gateway mount the assets in a bind-mount like this:
+Test. Repeat.
 
-Remove the Docker stack, then create the faas network as "attachable":
+## Work on the UI the quick way
+
+Working on the UI with the procedure above could take up to a minute to iterate between changing code and testing the changes. This section of the post shows how to bind-mount the UI assets into the API gateway as a separate container.
+
+Remove the Docker stack, then re-define the faas network as "attachable":
 
 ```
 $ docker stack rm func
@@ -31,11 +35,14 @@ networks:
             name: func_functions
 ```
 
-Now you can run the gateway as its own container and bind-mount in the HTML assets.
-
-```
-$ docker run -v `pwd`/gateway/assets:/root/assets -v "/var/run/docker.sock:/var/run/docker.sock" \
--p 8080:8080 --network=func_functions -d functions/gateway:latest-dev
-```
-
 Now deploy the rest of the stack with: `./deploy_stack.sh`.
+
+Now you can run the gateway as its own container via `docker run` and bind-mount in the HTML assets.
+
+```
+$ docker service rm func_gateway
+$ docker run --name func_gateway -v `pwd`/gateway/assets:/root/assets \
+  -v "/var/run/docker.sock:/var/run/docker.sock" \
+  -p 8080:8080 --network=func_functions \
+  -d functions/gateway:latest-dev
+```

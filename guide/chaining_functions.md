@@ -18,8 +18,8 @@ $ curl -d "# test" localhost:8080/function/markdown | \
 You could also do this via code, or through the `faas-cli`:
 
 ```
-$ echo "test" | faas-cli invoke --name markdown | \
-faas-cli invoke --name slack
+$ echo "test" | faas-cli invoke markdown | \
+faas-cli invoke slack
 ```
 
 ## Server-side access via gateway
@@ -79,3 +79,15 @@ GitHub sends a "star" event to tweetfanclub function, tweetfanclub uses get-avat
 This example uses a mix of regular binaries such as ImageMagick and Python handlers generated with the FaaS-CLI.
 
 * [GitHub to Twitter Fanclub](https://github.com/alexellis/faas-twitter-fanclub/blob/master/README.md)
+
+## Asynchronous call-backs
+
+If you invoke a function asynchronously you have two options for getting the result back:
+
+* Update the function
+
+You can update your code to call another function / store state in another service
+
+* X-Callback-Url
+
+If you set a header for `X-Callback-Url` then that will be invoked after the function has run, [read more](https://github.com/openfaas/faas/blob/1aa6270fcc274cc36d90e0a9e4caa3eb71912ae0/guide/asynchronous.md#call-a-function)

@@ -6,19 +6,19 @@ Before you start development, you may want to take FaaS for a test drive which s
 
 > You can test-drive FaaS with a set of sample functions as defined in docker-compose.yml on play-with-docker.com for free, or on your own laptop.
 
-* [Begin the TestDrive instructions](https://github.com/alexellis/faas/blob/master/TestDrive.md)
+* [Begin the TestDrive instructions](https://github.com/openfaas/faas/blob/master/TestDrive.md)
 
 ### Working on the API Gateway or Watchdog
 
 To work on either of the FaaS Golang components checkout the "./build.sh" scripts and acompanying Dockerfiles.
 
-* [Roadmap and Contributing](https://github.com/alexellis/faas/blob/master/ROADMAP.md)
+* [Roadmap and Contributing](https://github.com/openfaas/faas/blob/master/ROADMAP.md)
 
 ### Creating a function
 
 Functions run as Docker containers with the Watchdog component embedded to handle communication with the API Gateway.
 
-You can find the [reference documentation for the Watchdog here](https://github.com/alexellis/faas/tree/master/watchdog).
+You can find the [reference documentation for the Watchdog here](https://github.com/openfaas/faas/tree/master/watchdog).
 
 
 **Markdown Parser**
@@ -35,7 +35,7 @@ RUN go get github.com/microcosm-cc/bluemonday && \
 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 
-ADD https://github.com/alexellis/faas/releases/download/v0.3-alpha/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/v0.3-alpha/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
 ENV fprocess="/go/src/app/app"
@@ -52,8 +52,6 @@ Update the Docker stack with this:
         image: alexellis2/faas-markdownrender:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
 ```
@@ -63,7 +61,7 @@ Update the Docker stack with this:
 ```
 FROM alpine:latest
 
-ADD https://github.com/alexellis/faas/releases/download/v0.3-alpha/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/v0.3-alpha/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
 ENV fprocess="wc"
@@ -77,8 +75,6 @@ Update your Docker stack with this definition:
         image: alexellis2/faas-alpinefunction:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:

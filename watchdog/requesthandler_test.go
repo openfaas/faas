@@ -5,6 +5,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -28,6 +29,7 @@ func TestHandler_HasCustomHeaderInFunction_WithCgi_Mode(t *testing.T) {
 	body := ""
 	req, err := http.NewRequest("POST", "/", bytes.NewBufferString(body))
 	req.Header.Add("custom-header", "value")
+
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -47,9 +49,50 @@ func TestHandler_HasCustomHeaderInFunction_WithCgi_Mode(t *testing.T) {
 
 	read, _ := ioutil.ReadAll(rr.Body)
 	val := string(read)
+	if !strings.Contains(val, "Http_ContentLength=0") {
+		t.Errorf("'env' should printed: Http_ContentLength=0, got: %s\n", val)
+	}
 	if !strings.Contains(val, "Http_Custom_Header") {
 		t.Errorf("'env' should printed: Http_Custom_Header, got: %s\n", val)
+	}
 
+	seconds := rr.Header().Get("X-Duration-Seconds")
+	if len(seconds) == 0 {
+		t.Errorf("Exec of cat should have given a duration as an X-Duration-Seconds header\n")
+	}
+}
+
+func TestHandler_HasCustomHeaderInFunction_WithCgiMode_AndBody(t *testing.T) {
+	rr := httptest.NewRecorder()
+
+	body := "test"
+	req, err := http.NewRequest("POST", "/", bytes.NewBufferString(body))
+	req.Header.Add("custom-header", "value")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	config := WatchdogConfig{
+		faasProcess: "env",
+		cgiHeaders:  true,
+	}
+	handler := makeRequestHandler(&config)
+	handler(rr, req)
+
+	required := http.StatusOK
+	if status := rr.Code; status != required {
+		t.Errorf("handler returned wrong status code: got %v, but wanted %v",
+			status, required)
+	}
+
+	read, _ := ioutil.ReadAll(rr.Body)
+	val := string(read)
+	if !strings.Contains(val, fmt.Sprintf("Http_ContentLength=%d", len(body))) {
+		t.Errorf("'env' should printed: Http_ContentLength=0, got: %s\n", val)
+	}
+	if !strings.Contains(val, "Http_Custom_Header") {
+		t.Errorf("'env' should printed: Http_Custom_Header, got: %s\n", val)
 	}
 
 	seconds := rr.Header().Get("X-Duration-Seconds")

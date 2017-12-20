@@ -1,0 +1,85 @@
+provider:
+  name: faas
+  gateway: http://localhost:8080  # can be a remote server
+
+functions:
+  alpinefunction:
+    lang: Dockerfile
+    handler: ./AlpineFunction
+    image: functions/alpine:0.6.9
+
+  apikeyprotected:
+    lang: Dockerfile
+    handler: ./AlpineFunction
+    image: functions/api-key-protected:latest
+
+  captainsintent:
+    lang: Dockerfile
+    handler: ./CaptainsIntent
+    image: functions/captainsintent:latest
+
+  echo:
+    lang: Dockerfile
+    handler: ./echo
+    image: functions/faas-echo:latest
+
+  changecolorintent:
+    lang: Dockerfile
+    handler: ./ChangeColorIntent
+    image: functions/alexa-leds:latest
+
+  chelloworld:
+    lang: Dockerfile
+    handler: ./CHelloWorld/src
+    image: functions/helloc:latest
+
+  dockerhubstats:
+    lang: Dockerfile
+    handler: ./DockerHubStats
+    image: functions/hubstats:latest
+
+  gif-maker:
+    lang: Dockerfile
+    handler: ./gif-maker
+    image: functions/gif-maker:latest
+
+  hostnameintent:
+    lang: Dockerfile
+    handler: ./HostnameIntent
+    image: functions/hostname-intent:latest
+
+  markdownrender:
+    lang: Dockerfile
+    handler: ./MarkdownRender
+    image: functions/markdown-render:latest
+
+  nodeinfo:
+    lang: Dockerfile
+    handler: ./NodeInfo
+    image: functions/node-info:latest
+
+  phantomjs:
+    lang: Dockerfile
+    handler: ./Phantomjs
+    image: functions/phantomjs:latest
+
+  resizeimagemagick:
+    lang: Dockerfile
+    handler: ./ResizeImageMagick
+    image: functions/resizer:latest
+
+  sentimentanalysis:
+    lang: Dockerfile
+    handler: ./SentimentAnalysis
+    image: functions/sentimentanalysis:latest
+
+  webhookstash:
+    lang: Dockerfile
+    handler: ./WebhookStash
+    image: functions/webhookstash:latest
+
+  wordcountfunction:
+    lang: Dockerfile
+    handler: ./WordCountFunction
+    image: functions/wordcount:latest
+

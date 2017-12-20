@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   description: FaaS API documentation
-  version: 0.6.1
+  version: 0.6.5
   title: FaaS API Gateway
   license:
     name: MIT
@@ -37,6 +37,23 @@ paths:
         - in: body
           name: body
           description: Function to deploy
+          required: true
+          schema:
+            $ref: '#/definitions/CreateFunctionRequest'
+      responses:
+        '200':
+          description: OK
+    put:
+      summary: Update a function.
+      description: ''
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Function to update
           required: true
           schema:
             $ref: '#/definitions/CreateFunctionRequest'
@@ -128,38 +145,59 @@ paths:
           description: Alert handled successfully
         '500':
           description: Internal error with swarm or request JSON invalid
-  /async-function/{functionName}:
+  '/async-function/{functionName}':
     post:
-      summary: 'Invoke a function asynchronously in OpenFaaS - coming in PR 131'
+      summary: 'Invoke a function asynchronously in OpenFaaS'
+      description: >-
+        ### This endpoint requires the asynchronous stack.
+        See https://github.com/openfaas/faas/blob/master/guide/asynchronous.md.
       parameters:
         - in: path
           name: functionName
           description: Function name
           type: string
           required: true
+        - in: body
+          name: input
+          description: (Optional) data to pass to function
+          schema:
+            type: string
+            format: binary
+            example:
+              '{"hello": "world"}'
+          required: false
       responses:
         '202':
           description: Request accepted and queued
-        '500':
-          description: Internal server or queue error
         '404':
           description: Requested function not found
-  /function/{functionName}:
+        '500':
+          description: Internal server error
+  '/function/{functionName}':
     post:
-      summary: 'Invoke a function defined in OpenFaaS'
+      summary: Invoke a function defined in OpenFaaS
       parameters:
         - in: path
           name: functionName
           description: Function name
           type: string
           required: true
+        - in: body
+          name: input
+          description: (Optional) data to pass to function
+          schema:
+            type: string
+            format: binary
+            example:
+              '{"hello": "world"}'
+          required: false
       responses:
         '200':
           description: Value returned from function
-        '500':
-          description: Error connecting to function
         '404':
           description: Function not found
+        '500':
+          description: Error connecting to function
 definitions:
   DeleteFunctionRequest:
     type: object
@@ -187,6 +225,11 @@ definitions:
         items:
           type: string
         description: Overrides to environmental variables
+      secrets:
+        type: array
+        items:
+          type: string
+        description: An array of names of secrets that are required to be loaded from the Docker Swarm.
       registryAuth:
         type: string
         description: >-
@@ -194,4 +237,4 @@ definitions:
           ~/.docker/config.json)
 externalDocs:
   description: More documentation available on Github
-  url: 'https://github.com/alexellis/faas'
+  url: 'https://github.com/openfaas/faas'

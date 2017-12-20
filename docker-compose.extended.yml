@@ -5,17 +5,21 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:0.6.3 
+        image: functions/gateway:0.6.14
         networks:
             - functions
         environment:
+            read_timeout: 10    # set both here, and on your functions
+            write_timeout: 10   # set both here, and on your functions
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
             faas_nats_address: "nats"
             faas_nats_port: 4222
-        # Start Add for NATS Streaming
-        depends_on:
-            - nats
         deploy:
+            resources:
+                limits:
+                    memory: 100M
+                reservations:
+                    memory: 50M
             restart_policy:
                 condition: on-failure
                 delay: 5s
@@ -27,23 +31,38 @@ services:
                     - 'node.platform.os == linux'
 
     nats:
-        image: nats-streaming:0.5.0
-        ports:
-            - 4222:4222
-            - 8222:8222
+        image: nats-streaming:0.6.0
+        # Uncomment the following port mappings if you wish to expose the 
+        # NATS client and/or management ports
+        # ports:
+        #     - 4222:4222
+        #     - 8222:8222
         command: "--store memory --cluster_id faas-cluster"
         networks:
             - functions
         deploy:
+            resources:
+                limits:
+                    memory: 125M
+                reservations:
+                    memory: 50M
             placement:
                 constraints:
                     - 'node.platform.os == linux'
 
     queue-worker:
-        image: functions/queue-worker:0.1.1
+        image: functions/queue-worker:0.4
         networks:
             - functions
+        environment:
+            max_inflight: "1"
+            ack_timeout: "30s"    # Max duration of any async task / request
         deploy:
+            resources:
+                limits:
+                    memory: 50M
+                reservations:
+                    memory: 20M
             restart_policy:
                 condition: on-failure
                 delay: 5s
@@ -55,19 +74,23 @@ services:
 
     # End
 
+    # Start monitoring
+
     prometheus:
         image: functions/prometheus:latest  # autobuild from Dockerfile in repo.
         command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
         ports:
             - 9090:9090
-        depends_on:
-            - gateway
-            - alertmanager
         environment:
             no_proxy: "gateway"
         networks:
             - functions
         deploy:
+            resources:
+                limits:
+                    memory: 500M
+                reservations:
+                    memory: 200M
             placement:
                 constraints:
                     - 'node.role == manager'
@@ -77,15 +100,20 @@ services:
         image: functions/alertmanager:latest    # autobuild from Dockerfile in repo.
         environment:
             no_proxy: "gateway"
-#        volumes:
-#            - ./prometheus/alertmanager.yml:/alertmanager.yml
         command:
             - '-config.file=/alertmanager.yml'
         networks:
             - functions
-        ports:
-            - 9093:9093
+        # Uncomment the following port mapping if you wish to expose the Prometheus
+        # Alertmanager UI.
+        # ports:
+        #     - 9093:9093
         deploy:
+            resources:
+                limits:
+                    memory: 50M
+                reservations:
+                    memory: 20M
             placement:
                 constraints: 
                     - 'node.role == manager'
@@ -95,17 +123,20 @@ services:
 
     # Pass a username as an argument to find how many images user has pushed to Docker Hub.
     hubstats:
-        image: alexellis2/faas-dockerhubstats:latest
+        image: functions/hubstats:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
             no_proxy: "gateway"
             https_proxy: $https_proxy
         deploy:
+            resources:
+                limits:
+                    memory: 50M
+                reservations:
+                    memory: 20M
             placement:
                 constraints:
                     - 'node.platform.os == linux'
@@ -115,25 +146,26 @@ services:
         image: functions/nodeinfo:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
             no_proxy: "gateway"
             https_proxy: $https_proxy
         deploy:
+            resources:
+                limits:
+                    memory: 50M
+                reservations:
+                    memory: 20M
             placement:
                 constraints:
                     - 'node.platform.os == linux'
 
     # Uses `cat` to echo back response, fastest function to execute.
     echoit:
-        image: functions/alpine:health
+        image: functions/alpine:latest
         labels:
             function: "true"
-        depends_on:
-            - gateway
         networks:
             - functions
         environment:
@@ -141,6 +173,11 @@ services:
             no_proxy: "gateway"
             https_proxy: $https_proxy
         deploy:
+            resources:
+                limits:
+                    memory: 50M
+                reservations:
+                    memory: 20M
             placement:
                 constraints:
                     - 'node.platform.os == linux'
@@ -148,5 +185,4 @@ services:
 networks:
     functions:
         driver: overlay
-        # Docker does not support this option yet - maybe create outside of the stack and reference as "external"?
         #attachable: true

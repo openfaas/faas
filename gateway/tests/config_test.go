@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/alexellis/faas/gateway/types"
+	"github.com/openfaas/faas/gateway/types"
 )
 
 type EnvBucket struct {

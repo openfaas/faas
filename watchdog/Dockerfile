@@ -1,6 +1,6 @@
-FROM golang:1.8.3
-RUN mkdir -p /go/src/github.com/alexellis/faas/watchdog
-WORKDIR /go/src/github.com/alexellis/faas/watchdog
+FROM golang:1.8.5
+RUN mkdir -p /go/src/github.com/openfaas/faas/watchdog
+WORKDIR /go/src/github.com/openfaas/faas/watchdog
 
 COPY main.go        .
 COPY readconfig.go  .
@@ -11,9 +11,9 @@ COPY requesthandler_test.go .
 COPY types types
 
 # Run a gofmt and exclude all vendored code.
-RUN gofmt -l -d $(find . -type f -name '*.go' -not -path "./vendor/*")
+RUN test -z "$(gofmt -l $(find . -type f -name '*.go' -not -path "./vendor/*"))"
 
-RUN go test
+RUN go test -v ./...
 
 # Stripping via -ldflags "-s -w" 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-s -w" -installsuffix cgo -o watchdog . \

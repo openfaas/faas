@@ -1,0 +1,39 @@
+version: "3.2"
+services:
+    gateway:
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+        ports:
+            - 8080:8080
+        image: functions/gateway:0.6.9-arm64
+        networks:
+            - functions
+        environment:
+            read_timeout: 10    # set both here, and on your functions
+            write_timeout: 10   # set both here, and on your functions
+            dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
+        deploy:
+            placement:
+                constraints:
+                    - 'node.role == manager'
+                    - 'node.platform.os == linux'
+    prometheus:
+        image: alexellis2/prometheus:1.5.2-arm64
+        command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
+        ports:
+            - 9090:9090
+        environment:
+            no_proxy: "gateway"
+        networks:
+            - functions
+        deploy:
+            placement:
+                constraints:
+                    - 'node.role == manager'
+                    - 'node.platform.os == linux'
+
+networks:
+    functions:
+        driver: overlay
+        # Docker does not support this option yet - maybe create outside of the stack and reference as "external"?
+        #attachable: true
