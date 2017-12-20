@@ -5,9 +5,10 @@ package inttests
 
 import (
 	"encoding/json"
-	"github.com/openfaas/faas/gateway/requests"
 	"net/http"
 	"testing"
+
+	"github.com/openfaas/faas/gateway/requests"
 )
 
 func listFunction(verbose bool) (string, int, error) {
@@ -39,8 +40,8 @@ func TestList(t *testing.T) {
 	}
 
 	for _, result := range results {
-		if result.ReplicaCount != 0 {
-			t.Errorf("Verbose mode should get replicaCount, instead got %v\n", result)
+		if result.AvailableReplicas != 0 {
+			t.Errorf("Verbose mode should get availableReplicas, instead got %v\n", result)
 		}
 	}
 }
@@ -66,8 +67,8 @@ func TestList_verbose(t *testing.T) {
 	}
 
 	for _, result := range results {
-		if result.ReplicaCount != 1 {
-			t.Errorf("Verbose mode should get replicaCount, instead got %v\n", result)
+		if result.AvailableReplicas != 1 {
+			t.Errorf("Verbose mode should get availableReplicas, instead got %v\n", result)
 		}
 	}
 }

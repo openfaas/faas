@@ -298,12 +298,12 @@ func TestReaderSuccessReturnsCorrectBodyWithOneFunctionVerbose(t *testing.T) {
 
 	functions := []requests.Function{
 		requests.Function{
-			Name:            "bar",
-			Image:           "foo/bar:latest",
-			InvocationCount: 0,
-			Replicas:        1,
-			ReplicaCount:    1,
-			EnvProcess:      "bar",
+			Name:              "bar",
+			Image:             "foo/bar:latest",
+			InvocationCount:   0,
+			Replicas:          1,
+			AvailableReplicas: 1,
+			EnvProcess:        "bar",
 			Labels: &map[string]string{
 				"function": "bar",
 			},

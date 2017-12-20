@@ -59,19 +59,19 @@ func MakeFunctionReader(metricsOptions metrics.MetricOptions, serviceClient clie
 				// Required (copy by value)
 				labels := service.Spec.Annotations.Labels
 
-				var replicaCount int
+				var availableReplicas int
 				if _, ok := running[service.ID]; ok {
-					replicaCount = running[service.ID]
+					availableReplicas = running[service.ID]
 				}
 
 				f := requests.Function{
-					Name:            service.Spec.Name,
-					Image:           service.Spec.TaskTemplate.ContainerSpec.Image,
-					InvocationCount: 0,
-					Replicas:        *service.Spec.Mode.Replicated.Replicas,
-					ReplicaCount:    replicaCount,
-					EnvProcess:      envProcess,
-					Labels:          &labels,
+					Name:              service.Spec.Name,
+					Image:             service.Spec.TaskTemplate.ContainerSpec.Image,
+					InvocationCount:   0,
+					Replicas:          *service.Spec.Mode.Replicated.Replicas,
+					AvailableReplicas: availableReplicas,
+					EnvProcess:        envProcess,
+					Labels:            &labels,
 				}
 
 				functions = append(functions, f)
