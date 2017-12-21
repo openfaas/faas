@@ -4,7 +4,7 @@
 
 Guidelines for contributing.
 
-**How can I get involved?**
+#### How can I get involved?
 
 First of all, we'd love to welcome you into our Slack community where we exchange ideas, ask questions and chat about OpenFaaS, Raspberry Pi and other cloud-native technology. (*See below for how to join*)
 
@@ -24,11 +24,11 @@ We have a number of areas where we can accept contributions:
 
 This is just a short list of ideas, if you have other ideas for contributing please make a suggestion.
 
-**I've found a typo**
+#### I've found a typo
 
 * A Pull Request is not necessary. Raise an [Issue](https://github.com/openfaas/faas/issues) and we'll fix it as soon as we can. 
 
-**I have a [great] idea**
+#### I have a [great] idea
 
 The OpenFaaS maintainers would like to make OpenFaaS the best it can be and welcome new contributions that align with the project's goals. Our time is limited so we'd like to make sure we agree on the proposed work before you spend time doing it. Saying "no" is hard which is why we'd rather say "yes" ahead of time.
 
@@ -39,13 +39,14 @@ What makes a good proposal?
 * Brief summary including motivation/context
 * Any design changes
 * Pros + Cons
-* Effort required
+* Effort required up front
+* Effort required for CI/CD, release, ongoing maintenance
 * Migration strategy / backwards-compatibility
 * Mock-up screenshots or examples of how the CLI would work
 
 If you are proposing a new tool or service please do due diligence. Does this tool already exist? Can we reuse it? For example: a timer / CRON-type scheduler for invoking functions. 
 
-**Paperwork for Pull Requests**
+#### Paperwork for Pull Requests
 
 Please read this whole guide and make sure you agree to our DCO agreement (included below):
 
