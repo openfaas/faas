@@ -30,9 +30,9 @@ This is just a short list of ideas, if you have other ideas for contributing ple
 
 #### I have a [great] idea
 
-The OpenFaaS maintainers would like to make OpenFaaS the best it can be and welcome new contributions that align with the project's goals. Our time is limited so we'd like to make sure we agree on the proposed work before you spend time doing it. Saying "no" is hard which is why we'd rather say "yes" ahead of time.
+The OpenFaaS maintainers would like to make OpenFaaS the best it can be and welcome new contributions that align with the project's goals. Our time is limited so we'd like to make sure we agree on the proposed work before you spend time doing it. Saying "no" is hard which is why we'd rather say "yes" ahead of time. You need to raise a proposal.
 
-**Please do not raise a proposal after doing the work - this is counter to the spirit of the project and we find it's easier to be objective that way**
+**Please do not raise a proposal after doing the work - this is counter to the spirit of the project. It is hard to be objective about something which has already been done**
 
 What makes a good proposal?
 
