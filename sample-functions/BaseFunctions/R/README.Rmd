@@ -7,11 +7,11 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Use this FaaS function using R.
+Use this OpenFaaS function using R.
 
 **Deploy the base R function**
 
-(Make sure you have already deployed FaaS with ./deploy_stack.sh in the root of this Github repository.
+(Make sure you have already deployed OpenFaaS with ./deploy_stack.sh in the root of this Github repository.
 
 * Option 1 - click *Create a new function* on the FaaS UI
 
