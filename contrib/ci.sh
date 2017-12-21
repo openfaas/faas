@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 docker swarm init --advertise-addr=127.0.0.1
 
