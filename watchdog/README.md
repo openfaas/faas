@@ -73,7 +73,7 @@ The watchdog can be configured through environmental variables. You must always 
 |------------------------|--------------|
 | `fprocess`             | The process to invoke for each function call (function process). This must be a UNIX binary and accept input via STDIN and output via STDOUT.  |
 | `cgi_headers`          | HTTP headers from request are made available through environmental variables - `Http_X_Served_By` etc. See section: *Handling headers* for more detail. Enabled by default. |
-| `marshal_requests`     | Instead of re-directing the raw HTTP body into your fprocess, it will first be marshalled into JSON. Use this if you need to work with HTTP headers and do not want to use environmental variables via the `cgi_headers` flag. |
+| `marshal_request`     | Instead of re-directing the raw HTTP body into your fprocess, it will first be marshalled into JSON. Use this if you need to work with HTTP headers and do not want to use environmental variables via the `cgi_headers` flag. |
 | `content_type`         | Force a specific Content-Type response for all responses. |
 | `write_timeout`        | HTTP timeout for writing a response body from your function (in seconds)  |
 | `read_timeout`         | HTTP timeout for reading the payload from the client caller (in seconds) |
