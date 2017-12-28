@@ -180,12 +180,19 @@ Auto-scaling starts at 1 replica and steps up in blocks of 5:
 * 10->15
 * 15->20
 
-You can override the upper limit of auto-scaling by setting the following label on your container:
+You can override the minimum and maximum scale of a function through labels.
+
+Add these labels to the deployment if you want to sacle between 2 and 15 replicas.
 
 ```
-com.faas.max_replicas: "10"
+com.openfaas.scale.min: "2"
+com.openfaas.scale.max: "15"
 ```
 
-In Docker Swarm you can disable scaling, set the `com.faas.max_replicas` value to `"1"`.
+The labels are optional.
 
-As an alternative you can also remove or scale AlertManager to zero replicas.
+**Disabling auto-scaling**
+
+If you want to disable auto-scaling for a function then set the minimum and maximum scale to the same value i.e. "1".
+
+As an alternative you can also remove AlertManager or scale it to 0 replicas.
