@@ -4,6 +4,7 @@ let fs = require('fs');
 let util = require('util');
 
 module.exports = (content, callback) => {
+    
     fs.readFile("/etc/hostname", "utf8", (err, data) => {
         let val  = "";
         val += "Hostname: " + data +"\n";

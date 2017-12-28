@@ -7,6 +7,8 @@ RUN chmod +x /usr/bin/fwatchdog
 
 COPY package.json .
 COPY main.js .
+
 RUN npm i
+
 ENV fprocess="node main.js"
 CMD ["fwatchdog"]

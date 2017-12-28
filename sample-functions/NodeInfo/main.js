@@ -5,6 +5,7 @@ let fs = require('fs');
 const getStdin = require('get-stdin');
 
 getStdin().then((content) => {
+    
     fs.readFile("/etc/hostname", "utf8", (err, data) => {
         console.log("Hostname: " + data);
         console.log("Platform: " + os.platform());
