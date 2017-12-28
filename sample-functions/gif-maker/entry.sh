@@ -1,4 +1,5 @@
 #!/bin/sh
+
 export nano=`date +%s%N`
 # -s 600x400
 cat - > ./$nano.mov

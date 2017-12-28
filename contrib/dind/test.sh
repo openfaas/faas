@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 function test_gateway {
 for i in {1..100}
