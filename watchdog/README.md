@@ -36,10 +36,10 @@ Example Dockerfile for an `echo` function:
 ```
 FROM alpine:3.5
 
-ADD https://github.com/openfaas/faas/releases/download/v0.5-alpha/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/0.6.15/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
-# Define your UNIX binary here
+# Define your binary here
 ENV fprocess="/bin/cat"
 
 CMD ["fwatchdog"]
