@@ -25,7 +25,7 @@ $ ./deploy_stack.sh
 
 ## Configure Traefik for Basic Authentication
 
-#### Generate an MD5 hashed password
+### Generate an MD5 hashed password
 
 Use htpasswd to generate a hashed password
 ```
@@ -34,7 +34,7 @@ $  htpasswd -c ./password.txt user
 Add a new password when prompted. The new credentials can be found in
 the `password.txt` file.
 
-#### Add Traefik configuration to docker-compose.yml
+### Add Traefik configuration to docker-compose.yml
 
 Add an entry under `services` with the Traefik configuration
 ```
@@ -63,7 +63,7 @@ services:
                 constraints: [node.role == manager]
 ```
 
-#### Update the Gateway service
+### Update the Gateway service
 
 Traefik requires some service labels to discover the gateway service.
 Update the gateway configuration to remove the port property and add
@@ -93,14 +93,14 @@ include the username and the hashed password. Remember to escape any special
 characters, so if the password contains a `$`, you can escape it by
 doubling up `$$` just like the above.
 
-#### Re-Deploy OpenFaaS
+### Re-Deploy OpenFaaS
 
 Redeploy OpenFaaS to update the service with the new changes.
 ```
 $ ./deploy_stack.sh
 ```
 
-#### Test
+### Test
 
 ```
 $ curl -u user:password -X POST http://localhost/function/func_echoit -d "hello OpenFaaS"
@@ -113,13 +113,16 @@ be greeted with a login alert.
 
 ## Configure Traefik with SSL Support
 
-#### Update Traefik configuration
+### Update Traefik configuration
 
 Traefik makes it extremely easy to add SSL support using
 LetsEncrypt. Add `443` to the list of ports in the `traefik`
 service, add the following flags to the command property
 of the `traefik` service in the `docker-compose.yml` file,
 and add a new `acme` volume under the `volumes` property.
+
+> Note: if you're using the default EC2 DNS entry it may be black-listed by LetsEncrypt, so you will need to obtain your own domain name.
+
 ```
 # docker-compose.yml
 version: "3.2"
@@ -158,12 +161,14 @@ volumes:
 # end of file
 ```
 
-#### Re-Deploy the OpenFaaS service
+### Re-Deploy the OpenFaaS service
+
 ```
 $ ./deploy_stack.sh
 ```
 
-#### Test
+### Test
+
 ```
 $ curl -u user:password -X POST https://your-domain.com/function/func_echoit -d "hello OpenFaaS"
 hello OpenFaaS
