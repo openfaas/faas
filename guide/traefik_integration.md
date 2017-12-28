@@ -116,7 +116,7 @@ be greeted with a login alert.
 #### Update Traefik configuration
 
 Traefik makes it extremely easy to add SSL support using
-LetsEncrypt. Add `443` to the list of ports in the `traefik`
+LetsEncrypt. **However, this will not work for Amazon EC2 domain names**, because they are blacklisted by LetsEncrypt. Make sure to use your own domain name if deploying on EC2. Add `443` to the list of ports in the `traefik`
 service, add the following flags to the command property
 of the `traefik` service in the `docker-compose.yml` file,
 and add a new `acme` volume under the `volumes` property.
