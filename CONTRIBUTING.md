@@ -66,7 +66,10 @@ Please raise an Issue or email alex@openfaas.com for an invitation to our Slack 
 
 **I need to add a dependency**
 
-We are using the `vndr` tool across all projects. Get [started here](https://github.com/LK4D4/vndr).
+We use vendoring for projects written in Go. This means that we will maintain a copy of the source-code of dependencies within Git. It allows a repeatable build and isolates change. 
+
+* Legacy: `vndr` - https://github.com/LK4D4/vndr
+* New projects: `dep` - https://github.com/golang/dep
 
 **How do I become a maintainer?**
 
@@ -75,6 +78,7 @@ Maintainers are well-known contributors who help with:
 * Joining contributor meetings and supporting new contributors
 * Testing and reviewing pull requests
 * Offering other project support and strategical advice
+* Attending contributors' meetings
 
 Varying levels of write access are made available via our project bot [Derek](https://github.com/alexellis/derek) to help regular contributors transition to maintainers.
 
