@@ -33,3 +33,7 @@ The gateway can be configured through the following environment variables:
 | `faas_nats_port`    | Port for NATS service. Requrired for asynchronous mode. |
 | `faas_prometheus_host`         | Host to connect to Prometheus. Default: `"prometheus"`.  |
 | `faas_promethus_port`         | Port to connect to Prometheus. Default: `9090`. |
+| `logger_format`  | Format for log file output, TEXT, JSON. Default: `TEXT`. |
+| `logger_output` | Write the log to a file at the given location. Default: stdout |
+| `logger_level` | Log level to output, INFO, DEBUG, WARNING. Default: `INFO` |
+| `statsd_server` | Address of the statsD server to send metrics to. |

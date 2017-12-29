@@ -19,7 +19,7 @@ import (
 	"github.com/openfaas/faas/gateway/requests"
 )
 
-func MakeDeleteFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Client) http.HandlerFunc {
+func MakeDeleteFunctionHandler(metricsOptions metrics.Metrics, c *client.Client) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		req := requests.DeleteFunctionRequest{}

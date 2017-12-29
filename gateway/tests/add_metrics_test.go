@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/openfaas/faas/gateway/metrics"
+	metrics "github.com/openfaas/faas/gateway/metrics/prometheus"
 	"github.com/openfaas/faas/gateway/requests"
 )
 

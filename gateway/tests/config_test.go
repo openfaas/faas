@@ -151,3 +151,67 @@ func TestRead_PrometheusDefaults(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestRead_UseStatsD(t *testing.T) {
+	defaults := NewEnvBucket()
+	defaults.Setenv("statsd_server", "localhost:9134")
+	readConfig := types.ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.StatsDServer != "localhost:9134" {
+		t.Logf("config.StatsDServer, want: %s, got: %s\n", "localhost:9134", config.StatsDServer)
+		t.Fail()
+	}
+}
+
+func TestRead_LoggerFormat(t *testing.T) {
+	defaults := NewEnvBucket()
+	defaults.Setenv("logger_format", "JSON")
+	readConfig := types.ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.LoggerFormat != "JSON" {
+		t.Logf("config.LoggerFormat, want: %s, got: %s\n", "JSON", config.LoggerFormat)
+		t.Fail()
+	}
+}
+
+func TestRead_LoggerOutput(t *testing.T) {
+	defaults := NewEnvBucket()
+	defaults.Setenv("logger_output", "/log/gateway.log")
+	readConfig := types.ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.LoggerFileOutput != "/log/gateway.log" {
+		t.Logf("config.LoggerFileOutput, want: %s, got: %s\n", "/log/gateway.log", config.LoggerFileOutput)
+		t.Fail()
+	}
+}
+
+func TestRead_LoggerLevel(t *testing.T) {
+	defaults := NewEnvBucket()
+	defaults.Setenv("logger_level", "DEBUG")
+	readConfig := types.ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.LoggerLevel != "DEBUG" {
+		t.Logf("config.LoggerLevel, want: %s, got: %s\n", "DEBUG", config.LoggerFileOutput)
+		t.Fail()
+	}
+}
+
+func TestRead_LoggerLevelDefault(t *testing.T) {
+	defaults := NewEnvBucket()
+	readConfig := types.ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.LoggerLevel != "INFO" {
+		t.Logf("config.LoggerLevel, want: %s, got: %s\n", "INFO", config.LoggerFileOutput)
+		t.Fail()
+	}
+}

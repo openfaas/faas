@@ -28,7 +28,7 @@ import (
 var linuxOnlyConstraints = []string{"node.platform.os == linux"}
 
 // MakeNewFunctionHandler creates a new function (service) inside the swarm network.
-func MakeNewFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Client, maxRestarts uint64, restartDelay time.Duration) http.HandlerFunc {
+func MakeNewFunctionHandler(metricsOptions metrics.Metrics, c *client.Client, maxRestarts uint64, restartDelay time.Duration) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 		body, _ := ioutil.ReadAll(r.Body)

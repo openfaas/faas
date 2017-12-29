@@ -17,7 +17,7 @@ import (
 )
 
 // MakeUpdateFunctionHandler request to update an existing function with new configuration such as image, envvars etc.
-func MakeUpdateFunctionHandler(metricsOptions metrics.MetricOptions, c *client.Client, maxRestarts uint64, restartDelay time.Duration) http.HandlerFunc {
+func MakeUpdateFunctionHandler(metricsOptions metrics.Metrics, c *client.Client, maxRestarts uint64, restartDelay time.Duration) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := context.Background()
 

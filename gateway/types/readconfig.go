@@ -97,6 +97,28 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 		cfg.PrometheusHost = prometheusHost
 	}
 
+	statsDServer := hasEnv.Getenv("statsd_server")
+	if len(statsDServer) > 0 {
+		cfg.StatsDServer = statsDServer
+	}
+
+	loggerFormat := hasEnv.Getenv("logger_format")
+	if len(loggerFormat) > 0 {
+		cfg.LoggerFormat = loggerFormat
+	}
+
+	loggerLevel := hasEnv.Getenv("logger_level")
+	if len(loggerLevel) > 0 {
+		cfg.LoggerLevel = loggerLevel
+	} else {
+		cfg.LoggerLevel = "INFO"
+	}
+
+	loggerLogLocation := hasEnv.Getenv("logger_output")
+	if len(loggerLogLocation) > 0 {
+		cfg.LoggerFileOutput = loggerLogLocation
+	}
+
 	return cfg
 }
 
@@ -123,6 +145,20 @@ type GatewayConfig struct {
 
 	// Port to connect to Prometheus.
 	PrometheusPort int
+
+	// StatsD endpoint for exposing StatsD metrics
+	StatsDServer string
+
+	// LoggerFormat is the type of the log output: TEXT, JSON
+	LoggerFormat string
+
+	// LoggerFileOutput is the location of the logfile to write, if blank logs
+	// will be written to stdout
+	LoggerFileOutput string
+
+	// LoggerLevel sets the log level, default value is INFO
+	// Optional values DEBUG, WARNING
+	LoggerLevel string
 }
 
 // UseNATS Use NATSor not

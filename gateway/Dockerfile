@@ -7,6 +7,7 @@ COPY vendor         vendor
 
 COPY handlers       handlers
 COPY metrics        metrics
+COPY replicas       replicas
 COPY requests       requests
 COPY tests          tests
 
