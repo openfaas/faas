@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"strconv"
 
 	"github.com/openfaas/faas/gateway/requests"
@@ -56,8 +57,8 @@ func AddMetricsHandler(handler http.HandlerFunc, prometheusQuery PrometheusQuery
 		}
 
 		// log.Printf("Querying Prometheus API\n")
-		// `sum(gateway_function_invocation_total{function_name=~".*", code=~".*"}) by (function_name, code)`)
-		expr := "sum(gateway_function_invocation_total%7Bfunction_name%3D~%22.*%22%2C+code%3D~%22.*%22%7D)+by+(function_name%2C+code)"
+		expr := url.QueryEscape(`sum(gateway_function_invocation_total{function_name=~".*", code=~".*"}) by (function_name, code)`)
+		// expr := "sum(gateway_function_invocation_total%7Bfunction_name%3D~%22.*%22%2C+code%3D~%22.*%22%7D)+by+(function_name%2C+code)"
 		results, fetchErr := prometheusQuery.Fetch(expr)
 		if fetchErr != nil {
 			log.Printf("Error querying Prometheus API: %s\n", fetchErr.Error())
