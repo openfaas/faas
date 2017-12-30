@@ -18,6 +18,15 @@ Listed by reward, followed by miscellaneous amounts. Names are (pending) until f
 * Wesley Kennedy
 * Owen Dall Sotomayor
 * Glenn Grant (pending)
+* Theo Pack (pending)
+
+**#TeamServerless backers**
+
+Pav Jimanov (pending)
+
+**#FaaSFriday**
+
+Toby Boudreaux (pending)
 
 **OpenFaaS backers (reward)**
 
