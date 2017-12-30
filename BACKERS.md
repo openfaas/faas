@@ -1,6 +1,8 @@
 ## Project backers
 
-This page shows the project's backers and sponsors. Thank you for your help
+> Disclaimer: all Patrons regardless of the level of reward are making a monthly pledge to donate money to support Alex Ellis. This does not represent an investment, stake or ownership in the OpenFaaS project, OpenFaaS Ltd or any other related entity.
+
+Thank you for your help
 
 View this page for live data [on Patreon for everyone who has pledged](https://www.patreon.com/alexellis).
 
@@ -44,8 +46,6 @@ Toby Boudreaux (pending)
 * Richard Petersen-Hall (pending)
 
 **OpenFaaS patrons (reward)**
-
-**OpenFaaS fanclub (reward)**
 
 **Misc. amount**
 
