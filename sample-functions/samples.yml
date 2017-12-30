@@ -83,3 +83,8 @@ functions:
     handler: ./WordCountFunction
     image: functions/wordcount:latest
 
+  nmap:
+    lang: Dockerfile
+    handler: ./Nmap
+    image: functions/nmap:0.1
+
