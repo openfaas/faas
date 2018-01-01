@@ -1,6 +1,6 @@
 FROM arm64v8/alpine:3.5
 
-workdir /root
+WORKDIR /root
 RUN apk add --update libarchive-tools
 
 ADD https://github.com/prometheus/prometheus/releases/download/v1.5.2/prometheus-1.5.2.linux-arm64.tar.gz /root/
