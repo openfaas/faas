@@ -9,15 +9,38 @@ Welcome to the OpenFaaS community page where you can find:
 There are three main Github repos
 
 * FaaS - the main OpenFaaS repo for the Docker Swarm integration, samples and documentation
-* [FaaS-netes](http://github.com/openfaas/faas-netes) - the Kubernetes back-end for FaaS
 * [FaaS-cli](http://github.com/openfaas/faas-cli) - the user-facing CLI for templating and deploying functions
 
 > It would be great to hear from you especially if you have any of the above and want to share it with the rest of the community. Pull Request or submit a Github Issue.
+
+### Industry awards and mentions
+
+| Award/Mention                                          | Author(s)       | Source     | Date        |
+|---------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFaaS added to CNCF Cloud Native Landscape - Serverless/Event-based](https://github.com/cncf/landscape/blob/master/landscape/CloudNativeLandscape_latest.jpg) | [Cloud Native Computing Foundation (CNCF)](https://www.cncf.io/) | Github | 23-Oct-2017 |
+| [OpenFaaS: Package any Binary or Code as a Serverless Function](https://thenewstack.io/openfaas-put-serverless-function-container/) | Joab Jackson | The New Stack | 9-Oct-2017 |
+| [Functions-as-a-Service Landscape](https://medium.com/memory-leak/this-year-gartner-added-serverless-to-its-hype-cycle-of-emerging-technologies-reflecting-the-5dfe43d818f0) | Astasia Myers | Redpoint Ventures | 4-Oct-2017 |
+| 🏆 [Bossie Award for Cloud Computing 2017](https://www.infoworld.com/article/3227920/cloud-computing/bossie-awards-2017-the-best-cloud-computing-software.html#slide7) |  Martin Heller, Andrew C. Oliver and Serdar Yegulalp| InfoWorld (from IDG) |  27-Sep-2017 |
+| [Open source project uses Docker for serverless computing](http://www.infoworld.com/article/3184757/open-source-tools/open-source-project-uses-docker-for-serverless-computing.html#tk.twt_ifw)| Serdar Yegulalp  | InfoWorld (from IDG)  | 27-Mar-2017 |
+
+### OpenFaaS providers
+| Project name and description                                         | Author     | Site      | Status      |
+|----------------------------------------------------------------------|------------|-----------|-------------|
+| [faas-netes](https://github.com/openfaas/faas-netes) - Kubernetes provider | OpenFaaS | github.com | Supported |
+| [faas-swarm](https://github.com/openfaas/faas-swarm) - Docker Swarm provider | OpenFaaS | github.com | Supported |
+| [faas-nomad](https://github.com/hashicorp/faas-nomad) - Nomad provider | Nic Jackson (Hashicorp) | github.com | Incubation  |
+| [faas-rancher](https://github.com/kenfdev/faas-rancher) - Rancher/Cattle provider | Ken Fukuyama | github.com | Incubation |
+| [faas-dcos](https://github.com/realbot/faas-dcos) - DCOS provider | Alberto Quario | github.com | Inception  |
+| [faas-hyper](https://github.com/hyperhq/faas-hyper) - Hyper.sh provider | Hyper | github.com | Incubation |
+| [faas-guardian](https://github.com/nwright-nz/openfaas-guardian-backend) - Guardian provider | Nigel Wright | github.com | Inception |
+| [faas-ecs](https://github.com/stack360/faas-ecs) | Xicheng Chang (Huawei) | github.com | Inception |
+
 
 ### Events 2017
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Talk: Building a Raspberry Pi Kubernetes Cluster with OpenFaaS](https://ndc-london.com/talk/building-a-raspberry-pi-kubernetes-cluster-and-running-.net-core/) | Alex Ellis / Scott Hanselman | London | 18-Jan-2018 |
 | [OpenFaaS @ KubeCon + CloudNativeCon](https://kccncna17.sched.com/event/CU6s/faas-and-furious-0-to-serverless-in-60-seconds-anywhere-alex-ellis-adp) | Alex Ellis | Austin, USA | 07-Dec-2017 |
 | [OpenFaaS presentation + Demo on Kubernetes @ Paris Serverless Meetup](https://www.meetup.com/fr-FR/Paris-Serverless-Architecture-Meetup/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 14-Nov-2017 |
 | [OpenFaaS - Serverless Functions Made Simple @ Docker Cambridge Meetup](https://www.meetup.com/docker-cambridge/events/243206434/) | Alex Ellis | Cambridge, UK | 20-Nov-2017 |
@@ -42,21 +65,13 @@ There are three main Github repos
 | [Operationalizing Containers](http://www.rackspace-inform.eu/dispatcher/action?wlmsac=t1ejSDdh1hygBurJJANV)| Brian Christner   | Zürich   | 5-April-2017 |
 | [FaaS on Hacker News](https://news.ycombinator.com/item?id=13920588)| Alex Ellis   | Online   | 22-Mar-2017 |
 
-### Industry awards and mentions
-
-| Award/Mention                                          | Author(s)       | Source     | Date        |
-|---------------------------------------------------------------------|--------------|----------|-------------|
-| [OpenFaaS added to CNCF Cloud Native Landscape - Serverless/Event-based](https://github.com/cncf/landscape/blob/master/landscape/CloudNativeLandscape_latest.jpg) | [Cloud Native Computing Foundation (CNCF)](https://www.cncf.io/) | Github | 23-Oct-2017 |
-| [OpenFaaS: Package any Binary or Code as a Serverless Function](https://thenewstack.io/openfaas-put-serverless-function-container/) | Joab Jackson | The New Stack | 9-Oct-2017 |
-| [Functions-as-a-Service Landscape](https://medium.com/memory-leak/this-year-gartner-added-serverless-to-its-hype-cycle-of-emerging-technologies-reflecting-the-5dfe43d818f0) | Astasia Myers | Redpoint Ventures | 4-Oct-2017 |
-| 🏆 [Bossie Award for Cloud Computing 2017](https://www.infoworld.com/article/3227920/cloud-computing/bossie-awards-2017-the-best-cloud-computing-software.html#slide7) |  Martin Heller, Andrew C. Oliver and Serdar Yegulalp| InfoWorld (from IDG) |  27-Sep-2017 |
-| [Open source project uses Docker for serverless computing](http://www.infoworld.com/article/3184757/open-source-tools/open-source-project-uses-docker-for-serverless-computing.html#tk.twt_ifw)| Serdar Yegulalp  | InfoWorld (from IDG)  | 27-Mar-2017 |
-
 
 ### Blog posts and write-ups
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Podcast - Hanselminutes - Serverless and OpenFaas with Alex Ellis](https://www.hanselminutes.com) | Scott Hanselman | hanselminutes.com | 29-Dec-2017
+| [Podcast - How Serverless Technologies Impact Kubernetes](https://thenewstack.io/serverless-technologies-impact-kubernetes/) | thenewstack.io | 28-Dec-2017 |
 | [OpenFaaS on DCOS](https://medium.com/@realrealbot/openfaas-on-dcos-9d5927f4e725) | Alberto Quario | medium.com/@realrealbot  | 20-Dec-2017
 | [Deploying Kubernetes On-Premise with RKE and deploying OpenFaaS on it — Part 1](https://medium.com/@kenfdev/deploying-kubernetes-on-premise-with-rke-and-deploying-openfaas-on-it-part-1-69a35ddfa507) | Ken Fukuyama | medium.com/@kenfdev  | 10-Dec-2017
 | [Deploying Kubernetes On-Premise with RKE and deploying OpenFaaS on it — Part 2](https://medium.com/@kenfdev/deploying-kubernetes-on-premise-with-rke-and-deploying-openfaas-on-it-part-2-cc14004e7007) | Ken Fukuyama | medium.com/@kenfdev  | 10-Dec-2017
@@ -110,17 +125,6 @@ There are three main Github repos
 | [Docker-awesome curated projects](https://github.com/veggiemonk/awesome-docker#serverless) | Julien Bisconti | Github.com | 23-Mar-2017 |
 | [Functions as a Service (FaaS) in French](http://blog.alexellis.io/fonction-service/) | Alex Ellis | alexellis.io | 13-Jan-2017 |
 | [Functions as a Service (FaaS)](http://blog.alexellis.io/functions-as-a-service/) | Alex Ellis | alexellis.io | 4-Jan-2017 |
-
-### Third-party integrations / OpenFaaS providers
-| Project name and description                                         | Author     | Site      | Status      |
-|----------------------------------------------------------------------|------------|-----------|-------------|
-| [faas-netes](https://github.com/openfaas/faas-netes) - Kubernetes provider | OpenFaaS | github.com | Supported |
-| [faas-nomad](https://github.com/hashicorp/faas-nomad) - Nomad provider | Hashicorp | github.com | Incubation  |
-| [faas-rancher](https://github.com/kenfdev/faas-rancher) - Rancher/Cattle provider | Ken Fukuyama | github.com | Incubation |
-| [faas-hyper](https://github.com/hyperhq/faas-hyper) - Hyper.sh provider | Hyper | github.com | Incubation |
-| [faas-guardian](https://github.com/nwright-nz/openfaas-guardian-backend) - Guardian provider | Nigel Wright | github.com | Inception |
-| [faas-ecs](https://github.com/stack360/faas-ecs) - Huawei | Xicheng Chang | github.com | Inception |
-| [faas-dcos](https://github.com/realbot/faas-dcos) - DCOS provider | Alberto Quario | github.com | Inception  |
 
 ### Repos - projects / samples / use cases
 
