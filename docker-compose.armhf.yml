@@ -21,7 +21,7 @@ services:
         image: alexellis2/prometheus-armhf:1.5.2
         volumes:
             - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-            - ./prometheus/alert.rules:/etc/prometheus/alert.rules
+            - ./prometheus/k8s.alert.rules:/etc/prometheus/alert.rules
 
         command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
         ports:
