@@ -1,5 +1,0 @@
-FROM prom/prometheus:v2.0.0
-
-COPY k8s.prometheus.yml /etc/prometheus/prometheus.yml
-COPY k8s.alert.rules.yml /etc/prometheus/alert.rules.yml
-
