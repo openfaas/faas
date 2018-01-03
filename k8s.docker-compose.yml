@@ -82,8 +82,8 @@ services:
         ports:
             - 9090:9090
         volumes:
-           - ./prometheus/alert.rules.yml:/etc/prometheus/alert.rules.yml
-           - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+           - ./prometheus/alert.rules.yml:/etc/prometheus/k8s.alert.rules.yml
+           - ./prometheus/prometheus.yml:/etc/prometheus/k8s.prometheus.yml
         environment:
             no_proxy: "gateway"
         networks:
@@ -108,7 +108,7 @@ services:
         networks:
             - functions
         volumes:
-            - ./prometheus/alertmanager.yml:/alertmanager.yml
+            - ./prometheus/k8s.alertmanager.yml:/alertmanager.yml
         # Uncomment the following port mapping if you wish to expose the Prometheus
         # Alertmanager UI.
         # ports:
