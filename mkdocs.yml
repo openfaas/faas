@@ -125,5 +125,11 @@ pages:
     - Debugging: developer/debug.md
     - Backends: developer/backends.md
     - Function Chaining: developer/chaining_functions.md
+  - Tutorials:
+    - Secret Management: operations/secure_secret_management.md
+    - Private Registry: operations/managing-images.md
+    - Performance Testing: operations/performance_testing.md
+    - Interacting w/ Other Containers: operations/interactions.md
+  - Troubleshooting: troubleshooting.md
   - Contributing: contributing.md
   
