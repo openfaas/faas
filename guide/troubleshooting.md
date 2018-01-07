@@ -128,13 +128,9 @@ $ kubectl describe deploy/FUNCTION
 ### Remove the OpenFaaS deployment
 
 ```
-$ kubectl delete -f faas.yml,monitoring.yml,rbac.yml
-```
-
-If you're using the async stack remove it this way:
-
-```
-$ kubectl delete -f faas.async.yml,monitoring.yml,rbac.yml,nats.yml
+$ git clone https://github.com/openfaas/faas-netes/ && \
+  cd faas-netes && \
+  kubectl delete -f ./yaml/
 ```
 
 ## Watchdog
