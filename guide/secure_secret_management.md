@@ -22,7 +22,7 @@ functions:
 You can then deploy and invoke the function via the `faas-cli` using
 ```sh
 $ faas-cli deploy -f ./samples.yml
-$ fass-cli invoke nodehelloenv
+$ faas-cli invoke nodehelloenv
 Hello from a production machine
 ```
 
