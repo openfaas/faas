@@ -57,7 +57,7 @@ This command is split into two parts so that the OpenFaaS namespaces are always 
 
 ```
 $ cd faas-netes && \
- kubectl apply -f ./yaml/namespaces.yml && \
+ kubectl apply -f ./namespaces.yml && \
  kubectl apply -f ./yaml
 ```
 
