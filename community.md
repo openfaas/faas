@@ -24,16 +24,16 @@ There are three main Github repos
 | [Open source project uses Docker for serverless computing](http://www.infoworld.com/article/3184757/open-source-tools/open-source-project-uses-docker-for-serverless-computing.html#tk.twt_ifw)| Serdar Yegulalp  | InfoWorld (from IDG)  | 27-Mar-2017 |
 
 ### OpenFaaS providers
-| Project name and description                                         | Author     | Site      | Status      |
-|----------------------------------------------------------------------|------------|-----------|-------------|
-| [faas-netes](https://github.com/openfaas/faas-netes) - Kubernetes provider | OpenFaaS | github.com | Supported |
-| [faas-swarm](https://github.com/openfaas/faas-swarm) - Docker Swarm provider | OpenFaaS | github.com | Supported |
-| [faas-nomad](https://github.com/hashicorp/faas-nomad) - Nomad provider | Nic Jackson (Hashicorp) | github.com | Incubation  |
-| [faas-rancher](https://github.com/kenfdev/faas-rancher) - Rancher/Cattle provider | Ken Fukuyama | github.com | Incubation |
-| [faas-dcos](https://github.com/realbot/faas-dcos) - DCOS provider | Alberto Quario | github.com | Inception  |
-| [faas-hyper](https://github.com/hyperhq/faas-hyper) - Hyper.sh provider | Hyper | github.com | Incubation |
-| [faas-guardian](https://github.com/nwright-nz/openfaas-guardian-backend) - Guardian provider | Nigel Wright | github.com | Inception |
-| [faas-ecs](https://github.com/stack360/faas-ecs) | Xicheng Chang (Huawei) | github.com | Inception |
+| Project name and description                                         | Author     | Site      | Status      | Official
+|----------------------------------------------------------------------|------------|-----------|-------------|----------|
+| [faas-netes](https://github.com/openfaas/faas-netes) - Kubernetes provider | OpenFaaS | github.com | Supported | Yes |
+| [faas-swarm](https://github.com/openfaas/faas-swarm) - Docker Swarm provider | OpenFaaS | github.com | Supported | Yes |
+| [faas-nomad](https://github.com/hashicorp/faas-nomad) - Nomad provider | Nic Jackson (Hashicorp) | github.com | Incubation  | Community |
+| [faas-rancher](https://github.com/kenfdev/faas-rancher) - Rancher/Cattle provider | Ken Fukuyama | github.com | Incubation | Community |
+| [faas-dcos](https://github.com/realbot/faas-dcos) - DCOS provider | Alberto Quario | github.com | Inception  | Community |
+| [faas-hyper](https://github.com/hyperhq/faas-hyper) - Hyper.sh provider | Hyper | github.com | Incubation |  n/a |
+| [faas-guardian](https://github.com/nwright-nz/openfaas-guardian-backend) - Guardian provider | Nigel Wright | github.com | Inception |  n/a |
+| [faas-ecs](https://github.com/stack360/faas-ecs) | Xicheng Chang (Huawei) | github.com | Inception | n/a |
 
 
 ### Events 2017
