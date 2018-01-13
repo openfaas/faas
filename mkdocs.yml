@@ -131,5 +131,6 @@ pages:
     - Performance Testing: operations/performance_testing.md
     - Interacting w/ Other Containers: operations/interactions.md
   - Troubleshooting: troubleshooting.md
+  - Roadmap: roadmap.md
   - Contributing: contributing.md
   
