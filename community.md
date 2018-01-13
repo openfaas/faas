@@ -31,10 +31,16 @@ There are three main Github repos
 | [faas-nomad](https://github.com/hashicorp/faas-nomad) - Nomad provider | Nic Jackson (Hashicorp) | github.com | Incubation  | Community |
 | [faas-rancher](https://github.com/kenfdev/faas-rancher) - Rancher/Cattle provider | Ken Fukuyama | github.com | Incubation | Community |
 | [faas-dcos](https://github.com/realbot/faas-dcos) - DCOS provider | Alberto Quario | github.com | Inception  | Community |
-| [faas-hyper](https://github.com/hyperhq/faas-hyper) - Hyper.sh provider | Hyper | github.com | Incubation |  n/a |
+| [faas-hyper](https://github.com/hyperhq/faas-hyper) - Hyper.sh provider | Hyper | github.com | Inception |  n/a |
 | [faas-guardian](https://github.com/nwright-nz/openfaas-guardian-backend) - Guardian provider | Nigel Wright | github.com | Inception |  n/a |
 | [faas-ecs](https://github.com/stack360/faas-ecs) | Xicheng Chang (Huawei) | github.com | Inception | n/a |
 
+Key:
+
+* Supported - stable and supported by the OpenFaaS project
+* Community - actively being developed, support provided by a third-party
+* Incubation - actively being developed, but not stable
+* Inception - more work needed. May work in happy path scenario, but unlikely to be suitable for production
 
 ### Events 2017
 
