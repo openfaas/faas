@@ -32,7 +32,7 @@ If you would like to write your own back-end for `X` then you can write your own
 
 In order to support a new back end you will write a new "external_provider" and configure this on the API Gateway. The API Gateway will then proxy any requests to your new microservice. The first "external_provider" was the Kubernetes implementation [faas-netes](https://github.com/openfaas/faas-netes):
 
-![](https://camo.githubusercontent.com/c250e0dc975e50b6fae3fc84ba5cdc0274bc305c/68747470733a2f2f7062732e7477696d672e636f6d2f6d656469612f44466837692d5a586b41415a6b77342e6a70673a6c61726765)
+![](https://camo.githubusercontent.com/888f9106de92978615b16231e6a0801e0a5b6f77/68747470733a2f2f696d6775722e636f6d2f646f776e6c6f61642f525847344e3162)
 
 Deploy a function - through the built-in Swarm support or through faas-netes
 
