@@ -30,7 +30,7 @@ func NewPrometheusQuery(host string, port int, client *http.Client) PrometheusQu
 // Fetch queries aggregated stats
 func (q PrometheusQuery) Fetch(query string) (*VectorQueryResponse, error) {
 
-	req, reqErr := http.NewRequest(http.MethodGet, fmt.Sprintf("http://%s:%d/api/v1/query/?query=%s", q.Host, q.Port, query), nil)
+	req, reqErr := http.NewRequest(http.MethodGet, fmt.Sprintf("http://%s:%d/api/v1/query?query=%s", q.Host, q.Port, query), nil)
 	if reqErr != nil {
 		return nil, reqErr
 	}
