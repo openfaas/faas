@@ -4,17 +4,12 @@ OpenFaaS is a framework for building serverless functions with containers and ru
 
 > Bring Serverless OpenFaaS functions to your favourite container platform.
 
-We support two orchestration platforms or "backends":
+We support two orchestration platforms or "backends" within the OpenFaaS project. 
 
 * Docker Swarm
 * Kubernetes
 
-There is also community work in-progress to support:
-
-* Rancher/Cattle
-* Nomad
-* DCOS
-* Hyper.sh
+There are several other backends available with community-support as documented in the [community guide](https://github.com/openfaas/faas/blob/master/community.md#openfaas-providers).
 
 The Docker Swarm support is built-into the faas repo, but the Kubernetes support is provided by a microservice in the [faas-netes](https://github.com/openfaas/faas-netes) repo.
 
