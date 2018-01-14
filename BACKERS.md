@@ -19,16 +19,15 @@ Listed by reward, followed by miscellaneous amounts. Names are (pending) until f
 * José Roberto Almaráz Da Cunha Júnior
 * Wesley Kennedy
 * Owen Dall Sotomayor
-* Glenn Grant (pending)
-* Theo Pack (pending)
-
-**#TeamServerless backers**
-
-Pav Jimanov (pending)
+* Theo Pack
 
 **#FaaSFriday**
 
-Toby Boudreaux (pending)
+Toby Boudreaux
+
+**#TeamServerless backers**
+
+Pav Jimanov
 
 **OpenFaaS backers (reward)**
 
@@ -42,11 +41,9 @@ Toby Boudreaux (pending)
 * Weston Steimel
 * Ram	Gopinathan
 * Michael	Herman
-* Cody De Arkland (pending)
-* Richard Petersen-Hall (pending)
+* Cody De Arkland
+* Richard Petersen-Hall
 
 **OpenFaaS patrons (reward)**
 
-**Misc. amount**
-
-1 person
+Miscellaneous amounts are not shown.
