@@ -15,7 +15,7 @@ Summary of modes for calling functions via API Gateway:
 | Asynchronous | POST   | http://gateway:8080/async-function/{function_name}  | Yes  | Yes      | Yes [#369](https://github.com/openfaas/faas/issues/369) |
 | Asynchronous | GET    | Not supported                                  | -    | -        | - |
 
-This work was carried out under [PR #131](https://github.com/openfaas/faas/pull/131).
+> Note: This work was originally carried out under [PR #131](https://github.com/openfaas/faas/pull/131).
 
 *Logical flow for synchronous functions:*
 
