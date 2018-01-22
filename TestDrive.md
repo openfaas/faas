@@ -111,6 +111,9 @@ View screenshot:
 
 <a href="https://pbs.twimg.com/media/C3hDUkyWEAEgciP.jpg"><img src="https://pbs.twimg.com/media/C3hDUkyWEAEgciP.jpg" width="800"></img></a>
 
+You can also deploy functions either manually or from the OpenFaaS store by clicking on the **Deploy New Function** button:
+<a href="https://pbs.twimg.com/media/DP3od15X4AEXoDI.jpg"><img src="https://pbs.twimg.com/media/DP3od15X4AEXoDI.jpg" width="800"></img></a>
+
 You can find out which services are deployed like this:
 
 ```
@@ -166,7 +169,7 @@ The FaaS CLI can be used to build functions very quickly though the use of templ
 
 **Option 2: via FaaS UI portal**
 
-To attach a function at runtime you can use the "Create New Function" button on the portal UI at http://localhost:8080/ 
+To attach a function at runtime you can use the "Create New Function" button on the portal UI at http://localhost:8080/
 
 <a href="https://pbs.twimg.com/media/C8opW3RW0AAc9Th.jpg:large"><img src="https://pbs.twimg.com/media/C8opW3RW0AAc9Th.jpg:large" width="600"></img></a>
 
@@ -181,7 +184,7 @@ Creating a function via the UI:
 
 Once the create button is clicked, faas will provision a new Docker Swarm service. The newly created function will shortly be available in the list of functions on the left hand side of the UI.
 
-**Option 3: Through docker-compose.yml stack file** 
+**Option 3: Through docker-compose.yml stack file**
 
 Edit the docker-compose stack file, then run ./deploy_stack.sh - this will only update changed/added services, not existing ones.
 
