@@ -60,6 +60,55 @@ read_timeout: 30
 write_timeout: 30
 ```
 
+## Function execution logs
+
+By default the functions will not log out the result, but just show how long the process took to run and the length of the result in bytes.
+
+```
+$ echo test this | faas invoke json-hook -g localhost:31112
+Received JSON webook. Elements: 10
+
+$ kubectl logs deploy/json-hook -n openfaas-fn
+2018/01/28 20:47:21 Writing lock-file to: /tmp/.lock
+2018/01/28 20:47:27 Forking fprocess.
+2018/01/28 20:47:27 Wrote 35 Bytes - Duration: 0.001844 seconds
+```
+
+If you want to see the result of a function in the function's logs then deploy it with the `write_debug` environmental variable set to `true`.
+
+For example:
+
+```
+provider:
+  name: faas
+  gateway: http://localhost:8080
+
+functions:
+  json-hook:
+    lang: go
+    handler: ./json-hook
+    image: json-hook
+    environment:
+      write_debug: true
+```
+
+Now you'll see logs like this:
+
+```
+$ echo test this | faas invoke json-hook -g localhost:31112
+Received JSON webook. Elements: 10
+
+$ kubectl logs deploy/json-hook -n openfaas-fn
+2018/01/28 20:50:27 Writing lock-file to: /tmp/.lock
+2018/01/28 20:50:35 Forking fprocess.
+2018/01/28 20:50:35 Query  
+2018/01/28 20:50:35 Path  /function/json-hook
+Received JSON webook. Elements: 10
+2018/01/28 20:50:35 Duration: 0.001857 seconds
+```
+
+You can then find the logs of the function using Docker Swarm or Kubernetes as listed in the section below.
+
 ## Healthcheck
 
 Most problems reported via GitHub or Slack stem from a configuration problem or issue with a function. Here is a checklist of things you can try before digging deeper:
