@@ -45,74 +45,67 @@ Here we are using a basic local registry. You can deploy it elsewhere and use vo
 
 This is a helper for using and deploying functions to OpenFaaS.
 
-On a Mac if you're using brew then you can type in
-```
-$ brew install faas-cli
-```
-
 On Linux
 
 ```
 $ curl -sSL https://cli.openfaas.com | sh
 ```
 
+On a Mac if you're using brew then you can type in
+```
+$ brew install faas-cli
+```
+
 ## Create a function
 
+Generate function from a template
+
 ```
-$ mkdir -p ~/functions/hello-python
-$ cd ~/functions
+$ mkdir functions && cd ~/functions
+$ faas-cli new hello-python --lang=python --gateway=http://localhost:8080
 ```
 
-*hello-python/handler.py*
+Update the print method in *hello-python/handler.py*
 ```
 import socket
 def handle(req):
     print("Hello world from " + socket.gethostname())
 ```
 
-*stack.yml*
+Update the image in *hello-python.yml* to read
 ```
-provider:  
-  name: faas
-  gateway: http://localhost:8080
-
-functions:  
-  hello-python:
-    lang: python
-    handler: ./hello-python/
-    image: localhost:5000/faas-hello-python
+    image: localhost:5000/hello-python
 ```
 
 Let's build the function
 ```
-$ faas-cli build -f ./stack.yml
+$ faas-cli build -f hello-python.yml
 ```
 
 Upload the function to our registry
 ```
-$ faas-cli push -f ./stack.yml
+$ faas-cli push -f hello-python.yml
 ```
 
 Check that the image made it to the registry
 ```
-$ curl localhost:5000/v2/faas-hello-python/tags/list
-{"name":"faas-hello-python","tags":["latest"]}
+$ curl localhost:5000/v2/hello-python/tags/list
+{"name":"hello-python","tags":["latest"]}
 ```
 
 Now we will delete the local image to be sure the deployment happens from the registry
 ```
-$ docker rmi localhost:5000/faas-hello-python
+$ docker rmi localhost:5000/hello-python
 $ docker images | grep hello | wc -l
 0
 ```
 
 Deploy the function from the registry
 ```
-$ faas-cli deploy -f ./stack.yml
-Deploying: hello-python.  
-No existing service to remove  
-Deployed.  
-200 OK  
+$ faas-cli deploy -f hello-python.yml
+Deploying: hello-python.
+
+Deployed. 200 OK.
 URL: http://localhost:8080/function/hello-python  
 ```
 
@@ -132,9 +125,9 @@ def handle(req):
 ```
 Now we can rebuild, push and deploy it to the swarm.
 ```
-$ faas-cli build -f ./stack.yml && \
-  faas-cli push -f ./stack.yml && \
-  faas-cli deploy -f ./stack.yml
+$ faas-cli build -f hello-python.yml && \
+  faas-cli push -f hello-python.yml && \
+  faas-cli deploy -f hello-python.yml
 ```
 
 See that the update works
