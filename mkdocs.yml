@@ -106,7 +106,7 @@ pages:
     - Part 1 - Deploy: getting-started/deploy.md
     - Part 2 - OpenFaaS CLI: getting-started/testdrive.md
     - Part 3 - Sample Functions: getting-started/sample_functions.md
-    - Part 4 - Create a Function: getting-started/testdrive.md
+    - Part 4 - Create a Function: getting-started/functions.md
   - Architecture: architecture.md
   - Deployment Guides:
     - Docker Swarm: deployment/swarm.md

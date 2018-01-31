@@ -79,7 +79,3 @@ OpenFaaS should complete its deployment within a few seconds (or minutes if on a
 The Grafana dashboard linked to OpenFaaS will be accessible at:
 
 * http://localhost:9090
-
-## Continue Getting Started
-
-If you are following the Getting Started Guide you should proceed to [Step 2 - OpenFaaS UIs](#).
