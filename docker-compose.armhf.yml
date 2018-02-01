@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: functions/gateway:gateway:0.7.0-armhf
+        image: functions/gateway:0.7.0-armhf
         networks:
             - functions
         environment:
