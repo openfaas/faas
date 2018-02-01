@@ -30,7 +30,7 @@ func MakeForwardingProxyHandler(proxy *httputil.ReverseProxy, metrics *metrics.M
 
 		forward := "/function/"
 		if startsWith(uri, forward) {
-			log.Printf("function=%s", uri[len(forward):])
+			// log.Printf("function=%s", uri[len(forward):])
 
 			service := uri[len(forward):]
 
