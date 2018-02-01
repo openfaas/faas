@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/opencontainers/go-digest"
+	"github.com/docker/distribution/digest"
 )
 
 // ErrAccessDenied is returned when an access to a requested resource is
@@ -77,7 +77,7 @@ func (err ErrManifestUnknownRevision) Error() string {
 type ErrManifestUnverified struct{}
 
 func (ErrManifestUnverified) Error() string {
-	return "unverified manifest"
+	return fmt.Sprintf("unverified manifest")
 }
 
 // ErrManifestVerification provides a type to collect errors encountered

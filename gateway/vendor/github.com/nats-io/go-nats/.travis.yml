@@ -1,0 +1,21 @@
+language: go
+sudo: false
+go:
+- 1.9.x
+- 1.8.x
+- 1.7.x
+install:
+- go get -t ./...
+- go get github.com/nats-io/gnatsd
+- go get github.com/mattn/goveralls
+- go get github.com/wadey/gocovmerge
+- go get -u honnef.co/go/tools/cmd/megacheck
+- go get -u github.com/client9/misspell/cmd/misspell
+before_script:
+- $(exit $(go fmt ./... | wc -l))
+- go vet ./...
+- misspell -error -locale US .
+- megacheck -ignore "$(cat staticcheck.ignore)" ./...
+script:
+- go test -i -race ./... 
+- if [[ "$TRAVIS_GO_VERSION" == 1.7.* ]]; then ./scripts/cov.sh TRAVIS; else go test -v -race ./...; fi

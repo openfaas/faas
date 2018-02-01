@@ -2,7 +2,7 @@
 
 NATS Streaming is an extremely performant, lightweight reliable streaming platform powered by [NATS](https://nats.io).
 
-[![License MIT](https://img.shields.io/badge/License-MIT-blue.svg)](http://opensource.org/licenses/MIT)
+[![License MIT](https://img.shields.io/npm/l/express.svg)](http://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/nats-io/go-nats-streaming.svg?branch=master)](http://travis-ci.org/nats-io/go-nats-streaming)
 [![Coverage Status](https://coveralls.io/repos/nats-io/go-nats-streaming/badge.svg?branch=master)](https://coveralls.io/r/nats-io/go-nats-streaming?branch=master)
 
@@ -16,6 +16,9 @@ NATS Streaming provides the following high-level feature set:
 ## Notes
 
 - Please raise questions/issues via the [Issue Tracker](https://github.com/nats-io/go-nats-streaming/issues).
+
+## Known Issues
+- Time- and sequence-based subscriptions are exact. Requesting a time or seqno before the earliest stored message for a subject will result in an error (in SubscriptionRequest.Error)
 
 ## Installation
 
@@ -181,7 +184,7 @@ that is, the start position will take effect and delivery will start from there.
 
 ### Durable Queue Groups
 
-As described above, for non durable queue subscribers, when the last member leaves the group,
+As described above, for non durable queue subsribers, when the last member leaves the group,
 that group is removed. A durable queue group allows you to have all members leave but still
 maintain state. When a member re-joins, it starts at the last position in that group.
 
@@ -217,7 +220,7 @@ The rules for non-durable queue subscribers apply to durable subscribers.
 
 As for non-durable queue subscribers, if a member's connection is closed, or if
 `Unsubscribe` its called, the member leaves the group. Any unacknowledged message
-is transferred to remaining members. See *Closing the Group* for important difference
+is transfered to remaining members. See *Closing the Group* for important difference
 with non-durable queue subscribers.
 
 #### Closing the Group
@@ -298,7 +301,7 @@ ah := func(nuid string, err error) {
 }
 
 for i := 1; i < 1000; i++ {
-    // If the server is unable to keep up with the publisher, the number of outstanding acks will eventually
+    // If the server is unable to keep up with the publisher, the number of oustanding acks will eventually
     // reach the max and this call will block
     guid, _ := sc.PublishAsync("foo", []byte("Hello World"), ah)
 }

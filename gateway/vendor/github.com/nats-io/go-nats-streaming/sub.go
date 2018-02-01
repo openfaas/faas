@@ -30,14 +30,6 @@ type Msg struct {
 // Subscription represents a subscription within the NATS Streaming cluster. Subscriptions
 // will be rate matched and follow at-least delivery semantics.
 type Subscription interface {
-	ClearMaxPending() error
-	Delivered() (int64, error)
-	Dropped() (int, error)
-	IsValid() bool
-	MaxPending() (int, int, error)
-	Pending() (int, int, error)
-	PendingLimits() (int, int, error)
-	SetPendingLimits(msgLimit, bytesLimit int) error
 	// Unsubscribe removes interest in the subscription.
 	// For durables, it means that the durable interest is also removed from
 	// the server. Restarting a durable with the same name will not resume
@@ -264,97 +256,12 @@ func (sc *conn) subscribe(subject, qgroup string, cb MsgHandler, options ...Subs
 	return sub, nil
 }
 
-// ClearMaxPending resets the maximums seen so far.
-func (sub *subscription) ClearMaxPending() error {
-	sub.Lock()
-	defer sub.Unlock()
-	if sub.inboxSub == nil {
-		return ErrBadSubscription
-	}
-	return sub.inboxSub.ClearMaxPending()
-}
-
-// Delivered returns the number of delivered messages for this subscription.
-func (sub *subscription) Delivered() (int64, error) {
-	sub.Lock()
-	defer sub.Unlock()
-	if sub.inboxSub == nil {
-		return -1, ErrBadSubscription
-	}
-	return sub.inboxSub.Delivered()
-}
-
-// Dropped returns the number of known dropped messages for this subscription.
-// This will correspond to messages dropped by violations of PendingLimits. If
-// the server declares the connection a SlowConsumer, this number may not be
-// valid.
-func (sub *subscription) Dropped() (int, error) {
-	sub.Lock()
-	defer sub.Unlock()
-	if sub.inboxSub == nil {
-		return -1, ErrBadSubscription
-	}
-	return sub.inboxSub.Dropped()
-}
-
-// IsValid returns a boolean indicating whether the subscription
-// is still active. This will return false if the subscription has
-// already been closed.
-func (sub *subscription) IsValid() bool {
-	sub.Lock()
-	defer sub.Unlock()
-	if sub.inboxSub == nil {
-		return false
-	}
-	return sub.inboxSub.IsValid()
-}
-
-// MaxPending returns the maximum number of queued messages and queued bytes seen so far.
-func (sub *subscription) MaxPending() (int, int, error) {
-	sub.Lock()
-	defer sub.Unlock()
-	if sub.inboxSub == nil {
-		return -1, -1, ErrBadSubscription
-	}
-	return sub.inboxSub.MaxPending()
-}
-
-// Pending returns the number of queued messages and queued bytes in the client for this subscription.
-func (sub *subscription) Pending() (int, int, error) {
-	sub.Lock()
-	defer sub.Unlock()
-	if sub.inboxSub == nil {
-		return -1, -1, ErrBadSubscription
-	}
-	return sub.inboxSub.Pending()
-}
-
-// PendingLimits returns the current limits for this subscription.
-// If no error is returned, a negative value indicates that the
-// given metric is not limited.
-func (sub *subscription) PendingLimits() (int, int, error) {
-	sub.Lock()
-	defer sub.Unlock()
-	if sub.inboxSub == nil {
-		return -1, -1, ErrBadSubscription
-	}
-	return sub.inboxSub.PendingLimits()
-}
-
-// SetPendingLimits sets the limits for pending msgs and bytes for this subscription.
-// Zero is not allowed. Any negative value means that the given metric is not limited.
-func (sub *subscription) SetPendingLimits(msgLimit, bytesLimit int) error {
-	sub.Lock()
-	defer sub.Unlock()
-	if sub.inboxSub == nil {
-		return ErrBadSubscription
-	}
-	return sub.inboxSub.SetPendingLimits(msgLimit, bytesLimit)
-}
-
 // closeOrUnsubscribe performs either close or unsubsribe based on
 // given boolean.
 func (sub *subscription) closeOrUnsubscribe(doClose bool) error {
+	if sub == nil {
+		return ErrBadSubscription
+	}
 	sub.Lock()
 	sc := sub.sc
 	if sc == nil {
@@ -366,6 +273,10 @@ func (sub *subscription) closeOrUnsubscribe(doClose bool) error {
 	sub.inboxSub.Unsubscribe()
 	sub.inboxSub = nil
 	sub.Unlock()
+
+	if sc == nil {
+		return ErrBadSubscription
+	}
 
 	sc.Lock()
 	if sc.nc == nil {
@@ -431,8 +342,12 @@ func (msg *Msg) Ack() error {
 	if msg == nil {
 		return ErrNilMsg
 	}
-	// Look up subscription (cannot be nil)
+	// Look up subscription
 	sub := msg.Sub.(*subscription)
+	if sub == nil {
+		return ErrBadSubscription
+	}
+
 	sub.RLock()
 	ackSubject := sub.ackInbox
 	isManualAck := sub.opts.ManualAcks
@@ -440,9 +355,6 @@ func (msg *Msg) Ack() error {
 	sub.RUnlock()
 
 	// Check for error conditions.
-	if !isManualAck {
-		return ErrManualAck
-	}
 	if sc == nil {
 		return ErrBadSubscription
 	}
@@ -452,6 +364,9 @@ func (msg *Msg) Ack() error {
 	sc.RUnlock()
 	if nc == nil {
 		return ErrBadConnection
+	}
+	if !isManualAck {
+		return ErrManualAck
 	}
 
 	// Ack here.

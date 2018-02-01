@@ -11,7 +11,7 @@ global:
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
-    - 'alert.rules'
+    - 'alert.rules.yml'
 
 
 # A scrape configuration containing exactly one endpoint to scrape:
@@ -36,5 +36,8 @@ scrape_configs:
         type: A
         refresh_interval: 5s
 
-
-
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - alertmanager:9093

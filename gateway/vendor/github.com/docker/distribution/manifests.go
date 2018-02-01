@@ -5,7 +5,7 @@ import (
 	"mime"
 
 	"github.com/docker/distribution/context"
-	"github.com/opencontainers/go-digest"
+	"github.com/docker/distribution/digest"
 )
 
 // Manifest represents a registry object specifying a set of
@@ -22,8 +22,8 @@ type Manifest interface {
 	References() []Descriptor
 
 	// Payload provides the serialized format of the manifest, in addition to
-	// the media type.
-	Payload() (mediaType string, payload []byte, err error)
+	// the mediatype.
+	Payload() (mediatype string, payload []byte, err error)
 }
 
 // ManifestBuilder creates a manifest allowing one to include dependencies.
@@ -94,20 +94,20 @@ var mappings = make(map[string]UnmarshalFunc, 0)
 func UnmarshalManifest(ctHeader string, p []byte) (Manifest, Descriptor, error) {
 	// Need to look up by the actual media type, not the raw contents of
 	// the header. Strip semicolons and anything following them.
-	var mediaType string
+	var mediatype string
 	if ctHeader != "" {
 		var err error
-		mediaType, _, err = mime.ParseMediaType(ctHeader)
+		mediatype, _, err = mime.ParseMediaType(ctHeader)
 		if err != nil {
 			return nil, Descriptor{}, err
 		}
 	}
 
-	unmarshalFunc, ok := mappings[mediaType]
+	unmarshalFunc, ok := mappings[mediatype]
 	if !ok {
 		unmarshalFunc, ok = mappings[""]
 		if !ok {
-			return nil, Descriptor{}, fmt.Errorf("unsupported manifest media type and no default available: %s", mediaType)
+			return nil, Descriptor{}, fmt.Errorf("unsupported manifest mediatype and no default available: %s", mediatype)
 		}
 	}
 
@@ -116,10 +116,10 @@ func UnmarshalManifest(ctHeader string, p []byte) (Manifest, Descriptor, error) 
 
 // RegisterManifestSchema registers an UnmarshalFunc for a given schema type.  This
 // should be called from specific
-func RegisterManifestSchema(mediaType string, u UnmarshalFunc) error {
-	if _, ok := mappings[mediaType]; ok {
-		return fmt.Errorf("manifest media type registration would overwrite existing: %s", mediaType)
+func RegisterManifestSchema(mediatype string, u UnmarshalFunc) error {
+	if _, ok := mappings[mediatype]; ok {
+		return fmt.Errorf("manifest mediatype registration would overwrite existing: %s", mediatype)
 	}
-	mappings[mediaType] = u
+	mappings[mediatype] = u
 	return nil
 }

@@ -41,13 +41,16 @@ These projects use gogoprotobuf:
   - <a href="https://github.com/AsynkronIT/protoactor-go">protoactor-go</a> - <a href="https://github.com/AsynkronIT/protoactor-go/blob/master/protobuf/protoc-gen-protoactor/main.go">vanity command</a> that also generates actors from service definitions
   - <a href="https://containerd.io/">containerd</a> - <a href="https://github.com/containerd/containerd/tree/master/cmd/protoc-gen-gogoctrd">vanity command with custom field names</a> that conforms to the golang convention.
   - <a href="https://github.com/heroiclabs/nakama">nakama</a>
-
-Please lets us know if you are using gogoprotobuf by posting on our <a href="https://groups.google.com/forum/#!topic/gogoprotobuf/Brw76BxmFpQ">GoogleGroup</a>.
+  - <a href="https://github.com/src-d/proteus">proteus</a>
+  - <a href="https://github.com/go-graphite">carbonzipper stack</a>
+  - <a href="https://sendgrid.com/">SendGrid</a>
+  
+Please let us know if you are using gogoprotobuf by posting on our <a href="https://groups.google.com/forum/#!topic/gogoprotobuf/Brw76BxmFpQ">GoogleGroup</a>.
 
 ### Mentioned
 
   - <a href="http://www.slideshare.net/albertstrasheim/serialization-in-go">Cloudflare - go serialization talk - Albert Strasheim</a>
-  - <a href="http://gophercon.sourcegraph.com/post/83747547505/writing-a-high-performance-database-in-go">gophercon</a>
+  - <a href="https://youtu.be/4xB46Xl9O9Q?t=557">GopherCon 2014 Writing High Performance Databases in Go by Ben Johnson</a>
   - <a href="https://github.com/alecthomas/go_serialization_benchmarks">alecthomas' go serialization benchmarks</a>
 
 ## Getting Started
@@ -61,10 +64,10 @@ After that you can choose:
 
 ### Installation
 
-To install it, you must first have Go (at least version 1.6.3) installed (see [http://golang.org/doc/install](http://golang.org/doc/install)).  Go 1.7.1 and 1.8 are continuously tested.
+To install it, you must first have Go (at least version 1.6.3) installed (see [http://golang.org/doc/install](http://golang.org/doc/install)).  Go 1.8.3 and 1.9 are continuously tested.
 
 Next, install the standard protocol buffer implementation from [https://github.com/google/protobuf](https://github.com/google/protobuf).
-Most versions from 2.3.1 should not give any problems, but 2.6.1, 3.0.2 and 3.3.0 are continuously tested.
+Most versions from 2.3.1 should not give any problems, but 2.6.1, 3.0.2 and 3.4.0 are continuously tested.
 
 ### Speed
 

@@ -1,0 +1,17 @@
+sudo: required
+
+language: go
+
+go:
+  - 1.9.x
+install:
+  - echo "Please don't go get"
+  
+services:
+  - docker
+
+before_script:
+  - curl -sSL test.docker.com | sudo -E sh
+
+script:
+  - cd queue-worker && ./build.sh
