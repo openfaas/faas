@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: functions/gateway:0.6.16-rc1-armhf
+        image: functions/gateway:gateway:0.7.0-armhf
         networks:
             - functions
         environment:
@@ -34,7 +34,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         # ports:
             # - 8081:8080
-        image:  functions/faas-swarm:0.1.1-armhf
+        image:  functions/faas-swarm:0.1.5-armhf
         networks:
             - functions
         environment:
