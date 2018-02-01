@@ -20,11 +20,6 @@ package prometheus
 // no type information is implied.
 //
 // To create Untyped instances, use NewUntyped.
-//
-// Deprecated: The Untyped type is deprecated because it doesn't make sense in
-// direct instrumentation. If you need to mirror an external metric of unknown
-// type (usually while writing exporters), Use MustNewConstMetric to create an
-// untyped metric instance on the fly.
 type Untyped interface {
 	Metric
 	Collector
@@ -60,14 +55,13 @@ func NewUntyped(opts UntypedOpts) Untyped {
 // share the same Desc, but have different values for their variable
 // labels. This is used if you want to count the same thing partitioned by
 // various dimensions. Create instances with NewUntypedVec.
-//
-// Deprecated: UntypedVec is deprecated for the same reasons as Untyped.
 type UntypedVec struct {
-	*metricVec
+	*MetricVec
 }
 
 // NewUntypedVec creates a new UntypedVec based on the provided UntypedOpts and
-// partitioned by the given label names.
+// partitioned by the given label names. At least one label name must be
+// provided.
 func NewUntypedVec(opts UntypedOpts, labelNames []string) *UntypedVec {
 	desc := NewDesc(
 		BuildFQName(opts.Namespace, opts.Subsystem, opts.Name),
@@ -76,58 +70,28 @@ func NewUntypedVec(opts UntypedOpts, labelNames []string) *UntypedVec {
 		opts.ConstLabels,
 	)
 	return &UntypedVec{
-		metricVec: newMetricVec(desc, func(lvs ...string) Metric {
+		MetricVec: newMetricVec(desc, func(lvs ...string) Metric {
 			return newValue(desc, UntypedValue, 0, lvs...)
 		}),
 	}
 }
 
-// GetMetricWithLabelValues returns the Untyped for the given slice of label
-// values (same order as the VariableLabels in Desc). If that combination of
-// label values is accessed for the first time, a new Untyped is created.
-//
-// It is possible to call this method without using the returned Untyped to only
-// create the new Untyped but leave it at its starting value 0. See also the
-// SummaryVec example.
-//
-// Keeping the Untyped for later use is possible (and should be considered if
-// performance is critical), but keep in mind that Reset, DeleteLabelValues and
-// Delete can be used to delete the Untyped from the UntypedVec. In that case, the
-// Untyped will still exist, but it will not be exported anymore, even if a
-// Untyped with the same label values is created later. See also the CounterVec
-// example.
-//
-// An error is returned if the number of label values is not the same as the
-// number of VariableLabels in Desc.
-//
-// Note that for more than one label value, this method is prone to mistakes
-// caused by an incorrect order of arguments. Consider GetMetricWith(Labels) as
-// an alternative to avoid that type of mistake. For higher label numbers, the
-// latter has a much more readable (albeit more verbose) syntax, but it comes
-// with a performance overhead (for creating and processing the Labels map).
-// See also the GaugeVec example.
+// GetMetricWithLabelValues replaces the method of the same name in
+// MetricVec. The difference is that this method returns an Untyped and not a
+// Metric so that no type conversion is required.
 func (m *UntypedVec) GetMetricWithLabelValues(lvs ...string) (Untyped, error) {
-	metric, err := m.metricVec.getMetricWithLabelValues(lvs...)
+	metric, err := m.MetricVec.GetMetricWithLabelValues(lvs...)
 	if metric != nil {
 		return metric.(Untyped), err
 	}
 	return nil, err
 }
 
-// GetMetricWith returns the Untyped for the given Labels map (the label names
-// must match those of the VariableLabels in Desc). If that label map is
-// accessed for the first time, a new Untyped is created. Implications of
-// creating a Untyped without using it and keeping the Untyped for later use are
-// the same as for GetMetricWithLabelValues.
-//
-// An error is returned if the number and names of the Labels are inconsistent
-// with those of the VariableLabels in Desc.
-//
-// This method is used for the same purpose as
-// GetMetricWithLabelValues(...string). See there for pros and cons of the two
-// methods.
+// GetMetricWith replaces the method of the same name in MetricVec. The
+// difference is that this method returns an Untyped and not a Metric so that no
+// type conversion is required.
 func (m *UntypedVec) GetMetricWith(labels Labels) (Untyped, error) {
-	metric, err := m.metricVec.getMetricWith(labels)
+	metric, err := m.MetricVec.GetMetricWith(labels)
 	if metric != nil {
 		return metric.(Untyped), err
 	}
@@ -139,14 +103,14 @@ func (m *UntypedVec) GetMetricWith(labels Labels) (Untyped, error) {
 // error, WithLabelValues allows shortcuts like
 //     myVec.WithLabelValues("404", "GET").Add(42)
 func (m *UntypedVec) WithLabelValues(lvs ...string) Untyped {
-	return m.metricVec.withLabelValues(lvs...).(Untyped)
+	return m.MetricVec.WithLabelValues(lvs...).(Untyped)
 }
 
 // With works as GetMetricWith, but panics where GetMetricWithLabels would have
 // returned an error. By not returning an error, With allows shortcuts like
 //     myVec.With(Labels{"code": "404", "method": "GET"}).Add(42)
 func (m *UntypedVec) With(labels Labels) Untyped {
-	return m.metricVec.with(labels).(Untyped)
+	return m.MetricVec.With(labels).(Untyped)
 }
 
 // UntypedFunc is an Untyped whose value is determined at collect time by

@@ -35,6 +35,3 @@ scrape_configs:
         port: 8080
         type: A
         refresh_interval: 5s
-
-
-

@@ -1,28 +1,31 @@
-FROM arm64v8/alpine:3.5
+FROM alpine:3.6
+WORKDIR /root/
 
-WORKDIR /root
-RUN apk add --update libarchive-tools
+RUN apk add --update libarchive-tools curl \
+    && curl -sLf https://github.com/prometheus/prometheus/releases/download/v2.0.0/prometheus-2.0.0.linux-armv7.tar.gz > prometheus.tar.gz \
+    && bsdtar -xvf prometheus.tar.gz -C ./ --strip-components=1 \
+    && apk del libarchive-tools curl \
+    && mkdir /etc/prometheus \
+    && mkdir -p /usr/share/prometheus \
+    && cp prometheus                             /bin/prometheus \
+    && cp promtool                               /bin/promtool \
+    && cp prometheus.yml  				/etc/prometheus/ \
+    && cp -r console_libraries                     /usr/share/prometheus/ \
+    && cp -r consoles                              /usr/share/prometheus/ \
+    && rm -rf /root/*
 
-ADD https://github.com/prometheus/prometheus/releases/download/v1.5.2/prometheus-1.5.2.linux-arm64.tar.gz /root/
-RUN bsdtar -xvf prometheus-*.tar.gz -C ./ --strip-components=1
+RUN ln -s /usr/share/prometheus/console_libraries /usr/share/prometheus/consoles/ /etc/prometheus/
+RUN mkdir -p /prometheus && \
+    chown -R nobody:nogroup /etc/prometheus /prometheus
 
-RUN mkdir -p /usr/share/prometheus
-RUN mkdir -p /etc/prometheus
-
-RUN cp prometheus                             /bin/prometheus
-RUN cp promtool                               /bin/promtool
-RUN cp prometheus.yml  /etc/prometheus/prometheus.yml
-RUN cp -r console_libraries/                     /usr/share/prometheus/console_libraries/
-RUN cp -r consoles/                              /usr/share/prometheus/consoles/
-
-#RUN ln -s /usr/share/prometheus/console_libraries /usr/share/prometheus/consoles/ /etc/prometheus/
-
+USER       nobody
 EXPOSE     9090
 VOLUME     [ "/prometheus" ]
 WORKDIR    /prometheus
 ENTRYPOINT [ "/bin/prometheus" ]
-CMD        [ "-config.file=/etc/prometheus/prometheus.yml", \
-             "-storage.local.path=/prometheus", \
-             "-web.console.libraries=/usr/share/prometheus/console_libraries", \
-             "-web.console.templates=/usr/share/prometheus/consoles" ]
+CMD        [ "--config.file=/etc/prometheus/prometheus.yml", \
+             "--storage.tsdb.path=/prometheus", \
+             "--web.console.libraries=/usr/share/prometheus/console_libraries", \
+             "--web.console.templates=/usr/share/prometheus/consoles" ]
+
 

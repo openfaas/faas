@@ -123,6 +123,12 @@ type asyncCB func()
 // Option is a function on the options for a connection.
 type Option func(*Options) error
 
+// CustomDialer can be used to specify any dialer, not necessarily
+// a *net.Dialer.
+type CustomDialer interface {
+	Dial(network, address string) (net.Conn, error)
+}
+
 // Options can be used to create a customized connection.
 type Options struct {
 
@@ -225,8 +231,13 @@ type Options struct {
 	// Token sets the token to be used when connecting to a server.
 	Token string
 
-	// Dialer allows a custom Dialer when forming connections.
+	// Dialer allows a custom net.Dialer when forming connections.
+	// DEPRECATED: should use CustomDialer instead.
 	Dialer *net.Dialer
+
+	// CustomDialer allows to specify a custom dialer (not necessarily
+	// a *net.Dialer).
+	CustomDialer CustomDialer
 
 	// UseOldRequestStyle forces the old method of Requests that utilize
 	// a new Inbox and a new Subscription for each request.
@@ -450,7 +461,7 @@ func RootCAs(file ...string) Option {
 			if err != nil || rootPEM == nil {
 				return fmt.Errorf("nats: error loading or parsing rootCA file: %v", err)
 			}
-			ok := pool.AppendCertsFromPEM([]byte(rootPEM))
+			ok := pool.AppendCertsFromPEM(rootPEM)
 			if !ok {
 				return fmt.Errorf("nats: failed to parse root certificate from %q", f)
 			}
@@ -586,9 +597,20 @@ func Token(token string) Option {
 
 // Dialer is an Option to set the dialer which will be used when
 // attempting to establish a connection.
+// DEPRECATED: Should use CustomDialer instead.
 func Dialer(dialer *net.Dialer) Option {
 	return func(o *Options) error {
 		o.Dialer = dialer
+		return nil
+	}
+}
+
+// SetCustomDialer is an Option to set a custom dialer which will be
+// used when attempting to establish a connection. If both Dialer
+// and CustomDialer are specified, CustomDialer takes precedence.
+func SetCustomDialer(dialer CustomDialer) Option {
+	return func(o *Options) error {
+		o.CustomDialer = dialer
 		return nil
 	}
 }
@@ -787,7 +809,7 @@ const tlsScheme = "tls"
 
 // Create the server pool using the options given.
 // We will place a Url option first, followed by any
-// Server Options. We will randomize the server pool unlesss
+// Server Options. We will randomize the server pool unless
 // the NoRandomize flag is set.
 func (nc *Conn) setupServerPool() error {
 	nc.srvPool = make([]*srv, 0, srvPoolSize)
@@ -877,7 +899,13 @@ func (nc *Conn) createConn() (err error) {
 		cur.lastAttempt = time.Now()
 	}
 
-	dialer := nc.Opts.Dialer
+	// CustomDialer takes precedence. If not set, use Opts.Dialer which
+	// is set to a default *net.Dialer (in Connect()) if not explicitly
+	// set by the user.
+	dialer := nc.Opts.CustomDialer
+	if dialer == nil {
+		dialer = nc.Opts.Dialer
+	}
 	nc.conn, err = dialer.Dial("tcp", nc.url.Host)
 	if err != nil {
 		return err
@@ -1040,7 +1068,7 @@ func (nc *Conn) connect() error {
 	// to connect immediately.
 	nc.mu.Lock()
 	nc.initc = true
-	// The pool may change inside theloop iteration due to INFO protocol.
+	// The pool may change inside the loop iteration due to INFO protocol.
 	for i := 0; i < len(nc.srvPool); i++ {
 		nc.url = nc.srvPool[i].url
 
@@ -1682,9 +1710,11 @@ slowConsumer:
 // permissions violation on either publish or subscribe.
 func (nc *Conn) processPermissionsViolation(err string) {
 	nc.mu.Lock()
-	nc.err = errors.New("nats: " + err)
+	// create error here so we can pass it as a closure to the async cb dispatcher.
+	e := errors.New("nats: " + err)
+	nc.err = e
 	if nc.Opts.AsyncErrorCB != nil {
-		nc.ach <- func() { nc.Opts.AsyncErrorCB(nc, nil, nc.err) }
+		nc.ach <- func() { nc.Opts.AsyncErrorCB(nc, nil, e) }
 	}
 	nc.mu.Unlock()
 }
@@ -2248,7 +2278,7 @@ func (nc *Conn) subscribe(subj, queue string, cb MsgHandler, ch chan *Msg) (*Sub
 	// We will send these for all subs when we reconnect
 	// so that we can suppress here.
 	if !nc.isReconnecting() {
-		nc.bw.WriteString(fmt.Sprintf(subProto, subj, queue, sub.sid))
+		fmt.Fprintf(nc.bw, subProto, subj, queue, sub.sid)
 	}
 	return sub, nil
 }
@@ -2368,7 +2398,7 @@ func (nc *Conn) unsubscribe(sub *Subscription, max int) error {
 	// We will send these for all subs when we reconnect
 	// so that we can suppress here.
 	if !nc.isReconnecting() {
-		nc.bw.WriteString(fmt.Sprintf(unsubProto, s.sid, maxStr))
+		fmt.Fprintf(nc.bw, unsubProto, s.sid, maxStr)
 	}
 	return nil
 }
@@ -2670,7 +2700,10 @@ func (nc *Conn) FlushTimeout(timeout time.Duration) (err error) {
 	t := globalTimerPool.Get(timeout)
 	defer globalTimerPool.Put(t)
 
-	ch := make(chan struct{})
+	// Create a buffered channel to prevent chan send to block
+	// in processPong() if this code here times out just when
+	// PONG was received.
+	ch := make(chan struct{}, 1)
 	nc.sendPing(ch)
 	nc.mu.Unlock()
 
@@ -2732,16 +2765,16 @@ func (nc *Conn) resendSubscriptions() {
 			// reached the max, if so unsubscribe.
 			if adjustedMax == 0 {
 				s.mu.Unlock()
-				nc.bw.WriteString(fmt.Sprintf(unsubProto, s.sid, _EMPTY_))
+				fmt.Fprintf(nc.bw, unsubProto, s.sid, _EMPTY_)
 				continue
 			}
 		}
 		s.mu.Unlock()
 
-		nc.bw.WriteString(fmt.Sprintf(subProto, s.Subject, s.Queue, s.sid))
+		fmt.Fprintf(nc.bw, subProto, s.Subject, s.Queue, s.sid)
 		if adjustedMax > 0 {
 			maxStr := strconv.Itoa(int(adjustedMax))
-			nc.bw.WriteString(fmt.Sprintf(unsubProto, s.sid, maxStr))
+			fmt.Fprintf(nc.bw, unsubProto, s.sid, maxStr)
 		}
 	}
 }

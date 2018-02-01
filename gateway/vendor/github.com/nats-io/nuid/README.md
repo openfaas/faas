@@ -35,8 +35,8 @@ NUID needs to be very fast to generate and be truly unique, all while being entr
 NUID uses 12 bytes of crypto generated data (entropy draining), and 10 bytes of pseudo-random
 sequential data that increments with a pseudo-random increment.
 
-Total length of a NUID string is 22 bytes of base 62 ascii text, so 62^22 or
-2707803647802660400290261537185326956544 possibilities.
+Total length of a NUID string is 22 bytes of base 36 ascii text, so 36^22 or
+17324272922341479351919144385642496 possibilities.
 
 NUID can generate identifiers as fast as 60ns, or ~16 million per second. There is an associated
 benchmark you can use to test performance on your own hardware.

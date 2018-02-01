@@ -22,14 +22,23 @@ RUN license-check -path ./ --verbose=false \
     && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gateway .
 
 FROM alpine:3.6
-WORKDIR /root/
+
+RUN addgroup -S app \
+    && adduser -S -g app app
+
+WORKDIR /home/app
 
 EXPOSE 8080
 ENV http_proxy      ""
 ENV https_proxy     ""
 
-COPY --from=build /go/src/github.com/openfaas/faas/gateway/gateway    .
 
+
+COPY --from=build /go/src/github.com/openfaas/faas/gateway/gateway    .
 COPY assets     assets
+
+RUN chown -R app:app ./
+
+USER app
 
 CMD ["./gateway"]

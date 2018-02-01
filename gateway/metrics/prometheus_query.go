@@ -40,17 +40,24 @@ func (q PrometheusQuery) Fetch(query string) (*VectorQueryResponse, error) {
 		return nil, getErr
 	}
 
-	defer res.Body.Close()
+	if res.Body != nil {
+		defer res.Body.Close()
+	}
+
 	bytesOut, readErr := ioutil.ReadAll(res.Body)
 	if readErr != nil {
 		return nil, readErr
+	}
+
+	if res.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("Unexpected status code from Prometheus want: %d, got: %d, body: %s", http.StatusOK, res.StatusCode, string(bytesOut))
 	}
 
 	var values VectorQueryResponse
 
 	unmarshalErr := json.Unmarshal(bytesOut, &values)
 	if unmarshalErr != nil {
-		return nil, unmarshalErr
+		return nil, fmt.Errorf("Error unmarshaling result: %s, '%s'", unmarshalErr, string(bytesOut))
 	}
 
 	return &values, nil
