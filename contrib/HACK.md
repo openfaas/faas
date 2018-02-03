@@ -41,7 +41,8 @@ Now you can run the gateway as its own container via `docker run` and bind-mount
 
 ```
 $ docker service rm func_gateway
-$ docker run --name func_gateway -v `pwd`/gateway/assets:/root/assets \
+$ docker run --name func_gateway -e "functions_provider_url=http://faas-swarm:8080/" \
+  -v `pwd`/gateway/assets:/home/app/assets \
   -v "/var/run/docker.sock:/var/run/docker.sock" \
   -p 8080:8080 --network=func_functions \
   -d functions/gateway:latest-dev
