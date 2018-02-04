@@ -58,7 +58,7 @@
                 </md-content>
             </md-sidenav>
 
-            <md-content flex layout-padding ng-if="!selectedFunction" ng-show="functions.length">
+            <md-content flex layout-padding ng-if="!selectedFunction" ng-show="functions.length" style="background-color: rgb(243, 244, 250)">
                 <div layout="column" layout-align="top center">
                     <p>Select a function.</p>
                 </div>
@@ -70,6 +70,11 @@
                 You have no functions in OpenFaaS.<br>
                 Start by deploying a new function.
               </p>
+              <md-button class="md-primary" md-colors="{background: 'blue'}" ng-click="newFunction()">
+                Deploy new function
+              </md-button>
+              <p>Or use <strong>faas-cli</strong> to build and deploy functions:</p>
+              <pre>$ curl -sSL https://cli.openfaas.com | sudo sh</pre>
             </div>
 
             <md-content flex layout="column" ng-repeat="function in functions" ng-show="function.name == selectedFunction.name">
