@@ -8,7 +8,7 @@ These instructions are for a development environment. If you plan to expose Open
 
 ## Initialize Swarm Mode
 
-You can create a single-host Docker Swarm on your laptop with a single command. You don't need any additional software to Docker 17.05 or greater. You can also run these commands on a Linux VM or cloud host.
+You can create a single-host Docker Swarm on your laptop with a single command. You don't need any additional software to Docker 17.06 or greater. You can also run these commands on a Linux VM or cloud host.
 
 This is how you initialize your master node:
 

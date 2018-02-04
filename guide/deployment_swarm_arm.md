@@ -26,7 +26,7 @@ When running OpenFaaS on ARM a key consideration is that we need to use arm base
 
 ### Initialize Swarm Mode
 
-You can create a single-host Docker Swarm on your ARM device with a single command. You don't need any additional software to Docker 17.05 or greater.
+You can create a single-host Docker Swarm on your ARM device with a single command. You don't need any additional software to Docker 17.06 or greater.
 
 This is how you initialize your master node:
 
