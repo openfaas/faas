@@ -15,7 +15,7 @@
 <body ng-controller="home">
     <div layout="column" ng-cloak>
 
-        <md-toolbar class="md-theme-indigo" hide-gt-sm>
+        <md-toolbar class="md-theme-indigo" hide-gt-sm ng-if="functions.length !== 0">
             <div class="md-toolbar-tools">
                 <md-button ng-click="toggleSideNav()" class="md-icon-button" aria-label="Menu">
                     <md-icon md-svg-icon="img/icons/ic_menu_white.svg"></md-icon>
@@ -23,7 +23,7 @@
             </div>
         </md-toolbar>
         <section id="popupContainer" layout="row" flex>
-            <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-whiteframe="4" layout="column">
+            <md-sidenav class="md-sidenav-left" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-whiteframe="4" ng-if="functions.length !== 0">
 
                 <md-toolbar class="md-theme-indigo">
                     <div class="md-toolbar-tools">
@@ -64,6 +64,13 @@
                 </div>
                 <div flex></div>
             </md-content>
+
+            <div class="blankslate" layout="column" layout-align="center center" ng-if="functions.length === 0">
+              <p>
+                You have no functions in OpenFaaS.<br>
+                Start by deploying a new function.
+              </p>
+            </div>
 
             <md-content flex layout-padding ng-if="!functions.length">
                 <div layout="column" layout-align="top center">
@@ -143,7 +150,7 @@
                                     <md-radio-group ng-model="invocation.contentType" layout="row" layout-align="start center">
                                         <md-radio-button value="text" class="md-primary"> Text </md-radio-button>
                                         <md-radio-button value="json"> JSON </md-radio-button>
-                                        <md-radio-button value="binary"> Download </md-radio-button>                                        
+                                        <md-radio-button value="binary"> Download </md-radio-button>
                                     </md-radio-group>
                                 </md-input-container>
                             </div>

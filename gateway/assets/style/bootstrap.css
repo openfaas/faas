@@ -1,3 +1,20 @@
+div.blankslate {
+	background-color: pink;
+	bottom: 0;
+	height: 300px;
+	left: 0;
+	margin: auto;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 400px;
+}
+
+div.blankslate > p {
+	line-height: 1.5;
+	text-align: center;
+}
+
 /*Taken from PWD, remove styles not used.*/
 
 .selected button {
