@@ -77,6 +77,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Deploying OpenFaaS on Kubernetes  - Azure AKS](https://medium.com/@ericstoekl/deploying-openfaas-on-kubernetes-azure-aks-4eea99d0743f) | Eric Stoekl | medium.com/ | 03-Feb-2018 |
 | [OpenFaaS with Ruby/MySQL/Ceph](https://github.com/Lallassu/openfaas-demo) | Magnus Persson | cygate.se/github.io | 23-Jan-2018 |
 | [ColoriseBot: three months on](https://finnian.io/blog/colorisebot-three-months-on/) | Finnian Anderson | finnian.io | 22-Jan-2018 |
 | [Podcast - Hanselminutes - Serverless and OpenFaas with Alex Ellis](https://www.hanselminutes.com) | Scott Hanselman | hanselminutes.com | 29-Dec-2017
