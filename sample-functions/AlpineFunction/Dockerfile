@@ -1,6 +1,6 @@
 FROM alpine:3.6
 
-ADD https://github.com/openfaas/faas/releases/download/0.6.9/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/0.7.0/fwatchdog /usr/bin
 # COPY ./fwatchdog /usr/bin/
 RUN chmod +x /usr/bin/fwatchdog
 
