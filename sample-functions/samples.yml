@@ -4,87 +4,87 @@ provider:
 
 functions:
   alpinefunction:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./AlpineFunction
     image: functions/alpine:0.6.9
 
   apikeyprotected:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./AlpineFunction
     image: functions/api-key-protected:latest
 
   captainsintent:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./CaptainsIntent
     image: functions/captainsintent:latest
 
   echo:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./echo
     image: functions/faas-echo:latest
 
   changecolorintent:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./ChangeColorIntent
     image: functions/alexa-leds:latest
 
   chelloworld:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./CHelloWorld/src
     image: functions/helloc:latest
 
   dockerhubstats:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./DockerHubStats
     image: functions/hubstats:latest
 
   gif-maker:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./gif-maker
     image: functions/gif-maker:latest
 
   hostnameintent:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./HostnameIntent
     image: functions/hostname-intent:latest
 
   markdownrender:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./MarkdownRender
     image: functions/markdown-render:latest
 
   nodeinfo:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./NodeInfo
     image: functions/node-info:latest
 
   phantomjs:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./Phantomjs
     image: functions/phantomjs:latest
 
   resizeimagemagick:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./ResizeImageMagick
     image: functions/resizer:latest
 
   sentimentanalysis:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./SentimentAnalysis
     image: functions/sentimentanalysis:latest
 
   webhookstash:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./WebhookStash
     image: functions/webhookstash:latest
 
   wordcountfunction:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./WordCountFunction
     image: functions/wordcount:latest
 
   nmap:
-    lang: Dockerfile
+    lang: dockerfile
     handler: ./Nmap
     image: functions/nmap:0.1
 
