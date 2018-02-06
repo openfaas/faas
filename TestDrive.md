@@ -30,7 +30,7 @@ This one-shot script clones the code, sets up a Docker Swarm master node then de
 # docker swarm init --advertise-addr eth0 && \
   git clone https://github.com/openfaas/faas && \
   cd faas && \
-  git checkout 0.6.17 && \
+  git checkout 0.7.0 && \
   ./deploy_stack.sh && \
   docker service ls
 ```
