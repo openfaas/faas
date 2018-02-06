@@ -29,5 +29,7 @@ deploy:
   - ./watchdog/fwatchdog-arm64
   - ./watchdog/fwatchdog.exe
   skip_cleanup: true
+  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
+  local_dir: site
   on:
-    tags: true
+    branch: docs-revamp

@@ -10,6 +10,10 @@ http://localhost:9090/graph?g0.range_input=15m&g0.expr=gateway_service_count&g0.
 
 
 ```
-$ docker service ls -q |xargs -n 1 -I {} docker service scale {}=10;docker service scale func_gateway=1 ;
-$ docker service scale func_prometheus=1 ; docker service scale func_alertmanager=1
+$ docker service ls -q | \
+  xargs -n 1 -I {} docker service scale {}=10; \
+  docker service scale func_gateway=1 ;
+
+$ docker service scale func_prometheus=1 ; \
+  docker service scale func_alertmanager=1
 ```

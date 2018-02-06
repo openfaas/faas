@@ -4,3 +4,4 @@ fwatchdog-armhf
 **/*.DS_Store
 .vscode
 .idea
+site

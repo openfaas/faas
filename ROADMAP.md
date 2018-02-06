@@ -2,7 +2,7 @@
 
 ## 1. Current features
 
-For an overview of features in August 2017 read the following post:
+For an overview of features read the following post:
 
 * [Introducing OpenFaaS (Functions as a Service)](https://blog.alexellis.io/introducing-functions-as-a-service/)
 
@@ -51,24 +51,24 @@ Some of the more recent Completed Features:
 * Developer guide for DigitalOcean
 * Re-branding to OpenFaaS
  * New logo - graphic icon and text
- * Website / landing page
-* Non-root Docker templates for the CLI
-* Integration with a reverse proxy - such as Traefik or Kong
- * I.e. for TLS termination
- * Basic auth for /system endpoints (probably via reverse proxy)
-* AARCH64 (64-bit ARM) port (dependent on Docker release schedule)
-* Healthchecks for functions deployed on Kubernetes
-* Supporting request parameters via query-string
-* Custom end-to-end label support for functions
-* Supporting request parameters via route - QueryString / Path
-* Guide for basic authentication over HTTPs (set up externally through NGinx etc)
+  * Website / landing page
+  * Non-root Docker templates for the CLI
+  * Integration with a reverse proxy - such as Traefik or Kong
+   * I.e. for TLS termination
+    * Basic auth for /system endpoints (probably via reverse proxy)
+    * AARCH64 (64-bit ARM) port (dependent on Docker release schedule)
+    * Healthchecks for functions deployed on Kubernetes
+    * Supporting request parameters via query-string
+    * Custom end-to-end label support for functions
+    * Supporting request parameters via route - QueryString / Path
+    * Guide for basic authentication over HTTPs (set up externally through NGinx etc)
 
-**Incoming requests and routing**
+    **Incoming requests and routing**
 
-There are three options for routing:
+    There are three options for routing:
 
-* Functions created on the overlay network can be invoked by: http://localhost:8080/function/{servicename}
-* Automatic routing is also enabled through the `/` endpoint via a `X-Function` header which matches a service name (function) directly.
+    * Functions created on the overlay network can be invoked by: http://localhost:8080/function/{servicename}
+    * Automatic routing is also enabled through the `/` endpoint via a `X-Function` header which matches a service name (function) directly.
 
 ### The watchdog
 
@@ -87,48 +87,45 @@ If you need an up-to-date picture of what is current and ready-for-use please re
 
 Native support is available for Docker Swarm and Kubernetes using primitive API objects in each orchestration platform.
 
-Must have
+#### Must have
 
 * Dedicated blog site built from GitHub pages or Hugo
 * Developer Cloud guides:
- * for Digital Ocean (done)
- * for Packet
- * for AWS
+    * for Digital Ocean (done)
+    * for Packet
+    * for AWS
 * Developer guide for your first Node.js function
-
 * Configurable memory limits per function exposed through API
 * Certifier for third-party integrations - via e2e tests (in progress) 
 * Return stderr or link to stderr via function invocation (For VMWare / Mark Peek)
 * Community function templates for the FaaS-CLI (in progress)
 
-Should have
+#### Should have
 
 * Docker image builder as remote service based upon Moby
 * Kafka-Connector for the API Gateway
 * AfterBurn - fork once, use many which removes almost all runtime latency - (Alpha available)
 * Kafka queue worker implementation (async currently available by NATS Streaming) - available in pending PR
-
 * Our own "timer" (aka cron) for invoking functions on a regular basis - or a guide for setting this up via Jenkins or CRON
 * Guide/proxy for Flask in a function
 
 
-Could have
+#### Could have
 
 * Multi-tenancy (in-progress for Kubernetes and Docker Swarm)
 * Progress animation for building Docker images via CLI
 * Built-in Docker registry with default configuration
-
 * Function store - list of useful predefined functions
 * Configurable memory limits via "new function" pop-up (already supported by Docker compose stack)
 * Scale to zero 0/0 replicas
 * Serverless Inc framework support - as a "provider" (in progress)
 
-Nice to have
+### Nice to have
 
 * CRIU - (Checkpoint/Restore In Userspace) for starting serverless tasks with a high start-up cost/latency.
 * Deeper tests coverage and integration tests
 
-On-going integrations in addition to Swarm and K8s:
+#### On-going integrations in addition to Swarm and K8s:
 
 * ECS - via Huawei
 * Nomad via Hashicorp / Nic Jackson
@@ -137,7 +134,3 @@ On-going integrations in addition to Swarm and K8s:
 * DC/OS via Alberto in the community
 
 Internal research is also being done for the ACI / AKS / K8s-connector.
-
-### Contributing
-
-Please see [CONTRIBUTING.md](https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md).

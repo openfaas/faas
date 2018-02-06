@@ -1,0 +1,132 @@
+# Copyright (c) 2016-2017 Martin Donath <martin.donath@squidfunk.com>
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to
+# deal in the Software without restriction, including without limitation the
+# rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+# sell copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+# IN THE SOFTWARE.
+
+# Project information
+site_name: OpenFaaS
+site_description: OpenFaaS is a serverless framework for Docker & Kubernetes
+site_author: OpenFaaS Authors
+site_url: https://www.openfaas.com/
+
+
+# Repository
+repo_name: openfaas/faas
+repo_url: https://github.com/openfaas/faas
+edit_uri: ""
+
+# edit_uri: edit/docs-revamp/docs/
+# edit_uri: blob/docs-revamp/docs/
+
+# remote_name: origin
+# remote_branch: gh-pages
+
+# Theme and overrides, i.e. language partial
+theme:
+  name: material
+
+  # Don't include MkDocs' JavaScript
+  include_search_page: false
+  search_index_only: true
+
+  # Default values, taken from mkdocs_theme.yml
+  language: en
+  feature:
+    tabs: false
+  palette:
+    primary: blue
+    accent: indigo
+  favicon: images/favicon.ico
+  logo: images/logo.svg
+
+# Copyright
+copyright: 'Copyright &copy; 2017 OpenFaaS Project'
+
+# Options
+extra:
+  search:
+    languages: 'en'
+  social:
+    - type: globe
+      link: https://www.openfaas.com/
+    - type: github-alt
+      link: https://github.com/openfaas/faas
+    - type: twitter
+      link: https://twitter.com/openfaas
+
+extra_css:
+  - stylesheets/extra.css
+
+# Extensions
+markdown_extensions:
+  - markdown.extensions.admonition
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - markdown.extensions.def_list
+  - markdown.extensions.footnotes
+  - markdown.extensions.meta
+  - markdown.extensions.toc:
+      permalink: true
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# Page tree
+pages:
+  - Overview: index.md
+  - Getting Started:
+    - Part 1 - Deploy: getting-started/deploy.md
+    - Part 2 - OpenFaaS CLI: getting-started/faas-cli.md
+    - Part 3 - Create a Function: getting-started/functions.md
+  - Architecture: architecture.md
+  - Deployment Guides:
+    - Docker Swarm: deployment/swarm.md
+    - Kubernetes: deployment/kubernetes.md
+  - Cloud Platform Guides:
+    - Digital Ocean: cloud-platforms/swarm_digitalocean.md
+    - Play-with-Docker: cloud-platforms/play-with-docker.md
+  - Integration Guides:
+    - Kong: integrations/kong.md
+    - Traefik: integrations/traefik.md
+  - Development:
+    - API Gateway: developer/gateway.md
+    - Watchdog: developer/watchdog.md
+    - Asynchronous Functions: developer/asynchronous.md
+    - Swagger API: developer/swagger.md
+    - Debugging: developer/debug.md
+    - Backends: developer/backends.md
+    - Function Chaining: developer/chaining_functions.md
+  - Tutorials:
+    - Secret Management: operations/secure_secret_management.md
+    - Private Registry: operations/managing-images.md
+    - Performance Testing: operations/performance_testing.md
+    - Interacting w/ Other Containers: operations/interactions.md
+  - Troubleshooting: troubleshooting.md
