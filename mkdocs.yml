@@ -104,22 +104,21 @@ pages:
   - Overview: index.md
   - Getting Started:
     - Part 1 - Deploy: getting-started/deploy.md
-    - Part 2 - OpenFaaS CLI: getting-started/testdrive.md
-    - Part 3 - Sample Functions: getting-started/sample_functions.md
-    - Part 4 - Create a Function: getting-started/functions.md
+    - Part 2 - OpenFaaS CLI: getting-started/faas-cli.md
+    - Part 3 - Create a Function: getting-started/functions.md
   - Architecture: architecture.md
   - Deployment Guides:
     - Docker Swarm: deployment/swarm.md
     - Kubernetes: deployment/kubernetes.md
-    - Play-with-Docker: deployment/play-with-docker.md
+  - Cloud Platform Guides:
+    - Digital Ocean: cloud-platforms/swarm_digitalocean.md
+    - Play-with-Docker: cloud-platforms/play-with-docker.md
   - Integration Guides:
     - Kong: integrations/kong.md
     - Traefik: integrations/traefik.md
   - Development:
     - API Gateway: developer/gateway.md
-    - Dashboard UI: developer/dashboard.md
     - Watchdog: developer/watchdog.md
-    - Functions: developer/functions.md
     - Asynchronous Functions: developer/asynchronous.md
     - Swagger API: developer/swagger.md
     - Debugging: developer/debug.md
@@ -131,6 +130,3 @@ pages:
     - Performance Testing: operations/performance_testing.md
     - Interacting w/ Other Containers: operations/interactions.md
   - Troubleshooting: troubleshooting.md
-  - Roadmap: roadmap.md
-  - Contributing: contributing.md
-  
