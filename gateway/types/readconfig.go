@@ -36,14 +36,19 @@ func parseBoolValue(val string) bool {
 	return false
 }
 
-func parseIntValue(val string, fallback int) int {
+func parseIntOrDurationValue(val string, fallback time.Duration) time.Duration {
 	if len(val) > 0 {
 		parsedVal, parseErr := strconv.Atoi(val)
 		if parseErr == nil && parsedVal >= 0 {
-			return parsedVal
+			return time.Duration(parsedVal) * time.Second
 		}
 	}
-	return fallback
+
+	duration, durationErr := time.ParseDuration(val)
+	if durationErr != nil {
+		return fallback
+	}
+	return duration
 }
 
 // Read fetches config from environmental variables.
@@ -53,11 +58,11 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 		PrometheusPort: 9090,
 	}
 
-	readTimeout := parseIntValue(hasEnv.Getenv("read_timeout"), 8)
-	writeTimeout := parseIntValue(hasEnv.Getenv("write_timeout"), 8)
+	readTimeout := parseIntOrDurationValue(hasEnv.Getenv("read_timeout"), time.Second*8)
+	writeTimeout := parseIntOrDurationValue(hasEnv.Getenv("write_timeout"), time.Second*8)
 
-	cfg.ReadTimeout = time.Duration(readTimeout) * time.Second
-	cfg.WriteTimeout = time.Duration(writeTimeout) * time.Second
+	cfg.ReadTimeout = readTimeout
+	cfg.WriteTimeout = writeTimeout
 
 	if len(hasEnv.Getenv("functions_provider_url")) > 0 {
 		var err error
