@@ -16,6 +16,10 @@ In summary:
 
 *Pictured: conceptual architecture when Kubernetes is used as the orchestration provider*
 
+## Function Providers
+
+Providers for functions can be written using the [faas-provider](https://github.com/openfaas/faas-provider/) interface in Golang which provides the REST API for interacting with the gateway. The gateway originally interacted with Docker Swarm directly and anything else via a Function Provider - this support was moved into a separate project [faas-swarm](https://github.com/openfaas/faas-swarm/).
+
 ## REST API
 
 Swagger docs: https://github.com/openfaas/faas/tree/master/api-docs
@@ -43,7 +47,7 @@ The gateway can be configured through the following environment variables:
 |------------------------|--------------|
 | `write_timeout`        | HTTP timeout for writing a response body from your function (in seconds). Default: `8`  |
 | `read_timeout`         | HTTP timeout for reading the payload from the client caller (in seconds). Default: `8` |
-| `functions_provider_url`             | URL of an alternate microservice to manage functions (e.g., Kubernetes). When given, this overrides the default Docker Swarm provider.  |
+| `functions_provider_url`             | URL of upstream [functions provider](https://github.com/openfaas/faas-provider/) - i.e. Swarm, Kubernetes, Nomad etc  |
 | `faas_nats_address`          | Address of NATS service. Required for asynchronous mode. |
 | `faas_nats_port`    | Port for NATS service. Requrired for asynchronous mode. |
 | `faas_prometheus_host`         | Host to connect to Prometheus. Default: `"prometheus"`.  |
