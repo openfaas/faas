@@ -1,3 +1,35 @@
+body {
+	background-color: rgb(243, 244, 250);
+}
+
+div.blankslate {
+	bottom: 0;
+	height: 300px;
+	left: 0;
+	margin: auto;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 400px;
+}
+
+div.blankslate > button {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+div.blankslate > p {
+	line-height: 1.5;
+	text-align: center;
+}
+
+div.blankslate > pre {
+	background-color: white;
+	border-radius: 3px;
+	margin-top: 0;
+	padding: .5rem;
+}
+
 /*Taken from PWD, remove styles not used.*/
 
 .selected button {
