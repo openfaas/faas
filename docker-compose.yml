@@ -8,8 +8,8 @@ services:
             - functions
         environment:
             functions_provider_url: "http://faas-swarm:8080/"
-            read_timeout:  10   # set both here, and on your functions
-            write_timeout: 10   # set both here, and on your functions
+            read_timeout:  10s   # set both here, and on your functions
+            write_timeout: 10s   # set both here, and on your functions
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
             faas_nats_address: "nats"
             faas_nats_port: 4222
