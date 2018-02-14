@@ -67,12 +67,14 @@ Key:
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [I'm going to be working on OpenFaaS full-time](https://github.com/openfaas/faas-netes/issues/145) | Alex Ellis | alexellis.io | 19-Feb-2018 |
+| [Stop installing CLI tools on your build server: CLI-as-a-Function with OpenFaaS](https://medium.com/@burtonr/stop-installing-cli-tools-on-your-build-server-cli-as-a-function-with-openfaas-80dd8d6be611) | Burton Rheutan | medium.com/@burtonr | 12-Feb-2018 |
 | [Turn Any CLI into a Function with OpenFaaS](https://blog.alexellis.io/cli-functions-with-openfaas/) | Alex Ellis | alexellis.io | 06-Feb-2018
 | [Deploying OpenFaaS on Kubernetes  - Azure AKS](https://medium.com/@ericstoekl/deploying-openfaas-on-kubernetes-azure-aks-4eea99d0743f) | Eric Stoekl | medium.com | 03-Feb-2018 |
 | [OpenFaaS with Ruby/MySQL/Ceph](https://github.com/Lallassu/openfaas-demo) | Magnus Persson | cygate.se | 23-Jan-2018 |
 | [Installing OpenFaaS on top of Kubernetes on bare-metal with Terraform Scaleway provider and kubeadm](https://stefanprodan.com/2018/kubernetes-scaleway-baremetal-arm-terraform-installer/) | Stefan Prodan | stefanprodan.com | 22-Jan-2018
 | [Get storage for your Severless Functions with Minio & Docker](https://blog.alexellis.io/openfaas-storage-for-your-functions/) | Alex Ellis | alexellis.io | 22-Jan-2018
 | [ColoriseBot: three months on](https://finnian.io/blog/colorisebot-three-months-on/) | Finnian Anderson | finnian.io | 22-Jan-2018 |
+| [Google Home + OpenFaaS: Write your own voice controlled functions](https://medium.com/@burtonr/google-home-openfaas-write-your-own-voice-controlled-functions-11f195398e3f) | Burton Rheutan | medium.com/@burtonr | 06-Jan-2018 |
 
 ### 2017
 
@@ -131,7 +133,7 @@ Key:
 | [Repainting the Past with Machine Learning and OpenFaaS](http://olicallaghan.com/post/repainting-the-past-with-machine-learning-and-openfaas) | Oli Callaghan | olicallaghan.com | 23-Oct-2017 |
 | [An Introduction to Serverless DevOps with OpenFaaS](https://hackernoon.com/an-introduction-to-serverless-devops-with-openfaas-b978ab0eb2b) | Ken Fukuyama | medium.com/@kenfdev | 22-Oct-2017 |
 | [Colourising Video with OpenFaaS Serverless Functions](https://finnian.io/blog/colourising-video-with-openfaas-serverless-functions/) | Finnian Anderson | finnian.io | 21-Oct-2017 |
-| [My First Pull Request To OpenFaaS](https://hackernoon.com/my-first-pull-request-to-openfaas-a-major-open-source-project-d0c823790691) | Burton Rheutan | hackernoon.com/@rheutan7 | 10-Oct-2017 |
+| [My First Pull Request To OpenFaaS](https://hackernoon.com/my-first-pull-request-to-openfaas-a-major-open-source-project-d0c823790691) | Burton Rheutan | hackernoon.com/@burtonr | 10-Oct-2017 |
 | [Deploying a Serverless Youtube-To-Gif Telegram bot with OpenFaaS](https://medium.com/@ericstoekl/deploying-a-serverless-youtube-to-gif-telegram-bot-with-openfaas-2b78d1e9ae6) | Eric Stoekl | medium.com/@ericstoekl | 25-Sep-2017 |
 | [A Serverless GraphQL Blog in 60 Seconds with OpenFaaS](https://medium.com/@kenfdev/a-serverless-graphql-blog-in-60-seconds-with-openfaas-aaedd566b1f3) | Ken Fukuyama | medium.com/@kenfdev | 24-Sep-2017 |
 | [Create your own DownNotifier with OpenFaaS](http://jmkhael.io/downnotifier-site-pinger/)| Johnny Mkhael | jmkhael.io | 22-Sep-2017|
@@ -174,6 +176,7 @@ You can also find cool projects or submit your own to the [faas-and-furious orga
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
 | [OpenFaaS with Ruby/MySQL/Ceph Sample](https://github.com/Lallassu/openfaas-demo) | Magnus Persson | [lallassu/openfaas-demo](https://github.com/Lallassu/openfaas-demo) | 23-Jan-2018
+| [sqlrest: API Proxy to connect to a SQL database from a function](https://github.com/BurtonR/sqlrest) | Burton Rheutan | github.com | 21-Nov-2017
 | [Kafka-connector for OpenFaaS](https://github.com/ucalgary/ftrigger) | King Chung Huang | [ucalgary/ftrigger](https://github.com/ucalgary/ftrigger) | 13-October-2017
 | [Azure Storage and Azure Service Bus Queues Trigger for OpenFaaS on Kubernetes](https://github.com/danigian/Azure-Queues-Trigger-OpenFaaS) | Daniele Antonio Maggio | github.com/danigian/Azure-Queues-Trigger-OpenFaaS | 24-September-2017 |
 | [faas-pipeline](https://github.com/getlazy/faas-pipeline) - OpenFaaS function composition | Ivan Erceg | github.com | 23-September-2017 |
