@@ -46,13 +46,19 @@ Key:
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFaaS : a serverless framework on top of Docker and Kubernetes @ Devoxx France](https://www.devoxx.fr/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 18-Apr-2018 |
 | [Deep Dive: Serverless Computing mit OpenFaaS - Magdeburger Developer Days](https://www.md-devdays.de/Act?id=34/) | Frank Pommerening | Magdeburg Germany | 10-April-2018 |
+| [OpenFaaS : a serverless framework on top of Docker and Kubernetes @ BreizhCamp](http://www.breizhcamp.org/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 29-Mar-2018 |
 | [Serverless Computing mit Docker Swarm und OpenFaaS - Softwerkskammer Jena](https://www.meetup.com/de-DE/jenadevs/events/246045796/) | Frank Pommerening | Jena Germany | 20-Mar-2018 |
 | [Workshop: Serverless Computing mit OpenFaaS - Spartakiade](https://github.com/fpommerening/Spartakiade2018-OpenFaaS) | Frank Pommerening | Berlin Germany | 17-Mar-2018 |
 | [Serverless con AWS Lambda y OpenFaaS](https://t3chfest.uc3m.es/2018/programa/serverless-con-aws-lambda-openfaas/) | [Javier Revillas](https://twitter.com/javirevillas) | Madrid, Spain | 01-Mar-2018 |
+| [OpenFaaS presentation + Demo on Kubernetes @ ClusterEurope](https://clustereurope.org/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 02-Feb-2018 |
+| [OpenFaaS presentation + Demo on Kubernetes @ ApiDays Paris](http://www.apidays.io/events/paris-2017) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 30-Jan-2018 |
 | [Serverless Computing mit OpenFaaS - Developer Group Leipzig](https://www.meetup.com/de-DE/Developer-Group-Leipzig/events/245252994/) | Frank Pommerening | Leipzig Germany | 29-Jan-2018 |
+| [OpenFaaS : a serverless framework on top of Docker and Kubernetes @ Snowcamp.io](https://snowcamp2018.sched.com/event/D2nX/openfaas-a-serverless-framework-on-top-of-docker-and-kubernetes?iframe=no&w=100%&sidebar=no&bg=no) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 25-Jan-2018 |
 | [Talk: Building a Raspberry Pi Kubernetes Cluster with OpenFaaS](https://ndc-london.com/talk/building-a-raspberry-pi-kubernetes-cluster-and-running-.net-core/) | Alex Ellis / Scott Hanselman | London | 18-Jan-2018 |
 | [OpenFaaS @ KubeCon + CloudNativeCon](https://kccncna17.sched.com/event/CU6s/faas-and-furious-0-to-serverless-in-60-seconds-anywhere-alex-ellis-adp) | Alex Ellis | Austin, USA | 07-Dec-2017 |
+| [OpenFaaS on Azure AKS with ASP.NET Core website @ AzugFR](https://www.meetup.com/fr-FR/AZUG-FR/events/245186139/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 05-Dec-2017 |
 | [OpenFaaS presentation + Demo on Kubernetes @ Paris Serverless Meetup](https://www.meetup.com/fr-FR/Paris-Serverless-Architecture-Meetup/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 14-Nov-2017 |
 | [OpenFaaS - Serverless Functions Made Simple @ Docker Cambridge Meetup](https://www.meetup.com/docker-cambridge/events/243206434/) | Alex Ellis | Cambridge, UK | 20-Nov-2017 |
 | [OpenFaaS Demo at APIOps Meetup](https://www.meetup.com/APIOps-Tampere/) | [Sakari Hoisko](https://twitter.com/Chaggeus) | Tampere, Finland | 14-Nov-2017 |
