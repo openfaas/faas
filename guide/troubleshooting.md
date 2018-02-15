@@ -1,10 +1,22 @@
 # Troubleshooting guide
 
+## CLI unresponsive - localhost vs 127.0.0.1
+
+On certain Linux distributions the name `localhost` maps to an IPv6 alias meaning that the CLI may hang. In these circumstances you have two options:
+
+1. Use the `-g` or `--gateway` argument with `127.0.0.1`
+
+This forces IPv4.
+
+2. Edit the `/etc/hosts` file on your machine and remove the IPv6 alias for localhost.
+
 ## Timeouts
 
 Default timeouts are configured at the HTTP level and must be set both on the gateway and the function.
 
-**Your function**
+> Note: all distributed systems need a maximum timeout value to be configured for work. This means that work cannot be unbounded.
+
+### Timeouts - Your function
 
 You can also enforce a hard-timeout for your function with the `hard_timeout` environmental variable.
 
@@ -42,7 +54,7 @@ func Handle(req []byte) string {
 }
 ```
 
-**Gateway**
+### Timeouts - Gateway
 
 For the gateway set the following environmental variables:
 
@@ -53,12 +65,20 @@ write_timeout: 30
 
 The default for both is "8" - seconds. In the example above "30" means 30 seconds.
 
-If on Kubernetes, set a matching timeout for the faas-netesd controller too:
+### Timeouts - Function provider
+
+If on Kubernetes and Swarm you should set a matching timeout for the faas-netesd or faas-swarm controller matching that of the gateway.
 
 ```
 read_timeout: 30
 write_timeout: 30
 ```
+
+### Timeouts - Asynchronous invocations
+
+For asynchronous invocations of functions a separate timeout can be configured at the `queue-worker` level in the `ack_timeout` environmental variable.
+
+If the `ack_timeout` is exceeded the task will not be acknowledge and the queue system will retry the invocation.
 
 ## Function execution logs
 
@@ -117,6 +137,8 @@ Checklist:
 * [ ] All core services are deployed: i.e. gateway
 * [ ] Check functions are deployed and started
 * [ ] Check request isn't timing out at the gateway or the function level
+
+# Troubleshooting Swarm or Kubernetes
 
 ## Docker Swarm
 
@@ -182,9 +204,9 @@ $ git clone https://github.com/openfaas/faas-netes/ && \
   kubectl delete -f ./yaml/
 ```
 
-## Watchdog
+# Watchdog
 
-### Debug your function without deploying it
+## Debug your function without deploying it
 
 Here's an example of how you can deploy a function without using an orchestrator and the API gateeway. It is especially useful for testing:
 
@@ -200,7 +222,7 @@ Now you can access the function with one of the supported HTTP methods such as G
 $ curl -4 localhost:8081
 ```
 
-### Edit your function without rebuilding it
+## Edit your function without rebuilding it
 
 You can bind-mount code straight into your function and work with it locally, until you are ready to re-build. This is a common flow with containers, but should be used sparingly.
 
