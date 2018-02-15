@@ -57,8 +57,7 @@ This command is split into two parts so that the OpenFaaS namespaces are always 
 
 ```
 $ cd faas-netes && \
- kubectl apply -f ./namespaces.yml && \
- kubectl apply -f ./yaml
+ kubectl apply -f ./namespaces.yml,./yaml
 ```
 
 Note: RBAC is optional but encouraged and enabled by default.
@@ -106,7 +105,7 @@ If you like you can also run the script via a non-root user. Then the faas-cli b
 $ git clone https://github.com/openfaas/faas-cli
 ```
 
-Edit samples.yml and change your gateway URL from `localhost:8080` to `kubernetes-node-ip:31112`.
+Edit samples.yml and change your gateway URL from `localhost:8080` to `kubernetes-node-ip:31112` or pass the `--gateway` / `-g` flag to commands.
 
 i.e.
 
@@ -135,7 +134,7 @@ $ faas-cli list -f samples.yml
 
 or
 
-$ faas-cli list  --gateway http://127.0.0.1:31112
+$ faas-cli list  --g http://127.0.0.1:31112
 Function                      	Invocations    	Replicas
 inception                     	0              	1    
 nodejs-echo                   	0              	1    
@@ -147,7 +146,7 @@ stronghash                    	2              	1
 Invoke a function:
 
 ```
-$ echo -n Test | faas-cli invoke stronghash --gateway http://127.0.0.1:31112
+$ echo -n "Test" | faas-cli invoke stronghash --g http://127.0.0.1:31112
 c6ee9e33cf5c6715a1d148fd73f7318884b41adcb916021e2bc0e800a5c5dd97f5142178f6ae88c8fdd98e1afb0ce4c8d2c54b5f37b30b7da1997bb33b0b8a31  -
 ```
 
@@ -182,3 +181,9 @@ The function can also be invoked through the CLI:
 $ echo -n "" | faas-cli invoke --gateway http://kubernetes-ip:31112 nodeinfo
 $ echo -n "verbose" | faas-cli invoke --gateway http://kubernetes-ip:31112 nodeinfo
 ```
+
+## Troubleshooting
+
+If you are running into any issues please check out the troubleshooting guide and search the documentation / past issues before raising an issue.
+
+* [Troubleshooting guide](https://github.com/openfaas/faas/blob/master/guide/troubleshooting.md)
