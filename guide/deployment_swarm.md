@@ -54,3 +54,10 @@ If you're running on Linux you may find that `localhost` times out. In this case
 You can now grab a coffee and start learning how to create your first function with the CLI:
 
 [Morning coffee with the OpenFaaS CLI](https://blog.alexellis.io/quickstart-openfaas-cli/)
+
+## Troubleshooting
+
+If you are running into any issues please check out the troubleshooting guide and search the documentation / past issues before raising na issue.
+
+* [Troubleshooting guide](https://github.com/openfaas/faas/blob/master/guide/troubleshooting.md)
+
