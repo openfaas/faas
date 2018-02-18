@@ -65,12 +65,15 @@
                 <div flex></div>
             </md-content>
 
-            <div class="blankslate" layout="column" layout-align="center center" ng-if="functions.length === 0">
-              <p>
+            <div class="blankslate" layout="column" layout-align="center center" ng-if="!selectedFunction">
+              <p ng-if="functions.length === 0">
                 You have no functions in OpenFaaS.<br>
                 Start by deploying a new function.
               </p>
-              <md-button class="md-primary" md-colors="{background: 'blue'}" ng-click="newFunction()">
+              <p ng-if="functions.length !== 0">
+                Select a function or deploy a new one.
+              </p>
+              <md-button class="md-primary md-raised" ng-click="newFunction()">
                 Deploy new function
               </md-button>
               <p>Or use <strong>faas-cli</strong> to build and deploy functions:</p>
