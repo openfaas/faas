@@ -87,6 +87,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [I'm going to be working on OpenFaaS full-time](https://github.com/openfaas/faas-netes/issues/145) | Alex Ellis | alexellis.io | 19-Feb-2018 |
 | [Turn Any CLI into a Function with OpenFaaS](https://blog.alexellis.io/cli-functions-with-openfaas/) | Alex Ellis | alexellis.io | 06-Feb-2018
 | [Deploying OpenFaaS on Kubernetes  - Azure AKS](https://medium.com/@ericstoekl/deploying-openfaas-on-kubernetes-azure-aks-4eea99d0743f) | Eric Stoekl | medium.com | 03-Feb-2018 |
 | [OpenFaaS with Ruby/MySQL/Ceph](https://github.com/Lallassu/openfaas-demo) | Magnus Persson | cygate.se | 23-Jan-2018 |
