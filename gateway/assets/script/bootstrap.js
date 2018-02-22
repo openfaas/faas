@@ -53,7 +53,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
             }
 
             var options = {
-                url: "/function/" + $scope.selectedFunction.name,
+                url: "../function/" + $scope.selectedFunction.name,
                 data: $scope.invocation.request,
                 method: "POST",
                 headers: { "Content-Type": requestContentType },
@@ -143,7 +143,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
             var previous = $scope.functions;
 
             var cl = function(previousItems) {
-                $http.get("/system/functions").then(function(response) {
+                $http.get("../system/functions").then(function(response) {
                     if (response && response.data) {
                         if (previousItems.length != response.data.length) {
                             $scope.functions = response.data;
@@ -164,7 +164,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
         }
 
         var fetch = function() {
-            $http.get("/system/functions").then(function(response) {
+            $http.get("../system/functions").then(function(response) {
                 $scope.functions = response.data;
             });
         };
@@ -227,7 +227,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
 
             $scope.createFunc = function() {
                 var options = {
-                    url: "/system/functions",
+                    url: "../system/functions",
                     data: $scope.item,
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -268,7 +268,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
             $mdDialog.show(confirm)
                 .then(function() {
                     var options = {
-                        url: "/system/functions",
+                        url: "../system/functions",
                         data: {
                             functionName: $scope.selectedFunction.name
                         },
