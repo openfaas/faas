@@ -91,9 +91,9 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
             }
 
             $http(options)
-                .success(function (data, status, headers) {
-
-                    var headerMap = headers();
+                .then(function (response) {
+                    var data = response.data;
+                    var status = response.status;
 
                     if($scope.invocation.contentType == "binary") {
                         var filename = uuidv4();
