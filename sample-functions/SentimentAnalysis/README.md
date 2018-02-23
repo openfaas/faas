@@ -7,7 +7,7 @@ Example:
 Run in the function:
 
 ```
-# curl -s http://localhost:8080/function/sentimentanalysis --data-binary \
+# curl -s http://localhost:8080/system/functions --data-binary \
 '{ 
    "service": "sentimentanalysis",
    "image": "functions/sentimentanalysis",
