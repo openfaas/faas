@@ -14,6 +14,8 @@ type MetricOptions struct {
 	GatewayFunctionInvocation *prometheus.CounterVec
 	GatewayFunctionsHistogram *prometheus.HistogramVec
 	ServiceReplicasCounter    *prometheus.GaugeVec
+	GatewaySystemInvocation   *prometheus.CounterVec
+	GatewaySystemHistogram    *prometheus.HistogramVec
 }
 
 // PrometheusHandler Bootstraps prometheus for metrics collection
@@ -39,15 +41,30 @@ func BuildMetricsOptions() MetricOptions {
 	serviceReplicas := prometheus.NewGaugeVec(
 		prometheus.GaugeOpts{
 			Name: "gateway_service_count",
-			Help: "Docker service replicas",
+			Help: "Function replicas",
 		},
 		[]string{"function_name"},
+	)
+
+	gatewaySystemHistogram := prometheus.NewHistogramVec(prometheus.HistogramOpts{
+		Name: "gateway_system_seconds",
+		Help: "System invocation time taken",
+	}, []string{"method"})
+
+	gatewaySystemInvocation := prometheus.NewCounterVec(
+		prometheus.CounterOpts{
+			Name: "gateway_system_invocation_total",
+			Help: "System invocation total",
+		},
+		[]string{"method", "code"},
 	)
 
 	metricsOptions := MetricOptions{
 		GatewayFunctionsHistogram: gatewayFunctionsHistogram,
 		GatewayFunctionInvocation: gatewayFunctionInvocation,
 		ServiceReplicasCounter:    serviceReplicas,
+		GatewaySystemHistogram:    gatewaySystemHistogram,
+		GatewaySystemInvocation:   gatewaySystemInvocation,
 	}
 
 	return metricsOptions
@@ -58,4 +75,6 @@ func RegisterMetrics(metricsOptions MetricOptions) {
 	prometheus.Register(metricsOptions.GatewayFunctionInvocation)
 	prometheus.Register(metricsOptions.GatewayFunctionsHistogram)
 	prometheus.Register(metricsOptions.ServiceReplicasCounter)
+	prometheus.Register(metricsOptions.GatewaySystemHistogram)
+	prometheus.Register(metricsOptions.GatewaySystemInvocation)
 }

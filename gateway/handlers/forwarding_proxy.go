@@ -44,6 +44,21 @@ func MakeForwardingProxyHandler(proxy *httputil.ReverseProxy, metrics *metrics.M
 				With(prometheus.Labels{"function_name": service, "code": code}).
 				Inc()
 		}
+
+		system := "/system/"
+		if startsWith(uri, system) {
+			// log.Printf("system_call=%s", uri[len(system):])
+
+			metrics.GatewaySystemHistogram.
+				WithLabelValues(r.Method).
+				Observe(seconds)
+
+			code := strconv.Itoa(writeAdapter.GetHeaderCode())
+
+			metrics.GatewaySystemInvocation.
+				With(prometheus.Labels{"method": r.Method, "code": code}).
+				Inc()
+		}
 	}
 }
 
