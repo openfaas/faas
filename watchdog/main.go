@@ -205,7 +205,7 @@ func getAdditionalEnvs(config *WatchdogConfig, r *http.Request, method string) [
 
 	cookies := r.Cookies()
 	if len(cookies) != 0 {
-		envs = append(envs, fmt.Sprintf("Http_Cookies=%s", cookies[0].String()))
+		envs = append(envs, fmt.Sprintf("Http_Cookie=%s", cookies[0].String()))
 	}
 
 	if config.cgiHeaders {
