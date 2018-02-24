@@ -1,7 +1,7 @@
 FROM alpine:3.6
 
 RUN apk --no-cache add ffmpeg gifsicle curl \
-   && curl -LS https://github.com/openfaas/faas/releases/download/0.7.0/fwatchdog > /usr/bin/fwatchdog \
+   && curl -LS https://github.com/openfaas/faas/releases/download/0.7.1/fwatchdog > /usr/bin/fwatchdog \
    && chmod +x /usr/bin/fwatchdog \
    && apk del curl
 WORKDIR /root/
