@@ -203,6 +203,11 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 func getAdditionalEnvs(config *WatchdogConfig, r *http.Request, method string) []string {
 	var envs []string
 
+	cookies := r.Cookies()
+	if len(cookies) != 0 {
+		envs = append(envs, fmt.Sprintf("Http_Cookies=%s", cookies[0].String()))
+	}
+
 	if config.cgiHeaders {
 		envs = os.Environ()
 		for k, v := range r.Header {
