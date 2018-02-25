@@ -106,7 +106,7 @@ This command clones the OpenFaaS Github repository then checkouts out a stable r
 ```
 $ git clone https://github.com/alexellis/faas && \
   cd faas && \
-  git checkout 0.6.5 && \
+  git checkout 0.7.1 && \
   ./deploy_stack.sh
 ```
 

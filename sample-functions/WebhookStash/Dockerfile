@@ -1,4 +1,4 @@
-FROM golang:1.9.2-alpine as builder
+FROM golang:1.9.4-alpine as builder
 
 MAINTAINER alex@openfaas.com
 ENTRYPOINT []

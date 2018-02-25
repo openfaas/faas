@@ -41,7 +41,10 @@ functions:
   gif-maker:
     lang: dockerfile
     handler: ./gif-maker
-    image: functions/gif-maker:latest
+    image: functions/gif-maker:dev
+    environment:
+      read_timeout:	60
+      write_timeout: 60 
 
   hostnameintent:
     lang: dockerfile

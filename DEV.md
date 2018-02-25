@@ -26,7 +26,7 @@ You can find the [reference documentation for the Watchdog here](https://github.
 This is the basis of a function which generates HTML from MarkDown:
 
 ```
-FROM golang:1.7.5
+FROM golang:1.9.4
 RUN mkdir -p /go/src/app
 COPY handler.go /go/src/app
 WORKDIR /go/src/app
@@ -35,7 +35,7 @@ RUN go get github.com/microcosm-cc/bluemonday && \
 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 
-ADD https://github.com/openfaas/faas/releases/download/v0.3-alpha/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/0.7.1/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
 ENV fprocess="/go/src/app/app"
@@ -61,7 +61,7 @@ Update the Docker stack with this:
 ```
 FROM alpine:latest
 
-ADD https://github.com/openfaas/faas/releases/download/v0.3-alpha/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/0.7.1/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
 ENV fprocess="wc"
