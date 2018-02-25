@@ -3,13 +3,13 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: functions/gateway:0.7.1
+        image: functions/gateway:0.7.2
         networks:
             - functions
         environment:
             functions_provider_url: "http://faas-swarm:8080/"
-            read_timeout:  10s   # set both here, and on your functions
-            write_timeout: 10s   # set both here, and on your functions
+            read_timeout:  "20s"   # set both here, and on your functions
+            write_timeout: "20s"   # set both here, and on your functions
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
             faas_nats_address: "nats"
             faas_nats_port: 4222
@@ -34,12 +34,12 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         # ports:
             # - 8081:8080
-        image:  functions/faas-swarm:0.1.5
+        image:  functions/faas-swarm:0.1.7
         networks:
             - functions
         environment:
-            read_timeout:  10   # set both here, and on your functions
-            write_timeout: 10   # set both here, and on your functions
+            read_timeout:  "20s"   # set both here, and on your functions
+            write_timeout: "20s"   # set both here, and on your functions
             DOCKER_API_VERSION: "1.30"
         deploy:
             placement:
