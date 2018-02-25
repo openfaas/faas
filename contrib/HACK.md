@@ -1,3 +1,23 @@
+# UI development
+
+The OpenFaaS UI consists of static pages built in Angular 1.x. These call the OpenFaaS API gateway for operations such as listing / creating and deleting functions. The Function Store is stored on GitHub as a JSON file which is fecthed over http.
+
+## Multi-browser testing
+
+UI changes should be tested in:
+
+* Safari
+* Chrome
+* FireFox
+* IE11
+
+### Testing on Windows
+
+Windows VMs are available from Microsoft for free - for testing pages/projects with their browsers:
+https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/
+
+[VirtualBox](https://www.virtualbox.org/wiki/Downloads) can run these VMs at no cost.
+
 ## Build a development API Gateway
 
 1. Build a new development Docker image:
