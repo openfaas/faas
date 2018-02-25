@@ -28,16 +28,19 @@ func parseBoolValue(val string) bool {
 	return false
 }
 
-func parseIntValue(val string) int {
+func parseIntOrDurationValue(val string, fallback time.Duration) time.Duration {
 	if len(val) > 0 {
 		parsedVal, parseErr := strconv.Atoi(val)
-
 		if parseErr == nil && parsedVal >= 0 {
-
-			return parsedVal
+			return time.Duration(parsedVal) * time.Second
 		}
 	}
-	return 0
+
+	duration, durationErr := time.ParseDuration(val)
+	if durationErr != nil {
+		return fallback
+	}
+	return duration
 }
 
 // Read fetches config from environmental variables.
@@ -49,21 +52,10 @@ func (ReadConfig) Read(hasEnv HasEnv) WatchdogConfig {
 
 	cfg.faasProcess = hasEnv.Getenv("fprocess")
 
-	readTimeout := parseIntValue(hasEnv.Getenv("read_timeout"))
-	writeTimeout := parseIntValue(hasEnv.Getenv("write_timeout"))
+	cfg.readTimeout = parseIntOrDurationValue(hasEnv.Getenv("read_timeout"), time.Second*5)
+	cfg.writeTimeout = parseIntOrDurationValue(hasEnv.Getenv("write_timeout"), time.Second*5)
 
-	cfg.execTimeout = time.Duration(parseIntValue(hasEnv.Getenv("exec_timeout"))) * time.Second
-
-	if readTimeout == 0 {
-		readTimeout = 5
-	}
-
-	if writeTimeout == 0 {
-		writeTimeout = 5
-	}
-
-	cfg.readTimeout = time.Duration(readTimeout) * time.Second
-	cfg.writeTimeout = time.Duration(writeTimeout) * time.Second
+	cfg.execTimeout = parseIntOrDurationValue(hasEnv.Getenv("exec_timeout"), time.Second*0)
 
 	writeDebugEnv := hasEnv.Getenv("write_debug")
 	if isBoolValueSet(writeDebugEnv) {
