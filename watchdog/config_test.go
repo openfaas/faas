@@ -162,16 +162,34 @@ func TestRead_ReadAndWriteTimeoutConfig(t *testing.T) {
 	}
 }
 
+func TestRead_ReadAndWriteTimeoutDurationConfig(t *testing.T) {
+	defaults := NewEnvBucket()
+	defaults.Setenv("read_timeout", "20s")
+	defaults.Setenv("write_timeout", "1m30s")
+
+	readConfig := ReadConfig{}
+	config := readConfig.Read(defaults)
+
+	if (config.readTimeout) != time.Duration(20)*time.Second {
+		t.Logf("readTimeout incorrect, got: %d\n", config.readTimeout)
+		t.Fail()
+	}
+	if (config.writeTimeout) != time.Duration(90)*time.Second {
+		t.Logf("writeTimeout incorrect, got: %d\n", config.writeTimeout)
+		t.Fail()
+	}
+}
+
 func TestRead_ExecTimeoutConfig(t *testing.T) {
 	defaults := NewEnvBucket()
-	defaults.Setenv("exec_timeout", "3")
+	defaults.Setenv("exec_timeout", "3s")
 
 	readConfig := ReadConfig{}
 	config := readConfig.Read(defaults)
 
 	want := time.Duration(3) * time.Second
 	if (config.execTimeout) != want {
-		t.Logf("readTimeout incorrect, got: %d - want: %s\n", config.execTimeout, want)
+		t.Logf("execTimeout incorrect, got: %d - want: %s\n", config.execTimeout, want)
 		t.Fail()
 	}
 }
