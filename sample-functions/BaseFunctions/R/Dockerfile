@@ -1,6 +1,6 @@
 FROM artemklevtsov/r-alpine:latest
 
-ADD https://github.com/openfaas/faas/releases/download/0.6.1/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/0.7.1/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
 WORKDIR /root/
