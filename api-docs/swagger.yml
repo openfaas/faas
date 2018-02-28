@@ -197,6 +197,22 @@ paths:
           description: Function not found
         '500':
           description: Error connecting to function
+  '/system/function/{functionName}':
+    get:
+      summary: Get a summary of an OpenFaaS function
+      parameters:
+        - in: path
+          name: functionName
+          description: Function name
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Function definition
+        '404':
+          description: Function not found
+        '500':
+          description: Error querying function
 definitions:
   DeleteFunctionRequest:
     type: object
