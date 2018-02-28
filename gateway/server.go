@@ -50,6 +50,8 @@ func main() {
 	faasHandlers.DeleteFunction = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
 	faasHandlers.UpdateFunction = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
 
+	queryFunction := internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
+
 	alertHandler := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL)
 	faasHandlers.Alert = internalHandlers.MakeAlertHandler(alertHandler)
 
@@ -77,6 +79,7 @@ func main() {
 
 	r.HandleFunc("/system/alert", faasHandlers.Alert)
 
+	r.HandleFunc("/system/function/{name:[-a-zA-Z_0-9]+}", queryFunction).Methods("GET")
 	r.HandleFunc("/system/functions", listFunctions).Methods("GET")
 	r.HandleFunc("/system/functions", faasHandlers.DeployFunction).Methods("POST")
 	r.HandleFunc("/system/functions", faasHandlers.DeleteFunction).Methods("DELETE")
