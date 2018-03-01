@@ -57,6 +57,9 @@ type Function struct {
 	Replicas        uint64  `json:"replicas"`
 	EnvProcess      string  `json:"envProcess"`
 
+	// AvailableReplicas is the count of replicas ready to receive invocations as reported by the back-end
+	AvailableReplicas uint64 `json:"availableReplicas"`
+
 	// Labels are metadata for functions which may be used by the
 	// back-end for making scheduling or routing decisions
 	Labels *map[string]string `json:"labels"`
