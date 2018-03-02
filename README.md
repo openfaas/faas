@@ -71,8 +71,8 @@ You can generate new functions using the FaaS-CLI and built-in templates or use 
 import requests
 
 def handle(req):
-        r =  requests.get(req, timeout = 1)
-        print(req +" => " + str(r.status_code))
+    r =  requests.get(req, timeout = 1)
+    print(req +" => " + str(r.status_code))
 ```
 *handler.py*
 
