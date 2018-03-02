@@ -71,8 +71,8 @@ You can generate new functions using the FaaS-CLI and built-in templates or use 
 import requests
 
 def handle(req):
-        r =  requests.get(req, timeout = 1)
-        print(req +" => " + str(r.status_code))
+    r =  requests.get(req, timeout = 1)
+    print(req +" => " + str(r.status_code))
 ```
 *handler.py*
 
@@ -107,7 +107,7 @@ The deployment guide for Docker Swarm contains a simple one-line command to get 
 
 OpenFaaS is Kubernetes-native - you can follow the [deployment guide here](https://github.com/openfaas/faas/blob/master/guide/deployment_k8s.md).
 
-The new login feature breaks the one-click deployment to PWD. 
+The new login feature breaks the one-click deployment to PWD.
 **Docker Playground**
 
 You can quickly start OpenFaaS on Docker Swarm online using the community-run Docker playground: play-with-docker.com (PWD) by clicking the button below:
