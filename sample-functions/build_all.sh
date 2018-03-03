@@ -1,3 +1,3 @@
 #!/bin/sh
 
-faas-cli build -f samples.yml --parallel 4
+faas-cli build --parallel 4
