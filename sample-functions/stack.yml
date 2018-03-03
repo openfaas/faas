@@ -7,6 +7,8 @@ functions:
     lang: dockerfile
     handler: ./AlpineFunction
     image: functions/alpine:latest
+    environment:
+      fprocess: "cat"
 
   apikeyprotected:
     lang: dockerfile
@@ -85,6 +87,8 @@ functions:
     lang: dockerfile
     handler: ./WordCountFunction
     image: functions/wordcount:latest
+    environment:
+      fprocess: "wc"
 
   nmap:
     lang: dockerfile

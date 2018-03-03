@@ -1,4 +1,4 @@
-FROM alexellis2/faas-alpinefunction:latest
+FROM functions/alpine:latest
 
 # Populate example here
 ENV fprocess="wc"

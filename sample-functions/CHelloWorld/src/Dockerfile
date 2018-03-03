@@ -22,5 +22,7 @@ COPY --from=builder /tmp /tmp
 
 ENV fprocess="/main"
 
+HEALTHCHECK --interval=5s CMD [ -e /tmp/.lock ] || exit 1
+
 CMD ["/fwatchdog"]
 
