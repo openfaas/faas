@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"net/http/httputil"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -41,7 +40,7 @@ func main() {
 
 	servicePollInterval := time.Second * 5
 
-	reverseProxy := httputil.NewSingleHostReverseProxy(config.FunctionsProviderURL)
+	reverseProxy := types.NewHttpClientReverseProxy(config.FunctionsProviderURL, config.ReadTimeout)
 
 	faasHandlers.Proxy = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
 	faasHandlers.RoutelessProxy = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)

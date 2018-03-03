@@ -48,7 +48,7 @@ func AddMetricsHandler(handler http.HandlerFunc, prometheusQuery PrometheusQuery
 		err := json.Unmarshal(upstreamBody, &functions)
 
 		if err != nil {
-			log.Println(err)
+			log.Printf("Metrics upstream error: %s", err)
 
 			w.Header().Set("Content-Type", "text/plain")
 			w.WriteHeader(http.StatusInternalServerError)
