@@ -31,11 +31,37 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
             labels: {}
         };
 
+        $scope.isReady = function(selectedFunction) {
+            if(selectedFunction.ready != undefined && selectedFunction.ready) {
+                return "Ready";
+            }
+            return "Querying..";
+        }
+
         $scope.invocation.request = "";
 
-        setInterval(function() {
+        $scope.fetchFunctionsDelay = 3500;
+        $scope.queryFunctionDelay = 2500;
+        
+        $scope.fetchFunctionsInterval = setInterval(function() {
             refreshData();
-        }, 1000);
+        }, $scope.fetchFunctionsDelay);
+
+        $scope.queryFunctionInterval = setInterval(function() {
+            if($scope.selectedFunction && $scope.selectedFunction.name) {
+                refreshFunction($scope.selectedFunction);
+            }
+        }, $scope.queryFunctionDelay);
+
+        var refreshFunction = function(functionInstance) {
+            $http.get("../system/function/" + functionInstance.name)
+            .then(function(response) {
+                functionInstance.ready = (response.data && response.data.availableReplicas && response.data.availableReplicas >0);
+            })
+            .catch(function(err) {
+                console.error(err);
+            });
+        };
 
         var showPostInvokedToast = function(message, duration) {
             $mdToast.show(
