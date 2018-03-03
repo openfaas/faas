@@ -91,9 +91,15 @@
                             </div>
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-icon-float md-block">
+                                    <label>Status</label>
+                                    <input ng-model="isReady(function)" type="text" readonly="readonly">
+                                </md-input-container>
+
+                                <md-input-container class="md-icon-float md-block">
                                     <label>Replicas</label>
                                     <input ng-model="function.replicas" type="text" readonly="readonly">
                                 </md-input-container>
+
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Invocation count</label>
                                     <input ng-model="function.invocationCount" type="text" readonly="readonly">
@@ -124,7 +130,7 @@
                             </span>
                             <div layout-gt-sm="row">
                                 <md-input-container class="md-block" flex-gt-sm>
-                                    <button ng-click="fireRequest()" class="md-raised md-button md-ink-ripple" type="button" ng-disabled="invocationInProgress">
+                                    <button ng-click="fireRequest()" class="md-raised md-button md-ink-ripple" type="button" ng-disabled="invocationInProgress || (selectedFunction && !selectedFunction.ready)">
                                         <span class="ng-scope">Invoke</span><div class="md-ripple-container"></div>
                                     </button>
                                 </md-input-container>
