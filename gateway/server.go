@@ -40,7 +40,7 @@ func main() {
 
 	servicePollInterval := time.Second * 5
 
-	reverseProxy := types.NewHttpClientReverseProxy(config.FunctionsProviderURL, config.ReadTimeout)
+	reverseProxy := types.NewHTTPClientReverseProxy(config.FunctionsProviderURL, config.ReadTimeout)
 
 	faasHandlers.Proxy = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
 	faasHandlers.RoutelessProxy = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)

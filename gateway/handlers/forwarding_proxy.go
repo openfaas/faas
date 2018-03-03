@@ -14,7 +14,7 @@ import (
 )
 
 // MakeForwardingProxyHandler create a handler which forwards HTTP requests
-func MakeForwardingProxyHandler(proxy *types.HttpClientReverseProxy, metrics *metrics.MetricOptions) http.HandlerFunc {
+func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, metrics *metrics.MetricOptions) http.HandlerFunc {
 	baseURL := proxy.BaseURL.String()
 	if strings.HasSuffix(baseURL, "/") {
 		baseURL = baseURL[0 : len(baseURL)-1]
