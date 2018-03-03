@@ -4,6 +4,16 @@
 
 var app = angular.module('faasGateway', ['ngMaterial', 'faasGateway.funcStore']);
 
+app.directive("readyInput", function() {
+    return {
+        "restrict": "E",
+        "template": '<md-input-container class="md-icon-float md-block">'+
+        '   <label>Status</label>' +
+        '   <input value="{{ function.ready ? \'Ready\' : \'Querying\' }}" type="text" readonly="readonly">' +
+        '</md-input-container>'
+    };
+});
+
 app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav',
     function($scope, $log, $http, $location, $timeout, $mdDialog, $mdToast, $mdSidenav) {
         var newFuncTabIdx = 0;
@@ -32,14 +42,11 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
         };
 
         $scope.isReady = function(selectedFunction) {
-            if(selectedFunction.ready != undefined && selectedFunction.ready) {
-                return "Ready";
-            }
-            return "Querying..";
+            return (selectedFunction.ready != undefined && selectedFunction.ready == true);
         }
 
         $scope.invocation.request = "";
-
+        $scope.isFunctionReady = "Querying";
         $scope.fetchFunctionsDelay = 3500;
         $scope.queryFunctionDelay = 2500;
         
