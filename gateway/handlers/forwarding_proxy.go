@@ -47,10 +47,15 @@ func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, metrics *me
 			defer res.Body.Close()
 		}
 
+		// Populate any headers received
 		for k, v := range res.Header {
 			w.Header()[k] = v
 		}
 
+		// Write status code
+		w.WriteHeader(res.StatusCode)
+
+		// Copy the body over
 		io.CopyBuffer(w, res.Body, nil)
 
 		seconds := time.Since(start).Seconds()
