@@ -1,4 +1,4 @@
-FROM golang:1.8.5 as build
+FROM golang:1.9.4 as build
 WORKDIR /go/src/github.com/openfaas/faas/gateway
 
 RUN curl -sL https://github.com/alexellis/license-check/releases/download/0.1/license-check > /usr/bin/license-check && chmod +x /usr/bin/license-check
@@ -31,8 +31,6 @@ WORKDIR /home/app
 EXPOSE 8080
 ENV http_proxy      ""
 ENV https_proxy     ""
-
-
 
 COPY --from=build /go/src/github.com/openfaas/faas/gateway/gateway    .
 COPY assets     assets
