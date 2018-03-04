@@ -91,7 +91,10 @@
                             </div>
 
                             <div layout-gt-sm="row">
-                                <ready-input></ready-input>
+                                <md-input-container class="md-icon-float md-block">
+                                   <label>Status</label>
+                                   <input value="{{ function.ready ? 'Ready' : 'Not ready' }}" type="text" readonly="readonly">
+                                </md-input-container>
 
                                 <md-input-container class="md-icon-float md-block">
                                     <label>Replicas</label>
