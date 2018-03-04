@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"io"
 	"log"
 	"net/http"
@@ -23,63 +24,84 @@ func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, metrics *me
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		requestURL := r.URL.String()
+		serviceName := getServiceName(requestURL)
 
 		log.Printf("> Forwarding [%s] to %s", r.Method, requestURL)
+
 		start := time.Now()
 
-		upstreamReq, _ := http.NewRequest(r.Method, baseURL+requestURL, nil)
+		statusCode, err := forwardRequest(w, r, proxy.Client, baseURL, requestURL, proxy.Timeout)
 
-		upstreamReq.Header["X-Forwarded-For"] = []string{r.RequestURI}
-
-		if r.Body != nil {
-			defer r.Body.Close()
-			upstreamReq.Body = r.Body
-
+		if err != nil {
+			log.Printf("error with upstream request to: %s, %s\n", requestURL, err.Error())
 		}
-
-		res, resErr := proxy.Client.Do(upstreamReq)
-		if resErr != nil {
-			log.Printf("upstream client error: %s\n", resErr)
-			return
-		}
-
-		if res.Body != nil {
-			defer res.Body.Close()
-		}
-
-		// Populate any headers received
-		for k, v := range res.Header {
-			w.Header()[k] = v
-		}
-
-		// Write status code
-		w.WriteHeader(res.StatusCode)
-
-		// Copy the body over
-		io.CopyBuffer(w, res.Body, nil)
 
 		seconds := time.Since(start).Seconds()
 		log.Printf("< [%s] - %d took %f seconds\n", r.URL.String(),
-			res.StatusCode, seconds)
+			statusCode, seconds)
 
-		forward := "/function/"
-		if startsWith(requestURL, forward) {
-			// log.Printf("function=%s", uri[len(forward):])
-
-			service := requestURL[len(forward):]
-
+		if len(serviceName) > 0 {
 			metrics.GatewayFunctionsHistogram.
-				WithLabelValues(service).
+				WithLabelValues(serviceName).
 				Observe(seconds)
 
-			code := strconv.Itoa(res.StatusCode)
+			code := strconv.Itoa(statusCode)
 
 			metrics.GatewayFunctionInvocation.
-				With(prometheus.Labels{"function_name": service, "code": code}).
+				With(prometheus.Labels{"function_name": serviceName, "code": code}).
 				Inc()
 		}
 
 	}
+}
+
+func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Client, baseURL string, requestURL string, timeout time.Duration) (int, error) {
+
+	upstreamReq, _ := http.NewRequest(r.Method, baseURL+requestURL, nil)
+
+	upstreamReq.Header["X-Forwarded-For"] = []string{r.RequestURI}
+
+	if r.Body != nil {
+		defer r.Body.Close()
+		upstreamReq.Body = r.Body
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), timeout-time.Second*1)
+	defer cancel()
+
+	res, resErr := proxyClient.Do(upstreamReq.WithContext(ctx))
+	if resErr != nil {
+		badStatus := http.StatusBadGateway
+		w.WriteHeader(badStatus)
+		return badStatus, resErr
+	}
+
+	if res.Body != nil {
+		defer res.Body.Close()
+	}
+
+	// Populate any headers received
+	for k, v := range res.Header {
+		w.Header()[k] = v
+	}
+
+	// Write status code
+	w.WriteHeader(res.StatusCode)
+
+	if res.Body != nil {
+		// Copy the body over
+		io.CopyBuffer(w, res.Body, nil)
+	}
+
+	return res.StatusCode, nil
+}
+
+func getServiceName(urlValue string) string {
+	var serviceName string
+	forward := "/function/"
+	if startsWith(urlValue, forward) {
+		serviceName = urlValue[len(forward):]
+	}
+	return serviceName
 }
 
 func startsWith(value, token string) bool {

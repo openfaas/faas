@@ -2,6 +2,14 @@ package handlers
 
 // ServiceQuery provides interface for replica querying/setting
 type ServiceQuery interface {
-	GetReplicas(service string) (currentReplicas uint64, maxReplicas uint64, minReplicas uint64, err error)
+	GetReplicas(service string) (response ServiceQueryResponse, err error)
 	SetReplicas(service string, count uint64) error
+}
+
+// ServiceQueryResponse response from querying a function status
+type ServiceQueryResponse struct {
+	Replicas          uint64
+	MaxReplicas       uint64
+	MinReplicas       uint64
+	AvailableReplicas uint64
 }

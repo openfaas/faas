@@ -14,6 +14,7 @@ import (
 func NewHTTPClientReverseProxy(baseURL *url.URL, timeout time.Duration) *HTTPClientReverseProxy {
 	h := HTTPClientReverseProxy{
 		BaseURL: baseURL,
+		Timeout: timeout,
 	}
 
 	h.Client = &http.Client{
@@ -26,6 +27,7 @@ func NewHTTPClientReverseProxy(baseURL *url.URL, timeout time.Duration) *HTTPCli
 			IdleConnTimeout:       120 * time.Millisecond,
 			ExpectContinueTimeout: 1500 * time.Millisecond,
 		},
+		Timeout: timeout,
 	}
 	return &h
 }
@@ -34,4 +36,5 @@ func NewHTTPClientReverseProxy(baseURL *url.URL, timeout time.Duration) *HTTPCli
 type HTTPClientReverseProxy struct {
 	BaseURL *url.URL
 	Client  *http.Client
+	Timeout time.Duration
 }

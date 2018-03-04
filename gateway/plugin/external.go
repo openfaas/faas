@@ -49,9 +49,16 @@ type ExternalServiceQuery struct {
 	ProxyClient http.Client
 }
 
+// ScaleServiceRequest request scaling of replica
+type ScaleServiceRequest struct {
+	ServiceName string `json:"serviceName"`
+	Replicas    uint64 `json:"replicas"`
+}
+
 // GetReplicas replica count for function
-func (s ExternalServiceQuery) GetReplicas(serviceName string) (uint64, uint64, uint64, error) {
+func (s ExternalServiceQuery) GetReplicas(serviceName string) (handlers.ServiceQueryResponse, error) {
 	var err error
+
 	function := requests.Function{}
 
 	urlPath := fmt.Sprintf("%ssystem/function/%s", s.URL.String(), serviceName)
@@ -80,6 +87,7 @@ func (s ExternalServiceQuery) GetReplicas(serviceName string) (uint64, uint64, u
 
 	maxReplicas := uint64(handlers.DefaultMaxReplicas)
 	minReplicas := uint64(1)
+	availableReplicas := function.AvailableReplicas
 
 	if function.Labels != nil {
 		labels := *function.Labels
@@ -105,13 +113,12 @@ func (s ExternalServiceQuery) GetReplicas(serviceName string) (uint64, uint64, u
 		}
 	}
 
-	return function.Replicas, maxReplicas, minReplicas, err
-}
-
-// ScaleServiceRequest request scaling of replica
-type ScaleServiceRequest struct {
-	ServiceName string `json:"serviceName"`
-	Replicas    uint64 `json:"replicas"`
+	return handlers.ServiceQueryResponse{
+		Replicas:          function.Replicas,
+		MaxReplicas:       maxReplicas,
+		MinReplicas:       minReplicas,
+		AvailableReplicas: availableReplicas,
+	}, err
 }
 
 // SetReplicas update the replica count

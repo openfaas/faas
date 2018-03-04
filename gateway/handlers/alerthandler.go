@@ -83,14 +83,14 @@ func scaleService(alert requests.PrometheusInnerAlert, service ServiceQuery) err
 	serviceName := alert.Labels.FunctionName
 
 	if len(serviceName) > 0 {
-		currentReplicas, maxReplicas, minReplicas, getErr := service.GetReplicas(serviceName)
+		queryResponse, getErr := service.GetReplicas(serviceName)
 		if getErr == nil {
 			status := alert.Status
 
-			newReplicas := CalculateReplicas(status, currentReplicas, uint64(maxReplicas), minReplicas)
+			newReplicas := CalculateReplicas(status, queryResponse.Replicas, uint64(queryResponse.MaxReplicas), queryResponse.MinReplicas)
 
-			log.Printf("[Scale] function=%s %d => %d.\n", serviceName, currentReplicas, newReplicas)
-			if newReplicas == currentReplicas {
+			log.Printf("[Scale] function=%s %d => %d.\n", serviceName, queryResponse.Replicas, newReplicas)
+			if newReplicas == queryResponse.Replicas {
 				return nil
 			}
 
