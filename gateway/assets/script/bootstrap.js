@@ -36,24 +36,23 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
         }
 
         $scope.invocation.request = "";
-        $scope.isFunctionReady = "Querying";
-        $scope.fetchFunctionsDelay = 3500;
-        $scope.queryFunctionDelay = 2500;
+        var fetchFunctionsDelay = 3500;
+        var queryFunctionDelay = 2500;
         
-        $scope.fetchFunctionsInterval = setInterval(function() {
+        var fetchFunctionsInterval = setInterval(function() {
             refreshData();
-        }, $scope.fetchFunctionsDelay);
+        }, fetchFunctionsDelay);
 
-        $scope.queryFunctionInterval = setInterval(function() {
+        var queryFunctionInterval = setInterval(function() {
             if($scope.selectedFunction && $scope.selectedFunction.name) {
                 refreshFunction($scope.selectedFunction);
             }
-        }, $scope.queryFunctionDelay);
+        }, queryFunctionDelay);
 
         var refreshFunction = function(functionInstance) {
             $http.get("../system/function/" + functionInstance.name)
             .then(function(response) {
-                functionInstance.ready = (response.data && response.data.availableReplicas && response.data.availableReplicas >0);
+                functionInstance.ready = (response.data && response.data.availableReplicas && response.data.availableReplicas > 0);
             })
             .catch(function(err) {
                 console.error(err);
