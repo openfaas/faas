@@ -72,7 +72,7 @@
                 <div flex></div>
             </md-content>
 
-            <md-content flex layout="column" ng-repeat="function in functions" ng-show="function.name == selectedFunction.name">
+            <md-content flex layout="column" ng-repeat="function in functions" ng-if="function.name == selectedFunction.name">
 
                 <md-card md-theme="default" md-theme-watch>
                     <md-card-title>

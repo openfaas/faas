@@ -4,8 +4,8 @@
 
 var app = angular.module('faasGateway', ['ngMaterial', 'faasGateway.funcStore']);
 
-app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$mdDialog', '$mdToast', '$mdSidenav',
-    function($scope, $log, $http, $location, $timeout, $mdDialog, $mdToast, $mdSidenav) {
+app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$filter', '$mdDialog', '$mdToast', '$mdSidenav',
+    function($scope, $log, $http, $location, $interval, $filter, $mdDialog, $mdToast, $mdSidenav) {
         var newFuncTabIdx = 0;
         $scope.functions = [];
         $scope.invocationInProgress = false;
@@ -31,19 +31,15 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
             labels: {}
         };
 
-        $scope.isReady = function(selectedFunction) {
-            return (selectedFunction.ready != undefined && selectedFunction.ready == true);
-        }
-
         $scope.invocation.request = "";
         var fetchFunctionsDelay = 3500;
         var queryFunctionDelay = 2500;
         
-        var fetchFunctionsInterval = setInterval(function() {
+        var fetchFunctionsInterval = $interval(function() {
             refreshData();
         }, fetchFunctionsDelay);
 
-        var queryFunctionInterval = setInterval(function() {
+        var queryFunctionInterval = $interval(function() {
             if($scope.selectedFunction && $scope.selectedFunction.name) {
                 refreshFunction($scope.selectedFunction);
             }
@@ -169,6 +165,14 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$timeout', '$md
                     if (response && response.data) {
                         if (previousItems.length != response.data.length) {
                             $scope.functions = response.data;
+                            
+                            // update the selected function object because the newly fetched object from the API becomes a different object
+                            var filteredSelectedFunction = $filter('filter')($scope.functions, {name: $scope.selectedFunction.name}, true);
+                            if (filteredSelectedFunction && filteredSelectedFunction.length > 0) {
+                                $scope.selectedFunction = filteredSelectedFunction[0];
+                            } else {
+                                $scope.selectedFunction = undefined;
+                            }
                         } else {
                             for (var i = 0; i < $scope.functions.length; i++) {
                                 for (var j = 0; j < response.data.length; j++) {
