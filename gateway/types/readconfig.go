@@ -58,11 +58,11 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 		PrometheusPort: 9090,
 	}
 
-	readTimeout := parseIntOrDurationValue(hasEnv.Getenv("read_timeout"), time.Second*8)
-	writeTimeout := parseIntOrDurationValue(hasEnv.Getenv("write_timeout"), time.Second*8)
+	defaultDuration := time.Second * 8
 
-	cfg.ReadTimeout = readTimeout
-	cfg.WriteTimeout = writeTimeout
+	cfg.ReadTimeout = parseIntOrDurationValue(hasEnv.Getenv("read_timeout"), defaultDuration)
+	cfg.WriteTimeout = parseIntOrDurationValue(hasEnv.Getenv("write_timeout"), defaultDuration)
+	cfg.UpstreamTimeout = parseIntOrDurationValue(hasEnv.Getenv("upstream_timeout"), defaultDuration)
 
 	if len(hasEnv.Getenv("functions_provider_url")) > 0 {
 		var err error
@@ -113,6 +113,9 @@ type GatewayConfig struct {
 
 	// HTTP timeout for writing a response from functions.
 	WriteTimeout time.Duration
+
+	// UpstreamTimeout maximum duration of HTTP call to upstream URL
+	UpstreamTimeout time.Duration
 
 	// URL for alternate functions provider.
 	FunctionsProviderURL *url.URL

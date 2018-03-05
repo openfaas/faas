@@ -65,7 +65,8 @@ func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Cl
 		defer r.Body.Close()
 		upstreamReq.Body = r.Body
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), timeout-time.Second*1)
+
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 
 	res, resErr := proxyClient.Do(upstreamReq.WithContext(ctx))
