@@ -10,8 +10,12 @@ import (
 	"strings"
 )
 
-type dockerHubStatsType struct {
+type dockerHubOrgStatsType struct {
 	Count int `json:"count"`
+}
+
+type dockerHubRepoStatsType struct {
+	PullCount int `json:"pull_count"`
 }
 
 func sanitizeInput(input string) string {
@@ -19,9 +23,9 @@ func sanitizeInput(input string) string {
 	return strings.Trim(parts[0], " ")
 }
 
-func requestHubStats(org string) dockerHubStatsType {
+func requestStats(repo string) []byte {
 	client := http.Client{}
-	res, err := client.Get("https://hub.docker.com/v2/repositories/" + org)
+	res, err := client.Get("https://hub.docker.com/v2/repositories/" + repo)
 	if err != nil {
 		log.Fatalln("Unable to reach Docker Hub server.")
 	}
@@ -31,9 +35,19 @@ func requestHubStats(org string) dockerHubStatsType {
 		log.Fatalln("Unable to parse response from server.")
 	}
 
-	dockerHubStats := dockerHubStatsType{}
-	json.Unmarshal(body, &dockerHubStats)
-	return dockerHubStats
+	return body
+}
+
+func parseOrgStats(response []byte) dockerHubOrgStatsType {
+	dockerHubOrgStats := dockerHubOrgStatsType{}
+	json.Unmarshal(response, &dockerHubOrgStats)
+	return dockerHubOrgStats
+}
+
+func parseRepoStats(response []byte) dockerHubRepoStatsType {
+	dockerHubRepoStats := dockerHubRepoStatsType{}
+	json.Unmarshal(response, &dockerHubRepoStats)
+	return dockerHubRepoStats
 }
 
 func main() {
@@ -41,13 +55,19 @@ func main() {
 	if err != nil {
 		log.Fatal("Unable to read standard input:", err)
 	}
-	org := string(input)
+	request := string(input)
 	if len(input) == 0 {
-		log.Fatalln("A username or organisation is required.")
+		log.Fatalln("A username/organisation or repository is required.")
 	}
 
-	org = sanitizeInput(org)
-	dockerHubStats := requestHubStats(org)
+	request = sanitizeInput(request)
+	response := requestStats(request)
 
-	fmt.Printf("The organisation or user %s has %d repositories on the Docker hub.\n", org, dockerHubStats.Count)
+	if strings.Contains(request, "/") {
+		dockerHubRepoStats := parseRepoStats(response)
+		fmt.Printf("Repo: %s has been pulled %d times from the Docker Hub", request, dockerHubRepoStats.PullCount)
+	} else {
+		dockerHubOrgStats := parseOrgStats(response)
+		fmt.Printf("The organisation or user %s has %d repositories on the Docker hub.\n", request, dockerHubOrgStats.Count)
+	}
 }
