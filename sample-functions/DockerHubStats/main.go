@@ -38,16 +38,16 @@ func requestStats(repo string) []byte {
 	return body
 }
 
-func parseOrgStats(response []byte) dockerHubOrgStatsType {
+func parseOrgStats(response []byte) (dockerHubOrgStatsType, error) {
 	dockerHubOrgStats := dockerHubOrgStatsType{}
-	json.Unmarshal(response, &dockerHubOrgStats)
-	return dockerHubOrgStats
+	err := json.Unmarshal(response, &dockerHubOrgStats)
+	return dockerHubOrgStats, err
 }
 
-func parseRepoStats(response []byte) dockerHubRepoStatsType {
+func parseRepoStats(response []byte) (dockerHubRepoStatsType, error) {
 	dockerHubRepoStats := dockerHubRepoStatsType{}
-	json.Unmarshal(response, &dockerHubRepoStats)
-	return dockerHubRepoStats
+	err := json.Unmarshal(response, &dockerHubRepoStats)
+	return dockerHubRepoStats, err
 }
 
 func main() {
@@ -64,10 +64,18 @@ func main() {
 	response := requestStats(request)
 
 	if strings.Contains(request, "/") {
-		dockerHubRepoStats := parseRepoStats(response)
-		fmt.Printf("Repo: %s has been pulled %d times from the Docker Hub", request, dockerHubRepoStats.PullCount)
+		dockerHubRepoStats, err := parseRepoStats(response)
+		if err != nil {
+			log.Fatalln("Unable to parse response from Docker Hub for repository")
+		} else {
+			fmt.Printf("Repo: %s has been pulled %d times from the Docker Hub", request, dockerHubRepoStats.PullCount)
+		}
 	} else {
-		dockerHubOrgStats := parseOrgStats(response)
-		fmt.Printf("The organisation or user %s has %d repositories on the Docker hub.\n", request, dockerHubOrgStats.Count)
+		dockerHubOrgStats, err := parseOrgStats(response)
+		if err != nil {
+			log.Fatalln("Unable to parse response from Docker Hub for user/organisation")
+		} else {
+			fmt.Printf("The organisation or user %s has %d repositories on the Docker hub.\n", request, dockerHubOrgStats.Count)
+		}
 	}
 }
