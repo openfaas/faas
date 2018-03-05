@@ -19,14 +19,13 @@ Here is a list of some of the sample functions included this repository.
 
 | Name                   | Details |
 |------------------------|-----------------------------------------                          |
-| AlpineFunction         | BusyBox - a useful base image with busybox utilities pre-installed        |
-| ApiKeyProtected        | Example in Golang showing how to read X-Api-Key header |
-| CaptainsIntent         | Alexa skill - find the count of Docker Captains |
-| ChangeColorIntent      | Alexa skill - change the colour of IoT-connected lights |
-| echo                   | Uses `cat` from BusyBox to provide an echo function |
-| DockerHubStats         | Golang function gives the count of repos a user has on the Docker hub |
-| HostnameIntent         | Prints the hostname of a container |
-| NodeInfo               | Node.js - gives CPU/network info on the current container |
-| WebhookStash           | Golang function provides way to capture webhooks - JSON/text/binary are all OK |
-| WordCountFunction      | BusyBox `wc` is exposed as a function / service through FaaS |
-
+| AlpineFunction           | BusyBox - a useful base image with busybox utilities pre-installed        |
+| ApiKeyProtected-Secrets  | Example in Golang showing how to read a secret from a HTTP header and validate with a Swarm/Kubernetes secret |
+| CaptainsIntent           | Alexa skill - find the count of Docker Captains |
+| ChangeColorIntent        | Alexa skill - change the colour of IoT-connected lights |
+| echo                     | Uses `cat` from BusyBox to provide an echo function |
+| DockerHubStats           | Golang function gives the count of repos a user has on the Docker hub |
+| HostnameIntent           | Prints the hostname of a container |
+| NodeInfo                 | Node.js - gives CPU/network info on the current container |
+| WebhookStash             | Golang function provides way to capture webhooks - JSON/text/binary are all OK |
+| WordCountFunction        | BusyBox `wc` is exposed as a function / service through FaaS |
