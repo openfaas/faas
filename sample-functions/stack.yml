@@ -10,10 +10,10 @@ functions:
     environment:
       fprocess: "cat"
 
-  apikeyprotected:
-    lang: dockerfile
-    handler: ./AlpineFunction
-    image: functions/api-key-protected:latest
+  apikey-secret:
+    lang: go
+    handler: ./apikey-secret
+    image: functions/apikey-secret:0.1
 
   captainsintent:
     lang: dockerfile

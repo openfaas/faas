@@ -17,10 +17,10 @@ For examples of hello-world in different programming languages see inside the Ba
 
 Here is a list of some of the sample functions included this repository.
 
-| Name                   | Details |
-|------------------------|-----------------------------------------                          |
+| Name                     | Details |
+|--------------------------|-----------------------------------------                          |
 | AlpineFunction           | BusyBox - a useful base image with busybox utilities pre-installed        |
-| ApiKeyProtected-Secrets  | Example in Golang showing how to read a secret from a HTTP header and validate with a Swarm/Kubernetes secret |
+| apikey-secret            | Example in Golang showing how to read a secret from a HTTP header and validate with a Swarm/Kubernetes secret |
 | CaptainsIntent           | Alexa skill - find the count of Docker Captains |
 | ChangeColorIntent        | Alexa skill - change the colour of IoT-connected lights |
 | echo                     | Uses `cat` from BusyBox to provide an echo function |
