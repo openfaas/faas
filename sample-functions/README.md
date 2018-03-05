@@ -23,9 +23,17 @@ Here is a list of some of the sample functions included this repository.
 | apikey-secret            | Example in Golang showing how to read a secret from a HTTP header and validate with a Swarm/Kubernetes secret |
 | CaptainsIntent           | Alexa skill - find the count of Docker Captains |
 | ChangeColorIntent        | Alexa skill - change the colour of IoT-connected lights |
+| CHelloWorld              | Use C to build a function |
 | echo                     | Uses `cat` from BusyBox to provide an echo function |
 | DockerHubStats           | Golang function gives the count of repos a user has on the Docker hub |
+| figlet                   | Generate ascii logos through the use of a binary |
+| git-maker                | Use gifsicle and ffmpeg packages from Alpine Linux to make gifs from video |
 | HostnameIntent           | Prints the hostname of a container |
+| MarkdownRender           | Use a Go function with vendoring to convert Markdown to HTML |
+| Nmap                     | The network scanning tool as a binary-based function |
 | NodeInfo                 | Node.js - gives CPU/network info on the current container |
-| WebhookStash             | Golang function provides way to capture webhooks - JSON/text/binary are all OK |
+| Phantomjs                | Use Phantomjs to scrape/automate web-pages |
+| ResizeImageMagick        | Resizes an image using the imagemagick binary |
+| SentimentAnalysis        | Perform sentiment analysis with the TextBlob library |
+| WebhookStash             | Golang function provides way to capture webhooks - JSON/text/binary into the container filesystem |
 | WordCountFunction        | BusyBox `wc` is exposed as a function / service through FaaS |
