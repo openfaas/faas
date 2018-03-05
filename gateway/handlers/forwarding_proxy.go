@@ -58,8 +58,9 @@ func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, metrics *me
 func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Client, baseURL string, requestURL string, timeout time.Duration) (int, error) {
 
 	upstreamReq, _ := http.NewRequest(r.Method, baseURL+requestURL, nil)
+	copyHeaders(upstreamReq.Header, &r.Header)
 
-	upstreamReq.Header["X-Forwarded-For"] = []string{r.RequestURI}
+	upstreamReq.Header["X-Forwarded-For"] = []string{r.RemoteAddr}
 
 	if r.Body != nil {
 		defer r.Body.Close()
@@ -80,10 +81,7 @@ func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Cl
 		defer res.Body.Close()
 	}
 
-	// Populate any headers received
-	for k, v := range res.Header {
-		w.Header()[k] = v
-	}
+	copyHeaders(w.Header(), &res.Header)
 
 	// Write status code
 	w.WriteHeader(res.StatusCode)
@@ -94,6 +92,14 @@ func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Cl
 	}
 
 	return res.StatusCode, nil
+}
+
+func copyHeaders(destination http.Header, source *http.Header) {
+	for k, v := range *source {
+		vClone := make([]string, len(v))
+		copy(vClone, v)
+		(destination)[k] = vClone
+	}
 }
 
 func getServiceName(urlValue string) string {
