@@ -26,6 +26,14 @@ We have a special guide for minikube here:
 
 * [Getting started with OpenFaaS on minikube](https://medium.com/devopslinks/getting-started-with-openfaas-on-minikube-634502c7acdf)
 
+Are you using Google Kubernetes Engine (GKE)? You'll need to create an RBAC role with the following command:
+
+```
+# kubectl create clusterrolebinding "cluster-admin-$(whoami)" \
+   --clusterrole=cluster-admin \
+   --user="$(gcloud config get-value core/account)"
+```
+
 ### 1.1 Pick helm or YAML files for deployment
 
 If you'd like to use helm follow the instructions in 2.0a and then come back here, otherwise follow 2.0b to use plain `kubectl`.
