@@ -46,7 +46,7 @@ functions:
     image: functions/gif-maker:latest
     environment:
       read_timeout:	60
-      write_timeout: 60 
+      write_timeout: 60
 
   hostnameintent:
     lang: dockerfile
@@ -95,3 +95,7 @@ functions:
     handler: ./Nmap
     image: functions/nmap:0.1
 
+  eval:
+    lang: dockerfile
+    handler: ./Eval
+    image: functions/eval:latest
