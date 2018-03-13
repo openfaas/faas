@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: functions/gateway:0.7.0-armhf
+        image: functions/gateway:0.7.3-armhf
         networks:
             - functions
         environment:
@@ -15,10 +15,10 @@ services:
             faas_nats_port: 4222
         deploy:
             resources:
-                limits:
-                    memory: 100M
+                # limits:   # uncomment to enable limits
+                #     memory: 100M
                 reservations:
-                    memory: 50M
+                    memory: 100M
             restart_policy:
                 condition: on-failure
                 delay: 5s
@@ -34,7 +34,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         # ports:
             # - 8081:8080
-        image:  functions/faas-swarm:0.1.5-armhf
+        image:  functions/faas-swarm:0.2.1-armhf
         networks:
             - functions
         environment:
@@ -47,10 +47,10 @@ services:
                     - 'node.role == manager'
                     - 'node.platform.os == linux'
             resources:
-                limits:
-                    memory: 100M
+                # limits:   # uncomment to enable limits
+                #     memory: 100M
                 reservations:
-                    memory: 50M
+                    memory: 100M
             restart_policy:
                 condition: on-failure
                 delay: 5s
