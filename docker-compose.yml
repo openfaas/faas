@@ -104,7 +104,7 @@ services:
     # Start monitoring
 
     prometheus:
-        image: prom/prometheus:v2.0.0
+        image: prom/prometheus:v2.2.0
         environment:
             no_proxy: "gateway"
         configs:
@@ -131,11 +131,12 @@ services:
                     memory: 200M
 
     alertmanager:
-        image: prom/alertmanager:v0.7.1
+        image: prom/alertmanager:v0.15.0-rc.0
         environment:
             no_proxy: "gateway"
         command:
-            - '-config.file=/alertmanager.yml'
+            - '--config.file=/alertmanager.yml'
+            - '--storage.path=/alertmanager'
         networks:
             - functions
         # Uncomment the following port mapping if you wish to expose the Prometheus
