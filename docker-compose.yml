@@ -268,3 +268,6 @@ networks:
     functions:
         driver: overlay
         attachable: true
+        labels:
+          - "openfaas=true"
+
