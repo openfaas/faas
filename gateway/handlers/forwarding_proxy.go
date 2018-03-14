@@ -14,8 +14,12 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
+type HTTPNotifier interface {
+	Notify(method string, URL string, statusCode int, duration time.Duration)
+}
+
 // MakeForwardingProxyHandler create a handler which forwards HTTP requests
-func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, metrics *metrics.MetricOptions) http.HandlerFunc {
+func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers []HTTPNotifier) http.HandlerFunc {
 	baseURL := proxy.BaseURL.String()
 	if strings.HasSuffix(baseURL, "/") {
 		baseURL = baseURL[0 : len(baseURL)-1]
@@ -24,34 +28,18 @@ func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, metrics *me
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		requestURL := r.URL.String()
-		serviceName := getServiceName(requestURL)
-
-		log.Printf("> Forwarding [%s] to %s", r.Method, requestURL)
 
 		start := time.Now()
 
 		statusCode, err := forwardRequest(w, r, proxy.Client, baseURL, requestURL, proxy.Timeout)
 
+		seconds := time.Since(start)
 		if err != nil {
 			log.Printf("error with upstream request to: %s, %s\n", requestURL, err.Error())
 		}
-
-		seconds := time.Since(start).Seconds()
-		log.Printf("< [%s] - %d took %f seconds\n", r.URL.String(),
-			statusCode, seconds)
-
-		if len(serviceName) > 0 {
-			metrics.GatewayFunctionsHistogram.
-				WithLabelValues(serviceName).
-				Observe(seconds)
-
-			code := strconv.Itoa(statusCode)
-
-			metrics.GatewayFunctionInvocation.
-				With(prometheus.Labels{"function_name": serviceName, "code": code}).
-				Inc()
+		for _, notifier := range notifiers {
+			notifier.Notify(r.Method, requestURL, statusCode, seconds)
 		}
-
 	}
 }
 
@@ -102,6 +90,25 @@ func copyHeaders(destination http.Header, source *http.Header) {
 	}
 }
 
+type PrometheusFunctionNotifier struct {
+	Metrics *metrics.MetricOptions
+}
+
+func (p PrometheusFunctionNotifier) Notify(method string, URL string, statusCode int, duration time.Duration) {
+	seconds := duration.Seconds()
+	serviceName := getServiceName(URL)
+
+	p.Metrics.GatewayFunctionsHistogram.
+		WithLabelValues(serviceName).
+		Observe(seconds)
+
+	code := strconv.Itoa(statusCode)
+
+	p.Metrics.GatewayFunctionInvocation.
+		With(prometheus.Labels{"function_name": serviceName, "code": code}).
+		Inc()
+}
+
 func getServiceName(urlValue string) string {
 	var serviceName string
 	forward := "/function/"
@@ -113,4 +120,11 @@ func getServiceName(urlValue string) string {
 
 func startsWith(value, token string) bool {
 	return len(value) > len(token) && strings.Index(value, token) == 0
+}
+
+type LoggingNotifier struct {
+}
+
+func (LoggingNotifier) Notify(method string, URL string, statusCode int, duration time.Duration) {
+	log.Printf("Forwarded [%s] to %s - [%d] - %f seconds", method, URL, statusCode, duration.Seconds())
 }

@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/openfaas/faas/gateway/handlers"
 
-	internalHandlers "github.com/openfaas/faas/gateway/handlers"
 	"github.com/openfaas/faas/gateway/metrics"
 	"github.com/openfaas/faas/gateway/plugin"
 	"github.com/openfaas/faas/gateway/types"
@@ -42,17 +42,24 @@ func main() {
 
 	reverseProxy := types.NewHTTPClientReverseProxy(config.FunctionsProviderURL, config.UpstreamTimeout)
 
-	faasHandlers.Proxy = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
-	faasHandlers.RoutelessProxy = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
-	faasHandlers.ListFunctions = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
-	faasHandlers.DeployFunction = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
-	faasHandlers.DeleteFunction = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
-	faasHandlers.UpdateFunction = internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
+	loggingNotifier := handlers.LoggingNotifier{}
+	prometheusNotifier := handlers.PrometheusFunctionNotifier{
+		Metrics: &metricsOptions,
+	}
+	functionNotifiers := []handlers.HTTPNotifier{loggingNotifier, prometheusNotifier}
+	forwardingNotifiers := []handlers.HTTPNotifier{loggingNotifier, prometheusNotifier}
 
-	queryFunction := internalHandlers.MakeForwardingProxyHandler(reverseProxy, &metricsOptions)
+	faasHandlers.Proxy = handlers.MakeForwardingProxyHandler(reverseProxy, functionNotifiers)
+	faasHandlers.RoutelessProxy = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers)
+	faasHandlers.ListFunctions = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers)
+	faasHandlers.DeployFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers)
+	faasHandlers.DeleteFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers)
+	faasHandlers.UpdateFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers)
+
+	queryFunction := handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers)
 
 	alertHandler := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL)
-	faasHandlers.Alert = internalHandlers.MakeAlertHandler(alertHandler)
+	faasHandlers.Alert = handlers.MakeAlertHandler(alertHandler)
 
 	metrics.AttachExternalWatcher(*config.FunctionsProviderURL, metricsOptions, "func", servicePollInterval)
 
@@ -63,13 +70,13 @@ func main() {
 			log.Fatalln(queueErr)
 		}
 
-		faasHandlers.QueuedProxy = internalHandlers.MakeQueuedProxy(metricsOptions, true, natsQueue)
-		faasHandlers.AsyncReport = internalHandlers.MakeAsyncReport(metricsOptions)
+		faasHandlers.QueuedProxy = handlers.MakeQueuedProxy(metricsOptions, true, natsQueue)
+		faasHandlers.AsyncReport = handlers.MakeAsyncReport(metricsOptions)
 	}
 
 	prometheusQuery := metrics.NewPrometheusQuery(config.PrometheusHost, config.PrometheusPort, &http.Client{})
 	listFunctions := metrics.AddMetricsHandler(faasHandlers.ListFunctions, prometheusQuery)
-	faasHandlers.Proxy = internalHandlers.MakeCallIDMiddleware(faasHandlers.Proxy)
+	faasHandlers.Proxy = handlers.MakeCallIDMiddleware(faasHandlers.Proxy)
 	r := mux.NewRouter()
 
 	// r.StrictSlash(false)	// This didn't work, so register routes twice.
@@ -95,7 +102,7 @@ func main() {
 
 	// This URL allows access from the UI to the OpenFaaS store
 	allowedCORSHost := "raw.githubusercontent.com"
-	fsCORS := internalHandlers.DecorateWithCORS(fs, allowedCORSHost)
+	fsCORS := handlers.DecorateWithCORS(fs, allowedCORSHost)
 
 	r.PathPrefix("/ui/").Handler(http.StripPrefix("/ui", fsCORS)).Methods("GET")
 
