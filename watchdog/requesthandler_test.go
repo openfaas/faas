@@ -360,3 +360,69 @@ func TestHandler_StatusOKForGETAndNoBody(t *testing.T) {
 			status, required)
 	}
 }
+
+func TestHealthHandler_SatusOK_LockFilePresent(t *testing.T) {
+	rr := httptest.NewRecorder()
+
+	if lockFilePresent() == false {
+		if err := createLockFile(); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	req, err := http.NewRequest("GET", "/_/health", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	handler := makeHealthHandler()
+	handler(rr, req)
+
+	required := http.StatusOK
+	if status := rr.Code; status != required {
+		t.Errorf("handler returned wrong status code: got %v, but wanted %v", status, required)
+	}
+
+}
+
+func TestHealthHandler_StatusInternalServerError_LockFileNotPresent(t *testing.T) {
+	rr := httptest.NewRecorder()
+
+	if lockFilePresent() == true {
+		if err := removeLockFile(); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	req, err := http.NewRequest("GET", "/_/health", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	handler := makeHealthHandler()
+	handler(rr, req)
+
+	required := http.StatusInternalServerError
+	if status := rr.Code; status != required {
+		t.Errorf("handler retruned wrong status code: got %v, but wanted %v", status, required)
+	}
+}
+
+func TestHealthHandler_SatusMethoNotAllowed_ForWriteableVerbs(t *testing.T) {
+	rr := httptest.NewRecorder()
+
+	verbs := []string{"POST", "PUT", "UPDATE", "DELETE"}
+
+	for _, verb := range verbs {
+		req, err := http.NewRequest(verb, "/_/health", nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		handler := makeHealthHandler()
+		handler(rr, req)
+
+		required := http.StatusMethodNotAllowed
+		if status := rr.Code; status != required {
+			t.Errorf("handler returned wrong status code: got %v, but wanted %v", status, required)
+		}
+	}
+}

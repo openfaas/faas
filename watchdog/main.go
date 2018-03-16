@@ -252,6 +252,48 @@ func getAdditionalEnvs(config *WatchdogConfig, r *http.Request, method string) [
 	return envs
 }
 
+func lockFilePresent() bool {
+	path := filepath.Join(os.TempDir(), ".lock")
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		return false
+	}
+	return true
+}
+
+func createLockFile() error {
+	path := filepath.Join(os.TempDir(), ".lock")
+	log.Printf("Writing lock-file to: %s\n", path)
+	writeErr := ioutil.WriteFile(path, []byte{}, 0660)
+	return writeErr
+}
+
+func removeLockFile() error {
+	path := filepath.Join(os.TempDir(), ".lock")
+	log.Printf("Removing lock-file : %s\n", path)
+	removeErr := os.Remove(path)
+	return removeErr
+}
+
+func makeHealthHandler() func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		switch r.Method {
+		case "GET":
+			if lockFilePresent() == false {
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte("OK"))
+			break
+		default:
+			w.WriteHeader(http.StatusMethodNotAllowed)
+
+		}
+
+	}
+}
+
 func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
@@ -290,6 +332,7 @@ func main() {
 		MaxHeaderBytes: 1 << 20, // Max header of 1MB
 	}
 
+	http.HandleFunc("/_/health", makeHealthHandler())
 	http.HandleFunc("/", makeRequestHandler(&config))
 
 	if config.suppressLock == false {
