@@ -193,6 +193,7 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 		header := w.Header()
 		debugHeaders(&header, "out")
 	}
+
 	if len(bytesWritten) > 0 {
 		log.Printf("%s - Duration: %f seconds", bytesWritten, execTime)
 	} else {
@@ -205,6 +206,7 @@ func getAdditionalEnvs(config *WatchdogConfig, r *http.Request, method string) [
 
 	if config.cgiHeaders {
 		envs = os.Environ()
+
 		for k, v := range r.Header {
 			kv := fmt.Sprintf("Http_%s=%s", strings.Replace(k, "-", "_", -1), v[0])
 			envs = append(envs, kv)
@@ -216,6 +218,7 @@ func getAdditionalEnvs(config *WatchdogConfig, r *http.Request, method string) [
 		if config.writeDebug {
 			log.Println("Query ", r.URL.RawQuery)
 		}
+
 		if len(r.URL.RawQuery) > 0 {
 			envs = append(envs, fmt.Sprintf("Http_Query=%s", r.URL.RawQuery))
 		}
@@ -223,6 +226,7 @@ func getAdditionalEnvs(config *WatchdogConfig, r *http.Request, method string) [
 		if config.writeDebug {
 			log.Println("Path ", r.URL.Path)
 		}
+
 		if len(r.URL.Path) > 0 {
 			envs = append(envs, fmt.Sprintf("Http_Path=%s", r.URL.Path))
 		}

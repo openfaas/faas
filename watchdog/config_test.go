@@ -144,6 +144,31 @@ func TestRead_EmptyTimeoutConfig(t *testing.T) {
 	}
 }
 
+func TestRead_DefaultPortConfig(t *testing.T) {
+	defaults := NewEnvBucket()
+
+	readConfig := ReadConfig{}
+	config := readConfig.Read(defaults)
+	want := 8080
+	if config.port != want {
+		t.Logf("port got: %d, want: %d\n", config.port, want)
+		t.Fail()
+	}
+}
+
+func TestRead_PortConfig(t *testing.T) {
+	defaults := NewEnvBucket()
+	defaults.Setenv("port", "8081")
+
+	readConfig := ReadConfig{}
+	config := readConfig.Read(defaults)
+	want := 8081
+	if config.port != want {
+		t.Logf("port got: %d, want: %d\n", config.port, want)
+		t.Fail()
+	}
+}
+
 func TestRead_ReadAndWriteTimeoutConfig(t *testing.T) {
 	defaults := NewEnvBucket()
 	defaults.Setenv("read_timeout", "10")

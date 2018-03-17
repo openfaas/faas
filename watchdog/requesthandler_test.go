@@ -43,22 +43,22 @@ func TestHandler_HasCustomHeaderInFunction_WithCgi_Mode(t *testing.T) {
 
 	required := http.StatusOK
 	if status := rr.Code; status != required {
-		t.Errorf("handler returned wrong status code: got %v, but wanted %v",
+		t.Errorf("handler returned wrong status code - got: %v, want: %v",
 			status, required)
 	}
 
 	read, _ := ioutil.ReadAll(rr.Body)
 	val := string(read)
 	if !strings.Contains(val, "Http_ContentLength=0") {
-		t.Errorf("'env' should printed: Http_ContentLength=0, got: %s\n", val)
+		t.Errorf(config.faasProcess+" should print: Http_ContentLength=0, got: %s\n", val)
 	}
 	if !strings.Contains(val, "Http_Custom_Header") {
-		t.Errorf("'env' should printed: Http_Custom_Header, got: %s\n", val)
+		t.Errorf(config.faasProcess+" should print: Http_Custom_Header, got: %s\n", val)
 	}
 
 	seconds := rr.Header().Get("X-Duration-Seconds")
 	if len(seconds) == 0 {
-		t.Errorf("Exec of cat should have given a duration as an X-Duration-Seconds header\n")
+		t.Errorf(config.faasProcess + " should have given a duration as an X-Duration-Seconds header\n")
 	}
 }
 
@@ -82,7 +82,7 @@ func TestHandler_HasCustomHeaderInFunction_WithCgiMode_AndBody(t *testing.T) {
 
 	required := http.StatusOK
 	if status := rr.Code; status != required {
-		t.Errorf("handler returned wrong status code: got %v, but wanted %v",
+		t.Errorf("handler returned wrong status code - got: %v, want: %v",
 			status, required)
 	}
 
@@ -120,7 +120,7 @@ func TestHandler_DoesntHaveCustomHeaderInFunction_WithoutCgi_Mode(t *testing.T) 
 
 	required := http.StatusOK
 	if status := rr.Code; status != required {
-		t.Errorf("handler returned wrong status code: got %v, but wanted %v",
+		t.Errorf("handler returned wrong status code - got: %v, want: %v",
 			status, required)
 	}
 
@@ -154,13 +154,13 @@ func TestHandler_HasXDurationSecondsHeader(t *testing.T) {
 
 	required := http.StatusOK
 	if status := rr.Code; status != required {
-		t.Errorf("handler returned wrong status code: got %v, but wanted %v",
+		t.Errorf("handler returned wrong status code - got: %v, want: %v",
 			status, required)
 	}
 
 	seconds := rr.Header().Get("X-Duration-Seconds")
 	if len(seconds) == 0 {
-		t.Errorf("Exec of cat should have given a duration as an X-Duration-Seconds header\n")
+		t.Errorf("Exec of " + config.faasProcess + " should have given a duration as an X-Duration-Seconds header")
 	}
 }
 
@@ -186,7 +186,7 @@ func TestHandler_RequestTimeoutFailsForExceededDuration(t *testing.T) {
 
 		required := http.StatusRequestTimeout
 		if status := rr.Code; status != required {
-			t.Errorf("handler returned wrong status code for verb [%s]: got %v, but wanted %v",
+			t.Errorf("handler returned wrong status code for verb [%s] - got: %v, want: %v",
 				verb, status, required)
 		}
 	}
@@ -212,7 +212,7 @@ func TestHandler_StatusOKAllowed_ForWriteableVerbs(t *testing.T) {
 
 		required := http.StatusOK
 		if status := rr.Code; status != required {
-			t.Errorf("handler returned wrong status code for verb [%s]: got %v, but wanted %v",
+			t.Errorf("handler returned wrong status code for verb [%s] - got: %v, want: %v",
 				verb, status, required)
 		}
 
@@ -238,7 +238,7 @@ func TestHandler_StatusMethodNotAllowed_ForUnknown(t *testing.T) {
 
 	required := http.StatusMethodNotAllowed
 	if status := rr.Code; status != required {
-		t.Errorf("handler returned wrong status code: got %v, but wanted %v",
+		t.Errorf("handler returned wrong status code: got %v, want: %v",
 			status, required)
 	}
 }
@@ -261,7 +261,7 @@ func TestHandler_StatusOKForGETAndNoBody(t *testing.T) {
 
 	required := http.StatusOK
 	if status := rr.Code; status != required {
-		t.Errorf("handler returned wrong status code: got %v, but wanted %v",
+		t.Errorf("handler returned wrong status code: got %v, want: %v",
 			status, required)
 	}
 }
