@@ -117,7 +117,7 @@ func TestHandler_StderrWritesToStderr_CombinedOutput_False(t *testing.T) {
 	}
 
 	config := WatchdogConfig{
-		faasProcess:   "man badtopic",
+		faasProcess:   "stat x",
 		cgiHeaders:    true,
 		combineOutput: false,
 	}
@@ -137,8 +137,9 @@ func TestHandler_StderrWritesToStderr_CombinedOutput_False(t *testing.T) {
 	stderrBytes, _ := ioutil.ReadAll(b)
 	stderrVal := string(stderrBytes)
 
-	if strings.Contains(stderrVal, "No manual entry for") == false {
-		t.Logf("Stderr should have contained error from function \"No manual entry for\", but was: %s", stderrVal)
+	want := "No such file or directory"
+	if strings.Contains(stderrVal, want) == false {
+		t.Logf("Stderr should have contained error from function \"%s\", but was: %s", want, stderrVal)
 		t.Fail()
 	}
 }
@@ -157,7 +158,7 @@ func TestHandler_StderrWritesToResponse_CombinedOutput_True(t *testing.T) {
 	}
 
 	config := WatchdogConfig{
-		faasProcess:   "man badtopic",
+		faasProcess:   "stat x",
 		cgiHeaders:    true,
 		combineOutput: true,
 	}
@@ -176,21 +177,23 @@ func TestHandler_StderrWritesToResponse_CombinedOutput_True(t *testing.T) {
 
 	stderrBytes, _ := ioutil.ReadAll(b)
 	stderrVal := string(stderrBytes)
-
-	if strings.Contains(stderrVal, "No manual entry for") {
+	stdErrWant := "No such file or directory"
+	if strings.Contains(stderrVal, stdErrWant) {
 		t.Logf("stderr should have not included any function errors, but did")
 		t.Fail()
 	}
 
 	bodyBytes, _ := ioutil.ReadAll(rr.Body)
 	bodyStr := string(bodyBytes)
-	want := `exit status 1
-No manual entry for badtopic`
-	if strings.Contains(bodyStr, want) == false {
-		t.Logf("response want: %s, got: %s", want, bodyStr)
+	stdOuputWant := `exit status 1`
+	if strings.Contains(bodyStr, stdOuputWant) == false {
+		t.Logf("response want: %s, got: %s", stdOuputWant, bodyStr)
 		t.Fail()
 	}
-
+	if strings.Contains(bodyStr, stdErrWant) == false {
+		t.Logf("response want: %s, got: %s", stdErrWant, bodyStr)
+		t.Fail()
+	}
 }
 
 func TestHandler_DoesntHaveCustomHeaderInFunction_WithoutCgi_Mode(t *testing.T) {
