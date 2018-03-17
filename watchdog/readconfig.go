@@ -57,8 +57,9 @@ func parseIntValue(val string, fallback int) int {
 // Read fetches config from environmental variables.
 func (ReadConfig) Read(hasEnv HasEnv) WatchdogConfig {
 	cfg := WatchdogConfig{
-		writeDebug: false,
-		cgiHeaders: true,
+		writeDebug:    false,
+		cgiHeaders:    true,
+		combineOutput: true,
 	}
 
 	cfg.faasProcess = hasEnv.Getenv("fprocess")
@@ -85,6 +86,10 @@ func (ReadConfig) Read(hasEnv HasEnv) WatchdogConfig {
 	cfg.suppressLock = parseBoolValue(hasEnv.Getenv("suppress_lock"))
 
 	cfg.contentType = hasEnv.Getenv("content_type")
+
+	if isBoolValueSet("combine_output") {
+		cfg.combineOutput = parseBoolValue(hasEnv.Getenv("combine_output"))
+	}
 
 	return cfg
 }
@@ -124,4 +129,7 @@ type WatchdogConfig struct {
 
 	// port for HTTP server
 	port int
+
+	// combineOutput combines stderr and stdout in response
+	combineOutput bool
 }

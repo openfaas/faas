@@ -7,8 +7,10 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"strings"
 	"testing"
 	"time"
@@ -99,6 +101,96 @@ func TestHandler_HasCustomHeaderInFunction_WithCgiMode_AndBody(t *testing.T) {
 	if len(seconds) == 0 {
 		t.Errorf("Exec of cat should have given a duration as an X-Duration-Seconds header\n")
 	}
+}
+
+func TestHandler_StderrWritesToStderr_CombinedOutput_False(t *testing.T) {
+	rr := httptest.NewRecorder()
+
+	b := bytes.NewBuffer([]byte{})
+	log.SetOutput(b)
+
+	body := ""
+	req, err := http.NewRequest("POST", "/", bytes.NewBufferString(body))
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	config := WatchdogConfig{
+		faasProcess:   "man badtopic",
+		cgiHeaders:    true,
+		combineOutput: false,
+	}
+
+	handler := makeRequestHandler(&config)
+	handler(rr, req)
+
+	required := http.StatusInternalServerError
+
+	if status := rr.Code; status != required {
+		t.Errorf("handler returned wrong status code - got: %v, want: %v",
+			status, required)
+	}
+
+	log.SetOutput(os.Stderr)
+
+	stderrBytes, _ := ioutil.ReadAll(b)
+	stderrVal := string(stderrBytes)
+
+	if strings.Contains(stderrVal, "No manual entry for") == false {
+		t.Logf("Stderr should have contained error from function \"No manual entry for\", but was: %s", stderrVal)
+		t.Fail()
+	}
+}
+
+func TestHandler_StderrWritesToResponse_CombinedOutput_True(t *testing.T) {
+	rr := httptest.NewRecorder()
+
+	b := bytes.NewBuffer([]byte{})
+	log.SetOutput(b)
+
+	body := ""
+	req, err := http.NewRequest("POST", "/", bytes.NewBufferString(body))
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	config := WatchdogConfig{
+		faasProcess:   "man badtopic",
+		cgiHeaders:    true,
+		combineOutput: true,
+	}
+
+	handler := makeRequestHandler(&config)
+	handler(rr, req)
+
+	required := http.StatusInternalServerError
+
+	if status := rr.Code; status != required {
+		t.Errorf("handler returned wrong status code - got: %v, want: %v",
+			status, required)
+	}
+
+	log.SetOutput(os.Stderr)
+
+	stderrBytes, _ := ioutil.ReadAll(b)
+	stderrVal := string(stderrBytes)
+
+	if strings.Contains(stderrVal, "No manual entry for") {
+		t.Logf("stderr should have not included any function errors, but did")
+		t.Fail()
+	}
+
+	bodyBytes, _ := ioutil.ReadAll(rr.Body)
+	bodyStr := string(bodyBytes)
+	want := `exit status 1
+No manual entry for badtopic`
+	if strings.Contains(bodyStr, want) == false {
+		t.Logf("response want: %s, got: %s", want, bodyStr)
+		t.Fail()
+	}
+
 }
 
 func TestHandler_DoesntHaveCustomHeaderInFunction_WithoutCgi_Mode(t *testing.T) {

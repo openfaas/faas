@@ -133,11 +133,27 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 		writer.Close()
 	}()
 
-	// Read the output from stdout/stderr and combine into one variable for output.
-	go func() {
-		defer wg.Done()
-		out, err = targetCmd.CombinedOutput()
-	}()
+	if config.combineOutput {
+		// Read the output from stdout/stderr and combine into one variable for output.
+		go func() {
+			defer wg.Done()
+
+			out, err = targetCmd.CombinedOutput()
+		}()
+	} else {
+		go func() {
+			var b bytes.Buffer
+			targetCmd.Stderr = &b
+
+			defer wg.Done()
+
+			out, err = targetCmd.Output()
+			if b.Len() > 0 {
+				log.Printf("stderr: %s", b.Bytes())
+			}
+			b.Reset()
+		}()
+	}
 
 	wg.Wait()
 	if timer != nil {
@@ -181,9 +197,9 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 		}
 	}
 
-	execTime := time.Since(startTime).Seconds()
+	execDuration := time.Since(startTime).Seconds()
 	if ri.headerWritten == false {
-		w.Header().Set("X-Duration-Seconds", fmt.Sprintf("%f", execTime))
+		w.Header().Set("X-Duration-Seconds", fmt.Sprintf("%f", execDuration))
 		ri.headerWritten = true
 		w.WriteHeader(200)
 		w.Write(out)
@@ -195,9 +211,9 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 	}
 
 	if len(bytesWritten) > 0 {
-		log.Printf("%s - Duration: %f seconds", bytesWritten, execTime)
+		log.Printf("%s - Duration: %f seconds", bytesWritten, execDuration)
 	} else {
-		log.Printf("Duration: %f seconds", execTime)
+		log.Printf("Duration: %f seconds", execDuration)
 	}
 }
 
