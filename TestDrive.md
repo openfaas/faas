@@ -12,7 +12,7 @@ We have provided several sample functions which are built-into the *Docker Stack
 
 ## Pre-reqs
 
-The guide makes use of a cloud playground service called [play-with-docker.com](http://play-with-docker.com/) that provides free Docker hosts for around 5 hours. If you want to try this on your own laptop just follow along.
+The guide makes use of a cloud playground service called [play-with-docker.com](https://play-with-docker.com/) that provides free Docker hosts for around 5 hours. If you want to try this on your own laptop just follow along.
 
 Background info:
 
@@ -20,7 +20,7 @@ Background info:
 
 ## Start here
 
-* So let's head over to http://play-with-docker.com/ and start a new session. You will probably have to fill out a Captcha.
+* So let's head over to [https://play-with-docker.com/](https://play-with-docker.com/) and start a new session. You will probably have to fill out a Captcha.
 
 * Click "Add New Instance" to create a single Docker host (more can be added later)
 
@@ -69,7 +69,7 @@ On your own machine change ` | sh` to ` | sudo sh`, for MacOS you can just use `
 
 * Find out what you can do
 
-```
+```shell
 $ faas-cli --help
 ```
 
@@ -105,7 +105,7 @@ func_webhookstash               0               1
 
 **UI portal:**
 
-The UI portal is accessible on: http://localhost:8080/ - it show a list of functions deployed on your swarm and allows you to test them out.
+The UI portal is accessible on: http://127.0.0.1:8080/ - it show a list of functions deployed on your swarm and allows you to test them out.
 
 View screenshot:
 
@@ -125,8 +125,8 @@ fssz6unq3e74  func_hubstats.1    alexellis2/faas-dockerhubstats:latest  moby  Ru
 nnlzo6u3pilg  func_prometheus.1  quay.io/prometheus/prometheus:latest   moby  Running        Running 27 minutes ago
 ```
 
-* Head over to http://localhost:9090 for your Prometheus metrics
- * A saved Prometheus view is available here: [metrics overview](http://localhost:9090/graph?g0.range_input=15m&g0.expr=rate(gateway_function_invocation_total%5B20s%5D)&g0.tab=0&g1.range_input=15m&g1.expr=gateway_functions_seconds_sum+%2F+gateway_functions_seconds_counts&g1.tab=0&g2.range_input=15m&g2.expr=gateway_service_count&g2.tab=0)
+* Head over to http://127.0.0.1:9090 for your Prometheus metrics
+ * A saved Prometheus view is available here: [metrics overview](http://127.0.0.1:9090/graph?g0.range_input=15m&g0.expr=rate(gateway_function_invocation_total%5B20s%5D)&g0.tab=0&g1.range_input=15m&g1.expr=gateway_functions_seconds_sum+%2F+gateway_functions_seconds_counts&g1.tab=0&g2.range_input=15m&g2.expr=gateway_service_count&g2.tab=0)
 
 * Your functions can be accessed via the gateway UI or read on for `curl`
 
@@ -166,7 +166,7 @@ The FaaS CLI can be used to build functions very quickly though the use of templ
 
 **Option 2: via FaaS UI portal**
 
-To attach a function at runtime you can use the "Create New Function" button on the portal UI at http://localhost:8080/ 
+To attach a function at runtime you can use the "Create New Function" button on the portal UI at http://127.0.0.1:8080/ 
 
 <a href="https://pbs.twimg.com/media/C8opW3RW0AAc9Th.jpg:large"><img src="https://pbs.twimg.com/media/C8opW3RW0AAc9Th.jpg:large" width="600"></img></a>
 
@@ -204,14 +204,14 @@ Example:
 For a quote-of-the-day type of application:
 
 ```
-curl localhost:8080/system/functions -d '
+curl 127.0.0.1:8080/system/functions -d '
 {"service": "oblique", "image": "vielmetti/faas-oblique", "envProcess": "/usr/bin/oblique", "network": "func_functions"}'
 ```
 
 For a hashing algorithm:
 
 ```
-curl localhost:8080/system/functions -d '
+curl 127.0.0.1:8080/system/functions -d '
 {"service": "stronghash", "image": "functions/alpine", "envProcess": "sha512sum", "network": "func_functions"}'
 ```
 
@@ -228,15 +228,18 @@ $ docker service rm func_echoit
 **Sample function: Docker Hub Stats (hubstats)**
 
 ```
-# curl -X POST http://localhost:8080/function/func_hubstats -d "alexellis2"
+# curl -X POST http://127.0.0.1:8080/function/func_hubstats -d "alexellis2"
 The organisation or user alexellis2 has 99 repositories on the Docker hub.
-
-# curl -X POST http://localhost:8080/function/func_hubstats -d "library"
-The organisation or user library has 128 repositories on the Docker hub.
 ```
 
 The `-d` value passes in the argument for your function. This is read via STDIN and used to query the Docker Hub to see how many images you've created/pushed.
 
+You can also invoke functions using the OpenFaaS CLI:
+
+```
+# echo -n "library" | faas-cli invoke func_hubstats
+The organisation or user library has 128 repositories on the Docker hub.
+```
 
 **Sample function: Node OS Info (nodeinfo)**
 
@@ -246,13 +249,13 @@ If you invoke this method in a while loop or with a load-generator tool then it 
 
 Here is a loop that can be used to invoke the function in a loop to trigger auto-scaling.
 ```
-while [ true ] ; do curl -X POST http://localhost:8080/function/func_nodeinfo -d ''; done
+while [ true ] ; do curl -X POST http://127.0.0.1:8080/function/func_nodeinfo -d ''; done
 ```
 
 Example:
 
 ```
-# curl -X POST http://localhost:8080/function/func_nodeinfo -d ''
+# curl -X POST http://127.0.0.1:8080/function/func_nodeinfo -d ''
 
 Hostname: 9b077a81a489
 
@@ -275,7 +278,7 @@ To control scaling behaviour you can set a min/max scale value with a label when
 Another cool sample function is the Webhook Stasher which saves the body of any data posted to the service to the container's filesystem. Each file is written with the filename of the UNIX time.
 
 ```
-# curl -X POST http://localhost:8080/function/func_webhookstash -d '{"event": "fork", "repo": "alexellis2/faas"}'
+# curl -X POST http://127.0.0.1:8080/function/func_webhookstash -d '{"event": "fork", "repo": "alexellis2/faas"}'
 Webhook stashed
 
 # docker ps|grep stash
