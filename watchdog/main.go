@@ -268,7 +268,7 @@ func main() {
 	writeTimeout := config.writeTimeout
 
 	s := &http.Server{
-		Addr:           ":8080",
+		Addr:           fmt.Sprintf(":%d", config.port),
 		ReadTimeout:    readTimeout,
 		WriteTimeout:   writeTimeout,
 		MaxHeaderBytes: 1 << 20, // Max header of 1MB
