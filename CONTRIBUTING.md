@@ -50,11 +50,35 @@ If you are proposing a new tool or service please do due diligence. Does this to
 
 Please read this whole guide and make sure you agree to our DCO agreement (included below):
 
-* Sign-off your commits 
+* See guidelines on commit messages (below)
+* Sign-off your commits
 * Complete the whole template for issues and pull requests
 * [Reference addressed issues](https://help.github.com/articles/closing-issues-using-keywords/) in the PR description & commit messages - use 'Fixes #IssueNo' 
 * Always give instructions for testing
-* Provide us CLI commands and output or screenshots where you can 
+* Provide us CLI commands and output or screenshots where you can
+
+**Commit messages**
+
+The first line of the commit message is the *subject*, this should be followed by a blank line and then a message describing the intent and purpose of the commit.
+
+* When you run `git commit` make sure you sign-off the commit by typing `git commit -s`.
+
+* The commit subject should start with an uppercase letter
+
+* The commit subject should not exceed 50 characters in length
+
+* When giving a commit body, leave a blank line then make you wrap all text to 72 characters
+
+Here's an example:
+
+```
+Add alexellis to the .DEREK.yml file
+
+We need to add alexellis to the .DEREK.yml file for project maintainer
+duties.
+
+Signed-off-by: Alex Ellis >alex@openfaas.com>
+```
 
 **Unit testing with Golang**
 
