@@ -77,7 +77,7 @@ Add alexellis to the .DEREK.yml file
 We need to add alexellis to the .DEREK.yml file for project maintainer
 duties.
 
-Signed-off-by: Alex Ellis >alex@openfaas.com>
+Signed-off-by: Alex Ellis <alex@openfaas.com>
 ```
 
 **Unit testing with Golang**
