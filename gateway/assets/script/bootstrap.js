@@ -96,11 +96,30 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
                     linkElement.setAttribute('href', url);
                     linkElement.setAttribute("download", filename);
          
-                    var clickEvent = new MouseEvent("click", {
-                        "view": window,
-                        "bubbles": true,
-                        "cancelable": false
-                    });
+                    var clickEvent;
+
+                    if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) { // for IE 11
+                        clickEvent = document.createEvent("MouseEvent");
+
+                        clickEvent.initMouseEvent("click",  /* eventName */
+                                            true,           /* bubbles */
+                                            false,          /* cancelable */
+                                            window,         /* view */
+                                            0,0,0,0,0,      /* detail, screenX, screenY, clientX, clientY */
+                                            false,          /* ctrlKey */
+                                            false,          /* altKey */
+                                            false,          /* shiftKey */
+                                            false,          /* metaKey */
+                                            0,              /* button */
+                                            null            /* relatedTarget */
+                                        );
+                    } else {
+                        clickEvent = new MouseEvent("click", {
+                            "view": window,
+                            "bubbles": true,
+                            "cancelable": false
+                        });
+                    }
                     linkElement.dispatchEvent(clickEvent);
                 } catch (ex) {
                     caught = ex;
