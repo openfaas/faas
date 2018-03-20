@@ -1,4 +1,4 @@
-FROM golang:1.8.5
+FROM golang:1.9.4
 RUN mkdir -p /go/src/github.com/openfaas/faas/watchdog
 WORKDIR /go/src/github.com/openfaas/faas/watchdog
 
