@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 	"time"
@@ -361,11 +362,13 @@ func TestHandler_StatusOKForGETAndNoBody(t *testing.T) {
 	}
 }
 
-func TestHealthHandler_SatusOK_LockFilePresent(t *testing.T) {
+func TestHealthHandler_StatusOK_LockFilePresent(t *testing.T) {
 	rr := httptest.NewRecorder()
 
-	if lockFilePresent() == false {
-		if err := createLockFile(); err != nil {
+	present := lockFilePresent()
+
+	if present == false {
+		if _, err := createLockFile(); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -402,7 +405,7 @@ func TestHealthHandler_StatusInternalServerError_LockFileNotPresent(t *testing.T
 
 	required := http.StatusInternalServerError
 	if status := rr.Code; status != required {
-		t.Errorf("handler retruned wrong status code: got %v, but wanted %v", status, required)
+		t.Errorf("handler returned wrong status code - got: %v, want: %v", status, required)
 	}
 }
 
@@ -425,4 +428,11 @@ func TestHealthHandler_SatusMethoNotAllowed_ForWriteableVerbs(t *testing.T) {
 			t.Errorf("handler returned wrong status code: got %v, but wanted %v", status, required)
 		}
 	}
+}
+
+func removeLockFile() error {
+	path := filepath.Join(os.TempDir(), ".lock")
+	log.Printf("Removing lock-file : %s\n", path)
+	removeErr := os.Remove(path)
+	return removeErr
 }
