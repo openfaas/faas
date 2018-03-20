@@ -87,40 +87,22 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
 
             var tryDownload = function(data, filename) {
                 var caught;
-
-                var linkElement = document.createElement('a');
+            
                 try {
                     var blob = new Blob([data], { type: "binary/octet-stream" });
-                    var url = window.URL.createObjectURL(blob);
-
-                    linkElement.setAttribute('href', url);
-                    linkElement.setAttribute("download", filename);
-         
-                    var clickEvent;
-
-                    if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) { // for IE 11
-                        clickEvent = document.createEvent("MouseEvent");
-
-                        clickEvent.initMouseEvent("click",  /* eventName */
-                                            true,           /* bubbles */
-                                            false,          /* cancelable */
-                                            window,         /* view */
-                                            0,0,0,0,0,      /* detail, screenX, screenY, clientX, clientY */
-                                            false,          /* ctrlKey */
-                                            false,          /* altKey */
-                                            false,          /* shiftKey */
-                                            false,          /* metaKey */
-                                            0,              /* button */
-                                            null            /* relatedTarget */
-                                        );
-                    } else {
-                        clickEvent = new MouseEvent("click", {
-                            "view": window,
-                            "bubbles": true,
-                            "cancelable": false
-                        });
+            
+                    if (window.navigator.msSaveBlob) { // // IE hack; see http://msdn.microsoft.com/en-us/library/ie/hh779016.aspx
+                        window.navigator.msSaveOrOpenBlob(blob, filename);
                     }
-                    linkElement.dispatchEvent(clickEvent);
+                    else {
+                        var linkElement = window.document.createElement("a");
+                        linkElement.href = window.URL.createObjectURL(blob);
+                        linkElement.download = filename;
+                        document.body.appendChild(linkElement);
+                        linkElement.click();
+                        document.body.removeChild(linkElement);
+                    }
+            
                 } catch (ex) {
                     caught = ex;
                 }
