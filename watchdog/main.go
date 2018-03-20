@@ -5,19 +5,24 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"os/exec"
+	"os/signal"
 	"path/filepath"
 	"strings"
 	"sync"
+	"syscall"
 	"time"
 
 	"github.com/openfaas/faas/watchdog/types"
 )
+
+var acceptingConnections bool
 
 // buildFunctionInput for a GET method this is an empty byte array.
 func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error) {
@@ -260,25 +265,20 @@ func lockFilePresent() bool {
 	return true
 }
 
-func createLockFile() error {
+func createLockFile() (string, error) {
 	path := filepath.Join(os.TempDir(), ".lock")
 	log.Printf("Writing lock-file to: %s\n", path)
 	writeErr := ioutil.WriteFile(path, []byte{}, 0660)
-	return writeErr
-}
+	acceptingConnections = true
 
-func removeLockFile() error {
-	path := filepath.Join(os.TempDir(), ".lock")
-	log.Printf("Removing lock-file : %s\n", path)
-	removeErr := os.Remove(path)
-	return removeErr
+	return path, writeErr
 }
 
 func makeHealthHandler() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
-			if lockFilePresent() == false {
+			if acceptingConnections == false || lockFilePresent() == false {
 				w.WriteHeader(http.StatusInternalServerError)
 				return
 			}
@@ -288,9 +288,7 @@ func makeHealthHandler() func(http.ResponseWriter, *http.Request) {
 			break
 		default:
 			w.WriteHeader(http.StatusMethodNotAllowed)
-
 		}
-
 	}
 }
 
@@ -312,6 +310,8 @@ func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.
 }
 
 func main() {
+	acceptingConnections = false
+
 	osEnv := types.OsEnv{}
 	readConfig := ReadConfig{}
 	config := readConfig.Read(osEnv)
@@ -335,15 +335,46 @@ func main() {
 	http.HandleFunc("/", makeRequestHandler(&config))
 
 	if config.suppressLock == false {
-		path := filepath.Join(os.TempDir(), ".lock")
-		log.Printf("Writing lock-file to: %s\n", path)
-		writeErr := ioutil.WriteFile(path, []byte{}, 0660)
+		path, writeErr := createLockFile()
+
 		if writeErr != nil {
 			log.Panicf("Cannot write %s. To disable lock-file set env suppress_lock=true.\n Error: %s.\n", path, writeErr.Error())
 		}
 	} else {
 		log.Println("Warning: \"suppress_lock\" is enabled. No automated health-checks will be in place for your function.")
+		acceptingConnections = true
 	}
 
-	log.Fatal(s.ListenAndServe())
+	listenUntilShutdown(config.writeTimeout, s)
+}
+
+func listenUntilShutdown(shutdownTimeout time.Duration, s *http.Server) {
+
+	idleConnsClosed := make(chan struct{})
+	go func() {
+		sig := make(chan os.Signal, 1)
+		signal.Notify(sig, syscall.SIGTERM)
+
+		<-sig
+
+		log.Printf("SIGTERM received.. shutting down server")
+
+		acceptingConnections = false
+
+		if err := s.Shutdown(context.Background()); err != nil {
+			// Error from closing listeners, or context timeout:
+			log.Printf("Error in Shutdown: %v", err)
+		}
+
+		<-time.Tick(shutdownTimeout)
+
+		close(idleConnsClosed)
+	}()
+
+	if err := s.ListenAndServe(); err != http.ErrServerClosed {
+		log.Printf("Error ListenAndServe: %v", err)
+		close(idleConnsClosed)
+	}
+
+	<-idleConnsClosed
 }
