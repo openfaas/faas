@@ -301,7 +301,6 @@ func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.
 			http.MethodPost,
 			http.MethodPut,
 			http.MethodDelete,
-			"UPDATE",
 			http.MethodGet:
 			pipeRequest(config, w, r, r.Method)
 			break
