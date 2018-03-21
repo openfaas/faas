@@ -1,9 +1,10 @@
 FROM golang:1.9.4 as build
-WORKDIR /go/src/github.com/openfaas/faas/gateway
-
 RUN curl -sL https://github.com/alexellis/license-check/releases/download/0.2.2/license-check \
       > /usr/bin/license-check \
       && chmod +x /usr/bin/license-check
+
+WORKDIR /go/src/github.com/openfaas/faas/gateway
+
 
 COPY vendor         vendor
 

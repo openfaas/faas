@@ -38,6 +38,36 @@ func TestRead_UseExternalProvider_Defaults(t *testing.T) {
 		t.Log("Default for UseExternalProvider should be false")
 		t.Fail()
 	}
+
+	if config.DirectFunctions != false {
+		t.Log("Default for DirectFunctions should be false")
+		t.Fail()
+	}
+
+	if len(config.DirectFunctionsSuffix) > 0 {
+		t.Log("Default for DirectFunctionsSuffix should be empty as a default")
+		t.Fail()
+	}
+}
+
+func TestRead_DirectFunctionsOverride(t *testing.T) {
+	defaults := NewEnvBucket()
+	readConfig := types.ReadConfig{}
+	defaults.Setenv("direct_functions", "true")
+	wantSuffix := "openfaas-fn.cluster.local.svc."
+	defaults.Setenv("direct_functions_suffix", wantSuffix)
+
+	config := readConfig.Read(defaults)
+
+	if config.DirectFunctions != true {
+		t.Logf("DirectFunctions should be true, got: %v", config.DirectFunctions)
+		t.Fail()
+	}
+
+	if config.DirectFunctionsSuffix != wantSuffix {
+		t.Logf("DirectFunctionsSuffix want: %s, got: %s", wantSuffix, config.DirectFunctionsSuffix)
+		t.Fail()
+	}
 }
 
 func TestRead_EmptyTimeoutConfig(t *testing.T) {
