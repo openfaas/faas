@@ -85,15 +85,15 @@ func main() {
 
 	r.HandleFunc("/system/alert", faasHandlers.Alert)
 
-	r.HandleFunc("/system/function/{name:[-a-zA-Z_0-9]+}", queryFunction).Methods("GET")
-	r.HandleFunc("/system/functions", listFunctions).Methods("GET")
-	r.HandleFunc("/system/functions", faasHandlers.DeployFunction).Methods("POST")
-	r.HandleFunc("/system/functions", faasHandlers.DeleteFunction).Methods("DELETE")
-	r.HandleFunc("/system/functions", faasHandlers.UpdateFunction).Methods("PUT")
+	r.HandleFunc("/system/function/{name:[-a-zA-Z_0-9]+}", queryFunction).Methods(http.MethodGet)
+	r.HandleFunc("/system/functions", listFunctions).Methods(http.MethodGet)
+	r.HandleFunc("/system/functions", faasHandlers.DeployFunction).Methods(http.MethodPost)
+	r.HandleFunc("/system/functions", faasHandlers.DeleteFunction).Methods(http.MethodDelete)
+	r.HandleFunc("/system/functions", faasHandlers.UpdateFunction).Methods(http.MethodPut)
 
 	if faasHandlers.QueuedProxy != nil {
-		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}/", faasHandlers.QueuedProxy).Methods("POST")
-		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}", faasHandlers.QueuedProxy).Methods("POST")
+		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}/", faasHandlers.QueuedProxy).Methods(http.MethodPost)
+		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}", faasHandlers.QueuedProxy).Methods(http.MethodPost)
 
 		r.HandleFunc("/system/async-report", faasHandlers.AsyncReport)
 	}
@@ -104,13 +104,13 @@ func main() {
 	allowedCORSHost := "raw.githubusercontent.com"
 	fsCORS := handlers.DecorateWithCORS(fs, allowedCORSHost)
 
-	r.PathPrefix("/ui/").Handler(http.StripPrefix("/ui", fsCORS)).Methods("GET")
+	r.PathPrefix("/ui/").Handler(http.StripPrefix("/ui", fsCORS)).Methods(http.MethodGet)
 
-	r.HandleFunc("/", faasHandlers.RoutelessProxy).Methods("POST")
+	r.HandleFunc("/", faasHandlers.RoutelessProxy).Methods(http.MethodPost)
 
 	metricsHandler := metrics.PrometheusHandler()
 	r.Handle("/metrics", metricsHandler)
-	r.Handle("/", http.RedirectHandler("/ui/", http.StatusMovedPermanently)).Methods("GET")
+	r.Handle("/", http.RedirectHandler("/ui/", http.StatusMovedPermanently)).Methods(http.MethodGet)
 
 	tcpPort := 8080
 

@@ -29,8 +29,8 @@ func Test_HeadersAdded(t *testing.T) {
 	}
 
 	actualMethods := rr.Header().Get("Access-Control-Allow-Methods")
-	if actualMethods != "GET" {
-		t.Errorf("Access-Control-Allow-Methods: want: %s got: %s", "GET", actualMethods)
+	if actualMethods != http.MethodGet {
+		t.Errorf("Access-Control-Allow-Methods: want: %s got: %s", http.MethodGet, actualMethods)
 	}
 
 }

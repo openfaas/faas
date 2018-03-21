@@ -277,7 +277,7 @@ func removeLockFile() error {
 func makeHealthHandler() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
-		case "GET":
+		case http.MethodGet:
 			if lockFilePresent() == false {
 				w.WriteHeader(http.StatusInternalServerError)
 				return
@@ -298,11 +298,11 @@ func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.
 	return func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case
-			"POST",
-			"PUT",
-			"DELETE",
+			http.MethodPost,
+			http.MethodPut,
+			http.MethodDelete,
 			"UPDATE",
-			"GET":
+			http.MethodGet:
 			pipeRequest(config, w, r, r.Method)
 			break
 		default:
