@@ -13,7 +13,7 @@ There are several key GitHub repositories for the project which are available un
 
 It would be great to hear from you especially if you have any of the above and want to share it with the rest of the community. Pull Request or submit a Github Issue.
 
-> Note: You will need to sign-off the commit too using `git commit -s` or add "Signed-off by your.email@domain.com" to the commit message when using the UI.
+> Note: You will need to sign-off the commit too using `git commit -s` or add `Signed-off-by: {your full name} <{your email address}>` to the commit message when using the UI.
 
 ### Industry awards and mentions
 
