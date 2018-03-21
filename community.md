@@ -50,6 +50,7 @@ Key:
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFaaS @ Serverless CPH](https://serverlesscph.dk) | John Mccabe | Copenhagen, DK | 16-May-2018 |
 | Serverless OpenFaaS and Python Workshop @ Agile Peterborough        | Alex Ellis  | Peterborough, UK | 12-May-2018 |
 | [OpenFaaS talk and workshop @ Cisco DevNet Create](https://devnetcreate.io/2018/pages/speaker/speaker.html#Alex-Ellis) | Alex Ellis | Mountain View, CA | 10/11-Apr-2018 |
 | [OpenFaaS : a serverless framework on top of Docker and Kubernetes @ Devoxx France](https://www.devoxx.fr/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 18-Apr-2018 |
@@ -71,6 +72,8 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [VMware + OpenFaaS – One Month In](https://blogs.vmware.com/opensource/2018/03/20/vmware-openfaas-alex-ellis) | Alex Ellis | vmware.com | 21-Mar-2018 |
+| [VMware Welcomes Alex Ellis](https://blogs.vmware.com/opensource/2018/02/19/vmware-welcomes-alex-ellis/) | VMware team | vmware.com | 19-Feb-2018 |
 | [I'm going to be working on OpenFaaS full-time](https://github.com/openfaas/faas-netes/issues/145) | Alex Ellis | alexellis.io | 19-Feb-2018 |
 | [Stop installing CLI tools on your build server: CLI-as-a-Function with OpenFaaS](https://medium.com/@burtonr/stop-installing-cli-tools-on-your-build-server-cli-as-a-function-with-openfaas-80dd8d6be611) | Burton Rheutan | medium.com/@burtonr | 12-Feb-2018 |
 | [Turn Any CLI into a Function with OpenFaaS](https://blog.alexellis.io/cli-functions-with-openfaas/) | Alex Ellis | alexellis.io | 06-Feb-2018
