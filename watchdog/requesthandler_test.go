@@ -29,7 +29,7 @@ func TestHandler_HasCustomHeaderInFunction_WithCgi_Mode(t *testing.T) {
 	rr := httptest.NewRecorder()
 
 	body := ""
-	req, err := http.NewRequest("POST", "/", bytes.NewBufferString(body))
+	req, err := http.NewRequest(http.MethodPost, "/", bytes.NewBufferString(body))
 	req.Header.Add("custom-header", "value")
 
 	if err != nil {
@@ -68,7 +68,7 @@ func TestHandler_HasCustomHeaderInFunction_WithCgiMode_AndBody(t *testing.T) {
 	rr := httptest.NewRecorder()
 
 	body := "test"
-	req, err := http.NewRequest("POST", "/", bytes.NewBufferString(body))
+	req, err := http.NewRequest(http.MethodPost, "/", bytes.NewBufferString(body))
 	req.Header.Add("custom-header", "value")
 
 	if err != nil {
@@ -110,7 +110,7 @@ func TestHandler_StderrWritesToStderr_CombinedOutput_False(t *testing.T) {
 	log.SetOutput(b)
 
 	body := ""
-	req, err := http.NewRequest("POST", "/", bytes.NewBufferString(body))
+	req, err := http.NewRequest(http.MethodPost, "/", bytes.NewBufferString(body))
 
 	if err != nil {
 		t.Fatal(err)
@@ -151,7 +151,7 @@ func TestHandler_StderrWritesToResponse_CombinedOutput_True(t *testing.T) {
 	log.SetOutput(b)
 
 	body := ""
-	req, err := http.NewRequest("POST", "/", bytes.NewBufferString(body))
+	req, err := http.NewRequest(http.MethodPost, "/", bytes.NewBufferString(body))
 
 	if err != nil {
 		t.Fatal(err)
@@ -200,7 +200,7 @@ func TestHandler_DoesntHaveCustomHeaderInFunction_WithoutCgi_Mode(t *testing.T) 
 	rr := httptest.NewRecorder()
 
 	body := ""
-	req, err := http.NewRequest("POST", "/", bytes.NewBufferString(body))
+	req, err := http.NewRequest(http.MethodPost, "/", bytes.NewBufferString(body))
 	req.Header.Add("custom-header", "value")
 	if err != nil {
 		t.Fatal(err)
@@ -236,7 +236,7 @@ func TestHandler_HasXDurationSecondsHeader(t *testing.T) {
 	rr := httptest.NewRecorder()
 
 	body := "hello"
-	req, err := http.NewRequest("POST", "/", bytes.NewBufferString(body))
+	req, err := http.NewRequest(http.MethodPost, "/", bytes.NewBufferString(body))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -262,7 +262,7 @@ func TestHandler_HasXDurationSecondsHeader(t *testing.T) {
 func TestHandler_RequestTimeoutFailsForExceededDuration(t *testing.T) {
 	rr := httptest.NewRecorder()
 
-	verbs := []string{"POST"}
+	verbs := []string{http.MethodPost}
 	for _, verb := range verbs {
 
 		body := "hello"
@@ -290,7 +290,7 @@ func TestHandler_RequestTimeoutFailsForExceededDuration(t *testing.T) {
 func TestHandler_StatusOKAllowed_ForWriteableVerbs(t *testing.T) {
 	rr := httptest.NewRecorder()
 
-	verbs := []string{"POST", "PUT", "UPDATE", "DELETE"}
+	verbs := []string{http.MethodPost, http.MethodPut, "UPDATE", http.MethodDelete}
 	for _, verb := range verbs {
 
 		body := "hello"
@@ -341,7 +341,7 @@ func TestHandler_StatusMethodNotAllowed_ForUnknown(t *testing.T) {
 func TestHandler_StatusOKForGETAndNoBody(t *testing.T) {
 	rr := httptest.NewRecorder()
 
-	req, err := http.NewRequest("GET", "/", nil)
+	req, err := http.NewRequest(http.MethodGet, "/", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -370,7 +370,7 @@ func TestHealthHandler_SatusOK_LockFilePresent(t *testing.T) {
 		}
 	}
 
-	req, err := http.NewRequest("GET", "/_/health", nil)
+	req, err := http.NewRequest(http.MethodGet, "/_/health", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -393,7 +393,7 @@ func TestHealthHandler_StatusInternalServerError_LockFileNotPresent(t *testing.T
 		}
 	}
 
-	req, err := http.NewRequest("GET", "/_/health", nil)
+	req, err := http.NewRequest(http.MethodGet, "/_/health", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -409,7 +409,7 @@ func TestHealthHandler_StatusInternalServerError_LockFileNotPresent(t *testing.T
 func TestHealthHandler_SatusMethoNotAllowed_ForWriteableVerbs(t *testing.T) {
 	rr := httptest.NewRecorder()
 
-	verbs := []string{"POST", "PUT", "UPDATE", "DELETE"}
+	verbs := []string{http.MethodPost, http.MethodPut, "UPDATE", http.MethodDelete}
 
 	for _, verb := range verbs {
 		req, err := http.NewRequest(verb, "/_/health", nil)
