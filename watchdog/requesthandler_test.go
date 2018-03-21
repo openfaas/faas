@@ -290,7 +290,7 @@ func TestHandler_RequestTimeoutFailsForExceededDuration(t *testing.T) {
 func TestHandler_StatusOKAllowed_ForWriteableVerbs(t *testing.T) {
 	rr := httptest.NewRecorder()
 
-	verbs := []string{http.MethodPost, http.MethodPut, "UPDATE", http.MethodDelete}
+	verbs := []string{http.MethodPost, http.MethodPut, http.MethodDelete}
 	for _, verb := range verbs {
 
 		body := "hello"
@@ -409,7 +409,7 @@ func TestHealthHandler_StatusInternalServerError_LockFileNotPresent(t *testing.T
 func TestHealthHandler_SatusMethoNotAllowed_ForWriteableVerbs(t *testing.T) {
 	rr := httptest.NewRecorder()
 
-	verbs := []string{http.MethodPost, http.MethodPut, "UPDATE", http.MethodDelete}
+	verbs := []string{http.MethodPost, http.MethodPut, http.MethodDelete}
 
 	for _, verb := range verbs {
 		req, err := http.NewRequest(verb, "/_/health", nil)
