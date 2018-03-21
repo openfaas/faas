@@ -14,6 +14,8 @@ services:
             dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
             faas_nats_address: "nats"
             faas_nats_port: 4222
+            direct_functions: "true"    # Functions are invoked directly over the overlay network
+            direct_functions_suffix: ""
         deploy:
             resources:
                 # limits:   # Enable if you want to limit memory usage

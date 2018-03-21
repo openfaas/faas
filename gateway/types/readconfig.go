@@ -102,6 +102,9 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 		cfg.PrometheusHost = prometheusHost
 	}
 
+	cfg.DirectFunctions = parseBoolValue(hasEnv.Getenv("direct_functions"))
+	cfg.DirectFunctionsSuffix = hasEnv.Getenv("direct_functions_suffix")
+
 	return cfg
 }
 
@@ -131,6 +134,12 @@ type GatewayConfig struct {
 
 	// Port to connect to Prometheus.
 	PrometheusPort int
+
+	// If set to true we will access upstream functions directly rather than through the upstream provider
+	DirectFunctions bool
+
+	// If set this will be used to resolve functions directly
+	DirectFunctionsSuffix string
 }
 
 // UseNATS Use NATSor not

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -14,20 +15,22 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
+// HTTPNotifier notify about HTTP request/response
 type HTTPNotifier interface {
 	Notify(method string, URL string, statusCode int, duration time.Duration)
 }
 
+// BaseURLResolver URL resolver for upstream requests
+type BaseURLResolver interface {
+	Resolve(r *http.Request) string
+}
+
 // MakeForwardingProxyHandler create a handler which forwards HTTP requests
-func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers []HTTPNotifier) http.HandlerFunc {
-	baseURL := proxy.BaseURL.String()
-	if strings.HasSuffix(baseURL, "/") {
-		baseURL = baseURL[0 : len(baseURL)-1]
-	}
-
+func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers []HTTPNotifier, baseURLResolver BaseURLResolver) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		baseURL := baseURLResolver.Resolve(r)
 
-		requestURL := r.URL.String()
+		requestURL := r.URL.Path
 
 		start := time.Now()
 
@@ -90,10 +93,12 @@ func copyHeaders(destination http.Header, source *http.Header) {
 	}
 }
 
+// PrometheusFunctionNotifier records metrics to Prometheus
 type PrometheusFunctionNotifier struct {
 	Metrics *metrics.MetricOptions
 }
 
+// Notify records metrics in Prometheus
 func (p PrometheusFunctionNotifier) Notify(method string, URL string, statusCode int, duration time.Duration) {
 	seconds := duration.Seconds()
 	serviceName := getServiceName(URL)
@@ -112,19 +117,52 @@ func (p PrometheusFunctionNotifier) Notify(method string, URL string, statusCode
 func getServiceName(urlValue string) string {
 	var serviceName string
 	forward := "/function/"
-	if startsWith(urlValue, forward) {
+	if strings.HasPrefix(urlValue, forward) {
 		serviceName = urlValue[len(forward):]
 	}
 	return serviceName
 }
 
-func startsWith(value, token string) bool {
-	return len(value) > len(token) && strings.Index(value, token) == 0
-}
-
+// LoggingNotifier notifies a log about a request
 type LoggingNotifier struct {
 }
 
+// Notify a log about a request
 func (LoggingNotifier) Notify(method string, URL string, statusCode int, duration time.Duration) {
 	log.Printf("Forwarded [%s] to %s - [%d] - %f seconds", method, URL, statusCode, duration.Seconds())
+}
+
+// SingleHostBaseURLResolver resolves URLs against a single BaseURL
+type SingleHostBaseURLResolver struct {
+	BaseURL string
+}
+
+// Resolve the base URL for a request
+func (s SingleHostBaseURLResolver) Resolve(r *http.Request) string {
+
+	baseURL := s.BaseURL
+
+	if strings.HasSuffix(baseURL, "/") {
+		baseURL = baseURL[0 : len(baseURL)-1]
+	}
+	return baseURL
+}
+
+// FunctionAsHostBaseURLResolver resolves URLs using a function from the URL as a host
+type FunctionAsHostBaseURLResolver struct {
+	FunctionSuffix string
+}
+
+// Resolve the base URL for a request
+func (f FunctionAsHostBaseURLResolver) Resolve(r *http.Request) string {
+
+	svcName := getServiceName(r.URL.Path)
+
+	const watchdogPort = 8080
+	var suffix string
+	if len(f.FunctionSuffix) > 0 {
+		suffix = "." + f.FunctionSuffix
+	}
+
+	return fmt.Sprintf("http://%s%s:%d", svcName, suffix, watchdogPort)
 }
