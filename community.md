@@ -55,9 +55,12 @@ Key:
 | [OpenFaaS talk and workshop @ Cisco DevNet Create](https://devnetcreate.io/2018/pages/speaker/speaker.html#Alex-Ellis) | Alex Ellis | Mountain View, CA | 10/11-Apr-2018 |
 | [OpenFaaS : a serverless framework on top of Docker and Kubernetes @ Devoxx France](https://www.devoxx.fr/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 18-Apr-2018 |
 | [Deep Dive: Serverless Computing mit OpenFaaS - Magdeburger Developer Days](https://www.md-devdays.de/Act?id=34/) | Frank Pommerening | Magdeburg Germany | 10-April-2018 |
+| [.NET Core on a Raspberry Pi Cluster with Docker and OpenFaaS](https://www.meetup.com/St-Pete-NET-Meetup/events/247299483/) | John Callaway | St Petersburg, FL | 03-Apr-2018 |
+| [.NET Core on a Raspberry Pi Cluster with Docker and OpenFaaS](http://www.codepalousa.com/Sessions/1034) | John Callaway | Louisville, KY | 30-Mar-2018 |
 | [OpenFaaS : a serverless framework on top of Docker and Kubernetes @ BreizhCamp](http://www.breizhcamp.org/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 29-Mar-2018 |
 | [Running private OpenFaaS is not about avoiding lock-in](https://www.meetup.com/Serverless-Italy/events/248536634/) | Nic Jackson | Milan, IT | 20-Mar-2018 |
 | [Serverless Computing mit Docker Swarm und OpenFaaS - Softwerkskammer Jena](https://www.meetup.com/de-DE/jenadevs/events/246045796/) | Frank Pommerening | Jena Germany | 20-Mar-2018 |
+| [.NET Core on a Raspberry Pi Cluster with Docker and OpenFaaS](https://orlandocodecamp.com/sessions/Details/63) | John Callaway | Orlando, FL | 17-Mar-2018 |
 | [Workshop: Serverless Computing mit OpenFaaS - Spartakiade](https://github.com/fpommerening/Spartakiade2018-OpenFaaS) | Frank Pommerening | Berlin Germany | 17-Mar-2018 |
 | Serverless OpenFaaS and Python Workshop @ PyCon SK        | Alex Ellis  | Bratislava, SK | 11-Mar-2018 |
 | Serverless with OpenFaaS Opening Keynote @ PyCon SK        | Alex Ellis  | Bratislava, SK | 09-Mar-2018 |
@@ -84,6 +87,8 @@ Key:
 | [Installing OpenFaaS on top of Kubernetes on bare-metal with Terraform Scaleway provider and kubeadm](https://stefanprodan.com/2018/kubernetes-scaleway-baremetal-arm-terraform-installer/) | Stefan Prodan | stefanprodan.com | 22-Jan-2018
 | [Get storage for your Severless Functions with Minio & Docker](https://blog.alexellis.io/openfaas-storage-for-your-functions/) | Alex Ellis | alexellis.io | 22-Jan-2018
 | [ColoriseBot: three months on](https://finnian.io/blog/colorisebot-three-months-on/) | Finnian Anderson | finnian.io | 22-Jan-2018 |
+| [Raspberry Pi Cluster with Docker and OpenFaaS (and SETI)](http://6figuredev.com/learning/raspberry-pi-cluster-with-docker-and-openfaas-and-seti/) | John Callaway | 6FigureDev.com | 17-Jan-2018 |
+| [Podcast - Episode 022 – OpenFaaS with Docker Captain Alex Ellis](http://6figuredev.com/podcast/episode-022-openfaas-with-docker-captain-alex-ellis/) | The 6 Figure Developer Podcast | 6FigureDev.com | 15-Jan-2018 |
 | [Google Home + OpenFaaS: Write your own voice controlled functions](https://medium.com/@burtonr/google-home-openfaas-write-your-own-voice-controlled-functions-11f195398e3f) | Burton Rheutan | medium.com/@burtonr | 06-Jan-2018 |
 
 ### 2017
@@ -123,7 +128,7 @@ Key:
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [Podcast - Hanselminutes - Serverless and OpenFaas with Alex Ellis](https://www.hanselminutes.com) | Scott Hanselman | hanselminutes.com | 29-Dec-2017
-| [Podcast - How Serverless Technologies Impact Kubernetes](https://thenewstack.io/serverless-technologies-impact-kubernetes/) | thenewstack.io | 28-Dec-2017 |
+| [Podcast - How Serverless Technologies Impact Kubernetes](https://thenewstack.io/serverless-technologies-impact-kubernetes/) | The New Stack Makers | thenewstack.io | 28-Dec-2017 |
 | [OpenFaaS on DCOS](https://medium.com/@realrealbot/openfaas-on-dcos-9d5927f4e725) | Alberto Quario | medium.com/@realrealbot  | 20-Dec-2017
 | [Deploying Kubernetes On-Premise with RKE and deploying OpenFaaS on it — Part 1](https://medium.com/@kenfdev/deploying-kubernetes-on-premise-with-rke-and-deploying-openfaas-on-it-part-1-69a35ddfa507) | Ken Fukuyama | medium.com/@kenfdev  | 10-Dec-2017
 | [Deploying Kubernetes On-Premise with RKE and deploying OpenFaaS on it — Part 2](https://medium.com/@kenfdev/deploying-kubernetes-on-premise-with-rke-and-deploying-openfaas-on-it-part-2-cc14004e7007) | Ken Fukuyama | medium.com/@kenfdev  | 10-Dec-2017
