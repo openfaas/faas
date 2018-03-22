@@ -87,7 +87,7 @@ func (ReadConfig) Read(hasEnv HasEnv) WatchdogConfig {
 
 	cfg.contentType = hasEnv.Getenv("content_type")
 
-	if isBoolValueSet("combine_output") {
+	if isBoolValueSet(hasEnv.Getenv("combine_output")) {
 		cfg.combineOutput = parseBoolValue(hasEnv.Getenv("combine_output"))
 	}
 

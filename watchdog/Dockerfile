@@ -2,11 +2,10 @@ FROM golang:1.8.5
 RUN mkdir -p /go/src/github.com/openfaas/faas/watchdog
 WORKDIR /go/src/github.com/openfaas/faas/watchdog
 
-COPY main.go        .
-COPY readconfig.go  .
-COPY config_test.go .
+COPY main.go            .
+COPY readconfig.go      .
+COPY readconfig_test.go .
 COPY requesthandler_test.go .
-
 COPY types types
 
 # Run a gofmt and exclude all vendored code.
