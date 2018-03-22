@@ -26,6 +26,31 @@ func (e EnvBucket) Setenv(key string, value string) {
 	e.Items[key] = value
 }
 
+func TestRead_CombineOutput_DefaultTrue(t *testing.T) {
+	defaults := NewEnvBucket()
+	readConfig := ReadConfig{}
+
+	config := readConfig.Read(defaults)
+	want := true
+	if config.combineOutput != want {
+		t.Logf("combineOutput error, want: %v, got: %v", want, config.combineOutput)
+		t.Fail()
+	}
+}
+
+func TestRead_CombineOutput_OverrideFalse(t *testing.T) {
+	defaults := NewEnvBucket()
+	readConfig := ReadConfig{}
+	defaults.Setenv("combine_output", "false")
+
+	config := readConfig.Read(defaults)
+	want := false
+	if config.combineOutput != want {
+		t.Logf("combineOutput error, want: %v, got: %v", want, config.combineOutput)
+		t.Fail()
+	}
+}
+
 func TestRead_CgiHeaders_OverrideFalse(t *testing.T) {
 	defaults := NewEnvBucket()
 	readConfig := ReadConfig{}
