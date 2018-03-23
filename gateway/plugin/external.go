@@ -86,13 +86,15 @@ func (s ExternalServiceQuery) GetReplicas(serviceName string) (handlers.ServiceQ
 	}
 
 	maxReplicas := uint64(handlers.DefaultMaxReplicas)
-	minReplicas := uint64(1)
+	minReplicas := uint64(handlers.DefaultMinReplicas)
+	scalingFactor := uint64(handlers.DefaultScalingFactor)
 	availableReplicas := function.AvailableReplicas
 
 	if function.Labels != nil {
 		labels := *function.Labels
 		minScale := labels[handlers.MinScaleLabel]
 		maxScale := labels[handlers.MaxScaleLabel]
+		scaleFactor := labels[handlers.ScalingFactorLabel]
 
 		if len(minScale) > 0 {
 			labelValue, err := strconv.Atoi(minScale)
@@ -111,12 +113,28 @@ func (s ExternalServiceQuery) GetReplicas(serviceName string) (handlers.ServiceQ
 				maxReplicas = uint64(labelValue)
 			}
 		}
+
+		if len(scaleFactor) > 0 {
+			labelValue, err := strconv.Atoi(scaleFactor)
+			if err != nil {
+				log.Printf("Bad Scaling Factor: %s, should be uint", scaleFactor)
+			} else {
+				var temp = uint64(labelValue)
+
+				if temp >= 0 && temp <= 100 {
+					scalingFactor = temp
+				} else {
+					log.Printf("Bad Scaling Factor: %s, is in range [0 - 100]", temp)
+				}
+			}
+		}
 	}
 
 	return handlers.ServiceQueryResponse{
 		Replicas:          function.Replicas,
 		MaxReplicas:       maxReplicas,
 		MinReplicas:       minReplicas,
+		ScalingFactor:     scalingFactor,
 		AvailableReplicas: availableReplicas,
 	}, err
 }
