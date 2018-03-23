@@ -5,15 +5,18 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"os/exec"
+	"os/signal"
 	"path/filepath"
 	"strings"
 	"sync"
+	"syscall"
 	"time"
 
 	"github.com/openfaas/faas/watchdog/types"
@@ -311,6 +314,38 @@ func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.
 	}
 }
 
+// This method listens for incoming SIGTERM and starts an gracefully shutdown
+// successChan is indented for testing and should be nil in a normal environment
+func gracefulShutdown(server *http.Server, successChan chan bool) {
+	sigChannel := make(chan os.Signal, 1)
+	signal.Notify(sigChannel, syscall.SIGTERM) // For now supporting only linux is feasible
+
+	sig := <-sigChannel
+	log.Printf("Received Sig: %+v", sig)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if err := server.Shutdown(ctx); err != nil {
+		log.Printf("Error: %v during gracefully shutdown", err)
+
+		if successChan == nil {
+			os.Exit(1)
+		} else {
+			successChan <- false
+		}
+	} else {
+		signal.Stop(sigChannel)
+		log.Println("Gracefully stopped watchdog")
+
+		if successChan == nil {
+			os.Exit(0)
+		} else {
+			successChan <- true
+		}
+	}
+}
+
 func main() {
 	osEnv := types.OsEnv{}
 	readConfig := ReadConfig{}
@@ -345,5 +380,6 @@ func main() {
 		log.Println("Warning: \"suppress_lock\" is enabled. No automated health-checks will be in place for your function.")
 	}
 
+	go gracefulShutdown(s, nil)
 	log.Fatal(s.ListenAndServe())
 }
