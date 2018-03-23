@@ -33,7 +33,7 @@ This process will take a few minutes as Droplets are created and Docker installe
 for i in 1 2 3; do
     docker-machine create \
         --driver digitalocean \
-        --digitalocean-image ubuntu-17-04-x64 \
+        --digitalocean-image ubuntu-17-10-x64 \
         --digitalocean-tags openfaas-getting-started \
         --digitalocean-region=nyc3 \
         --digitalocean-access-token $DOTOKEN \
