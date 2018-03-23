@@ -14,14 +14,23 @@ import (
 	"github.com/openfaas/faas/gateway/requests"
 )
 
+// DefaultMinReplicas is the minimal amount of replicas for a service.
+const DefaultMinReplicas = 1
+
 // DefaultMaxReplicas is the amount of replicas a service will auto-scale up to.
 const DefaultMaxReplicas = 20
+
+// DefaultScalingFactor is the defining proportion for the scaling increments.
+const DefaultScalingFactor = 20
 
 // MinScaleLabel label indicating min scale for a function
 const MinScaleLabel = "com.openfaas.scale.min"
 
 // MaxScaleLabel label indicating max scale for a function
 const MaxScaleLabel = "com.openfaas.scale.max"
+
+// ScalingFactorLabel label indicates the scaling factor for a function
+const ScalingFactorLabel = "com.openfaas.scale.factor"
 
 // MakeAlertHandler handles alerts from Prometheus Alertmanager
 func MakeAlertHandler(service ServiceQuery) http.HandlerFunc {
@@ -87,7 +96,7 @@ func scaleService(alert requests.PrometheusInnerAlert, service ServiceQuery) err
 		if getErr == nil {
 			status := alert.Status
 
-			newReplicas := CalculateReplicas(status, queryResponse.Replicas, uint64(queryResponse.MaxReplicas), queryResponse.MinReplicas)
+			newReplicas := CalculateReplicas(status, queryResponse.Replicas, uint64(queryResponse.MaxReplicas), queryResponse.MinReplicas, queryResponse.ScalingFactor)
 
 			log.Printf("[Scale] function=%s %d => %d.\n", serviceName, queryResponse.Replicas, newReplicas)
 			if newReplicas == queryResponse.Replicas {
@@ -104,13 +113,12 @@ func scaleService(alert requests.PrometheusInnerAlert, service ServiceQuery) err
 }
 
 // CalculateReplicas decides what replica count to set depending on current/desired amount
-func CalculateReplicas(status string, currentReplicas uint64, maxReplicas uint64, minReplicas uint64) uint64 {
+func CalculateReplicas(status string, currentReplicas uint64, maxReplicas uint64, minReplicas uint64, scalingFactor uint64) uint64 {
 	newReplicas := currentReplicas
-	const step = 5
+	step := uint64((float64(maxReplicas) / 100) * float64(scalingFactor))
 
 	if status == "firing" {
 		if currentReplicas == 1 {
-			// First jump is from 1 to "step" i.e. 1->5
 			newReplicas = step
 		} else {
 			if currentReplicas+step > maxReplicas {
