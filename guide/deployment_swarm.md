@@ -35,7 +35,7 @@ Clone OpenFaaS and then checkout the latest stable release:
 ```
 $ git clone https://github.com/openfaas/faas && \
   cd faas && \
-  git checkout 0.7.1 && \
+  git checkout 0.7.7 && \
   ./deploy_stack.sh
 ```
 
