@@ -47,7 +47,7 @@ func main() {
 		Metrics: &metricsOptions,
 	}
 	functionNotifiers := []handlers.HTTPNotifier{loggingNotifier, prometheusNotifier}
-	forwardingNotifiers := []handlers.HTTPNotifier{loggingNotifier, prometheusNotifier}
+	forwardingNotifiers := []handlers.HTTPNotifier{loggingNotifier}
 
 	urlResolver := handlers.SingleHostBaseURLResolver{BaseURL: config.FunctionsProviderURL.String()}
 	var functionURLResolver handlers.BaseURLResolver
