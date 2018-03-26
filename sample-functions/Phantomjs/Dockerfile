@@ -1,6 +1,6 @@
 FROM alexellis2/phantomjs-docker:latest
 
-ADD https://github.com/openfaas/faas/releases/download/0.7.1/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/0.7.7/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
 ENV fprocess="phantomjs /dev/stdin"
