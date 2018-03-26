@@ -1,15 +1,5 @@
 # Troubleshooting guide
 
-## CLI unresponsive - localhost vs 127.0.0.1
-
-On certain Linux distributions the name `localhost` maps to an IPv6 alias meaning that the CLI may hang. In these circumstances you have two options:
-
-1. Use the `-g` or `--gateway` argument with `127.0.0.1`
-
-This forces IPv4.
-
-2. Edit the `/etc/hosts` file on your machine and remove the IPv6 alias for localhost.
-
 ## Timeouts
 
 Default timeouts are configured at the HTTP level and must be set both on the gateway and the function.
@@ -37,8 +27,8 @@ functions:
     handler: ./sleepygo
     image: alexellis2/sleeps-for-10-seconds
     environment:
-        read_timeout: 20
-        write_timeout: 20
+        read_timeout: 20s
+        write_timeout: 20s
 ```
 
 handler.go
@@ -59,19 +49,20 @@ func Handle(req []byte) string {
 For the gateway set the following environmental variables:
 
 ```
-read_timeout: 30
-write_timeout: 30
+            read_timeout:  "25s"        # Maximum time to read HTTP request
+            write_timeout: "25s"        # Maximum time to write HTTP response
+            upstream_timeout: "20s"     # Maximum duration of upstream function call
 ```
 
-The default for both is "8" - seconds. In the example above "30" means 30 seconds.
+> Note: The value for `upstream_timeout` should be slightly less than `read_timeout` and `write_timeout`
 
 ### Timeouts - Function provider
 
-If on Kubernetes and Swarm you should set a matching timeout for the faas-netesd or faas-swarm controller matching that of the gateway.
+When using a gateway version older than `0.7.8` a timeout matching the gateway should be set for the `faas-swarm` or `faas-netes` controller.
 
 ```
-read_timeout: 30
-write_timeout: 30
+read_timeout: 25s
+write_timeout: 25s
 ```
 
 ### Timeouts - Asynchronous invocations
@@ -138,6 +129,16 @@ Checklist:
 * [ ] Check functions are deployed and started
 * [ ] Check request isn't timing out at the gateway or the function level
 
+## CLI unresponsive - localhost vs 127.0.0.1
+
+On certain Linux distributions the name `localhost` maps to an IPv6 alias meaning that the CLI may hang. In these circumstances you have two options:
+
+1. Use the `-g` or `--gateway` argument with `127.0.0.1`
+
+This forces IPv4.
+
+2. Edit the `/etc/hosts` file on your machine and remove the IPv6 alias for localhost.
+
 # Troubleshooting Swarm or Kubernetes
 
 ## Docker Swarm
@@ -178,30 +179,38 @@ $ docker service ls -q | xargs docker service rm
 
 ## Kubernetes
 
+If you have deployed OpenFaaS to the recommended namespaces then functions are in the `openfaas-fn` namespace and the core services are in the `openfaas` namespace. The `-n` flag to `kubectl` sets the namespace to look at.
+
+### List OpenFaaS services
+
+```
+$ kubectl get deploy -n openfaas
+```
+
 ### List all functions
 
 ```
-$ kubectl get deploy
+$ kubectl get deploy -n openfaas-fn
 ```
 
 ### Find a function's logs
 
 ```
-$ kubectl logs deploy/FUNCTION
+$ kubectl logs -n openfaas-fn deploy/FUNCTION_NAME
 ```
 
 ### Find out if a function failed to start
 
 ```
-$ kubectl describe deploy/FUNCTION
+$ kubectl describe -n openfaas-fn deploy/FUNCTION_NAME
 ```
 
 ### Remove the OpenFaaS deployment
 
+From within the `faas-netes` folder:
+
 ```
-$ git clone https://github.com/openfaas/faas-netes/ && \
-  cd faas-netes && \
-  kubectl delete -f ./yaml/
+$ kubectl delete -f namespaces.yml,./yaml/
 ```
 
 # Watchdog
