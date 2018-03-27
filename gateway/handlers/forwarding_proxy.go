@@ -58,15 +58,18 @@ func buildUpstreamRequest(r *http.Request, url string) *http.Request {
 	upstreamReq.Header["X-Forwarded-For"] = []string{r.RemoteAddr}
 
 	if r.Body != nil {
-		defer r.Body.Close()
 		upstreamReq.Body = r.Body
 	}
+
 	return upstreamReq
 }
 
 func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Client, baseURL string, requestURL string, timeout time.Duration) (int, error) {
 
 	upstreamReq := buildUpstreamRequest(r, baseURL+requestURL)
+	if upstreamReq.Body != nil {
+		defer upstreamReq.Body.Close()
+	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
