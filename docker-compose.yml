@@ -11,7 +11,7 @@ services:
             read_timeout:  "25s"        # Maximum time to read HTTP request
             write_timeout: "25s"        # Maximum time to write HTTP response
             upstream_timeout: "20s"     # Maximum duration of upstream function call - should be more than read_timeout and write_timeout
-            dnsrr: "true"  		# Temporarily use dnsrr in place of VIP while issue persists on PWD
+            dnsrr: "true"               # Temporarily use dnsrr in place of VIP while issue persists on PWD
             faas_nats_address: "nats"
             faas_nats_port: 4222
             direct_functions: "true"    # Functions are invoked directly over the overlay network
