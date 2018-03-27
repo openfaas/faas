@@ -34,7 +34,7 @@ FaaS is a framework for building serverless functions with Docker which has firs
 
 Any container or process in a Docker container can be a serverless function in FaaS. Using the [FaaS CLI](http://github.com/openfaas/faas-cli) you can deploy your functions or quickly create new functions from templates such as Node.js or Python.
 
-## Notable mentions
+## Notable Mentions
 
 ### Closing Keynote at Dockercon 2017
 
