@@ -46,9 +46,13 @@ func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers [
 	}
 }
 
-func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Client, baseURL string, requestURL string, timeout time.Duration) (int, error) {
+func buildUpstreamRequest(r *http.Request, url string) *http.Request {
 
-	upstreamReq, _ := http.NewRequest(r.Method, baseURL+requestURL, nil)
+	if len(r.URL.RawQuery) > 0 {
+		url = fmt.Sprintf("%s?%s", url, r.URL.RawQuery)
+	}
+
+	upstreamReq, _ := http.NewRequest(r.Method, url, nil)
 	copyHeaders(upstreamReq.Header, &r.Header)
 
 	upstreamReq.Header["X-Forwarded-For"] = []string{r.RemoteAddr}
@@ -57,6 +61,12 @@ func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Cl
 		defer r.Body.Close()
 		upstreamReq.Body = r.Body
 	}
+	return upstreamReq
+}
+
+func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Client, baseURL string, requestURL string, timeout time.Duration) (int, error) {
+
+	upstreamReq := buildUpstreamRequest(r, baseURL+requestURL)
 
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
