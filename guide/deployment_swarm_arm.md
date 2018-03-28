@@ -16,13 +16,13 @@ The OpenFaaS containers are built manually on a Raspberry Pi 2 or 3:
 * Gateway
 * Faas-netesd
 
-NATS Streaming is not yet available, but we expect it to be around November 2017.
+NATS Streaming is now provided as a multi-architecture image.
 
 The function watchdog is cross-compiled through our CI process on a 64-bit PC.
 
 **Functions on armhf**
 
-When running OpenFaaS on ARM a key consideration is that we need to use arm base Docker images for our functions. Normally this means just swapping out the `FROM` instruction and the function code can stay the same.
+When running OpenFaaS on ARM a key consideration is that we need to use ARM base Docker images for our functions. This typically means swapping out the `FROM` instruction and the function code can stay the same, but more of the official base images are becoming multi-architecture (e.g. `apline:3.6`) which means that the build stage will pull the appropriate image for the hardware performing the build.
 
 ### Initialize Swarm Mode
 
@@ -53,7 +53,7 @@ Clone OpenFaaS and then checkout the latest stable release:
 ```sh
 $ git clone https://github.com/openfaas/faas && \
   cd faas && \
-  git checkout 0.7.1 && \
+  git checkout 0.7.8 && \
   ./deploy_stack.armhf.sh
 ```
 
@@ -89,13 +89,14 @@ A successful installation should yield a response similar to this:
   \___/| .__/ \___|_| |_|_|  \__,_|\__,_|____/ 
        |_|                                     
 
- Commit: fe0b89352e9c078c951a9f100cd4a7daae1ca15c
- Version: 0.4.18c
+ Commit: 8c7ebc3e7304873ba42b8d8e95d492499935f278
+ Version: 0.6.4
 ```  
 
 ### Using the CLI
 
-As mentioned at the start of the guide, when running OpenFaaS on ARM a key consideration is the use of ARM based images for our functions; this is as simple as swapping the function's Dockerfile.
+As mentioned at the start of the guide, when running OpenFaaS on ARM a key consideration is the use of ARM base images for our functions.  Full templates are provided for ARM supported languages meaning that the ARM template variant needs to be specified when using `new` to create a new function.
+
 We'll adapt the content of an [earlier blog](https://blog.alexellis.io/quickstart-openfaas-cli/) to demonstrate.
 
 Create a work area for your functions:
@@ -107,7 +108,7 @@ $ mkdir -p ~/functions && \
 Next use the CLI to create a new function skeleton:
 
 ```
-$ faas-cli new callme --lang node
+$ faas-cli new callme --lang node-armhf
  Folder: callme created.
    ___                   _____           ____  
   / _ \ _ __   ___ _ __ |  ___|_ _  __ _/ ___| 
@@ -129,17 +130,9 @@ Now we'll have the following structure:
 └── template
 ```
 
-Here is where the important Dockerfile 'patching' takes place.  We need to take the `node-armhf` `Dockerfile` and place it in the `node` template directory.
+At the time of writing the Go, Node and Python templates can all be specified using with an `-armhf` suffix.
 
-```
-cp ./template/node-armhf/Dockerfile ./template/node/
-cp ./template/go-armhf/Dockerfile ./template/go/
-cp ./template/python-armhf/Dockerfile ./template/python/
-```
-
-At the time of writing you can also patch the `go` and `python` templates using the method above.
-
-With the ARM `Dockerfile` in place we are almost ready to build as we normally would.  Before we do, quickly edit `callme.yml` changing the image line to reflect your username and tag in the architecture - `alexellis/callme:armhf`
+Having used the ARM template we are almost ready to build as we normally would.  Before we do, quickly edit `callme.yml` changing the image line to reflect your username and tag in the architecture - `alexellis/callme:armhf`
 
 ```
 $ faas-cli build -f callme.yml 
@@ -149,7 +142,7 @@ $ faas-cli build -f callme.yml
  Building: alexellis/callme:armhf with node template. Please wait..
  docker build -t alexellis/callme:armhf .
  Sending build context to Docker daemon  8.704kB
- Step 1/16 : FROM arm32v6/alpine:3.6
+ Step 1/16 : FROM alpine:3.6
   ---> 16566b7ed19e
 ...
 
@@ -162,12 +155,6 @@ $ faas-cli build -f callme.yml
  Image: alexellis/callme:armhf built.
  [0] < Builder done.
 ```
-
-Let's look at the 1st step in the Docker build:
-
-`FROM arm32v6/alpine:3.6`
-
-The main difference between running on a PC and running on an arm device is that the Dockerfile for our function used an arm base image.
 
 Now use the CLI to push the newly built function to Docker Hub:
 
@@ -215,8 +202,10 @@ $ faas-cli invoke callme
 
 The work for For 64-bit ARM or the `aarch64` architecture is currently in testing/development.
 
-See the equivalent files as above with the arm64 suffix.
+See the equivalent files as above with the arm64 suffix.  
 
 ```
 $ docker stack deploy -c docker-compose.arm64.yml
 ```
+
+Currently the node is supported with a node-arm64 template.
