@@ -49,7 +49,8 @@ func fireRequestWithHeaders(url string, method string, reqBody string, headers m
 
 func TestGet_Rejected(t *testing.T) {
 	var reqBody string
-	_, code, err := fireRequest("http://localhost:8080/function/func_echoit", http.MethodGet, reqBody)
+	unsupportedMethod := http.MethodHead
+	_, code, err := fireRequest("http://localhost:8080/function/func_echoit", unsupportedMethod, reqBody)
 	want := http.StatusMethodNotAllowed
 	if code != want {
 		t.Logf("Failed got: %d, wanted: %d", code, want)
