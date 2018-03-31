@@ -192,20 +192,21 @@ You can also find cool projects or submit your own to the [faas-and-furious orga
 
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| [OpenFaaS Code Eval](https://github.com/testdrivenio/openfass-code-eval) | Michael Herman | github.com | 30-Mar-2018 |
+| [OpenFaaS RESTful API w/ Node and Postgres](https://github.com/testdrivenio/openfass-node-restful-api) | Michael Herman | github.com | 26-Jan-2018 |
 | [OpenFaaS with Ruby/MySQL/Ceph Sample](https://github.com/Lallassu/openfaas-demo) | Magnus Persson | [lallassu/openfaas-demo](https://github.com/Lallassu/openfaas-demo) | 23-Jan-2018
 | [sqlrest: API Proxy to connect to a SQL database from a function](https://github.com/BurtonR/sqlrest) | Burton Rheutan | github.com | 21-Nov-2017
-| [Kafka-connector for OpenFaaS](https://github.com/ucalgary/ftrigger) | King Chung Huang | [ucalgary/ftrigger](https://github.com/ucalgary/ftrigger) | 13-October-2017
-| [Azure Storage and Azure Service Bus Queues Trigger for OpenFaaS on Kubernetes](https://github.com/danigian/Azure-Queues-Trigger-OpenFaaS) | Daniele Antonio Maggio | github.com/danigian/Azure-Queues-Trigger-OpenFaaS | 24-September-2017 |
-| [faas-pipeline](https://github.com/getlazy/faas-pipeline) - OpenFaaS function composition | Ivan Erceg | github.com | 23-September-2017 |
-| [Github - Reverse geocoding](https://github.com/lucj/faas-reverse-geocoding) | Luc Juggery | github.com | 14-September-2017 |
-| [QR Code](https://github.com/faas-and-furious/qrcode) | John McCabe | github.com | 18-August-2017 |
-| [Img2ANSI - GIF/PNG/JPG to ANSI art converter](https://github.com/johnmccabe/faas-img2ansi/) | John McCabe | github.com | 10-August-2017 |
+| [Kafka-connector for OpenFaaS](https://github.com/ucalgary/ftrigger) | King Chung Huang | [ucalgary/ftrigger](https://github.com/ucalgary/ftrigger) | 13-Oct-2017
+| [Azure Storage and Azure Service Bus Queues Trigger for OpenFaaS on Kubernetes](https://github.com/danigian/Azure-Queues-Trigger-OpenFaaS) | Daniele Antonio Maggio | github.com/danigian/Azure-Queues-Trigger-OpenFaaS | 24-Sep-2017 |
+| [faas-pipeline](https://github.com/getlazy/faas-pipeline) - OpenFaaS function composition | Ivan Erceg | github.com | 23-Sep-2017 |
+| [Github - Reverse geocoding](https://github.com/lucj/faas-reverse-geocoding) | Luc Juggery | github.com | 14-Sep-2017 |
+| [QR Code](https://github.com/faas-and-furious/qrcode) | John McCabe | github.com | 18-Aug-2017 |
+| [Img2ANSI - GIF/PNG/JPG to ANSI art converter](https://github.com/johnmccabe/faas-img2ansi/) | John McCabe | github.com | 10-Aug-2017 |
 | [FaaS-netes - Kubernetes backend for FaaS](https://github.com/openfaas/faas-netes) | Alex Ellis | github.com | 25-Jul-2017 |
 | [Twitter, Elastic Search and Alexa stack of functions](https://github.com/alexellis/journey-expert/tree/master/tweetstash) | Alex Ellis | github.com | 24-Apr-2017 |
+| [Github - URL Shortener](https://github.com/developius/faas-node-url-shortener) | Finnian Anderson | [developius/faas-node-url-shortener](https://github.com/developius/faas-node-url-shortener) | 19-Apr-2017 |
+| [Github - fibonacci numbers up to N](https://github.com/developius/faas-python-fib/) | Finnian Anderson | [developius/faas-python-fib/](https://github.com/developius/faas-python-fib/) | 19-Apr-2017 |
+| [Github - ascii art generator](https://github.com/developius/faas-node-ascii) | Finnian Anderson | [developius/faas-node-ascii](https://github.com/developius/faas-node-ascii) | 17-Apr-2017 |
 | [Dockercon FaaS demos including Alexa/Github](https://github.com/alexellis/faas-dockercon) | Alex Ellis | github.com | 14-Apr-2017 |
 | [Docker Birthday voting app ported to FaaS](https://github.com/alexellis/faas-example-voting-app) | Alex Ellis | github.com | 14-Apr-2017 |
-| [Github-Airtable Bug Tracker integration](https://github.com/aafrey/faas-demo) | Austin Frey | github.com/aafrey/faas-demo | 10-April-2017 |
-| [Github - ascii art generator](https://github.com/developius/faas-node-ascii) | Finnian Anderson | [developius/faas-node-ascii](https://github.com/developius/faas-node-ascii) | 17-April-2017 |
-| [Github - URL Shortener](https://github.com/developius/faas-node-url-shortener) | Finnian Anderson | [developius/faas-node-url-shortener](https://github.com/developius/faas-node-url-shortener) | 19-April-2017 |
-| [Github - fibonacci numbers up to N](https://github.com/developius/faas-python-fib/) | Finnian Anderson | [developius/faas-python-fib/](https://github.com/developius/faas-python-fib/) | 19-April-2017 |
-| [OpenFaaS RESTful API w/ Node and Postgres](https://github.com/testdrivenio/openfass-node-restful-api) | Michael Herman | github.com | 26-Jan-2018 |
+| [Github-Airtable Bug Tracker integration](https://github.com/aafrey/faas-demo) | Austin Frey | github.com/aafrey/faas-demo | 10-Apr-2017 |
