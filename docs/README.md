@@ -1,7 +1,4 @@
-## Functions as a Service (OpenFaaS)
-
-[![Build
-Status](https://travis-ci.org/openfaas/faas.svg?branch=master)](https://travis-ci.org/openfaas/faas)
+## OpenFaaS - Serverless Functions Made Simple for Docker & Kubernetes 
 
 ![https://blog.alexellis.io/content/images/2017/08/faas_side.png](https://blog.alexellis.io/content/images/2017/08/faas_side.png)
 
