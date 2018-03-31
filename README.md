@@ -91,21 +91,27 @@ Other [Sample functions](https://github.com/openfaas/faas/tree/master/sample-fun
 
 ## Documentation
 
-[View our guides](https://github.com/openfaas/faas/tree/master/guide) for documentation, deployment guides and tutorials.
+We are building a new documentation site at [docs.openfaas.com](http://docs.openfaas.com).
+
+For all other guides, tutorials, trouble-shooting and blog posts head over to our [guides page](https://github.com/openfaas/faas/tree/master/guide) on GitHub.
 
 ## Get started with OpenFaaS
 
-### TestDrive
+### Hands-on labs (detailed getting started)
+
+You can learn how to build functions with OpenFaaS using our hands-on labs in the [OpenFaaS workshop](http://github.com/openfaas/workshop).
+
+### TestDrive (classic getting started)
+
+**Kubernetes**
+
+OpenFaaS is Kubernetes-native - you can follow the [deployment guide here](http://docs.openfaas.com/deployment/kubernetes/).
 
 **Docker Swarm**
 
 The deployment guide for Docker Swarm contains a simple one-line command to get you up and running in around 60 seconds. It also includes a set of [sample functions](https://github.com/openfaas/faas/tree/master/sample-functions) which you can use with the TestDrive instructions below.
 
-[Deployment guide for Docker Swarm](https://github.com/openfaas/faas/blob/master/guide/deployment_swarm.md)
-
-**Kubernetes**
-
-OpenFaaS is Kubernetes-native - you can follow the [deployment guide here](https://github.com/openfaas/faas/blob/master/guide/deployment_k8s.md).
+[Deployment guide for Docker Swarm](http://docs.openfaas.com/deployment/docker-swarm/)
 
 The new login feature breaks the one-click deployment to PWD.
 **Docker Playground**
@@ -113,7 +119,6 @@ The new login feature breaks the one-click deployment to PWD.
 You can quickly start OpenFaaS on Docker Swarm online using the community-run Docker playground: play-with-docker.com (PWD) by clicking the button below:
 
 [![Try in PWD](https://cdn.rawgit.com/play-with-docker/stacks/cff22438/assets/images/button.png)](http://play-with-docker.com?stack=https://raw.githubusercontent.com/openfaas/faas/master/docker-compose.yml&stack_name=func)
-
 
 #### Begin the TestDrive
 
