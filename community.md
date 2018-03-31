@@ -52,6 +52,7 @@ Key:
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [OpenFaaS @ Serverless CPH](https://serverlesscph.dk) | John Mccabe | Copenhagen, DK | 16-May-2018 |
 | Serverless OpenFaaS and Python Workshop @ Agile Peterborough        | Alex Ellis  | Peterborough, UK | 12-May-2018 |
+| [Going Serverless with OpenFaaS, Kubernetes, and Python @ PyCon](https://us.pycon.org/2018/schedule/presentation/40/) | [Michael Herman](https://twitter.com/mikeherman) |  Cleveland, OH | 9-May-2018 |
 | [OpenFaaS talk and workshop @ Cisco DevNet Create](https://devnetcreate.io/2018/pages/speaker/speaker.html#Alex-Ellis) | Alex Ellis | Mountain View, CA | 10/11-Apr-2018 |
 | [OpenFaaS : a serverless framework on top of Docker and Kubernetes @ Devoxx France](https://www.devoxx.fr/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 18-Apr-2018 |
 | [Deep Dive: Serverless Computing mit OpenFaaS - Magdeburger Developer Days](https://www.md-devdays.de/Act?id=34/) | Frank Pommerening | Magdeburg Germany | 10-April-2018 |
