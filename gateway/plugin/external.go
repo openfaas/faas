@@ -85,48 +85,22 @@ func (s ExternalServiceQuery) GetReplicas(serviceName string) (handlers.ServiceQ
 		}
 	}
 
-	maxReplicas := uint64(handlers.DefaultMaxReplicas)
 	minReplicas := uint64(handlers.DefaultMinReplicas)
+	maxReplicas := uint64(handlers.DefaultMaxReplicas)
 	scalingFactor := uint64(handlers.DefaultScalingFactor)
 	availableReplicas := function.AvailableReplicas
 
 	if function.Labels != nil {
 		labels := *function.Labels
-		minScale := labels[handlers.MinScaleLabel]
-		maxScale := labels[handlers.MaxScaleLabel]
-		scaleFactor := labels[handlers.ScalingFactorLabel]
 
-		if len(minScale) > 0 {
-			labelValue, err := strconv.Atoi(minScale)
-			if err != nil {
-				log.Printf("Bad replica count: %s, should be uint", minScale)
-			} else {
-				minReplicas = uint64(labelValue)
-			}
-		}
+		minReplicas = extractLabelValue(labels[handlers.MinScaleLabel], minReplicas)
+		maxReplicas = extractLabelValue(labels[handlers.MaxScaleLabel], maxReplicas)
+		temp := extractLabelValue(labels[handlers.ScalingFactorLabel], scalingFactor)
 
-		if len(maxScale) > 0 {
-			labelValue, err := strconv.Atoi(maxScale)
-			if err != nil {
-				log.Printf("Bad replica count: %s, should be uint", maxScale)
-			} else {
-				maxReplicas = uint64(labelValue)
-			}
-		}
-
-		if len(scaleFactor) > 0 {
-			labelValue, err := strconv.Atoi(scaleFactor)
-			if err != nil {
-				log.Printf("Bad Scaling Factor: %s, should be uint", scaleFactor)
-			} else {
-				var temp = uint64(labelValue)
-
-				if temp >= 0 && temp <= 100 {
-					scalingFactor = temp
-				} else {
-					log.Printf("Bad Scaling Factor: %s, is in range [0 - 100]", temp)
-				}
-			}
+		if temp >= 0 && temp <= 100 {
+			scalingFactor = temp
+		} else {
+			log.Printf("Bad Scaling Factor: %d, is in range [0 - 100]", temp)
 		}
 	}
 
@@ -171,4 +145,21 @@ func (s ExternalServiceQuery) SetReplicas(serviceName string, count uint64) erro
 	}
 
 	return err
+}
+
+// This methods tries to parse the provided raw label value and if it fails
+// it will return the provided fallback value and log and message
+func extractLabelValue(rawLabelValue string, fallback uint64 ) uint64{
+	if len(rawLabelValue) <= 0 {
+		return fallback
+	}
+
+	value, err := strconv.Atoi(rawLabelValue)
+
+	if err != nil {
+		log.Printf("Provided label value %s should be of type uint", rawLabelValue)
+		return fallback
+	}
+
+	return uint64(value)
 }
