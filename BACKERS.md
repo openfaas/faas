@@ -14,36 +14,22 @@ Become the first sponsor and have your logo on the [OpenFaaS homepage](https://w
 
 Listed by reward, followed by miscellaneous amounts. Names are (pending) until first pledge is taken by Patreon, this is at the start of each month.
 
-**Early Backers (reward)**
-
 * José Roberto Almaráz Da Cunha Júnior
 * Wesley Kennedy
 * Owen Dall Sotomayor
 * Theo Pack
-
-**#FaaSFriday**
-
-Toby Boudreaux
-
-**#TeamServerless backers**
-
-Pav Jimanov
-
-**OpenFaaS backers (reward)**
-
+* Toby Boudreaux
+* Pav Jimanov
 * Eric Stoekl
-* Nic Jackson
 * Alex DeBrie
 * Johnny Mkhael
-* Finnian Anderson
-* Thom Toogood
 * Rafael Barbosa
 * Weston Steimel
-* Ram	Gopinathan
 * Michael	Herman
 * Cody De Arkland
 * Richard Petersen-Hall
+* Sivaramakrishnan Malikkal
+* Lewis Denham-Parry
+* Markus Fischbacher
 
-**OpenFaaS patrons (reward)**
-
-Miscellaneous amounts are not shown.
+Miscellaneous rewards/amounts are not shown.
