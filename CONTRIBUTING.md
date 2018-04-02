@@ -59,15 +59,15 @@ Please read this whole guide and make sure you agree to our DCO agreement (inclu
 
 ### Commit messages
 
-The first line of the commit message is the *subject*, this should be followed by a blank line and then a message describing the intent and purpose of the commit.
+The first line of the commit message is the *subject*, this should be followed by a blank line and then a message describing the intent and purpose of the commit. These guidelines are based upon a [post by Chris Beams](https://chris.beams.io/posts/git-commit/).
 
 * When you run `git commit` make sure you sign-off the commit by typing `git commit -s`.
-
 * The commit subject should start with an uppercase letter
+* The commit subject should not exceed 72 characters in length
 
-* The commit subject should not exceed 50 characters in length
-
-* When giving a commit body, leave a blank line then make you wrap all text to 72 characters
+When giving a commit body:
+* Leave a blank line after the subject
+* Make sure all lines are wrapped to 72 characters
 
 Here's an example:
 
