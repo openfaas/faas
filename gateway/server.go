@@ -115,8 +115,6 @@ func main() {
 
 	r.PathPrefix("/ui/").Handler(http.StripPrefix("/ui", fsCORS)).Methods(http.MethodGet)
 
-	r.HandleFunc("/", faasHandlers.RoutelessProxy).Methods(http.MethodPost)
-
 	metricsHandler := metrics.PrometheusHandler()
 	r.Handle("/metrics", metricsHandler)
 	r.Handle("/", http.RedirectHandler("/ui/", http.StatusMovedPermanently)).Methods(http.MethodGet)
