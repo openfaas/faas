@@ -150,7 +150,8 @@ If you'd like to find the functions I used in the demos head over to the [faas-d
 
 **Background story**
 
-This is my original blog post on FaaS from January: [Functions as a Service blog post](http://blog.alexellis.io/functions-as-a-service/)
+* [Introducing OpenFaaS (Functions as a Service)](https://blog.alexellis.io/introducing-functions-as-a-service/) -  August 2017
+* [Functions as a Service (FaaS)](http://blog.alexellis.io/functions-as-a-service/) - January 2017
 
 ### Community
 
@@ -158,34 +159,24 @@ Have you written a blog about OpenFaaS? Send a Pull Request to the community pag
 
 * [Read blogs/articles and find events about OpenFaaS](https://github.com/openfaas/faas/blob/master/community.md)
 
-If you'd like to join OpenFaaS community Slack channel to chat with contributors or get some help - then send a Tweet to [@alexellisuk](https://twitter.com/alexellisuk/) or email alex@openfaas.com.
+If you'd like to join OpenFaaS community Slack channel to chat with contributors or get some help then check out [this page on community](https://docs.openfaas.com/community).
 
 ### Roadmap and contributing
 
 OpenFaaS is written in Golang and is MIT licensed - contributions are welcomed whether that means providing feedback, testing existing and new feature or hacking on the source.
 
-To get started you can read the [roadmap](https://github.com/openfaas/faas/blob/master/ROADMAP.md) and [contribution guide](https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md) or:
+#### How do I become a contributor?
 
-* [Browse FaaS issues on Github](https://github.com/openfaas/faas/issues).
-* [Browse FaaS-CLI issues on Github](https://github.com/openfaas/faas-cli/issues).
+Please see the guide on [community & contributing](https://docs.openfaas.com/community/#contribute)
 
-Highlights:
+#### Roadmap
 
-* New: Kubernetes support via [FaaS-netes](https://github.com/openfaas/faas-netes) plugin
-* New: FaaS CLI and easy install via `curl` and `brew`
-* New: Windows function support
-* New: Asynchronous/long-running OpenFaaS functions via [NATS Streaming](https://nats.io/documentation/streaming/nats-streaming-intro/) - [Follow this guide](https://github.com/openfaas/faas/blob/master/guide/asynchronous.md)
-
-### How do I become a contributor?
-
-Anyone is invited to contribute to the project in-line with the [contribution guide](https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md) - you can also read the guide for ideas on how to get involved. We invite new contributors to join our Slack community. We would also ask you to propose any changes or contributions ahead of time, especially when there is no issue or proposal already tracking it.
+The roadmap is represented in [GitHub issues](https://github.com/openfaas/faas/issues) and a Trello board. There is also a historical ROADMAP file in the [main faas repository](https://github.com/openfaas/faas/blob/master/ROADMAP.md).
 
 ### Other
 
 Example of a Grafana dashboards linked to OpenFaaS showing auto-scaling live in action: [here](https://grafana.com/dashboards/3526)
 
-
 ![](https://pbs.twimg.com/media/C9caE6CXUAAX_64.jpg:large)
-
 
 An alternative community dashboard is [available here](https://grafana.com/dashboards/3434)
