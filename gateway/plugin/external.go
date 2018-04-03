@@ -95,12 +95,12 @@ func (s ExternalServiceQuery) GetReplicas(serviceName string) (handlers.ServiceQ
 
 		minReplicas = extractLabelValue(labels[handlers.MinScaleLabel], minReplicas)
 		maxReplicas = extractLabelValue(labels[handlers.MaxScaleLabel], maxReplicas)
-		temp := extractLabelValue(labels[handlers.ScalingFactorLabel], scalingFactor)
+		extractedScalingFactor := extractLabelValue(labels[handlers.ScalingFactorLabel], scalingFactor)
 
-		if temp >= 0 && temp <= 100 {
-			scalingFactor = temp
+		if extractedScalingFactor >= 0 && extractedScalingFactor <= 100 {
+			scalingFactor = extractedScalingFactor
 		} else {
-			log.Printf("Bad Scaling Factor: %d, is in range [0 - 100]", temp)
+			log.Printf("Bad Scaling Factor: %d, is not in range of [0 - 100]. Will fallback to %d", extractedScalingFactor, scalingFactor)
 		}
 	}
 
@@ -147,8 +147,8 @@ func (s ExternalServiceQuery) SetReplicas(serviceName string, count uint64) erro
 	return err
 }
 
-// This methods tries to parse the provided raw label value and if it fails
-// it will return the provided fallback value and log and message
+// extractLabelValue will parse the provided raw label value and if it fails
+// it will return the provided fallback value and log an message
 func extractLabelValue(rawLabelValue string, fallback uint64 ) uint64{
 	if len(rawLabelValue) <= 0 {
 		return fallback
