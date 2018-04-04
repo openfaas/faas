@@ -6,7 +6,10 @@ var app = angular.module('faasGateway', ['ngMaterial', 'faasGateway.funcStore'])
 
 app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$filter', '$mdDialog', '$mdToast', '$mdSidenav',
     function($scope, $log, $http, $location, $interval, $filter, $mdDialog, $mdToast, $mdSidenav) {
-        var newFuncTabIdx = 0;
+        var FUNCSTORE_DEPLOY_TAB_INDEX = 0;
+        var MANUAL_DEPLOY_TAB_INDEX = 1;
+
+        var newFuncTabIdx = FUNCSTORE_DEPLOY_TAB_INDEX;
         $scope.functions = [];
         $scope.invocationInProgress = false;
         $scope.invocationRequest = "";
@@ -274,6 +277,8 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
                         $scope.closeDialog();
                         showPostInvokedToast("Function created");
                     }).catch(function(error1) {
+                        showPostInvokedToast("Error");
+                        $scope.selectedTabIdx = MANUAL_DEPLOY_TAB_INDEX;
                         $scope.validationError = error1.data;
                     });
             };
