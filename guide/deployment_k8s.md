@@ -113,7 +113,7 @@ If you like you can also run the script via a non-root user. Then the faas-cli b
 $ git clone https://github.com/openfaas/faas-cli
 ```
 
-Edit samples.yml and change your gateway URL from `localhost:8080` to `kubernetes-node-ip:31112` or pass the `--gateway` / `-g` flag to commands.
+Edit stack.yml and change your gateway URL from `localhost:8080` to `kubernetes-node-ip:31112` or pass the `--gateway` / `-g` flag to commands.
 
 i.e.
 
@@ -132,7 +132,7 @@ $ faas-cli deploy -f stack.yml
 > The `faas-cli` also supports an override of `--gateway http://...` for example:
 
 ```
-$ faas-cli deploy -f samples.yml --gateway http://127.0.0.1:31112
+$ faas-cli deploy -f stack.yml --gateway http://127.0.0.1:31112
 ```
 
 List the functions:
