@@ -1,13 +1,11 @@
 // Copyright (c) Alex Ellis 2017. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-package tests
+package types
 
 import (
 	"testing"
 	"time"
-
-	"github.com/openfaas/faas/gateway/types"
 )
 
 type EnvBucket struct {
@@ -30,7 +28,7 @@ func (e EnvBucket) Setenv(key string, value string) {
 
 func TestRead_UseExternalProvider_Defaults(t *testing.T) {
 	defaults := NewEnvBucket()
-	readConfig := types.ReadConfig{}
+	readConfig := ReadConfig{}
 
 	config := readConfig.Read(defaults)
 
@@ -52,7 +50,7 @@ func TestRead_UseExternalProvider_Defaults(t *testing.T) {
 
 func TestRead_DirectFunctionsOverride(t *testing.T) {
 	defaults := NewEnvBucket()
-	readConfig := types.ReadConfig{}
+	readConfig := ReadConfig{}
 	defaults.Setenv("direct_functions", "true")
 	wantSuffix := "openfaas-fn.cluster.local.svc."
 	defaults.Setenv("direct_functions_suffix", wantSuffix)
@@ -72,7 +70,7 @@ func TestRead_DirectFunctionsOverride(t *testing.T) {
 
 func TestRead_EmptyTimeoutConfig(t *testing.T) {
 	defaults := NewEnvBucket()
-	readConfig := types.ReadConfig{}
+	readConfig := ReadConfig{}
 
 	config := readConfig.Read(defaults)
 
@@ -91,7 +89,7 @@ func TestRead_ReadAndWriteTimeoutConfig(t *testing.T) {
 	defaults.Setenv("read_timeout", "10")
 	defaults.Setenv("write_timeout", "60")
 
-	readConfig := types.ReadConfig{}
+	readConfig := ReadConfig{}
 	config := readConfig.Read(defaults)
 
 	if (config.ReadTimeout) != time.Duration(10)*time.Second {
@@ -109,7 +107,7 @@ func TestRead_ReadAndWriteTimeoutDurationConfig(t *testing.T) {
 	defaults.Setenv("read_timeout", "20s")
 	defaults.Setenv("write_timeout", "1m30s")
 
-	readConfig := types.ReadConfig{}
+	readConfig := ReadConfig{}
 	config := readConfig.Read(defaults)
 
 	if (config.ReadTimeout) != time.Duration(20)*time.Second {
@@ -124,7 +122,7 @@ func TestRead_ReadAndWriteTimeoutDurationConfig(t *testing.T) {
 
 func TestRead_UseNATSDefaultsToOff(t *testing.T) {
 	defaults := NewEnvBucket()
-	readConfig := types.ReadConfig{}
+	readConfig := ReadConfig{}
 
 	config := readConfig.Read(defaults)
 
@@ -138,7 +136,7 @@ func TestRead_UseNATS(t *testing.T) {
 	defaults := NewEnvBucket()
 	defaults.Setenv("faas_nats_address", "nats")
 	defaults.Setenv("faas_nats_port", "6222")
-	readConfig := types.ReadConfig{}
+	readConfig := ReadConfig{}
 
 	config := readConfig.Read(defaults)
 
@@ -153,7 +151,7 @@ func TestRead_UseNATSBadPort(t *testing.T) {
 	defaults := NewEnvBucket()
 	defaults.Setenv("faas_nats_address", "nats")
 	defaults.Setenv("faas_nats_port", "6fff")
-	readConfig := types.ReadConfig{}
+	readConfig := ReadConfig{}
 
 	config := readConfig.Read(defaults)
 
@@ -167,7 +165,7 @@ func TestRead_PrometheusNonDefaults(t *testing.T) {
 	defaults := NewEnvBucket()
 	defaults.Setenv("faas_prometheus_host", "prom1")
 	defaults.Setenv("faas_prometheus_port", "9999")
-	readConfig := types.ReadConfig{}
+	readConfig := ReadConfig{}
 
 	config := readConfig.Read(defaults)
 
@@ -185,7 +183,7 @@ func TestRead_PrometheusNonDefaults(t *testing.T) {
 func TestRead_PrometheusDefaults(t *testing.T) {
 	defaults := NewEnvBucket()
 
-	readConfig := types.ReadConfig{}
+	readConfig := ReadConfig{}
 
 	config := readConfig.Read(defaults)
 

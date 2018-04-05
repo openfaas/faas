@@ -1,11 +1,9 @@
-package tests
+package handlers
 
 import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"github.com/openfaas/faas/gateway/handlers"
 )
 
 type customHandler struct {
@@ -19,7 +17,7 @@ func Test_HeadersAdded(t *testing.T) {
 	handler := customHandler{}
 	host := "store.openfaas.com"
 
-	decorated := handlers.DecorateWithCORS(handler, host)
+	decorated := DecorateWithCORS(handler, host)
 	request, _ := http.NewRequest(http.MethodGet, "/", nil)
 	decorated.ServeHTTP(rr, request)
 
