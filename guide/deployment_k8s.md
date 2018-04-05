@@ -126,7 +126,7 @@ provider:
 Now deploy the samples:
 
 ```
-$ faas-cli deploy -f samples.yml
+$ faas-cli deploy -f stack.yml
 ```
 
 > The `faas-cli` also supports an override of `--gateway http://...` for example:
@@ -138,7 +138,7 @@ $ faas-cli deploy -f samples.yml --gateway http://127.0.0.1:31112
 List the functions:
 
 ```
-$ faas-cli list -f samples.yml
+$ faas-cli list -f stack.yml
 
 or
 
