@@ -1,14 +1,12 @@
-package tests
+package requests
 
 import (
 	"net/http"
 	"testing"
-
-	"github.com/openfaas/faas/gateway/requests"
 )
 
 func TestFormattingOfURLWithPath_NoQuery(t *testing.T) {
-	req := requests.ForwardRequest{
+	req := ForwardRequest{
 		RawQuery: "",
 		RawPath:  "/encode/utf8/",
 		Method:   http.MethodPost,
@@ -23,7 +21,7 @@ func TestFormattingOfURLWithPath_NoQuery(t *testing.T) {
 }
 
 func TestFormattingOfURLAtRoot_NoQuery(t *testing.T) {
-	req := requests.ForwardRequest{
+	req := ForwardRequest{
 		RawQuery: "",
 		RawPath:  "/",
 		Method:   http.MethodPost,
@@ -45,7 +43,7 @@ func TestFormattingOfURLAtRoot_NoQuery(t *testing.T) {
 // }
 
 func TestUrlForFlask(t *testing.T) {
-	req := requests.ForwardRequest{
+	req := ForwardRequest{
 		RawQuery: "query=uptime",
 		RawPath:  "/function/flask",
 		Method:   http.MethodPost,
@@ -60,7 +58,7 @@ func TestUrlForFlask(t *testing.T) {
 }
 
 func TestFormattingOfURL_OneQuery(t *testing.T) {
-	req := requests.ForwardRequest{
+	req := ForwardRequest{
 		RawQuery: "name=alex",
 		RawPath:  "/",
 		Method:   http.MethodPost,

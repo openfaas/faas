@@ -1,4 +1,4 @@
-package tests
+package metrics
 
 import (
 	"encoding/json"
@@ -7,16 +7,15 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/openfaas/faas/gateway/metrics"
 	"github.com/openfaas/faas/gateway/requests"
 )
 
 type FakePrometheusQueryFetcher struct {
 }
 
-func (q FakePrometheusQueryFetcher) Fetch(query string) (*metrics.VectorQueryResponse, error) {
+func (q FakePrometheusQueryFetcher) Fetch(query string) (*VectorQueryResponse, error) {
 	val := []byte(`{"status":"success","data":{"resultType":"vector","result":[{"metric":{"code":"200","function_name":"func_echoit"},"value":[1509267827.752,"1"]}]}}`)
-	queryRes := metrics.VectorQueryResponse{}
+	queryRes := VectorQueryResponse{}
 	err := json.Unmarshal(val, &queryRes)
 	return &queryRes, err
 }
@@ -29,7 +28,7 @@ func Test_PrometheusMetrics_MixedInto_Services(t *testing.T) {
 	functionsHandler := makeFunctionsHandler()
 	fakeQuery := makeFakePrometheusQueryFetcher()
 
-	handler := metrics.AddMetricsHandler(functionsHandler, fakeQuery)
+	handler := AddMetricsHandler(functionsHandler, fakeQuery)
 
 	rr := httptest.NewRecorder()
 	request, _ := http.NewRequest(http.MethodGet, "/system/functions", nil)
