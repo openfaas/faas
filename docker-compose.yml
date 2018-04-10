@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: functions/gateway:0.7.8
+        image: functions/gateway:0.7.9
         networks:
             - functions
         environment:
