@@ -1,5 +1,13 @@
 # OpenFaaS - TestDrive
 
+## TestDrive (v2)
+
+The TestDrive has been replaced by the OpenFaaS workshop which is a set of self-paced labs developed by the community to teach you the basics of building Serverless Functions with OpenFaaS.
+
+Please start [Lab 1 here](https://github.com/openfaas/workshop)
+
+## TestDrive (v1)
+
 OpenFaaS (or Functions as a Service) is a framework for building serverless functions on Docker Swarm and Kubernetes with first class metrics. Any UNIX process can be packaged as a function in FaaS enabling you to consume a range of web events without repetitive boiler-plate coding.
 
 > Please support the project and put a **Star** on the repo.
