@@ -17,7 +17,7 @@ func TestDisabledScale(t *testing.T) {
 	}
 }
 
-func TestParameterEdge(t *testing.T){
+func TestParameterEdge(t *testing.T) {
 	minReplicas := uint64(0)
 	scalingFactor := uint64(0)
 	newReplicas := CalculateReplicas("firing", DefaultMinReplicas, DefaultMaxReplicas, minReplicas, scalingFactor)
@@ -27,7 +27,7 @@ func TestParameterEdge(t *testing.T){
 	}
 }
 
-func TestMaxScale(t *testing.T){
+func TestMaxScale(t *testing.T) {
 	minReplicas := uint64(1)
 	scalingFactor := uint64(100)
 	newReplicas := CalculateReplicas("firing", DefaultMinReplicas, DefaultMaxReplicas, minReplicas, scalingFactor)

@@ -11,6 +11,6 @@ type ServiceQueryResponse struct {
 	Replicas          uint64
 	MaxReplicas       uint64
 	MinReplicas       uint64
-	ScalingFactor 	  uint64
+	ScalingFactor     uint64
 	AvailableReplicas uint64
 }

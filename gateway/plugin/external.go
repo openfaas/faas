@@ -149,7 +149,7 @@ func (s ExternalServiceQuery) SetReplicas(serviceName string, count uint64) erro
 
 // extractLabelValue will parse the provided raw label value and if it fails
 // it will return the provided fallback value and log an message
-func extractLabelValue(rawLabelValue string, fallback uint64 ) uint64{
+func extractLabelValue(rawLabelValue string, fallback uint64) uint64 {
 	if len(rawLabelValue) <= 0 {
 		return fallback
 	}
