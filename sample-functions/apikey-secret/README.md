@@ -2,7 +2,7 @@
 
 This function returns access denied, or unlocked depending on whether your header for X-Api-Key matches a secret in the cluster called `secret_api_key`.
 
-See the [secure secret management guide](../guide/secure_secret_management.md) for more information on secrets.
+See the [secure secret management guide](../../guide/secure_secret_management.md) for more information on secrets.
 
 ## Trying the sample:
 
@@ -11,7 +11,7 @@ See the [secure secret management guide](../guide/secure_secret_management.md) f
 $ docker secret remove secret_api_key  # make sure we delete any existing secret
 
 # Create a secret with Swarm
-$ echo "secret_value_goes_here" | docker secret create secret_api_key
+$ echo -n "secret_value_goes_here" | docker secret create secret_api_key -
 
 # Deploy this sample with Docker Swarm and attach the secret to it
 
