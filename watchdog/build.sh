@@ -7,11 +7,17 @@ if [ "$arch" = "armv7l" ] ; then
     exit 1
 fi
 
+cd ..
+GIT_COMMIT=$(git rev-list -1 HEAD)
+VERSION=$(git describe --all --exact-match `git rev-parse HEAD` | grep tags | sed 's/tags\///')
+cd watchdog
+
 if [ ! $http_proxy == "" ] 
 then
-    docker build --no-cache --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy -t functions/watchdog:build .
+    docker build --no-cache --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy \
+        --build-arg GIT_COMMIT=$GIT_COMMIT --build-arg VERSION=$VERSION -t functions/watchdog:build .
 else
-    docker build -t functions/watchdog:build .
+    docker build --no-cache --build-arg VERSION=$VERSION --build-arg GIT_COMMIT=$GIT_COMMIT -t functions/watchdog:build .
 fi
 
 docker create --name buildoutput functions/watchdog:build echo

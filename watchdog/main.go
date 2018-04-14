@@ -6,6 +6,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -309,7 +310,12 @@ func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.
 	}
 }
 
+var (
+	version = flag.Bool("version", false, "Print the version and Git SHA")
+)
+
 func main() {
+	flag.Parse()
 	acceptingConnections = false
 
 	osEnv := types.OsEnv{}
@@ -318,6 +324,12 @@ func main() {
 
 	if len(config.faasProcess) == 0 {
 		log.Panicln("Provide a valid process via fprocess environmental variable.")
+		return
+	}
+
+	if *version == true {
+		fmt.Printf("Commit: %v\n", GitCommit)
+		fmt.Printf("Version: %v\n", BuildVersion())
 		return
 	}
 
