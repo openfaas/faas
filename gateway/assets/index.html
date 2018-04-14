@@ -11,9 +11,16 @@
     <link rel="manifest" href="manifest.json">
     <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
     <meta name="theme-color" content="#ffffff">
+    
+    <noscript><style>
+        .jsonly {
+            display: none;
+        }
+    </style></noscript>
 </head>
 
 <body ng-controller="home">
+    <div class="jsonly">
     <div layout="column" ng-cloak>
 
         <md-toolbar class="md-theme-indigo" hide-gt-sm>
@@ -187,6 +194,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>
     <script src="script/funcstore.js"></script>
     <script src="script/bootstrap.js"></script>
+    </div>
+    
+    <noscript>
+        <h2>You need javascript to view this page</h2>
+    </noscript>
 </body>
 
 </html>
