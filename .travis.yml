@@ -22,7 +22,7 @@ script:
 after_success:
     - if [ ! -z "$TRAVIS_TAG" ] ; then 
         docker tag $DOCKER_NS/gateway:latest-dev $DOCKER_NS/gateway:$TRAVIS_TAG;
-        docker login -u=$DOCKER_USERNAME -p=$DOCKER_PASSWORD;
+        echo $DOCKER_PASSWORD | docker login -u=$DOCKER_USERNAME --password-stdin;
         docker push $DOCKER_NS/gateway:$TRAVIS_TAG;
         fi
 
