@@ -68,6 +68,7 @@ ENV fprocess="wc"
 CMD ["fwatchdog"]
 ```
 
+
 Update your Docker stack with this definition:
 
 ```
