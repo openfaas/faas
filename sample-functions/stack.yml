@@ -10,6 +10,11 @@ functions:
     environment:
       fprocess: "cat"
 
+  pwgen:
+    lang: dockerfile
+    handler: ./pwgen
+    image: functions/pwgen-sample:latest
+
   apikey-secret:
     lang: go
     handler: ./apikey-secret
