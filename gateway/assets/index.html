@@ -16,7 +16,7 @@
 <body ng-controller="home">
     <div layout="column" ng-cloak>
 
-        <md-toolbar class="md-theme-indigo" hide-gt-sm>
+        <md-toolbar class="md-theme-indigo" hide-gt-sm ng-if="functions.length !== 0">
             <div class="md-toolbar-tools">
                 <md-button ng-click="toggleSideNav()" class="md-icon-button" aria-label="Menu">
                     <md-icon md-svg-icon="img/icons/ic_menu_white.svg"></md-icon>
@@ -24,7 +24,7 @@
             </div>
         </md-toolbar>
         <section id="popupContainer" layout="row" flex>
-            <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-whiteframe="4" layout="column">
+            <md-sidenav class="md-sidenav-left" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-whiteframe="4" ng-if="functions.length !== 0">
 
                 <md-toolbar class="md-theme-indigo">
                     <div class="md-toolbar-tools">
@@ -59,22 +59,29 @@
                 </md-content>
             </md-sidenav>
 
-            <md-content flex layout-padding ng-if="!selectedFunction" ng-show="functions.length">
+            <md-content flex layout-padding ng-if="!selectedFunction" ng-show="functions.length" style="background-color: rgb(243, 244, 250)">
                 <div layout="column" layout-align="top center">
                     <p>Select a function.</p>
                 </div>
                 <div flex></div>
             </md-content>
 
-            <md-content flex layout-padding ng-if="!functions.length">
-                <div layout="column" layout-align="top center">
-                    <p>No functions found in FaaS.</p>
-                </div>
-                <div flex></div>
-            </md-content>
+            <div class="blankslate" layout="column" layout-align="center center" ng-if="!selectedFunction">
+              <p ng-if="functions.length === 0">
+                You have no functions in OpenFaaS.<br>
+                Start by deploying a new function.
+              </p>
+              <p ng-if="functions.length !== 0">
+                Select a function or deploy a new one.
+              </p>
+              <md-button class="md-primary md-raised" ng-click="newFunction()">
+                Deploy new function
+              </md-button>
+              <p>Or use <strong>faas-cli</strong> to build and deploy functions:</p>
+              <pre>$ curl -sSL https://cli.openfaas.com | sudo sh</pre>
+            </div>
 
-            <md-content flex layout="column" ng-repeat="function in functions" ng-if="function.name == selectedFunction.name">
-
+            <md-content flex layout="column" ng-repeat="function in functions" ng-show="function.name == selectedFunction.name">
                 <md-card md-theme="default" md-theme-watch>
                     <md-card-title>
                         <md-card-title-text>
@@ -144,7 +151,7 @@
                                     <md-radio-group ng-model="invocation.contentType" layout="row" layout-align="start center">
                                         <md-radio-button value="text" class="md-primary"> Text </md-radio-button>
                                         <md-radio-button value="json"> JSON </md-radio-button>
-                                        <md-radio-button value="binary"> Download </md-radio-button>                                        
+                                        <md-radio-button value="binary"> Download </md-radio-button>
                                     </md-radio-group>
                                 </md-input-container>
                             </div>
