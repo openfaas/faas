@@ -58,19 +58,20 @@
                     </md-list>
                 </md-content>
             </md-sidenav>
-
-            <md-content flex layout-padding ng-if="!selectedFunction" ng-show="functions.length">
-                <div layout="column" layout-align="top center">
-                    <p>Select a function.</p>
-                </div>
-                <div flex></div>
-            </md-content>
-
-            <md-content flex layout-padding ng-if="!functions.length">
-                <div layout="column" layout-align="top center">
-                    <p>No functions found in FaaS.</p>
-                </div>
-                <div flex></div>
+            
+            <md-content flex layout="column" layout-align="start center" class="blankslate" ng-if="!selectedFunction">
+              <p ng-if="functions.length === 0">
+                You have no functions in OpenFaaS.<br>
+                Start by deploying a new function.
+              </p>
+              <p ng-if="functions.length !== 0">
+                Select a function or deploy a new one.
+              </p>
+              <md-button class="md-primary md-raised" ng-click="newFunction()">
+                Deploy new function
+              </md-button>
+              <p>Or use <strong>faas-cli</strong> to build and deploy functions:</p>
+              <pre>$ curl -sSL https://cli.openfaas.com | sudo sh</pre>
             </md-content>
 
             <md-content flex layout="column" ng-repeat="function in functions" ng-if="function.name == selectedFunction.name">
