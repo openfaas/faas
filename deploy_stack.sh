@@ -6,5 +6,10 @@ if ! [ -x "$(command -v docker)" ]; then
 fi
 
 echo "Deploying stack"
-docker stack deploy func --compose-file docker-compose.yml
+command='docker stack deploy func --compose-file docker-compose.yml'
 
+if ./check_user.sh; then
+  $command
+else
+  sudo $command
+fi
