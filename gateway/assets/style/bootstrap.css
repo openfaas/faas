@@ -1,3 +1,33 @@
+body {
+	background-color: rgb(243, 244, 250);
+}
+
+md-content.blankslate {
+	background-color: rgb(243, 244, 250);
+	padding-top: 50px;
+}
+
+md-content.blankslate > button {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+md-content.blankslate > p {
+	line-height: 1.5;
+	text-align: center;
+}
+
+md-content.blankslate > pre {
+	background-color: white;
+	border-radius: 3px;
+	margin-top: 0;
+	padding: .5rem;
+}
+
+md-sidenav {
+	min-height: 100vh;
+}
+
 /*Taken from PWD, remove styles not used.*/
 
 .selected button {
