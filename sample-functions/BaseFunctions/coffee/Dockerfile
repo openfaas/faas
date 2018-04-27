@@ -1,6 +1,6 @@
 FROM node:6.9.1-alpine
 
-ADD https://github.com/openfaas/faas/releases/download/0.7.9/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/0.8.0/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
 WORKDIR /root/
