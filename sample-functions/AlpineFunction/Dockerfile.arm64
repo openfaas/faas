@@ -1,4 +1,4 @@
-FROM arm64v8/alpine:3.6
+FROM arm64v8/alpine:3.7
 
 ADD https://github.com/alexellis/faas/releases/download/0.8.0/fwatchdog-arm64 /usr/bin/fwatchdog
 # COPY ./fwatchdog /usr/bin/

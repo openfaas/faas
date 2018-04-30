@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:3.7
 RUN apk --update add nodejs nodejs-npm
 
 ADD https://github.com/openfaas/faas/releases/download/0.8.0/fwatchdog /usr/bin

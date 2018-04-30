@@ -14,7 +14,7 @@ COPY vendor vendor
 
 RUN go install
 
-FROM alpine:3.6
+FROM alpine:3.7
 
 # Needed to reach the hub
 RUN apk --no-cache add ca-certificates 
