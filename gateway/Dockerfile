@@ -25,7 +25,7 @@ RUN license-check -path ./ --verbose=false "Alex Ellis" "OpenFaaS Project" \
     && go test $(go list ./... | grep -v integration | grep -v /vendor/ | grep -v /template/) -cover \
     && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gateway .
 
-FROM alpine:3.6
+FROM alpine:3.7
 
 RUN addgroup -S app \
     && adduser -S -g app app

@@ -22,7 +22,7 @@ The function watchdog is cross-compiled through our CI process on a 64-bit PC.
 
 **Functions on armhf**
 
-When running OpenFaaS on ARM a key consideration is that we need to use ARM base Docker images for our functions. This typically means swapping out the `FROM` instruction and the function code can stay the same, but more of the official base images are becoming multi-architecture (e.g. `apline:3.6`) which means that the build stage will pull the appropriate image for the hardware performing the build.
+When running OpenFaaS on ARM a key consideration is that we need to use ARM base Docker images for our functions. This typically means swapping out the `FROM` instruction and the function code can stay the same, but more of the official base images are becoming multi-architecture (e.g. `apline:3.7`) which means that the build stage will pull the appropriate image for the hardware performing the build.
 
 ### Initialize Swarm Mode
 
@@ -142,7 +142,7 @@ $ faas-cli build -f callme.yml
  Building: alexellis/callme:armhf with node template. Please wait..
  docker build -t alexellis/callme:armhf .
  Sending build context to Docker daemon  8.704kB
- Step 1/16 : FROM alpine:3.6
+ Step 1/16 : FROM alpine:3.7
   ---> 16566b7ed19e
 ...
 

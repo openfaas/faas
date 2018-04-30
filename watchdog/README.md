@@ -34,7 +34,7 @@ Here's how to package your function if you don't want to use the CLI or have exi
 Example Dockerfile for an `echo` function:
 
 ```
-FROM alpine:3.5
+FROM alpine:3.7
 
 ADD https://github.com/openfaas/faas/releases/download/0.8.0/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
