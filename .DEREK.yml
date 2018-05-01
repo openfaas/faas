@@ -10,6 +10,7 @@ maintainers:
  - iyovcheva
  - stefanprodan
  - ovation22
+ - cpitkin
 
 features:
  - dco_check
