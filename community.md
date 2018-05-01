@@ -52,6 +52,8 @@ Key:
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFaaS @ GOTO Nights](https://www.meetup.com/GOTO-Nights-CPH/events/249895973/) | Alex Ellis | Copenhagen, DK | 1-May-2018 |
+| [Kubernetes Seattle: OpenFaas & Migrating to Envoy Proxy in K8s](https://www.meetup.com/Seattle-Kubernetes-Meetup/events/250105287/) | Eric Stoekl | Seattle, WA | 23-May-2018 |
 | [OpenFaaS @ Serverless CPH](https://serverlesscph.dk) | John Mccabe | Copenhagen, DK | 16-May-2018 |
 | Serverless OpenFaaS and Python Workshop @ Agile Peterborough        | Alex Ellis  | Peterborough, UK | 12-May-2018 |
 | [Going Serverless with OpenFaaS, Kubernetes, and Python @ PyCon](https://us.pycon.org/2018/schedule/presentation/40/) | [Michael Herman](https://twitter.com/mikeherman) |  Cleveland, OH | 9-May-2018 |
