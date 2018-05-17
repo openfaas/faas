@@ -1,8 +1,8 @@
 swagger: '2.0'
 info:
-  description: FaaS API documentation
-  version: 0.6.5
-  title: FaaS API Gateway
+  description: OpenFaaS API documentation
+  version: 0.8.0
+  title: OpenFaaS API Gateway
   license:
     name: MIT
 basePath: /
@@ -253,4 +253,3 @@ definitions:
 externalDocs:
   description: More documentation available on Github
   url: 'https://github.com/openfaas/faas'
-  
