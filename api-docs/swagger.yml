@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   description: OpenFaaS API documentation
-  version: 0.8.0
+  version: 0.8.1
   title: OpenFaaS API Gateway
   license:
     name: MIT
@@ -213,6 +213,29 @@ paths:
           description: Function not found
         '500':
           description: Error querying function
+  '/system/info':
+    get:
+      summary: Get info such as provider version number and provider orchestrator
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Info result
+          examples:
+            application/json: |-
+                {"provider":"faas-swarm","version":{"sha":"7108418d9dd6b329ddff40e7393b3166f8160a88","release":"0.2.6"},"orchestration":"swarm"}
+        '404':
+          description: Provider does not support info endpoint
+        '500':
+          description: Error finding info
+  '/healthz':
+    get:
+      summary: Healthcheck
+      responses:
+        '200':
+          description: Healthy
+        '500':
+          description: Not healthy
 definitions:
   DeleteFunctionRequest:
     type: object
