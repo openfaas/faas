@@ -10,6 +10,7 @@ COPY handler.go			.
 COPY readconfig.go      	.
 COPY readconfig_test.go 	.
 COPY requesthandler_test.go 	.
+COPY vendor         vendor
 COPY types 			types
 COPY version.go 		.
 

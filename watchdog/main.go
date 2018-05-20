@@ -14,6 +14,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/prometheus/client_golang/prometheus"
+
 	"github.com/openfaas/faas/watchdog/types"
 )
 
@@ -50,8 +52,28 @@ func main() {
 		MaxHeaderBytes: 1 << 20, // Max header of 1MB
 	}
 
-	http.HandleFunc("/_/health", makeHealthHandler())
-	http.HandleFunc("/", makeRequestHandler(&config))
+	redCounter := prometheus.NewCounterVec(prometheus.CounterOpts{
+		Name: "watchdog_invocation_count",
+		Help: "invocations of main endpoint",
+	}, []string{"status"})
+
+	healthCounter := prometheus.NewCounter(prometheus.CounterOpts{
+		Name: "watchdog_health_invocation_count",
+		Help: "invocations of health endpoint",
+	})
+	redErr := prometheus.Register(redCounter)
+	if redErr != nil {
+		log.Println(redErr)
+	}
+	err := prometheus.Register(healthCounter)
+	if err != nil {
+		log.Println(err)
+	}
+
+	promHTTP := prometheus.Handler()
+	http.Handle("/_/metrics", promHTTP)
+	http.HandleFunc("/_/health", makeHealthHandler(healthCounter))
+	http.HandleFunc("/", makeRequestHandler(&config, redCounter))
 
 	if config.suppressLock == false {
 		path, writeErr := createLockFile()

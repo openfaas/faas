@@ -15,14 +15,17 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 func TestHandler_make(t *testing.T) {
 	config := WatchdogConfig{}
-	handler := makeRequestHandler(&config)
+	handler := makeRequestHandler(&config, prometheus.NewCounterVec(prometheus.CounterOpts{}, []string{"status"}))
 
 	if handler == nil {
 		t.Fail()
+
 	}
 }
 
@@ -41,7 +44,7 @@ func TestHandler_HasCustomHeaderInFunction_WithCgi_Mode(t *testing.T) {
 		faasProcess: "env",
 		cgiHeaders:  true,
 	}
-	handler := makeRequestHandler(&config)
+	handler := makeRequestHandler(&config, prometheus.NewCounterVec(prometheus.CounterOpts{}, []string{"status"}))
 	handler(rr, req)
 
 	required := http.StatusOK
@@ -80,7 +83,7 @@ func TestHandler_HasCustomHeaderInFunction_WithCgiMode_AndBody(t *testing.T) {
 		faasProcess: "env",
 		cgiHeaders:  true,
 	}
-	handler := makeRequestHandler(&config)
+	handler := makeRequestHandler(&config, prometheus.NewCounterVec(prometheus.CounterOpts{}, []string{"status"}))
 	handler(rr, req)
 
 	required := http.StatusOK
@@ -123,7 +126,7 @@ func TestHandler_StderrWritesToStderr_CombinedOutput_False(t *testing.T) {
 		combineOutput: false,
 	}
 
-	handler := makeRequestHandler(&config)
+	handler := makeRequestHandler(&config, prometheus.NewCounterVec(prometheus.CounterOpts{}, []string{"status"}))
 	handler(rr, req)
 
 	required := http.StatusInternalServerError
@@ -164,7 +167,7 @@ func TestHandler_StderrWritesToResponse_CombinedOutput_True(t *testing.T) {
 		combineOutput: true,
 	}
 
-	handler := makeRequestHandler(&config)
+	handler := makeRequestHandler(&config, prometheus.NewCounterVec(prometheus.CounterOpts{}, []string{"status"}))
 	handler(rr, req)
 
 	required := http.StatusInternalServerError
@@ -211,7 +214,7 @@ func TestHandler_DoesntHaveCustomHeaderInFunction_WithoutCgi_Mode(t *testing.T) 
 		faasProcess: "env",
 		cgiHeaders:  false,
 	}
-	handler := makeRequestHandler(&config)
+	handler := makeRequestHandler(&config, prometheus.NewCounterVec(prometheus.CounterOpts{}, []string{"status"}))
 	handler(rr, req)
 
 	required := http.StatusOK
@@ -245,7 +248,7 @@ func TestHandler_HasXDurationSecondsHeader(t *testing.T) {
 	config := WatchdogConfig{
 		faasProcess: "cat",
 	}
-	handler := makeRequestHandler(&config)
+	handler := makeRequestHandler(&config, prometheus.NewCounterVec(prometheus.CounterOpts{}, []string{"status"}))
 	handler(rr, req)
 
 	required := http.StatusOK
@@ -277,7 +280,7 @@ func TestHandler_RequestTimeoutFailsForExceededDuration(t *testing.T) {
 			execTimeout: time.Duration(100) * time.Millisecond,
 		}
 
-		handler := makeRequestHandler(&config)
+		handler := makeRequestHandler(&config, prometheus.NewCounterVec(prometheus.CounterOpts{}, []string{"status"}))
 		handler(rr, req)
 
 		required := http.StatusRequestTimeout
@@ -303,7 +306,7 @@ func TestHandler_StatusOKAllowed_ForWriteableVerbs(t *testing.T) {
 		config := WatchdogConfig{
 			faasProcess: "cat",
 		}
-		handler := makeRequestHandler(&config)
+		handler := makeRequestHandler(&config, prometheus.NewCounterVec(prometheus.CounterOpts{}, []string{"status"}))
 		handler(rr, req)
 
 		required := http.StatusOK
@@ -329,7 +332,7 @@ func TestHandler_StatusMethodNotAllowed_ForUnknown(t *testing.T) {
 	}
 
 	config := WatchdogConfig{}
-	handler := makeRequestHandler(&config)
+	handler := makeRequestHandler(&config, prometheus.NewCounterVec(prometheus.CounterOpts{}, []string{"status"}))
 	handler(rr, req)
 
 	required := http.StatusMethodNotAllowed
@@ -352,7 +355,7 @@ func TestHandler_StatusOKForGETAndNoBody(t *testing.T) {
 		faasProcess: "date",
 	}
 
-	handler := makeRequestHandler(&config)
+	handler := makeRequestHandler(&config, prometheus.NewCounterVec(prometheus.CounterOpts{}, []string{"status"}))
 	handler(rr, req)
 
 	required := http.StatusOK
@@ -377,7 +380,8 @@ func TestHealthHandler_StatusOK_LockFilePresent(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	handler := makeHealthHandler()
+	handler := makeHealthHandler(prometheus.NewCounter(prometheus.CounterOpts{}))
+
 	handler(rr, req)
 
 	required := http.StatusOK
@@ -400,7 +404,8 @@ func TestHealthHandler_StatusInternalServerError_LockFileNotPresent(t *testing.T
 	if err != nil {
 		t.Fatal(err)
 	}
-	handler := makeHealthHandler()
+	handler := makeHealthHandler(prometheus.NewCounter(prometheus.CounterOpts{}))
+
 	handler(rr, req)
 
 	required := http.StatusInternalServerError
@@ -420,7 +425,7 @@ func TestHealthHandler_SatusMethoNotAllowed_ForWriteableVerbs(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		handler := makeHealthHandler()
+		handler := makeHealthHandler(prometheus.NewCounter(prometheus.CounterOpts{}))
 		handler(rr, req)
 
 		required := http.StatusMethodNotAllowed

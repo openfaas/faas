@@ -16,6 +16,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/prometheus/client_golang/prometheus"
+
 	"github.com/openfaas/faas/watchdog/types"
 )
 
@@ -271,8 +273,11 @@ func createLockFile() (string, error) {
 	return path, writeErr
 }
 
-func makeHealthHandler() func(http.ResponseWriter, *http.Request) {
+func makeHealthHandler(counter prometheus.Counter) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+
+		counter.Add(1)
+
 		switch r.Method {
 		case http.MethodGet:
 			if acceptingConnections == false || lockFilePresent() == false {
@@ -289,7 +294,7 @@ func makeHealthHandler() func(http.ResponseWriter, *http.Request) {
 	}
 }
 
-func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.Request) {
+func makeRequestHandler(config *WatchdogConfig, redCounter *prometheus.CounterVec) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case
@@ -297,11 +302,13 @@ func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.
 			http.MethodPut,
 			http.MethodDelete,
 			http.MethodGet:
+			redCounter.With(prometheus.Labels{"status": "200"}).Inc()
+
 			pipeRequest(config, w, r, r.Method)
+
 			break
 		default:
 			w.WriteHeader(http.StatusMethodNotAllowed)
-
 		}
 	}
 }
