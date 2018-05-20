@@ -28,7 +28,7 @@ func main() {
 	log.Printf("HTTP Write Timeout: %s", config.WriteTimeout)
 
 	if !config.UseExternalProvider() {
-		log.Fatalln("As of this version of OpenFaaS, you must use external provider even for Docker Swarm.")
+		log.Fatalln("You must provide an external provider via 'functions_provider_url' env-var.")
 	}
 
 	log.Printf("Binding to external function provider: %s", config.FunctionsProviderURL)
@@ -92,6 +92,8 @@ func main() {
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}", faasHandlers.Proxy)
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/", faasHandlers.Proxy)
 
+	r.HandleFunc("/system/info", handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver)).Methods(http.MethodGet)
+
 	r.HandleFunc("/system/alert", faasHandlers.Alert)
 
 	r.HandleFunc("/system/function/{name:[-a-zA-Z_0-9]+}", queryFunction).Methods(http.MethodGet)
@@ -117,6 +119,8 @@ func main() {
 
 	metricsHandler := metrics.PrometheusHandler()
 	r.Handle("/metrics", metricsHandler)
+	r.HandleFunc("/healthz", handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver)).Methods(http.MethodGet)
+
 	r.Handle("/", http.RedirectHandler("/ui/", http.StatusMovedPermanently)).Methods(http.MethodGet)
 
 	tcpPort := 8080
