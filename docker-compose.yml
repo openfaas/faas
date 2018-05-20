@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: functions/gateway:0.8.0
+        image: functions/gateway:0.8.1
         networks:
             - functions
         environment:
@@ -37,7 +37,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         # ports:
             # - 8081:8080
-        image:  functions/faas-swarm:0.2.6
+        image:  functions/faas-swarm:0.2.7
         networks:
             - functions
         environment:
