@@ -197,3 +197,30 @@ func TestRead_PrometheusDefaults(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestRead_BasicAuthDefaults(t *testing.T) {
+	defaults := NewEnvBucket()
+
+	readConfig := ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.UseBasicAuth != false {
+		t.Logf("config.UseBasicAuth, want: %t, got: %t\n", false, config.UseBasicAuth)
+		t.Fail()
+	}
+}
+
+func TestRead_BasicAuth_SetTrue(t *testing.T) {
+	defaults := NewEnvBucket()
+	defaults.Setenv("basic_auth", "true")
+
+	readConfig := ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.UseBasicAuth != true {
+		t.Logf("config.UseBasicAuth, want: %t, got: %t\n", true, config.UseBasicAuth)
+		t.Fail()
+	}
+}
