@@ -5,8 +5,10 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -32,6 +34,27 @@ func main() {
 	}
 
 	log.Printf("Binding to external function provider: %s", config.FunctionsProviderURL)
+
+	var credentials *handlers.BasicAuthCredentials
+
+	if config.UseBasicAuth {
+		userPath := "/var/secrets/basic_auth_user"
+		user, userErr := ioutil.ReadFile(userPath)
+		if userErr != nil {
+			log.Panicf("Unable to load %s", userPath)
+		}
+
+		userPassword := "/var/secrets/basic_auth_password"
+		password, passErr := ioutil.ReadFile(userPassword)
+		if passErr != nil {
+			log.Panicf("Unable to load %s", userPassword)
+		}
+
+		credentials = &handlers.BasicAuthCredentials{
+			User:     strings.TrimSpace(string(user)),
+			Password: strings.TrimSpace(string(password)),
+		}
+	}
 
 	metricsOptions := metrics.BuildMetricsOptions()
 	metrics.RegisterMetrics(metricsOptions)
@@ -84,8 +107,20 @@ func main() {
 	}
 
 	prometheusQuery := metrics.NewPrometheusQuery(config.PrometheusHost, config.PrometheusPort, &http.Client{})
-	listFunctions := metrics.AddMetricsHandler(faasHandlers.ListFunctions, prometheusQuery)
+	faasHandlers.ListFunctions = metrics.AddMetricsHandler(faasHandlers.ListFunctions, prometheusQuery)
 	faasHandlers.Proxy = handlers.MakeCallIDMiddleware(faasHandlers.Proxy)
+
+	if credentials != nil {
+		faasHandlers.UpdateFunction =
+			handlers.DecorateWithBasicAuth(faasHandlers.UpdateFunction, credentials)
+		faasHandlers.DeleteFunction =
+			handlers.DecorateWithBasicAuth(faasHandlers.DeleteFunction, credentials)
+		faasHandlers.DeployFunction =
+			handlers.DecorateWithBasicAuth(faasHandlers.DeployFunction, credentials)
+		faasHandlers.ListFunctions =
+			handlers.DecorateWithBasicAuth(faasHandlers.ListFunctions, credentials)
+	}
+
 	r := mux.NewRouter()
 
 	// r.StrictSlash(false)	// This didn't work, so register routes twice.
@@ -97,7 +132,7 @@ func main() {
 	r.HandleFunc("/system/alert", faasHandlers.Alert)
 
 	r.HandleFunc("/system/function/{name:[-a-zA-Z_0-9]+}", queryFunction).Methods(http.MethodGet)
-	r.HandleFunc("/system/functions", listFunctions).Methods(http.MethodGet)
+	r.HandleFunc("/system/functions", faasHandlers.ListFunctions).Methods(http.MethodGet)
 	r.HandleFunc("/system/functions", faasHandlers.DeployFunction).Methods(http.MethodPost)
 	r.HandleFunc("/system/functions", faasHandlers.DeleteFunction).Methods(http.MethodDelete)
 	r.HandleFunc("/system/functions", faasHandlers.UpdateFunction).Methods(http.MethodPut)
@@ -115,7 +150,12 @@ func main() {
 	allowedCORSHost := "raw.githubusercontent.com"
 	fsCORS := handlers.DecorateWithCORS(fs, allowedCORSHost)
 
-	r.PathPrefix("/ui/").Handler(http.StripPrefix("/ui", fsCORS)).Methods(http.MethodGet)
+	uiHandler := http.StripPrefix("/ui", fsCORS)
+	if credentials != nil {
+		r.PathPrefix("/ui/").Handler(handlers.DecorateWithBasicAuth(uiHandler.ServeHTTP, credentials)).Methods(http.MethodGet)
+	} else {
+		r.PathPrefix("/ui/").Handler(uiHandler).Methods(http.MethodGet)
+	}
 
 	metricsHandler := metrics.PrometheusHandler()
 	r.Handle("/metrics", metricsHandler)

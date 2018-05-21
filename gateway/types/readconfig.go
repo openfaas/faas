@@ -105,6 +105,8 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 	cfg.DirectFunctions = parseBoolValue(hasEnv.Getenv("direct_functions"))
 	cfg.DirectFunctionsSuffix = hasEnv.Getenv("direct_functions_suffix")
 
+	cfg.UseBasicAuth = parseBoolValue(hasEnv.Getenv("basic_auth"))
+
 	return cfg
 }
 
@@ -140,6 +142,9 @@ type GatewayConfig struct {
 
 	// If set this will be used to resolve functions directly
 	DirectFunctionsSuffix string
+
+	// If set, reads secrets from file-system for enabling basic auth.
+	UseBasicAuth bool
 }
 
 // UseNATS Use NATSor not
