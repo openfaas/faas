@@ -3,16 +3,18 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: functions/gateway:0.7.3-armhf
+        image: functions/gateway:0.8.1-armhf
         networks:
             - functions
         environment:
             functions_provider_url: "http://faas-swarm:8080/"
-            read_timeout:  10   # set both here, and on your functions
-            write_timeout: 10   # set both here, and on your functions
-            dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
+            read_timeout:  "25s"        # Maximum time to read HTTP request
+            write_timeout: "25s"        # Maximum time to write HTTP response
+            upstream_timeout: "20s"     # Maximum duration of upstream function call - should be more than read_timeout and write_timeout            dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
             faas_nats_address: "nats"
             faas_nats_port: 4222
+            direct_functions: "true"    # Functions are invoked directly over the overlay network
+            direct_functions_suffix: ""
         deploy:
             resources:
                 # limits:   # uncomment to enable limits
@@ -34,12 +36,12 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         # ports:
             # - 8081:8080
-        image:  functions/faas-swarm:0.2.1-armhf
+        image:  functions/faas-swarm:0.2.7-armhf
         networks:
             - functions
         environment:
-            read_timeout:  10   # set both here, and on your functions
-            write_timeout: 10   # set both here, and on your functions
+            read_timeout:  "25s"   # set both here, and on your functions
+            write_timeout: "25s"   # set both here, and on your functions
             DOCKER_API_VERSION: "1.30"
         deploy:
             placement:
