@@ -2,10 +2,12 @@ package handlers
 
 import (
 	"net/http"
+
+	"github.com/openfaas/faas/gateway/types"
 )
 
 // DecorateWithBasicAuth enforces basic auth as a middleware with given credentials
-func DecorateWithBasicAuth(next http.HandlerFunc, credentials *BasicAuthCredentials) http.HandlerFunc {
+func DecorateWithBasicAuth(next http.HandlerFunc, credentials *types.BasicAuthCredentials) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		user, password, ok := r.BasicAuth()
@@ -20,10 +22,4 @@ func DecorateWithBasicAuth(next http.HandlerFunc, credentials *BasicAuthCredenti
 
 		next.ServeHTTP(w, r)
 	}
-}
-
-// BasicAuthCredentials for credentials
-type BasicAuthCredentials struct {
-	User     string
-	Password string
 }

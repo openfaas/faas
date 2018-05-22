@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/openfaas/faas/gateway/types"
 )
 
 func Test_AuthWithValidPassword_Gives200(t *testing.T) {
@@ -18,7 +20,7 @@ func Test_AuthWithValidPassword_Gives200(t *testing.T) {
 	wantPassword := "password"
 	r := httptest.NewRequest(http.MethodGet, "http://localhost:8080", nil)
 	r.SetBasicAuth(wantUser, wantPassword)
-	wantCredentials := &BasicAuthCredentials{
+	wantCredentials := &types.BasicAuthCredentials{
 		User:     wantUser,
 		Password: wantPassword,
 	}
@@ -47,7 +49,7 @@ func Test_AuthWithInvalidPassword_Gives403(t *testing.T) {
 	r := httptest.NewRequest(http.MethodGet, "http://localhost:8080", nil)
 	r.SetBasicAuth(wantUser, wantPassword)
 
-	wantCredentials := &BasicAuthCredentials{
+	wantCredentials := &types.BasicAuthCredentials{
 		User:     wantUser,
 		Password: "",
 	}

@@ -209,11 +209,18 @@ func TestRead_BasicAuthDefaults(t *testing.T) {
 		t.Logf("config.UseBasicAuth, want: %t, got: %t\n", false, config.UseBasicAuth)
 		t.Fail()
 	}
+
+	wantSecretsMount := "/run/secrets/"
+	if config.SecretMountPath != wantSecretsMount {
+		t.Logf("config.SecretMountPath, want: %s, got: %s\n", wantSecretsMount, config.SecretMountPath)
+		t.Fail()
+	}
 }
 
 func TestRead_BasicAuth_SetTrue(t *testing.T) {
 	defaults := NewEnvBucket()
 	defaults.Setenv("basic_auth", "true")
+	defaults.Setenv("secret_mount_path", "/etc/openfaas/")
 
 	readConfig := ReadConfig{}
 
@@ -221,6 +228,12 @@ func TestRead_BasicAuth_SetTrue(t *testing.T) {
 
 	if config.UseBasicAuth != true {
 		t.Logf("config.UseBasicAuth, want: %t, got: %t\n", true, config.UseBasicAuth)
+		t.Fail()
+	}
+
+	wantSecretsMount := "/etc/openfaas/"
+	if config.SecretMountPath != wantSecretsMount {
+		t.Logf("config.SecretMountPath, want: %s, got: %s\n", wantSecretsMount, config.SecretMountPath)
 		t.Fail()
 	}
 }

@@ -5,10 +5,8 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
-	"strings"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -35,24 +33,17 @@ func main() {
 
 	log.Printf("Binding to external function provider: %s", config.FunctionsProviderURL)
 
-	var credentials *handlers.BasicAuthCredentials
+	var credentials *types.BasicAuthCredentials
 
 	if config.UseBasicAuth {
-		userPath := "/var/secrets/basic_auth_user"
-		user, userErr := ioutil.ReadFile(userPath)
-		if userErr != nil {
-			log.Panicf("Unable to load %s", userPath)
+		var readErr error
+		reader := types.ReadBasicAuthFromDisk{
+			SecretMountPath: config.SecretMountPath,
 		}
+		credentials, readErr = reader.Read()
 
-		userPassword := "/var/secrets/basic_auth_password"
-		password, passErr := ioutil.ReadFile(userPassword)
-		if passErr != nil {
-			log.Panicf("Unable to load %s", userPassword)
-		}
-
-		credentials = &handlers.BasicAuthCredentials{
-			User:     strings.TrimSpace(string(user)),
-			Password: strings.TrimSpace(string(password)),
+		if readErr != nil {
+			log.Panicf(readErr.Error())
 		}
 	}
 
