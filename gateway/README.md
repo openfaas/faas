@@ -54,3 +54,5 @@ The gateway can be configured through the following environment variables:
 | `faas_promethus_port`         | Port to connect to Prometheus. Default: `9090` |
 | `direct_functions`            | `true` or `false` -  functions are invoked directly over overlay network without passing through provider |
 | `direct_functions_suffix`     | Provide a DNS suffix for invoking functions directly over overlay network  |
+| `basic_auth`              | Set to `true` or `false` to enable embedded basic auth on the /system and /ui endpoints (recommended) |
+| `secret_mount_path`       | Set a location where you have mounted `basic-auth-user` and `basic-auth-password`, default: `/run/secrets/`. |

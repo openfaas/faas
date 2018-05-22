@@ -107,6 +107,12 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 
 	cfg.UseBasicAuth = parseBoolValue(hasEnv.Getenv("basic_auth"))
 
+	secretPath := hasEnv.Getenv("secret_mount_path")
+	if len(secretPath) == 0 {
+		secretPath = "/run/secrets/"
+	}
+	cfg.SecretMountPath = secretPath
+
 	return cfg
 }
 
@@ -145,6 +151,9 @@ type GatewayConfig struct {
 
 	// If set, reads secrets from file-system for enabling basic auth.
 	UseBasicAuth bool
+
+	// SecretMountPath specifies where to read secrets from for embedded basic auth
+	SecretMountPath string
 }
 
 // UseNATS Use NATSor not
