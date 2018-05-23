@@ -80,6 +80,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Building a Serverless Microblog in Ruby with OpenFaaS – Part 1 ](https://keiran.scot/2018/05/18/faasfriday-serverless-microblog/) | Keiran Smith | keiran.scot | 18-May-2018 |
 | [Writing OpenFaas Serverless Functions in Go](https://marcussmallman.io/2018/04/11/writing-openfaas-serverless-functions-in-go/) | Marcus Smallman | marcussmallman.io | 11-Apr-2018 |
 | [Deploying OpenFaaS on Kubernetes - Azure AKS Part 2 (SSL)](https://medium.com/@ericstoekl/openfaas-on-azure-aks-with-ssl-ingress-openfaas-on-aks-part-2-2-e9f2db9db387) | Eric Stoekl | medium.com | 23-Mar-2018 |
 | [VMware + OpenFaaS – One Month In](https://blogs.vmware.com/opensource/2018/03/20/vmware-openfaas-alex-ellis) | Alex Ellis | vmware.com | 21-Mar-2018 |
@@ -199,6 +200,7 @@ You can also find cool projects or submit your own to the [faas-and-furious orga
 
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| [OpenFaaS Swift Template](https://github.com/affix/openfaas-swift-template) | Keiran Smith | github.com | 22-May-2018 |
 | [OpenFaaS Code Eval](https://github.com/testdrivenio/openfass-code-eval) | Michael Herman | github.com | 30-Mar-2018 |
 | [OpenFaaS RESTful API w/ Node and Postgres](https://github.com/testdrivenio/openfass-node-restful-api) | Michael Herman | github.com | 26-Jan-2018 |
 | [OpenFaaS with Ruby/MySQL/Ceph Sample](https://github.com/Lallassu/openfaas-demo) | Magnus Persson | [lallassu/openfaas-demo](https://github.com/Lallassu/openfaas-demo) | 23-Jan-2018
