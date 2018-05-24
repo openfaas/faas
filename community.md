@@ -52,6 +52,7 @@ Key:
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Serverless Beyond the Hype @ Docker London](https://www.meetup.com/Docker-London/events/249221771/) | Alex Ellis | London, UK | 25-May-2018 |
 | [OpenFaaS @ GOTO Nights](https://www.meetup.com/GOTO-Nights-CPH/events/249895973/) | Alex Ellis | Copenhagen, DK | 1-May-2018 |
 | [Kubernetes Seattle: OpenFaas & Migrating to Envoy Proxy in K8s](https://www.meetup.com/Seattle-Kubernetes-Meetup/events/250105287/) | Eric Stoekl | Seattle, WA | 23-May-2018 |
 | [OpenFaaS @ Serverless CPH](https://serverlesscph.dk) | John Mccabe | Copenhagen, DK | 16-May-2018 |
