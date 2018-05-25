@@ -56,7 +56,13 @@ This one-shot script clones the code, sets up a Docker Swarm master node then de
 
 ## Sample functions
 
-We have packaged some simple starter functions in the Docker stack, so as soon as you open the OpenFaaS UI you will see them listed down the left-hand side.
+Deploy the sample functions by deploying the `stack.yml` file in the `faas/` repo folder:
+
+```
+faas deploy
+```
+
+You don't need to specify a `-f` or `--yaml` option to the `faas` command. By default the `stack.yml` file is used if it is present.
 
 Here are a few of the functions:
 
