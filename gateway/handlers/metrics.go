@@ -29,3 +29,9 @@ func trackTimeExact(duration time.Duration, metrics metrics.MetricOptions, name 
 		WithLabelValues(name).
 		Observe(float64(duration))
 }
+
+func trackFunctionStop(metrics metrics.MetricOptions, name string) {
+	metrics.ServiceReplicasCounter.
+		WithLabelValues(name).
+		Set(float64(0))
+}
