@@ -67,9 +67,9 @@ write_timeout: 25s
 
 ### Timeouts - Asynchronous invocations
 
-For asynchronous invocations of functions a separate timeout can be configured at the `queue-worker` level in the `ack_timeout` environmental variable.
+For asynchronous invocations of functions a separate timeout can be configured at the `queue-worker` level in the `ack_wait` environmental variable.
 
-If the `ack_timeout` is exceeded the task will not be acknowledge and the queue system will retry the invocation.
+If the `ack_wait` is exceeded the task will not be acknowledge and the queue system will retry the invocation.
 
 ## Function execution logs
 

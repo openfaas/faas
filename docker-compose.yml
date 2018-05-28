@@ -3,20 +3,20 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: functions/gateway:0.8.1
+        image: functions/gateway:0.8.2
         networks:
             - functions
         environment:
             functions_provider_url: "http://faas-swarm:8080/"
-            read_timeout:  "25s"        # Maximum time to read HTTP request
-            write_timeout: "25s"        # Maximum time to write HTTP response
-            upstream_timeout: "20s"     # Maximum duration of upstream function call - should be more than read_timeout and write_timeout
+            read_timeout:  "300s"        # Maximum time to read HTTP request
+            write_timeout: "300s"        # Maximum time to write HTTP response
+            upstream_timeout: "300s"     # Maximum duration of upstream function call - should be more than read_timeout and write_timeout
             dnsrr: "true"               # Temporarily use dnsrr in place of VIP while issue persists on PWD
             faas_nats_address: "nats"
             faas_nats_port: 4222
             direct_functions: "true"    # Functions are invoked directly over the overlay network
             direct_functions_suffix: ""
-            basic_auth: "false"
+            basic_auth: "true"
             secret_mount_path: "/run/secrets/"
         deploy:
             resources:
@@ -32,6 +32,9 @@ services:
             placement:
                 constraints:
                     - 'node.platform.os == linux'
+        secrets:
+            - basic-auth-user
+            - basic-auth-password
 
     # Docker Swarm provider
     faas-swarm:
@@ -43,8 +46,8 @@ services:
         networks:
             - functions
         environment:
-            read_timeout:  "25s"   # set both here, and on your functions
-            write_timeout: "25s"   # set both here, and on your functions
+            read_timeout:  "300s"   # set both here, and on your functions
+            write_timeout: "300s"   # set both here, and on your functions
             DOCKER_API_VERSION: "1.30"
         deploy:
             placement:
@@ -88,7 +91,7 @@ services:
             - functions
         environment:
             max_inflight: "1"
-            ack_timeout: "30s"    # Max duration of any async task / request
+            ack_wait: "300s"    # Max duration of any async task / request
         deploy:
             resources:
                 limits:
@@ -274,3 +277,9 @@ networks:
         attachable: true
         labels:
           - "openfaas=true"
+
+secrets:
+    basic-auth-user:
+        external: true
+    basic-auth-password:
+        external: true
