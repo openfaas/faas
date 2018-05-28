@@ -87,7 +87,7 @@ services:
             - functions
         environment:
             max_inflight: "1"
-            ack_timeout: "30s"    # Max duration of any async task / request
+            ack_wait: "30s"    # Max duration of any async task / request
         deploy:
             resources:
                 limits:
