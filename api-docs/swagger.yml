@@ -1,18 +1,18 @@
 swagger: '2.0'
 info:
   description: OpenFaaS API documentation
-  version: 0.8.1
+  version: 0.8.2
   title: OpenFaaS API Gateway
   license:
     name: MIT
 basePath: /
 schemes:
   - http
+  - https
 paths:
-  /system/functions:
+  '/system/functions':
     get:
       summary: 'Get a list of deployed functions with: stats and image digest'
-      description: ''
       consumes:
         - application/json
       produces:
@@ -20,12 +20,10 @@ paths:
       responses:
         '200':
           description: List of deployed functions.
-          examples:
-            application/json: |-
-              [
-                {"name":"func_payroll","image":"alexellis2/faas-payroll:latest@sha256:0bc2773613c76d9ee4906bf3887ea2527f135cb7a0d0f430743e7c6712949709","invocationCount":16,"replicas":1},
-                {"name":"func_fanclub","image":"alexellis2/fanclub:18-04-2017@sha256:37bb3fabee7e36abab7e6250bb7d13c9ab66e983782b35200470fe2a3aa14daa","invocationCount":1125,"replicas":1}
-              ]
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FunctionListEntry'
     post:
       summary: Deploy a new function.
       description: ''
@@ -39,10 +37,14 @@ paths:
           description: Function to deploy
           required: true
           schema:
-            $ref: '#/definitions/CreateFunctionRequest'
+            $ref: '#/definitions/FunctionDefintion'
       responses:
-        '200':
-          description: OK
+        '202':
+          description: Accepted
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal server error
     put:
       summary: Update a function.
       description: ''
@@ -56,10 +58,16 @@ paths:
           description: Function to update
           required: true
           schema:
-            $ref: '#/definitions/CreateFunctionRequest'
+            $ref: '#/definitions/FunctionDefintion'
       responses:
         '200':
-          description: OK
+          description: Accepted
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal server error
     delete:
       summary: Remove a deployed function.
       description: ''
@@ -77,9 +85,13 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          description: Bade Request
         '404':
-          description: Function not found in gateway
-  /system/alert:
+          description: Not Found
+        '500':
+          description: Internal server error
+  '/system/alert':
     post:
       summary: 'Event-sink for AlertManager, for auto-scaling'
       description: 'Internal use for AlertManager, requires valid AlertManager alert JSON'
@@ -169,7 +181,7 @@ paths:
         '202':
           description: Request accepted and queued
         '404':
-          description: Requested function not found
+          description: Not Found
         '500':
           description: Internal server error
   '/function/{functionName}':
@@ -194,9 +206,9 @@ paths:
         '200':
           description: Value returned from function
         '404':
-          description: Function not found
+          description: Not Found
         '500':
-          description: Error connecting to function
+          description: Internal server error
   '/system/scale-function/{functionName}':
     get:
       summary: Scale a function
@@ -235,11 +247,13 @@ paths:
           required: true
       responses:
         '200':
-          description: Function definition
+          description: Function Summary
+          schema:
+            $ref: '#/definitions/FunctionListEntry'
         '404':
-          description: Function not found
+          description: Not Found
         '500':
-          description: Error querying function
+          description: Internal server error
   '/system/info':
     get:
       summary: Get info such as provider version number and provider orchestrator
@@ -251,10 +265,12 @@ paths:
           examples:
             application/json: |-
                 {"provider":"faas-swarm","version":{"sha":"7108418d9dd6b329ddff40e7393b3166f8160a88","release":"0.2.6"},"orchestration":"swarm"}
+          schema:
+            $ref: '#/definitions/Info'
         '404':
-          description: Provider does not support info endpoint
+          description: Endpoint Info not supported
         '500':
-          description: Error finding info
+          description: Internal server error
   '/healthz':
     get:
       summary: Healthcheck
@@ -264,13 +280,34 @@ paths:
         '500':
           description: Not healthy
 definitions:
+  Info:
+    type: object
+    properties:
+      provider:
+        type: string
+      version:
+        type: object
+        properties:
+          sha:
+            type: string
+          release:
+            type: string
+            format: semver
+      orchestration:
+        type: string
+    required:
+      - provider
+      - version
+      - orchestration
   DeleteFunctionRequest:
     type: object
     properties:
       functionName:
         type: string
         description: Name of deployed function
-  CreateFunctionRequest:
+    required:
+      - functionName
+  FunctionDefintion:
     type: object
     properties:
       service:
@@ -290,6 +327,11 @@ definitions:
         additionalProperties:
           type: string
         description: Overrides to environmental variables
+      constraints:
+        type: array
+        items:
+          type: string
+          description: Constraints are specific to back-end orchestration platform
       labels:
         type: array
         items:
@@ -310,6 +352,49 @@ definitions:
         description: >-
           Private registry base64-encoded basic auth (as present in
           ~/.docker/config.json)
+      limits:
+        type: object
+        properties:
+          memory:
+            type: string
+            example: "128M"
+          cpu:
+            type: string
+            example: "0.01"
+      requests:
+        type: object
+    required:
+      - service
+      - image
+      - envProcess
+  FunctionListEntry:
+    type: object
+    properties:
+      name:
+        type: string
+      image:
+        type: string
+      invocationCount:
+        type: number
+        format: integer
+      replicas:
+        type: number
+        format: integer
+      availableReplicas:
+        type: number
+        format: integer
+      envProcess:
+        type: string
+      labels:
+        type: object
+    required:
+      - name
+      - image
+      - invocationCount
+      - replicas
+      - availableReplicas
+      - envProcess
+      - labels
 externalDocs:
   description: More documentation available on Github
   url: 'https://github.com/openfaas/faas'
