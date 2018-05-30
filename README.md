@@ -91,7 +91,7 @@ Other [Sample functions](https://github.com/openfaas/faas/tree/master/sample-fun
 
 ## Documentation
 
-We are building a new documentation site at [docs.openfaas.com](http://docs.openfaas.com).
+We are building a new documentation site at [docs.openfaas.com](http://docs.openfaas.com). The github repository for the documentation website can is [openfaas/docs](https://github.com/openfaas/docs)
 
 For all other guides, tutorials, trouble-shooting and blog posts head over to our [guides page](https://github.com/openfaas/faas/tree/master/guide) on GitHub.
 
