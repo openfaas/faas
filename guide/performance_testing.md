@@ -39,8 +39,9 @@ Project tuning:
 
 of-watchdog templates:
 
-* [Node8 HTTP template](https://github.com/openfaas-incubator/node8-express-template)
-* [Golang HTTP template](https://github.com/alexellis/golang-http-template)
+* [Golang HTTP template with stdlib](https://github.com/alexellis/golang-http-template)
+* [Node8 HTTP template with Express.js](https://github.com/openfaas-incubator/node8-express-template)
+* [Python HTTP template with gevent/flask](https://github.com/openfaas-incubator/python-flask-template)
 
 ### Common mistakes for performance-testing a project:
 
