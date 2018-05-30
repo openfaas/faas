@@ -41,7 +41,7 @@ of-watchdog templates:
 
 * [Golang HTTP template with stdlib](https://github.com/alexellis/golang-http-template)
 * [Node8 HTTP template with Express.js](https://github.com/openfaas-incubator/node8-express-template)
-* [Python HTTP template with gevent/flask](https://github.com/openfaas-incubator/python-flask-template)
+* [Python3 HTTP template with gevent/flask](https://github.com/openfaas-incubator/python-flask-template)
 
 ### Common mistakes for performance-testing a project:
 
