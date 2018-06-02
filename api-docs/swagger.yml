@@ -86,7 +86,7 @@ paths:
         '200':
           description: OK
         '400':
-          description: Bade Request
+          description: Bad Request
         '404':
           description: Not Found
         '500':
