@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"testing"
 )
 
@@ -65,4 +66,53 @@ func Test_buildUpstreamRequest_NoBody_GetMethod_NoQuery(t *testing.T) {
 		t.Fail()
 	}
 
+}
+
+func Test_getServiceName(t *testing.T) {
+	scenarios := []struct {
+		name        string
+		url         string
+		serviceName string
+	}{
+		{
+			name:        "can handle request without trailing slash",
+			url:         "/function/testFunc",
+			serviceName: "testFunc",
+		},
+		{
+			name:        "can handle request with trailing slash",
+			url:         "/function/testFunc/",
+			serviceName: "testFunc",
+		},
+		{
+			name:        "can handle request with query parameters",
+			url:         "/function/testFunc?name=foo",
+			serviceName: "testFunc",
+		},
+		{
+			name:        "can handle request with trailing slash and query parameters",
+			url:         "/function/testFunc/?name=foo",
+			serviceName: "testFunc",
+		},
+		{
+			name:        "can handle request with a fragment",
+			url:         "/function/testFunc#fragment",
+			serviceName: "testFunc",
+		},
+	}
+
+	for _, s := range scenarios {
+		t.Run(s.name, func(t *testing.T) {
+
+			u, err := url.Parse("http://openfaas.local" + s.url)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			service := getServiceName(u.Path)
+			if service != s.serviceName {
+				t.Fatalf("Incorrect service name - want: %s, got: %s", s.serviceName, service)
+			}
+		})
+	}
 }

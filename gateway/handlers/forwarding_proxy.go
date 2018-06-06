@@ -133,7 +133,7 @@ func getServiceName(urlValue string) string {
 	if strings.HasPrefix(urlValue, forward) {
 		serviceName = urlValue[len(forward):]
 	}
-	return serviceName
+	return strings.Trim(serviceName, "/")
 }
 
 // LoggingNotifier notifies a log about a request
@@ -168,7 +168,6 @@ type FunctionAsHostBaseURLResolver struct {
 
 // Resolve the base URL for a request
 func (f FunctionAsHostBaseURLResolver) Resolve(r *http.Request) string {
-
 	svcName := getServiceName(r.URL.Path)
 
 	const watchdogPort = 8080
