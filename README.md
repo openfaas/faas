@@ -114,12 +114,14 @@ The deployment guide for Docker Swarm contains a simple one-line command to get 
 
 [Deployment guide for Docker Swarm](http://docs.openfaas.com/deployment/docker-swarm/)
 
-The new login feature breaks the one-click deployment to PWD.
 **Docker Playground**
 
-You can quickly start OpenFaaS on Docker Swarm online using the community-run Docker playground: play-with-docker.com (PWD) by clicking the button below:
+You can quickly start OpenFaaS on Docker Swarm online using the community-run Docker playground: [Play-with-Docker](https://labs.play-with-docker.com/) (PWD)
 
-[![Try in PWD](https://cdn.rawgit.com/play-with-docker/stacks/cff22438/assets/images/button.png)](http://play-with-docker.com?stack=https://raw.githubusercontent.com/openfaas/faas/master/docker-compose.yml&stack_name=func)
+Simply follow the deployment guide for Swarm above in a new session
+
+> You will need a free Docker Hub account to get access. Get one here: [Docker Hub](https://hub.docker.com/)
+
 
 #### Begin the TestDrive
 
