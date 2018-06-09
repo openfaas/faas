@@ -52,6 +52,9 @@ Key:
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [GitOps, OpenFaaS, Istio and Helm with Weaveworks](https://www.meetup.com/Weave-User-Group-Bay-Area/events/251409954/) | Alex Ellis, Stefan Prodan | SF, USA | 12-June-2018 |
+| [Serverless Panel @ Dockercon](https://dockercon18.smarteventscloud.com/connect/sessionDetail.ww?SESSION_ID=194869) | Alex Ellis & others | SF, USA | 14-June-2018 |
+| [Container Innovation SIG @ Dockercon](https://dockercon18.smarteventscloud.com/connect/sessionDetail.ww?SESSION_ID=187204) | Alex Ellis & others | SF, USA | 13-June-2018 |
 | [Serverless Beyond the Hype @ Docker London](https://www.meetup.com/Docker-London/events/249221771/) | Alex Ellis | London, UK | 25-May-2018 |
 | [OpenFaaS @ GOTO Nights](https://www.meetup.com/GOTO-Nights-CPH/events/249895973/) | Alex Ellis | Copenhagen, DK | 1-May-2018 |
 | [Kubernetes Seattle: OpenFaas & Migrating to Envoy Proxy in K8s](https://www.meetup.com/Seattle-Kubernetes-Meetup/events/250105287/) | Eric Stoekl | Seattle, WA | 23-May-2018 |
