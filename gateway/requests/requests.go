@@ -41,6 +41,9 @@ type CreateFunctionRequest struct {
 
 	// Requests of resources requested by function
 	Requests *FunctionResources `json:"requests"`
+
+	// Flag for enabling a readonly filesystem for the function.
+	ReadOnlyFs bool `json:"readOnlyFs"`
 }
 
 // FunctionResources Memory and CPU
