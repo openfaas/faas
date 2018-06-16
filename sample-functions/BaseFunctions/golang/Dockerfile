@@ -1,4 +1,4 @@
-FROM golang:1.9.4-alpine
+FROM golang:1.9.7-alpine
 
 MAINTAINER alexellis2@gmail.com
 ENTRYPOINT []
