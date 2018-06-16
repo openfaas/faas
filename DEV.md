@@ -26,7 +26,7 @@ You can find the [reference documentation for the Watchdog here](https://github.
 This is the basis of a function which generates HTML from MarkDown:
 
 ```
-FROM golang:1.9.4
+FROM golang:1.9.7
 RUN mkdir -p /go/src/app
 COPY handler.go /go/src/app
 WORKDIR /go/src/app

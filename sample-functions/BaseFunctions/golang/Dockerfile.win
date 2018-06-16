@@ -1,4 +1,4 @@
-FROM golang:1.9.4-windowsservercore
+FROM golang:1.9.7-windowsservercore
 MAINTAINER alexellis2@gmail.com
 ENTRYPOINT []
 

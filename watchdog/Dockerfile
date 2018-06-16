@@ -1,4 +1,4 @@
-FROM golang:1.9.4 as build
+FROM golang:1.9.7 as build
 ARG VERSION
 ARG GIT_COMMIT
 
