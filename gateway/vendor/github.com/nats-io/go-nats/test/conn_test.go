@@ -1,3 +1,16 @@
+// Copyright 2012-2018 The NATS Authors
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package test
 
 import (
@@ -11,6 +24,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"sync"
 	"sync/atomic"
 	"testing"
 	"time"
@@ -701,6 +715,7 @@ func TestCallbacksOrder(t *testing.T) {
 		nats.ErrorHandler(ech),
 		nats.ReconnectWait(50*time.Millisecond),
 		nats.DontRandomize())
+
 	if err != nil {
 		t.Fatalf("Unable to connect: %v\n", err)
 	}
@@ -1476,12 +1491,16 @@ func TestCustomFlusherTimeout(t *testing.T) {
 
 func TestNewServers(t *testing.T) {
 	s1Opts := test.DefaultTestOptions
+	s1Opts.Host = "127.0.0.1"
+	s1Opts.Port = 4222
 	s1Opts.Cluster.Host = "localhost"
 	s1Opts.Cluster.Port = 6222
 	s1 := test.RunServer(&s1Opts)
 	defer s1.Shutdown()
 
 	s2Opts := test.DefaultTestOptions
+	s2Opts.Host = "127.0.0.1"
+	s2Opts.Port = 4223
 	s2Opts.Port = s1Opts.Port + 1
 	s2Opts.Cluster.Host = "localhost"
 	s2Opts.Cluster.Port = 6223
@@ -1525,6 +1544,8 @@ func TestNewServers(t *testing.T) {
 
 	// Start a new server.
 	s3Opts := test.DefaultTestOptions
+	s1Opts.Host = "127.0.0.1"
+	s1Opts.Port = 4224
 	s3Opts.Port = s2Opts.Port + 1
 	s3Opts.Cluster.Host = "localhost"
 	s3Opts.Cluster.Port = 6224
@@ -1542,4 +1563,401 @@ func TestNewServers(t *testing.T) {
 	if err := Wait(ch); err != nil {
 		t.Fatal("Did not get our callback")
 	}
+}
+
+func TestBarrier(t *testing.T) {
+	s := RunDefaultServer()
+	defer s.Shutdown()
+
+	nc := NewDefaultConnection(t)
+	defer nc.Close()
+
+	pubMsgs := int32(0)
+	ch := make(chan bool, 1)
+
+	sub1, err := nc.Subscribe("pub", func(_ *nats.Msg) {
+		atomic.AddInt32(&pubMsgs, 1)
+		time.Sleep(250 * time.Millisecond)
+	})
+	if err != nil {
+		t.Fatalf("Error on subscribe: %v", err)
+	}
+
+	sub2, err := nc.Subscribe("close", func(_ *nats.Msg) {
+		// The "close" message was sent/received lat, but
+		// because we are dealing with different subscriptions,
+		// which are dispatched by different dispatchers, and
+		// because the "pub" subscription is delayed, this
+		// callback is likely to be invoked before the sub1's
+		// second callback is invoked. Using the Barrier call
+		// here will ensure that the given function will be invoked
+		// after the preceding messages have been dispatched.
+		nc.Barrier(func() {
+			res := atomic.LoadInt32(&pubMsgs) == 2
+			ch <- res
+		})
+	})
+	if err != nil {
+		t.Fatalf("Error on subscribe: %v", err)
+	}
+
+	// Send 2 "pub" messages followed by a "close" message
+	for i := 0; i < 2; i++ {
+		if err := nc.Publish("pub", []byte("pub msg")); err != nil {
+			t.Fatalf("Error on publish: %v", err)
+		}
+	}
+	if err := nc.Publish("close", []byte("closing")); err != nil {
+		t.Fatalf("Error on publish: %v", err)
+	}
+
+	select {
+	case ok := <-ch:
+		if !ok {
+			t.Fatal("The barrier function was invoked before the second message")
+		}
+	case <-time.After(2 * time.Second):
+		t.Fatal("Waited for too long...")
+	}
+
+	// Remove all subs
+	sub1.Unsubscribe()
+	sub2.Unsubscribe()
+
+	// Barrier should be invoked in place. Since we use buffered channel
+	// we are ok.
+	nc.Barrier(func() { ch <- true })
+	if err := Wait(ch); err != nil {
+		t.Fatal("Barrier function was not invoked")
+	}
+
+	if _, err := nc.Subscribe("foo", func(m *nats.Msg) {
+		// To check that the Barrier() function works if the subscription
+		// is unsubscribed after the call was made, sleep a bit here.
+		time.Sleep(250 * time.Millisecond)
+		m.Sub.Unsubscribe()
+	}); err != nil {
+		t.Fatalf("Error on subscribe: %v", err)
+	}
+	if err := nc.Publish("foo", []byte("hello")); err != nil {
+		t.Fatalf("Error on publish: %v", err)
+	}
+	// We need to Flush here to make sure that message has been received
+	// and posted to subscription's internal queue before calling Barrier.
+	if err := nc.Flush(); err != nil {
+		t.Fatalf("Error on flush: %v", err)
+	}
+	nc.Barrier(func() { ch <- true })
+	if err := Wait(ch); err != nil {
+		t.Fatal("Barrier function was not invoked")
+	}
+
+	// Test with AutoUnsubscribe now...
+	sub1, err = nc.Subscribe("foo", func(m *nats.Msg) {
+		// Since we auto-unsubscribe with 1, there should not be another
+		// invocation of this callback, but the Barrier should still be
+		// invoked.
+		nc.Barrier(func() { ch <- true })
+
+	})
+	if err != nil {
+		t.Fatalf("Error on subscribe: %v", err)
+	}
+	sub1.AutoUnsubscribe(1)
+	// Send 2 messages and flush
+	for i := 0; i < 2; i++ {
+		if err := nc.Publish("foo", []byte("hello")); err != nil {
+			t.Fatalf("Error on publish: %v", err)
+		}
+	}
+	if err := nc.Flush(); err != nil {
+		t.Fatalf("Error on flush: %v", err)
+	}
+	// Check barrier was invoked
+	if err := Wait(ch); err != nil {
+		t.Fatal("Barrier function was not invoked")
+	}
+
+	// Check that Barrier only affects asynchronous subscriptions
+	sub1, err = nc.Subscribe("foo", func(m *nats.Msg) {
+		nc.Barrier(func() { ch <- true })
+	})
+	if err != nil {
+		t.Fatalf("Error on subscribe: %v", err)
+	}
+	syncSub, err := nc.SubscribeSync("foo")
+	if err != nil {
+		t.Fatalf("Error on subscribe: %v", err)
+	}
+	msgChan := make(chan *nats.Msg, 1)
+	chanSub, err := nc.ChanSubscribe("foo", msgChan)
+	if err != nil {
+		t.Fatalf("Error on subscribe: %v", err)
+	}
+	if err := nc.Publish("foo", []byte("hello")); err != nil {
+		t.Fatalf("Error on publish: %v", err)
+	}
+	if err := nc.Flush(); err != nil {
+		t.Fatalf("Error on flush: %v", err)
+	}
+	// Check barrier was invoked even if we did not yet consume
+	// from the 2 other type of subscriptions
+	if err := Wait(ch); err != nil {
+		t.Fatal("Barrier function was not invoked")
+	}
+	if _, err := syncSub.NextMsg(time.Second); err != nil {
+		t.Fatalf("Sync sub did not receive the message")
+	}
+	select {
+	case <-msgChan:
+	case <-time.After(time.Second):
+		t.Fatal("Chan sub did not receive the message")
+	}
+	chanSub.Unsubscribe()
+	syncSub.Unsubscribe()
+	sub1.Unsubscribe()
+
+	atomic.StoreInt32(&pubMsgs, 0)
+	// Check barrier does not prevent new messages to be delivered.
+	sub1, err = nc.Subscribe("foo", func(_ *nats.Msg) {
+		if pm := atomic.AddInt32(&pubMsgs, 1); pm == 1 {
+			nc.Barrier(func() {
+				nc.Publish("foo", []byte("second"))
+				nc.Flush()
+			})
+		} else if pm == 2 {
+			ch <- true
+		}
+	})
+	if err != nil {
+		t.Fatalf("Error on subscribe: %v", err)
+	}
+	if err := nc.Publish("foo", []byte("first")); err != nil {
+		t.Fatalf("Error on publish: %v", err)
+	}
+	if err := Wait(ch); err != nil {
+		t.Fatal("Barrier function was not invoked")
+	}
+	sub1.Unsubscribe()
+
+	// Check that barrier works if called before connection
+	// is closed.
+	if _, err := nc.Subscribe("bar", func(_ *nats.Msg) {
+		nc.Barrier(func() { ch <- true })
+		nc.Close()
+	}); err != nil {
+		t.Fatalf("Error on subscribe: %v", err)
+	}
+	if err := nc.Publish("bar", []byte("hello")); err != nil {
+		t.Fatalf("Error on publish: %v", err)
+	}
+	if err := nc.Flush(); err != nil {
+		t.Fatalf("Error on flush: %v", err)
+	}
+	if err := Wait(ch); err != nil {
+		t.Fatal("Barrier function was not invoked")
+	}
+
+	// Finally, check that if connection is closed, Barrier returns
+	// an error.
+	if err := nc.Barrier(func() { ch <- true }); err != nats.ErrConnectionClosed {
+		t.Fatalf("Expected error %v, got %v", nats.ErrConnectionClosed, err)
+	}
+
+	// Check that one can call connection methods from Barrier
+	// when there is no async subscriptions
+	nc = NewDefaultConnection(t)
+	defer nc.Close()
+
+	if err := nc.Barrier(func() {
+		ch <- nc.TLSRequired()
+	}); err != nil {
+		t.Fatalf("Error on Barrier: %v", err)
+	}
+	if err := Wait(ch); err != nil {
+		t.Fatal("Barrier was blocked")
+	}
+}
+
+func TestReceiveInfoRightAfterFirstPong(t *testing.T) {
+	l, err := net.Listen("tcp", "127.0.0.1:0")
+	if err != nil {
+		t.Fatalf("Error on listen: %v", err)
+	}
+	tl := l.(*net.TCPListener)
+	defer tl.Close()
+	addr := tl.Addr().(*net.TCPAddr)
+
+	wg := sync.WaitGroup{}
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+
+		c, err := tl.Accept()
+		if err != nil {
+			return
+		}
+		defer c.Close()
+		// Send the initial INFO
+		c.Write([]byte("INFO {}\r\n"))
+		buf := make([]byte, 0, 100)
+		b := make([]byte, 100)
+		for {
+			n, err := c.Read(b)
+			if err != nil {
+				return
+			}
+			buf = append(buf, b[:n]...)
+			if bytes.Contains(buf, []byte("PING\r\n")) {
+				break
+			}
+		}
+		// Send PONG and following INFO in one go (or at least try).
+		// The processing of PONG in sendConnect() should leave the
+		// rest for the readLoop to process.
+		c.Write([]byte(fmt.Sprintf("PONG\r\nINFO {\"connect_urls\":[\"127.0.0.1:%d\", \"me:1\"]}\r\n", addr.Port)))
+		// Wait for client to disconnect
+		for {
+			if _, err := c.Read(buf); err != nil {
+				return
+			}
+		}
+	}()
+
+	nc, err := nats.Connect(fmt.Sprintf("nats://127.0.0.1:%d", addr.Port))
+	if err != nil {
+		t.Fatalf("Error on connect: %v", err)
+	}
+	defer nc.Close()
+	var (
+		ds      []string
+		timeout = time.Now().Add(2 * time.Second)
+		ok      = false
+	)
+	for time.Now().Before(timeout) {
+		ds = nc.DiscoveredServers()
+		if len(ds) == 1 && ds[0] == "nats://me:1" {
+			ok = true
+			break
+		}
+		time.Sleep(50 * time.Millisecond)
+	}
+	nc.Close()
+	wg.Wait()
+	if !ok {
+		t.Fatalf("Unexpected discovered servers: %v", ds)
+	}
+}
+
+func TestReceiveInfoWithEmptyConnectURLs(t *testing.T) {
+	ready := make(chan bool, 2)
+	ch := make(chan bool, 1)
+	wg := sync.WaitGroup{}
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+
+		ports := []int{4222, 4223}
+		for i := 0; i < 2; i++ {
+			l, err := net.Listen("tcp", fmt.Sprintf("127.0.0.1:%d", ports[i]))
+			if err != nil {
+				t.Fatalf("Error on listen: %v", err)
+			}
+			tl := l.(*net.TCPListener)
+			defer tl.Close()
+
+			ready <- true
+
+			c, err := tl.Accept()
+			if err != nil {
+				return
+			}
+			defer c.Close()
+
+			// Send the initial INFO
+			c.Write([]byte(fmt.Sprintf("INFO {\"server_id\":\"server%d\"}\r\n", (i + 1))))
+			buf := make([]byte, 0, 100)
+			b := make([]byte, 100)
+			for {
+				n, err := c.Read(b)
+				if err != nil {
+					return
+				}
+				buf = append(buf, b[:n]...)
+				if bytes.Contains(buf, []byte("PING\r\n")) {
+					break
+				}
+			}
+			if i == 0 {
+				// Send PONG and following INFO in one go (or at least try).
+				// The processing of PONG in sendConnect() should leave the
+				// rest for the readLoop to process.
+				c.Write([]byte("PONG\r\nINFO {\"server_id\":\"server1\",\"connect_urls\":[\"127.0.0.1:4222\", \"127.0.0.1:4223\", \"127.0.0.1:4224\"]}\r\n"))
+				// Wait for the notication
+				<-ch
+				// Close the connection in our side and go back into accept
+				c.Close()
+			} else {
+				// Send no connect ULRs (as if this was an older server that could in some cases
+				// send an empty array)
+				c.Write([]byte(fmt.Sprintf("PONG\r\nINFO {\"server_id\":\"server2\"}\r\n")))
+				// Wait for client to disconnect
+				for {
+					if _, err := c.Read(buf); err != nil {
+						return
+					}
+				}
+			}
+		}
+	}()
+
+	// Wait for listener to be up and running
+	if err := Wait(ready); err != nil {
+		t.Fatal("Listener not ready")
+	}
+
+	rch := make(chan bool)
+	nc, err := nats.Connect("nats://127.0.0.1:4222",
+		nats.ReconnectWait(50*time.Millisecond),
+		nats.ReconnectHandler(func(_ *nats.Conn) {
+			rch <- true
+		}))
+	if err != nil {
+		t.Fatalf("Error on connect: %v", err)
+	}
+	defer nc.Close()
+	var (
+		ds      []string
+		timeout = time.Now().Add(2 * time.Second)
+		ok      = false
+	)
+	for time.Now().Before(timeout) {
+		ds = nc.DiscoveredServers()
+		if len(ds) == 2 {
+			if (ds[0] == "nats://127.0.0.1:4223" && ds[1] == "nats://127.0.0.1:4224") ||
+				(ds[0] == "nats://127.0.0.1:4224" && ds[1] == "nats://127.0.0.1:4223") {
+				ok = true
+				break
+			}
+		}
+		time.Sleep(50 * time.Millisecond)
+	}
+	if !ok {
+		t.Fatalf("Unexpected discovered servers: %v", ds)
+	}
+	// Make the server close our connection
+	ch <- true
+	// Wait for the reconnect
+	if err := Wait(rch); err != nil {
+		t.Fatal("Did not reconnect")
+	}
+	// Discovered servers should still contain nats://me:1
+	ds = nc.DiscoveredServers()
+	if len(ds) != 2 ||
+		!((ds[0] == "nats://127.0.0.1:4223" && ds[1] == "nats://127.0.0.1:4224") ||
+			(ds[0] == "nats://127.0.0.1:4224" && ds[1] == "nats://127.0.0.1:4223")) {
+		t.Fatalf("Unexpected discovered servers list: %v", ds)
+	}
+	nc.Close()
+	wg.Wait()
 }

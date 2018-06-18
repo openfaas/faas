@@ -1,4 +1,15 @@
-// Copyright 2012-2017 Apcera Inc. All rights reserved.
+// Copyright 2012-2018 The NATS Authors
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 // A Go client for the NATS messaging system (https://nats.io).
 package nats
@@ -11,15 +22,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"math/rand"
 	"net"
 	"net/url"
-	"regexp"
 	"runtime"
 	"strconv"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/nats-io/go-nats/util"
@@ -28,7 +40,7 @@ import (
 
 // Default Constants
 const (
-	Version                 = "1.3.1"
+	Version                 = "1.5.0"
 	DefaultURL              = "nats://localhost:4222"
 	DefaultPort             = 4222
 	DefaultMaxReconnect     = 60
@@ -351,6 +363,12 @@ type Msg struct {
 	Data    []byte
 	Sub     *Subscription
 	next    *Msg
+	barrier *barrierInfo
+}
+
+type barrierInfo struct {
+	refs int64
+	f    func()
 }
 
 // Tracks various stats received and sent on this connection,
@@ -528,6 +546,14 @@ func MaxReconnects(max int) Option {
 	}
 }
 
+// ReconnectBufSize sets the buffer size of messages kept while busy reconnecting
+func ReconnectBufSize(size int) Option {
+	return func(o *Options) error {
+		o.ReconnectBufSize = size
+		return nil
+	}
+}
+
 // Timeout is an Option to set the timeout for Dial on a connection.
 func Timeout(t time.Duration) Option {
 	return func(o *Options) error {
@@ -568,7 +594,7 @@ func DiscoveredServersHandler(cb ConnHandler) Option {
 	}
 }
 
-// ErrHandler is an Option to set the async error  handler.
+// ErrorHandler is an Option to set the async error  handler.
 func ErrorHandler(cb ErrHandler) Option {
 	return func(o *Options) error {
 		o.AsyncErrorCB = cb
@@ -615,7 +641,7 @@ func SetCustomDialer(dialer CustomDialer) Option {
 	}
 }
 
-// UseOldRequestyStyle is an Option to force usage of the old Request style.
+// UseOldRequestStyle is an Option to force usage of the old Request style.
 func UseOldRequestStyle() Option {
 	return func(o *Options) error {
 		o.UseOldRequestStyle = true
@@ -665,7 +691,7 @@ func (nc *Conn) SetClosedHandler(cb ConnHandler) {
 	nc.Opts.ClosedCB = cb
 }
 
-// SetErrHandler will set the async error handler.
+// SetErrorHandler will set the async error handler.
 func (nc *Conn) SetErrorHandler(cb ErrHandler) {
 	if nc == nil {
 		return
@@ -1094,7 +1120,7 @@ func (nc *Conn) connect() error {
 		} else {
 			// Cancel out default connection refused, will trigger the
 			// No servers error conditional
-			if matched, _ := regexp.Match(`connection refused`, []byte(err.Error())); matched {
+			if strings.Contains(err.Error(), "connection refused") {
 				returnedErr = nil
 			}
 		}
@@ -1229,44 +1255,69 @@ func (nc *Conn) sendConnect() error {
 		return err
 	}
 
-	// Now read the response from the server.
-	br := bufio.NewReaderSize(nc.conn, defaultBufSize)
-	line, err := br.ReadString('\n')
+	// We don't want to read more than we need here, otherwise
+	// we would need to transfer the excess read data to the readLoop.
+	// Since in normal situations we just are looking for a PONG\r\n,
+	// reading byte-by-byte here is ok.
+	proto, err := nc.readProto()
 	if err != nil {
 		return err
 	}
 
 	// If opts.Verbose is set, handle +OK
-	if nc.Opts.Verbose && line == okProto {
+	if nc.Opts.Verbose && proto == okProto {
 		// Read the rest now...
-		line, err = br.ReadString('\n')
+		proto, err = nc.readProto()
 		if err != nil {
 			return err
 		}
 	}
 
 	// We expect a PONG
-	if line != pongProto {
+	if proto != pongProto {
 		// But it could be something else, like -ERR
 
 		// Since we no longer use ReadLine(), trim the trailing "\r\n"
-		line = strings.TrimRight(line, "\r\n")
+		proto = strings.TrimRight(proto, "\r\n")
 
 		// If it's a server error...
-		if strings.HasPrefix(line, _ERR_OP_) {
+		if strings.HasPrefix(proto, _ERR_OP_) {
 			// Remove -ERR, trim spaces and quotes, and convert to lower case.
-			line = normalizeErr(line)
-			return errors.New("nats: " + line)
+			proto = normalizeErr(proto)
+			return errors.New("nats: " + proto)
 		}
 
 		// Notify that we got an unexpected protocol.
-		return fmt.Errorf("nats: expected '%s', got '%s'", _PONG_OP_, line)
+		return fmt.Errorf("nats: expected '%s', got '%s'", _PONG_OP_, proto)
 	}
 
 	// This is where we are truly connected.
 	nc.status = CONNECTED
 
 	return nil
+}
+
+// reads a protocol one byte at a time.
+func (nc *Conn) readProto() (string, error) {
+	var (
+		_buf     = [10]byte{}
+		buf      = _buf[:0]
+		b        = [1]byte{}
+		protoEnd = byte('\n')
+	)
+	for {
+		if _, err := nc.conn.Read(b[:1]); err != nil {
+			// Do not report EOF error
+			if err == io.EOF {
+				return string(buf), nil
+			}
+			return "", err
+		}
+		buf = append(buf, b[0])
+		if b[0] == protoEnd {
+			return string(buf), nil
+		}
+	}
 }
 
 // A control protocol line.
@@ -1460,10 +1511,12 @@ func (nc *Conn) processOpErr(err error) {
 			nc.conn = nil
 		}
 
-		// Create a new pending buffer to underpin the bufio Writer while
-		// we are reconnecting.
-		nc.pending = &bytes.Buffer{}
-		nc.bw = bufio.NewWriterSize(nc.pending, nc.Opts.ReconnectBufSize)
+		// Reset pending buffers before reconnecting.
+		if nc.pending == nil {
+			nc.pending = new(bytes.Buffer)
+		}
+		nc.pending.Reset()
+		nc.bw.Reset(nc.pending)
 
 		go nc.doReconnect()
 		nc.mu.Unlock()
@@ -1571,6 +1624,13 @@ func (nc *Conn) waitForMsgs(s *Subscription) {
 			if s.pHead == nil {
 				s.pTail = nil
 			}
+			if m.barrier != nil {
+				s.mu.Unlock()
+				if atomic.AddInt64(&m.barrier.refs, -1) == 0 {
+					m.barrier.f()
+				}
+				continue
+			}
 			s.pMsgs--
 			s.pBytes -= len(m.Data)
 		}
@@ -1599,6 +1659,19 @@ func (nc *Conn) waitForMsgs(s *Subscription) {
 			break
 		}
 	}
+	// Check for barrier messages
+	s.mu.Lock()
+	for m := s.pHead; m != nil; m = s.pHead {
+		if m.barrier != nil {
+			s.mu.Unlock()
+			if atomic.AddInt64(&m.barrier.refs, -1) == 0 {
+				m.barrier.f()
+			}
+			s.mu.Lock()
+		}
+		s.pHead = m.next
+	}
+	s.mu.Unlock()
 }
 
 // processMsg is called by parse and will place the msg on the
@@ -1812,32 +1885,67 @@ func (nc *Conn) processInfo(info string) error {
 	if info == _EMPTY_ {
 		return nil
 	}
-	if err := json.Unmarshal([]byte(info), &nc.info); err != nil {
+	ncInfo := serverInfo{}
+	if err := json.Unmarshal([]byte(info), &ncInfo); err != nil {
 		return err
 	}
+	// Copy content into connection's info structure.
+	nc.info = ncInfo
+	// The array could be empty/not present on initial connect,
+	// if advertise is disabled on that server, or servers that
+	// did not include themselves in the async INFO protocol.
+	// If empty, do not remove the implicit servers from the pool.
+	if len(ncInfo.ConnectURLs) == 0 {
+		return nil
+	}
+	// Note about pool randomization: when the pool was first created,
+	// it was randomized (if allowed). We keep the order the same (removing
+	// implicit servers that are no longer sent to us). New URLs are sent
+	// to us in no specific order so don't need extra randomization.
+	hasNew := false
+	// This is what we got from the server we are connected to.
 	urls := nc.info.ConnectURLs
-	if len(urls) > 0 {
-		added := false
-		// If randomization is allowed, shuffle the received array, not the
-		// entire pool. We want to preserve the pool's order up to this point
-		// (this would otherwise be problematic for the (re)connect loop).
-		if !nc.Opts.NoRandomize {
-			for i := range urls {
-				j := rand.Intn(i + 1)
-				urls[i], urls[j] = urls[j], urls[i]
-			}
+	// Transform that to a map for easy lookups
+	tmp := make(map[string]struct{}, len(urls))
+	for _, curl := range urls {
+		tmp[curl] = struct{}{}
+	}
+	// Walk the pool and removed the implicit servers that are no longer in the
+	// given array/map
+	sp := nc.srvPool
+	for i := 0; i < len(sp); i++ {
+		srv := sp[i]
+		curl := srv.url.Host
+		// Check if this URL is in the INFO protocol
+		_, inInfo := tmp[curl]
+		// Remove from the temp map so that at the end we are left with only
+		// new (or restarted) servers that need to be added to the pool.
+		delete(tmp, curl)
+		// Keep servers that were set through Options, but also the one that
+		// we are currently connected to (even if it is a discovered server).
+		if !srv.isImplicit || srv.url == nc.url {
+			continue
 		}
-		for _, curl := range urls {
-			if _, present := nc.urls[curl]; !present {
-				if err := nc.addURLToPool(fmt.Sprintf("nats://%s", curl), true); err != nil {
-					continue
-				}
-				added = true
-			}
+		if !inInfo {
+			// Remove from server pool. Keep current order.
+			copy(sp[i:], sp[i+1:])
+			nc.srvPool = sp[:len(sp)-1]
+			sp = nc.srvPool
+			i--
 		}
-		if added && !nc.initc && nc.Opts.DiscoveredServersCB != nil {
-			nc.ach <- func() { nc.Opts.DiscoveredServersCB(nc) }
+	}
+	// If there are any left in the tmp map, these are new (or restarted) servers
+	// and need to be added to the pool.
+	for curl := range tmp {
+		// Before adding, check if this is a new (as in never seen) URL.
+		// This is used to figure out if we invoke the DiscoveredServersCB
+		if _, present := nc.urls[curl]; !present {
+			hasNew = true
 		}
+		nc.addURLToPool(fmt.Sprintf("nats://%s", curl), true)
+	}
+	if hasNew && !nc.initc && nc.Opts.DiscoveredServersCB != nil {
+		nc.ach <- func() { nc.Opts.DiscoveredServersCB(nc) }
 	}
 	return nil
 }
@@ -3005,4 +3113,52 @@ func (nc *Conn) TLSRequired() bool {
 	nc.mu.Lock()
 	defer nc.mu.Unlock()
 	return nc.info.TLSRequired
+}
+
+// Barrier schedules the given function `f` to all registered asynchronous
+// subscriptions.
+// Only the last subscription to see this barrier will invoke the function.
+// If no subscription is registered at the time of this call, `f()` is invoked
+// right away.
+// ErrConnectionClosed is returned if the connection is closed prior to
+// the call.
+func (nc *Conn) Barrier(f func()) error {
+	nc.mu.Lock()
+	if nc.isClosed() {
+		nc.mu.Unlock()
+		return ErrConnectionClosed
+	}
+	nc.subsMu.Lock()
+	// Need to figure out how many non chan subscriptions there are
+	numSubs := 0
+	for _, sub := range nc.subs {
+		if sub.typ == AsyncSubscription {
+			numSubs++
+		}
+	}
+	if numSubs == 0 {
+		nc.subsMu.Unlock()
+		nc.mu.Unlock()
+		f()
+		return nil
+	}
+	barrier := &barrierInfo{refs: int64(numSubs), f: f}
+	for _, sub := range nc.subs {
+		sub.mu.Lock()
+		if sub.mch == nil {
+			msg := &Msg{barrier: barrier}
+			// Push onto the async pList
+			if sub.pTail != nil {
+				sub.pTail.next = msg
+			} else {
+				sub.pHead = msg
+				sub.pCond.Signal()
+			}
+			sub.pTail = msg
+		}
+		sub.mu.Unlock()
+	}
+	nc.subsMu.Unlock()
+	nc.mu.Unlock()
+	return nil
 }

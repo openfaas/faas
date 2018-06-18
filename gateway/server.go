@@ -88,7 +88,7 @@ func main() {
 
 	if config.UseNATS() {
 		log.Println("Async enabled: Using NATS Streaming.")
-		natsQueue, queueErr := natsHandler.CreateNatsQueue(*config.NATSAddress, *config.NATSPort)
+		natsQueue, queueErr := natsHandler.CreateNatsQueue(*config.NATSAddress, *config.NATSPort, natsHandler.DefaultNatsConfig{})
 		if queueErr != nil {
 			log.Fatalln(queueErr)
 		}

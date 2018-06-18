@@ -6,7 +6,6 @@ RUN curl -sL https://github.com/alexellis/license-check/releases/download/0.2.2/
 
 WORKDIR /go/src/github.com/openfaas/faas/gateway
 
-
 COPY vendor         vendor
 
 COPY handlers       handlers
@@ -20,12 +19,19 @@ COPY plugin         plugin
 COPY server.go      .
 
 # Run a gofmt and exclude all vendored code.
-RUN license-check -path ./ --verbose=false "Alex Ellis" "OpenFaaS Project" \
+RUN license-check -path ./ --verbose=false "Alex Ellis" "OpenFaaS Project" "OpenFaaS Authors" \
     && test -z "$(gofmt -l $(find . -type f -name '*.go' -not -path "./vendor/*"))" \
     && go test $(go list ./... | grep -v integration | grep -v /vendor/ | grep -v /template/) -cover \
     && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gateway .
 
 FROM alpine:3.7
+
+LABEL org.label-schema.license="MIT" \
+      org.label-schema.vcs-url="https://github.com/openfaas/faas" \
+      org.label-schema.vcs-type="Git" \
+      org.label-schema.name="openfaas/faas" \
+      org.label-schema.vendor="openfaas" \
+      org.label-schema.docker.schema-version="1.0"
 
 RUN addgroup -S app \
     && adduser -S -g app app

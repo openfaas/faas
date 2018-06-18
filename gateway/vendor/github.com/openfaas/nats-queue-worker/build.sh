@@ -9,4 +9,3 @@ fi
 echo Building functions/queue-worker:$eTAG
 
 docker build --build-arg http_proxy=$http_proxy -t functions/queue-worker:$eTAG .
-

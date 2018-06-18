@@ -15,3 +15,4 @@
 .idea
 .DS_Store
 
+nats-queue-worker

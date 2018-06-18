@@ -2,7 +2,7 @@
 
 NATS Streaming is an extremely performant, lightweight reliable streaming platform powered by [NATS](https://nats.io).
 
-[![License MIT](https://img.shields.io/npm/l/express.svg)](http://opensource.org/licenses/MIT)
+[![License Apache 2](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Build Status](https://travis-ci.org/nats-io/go-nats-streaming.svg?branch=master)](http://travis-ci.org/nats-io/go-nats-streaming)
 [![Coverage Status](https://coveralls.io/repos/nats-io/go-nats-streaming/badge.svg?branch=master)](https://coveralls.io/r/nats-io/go-nats-streaming?branch=master)
 
@@ -16,9 +16,6 @@ NATS Streaming provides the following high-level feature set:
 ## Notes
 
 - Please raise questions/issues via the [Issue Tracker](https://github.com/nats-io/go-nats-streaming/issues).
-
-## Known Issues
-- Time- and sequence-based subscriptions are exact. Requesting a time or seqno before the earliest stored message for a subject will result in an error (in SubscriptionRequest.Error)
 
 ## Installation
 
@@ -59,29 +56,29 @@ The options are described with examples below:
 // Subscribe starting with most recently published value
 sub, err := sc.Subscribe("foo", func(m *stan.Msg) {
     fmt.Printf("Received a message: %s\n", string(m.Data))
-}, StartWithLastReceived())
+}, stan.StartWithLastReceived())
 
 // Receive all stored values in order
 sub, err := sc.Subscribe("foo", func(m *stan.Msg) {
     fmt.Printf("Received a message: %s\n", string(m.Data))
-}, DeliverAllAvailable())
+}, stan.DeliverAllAvailable())
 
 // Receive messages starting at a specific sequence number
 sub, err := sc.Subscribe("foo", func(m *stan.Msg) {
     fmt.Printf("Received a message: %s\n", string(m.Data))
-}, StartAtSequence(22))
+}, stan.StartAtSequence(22))
 
 // Subscribe starting at a specific time
 var startTime time.Time
 ...
 sub, err := sc.Subscribe("foo", func(m *stan.Msg) {
     fmt.Printf("Received a message: %s\n", string(m.Data))
-}, StartAtTime(startTime))
+}, stan.StartAtTime(startTime))
 
 // Subscribe starting a specific amount of time in the past (e.g. 30 seconds ago)
 sub, err := sc.Subscribe("foo", func(m *stan.Msg) {
     fmt.Printf("Received a message: %s\n", string(m.Data))
-}, StartAtTimeDelta(time.ParseDuration("30s")))
+}, stan.StartAtTimeDelta(time.ParseDuration("30s")))
 ```
 
 ### Durable Subscriptions
@@ -184,7 +181,7 @@ that is, the start position will take effect and delivery will start from there.
 
 ### Durable Queue Groups
 
-As described above, for non durable queue subsribers, when the last member leaves the group,
+As described above, for non durable queue subscribers, when the last member leaves the group,
 that group is removed. A durable queue group allows you to have all members leave but still
 maintain state. When a member re-joins, it starts at the last position in that group.
 
@@ -220,7 +217,7 @@ The rules for non-durable queue subscribers apply to durable subscribers.
 
 As for non-durable queue subscribers, if a member's connection is closed, or if
 `Unsubscribe` its called, the member leaves the group. Any unacknowledged message
-is transfered to remaining members. See *Closing the Group* for important difference
+is transferred to remaining members. See *Closing the Group* for important difference
 with non-durable queue subscribers.
 
 #### Closing the Group
@@ -241,6 +238,58 @@ NATS Streaming subscriptions **do not** support wildcards.
 
 
 ## Advanced Usage
+
+### Connection Status
+
+The fact that the NATS Streaming server and clients are not directly connected poses a challenge when it comes to know if a client is still valid.
+When a client disconnects, the streaming server is not notified, hence the importance of calling `Close()`. The server sends heartbeats
+to the client's private inbox and if it misses a certain number of responses, it will consider the client's connection lost and remove it
+from its state.
+
+Before version `0.4.0`, the client library was not sending PINGs to the streaming server to detect connection failure. This was problematic
+especially if an application was never sending data (had only subscriptions for instance). Picture the case where a client connects to a
+NATS Server which has a route to a NATS Streaming server (either connecting to a standalone NATS Server or the server it embeds). If the
+connection between the streaming server and the client's NATS Server is broken, the client's NATS connection would still be ok, yet, no
+communication with the streaming server is possible. This is why relying on `Conn.NatsConn()` to check the status is not helpful.
+
+Starting version `0.4.0` of this library and server `0.10.0`, the client library will now send PINGs at regular intervals (default is 5 seconds)
+and will close the streaming connection after a certain number of PINGs have been sent without any response (default is 3). When that
+happens, a callback - if one is registered - will be invoked to notify the user that the connection is permanently lost, and the reason
+for the failure.
+
+Here is how you would specify your own PING values and the callback:
+
+```go
+
+    // Send PINGs every 10 seconds, and fail after 5 PINGs without any response.
+    sc, err := stan.Connect(clusterName, clientName,
+        stan.Pings(10, 5),    
+        stan.SetConnectionLostHandler(func(_ stan.Conn, reason error) {
+            log.Fatalf("Connection lost, reason: %v", reason)
+        }))      
+```
+
+Note that the only way to be notified is to set the callback. If the callback is not set, PINGs are still sent and the connection
+will be closed if needed, but the application won't know if it has only subscriptions.
+
+When the connection is lost, your application would have to re-create it and all subscriptions if any.
+
+When no NATS connection is provided to the `Connect()` call, the library creates its own NATS connection and will now
+set the reconnect attempts to "infinite", which was not the case before. It should therefore be possible for the library to
+always reconnect, but this does not mean that the streaming connection will not be closed, even if you set a very high
+threshold for the PINGs max out value. Keep in mind that while the client is disconnected, the server is sending heartbeats to
+the clients too, and when not getting any response, it will remove that client from its state. When the communication is restored,
+the PINGs sent to the server will allow to detect this condition and report to the client that the connection is now closed.
+
+Also, while a client is "disconnected" from the server, another application with connectivity to the streaming server may
+connect and uses the same client ID. The server, when detecting the duplicate client ID, will try to contact the first client
+to know if it should reject the connect request of the second client. Since the communication between the server and the
+first client is broken, the server will not get a response and therefore will replace the first client with the second one.
+
+Prior to client `0.4.0` and server `0.10.0`, if the communication between the first client and server were to be restored,
+and the application would send messages, the server would accept those because the published messages client ID would be
+valid, although the client is not. With client at `0.4.0+` and server `0.10.0+`, additional information is sent with each
+message to allow the server to reject messages from a client that has been replaced by another client.
 
 ### Asynchronous Publishing
 
@@ -301,7 +350,7 @@ ah := func(nuid string, err error) {
 }
 
 for i := 1; i < 1000; i++ {
-    // If the server is unable to keep up with the publisher, the number of oustanding acks will eventually
+    // If the server is unable to keep up with the publisher, the number of outstanding acks will eventually
     // reach the max and this call will block
     guid, _ := sc.PublishAsync("foo", []byte("Hello World"), ah)
 }
@@ -327,24 +376,5 @@ sc.Subscribe("foo", func(m *stan.Msg) {
 
 ## License
 
-(The MIT License)
-
-Copyright (c) 2012-2016 Apcera Inc.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to
-deal in the Software without restriction, including without limitation the
-rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-sell copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-IN THE SOFTWARE.
+Unless otherwise noted, the NATS source files are distributed
+under the Apache Version 2.0 license found in the LICENSE file.

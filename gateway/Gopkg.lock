@@ -8,8 +8,18 @@
   revision = "4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9"
 
 [[projects]]
+  name = "github.com/docker/distribution"
+  packages = ["uuid"]
+  revision = "48294d928ced5dd9b378f7fd7c6f5da3ff3f2c89"
+  version = "v2.6.2"
+
+[[projects]]
   name = "github.com/gogo/protobuf"
-  packages = ["gogoproto","proto","protoc-gen-gogo/descriptor"]
+  packages = [
+    "gogoproto",
+    "proto",
+    "protoc-gen-gogo/descriptor"
+  ]
   revision = "342cbe0a04158f6dcb03ca0079991a51a4248c02"
   version = "v0.5"
 
@@ -39,15 +49,22 @@
 
 [[projects]]
   name = "github.com/nats-io/go-nats"
-  packages = [".","encoders/builtin","util"]
-  revision = "d66cb54e6b7bdd93f0b28afc8450d84c780dfb68"
-  version = "v1.4.0"
+  packages = [
+    ".",
+    "encoders/builtin",
+    "util"
+  ]
+  revision = "062418ea1c2181f52dc0f954f6204370519a868b"
+  version = "v1.5.0"
 
 [[projects]]
   name = "github.com/nats-io/go-nats-streaming"
-  packages = [".","pb"]
-  revision = "6e620057a207bd61e992c1c5b6a2de7b6a4cb010"
-  version = "v0.3.4"
+  packages = [
+    ".",
+    "pb"
+  ]
+  revision = "e15a53f85e4932540600a16b56f6c4f65f58176f"
+  version = "v0.4.0"
 
 [[projects]]
   name = "github.com/nats-io/nuid"
@@ -55,12 +72,11 @@
   revision = "289cccf02c178dc782430d534e3c1f5b72af807f"
   version = "v1.0.0"
 
-
 [[projects]]
   name = "github.com/openfaas/nats-queue-worker"
   packages = ["handler"]
-  revision = "c064b78787b00d458fcb96435b0c1fff413126c9"
-  version = "0.4"
+  revision = "62e8dcfe87fc01de8b94156f3e4291370c0c84a8"
+  version = "0.4.6"
 
 [[projects]]
   name = "github.com/prometheus/client_golang"
@@ -77,18 +93,25 @@
 [[projects]]
   branch = "master"
   name = "github.com/prometheus/common"
-  packages = ["expfmt","internal/bitbucket.org/ww/goautoneg","model"]
+  packages = [
+    "expfmt",
+    "internal/bitbucket.org/ww/goautoneg",
+    "model"
+  ]
   revision = "2e54d0b93cba2fd133edc32211dcc32c06ef72ca"
 
 [[projects]]
   branch = "master"
   name = "github.com/prometheus/procfs"
-  packages = [".","xfs"]
+  packages = [
+    ".",
+    "xfs"
+  ]
   revision = "b15cd069a83443be3154b719d0cc9fe8117f09fb"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6c22951557e478603b9ee6d67e3787efd5230d52b29b01ad8e136fd3e1ca1bde"
+  inputs-digest = "181fb3c695e3b12e0a8e967135ef717ea83d9525c7c31b92f641d7a963d26254"
   solver-name = "gps-cdcl"
   solver-version = 1

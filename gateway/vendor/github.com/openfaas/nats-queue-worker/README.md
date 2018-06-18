@@ -6,7 +6,7 @@ This is a queue-worker to enable asynchronous processing of function requests.
 
 * [Read more in the async guide](https://github.com/openfaas/faas/blob/master/guide/asynchronous.md)
 
-Hub image: [functions/queue-worker:0.1.1](https://hub.docker.com/r/functions/queue-worker/)
+Hub image: [functions/queue-worker](https://hub.docker.com/r/functions/queue-worker/)
 
 License: MIT
 

@@ -1,4 +1,15 @@
-// Copyright 2016 Apcera Inc. All rights reserved.
+// Copyright 2016-2018 The NATS Authors
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 //
 // Uses https://github.com/gogo/protobuf
 // compiled via `protoc -I=. -I=$GOPATH/src  --gogofaster_out=. protocol.proto`
@@ -20,6 +31,7 @@ message PubMsg {
   string subject  = 3;  // subject
   string reply    = 4;  // optional reply
   bytes  data     = 5;  // payload
+  bytes  connID   = 6;  // Connection ID. For servers that know about this field, clientID can be omitted
 
   bytes  sha256  = 10; // optional sha256 of data
 }
@@ -53,6 +65,10 @@ message Ack {
 message ConnectRequest {
   string clientID       = 1;  // Client name/identifier.
   string heartbeatInbox = 2;  // Inbox for server initiated heartbeats.
+  int32  protocol       = 3;  // Protocol the client is at.
+  bytes  connID         = 4;  // Connection ID, a way to uniquely identify a connection (no connection should ever have the same)
+  int32  pingInterval   = 5;  // Interval at which client wishes to send PINGs (expressed in seconds).
+  int32  pingMaxOut     = 6;  // Maximum number of PINGs without a response after which the connection can be considered lost.
 }
 
 // Response to a client connect
@@ -63,8 +79,22 @@ message ConnectResponse {
   string closeRequests    = 4;   // Subject for closing the stan connection
   string error            = 5;   // err string, empty/omitted if no error
   string subCloseRequests = 6;   // Subject to use for subscription close requests
+  string pingRequests     = 7;   // Subject to use for PING requests
+  int32  pingInterval     = 8;   // Interval at which client should send PINGs (expressed in seconds).
+  int32  pingMaxOut       = 9;   // Maximum number of PINGs without a response after which the connection can be considered lost
+  int32  protocol         = 10;  // Protocol version the server is at
 
   string publicKey     = 100; // Possibly used to sign acks, etc.
+}
+
+// PING from client to server
+message Ping {
+  bytes connID    = 1;  // Connection ID
+}
+
+// PING response from the server
+message PingResponse {
+  string error    = 1;  // Error string, empty/omitted if no error
 }
 
 // Enum for start position type.

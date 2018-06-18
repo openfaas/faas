@@ -98,6 +98,7 @@ func main() {
 
 		req := queue.Request{}
 		unmarshalErr := json.Unmarshal(msg.Data, &req)
+
 		if unmarshalErr != nil {
 			log.Printf("Unmarshal error: %s with data %s", unmarshalErr, msg.Data)
 			return
@@ -115,12 +116,10 @@ func main() {
 
 		functionURL := fmt.Sprintf("http://%s%s:8080/%s", req.Function, functionSuffix, queryString)
 
-		request, err := http.NewRequest("POST", functionURL, bytes.NewReader(req.Body))
+		request, err := http.NewRequest(http.MethodPost, functionURL, bytes.NewReader(req.Body))
 		defer request.Body.Close()
 
-		for k, v := range req.Header {
-			request.Header[k] = v
-		}
+		copyHeaders(request.Header, &req.Header)
 
 		res, err := client.Do(request)
 		var status int
@@ -135,7 +134,7 @@ func main() {
 			if req.CallbackURL != nil {
 				log.Printf("Callback to: %s\n", req.CallbackURL.String())
 
-				resultStatusCode, resultErr := postResult(&client, req, functionResult, status)
+				resultStatusCode, resultErr := postResult(&client, res, functionResult, req.CallbackURL.String())
 				if resultErr != nil {
 					log.Println(resultErr)
 				} else {
@@ -170,7 +169,7 @@ func main() {
 
 		if req.CallbackURL != nil {
 			log.Printf("Callback to: %s\n", req.CallbackURL.String())
-			resultStatusCode, resultErr := postResult(&client, req, functionResult, res.StatusCode)
+			resultStatusCode, resultErr := postResult(&client, res, functionResult, req.CallbackURL.String())
 			if resultErr != nil {
 				log.Println(resultErr)
 			} else {
@@ -238,18 +237,21 @@ func main() {
 	<-cleanupDone
 }
 
-func postResult(client *http.Client, req queue.Request, result []byte, statusCode int) (int, error) {
+func postResult(client *http.Client, functionRes *http.Response, result []byte, callbackURL string) (int, error) {
 	var reader io.Reader
 
 	if result != nil {
 		reader = bytes.NewReader(result)
 	}
 
-	request, err := http.NewRequest("POST", req.CallbackURL.String(), reader)
+	request, err := http.NewRequest(http.MethodPost, callbackURL, reader)
+
+	copyHeaders(request.Header, &functionRes.Header)
+
 	res, err := client.Do(request)
 
 	if err != nil {
-		return http.StatusBadGateway, fmt.Errorf("error posting result to URL %s %s", req.CallbackURL.String(), err.Error())
+		return http.StatusBadGateway, fmt.Errorf("error posting result to URL %s %s", callbackURL, err.Error())
 	}
 
 	if request.Body != nil {
@@ -262,6 +264,14 @@ func postResult(client *http.Client, req queue.Request, result []byte, statusCod
 	return res.StatusCode, nil
 }
 
+func copyHeaders(destination http.Header, source *http.Header) {
+	for k, v := range *source {
+		vClone := make([]string, len(v))
+		copy(vClone, v)
+		(destination)[k] = vClone
+	}
+}
+
 func postReport(client *http.Client, function string, statusCode int, timeTaken float64, gatewayAddress string) (int, error) {
 	req := AsyncReport{
 		FunctionName: function,
@@ -271,7 +281,7 @@ func postReport(client *http.Client, function string, statusCode int, timeTaken 
 
 	targetPostback := "http://" + gatewayAddress + ":8080/system/async-report"
 	reqBytes, _ := json.Marshal(req)
-	request, err := http.NewRequest("POST", targetPostback, bytes.NewReader(reqBytes))
+	request, err := http.NewRequest(http.MethodPost, targetPostback, bytes.NewReader(reqBytes))
 	defer request.Body.Close()
 
 	res, err := client.Do(request)
