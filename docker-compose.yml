@@ -86,7 +86,7 @@ services:
                     - 'node.platform.os == linux'
 
     queue-worker:
-        image: functions/queue-worker:0.4.3
+        image: functions/queue-worker:0.4.6
         networks:
             - functions
         environment:
