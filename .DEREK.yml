@@ -11,6 +11,7 @@ maintainers:
  - stefanprodan
  - ovation22
  - cpitkin
+ - affix
 
 features:
  - dco_check
