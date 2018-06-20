@@ -52,7 +52,8 @@ Key:
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
-| [OpenFaas: Serverless Kubernetes Functions](https://www.meetup.com/meetup-group-hPTHYTAe/events/251435215/) | Burton Rheutan, Tunde Oladipupo | Zoom | 20-June-2018 |
+| [Opsview & Kubernetes (incl. OpenFaaS)](https://www.meetup.com/Birmingham-digital-development-Meetup/events/250680464/) | Opsview | Birmingham, UK | 28-June-2018 |
+| [OpenFaaS: Serverless Kubernetes Functions](https://www.meetup.com/meetup-group-hPTHYTAe/events/251435215/) | Burton Rheutan, Tunde Oladipupo | Zoom | 20-June-2018 |
 | [GitOps, OpenFaaS, Istio and Helm with Weaveworks](https://www.meetup.com/Weave-User-Group-Bay-Area/events/251409954/) | Alex Ellis, Stefan Prodan | SF, USA | 12-June-2018 |
 | [Serverless Panel @ Dockercon](https://dockercon18.smarteventscloud.com/connect/sessionDetail.ww?SESSION_ID=194869) | Alex Ellis & others | SF, USA | 14-June-2018 |
 | [Container Innovation SIG @ Dockercon](https://dockercon18.smarteventscloud.com/connect/sessionDetail.ww?SESSION_ID=187204) | Alex Ellis & others | SF, USA | 13-June-2018 |
@@ -60,7 +61,7 @@ Key:
 | [OpenFaaS @ GOTO Nights](https://www.meetup.com/GOTO-Nights-CPH/events/249895973/) | Alex Ellis | Copenhagen, DK | 1-May-2018 |
 | [Kubernetes Seattle: OpenFaas & Migrating to Envoy Proxy in K8s](https://www.meetup.com/Seattle-Kubernetes-Meetup/events/250105287/) | Eric Stoekl | Seattle, WA | 23-May-2018 |
 | [OpenFaaS @ Serverless CPH](https://serverlesscph.dk) | John Mccabe | Copenhagen, DK | 16-May-2018 |
-| Serverless OpenFaaS and Python Workshop @ Agile Peterborough        | Alex Ellis  | Peterborough, UK | 12-May-2018 |
+| Serverless OpenFaaS and Python Workshop @ Agile Peterborough        | Alex Ellis, Richard Gee  | Peterborough, UK | 12-May-2018 |
 | [Going Serverless with OpenFaaS, Kubernetes, and Python @ PyCon](https://us.pycon.org/2018/schedule/presentation/40/) | [Michael Herman](https://twitter.com/mikeherman) |  Cleveland, OH | 9-May-2018 |
 | [OpenFaaS talk and workshop @ Cisco DevNet Create](https://devnetcreate.io/2018/pages/speaker/speaker.html#Alex-Ellis) | Alex Ellis | Mountain View, CA | 10/11-Apr-2018 |
 | [OpenFaaS : a serverless framework on top of Docker and Kubernetes @ Devoxx France](https://www.devoxx.fr/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 18-Apr-2018 |
