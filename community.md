@@ -52,6 +52,7 @@ Key:
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFaas: Serverless Kubernetes Functions](https://www.meetup.com/meetup-group-hPTHYTAe/events/251435215/) | Burton Rheutan, Tunde Oladipupo | Zoom | 20-June-2018 |
 | [GitOps, OpenFaaS, Istio and Helm with Weaveworks](https://www.meetup.com/Weave-User-Group-Bay-Area/events/251409954/) | Alex Ellis, Stefan Prodan | SF, USA | 12-June-2018 |
 | [Serverless Panel @ Dockercon](https://dockercon18.smarteventscloud.com/connect/sessionDetail.ww?SESSION_ID=194869) | Alex Ellis & others | SF, USA | 14-June-2018 |
 | [Container Innovation SIG @ Dockercon](https://dockercon18.smarteventscloud.com/connect/sessionDetail.ww?SESSION_ID=187204) | Alex Ellis & others | SF, USA | 13-June-2018 |
