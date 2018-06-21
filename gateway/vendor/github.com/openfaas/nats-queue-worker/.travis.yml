@@ -17,7 +17,7 @@ install:
   - echo "Please don't go get"
 
 script:
-  - cd queue-worker && ./build.sh
+  - ./build.sh
 
 after_success:
     - if [ ! -z "$TRAVIS_TAG" ] ; then

@@ -33,6 +33,10 @@
   name = "github.com/openfaas/faas"
   version = "0.8.2"
 
+[[constraint]]
+  name = "github.com/nats-io/go-nats"
+  version = "v1.5.0"
+
 [prune]
   go-tests = true
   unused-packages = true

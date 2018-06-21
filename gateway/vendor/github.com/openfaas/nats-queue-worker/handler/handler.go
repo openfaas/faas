@@ -8,6 +8,7 @@ import (
 
 	"github.com/nats-io/go-nats-streaming"
 	"github.com/openfaas/faas/gateway/queue"
+	"regexp"
 )
 
 // NatsQueue queue for work
@@ -22,9 +23,11 @@ type NatsConfig interface {
 type DefaultNatsConfig struct {
 }
 
+var supportedCharacters, _ = regexp.Compile("[^a-zA-Z0-9-_]+")
+
 func (DefaultNatsConfig) GetClientID() string {
 	val, _ := os.Hostname()
-	return "faas-publisher-" + val
+	return getClientId(val)
 }
 
 // CreateNatsQueue ready for asynchronous processing
@@ -57,4 +60,8 @@ func (q *NatsQueue) Queue(req *queue.Request) error {
 	err = q.nc.Publish("faas-request", out)
 
 	return err
+}
+
+func getClientId(hostname string) string {
+	return "faas-publisher-" + supportedCharacters.ReplaceAllString(hostname, "_")
 }
