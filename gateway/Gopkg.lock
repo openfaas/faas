@@ -75,8 +75,8 @@
 [[projects]]
   name = "github.com/openfaas/nats-queue-worker"
   packages = ["handler"]
-  revision = "62e8dcfe87fc01de8b94156f3e4291370c0c84a8"
-  version = "0.4.6"
+  revision = "15287c9b2af293cee0c545ccc014a68e1f0a4424"
+  version = "0.4.7"
 
 [[projects]]
   name = "github.com/prometheus/client_golang"
@@ -112,6 +112,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "181fb3c695e3b12e0a8e967135ef717ea83d9525c7c31b92f641d7a963d26254"
+  inputs-digest = "f6e74bc55788e9ad6ea33f02d2be398013705f4606c29bbead71ac41a3c19514"
   solver-name = "gps-cdcl"
   solver-version = 1
