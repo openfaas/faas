@@ -53,6 +53,7 @@ Key:
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [Opsview & Kubernetes (incl. OpenFaaS)](https://www.meetup.com/Birmingham-digital-development-Meetup/events/250680464/) | Opsview | Birmingham, UK | 28-June-2018 |
+| [Meetup[4] - Pizza and OpenFaaS](https://www.meetup.com/Shirley-Software-Development-Meetup/events/251103825/) | [Steven Tsang](https://twitter.com/stetsang) | Shirley, UK | 27-June-2018 |
 | [OpenFaaS Bangalore Launch Meetup](https://www.meetup.com/Bangalore-OpenFaaS-Meetup/events/251711771/) | Vivek Singh, Vivek Sridhar, Tarun Mangukiya | Bangalore, IN | 23-June-2018 |
 | [Docker Seattle - Serverless Talks: Fn Project && OpenFaaS](https://www.meetup.com/Docker-Seattle/events/251686931/) | Eric Stoekl | Seattle, WA | 21-June-2018 |
 | [OpenFaaS: Serverless Kubernetes Functions](https://www.meetup.com/meetup-group-hPTHYTAe/events/251435215/) | Burton Rheutan, Tunde Oladipupo | Zoom | 20-June-2018 |
