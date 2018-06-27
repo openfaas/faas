@@ -12,6 +12,7 @@ maintainers:
  - ovation22
  - cpitkin
  - affix
+ - viveksyngh
 
 features:
  - dco_check
