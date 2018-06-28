@@ -109,7 +109,7 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 
 	secretPath := hasEnv.Getenv("secret_mount_path")
 	if len(secretPath) == 0 {
-		secretPath = "/run/secrets/"
+		secretPath = "/var/openfaas/secrets/"
 	}
 	cfg.SecretMountPath = secretPath
 
