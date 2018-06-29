@@ -52,6 +52,7 @@ Key:
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Cloud Native Glasgow - Serverless on Kubernetes](https://www.meetup.com/CloudNativeGlasgow/events/251913059/) | John McCabe | Glasgow, UK | 5-July-2018 |
 | [Opsview & Kubernetes (incl. OpenFaaS)](https://www.meetup.com/Birmingham-digital-development-Meetup/events/250680464/) | Opsview | Birmingham, UK | 28-June-2018 |
 | [Meetup[4] - Pizza and OpenFaaS](https://www.meetup.com/Shirley-Software-Development-Meetup/events/251103825/) | [Steven Tsang](https://twitter.com/stetsang) | Shirley, UK | 27-June-2018 |
 | [OpenFaaS Bangalore Launch Meetup](https://www.meetup.com/Bangalore-OpenFaaS-Meetup/events/251711771/) | Vivek Singh, Vivek Sridhar, Tarun Mangukiya | Bangalore, IN | 23-June-2018 |
