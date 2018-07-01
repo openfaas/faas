@@ -210,7 +210,7 @@ func TestRead_BasicAuthDefaults(t *testing.T) {
 		t.Fail()
 	}
 
-	wantSecretsMount := "/var/openfaas/secrets/"
+	wantSecretsMount := "/run/secrets/"
 	if config.SecretMountPath != wantSecretsMount {
 		t.Logf("config.SecretMountPath, want: %s, got: %s\n", wantSecretsMount, config.SecretMountPath)
 		t.Fail()
