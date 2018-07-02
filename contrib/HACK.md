@@ -29,7 +29,7 @@ $ cd gateway/
 $ ./build.sh
 ```
 
-This creates a Docker image with the name `functions/gateway:latest-dev`, but if you want to use something else then pass the tag as an argument to the `./build.sh` script. I.e. `./build.sh labels-pr`.
+This creates a Docker image with the name `openfaas/gateway:latest-dev`, but if you want to use something else then pass the tag as an argument to the `./build.sh` script. I.e. `./build.sh labels-pr`.
 
 3. Now edit the Docker image for the `gateway` service in your `docker-compose.yml` file.
 
@@ -67,5 +67,5 @@ $ docker run --name func_gateway -e "functions_provider_url=http://faas-swarm:80
   -v `pwd`/gateway/assets:/home/app/assets \
   -v "/var/run/docker.sock:/var/run/docker.sock" \
   -p 8080:8080 --network=func_functions \
-  -d functions/gateway:latest-dev
+  -d openfaas/gateway:latest-dev
 ```
