@@ -1,4 +1,7 @@
 FROM golang:1.9.7 as build
+ARG GIT_COMMIT_SHA
+ARG GIT_COMMIT_MESSAGE
+ARG VERSION='dev'
 
 RUN curl -sL https://github.com/alexellis/license-check/releases/download/0.2.2/license-check \
       > /usr/bin/license-check \
@@ -16,13 +19,18 @@ COPY tests          tests
 COPY types          types
 COPY queue          queue
 COPY plugin         plugin
+COPY version        version
 COPY server.go      .
 
 # Run a gofmt and exclude all vendored code.
 RUN license-check -path ./ --verbose=false "Alex Ellis" "OpenFaaS Project" "OpenFaaS Authors" \
     && test -z "$(gofmt -l $(find . -type f -name '*.go' -not -path "./vendor/*"))" \
     && go test $(go list ./... | grep -v integration | grep -v /vendor/ | grep -v /template/) -cover \
-    && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gateway .
+    && CGO_ENABLED=0 GOOS=linux go build --ldflags "-s -w \
+     -X github.com/openfaas/faas/gateway/version.GitCommitSHA=${GIT_COMMIT_SHA}\
+     -X \"github.com/openfaas/faas/gateway/version.GitCommitMessage=${GIT_COMMIT_MESSAGE}\"\
+     -X github.com/openfaas/faas/gateway/version.Version=${VERSION}" \
+    -a -installsuffix cgo -o gateway .
 
 FROM alpine:3.7
 

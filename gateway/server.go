@@ -118,7 +118,8 @@ func main() {
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}", faasHandlers.Proxy)
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/", faasHandlers.Proxy)
 
-	r.HandleFunc("/system/info", handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver)).Methods(http.MethodGet)
+	r.HandleFunc("/system/info", handlers.MakeInfoHandler(handlers.MakeForwardingProxyHandler(
+		reverseProxy, forwardingNotifiers, urlResolver))).Methods(http.MethodGet)
 
 	r.HandleFunc("/system/alert", faasHandlers.Alert)
 
