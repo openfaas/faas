@@ -50,7 +50,7 @@ func fireRequestWithHeaders(url string, method string, reqBody string, headers m
 func TestGet_Rejected(t *testing.T) {
 	var reqBody string
 	unsupportedMethod := http.MethodHead
-	_, code, err := fireRequest("http://localhost:8080/function/func_echoit", unsupportedMethod, reqBody)
+	_, code, err := fireRequest("http://localhost:8080/function/echoit", unsupportedMethod, reqBody)
 	want := http.StatusMethodNotAllowed
 	if code != want {
 		t.Logf("Failed got: %d, wanted: %d", code, want)
@@ -68,15 +68,18 @@ func TestEchoIt_Post_Route_Handler_ForwardsClientHeaders(t *testing.T) {
 	headers := make(map[string]string, 0)
 	headers["X-Api-Key"] = "123"
 
-	body, code, err := fireRequestWithHeaders("http://localhost:8080/function/func_echoit", http.MethodPost, reqBody, headers)
+	body, code, err := fireRequestWithHeaders("http://localhost:8080/function/echoit", http.MethodPost, reqBody, headers)
 
 	if err != nil {
 		t.Log(err)
 		t.Fail()
 	}
+
 	if code != http.StatusOK {
-		t.Log("Failed")
+		t.Logf("Failed, code: %d, body:%s", code, body)
+		t.Fail()
 	}
+
 	if body != reqBody {
 		t.Log("Expected body returned")
 		t.Fail()
@@ -85,7 +88,7 @@ func TestEchoIt_Post_Route_Handler_ForwardsClientHeaders(t *testing.T) {
 
 func TestEchoIt_Post_Route_Handler(t *testing.T) {
 	reqBody := "test message"
-	body, code, err := fireRequest("http://localhost:8080/function/func_echoit", http.MethodPost, reqBody)
+	body, code, err := fireRequest("http://localhost:8080/function/echoit", http.MethodPost, reqBody)
 
 	if err != nil {
 		t.Log(err)
