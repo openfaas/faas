@@ -6,6 +6,10 @@ if ! [ -x "$(command -v docker)" ]; then
 fi
 
 auth="1"
+sha_cmd="shasum -a 256"
+if ! command -v shasum >/dev/null; then
+  sha_cmd="sha256sum"
+fi
 
 while [ ! $# -eq 0 ]
 do
@@ -24,7 +28,7 @@ done
 # Secrets should be created even if basic-auth is disabled.
 echo "Attempting to create credentials for gateway.."
 echo "admin" | docker secret create basic-auth-user -
-secret=$(head -c 16 /dev/random|shasum -a 256 | cut -d " " -f 1)
+secret=$(head -c 16 /dev/random| $sha_cmd | cut -d " " -f 1)
 echo "$secret" | docker secret create basic-auth-password -
 if [ $? = 0 ];
 then
