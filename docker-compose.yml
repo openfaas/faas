@@ -16,7 +16,7 @@ services:
             faas_nats_port: 4222
             direct_functions: "true"    # Functions are invoked directly over the overlay network
             direct_functions_suffix: ""
-            basic_auth: "false"
+            basic_auth: "true"
             secret_mount_path: "/run/secrets/"
         deploy:
             resources:
