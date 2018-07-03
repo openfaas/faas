@@ -32,9 +32,9 @@ services:
             placement:
                 constraints:
                     - 'node.platform.os == linux'
-        # secrets:
-        #     - basic-auth-user
-        #     - basic-auth-password
+        secrets:
+            - basic-auth-user
+            - basic-auth-password
 
     # Docker Swarm provider
     faas-swarm:
@@ -180,8 +180,8 @@ networks:
         labels:
           - "openfaas=true"
 
-# secrets:
-#     basic-auth-user:
-#         external: true
-#     basic-auth-password:
-#         external: true
+secrets:
+    basic-auth-user:
+        external: true
+    basic-auth-password:
+        external: true
