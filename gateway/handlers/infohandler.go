@@ -5,6 +5,9 @@ import (
 	"log"
 	"net/http"
 
+	"io/ioutil"
+	"net/http/httptest"
+
 	"github.com/openfaas/faas/gateway/types"
 	"github.com/openfaas/faas/gateway/version"
 )
@@ -12,16 +15,19 @@ import (
 // MakeInfoHandler is responsible for display component version information
 func MakeInfoHandler(h http.Handler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		sw := types.NewStringResponseWriter()
-		h.ServeHTTP(sw, r)
+		responseRecorder := httptest.NewRecorder()
+		h.ServeHTTP(responseRecorder, r)
+		upstreamCall := responseRecorder.Result()
 
-		log.Printf("Body: %s", sw.Body())
+		defer upstreamCall.Body.Close()
+
 		provider := make(map[string]interface{})
 		providerVersion := &types.VersionInfo{}
 
-		err := json.Unmarshal(sw.Body(), &provider)
+		upstreamBody, _ := ioutil.ReadAll(upstreamCall.Body)
+		err := json.Unmarshal(upstreamBody, &provider)
 		if err != nil {
-			log.Printf("Error unmarshalling provider json. Got %s. Error %s\n", string(sw.Body()), err.Error())
+			log.Printf("Error unmarshalling provider json from body %s. Error %s\n", upstreamBody, err.Error())
 		}
 
 		versionMap := provider["version"].(map[string]interface{})
