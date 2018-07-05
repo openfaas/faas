@@ -5,7 +5,8 @@ if ! [ -x "$(command -v docker)" ]; then
   exit 1
 fi
 
-auth="1"
+export BASIC_AUTH="true"
+
 sha_cmd="shasum -a 256"
 if ! command -v shasum >/dev/null; then
   sha_cmd="sha256sum"
@@ -15,7 +16,7 @@ while [ ! $# -eq 0 ]
 do
 	case "$1" in
 		--no-auth | -n)
-			auth=0
+			export BASIC_AUTH="false"
 			;;
     --help | -h)
 			echo "Usage: \n [default]\tdeploy the OpenFaaS core services\n --no-auth [-n]\tdisable basic authentication.\n --help\tdisplays this screen"
@@ -37,7 +38,7 @@ else
   echo "[Credentials]\n already exist, not creating"
 fi
 
-if [ $auth -eq "1" ];
+if [ $BASIC_AUTH = "true" ];
 then
   echo ""
   echo "Enabling basic authentication for gateway.."
@@ -46,7 +47,6 @@ else
   echo ""
   echo "Disabling basic authentication for gateway.."
   echo ""
-  sed -i -r.bak 's/basic_auth: \"true\"/basic_auth: \"false\"/' docker-compose.yml
 fi
 
 echo "Deploying OpenFaaS core services"
