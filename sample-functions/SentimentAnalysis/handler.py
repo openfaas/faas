@@ -12,7 +12,7 @@ def get_stdin():
         buf = buf + line
     return buf
 
-if(__name__ == "__main__"):
+if __name__ == "__main__":
     st = get_stdin()
     blob = TextBlob(st)
     res = {
@@ -21,8 +21,8 @@ if(__name__ == "__main__"):
     }
 
     for sentence in blob.sentences:
-        res["subjectivity"] = res["subjectivity"] + sentence.sentiment.subjectivity
-        res["polarity"] = res["polarity"] + sentence.sentiment.polarity
+        res["subjectivity"] += sentence.sentiment.subjectivity
+        res["polarity"] += sentence.sentiment.polarity
 
     total = len(blob.sentences)
 
