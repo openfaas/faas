@@ -139,7 +139,7 @@ General format:
 
 **Governance**
 
-OpenFaaS is an independent project created by Alex Ellis in 2016. OpenFaaS is lead by Alex and is being built in the open by a growing community of contributors.
+OpenFaaS is an independent project created by Alex Ellis in 2016. OpenFaaS is led by Alex and is being built in the open by a growing community of contributors.
 
 ## Branding guidelines
 
@@ -180,7 +180,7 @@ Please add a Copyright notice to new files you add where this is not already pre
 
 ### Sign your work
 
-> Note: every commits in your PR or Patch must be signed-off.
+> Note: every commit in your PR or Patch must be signed-off.
 
 The sign-off is a simple line at the end of the explanation for a patch. Your
 signature certifies that you wrote the patch or otherwise have the right to pass
