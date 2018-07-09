@@ -91,14 +91,18 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Building a custom Dynamics 365 data interface with OpenFaaS](https://alexanderdevelopment.net/post/2018/07/05/building-a-custom-dynamics-365-data-interface-with-openfaas/) | Lucas Alexander | alexanderdevelopment.net | 5-Jul-2018 |
 | [Kubernetes: From Fear to Functions in 20 Minutes](https://medium.com/@rorpage/kubernetes-from-fear-to-functions-in-20-minutes-a021f7ef5843) | Rob Page | medium.com | 11-Jun-2018 |
+| [Installing and securing OpenFaaS on an AKS cluster](https://alexanderdevelopment.net/post/2018/05/31/installing-and-securing-openfaas-on-an-aks/) | Lucas Alexander | alexanderdevelopment.net | 31-May-2018 |
 | [How OpenFaaS came to rescue us!](https://medium.com/iconscout/how-openfaas-came-to-rescue-us-ec129518cd46) | Tarun Mangukiya | iconscout.com | 24-May-2018 |
 | [Building a Serverless Microblog in Ruby with OpenFaaS – Part 1 ](https://keiran.scot/2018/05/18/faasfriday-serverless-microblog/) | Keiran Smith | keiran.scot | 18-May-2018 |
+| [Using ML.NET in an OpenFaaS function](https://alexanderdevelopment.net/post/2018/05/17/using-ml-net-in-an-openfaas-function/) | Lucas Alexander | alexanderdevelopment.net | 17-May-2018 |
 | [Writing OpenFaas Serverless Functions in Go](https://marcussmallman.io/2018/04/11/writing-openfaas-serverless-functions-in-go/) | Marcus Smallman | marcussmallman.io | 11-Apr-2018 |
 | [Deploying OpenFaaS on Kubernetes - Azure AKS Part 2 (SSL)](https://medium.com/@ericstoekl/openfaas-on-azure-aks-with-ssl-ingress-openfaas-on-aks-part-2-2-e9f2db9db387) | Eric Stoekl | medium.com | 23-Mar-2018 |
 | [VMware + OpenFaaS – One Month In](https://blogs.vmware.com/opensource/2018/03/20/vmware-openfaas-alex-ellis) | Alex Ellis | vmware.com | 21-Mar-2018 |
 | [Securing Kubernetes for OpenFaaS and beyond](https://www.twistlock.com/2018/03/20/securing-kubernetes-openfaas-beyond) | Daniel Shapira | twistlock.com | 20-Mar-2018 |
 | [What Is OpenFaaS and How Can It Drive Innovation?](https://www.contino.io/insights/what-is-openfaas-and-why-is-it-an-alternative-to-aws-lambda-an-interview-with-creator-alex-ellis) | Ben Tannahill | contino.com | 19-Mar-2018 |
+| [Installing and securing OpenFaaS on a Google Cloud virtual machine](https://alexanderdevelopment.net/post/2018/02/25/installing-and-securing-openfaas-on-a-google-cloud-virtual-machine/) | Lucas Alexander | alexanderdevelopment.net | 25-Feb-2018 |
 | [VMware Welcomes Alex Ellis](https://blogs.vmware.com/opensource/2018/02/19/vmware-welcomes-alex-ellis/) | VMware team | vmware.com | 19-Feb-2018 |
 | [I'm going to be working on OpenFaaS full-time](https://blog.alexellis.io/full-time-openfaas/) | Alex Ellis | alexellis.io | 19-Feb-2018 |
 | [Stop installing CLI tools on your build server: CLI-as-a-Function with OpenFaaS](https://medium.com/@burtonr/stop-installing-cli-tools-on-your-build-server-cli-as-a-function-with-openfaas-80dd8d6be611) | Burton Rheutan | medium.com/@burtonr | 12-Feb-2018 |
