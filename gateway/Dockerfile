@@ -23,7 +23,7 @@ COPY version        version
 COPY server.go      .
 
 # Run a gofmt and exclude all vendored code.
-RUN license-check -path ./ --verbose=false "Alex Ellis" "OpenFaaS Project" "OpenFaaS Authors" \
+RUN license-check -path ./ --verbose=false "Alex Ellis" "OpenFaaS Project" "OpenFaaS Authors" "OpenFaaS Author(s)" \
     && test -z "$(gofmt -l $(find . -type f -name '*.go' -not -path "./vendor/*"))" \
     && go test $(go list ./... | grep -v integration | grep -v /vendor/ | grep -v /template/) -cover \
     && CGO_ENABLED=0 GOOS=linux go build --ldflags "-s -w \
