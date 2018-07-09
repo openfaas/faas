@@ -99,7 +99,8 @@ We use Golang's `dep` tool to manage dependencies for Golang projects - https://
 
 **How do I become a maintainer?**
 
-Maintainers are well-known contributors who help with:
+Maintainers are well-known contributors with a track record of:
+
 * Fixing, testing and triaging issues
 * Joining contributor meetings and supporting new contributors
 * Testing and reviewing pull requests
@@ -112,9 +113,33 @@ Varying levels of write access are made available via our project bot [Derek](ht
 
 If you have been added to the MAINTAINERS file in the root of an OpenFaaS repository then you can help us manage our community and contributions by issuing comments on Issues and Pull Requests. See [Derek](https://github.com/alexellis/derek) for available commands.
 
+**Who are the Core Contributors?**
+
+The Core Contributor group includes:
+
+- Alex Ellis (@alexellis)
+- Richard Gee (@rgee0)
+- Stefan Prodan (@stefanprodan)
+- Burton Rheutan (@burtonr)
+- LucasRoesler (@LucasRoesler)
+- Eric Stoekl (@ericstoekl)
+
+The Core Contributors have the ear of the project lead and help with strategy, project maintenance, community management and make a regular commitment of time to the project. Core Contributors attend all project meetings and calls.
+
+**Community/project meetings and calls**
+
+The community calls are held on Zoom on a regular basis with invitations sent out via email ahead of time.
+
+General format:
+
+- Project updates/briefing
+- Round-table intros/updates
+- Demos of features/new work from community
+- Q&A
+
 **Governance**
 
-OpenFaaS is an independent project created by Alex Ellis which is now being built by a growing community of contributors.
+OpenFaaS is an independent project created by Alex Ellis in 2016. OpenFaaS is lead by Alex and is being built in the open by a growing community of contributors.
 
 ## Branding guidelines
 
@@ -144,16 +169,18 @@ This project is licensed under the MIT License.
 
 ### Copyright notice
 
-Please add a Copyright notice to new files you add where this is not already present:
+It is important to state that you retain copyright for your contributions, but agree to license them for usage by the project and author(s) under the MIT license. Git retains history of authorship, but we use a catch-all statement rather than individual names. 
+
+Please add a Copyright notice to new files you add where this is not already present.
 
 ```
-// Copyright (c) OpenFaaS Project 2017. All rights reserved.
+// Copyright (c) OpenFaaS Author(s) 2018. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 ```
 
 ### Sign your work
 
-> Note: all of the commits in your PR/Patch must be signed-off.
+> Note: every commits in your PR or Patch must be signed-off.
 
 The sign-off is a simple line at the end of the explanation for a patch. Your
 signature certifies that you wrote the patch or otherwise have the right to pass
@@ -208,6 +235,11 @@ Use your real name (sorry, no pseudonyms or anonymous contributions.)
 If you set your `user.name` and `user.email` git configs, you can sign your
 commit automatically with `git commit -s`.
 
-* Please sign your commits with `git commit -s` so that commits are traceable.
+Please sign your commits with `git commit -s` so that commits are traceable.
 
-If you forgot to sign your work and want to fix that, see the following guide: [Git: Rewriting History](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History)
+This is different from digital signing using GPG, GPG is not required for 
+making contributions to the project. 
+
+If you forgot to sign your work and want to fix that, see the following 
+guide: [Git: Rewriting History](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History)
+
