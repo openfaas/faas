@@ -84,7 +84,7 @@ The watchdog can be configured through environmental variables. You must always 
 
 ## Advanced / tuning
 
-### of-watchdog and AfterBurn
+### (New) of-watchdog and HTTP mode
 
 * of-watchdog
 
