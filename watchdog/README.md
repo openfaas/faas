@@ -88,15 +88,11 @@ The watchdog can be configured through environmental variables. You must always 
 
 * of-watchdog
 
+Forking a new process per request has advantages such as process isolation, portability and simplicity. Any process can be made into a function without any additional code. The of-watchdog and its "HTTP" mode is an optimization which maintains one single process between all requests.
+
 A new version of the watchdog is being tested over at [openfaas-incubator/of-watchdog](https://github.com/openfaas-incubator/of-watchdog).
 
 This re-write is mainly structural for on-going maintenance. It will be a drop-in replacement for the existing watchdog and also has binary releases available.
-
-* AfterBurn Optimizations
-
-Forking a new process per request has many advantages for isolation, simplicity and means any process can be a function without any additional code. AfterBurn is an optimization which maintains one single process between all requests and means a Java function can execute a round-trip in as little as 10-12ms without further tuning. It relies on a simple client library maintained by this project for each runtime language.
-
-You can read about [AfterBurn](https://blog.alexellis.io/openfaas-serverless-acceleration/) on my blog. It is supported by the of-watchdog and a version is also available for the existing watchdog in [PR #224](https://github.com/openfaas/faas/pull/224).
 
 ### Working with HTTP headers
 
