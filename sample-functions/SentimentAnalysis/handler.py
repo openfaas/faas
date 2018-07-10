@@ -12,7 +12,7 @@ def get_stdin():
         buf = buf + line
     return buf
 
-if(__name__ == "__main__"):
+if __name__ == "__main__":
     st = get_stdin()
     blob = TextBlob(st)
     res = {
