@@ -92,7 +92,9 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Deploying OpenFaaS from Portainer.io and Creating your First Function](https://www.linkedin.com/pulse/deploying-openfaas-from-portainerio-creating-your-first-steven-kang/) | Steven Kang | linkedin.com | 8-Jul-2018 |
 | [Building a custom Dynamics 365 data interface with OpenFaaS](https://alexanderdevelopment.net/post/2018/07/05/building-a-custom-dynamics-365-data-interface-with-openfaas/) | Lucas Alexander | alexanderdevelopment.net | 5-Jul-2018 |
+| [Introducing the OpenFaaS Operator for Serverless on Kubernetes](https://blog.alexellis.io/introducing-the-openfaas-operator/) | Alex Ellis | alexellis.io | 2-Jul-2018 |
 | [Kubernetes: From Fear to Functions in 20 Minutes](https://medium.com/@rorpage/kubernetes-from-fear-to-functions-in-20-minutes-a021f7ef5843) | Rob Page | medium.com | 11-Jun-2018 |
 | [Installing and securing OpenFaaS on an AKS cluster](https://alexanderdevelopment.net/post/2018/05/31/installing-and-securing-openfaas-on-an-aks/) | Lucas Alexander | alexanderdevelopment.net | 31-May-2018 |
 | [How OpenFaaS came to rescue us!](https://medium.com/iconscout/how-openfaas-came-to-rescue-us-ec129518cd46) | Tarun Mangukiya | iconscout.com | 24-May-2018 |
