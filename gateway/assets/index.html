@@ -123,6 +123,11 @@
                                     <label>Image</label>
                                     <input ng-model="function.image" type="text" readonly="readonly">
                                 </md-input-container>
+                                <md-input-container class="md-block function-url" flex-gt-sm>
+                                    <label>URL</label>
+                                    <input ng-value="baseUrl + 'function/' + function.name" type="text" readonly="readonly">
+                                    <md-icon ng-if="canCopyToClipboard" md-svg-src="img/icons/outline-file_copy-24px.svg" ng-click="copyClicked($event)"></md-icon>
+                                </md-input-container>
                             </div>
                             <div layout-gt-sm="row" ng-show="function.envProcess">
                                 <md-input-container class="md-block" flex-gt-sm>

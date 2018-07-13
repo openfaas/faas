@@ -105,3 +105,8 @@ md-icon {
 md-icon.link {
     fill: #303AA5;
 }
+
+md-input-container.function-url md-icon {
+    display: inline-block;
+    cursor: pointer;
+}

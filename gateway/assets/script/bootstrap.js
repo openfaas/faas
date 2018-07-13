@@ -21,6 +21,25 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
             contentType: "text"
         };
 
+        $scope.baseUrl = $location.absUrl().replace(/\ui\/$/, '');
+        try {
+            $scope.canCopyToClipboard = document.queryCommandSupported('copy');
+        } catch (err) {
+            console.error(err);
+            $scope.canCopyToClipboard = false;
+        }
+        $scope.copyClicked = function(e) {
+            e.target.parentElement.querySelector('input').select()
+            var copySuccessful = false;
+            try {
+                copySuccessful = document.execCommand('copy');
+            } catch (err) {
+                console.error(err);
+            }
+            var msg = copySuccessful ? 'Copied to Clipboard' : 'Copy failed. Please copy it manually';
+            showPostInvokedToast(msg);
+        }
+
         $scope.toggleSideNav = function() {
             $mdSidenav('left').toggle();
         };
