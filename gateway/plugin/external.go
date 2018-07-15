@@ -140,7 +140,7 @@ func (s ExternalServiceQuery) SetReplicas(serviceName string, count uint64) erro
 		}
 	}
 
-	if res.StatusCode != http.StatusOK {
+	if !(res.StatusCode == http.StatusOK || res.StatusCode == http.StatusAccepted) {
 		err = fmt.Errorf("error scaling HTTP code %d, %s", res.StatusCode, urlPath)
 	}
 
