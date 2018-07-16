@@ -4,7 +4,7 @@ docker swarm init --advertise-addr=127.0.0.1
 
 ./deploy_stack.sh --no-auth
 
-docker service update func_gateway --image=functions/gateway:latest-dev
+docker service update func_gateway --image=openfaas/gateway:latest-dev
 
 # Script makes sure OpenFaaS API gateway is ready before running tests
 
