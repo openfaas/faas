@@ -41,6 +41,10 @@ type CreateFunctionRequest struct {
 
 	// Requests of resources requested by function
 	Requests *FunctionResources `json:"requests"`
+
+	// ReadOnlyRootFilesystem removes write-access from the root filesystem
+	// mount-point.
+	ReadOnlyRootFilesystem bool `json:"readOnlyRootFilesystem"`
 }
 
 // FunctionResources Memory and CPU
