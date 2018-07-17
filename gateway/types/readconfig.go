@@ -150,16 +150,13 @@ type GatewayConfig struct {
 	// If set this will be used to resolve functions directly
 	DirectFunctionsSuffix string
 
-<<<<<<< HEAD
 	// If set, reads secrets from file-system for enabling basic auth.
 	UseBasicAuth bool
 
 	// SecretMountPath specifies where to read secrets from for embedded basic auth
 	SecretMountPath string
-=======
 	// Enable the gateway to scale any service from 0 replicas to its configured "min replicas"
 	ScaleFromZero bool
->>>>>>> Add scale_from_zero flag
 }
 
 // UseNATS Use NATSor not
