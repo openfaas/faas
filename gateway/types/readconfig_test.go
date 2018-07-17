@@ -68,6 +68,29 @@ func TestRead_DirectFunctionsOverride(t *testing.T) {
 	}
 }
 
+func TestRead_ScaleZeroDefaultAndOverride(t *testing.T) {
+	defaults := NewEnvBucket()
+	readConfig := ReadConfig{}
+	// defaults.Setenv("scale_from_zero", "true")
+	config := readConfig.Read(defaults)
+
+	want := false
+	if config.ScaleFromZero != want {
+		t.Logf("ScaleFromZero should be %v, got: %v", want, config.ScaleFromZero)
+		t.Fail()
+	}
+
+	defaults.Setenv("scale_from_zero", "true")
+	config = readConfig.Read(defaults)
+	want = true
+
+	if config.ScaleFromZero != want {
+		t.Logf("ScaleFromZero was overriden - should be %v, got: %v", want, config.ScaleFromZero)
+		t.Fail()
+	}
+
+}
+
 func TestRead_EmptyTimeoutConfig(t *testing.T) {
 	defaults := NewEnvBucket()
 	readConfig := ReadConfig{}
