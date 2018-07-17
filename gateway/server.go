@@ -115,16 +115,20 @@ func main() {
 	r := mux.NewRouter()
 	// max wait time to start a function = maxPollCount * functionPollInterval
 
-	scalingConfig := handlers.ScalingConfig{
-		MaxPollCount:         uint(1000),
-		FunctionPollInterval: time.Millisecond * 10,
-		CacheExpiry:          time.Second * 5, // freshness of replica values before going stale
-	}
+	functionProxy := faasHandlers.Proxy
 
-	scalingProxy := handlers.MakeScalingHandler(faasHandlers.Proxy, queryFunction, scalingConfig)
+	if config.ScaleFromZero {
+		scalingConfig := handlers.ScalingConfig{
+			MaxPollCount:         uint(1000),
+			FunctionPollInterval: time.Millisecond * 10,
+			CacheExpiry:          time.Second * 5, // freshness of replica values before going stale
+		}
+
+		functionProxy = handlers.MakeScalingHandler(faasHandlers.Proxy, queryFunction, scalingConfig)
+	}
 	// r.StrictSlash(false)	// This didn't work, so register routes twice.
-	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}", scalingProxy)
-	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/", scalingProxy)
+	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}", functionProxy)
+	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/", functionProxy)
 
 	r.HandleFunc("/system/info", handlers.MakeInfoHandler(handlers.MakeForwardingProxyHandler(
 		reverseProxy, forwardingNotifiers, urlResolver))).Methods(http.MethodGet)
