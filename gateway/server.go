@@ -122,6 +122,7 @@ func main() {
 			MaxPollCount:         uint(1000),
 			FunctionPollInterval: time.Millisecond * 10,
 			CacheExpiry:          time.Second * 5, // freshness of replica values before going stale
+			ServiceQuery:         alertHandler,
 		}
 
 		functionProxy = handlers.MakeScalingHandler(faasHandlers.Proxy, queryFunction, scalingConfig)

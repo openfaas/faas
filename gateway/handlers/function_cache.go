@@ -11,8 +11,8 @@ import (
 // FunctionMeta holds the last refresh and any other
 // meta-data needed for caching.
 type FunctionMeta struct {
-	LastRefresh time.Time
-	Replicas    uint64
+	LastRefresh          time.Time
+	ServiceQueryResponse ServiceQueryResponse
 }
 
 // Expired find out whether the cache item has expired with
@@ -29,7 +29,7 @@ type FunctionCache struct {
 }
 
 // Set replica count for functionName
-func (fc *FunctionCache) Set(functionName string, replicas uint64) {
+func (fc *FunctionCache) Set(functionName string, serviceQueryResponse ServiceQueryResponse) {
 	fc.Sync.Lock()
 
 	if _, exists := fc.Cache[functionName]; !exists {
@@ -38,19 +38,22 @@ func (fc *FunctionCache) Set(functionName string, replicas uint64) {
 
 	entry := fc.Cache[functionName]
 	entry.LastRefresh = time.Now()
-	entry.Replicas = replicas
+	entry.ServiceQueryResponse = serviceQueryResponse
 
 	fc.Sync.Unlock()
 }
 
 // Get replica count for functionName
-func (fc *FunctionCache) Get(functionName string) (uint64, bool) {
-	replicas := uint64(0)
+func (fc *FunctionCache) Get(functionName string) (ServiceQueryResponse, bool) {
+	replicas := ServiceQueryResponse{
+		AvailableReplicas: 0,
+	}
+
 	hit := false
 	fc.Sync.Lock()
 
 	if val, exists := fc.Cache[functionName]; exists {
-		replicas = val.Replicas
+		replicas = val.ServiceQueryResponse
 		hit = !val.Expired(fc.Expiry)
 	}
 
