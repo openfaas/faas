@@ -20,7 +20,7 @@ func Test_LastRefreshSet(t *testing.T) {
 		t.Fail()
 	}
 
-	cache.Set(fnName, 1)
+	cache.Set(fnName, ServiceQueryResponse{AvailableReplicas: 1})
 
 	if _, exists := cache.Cache[fnName]; !exists {
 		t.Errorf("Expected entry to exist after setting %s", fnName)
@@ -41,7 +41,7 @@ func Test_CacheExpiresIn1MS(t *testing.T) {
 		Expiry: time.Millisecond * 1,
 	}
 
-	cache.Set(fnName, 1)
+	cache.Set(fnName, ServiceQueryResponse{AvailableReplicas: 1})
 	time.Sleep(time.Millisecond * 2)
 
 	_, hit := cache.Get(fnName)
@@ -61,7 +61,7 @@ func Test_CacheGivesHitWithLongExpiry(t *testing.T) {
 		Expiry: time.Millisecond * 500,
 	}
 
-	cache.Set(fnName, 1)
+	cache.Set(fnName, ServiceQueryResponse{AvailableReplicas: 1})
 
 	_, hit := cache.Get(fnName)
 	wantHit := true

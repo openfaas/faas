@@ -3,7 +3,7 @@ ARG GIT_COMMIT_SHA
 ARG GIT_COMMIT_MESSAGE
 ARG VERSION='dev'
 
-RUN curl -sL https://github.com/alexellis/license-check/releases/download/0.2.2/license-check \
+RUN curl -sSfL https://github.com/alexellis/license-check/releases/download/0.2.2/license-check \
       > /usr/bin/license-check \
       && chmod +x /usr/bin/license-check
 
