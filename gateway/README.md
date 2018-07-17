@@ -56,3 +56,4 @@ The gateway can be configured through the following environment variables:
 | `direct_functions_suffix`     | Provide a DNS suffix for invoking functions directly over overlay network  |
 | `basic_auth`              | Set to `true` or `false` to enable embedded basic auth on the /system and /ui endpoints (recommended) |
 | `secret_mount_path`       | Set a location where you have mounted `basic-auth-user` and `basic-auth-password`, default: `/run/secrets/`. |
+| `scale_from_zero`       | Enables an intercepting proxy which will scale any function from 0 replicas to the desired amount |
