@@ -15,9 +15,8 @@ addons:
 before_install:
 
 script:
-    - sh build.sh
-    # Invoke ci script too
-    - sh contrib/ci.sh
+    - ./build.sh
+    - ./contrib/ci.sh
 
 after_success:
     - if [ -z $DOCKER_NS ] ; then

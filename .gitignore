@@ -4,3 +4,5 @@ fwatchdog-armhf
 **/*.DS_Store
 .vscode
 .idea
+certifier
+.editorconfig
