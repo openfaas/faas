@@ -263,6 +263,16 @@ definitions:
         additionalProperties:
           type: string
         description: Overrides to environmental variables
+      labels:
+        type: array
+        items:
+          type: string
+        description: An array of labels used by the back-end for making scheduling or routing decisions
+      annotations:
+        type: array
+        items:
+          type: string
+        description: An array of annotations used by the back-end for management, orchestration, events and build tasks
       secrets:
         type: array
         items:

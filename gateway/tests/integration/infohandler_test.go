@@ -34,7 +34,7 @@ func Test_InfoEndpoint_Returns_Gateway_Version_SHA_And_Message(t *testing.T) {
 	gatewayInfo := &types.GatewayInfo{}
 	err = json.Unmarshal([]byte(body), gatewayInfo)
 	if err != nil {
-		t.Log(err)
+		t.Errorf("Could not unmarshal gateway info, response body:%s, error:%s", body, err.Error())
 		t.Fail()
 	}
 

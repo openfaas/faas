@@ -3,17 +3,17 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"strconv"
 	"time"
-	"log"
 )
 
 func main() {
 	input, err := ioutil.ReadAll(os.Stdin)
 	if err != nil {
 		log.Fatalf("Cannot read input %s.\n", err)
-        return
+		return
 	}
 	now := time.Now()
 	stamp := strconv.FormatInt(now.UnixNano(), 10)
@@ -21,7 +21,7 @@ func main() {
 	writeErr := ioutil.WriteFile(stamp+".txt", input, 0644)
 	if writeErr != nil {
 		log.Fatalf("Cannot write input %s.\n", err)
-        return
+		return
 	}
 
 	fmt.Printf("Stashing request: %s.txt\n", stamp)
