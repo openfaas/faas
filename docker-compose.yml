@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: openfaas/gateway:0.8.5
+        image: openfaas/gateway:0.8.7
         networks:
             - functions
         environment:
@@ -18,6 +18,7 @@ services:
             direct_functions_suffix: ""
             basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
+            scale_from_zero: "false"
         deploy:
             resources:
                 # limits:   # Enable if you want to limit memory usage
