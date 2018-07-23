@@ -17,4 +17,7 @@ type HandlerSet struct {
 
 	// AsyncReport - report a deferred execution result
 	AsyncReport http.HandlerFunc
+
+	// ScaleFunction allows a function to be scaled
+	ScaleFunction http.HandlerFunc
 }

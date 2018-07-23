@@ -197,6 +197,33 @@ paths:
           description: Function not found
         '500':
           description: Error connecting to function
+  '/system/scale-function/{functionName}':
+    get:
+      summary: Scale a function
+      parameters:
+        - in: path
+          name: functionName
+          description: Function name
+          type: string
+          required: true
+        - in: body
+          name: input
+          description: Function to scale plus replica count
+          schema:
+            type: string
+            format: binary
+            example:
+              '{"service": "hello-world", "replicas": 10}'
+          required: false
+      responses:
+        '200':
+          description: Scaling OK
+        '202':
+          description: Scaling OK
+        '404':
+          description: Function not found
+        '500':
+          description: Error scaling function
   '/system/function/{functionName}':
     get:
       summary: Get a summary of an OpenFaaS function

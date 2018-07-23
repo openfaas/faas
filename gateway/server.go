@@ -101,6 +101,8 @@ func main() {
 	faasHandlers.ListFunctions = metrics.AddMetricsHandler(faasHandlers.ListFunctions, prometheusQuery)
 	faasHandlers.Proxy = handlers.MakeCallIDMiddleware(faasHandlers.Proxy)
 
+	faasHandlers.ScaleFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver)
+
 	if credentials != nil {
 		faasHandlers.UpdateFunction =
 			handlers.DecorateWithBasicAuth(faasHandlers.UpdateFunction, credentials)
@@ -110,6 +112,9 @@ func main() {
 			handlers.DecorateWithBasicAuth(faasHandlers.DeployFunction, credentials)
 		faasHandlers.ListFunctions =
 			handlers.DecorateWithBasicAuth(faasHandlers.ListFunctions, credentials)
+		faasHandlers.ScaleFunction =
+			handlers.DecorateWithBasicAuth(faasHandlers.ScaleFunction, credentials)
+
 	}
 
 	r := mux.NewRouter()
@@ -141,6 +146,7 @@ func main() {
 	r.HandleFunc("/system/functions", faasHandlers.DeployFunction).Methods(http.MethodPost)
 	r.HandleFunc("/system/functions", faasHandlers.DeleteFunction).Methods(http.MethodDelete)
 	r.HandleFunc("/system/functions", faasHandlers.UpdateFunction).Methods(http.MethodPut)
+	r.HandleFunc("/system/scale-function/{name:[-a-zA-Z_0-9]+}", faasHandlers.ScaleFunction).Methods(http.MethodPost)
 
 	if faasHandlers.QueuedProxy != nil {
 		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}/", faasHandlers.QueuedProxy).Methods(http.MethodPost)
