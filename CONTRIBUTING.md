@@ -83,21 +83,21 @@ Signed-off-by: Alex Ellis <alex@openfaas.com>
 
 If you would like to ammend your commit follow this guide: [Git: Rewriting History](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History)
 
-**Unit testing with Golang**
+#### Unit testing with Golang
 
 Please follow style guide on [this blog post](https://blog.alexellis.io/golang-writing-unit-tests/) from [The Go Programming Language](https://www.amazon.co.uk/Programming-Language-Addison-Wesley-Professional-Computing/dp/0134190440)
 
-**I have a question, a suggestion or need help**
+#### I have a question, a suggestion or need help
 
 Please raise an Issue or email alex@openfaas.com for an invitation to our Slack community.
 
-**I need to add a dependency**
+#### I need to add a dependency
 
 We use vendoring for projects written in Go. This means that we will maintain a copy of the source-code of dependencies within Git. It allows a repeatable build and isolates change. 
 
 We use Golang's `dep` tool to manage dependencies for Golang projects - https://github.com/golang/dep
 
-**How do I become a maintainer?**
+### How do I become a maintainer?
 
 Maintainers are well-known contributors with a track record of:
 
@@ -109,11 +109,11 @@ Maintainers are well-known contributors with a track record of:
 
 Varying levels of write access are made available via our project bot [Derek](https://github.com/alexellis/derek) to help regular contributors transition to maintainers.
 
-**How do I work with Derek the bot?**
+#### How do I work with Derek the bot?
 
 If you have been added to the MAINTAINERS file in the root of an OpenFaaS repository then you can help us manage our community and contributions by issuing comments on Issues and Pull Requests. See [Derek](https://github.com/alexellis/derek) for available commands.
 
-**Who are the Core Contributors?**
+### Who are the Core Contributors?**
 
 The Core Contributor group includes:
 
@@ -126,7 +126,7 @@ The Core Contributor group includes:
 
 The Core Contributors have the ear of the project lead and help with strategy, project maintenance, community management and make a regular commitment of time to the project. Core Contributors attend all project meetings and calls.
 
-**Community/project meetings and calls**
+#### Community/project meetings and calls
 
 The community calls are held on Zoom on a regular basis with invitations sent out via email ahead of time.
 
@@ -137,7 +137,7 @@ General format:
 - Demos of features/new work from community
 - Q&A
 
-**Governance**
+## Governance
 
 OpenFaaS is an independent project created by Alex Ellis in 2016. OpenFaaS is led by Alex and is being built in the open by a growing community of contributors.
 
