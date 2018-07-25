@@ -41,7 +41,7 @@ $ docker service create --name kong-database \
     -e "POSTGRES_USER=kong" \
     -e "POSTGRES_DB=kong" \
     -e "POSTGRES_PASSWORD=secretpassword" \
-    postgres:9.4
+    postgres:9.5
 ```
 
 Now we will use the Kong image to populate default configuration in the Postgres database:
@@ -100,6 +100,18 @@ $ kong_admin_curl -X POST \
     --data 'upstream_url=http://gateway:8080/function'
 
 $ curl localhost:8000/function/func_echoit -d 'hello world'
+hello world
+```
+
+Also enable routing for async invocation of functions
+```
+$ kong_admin_curl -X POST \
+    --url http://localhost:8001/apis/ \
+    --data 'name=async-function' \
+    --data 'uris=/async-function' \
+    --data 'upstream_url=http://gateway:8080/async-function'
+
+$ curl localhost:8000/async-function/func_echoit -d 'hello world'
 hello world
 ```
 
