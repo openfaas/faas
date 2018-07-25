@@ -20,7 +20,7 @@ func Test_buildUpstreamRequest_Body_Method_Query(t *testing.T) {
 		t.Fail()
 	}
 
-	upstream := buildUpstreamRequest(request, "/")
+	upstream := buildUpstreamRequest(request, "/", "")
 
 	if request.Method != upstream.Method {
 		t.Errorf("Method - want: %s, got: %s", request.Method, upstream.Method)
@@ -49,7 +49,7 @@ func Test_buildUpstreamRequest_Body_Method_Query(t *testing.T) {
 func Test_buildUpstreamRequest_NoBody_GetMethod_NoQuery(t *testing.T) {
 	request, _ := http.NewRequest(http.MethodGet, "/", nil)
 
-	upstream := buildUpstreamRequest(request, "/")
+	upstream := buildUpstreamRequest(request, "/", "")
 
 	if request.Method != upstream.Method {
 		t.Errorf("Method - want: %s, got: %s", request.Method, upstream.Method)
@@ -149,4 +149,48 @@ func Test_getServiceName(t *testing.T) {
 			}
 		})
 	}
+}
+
+func Test_buildUpstreamRequest_Body_Method_Query_Path(t *testing.T) {
+	srcBytes := []byte("hello world")
+	path := "/my/deep/path"
+
+	reader := bytes.NewReader(srcBytes)
+	request, _ := http.NewRequest(http.MethodPost, "/function/xyz"+path+"?code=1", reader)
+	request.Header.Set("X-Source", "unit-test")
+
+	if request.URL.RawQuery != "code=1" {
+		t.Errorf("Query - want: %s, got: %s", "code=1", request.URL.RawQuery)
+		t.Fail()
+	}
+
+	upstream := buildUpstreamRequest(request, "http://xyz:8080", request.URL.Path)
+
+	if request.Method != upstream.Method {
+		t.Errorf("Method - want: %s, got: %s", request.Method, upstream.Method)
+		t.Fail()
+	}
+
+	upstreamBytes, _ := ioutil.ReadAll(upstream.Body)
+
+	if string(upstreamBytes) != string(srcBytes) {
+		t.Errorf("Body - want: %s, got: %s", string(upstreamBytes), string(srcBytes))
+		t.Fail()
+	}
+
+	if request.Header.Get("X-Source") != upstream.Header.Get("X-Source") {
+		t.Errorf("Header X-Source - want: %s, got: %s", request.Header.Get("X-Source"), upstream.Header.Get("X-Source"))
+		t.Fail()
+	}
+
+	if request.URL.RawQuery != upstream.URL.RawQuery {
+		t.Errorf("URL.RawQuery - want: %s, got: %s", request.URL.RawQuery, upstream.URL.RawQuery)
+		t.Fail()
+	}
+
+	if path != upstream.URL.Path {
+		t.Errorf("URL.Path - want: %s, got: %s", path, upstream.URL.Path)
+		t.Fail()
+	}
+
 }
