@@ -135,6 +135,7 @@ func main() {
 	// r.StrictSlash(false)	// This didn't work, so register routes twice.
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}", functionProxy)
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/", functionProxy)
+	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/{params:.*}", faasHandlers.Proxy)
 
 	r.HandleFunc("/system/info", handlers.MakeInfoHandler(handlers.MakeForwardingProxyHandler(
 		reverseProxy, forwardingNotifiers, urlResolver))).Methods(http.MethodGet)
@@ -151,6 +152,7 @@ func main() {
 	if faasHandlers.QueuedProxy != nil {
 		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}/", faasHandlers.QueuedProxy).Methods(http.MethodPost)
 		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}", faasHandlers.QueuedProxy).Methods(http.MethodPost)
+		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}/{params:.*}", faasHandlers.QueuedProxy).Methods(http.MethodPost)
 
 		r.HandleFunc("/system/async-report", faasHandlers.AsyncReport)
 	}

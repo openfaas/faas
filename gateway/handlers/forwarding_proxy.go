@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -14,6 +15,9 @@ import (
 	"github.com/openfaas/faas/gateway/types"
 	"github.com/prometheus/client_golang/prometheus"
 )
+
+// Parse out the service name (group 1) and rest of path (group 2).
+var functionMatcher = regexp.MustCompile("^/?function/([^/?]+)([^?]*)")
 
 // HTTPNotifier notify about HTTP request/response
 type HTTPNotifier interface {
@@ -46,7 +50,24 @@ func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers [
 	}
 }
 
-func buildUpstreamRequest(r *http.Request, url string) *http.Request {
+func buildUpstreamRequest(r *http.Request, baseURL string, requestURL string) *http.Request {
+	url := baseURL
+
+	if requestURL != "" {
+		// When forwarding to a function, since the `/function/xyz` portion
+		// of a path like `/function/xyz/rest/of/path` is only used or needed
+		// by the Gateway, we want to trim it down to `/rest/of/path` for the
+		// upstream request.  In the following regex, in the case of a match
+		// the requestURL will be at `0`, the function name at `1` and the
+		// rest of the path (the part we are interested in) at `2`.
+		matcher := functionMatcher.Copy()
+		parts := matcher.FindStringSubmatch(requestURL)
+		if 3 == len(parts) {
+			url += parts[2]
+		} else {
+			url += requestURL
+		}
+	}
 
 	if len(r.URL.RawQuery) > 0 {
 		url = fmt.Sprintf("%s?%s", url, r.URL.RawQuery)
@@ -69,7 +90,7 @@ func buildUpstreamRequest(r *http.Request, url string) *http.Request {
 
 func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Client, baseURL string, requestURL string, timeout time.Duration) (int, error) {
 
-	upstreamReq := buildUpstreamRequest(r, baseURL+requestURL)
+	upstreamReq := buildUpstreamRequest(r, baseURL, requestURL)
 	if upstreamReq.Body != nil {
 		defer upstreamReq.Body.Close()
 	}
@@ -134,7 +155,16 @@ func getServiceName(urlValue string) string {
 	var serviceName string
 	forward := "/function/"
 	if strings.HasPrefix(urlValue, forward) {
-		serviceName = urlValue[len(forward):]
+		// With a path like `/function/xyz/rest/of/path?q=a`, the service
+		// name we wish to locate is just the `xyz` portion.  With a postive
+		// match on the regex below, it will return a three-element slice.
+		// The item at index `0` is the same as `urlValue`, at `1`
+		// will be the service name we need, and at `2` the rest of the path.
+		matcher := functionMatcher.Copy()
+		matches := matcher.FindStringSubmatch(urlValue)
+		if 3 == len(matches) {
+			serviceName = matches[1]
+		}
 	}
 	return strings.Trim(serviceName, "/")
 }
