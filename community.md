@@ -92,6 +92,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Scale to Zero and Back Again with OpenFaaS](https://www.openfaas.com/blog/zero-scale/) | Alex Ellis | openfaas.com | 25-July-2018 |
 | [Deploying OpenFaaS from Portainer.io and Creating your First Function](https://www.linkedin.com/pulse/deploying-openfaas-from-portainerio-creating-your-first-steven-kang/) | Steven Kang | linkedin.com | 8-Jul-2018 |
 | [Building a custom Dynamics 365 data interface with OpenFaaS](https://alexanderdevelopment.net/post/2018/07/05/building-a-custom-dynamics-365-data-interface-with-openfaas/) | Lucas Alexander | alexanderdevelopment.net | 5-Jul-2018 |
 | [Introducing the OpenFaaS Operator for Serverless on Kubernetes](https://blog.alexellis.io/introducing-the-openfaas-operator/) | Alex Ellis | alexellis.io | 2-Jul-2018 |
