@@ -98,6 +98,11 @@ For all other guides, tutorials, trouble-shooting and blog posts head over to ou
 
 ## Get started with OpenFaaS
 
+### Official documentation and blog
+See our documentation on [docs.openfaas.com](https://docs.openfaas.com/)
+
+Read latest news on OpenFaaS from the community [blog](https://www.openfaas.com/blog/)
+
 ### Hands-on labs (detailed getting started)
 
 You can learn how to build functions with OpenFaaS using our hands-on labs in the [OpenFaaS workshop](http://github.com/openfaas/workshop).
