@@ -13,6 +13,7 @@ maintainers:
  - cpitkin
  - affix
  - viveksyngh
+ - martindekov
 
 features:
  - dco_check
