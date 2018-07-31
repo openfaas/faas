@@ -24,6 +24,12 @@ We need your support to keep delivering on Serverless Functions Made Simple so p
 
 View the [List of backers and sponsors](https://github.com/openfaas/faas/blob/master/BACKERS.md)
 
+## Overview of OpenFaaS
+
+> Serverless Functions Made Simple.
+
+![Stack](https://pbs.twimg.com/media/DFrkF4NXoAAJwN2.jpg)
+
 ## Press-kit/media/swag
 
 For stickers, swag, media or press-kit information head over to [openfaas/media](https://github.com/openfaas/media/blob/master/README.md)
@@ -32,11 +38,9 @@ For stickers, swag, media or press-kit information head over to [openfaas/media]
 
 OpenFaaS is an independent project created by [Alex Ellis](https://www.alexellis.io) which is now being built and shaped by a growing community of contributors. Project website: [openfaas.com](https://www.openfaas.com).
 
-## Overview of OpenFaaS
+## Users
 
-> Serverless Functions Made Simple.
-
-![Stack](https://pbs.twimg.com/media/DFrkF4NXoAAJwN2.jpg)
+[View some of our end-users](https://docs.openfaas.com/#users-of-openfaas) or [get in touch to be listed](https://github.com/openfaas/faas/issues/776).
 
 ### Function Watchdog
 
