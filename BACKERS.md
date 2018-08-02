@@ -1,8 +1,6 @@
 ## Project backers
 
-> Disclaimer: all Patrons regardless of the level of reward are making a monthly pledge to donate money to support Alex Ellis. This does not represent an investment, stake or ownership in the OpenFaaS project, OpenFaaS Ltd or any other related entity.
-
-Thank you for your help
+We need your support to keep delivering on Serverless Functions Made Simple so pledge to OpenFaaS and [become a backer or a sponsor](https://www.patreon.com/alexellis) with a unique set of rewards. Help us hit our goals and get to back a great project at the same time.
 
 View this page for live data [on Patreon for everyone who has pledged](https://www.patreon.com/alexellis).
 
@@ -33,3 +31,6 @@ Listed by reward, followed by miscellaneous amounts. Names are (pending) until f
 * Markus Fischbacher
 
 Miscellaneous rewards/amounts are not shown.
+
+
+> Disclaimer: all Patrons regardless of the level of reward are making a monthly pledge to donate money to support Alex Ellis. This does not represent an investment, stake or ownership in the OpenFaaS project, OpenFaaS Ltd or any other related entity.
