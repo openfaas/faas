@@ -14,6 +14,7 @@ maintainers:
  - affix
  - viveksyngh
  - martindekov
+ - ewilde
 
 features:
  - dco_check
