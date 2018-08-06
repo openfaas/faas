@@ -47,12 +47,14 @@ func main() {
 		}
 	}
 
-	metricsOptions := metrics.BuildMetricsOptions()
-	metrics.RegisterMetrics(metricsOptions)
-
 	var faasHandlers types.HandlerSet
 
 	servicePollInterval := time.Second * 5
+
+	metricsOptions := metrics.BuildMetricsOptions()
+	exporter := metrics.NewExporter(metricsOptions)
+	exporter.StartServiceWatcher(*config.FunctionsProviderURL, metricsOptions, "func", servicePollInterval)
+	metrics.RegisterExporter(exporter)
 
 	reverseProxy := types.NewHTTPClientReverseProxy(config.FunctionsProviderURL, config.UpstreamTimeout)
 
@@ -83,8 +85,6 @@ func main() {
 
 	alertHandler := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL)
 	faasHandlers.Alert = handlers.MakeAlertHandler(alertHandler)
-
-	metrics.AttachExternalWatcher(*config.FunctionsProviderURL, metricsOptions, "func", servicePollInterval)
 
 	if config.UseNATS() {
 		log.Println("Async enabled: Using NATS Streaming.")

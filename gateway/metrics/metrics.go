@@ -54,8 +54,6 @@ func BuildMetricsOptions() MetricOptions {
 }
 
 //RegisterMetrics registers with Prometheus for tracking
-func RegisterMetrics(metricsOptions MetricOptions) {
-	prometheus.Register(metricsOptions.GatewayFunctionInvocation)
-	prometheus.Register(metricsOptions.GatewayFunctionsHistogram)
-	prometheus.Register(metricsOptions.ServiceReplicasCounter)
+func RegisterExporter(exporter *Exporter) {
+	prometheus.MustRegister(exporter)
 }
