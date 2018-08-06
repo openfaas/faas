@@ -77,7 +77,7 @@ func main() {
 	faasHandlers.RoutelessProxy = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver)
 	faasHandlers.ListFunctions = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver)
 	faasHandlers.DeployFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver)
-	faasHandlers.DeleteFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver)
+	faasHandlers.DeleteFunction = handlers.MakeDeleteFunctionProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, metricsOptions)
 	faasHandlers.UpdateFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver)
 	queryFunction := handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver)
 
