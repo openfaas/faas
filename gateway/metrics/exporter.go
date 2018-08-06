@@ -14,9 +14,46 @@ import (
 	"log"
 
 	"github.com/openfaas/faas/gateway/requests"
+	"github.com/prometheus/client_golang/prometheus"
 )
 
-func AttachExternalWatcher(endpointURL url.URL, metricsOptions MetricOptions, label string, interval time.Duration) {
+// Exporter is a prometheus exporter
+type Exporter struct {
+	metricOptions MetricOptions
+	services      []requests.Function
+}
+
+// NewExporter creates a new exporter for the OpenFaaS gateway metrics
+func NewExporter(options MetricOptions) *Exporter {
+	return &Exporter{
+		metricOptions: options,
+		services:      []requests.Function{},
+	}
+}
+
+// Describe is to describe the metrics for Prometheus
+func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
+	e.metricOptions.GatewayFunctionInvocation.Describe(ch)
+	e.metricOptions.GatewayFunctionsHistogram.Describe(ch)
+	e.metricOptions.ServiceReplicasCounter.Describe(ch)
+}
+
+// Collect collects data to be consumed by prometheus
+func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
+	e.metricOptions.GatewayFunctionInvocation.Collect(ch)
+	e.metricOptions.GatewayFunctionsHistogram.Collect(ch)
+
+	e.metricOptions.ServiceReplicasCounter.Reset()
+	for _, service := range e.services {
+		e.metricOptions.ServiceReplicasCounter.
+			WithLabelValues(service.Name).
+			Set(float64(service.Replicas))
+	}
+	e.metricOptions.ServiceReplicasCounter.Collect(ch)
+}
+
+// StartServiceWatcher starts a ticker and collects service replica counts to expose to prometheus
+func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions MetricOptions, label string, interval time.Duration) {
 	ticker := time.NewTicker(interval)
 	quit := make(chan struct{})
 	proxyClient := http.Client{
@@ -57,11 +94,7 @@ func AttachExternalWatcher(endpointURL url.URL, metricsOptions MetricOptions, la
 					continue
 				}
 
-				for _, service := range services {
-					metricsOptions.ServiceReplicasCounter.
-						WithLabelValues(service.Name).
-						Set(float64(service.Replicas))
-				}
+				e.services = services
 
 				break
 			case <-quit:
