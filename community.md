@@ -92,6 +92,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [How to run Rust in OpenFaaS](https://booyaa.wtf/2018/run-rust-in-openfaas/) | Mark Sta Ana | booyaa.wtf | 4-Aug-2018 |
 | [Scale to Zero and Back Again with OpenFaaS](https://www.openfaas.com/blog/zero-scale/) | Alex Ellis | openfaas.com | 25-July-2018 |
 | [PHP and OpenFaaS](https://mfyu.co.uk/post/php-and-openfaas) | Matt Brunt | mfyu.co.uk | 21-July-2018 |
 | [Deploying OpenFaaS from Portainer.io and Creating your First Function](https://www.linkedin.com/pulse/deploying-openfaas-from-portainerio-creating-your-first-steven-kang/) | Steven Kang | linkedin.com | 8-Jul-2018 |
@@ -102,6 +103,7 @@ Key:
 | [How OpenFaaS came to rescue us!](https://medium.com/iconscout/how-openfaas-came-to-rescue-us-ec129518cd46) | Tarun Mangukiya | iconscout.com | 24-May-2018 |
 | [Building a Serverless Microblog in Ruby with OpenFaaS – Part 1 ](https://keiran.scot/2018/05/18/faasfriday-serverless-microblog/) | Keiran Smith | keiran.scot | 18-May-2018 |
 | [Using ML.NET in an OpenFaaS function](https://alexanderdevelopment.net/post/2018/05/17/using-ml-net-in-an-openfaas-function/) | Lucas Alexander | alexanderdevelopment.net | 17-May-2018 |
+| [Demystifying Serverless & OpenFaas](https://collabnix.com/demystifying-openfaas-simplifying-serverless-computing/) | Ajeet Raina | collabnix.com | 27-Apr-2018
 | [Writing OpenFaas Serverless Functions in Go](https://marcussmallman.io/2018/04/11/writing-openfaas-serverless-functions-in-go/) | Marcus Smallman | marcussmallman.io | 11-Apr-2018 |
 | [Deploying OpenFaaS on Kubernetes - Azure AKS Part 2 (SSL)](https://medium.com/@ericstoekl/openfaas-on-azure-aks-with-ssl-ingress-openfaas-on-aks-part-2-2-e9f2db9db387) | Eric Stoekl | medium.com | 23-Mar-2018 |
 | [VMware + OpenFaaS – One Month In](https://blogs.vmware.com/opensource/2018/03/20/vmware-openfaas-alex-ellis) | Alex Ellis | vmware.com | 21-Mar-2018 |
