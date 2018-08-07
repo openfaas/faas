@@ -37,8 +37,9 @@ Miscellaneous rewards/amounts are not shown.
 The hall of fame shows contributors who made a sustained positive impact on the project and community, but are no longer able to remain active in Open Source or OpenFaaS.
 
 * John Mccabe
-* Eric Stoekl
 * Austin Frey
 * Robbie Page
+* Jock Reed
+* Eric Stoekl
 
 > Disclaimer: all Patrons are making a monthly pledge to support Alex Ellis in running and operating OpenFaaS. This does not represent an investment, stake or ownership in OpenFaaS Ltd or related entities.
