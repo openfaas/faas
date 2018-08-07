@@ -1,22 +1,21 @@
 swagger: '2.0'
 info:
   description: OpenFaaS API documentation
-  version: 0.8.2
+  version: 0.8.9
   title: OpenFaaS API Gateway
   license:
     name: MIT
 basePath: /
 schemes:
-  - http
-  - https
+- http
 paths:
   '/system/functions':
     get:
       summary: 'Get a list of deployed functions with: stats and image digest'
       consumes:
-        - application/json
+      - application/json
       produces:
-        - application/json
+      - application/json
       responses:
         '200':
           description: List of deployed functions.
@@ -28,16 +27,16 @@ paths:
       summary: Deploy a new function.
       description: ''
       consumes:
-        - application/json
+      - application/json
       produces:
-        - application/json
+      - application/json
       parameters:
-        - in: body
-          name: body
-          description: Function to deploy
-          required: true
-          schema:
-            $ref: '#/definitions/FunctionDefintion'
+      - in: body
+        name: body
+        description: Function to deploy
+        required: true
+        schema:
+          $ref: '#/definitions/FunctionDefintion'
       responses:
         '202':
           description: Accepted
@@ -49,16 +48,16 @@ paths:
       summary: Update a function.
       description: ''
       consumes:
-        - application/json
+      - application/json
       produces:
-        - application/json
+      - application/json
       parameters:
-        - in: body
-          name: body
-          description: Function to update
-          required: true
-          schema:
-            $ref: '#/definitions/FunctionDefintion'
+      - in: body
+        name: body
+        description: Function to update
+        required: true
+        schema:
+          $ref: '#/definitions/FunctionDefintion'
       responses:
         '200':
           description: Accepted
@@ -72,16 +71,16 @@ paths:
       summary: Remove a deployed function.
       description: ''
       consumes:
-        - application/json
+      - application/json
       produces:
-        - application/json
+      - application/json
       parameters:
-        - in: body
-          name: body
-          description: Function to delete
-          required: true
-          schema:
-            $ref: '#/definitions/DeleteFunctionRequest'
+      - in: body
+        name: body
+        description: Function to delete
+        required: true
+        schema:
+          $ref: '#/definitions/DeleteFunctionRequest'
       responses:
         '200':
           description: OK
@@ -96,62 +95,62 @@ paths:
       summary: 'Event-sink for AlertManager, for auto-scaling'
       description: 'Internal use for AlertManager, requires valid AlertManager alert JSON'
       consumes:
-        - application/json
+      - application/json
       produces:
-        - application/json
+      - application/json
       parameters:
-        - in: body
-          name: body
-          description: Function to delete
-          schema:
-            type: object
-            example: |-
-              {"receiver": "scale-up",
-                "status": "firing",
-                "alerts": [{
-                    "status": "firing",
-                    "labels": {
-                        "alertname": "APIHighInvocationRate",
-                        "code": "200",
-                        "function_name": "func_nodeinfo",
-                        "instance": "gateway:8080",
-                        "job": "gateway",
-                        "monitor": "faas-monitor",
-                        "service": "gateway",
-                        "severity": "major",
-                        "value": "8.998200359928017"
-                    },
-                    "annotations": {
-                        "description": "High invocation total on gateway:8080",
-                        "summary": "High invocation total on gateway:8080"
-                    },
-                    "startsAt": "2017-03-15T15:52:57.805Z",
-                    "endsAt": "0001-01-01T00:00:00Z",
-                    "generatorURL": "http://4156cb797423:9090/graph?g0.expr=rate%28gateway_function_invocation_total%5B10s%5D%29+%3E+5\u0026g0.tab=0"
-                }],
-                "groupLabels": {
-                    "alertname": "APIHighInvocationRate",
-                    "service": "gateway"
-                },
-                "commonLabels": {
-                    "alertname": "APIHighInvocationRate",
-                    "code": "200",
-                    "function_name": "func_nodeinfo",
-                    "instance": "gateway:8080",
-                    "job": "gateway",
-                    "monitor": "faas-monitor",
-                    "service": "gateway",
-                    "severity": "major",
-                    "value": "8.998200359928017"
-                },
-                "commonAnnotations": {
-                    "description": "High invocation total on gateway:8080",
-                    "summary": "High invocation total on gateway:8080"
-                },
-                "externalURL": "http://f054879d97db:9093",
-                "version": "3",
-                "groupKey": 18195285354214864953
-              }
+      - in: body
+        name: body
+        description: Function to delete
+        schema:
+          type: object
+          example: |-
+            {"receiver": "scale-up",
+              "status": "firing",
+              "alerts": [{
+                  "status": "firing",
+                  "labels": {
+                      "alertname": "APIHighInvocationRate",
+                      "code": "200",
+                      "function_name": "func_nodeinfo",
+                      "instance": "gateway:8080",
+                      "job": "gateway",
+                      "monitor": "faas-monitor",
+                      "service": "gateway",
+                      "severity": "major",
+                      "value": "8.998200359928017"
+                  },
+                  "annotations": {
+                      "description": "High invocation total on gateway:8080",
+                      "summary": "High invocation total on gateway:8080"
+                  },
+                  "startsAt": "2017-03-15T15:52:57.805Z",
+                  "endsAt": "0001-01-01T00:00:00Z",
+                  "generatorURL": "http://4156cb797423:9090/graph?g0.expr=rate%28gateway_function_invocation_total%5B10s%5D%29+%3E+5\u0026g0.tab=0"
+              }],
+              "groupLabels": {
+                  "alertname": "APIHighInvocationRate",
+                  "service": "gateway"
+              },
+              "commonLabels": {
+                  "alertname": "APIHighInvocationRate",
+                  "code": "200",
+                  "function_name": "func_nodeinfo",
+                  "instance": "gateway:8080",
+                  "job": "gateway",
+                  "monitor": "faas-monitor",
+                  "service": "gateway",
+                  "severity": "major",
+                  "value": "8.998200359928017"
+              },
+              "commonAnnotations": {
+                  "description": "High invocation total on gateway:8080",
+                  "summary": "High invocation total on gateway:8080"
+              },
+              "externalURL": "http://f054879d97db:9093",
+              "version": "3",
+              "groupKey": 18195285354214864953
+            }
       responses:
         '200':
           description: Alert handled successfully
@@ -163,20 +162,20 @@ paths:
       description: >-
         See https://github.com/openfaas/faas/blob/master/guide/asynchronous.md.
       parameters:
-        - in: path
-          name: functionName
-          description: Function name
+      - in: path
+        name: functionName
+        description: Function name
+        type: string
+        required: true
+      - in: body
+        name: input
+        description: (Optional) data to pass to function
+        schema:
           type: string
-          required: true
-        - in: body
-          name: input
-          description: (Optional) data to pass to function
-          schema:
-            type: string
-            format: binary
-            example:
-              '{"hello": "world"}'
-          required: false
+          format: binary
+          example:
+            '{"hello": "world"}'
+        required: false
       responses:
         '202':
           description: Request accepted and queued
@@ -188,20 +187,20 @@ paths:
     post:
       summary: Invoke a function defined in OpenFaaS
       parameters:
-        - in: path
-          name: functionName
-          description: Function name
+      - in: path
+        name: functionName
+        description: Function name
+        type: string
+        required: true
+      - in: body
+        name: input
+        description: (Optional) data to pass to function
+        schema:
           type: string
-          required: true
-        - in: body
-          name: input
-          description: (Optional) data to pass to function
-          schema:
-            type: string
-            format: binary
-            example:
-              '{"hello": "world"}'
-          required: false
+          format: binary
+          example:
+            '{"hello": "world"}'
+        required: false
       responses:
         '200':
           description: Value returned from function
@@ -213,20 +212,20 @@ paths:
     get:
       summary: Scale a function
       parameters:
-        - in: path
-          name: functionName
-          description: Function name
+      - in: path
+        name: functionName
+        description: Function name
+        type: string
+        required: true
+      - in: body
+        name: input
+        description: Function to scale plus replica count
+        schema:
           type: string
-          required: true
-        - in: body
-          name: input
-          description: Function to scale plus replica count
-          schema:
-            type: string
-            format: binary
-            example:
-              '{"service": "hello-world", "replicas": 10}'
-          required: false
+          format: binary
+          example:
+            '{"service": "hello-world", "replicas": 10}'
+        required: false
       responses:
         '200':
           description: Scaling OK
@@ -240,11 +239,11 @@ paths:
     get:
       summary: Get a summary of an OpenFaaS function
       parameters:
-        - in: path
-          name: functionName
-          description: Function name
-          type: string
-          required: true
+      - in: path
+        name: functionName
+        description: Function name
+        type: string
+        required: true
       responses:
         '200':
           description: Function Summary
@@ -258,7 +257,7 @@ paths:
     get:
       summary: Get info such as provider version number and provider orchestrator
       produces:
-        - application/json
+      - application/json
       responses:
         '200':
           description: Info result
@@ -284,27 +283,46 @@ definitions:
     type: object
     properties:
       provider:
-        type: string
+        type: object
         description: The OpenFaaS Provider
-        example: faas-swarm
+        properties:
+          provider:
+            type: string
+            example: faas-swarm
+          orchestration:
+            type: string
+            example: swarm
+          version:
+            type: object
+            description: Version of the OpenFaaS Provider
+            properties:
+              commit_message:
+                type: string
+                example: Sample Message
+              sha:
+                type: string
+                example: 7108418d9dd6b329ddff40e7393b3166f8160a88
+              release:
+                type: string
+                format: semver
+                example: 0.2.6
       version:
         type: object
-        description: Version of the OpenFaaS Provider
+        description: Version of the Gateway
         properties:
+          commit_message:
+            type: string
+            example: Sample Message
           sha:
             type: string
             example: 7108418d9dd6b329ddff40e7393b3166f8160a88
           release:
             type: string
             format: semver
-            example: 0.2.6
-      orchestration:
-        type: string
-        example: swarm
+            example: 0.8.9
     required:
-      - provider
-      - version
-      - orchestration
+    - provider
+    - version
   DeleteFunctionRequest:
     type: object
     properties:
@@ -313,7 +331,7 @@ definitions:
         description: Name of deployed function
         example: nodeinfo
     required:
-      - functionName
+    - functionName
   FunctionDefintion:
     type: object
     properties:
@@ -345,15 +363,15 @@ definitions:
           description: Constraints are specific to OpenFaaS Provider
           example: "node.platform.os == linux"
       labels:
-          type: string
-        items:
-        type: array
         description: An array of labels used by the back-end for making scheduling or routing decisions
-      annotations:
-          type: string
-        description: An array of annotations used by the back-end for management, orchestration, events and build tasks
-        items:
         type: array
+        items:
+          type: string
+      annotations:
+        description: An array of annotations used by the back-end for management, orchestration, events and build tasks
+        type: array
+        items:
+          type: string
       secrets:
         type: array
         items:
@@ -365,7 +383,7 @@ definitions:
         description: >-
           Private registry base64-encoded basic auth (as present in
           ~/.docker/config.json)
-        example: Basic dXNlcjpwYXNzd29yZA==
+        example: dXNlcjpwYXNzd29yZA==
       limits:
         type: object
         properties:
@@ -385,9 +403,9 @@ definitions:
             type: string
             example: "0.01"
     required:
-      - service
-      - image
-      - envProcess
+    - service
+    - image
+    - envProcess
   FunctionListEntry:
     type: object
     properties:
@@ -423,13 +441,13 @@ definitions:
         additionalProperties:
           type: string
     required:
-      - name
-      - image
-      - invocationCount
-      - replicas
-      - availableReplicas
-      - envProcess
-      - labels
+    - name
+    - image
+    - invocationCount
+    - replicas
+    - availableReplicas
+    - envProcess
+    - labels
 externalDocs:
   description: More documentation available on Github
   url: 'https://github.com/openfaas/faas'
