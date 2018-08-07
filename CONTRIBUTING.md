@@ -122,7 +122,6 @@ The Core Contributor group includes:
 - Stefan Prodan (@stefanprodan)
 - Burton Rheutan (@burtonr)
 - LucasRoesler (@LucasRoesler)
-- Eric Stoekl (@ericstoekl)
 
 The Core Contributors have the ear of the project lead and help with strategy, project maintenance, community management and make a regular commitment of time to the project. Core Contributors attend all project meetings and calls.
 

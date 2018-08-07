@@ -32,5 +32,13 @@ Listed by reward, followed by miscellaneous amounts. Names are (pending) until f
 
 Miscellaneous rewards/amounts are not shown.
 
+### Hall of fame
 
-> Disclaimer: all Patrons regardless of the level of reward are making a monthly pledge to donate money to support Alex Ellis. This does not represent an investment, stake or ownership in the OpenFaaS project, OpenFaaS Ltd or any other related entity.
+The hall of fame shows contributors who made a sustained positive impact on the project and community, but are no longer able to remain active in Open Source or OpenFaaS.
+
+* John Mccabe
+* Eric Stoekl
+* Austin Frey
+* Robbie Page
+
+> Disclaimer: all Patrons are making a monthly pledge to support Alex Ellis in running and operating OpenFaaS. This does not represent an investment, stake or ownership in OpenFaaS Ltd or related entities.
