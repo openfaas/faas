@@ -92,6 +92,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [VMware CodeHouse: A Great Insight into the Future of Software Engineering](https://blogs.vmware.com/opensource/2018/08/07/vmware-codehouse-empowers-women/) | Jonas Rosland | blogs.vmware.com | 7-Aug-2018 |
 | [How to run Rust in OpenFaaS](https://booyaa.wtf/2018/run-rust-in-openfaas/) | Mark Sta Ana | booyaa.wtf | 4-Aug-2018 |
 | [Scale to Zero and Back Again with OpenFaaS](https://www.openfaas.com/blog/zero-scale/) | Alex Ellis | openfaas.com | 25-July-2018 |
 | [PHP and OpenFaaS](https://mfyu.co.uk/post/php-and-openfaas) | Matt Brunt | mfyu.co.uk | 21-July-2018 |
