@@ -43,7 +43,7 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock"
         # ports:
             # - 8081:8080
-        image:  openfaas/faas-swarm:0.4.0
+        image:  openfaas/faas-swarm:0.4.1
         networks:
             - functions
         environment:
