@@ -53,10 +53,10 @@ func Test_Describe_DescribesThePrometheusMetrics(t *testing.T) {
 		t.Errorf("Want %s, got: %s", expectedGatewayFunctionsHistogramDesc, actualGatewayFunctionsHistogramDesc)
 	}
 	d = (<-ch)
-	expectedServiceReplicasCounterDesc := `Desc{fqName: "gateway_service_count", help: "Docker service replicas", constLabels: {}, variableLabels: [function_name]}`
-	actualServiceReplicasCounterDesc := d.String()
-	if expectedServiceReplicasCounterDesc != actualServiceReplicasCounterDesc {
-		t.Errorf("Want %s, got: %s", expectedServiceReplicasCounterDesc, actualServiceReplicasCounterDesc)
+	expectedServiceReplicasGaugeDesc := `Desc{fqName: "gateway_service_count", help: "Docker service replicas", constLabels: {}, variableLabels: [function_name]}`
+	actualServiceReplicasGaugeDesc := d.String()
+	if expectedServiceReplicasGaugeDesc != actualServiceReplicasGaugeDesc {
+		t.Errorf("Want %s, got: %s", expectedServiceReplicasGaugeDesc, actualServiceReplicasGaugeDesc)
 	}
 }
 
