@@ -13,7 +13,7 @@ import (
 type MetricOptions struct {
 	GatewayFunctionInvocation *prometheus.CounterVec
 	GatewayFunctionsHistogram *prometheus.HistogramVec
-	ServiceReplicasCounter    *prometheus.GaugeVec
+	ServiceReplicasGauge      *prometheus.GaugeVec
 }
 
 // PrometheusHandler Bootstraps prometheus for metrics collection
@@ -47,7 +47,7 @@ func BuildMetricsOptions() MetricOptions {
 	metricsOptions := MetricOptions{
 		GatewayFunctionsHistogram: gatewayFunctionsHistogram,
 		GatewayFunctionInvocation: gatewayFunctionInvocation,
-		ServiceReplicasCounter:    serviceReplicas,
+		ServiceReplicasGauge:      serviceReplicas,
 	}
 
 	return metricsOptions
