@@ -104,6 +104,66 @@ func TestHandler_HasCustomHeaderInFunction_WithCgiMode_AndBody(t *testing.T) {
 	}
 }
 
+func TestHandler_HasHostHeaderWhenSet(t *testing.T) {
+	rr := httptest.NewRecorder()
+
+	body := "test"
+	req, err := http.NewRequest(http.MethodPost, "http://gateway/function", bytes.NewBufferString(body))
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	config := WatchdogConfig{
+		faasProcess: "env",
+		cgiHeaders:  true,
+	}
+	handler := makeRequestHandler(&config)
+	handler(rr, req)
+
+	required := http.StatusOK
+	if status := rr.Code; status != required {
+		t.Errorf("handler returned wrong status code - got: %v, want: %v",
+			status, required)
+	}
+
+	read, _ := ioutil.ReadAll(rr.Body)
+	val := string(read)
+	if !strings.Contains(val, fmt.Sprintf("Http_Host=%s", req.URL.Host)) {
+		t.Errorf("'env' should have printed: Http_Host=0, got: %s\n", val)
+	}
+}
+
+func TestHandler_HostHeader_Empty_WhenNotSet(t *testing.T) {
+	rr := httptest.NewRecorder()
+
+	body := "test"
+	req, err := http.NewRequest(http.MethodPost, "/function", bytes.NewBufferString(body))
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	config := WatchdogConfig{
+		faasProcess: "env",
+		cgiHeaders:  true,
+	}
+	handler := makeRequestHandler(&config)
+	handler(rr, req)
+
+	required := http.StatusOK
+	if status := rr.Code; status != required {
+		t.Errorf("handler returned wrong status code - got: %v, want: %v",
+			status, required)
+	}
+
+	read, _ := ioutil.ReadAll(rr.Body)
+	val := string(read)
+	if strings.Contains(val, fmt.Sprintf("Http_Host=%s", req.URL.Host)) {
+		t.Errorf("Http_Host should not have been given, but was: %s\n", val)
+	}
+}
+
 func TestHandler_StderrWritesToStderr_CombinedOutput_False(t *testing.T) {
 	rr := httptest.NewRecorder()
 
