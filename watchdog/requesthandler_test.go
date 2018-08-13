@@ -490,6 +490,43 @@ func TestHealthHandler_SatusMethoNotAllowed_ForWriteableVerbs(t *testing.T) {
 	}
 }
 
+func TestHandler_HasFullPathAndQueryInFunction_WithCgi_Mode(t *testing.T) {
+	rr := httptest.NewRecorder()
+
+	body := ""
+	wantPath := "/my/full/path"
+	wantQuery := "q=x"
+	requestURI := wantPath + "?" + wantQuery
+	req, err := http.NewRequest(http.MethodPost, requestURI, bytes.NewBufferString(body))
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	config := WatchdogConfig{
+		faasProcess: "env",
+		cgiHeaders:  true,
+	}
+	handler := makeRequestHandler(&config)
+	handler(rr, req)
+
+	required := http.StatusOK
+	if status := rr.Code; status != required {
+		t.Errorf("handler returned wrong status code - got: %v, want: %v",
+			status, required)
+	}
+
+	read, _ := ioutil.ReadAll(rr.Body)
+	val := string(read)
+	if !strings.Contains(val, "Http_Path="+wantPath) {
+		t.Errorf(config.faasProcess+" should print: Http_Path="+wantPath+", got: %s\n", val)
+	}
+
+	if !strings.Contains(val, "Http_Query="+wantQuery) {
+		t.Errorf(config.faasProcess+" should print: Http_Query="+wantQuery+", got: %s\n", val)
+	}
+}
+
 func removeLockFile() error {
 	path := filepath.Join(os.TempDir(), ".lock")
 	log.Printf("Removing lock-file : %s\n", path)
