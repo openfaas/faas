@@ -38,7 +38,7 @@ functions:
   haveibeenpwned:
     lang: go
     handler: ./haveibeenpwned
-    image: haveibeenpwned:latest
+    image: functions/haveibeenpwned:0.1
   hostnameintent:
     lang: dockerfile
     handler: ./hostnameintent
