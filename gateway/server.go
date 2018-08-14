@@ -74,7 +74,7 @@ func main() {
 		functionURLResolver = urlResolver
 	}
 
-	urlTransformer := handlers.PathTruncatingURLPathTransformer{}
+	urlTransformer := handlers.FunctionPathTruncatingURLPathTransformer{}
 	var functionURLTransformer handlers.URLPathTransformer
 
 	if config.PassURLPathsToFunctions {
