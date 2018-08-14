@@ -164,7 +164,10 @@ func Test_buildUpstreamRequest_Body_Method_Query_Path(t *testing.T) {
 		t.Fail()
 	}
 
-	upstream := buildUpstreamRequest(request, "http://xyz:8080", request.URL.Path)
+	transformer := FunctionPrefixTrimmingURLPathTransformer{}
+	transformedPath := transformer.Transform(request)
+
+	upstream := buildUpstreamRequest(request, "http://xyz:8080", transformedPath)
 
 	if request.Method != upstream.Method {
 		t.Errorf("Method - want: %s, got: %s", request.Method, upstream.Method)
