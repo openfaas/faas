@@ -50,6 +50,7 @@ func MakeQueuedProxy(metrics metrics.MetricOptions, wildcard bool, canQueueReque
 			Method:      r.Method,
 			QueryString: r.URL.RawQuery,
 			Header:      r.Header,
+			Host:        r.Host,
 			CallbackURL: callbackURL,
 		}
 
