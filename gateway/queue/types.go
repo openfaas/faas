@@ -9,6 +9,7 @@ import "net/http"
 // Request for asynchronous processing
 type Request struct {
 	Header      http.Header
+	Host        string
 	Body        []byte
 	Method      string
 	QueryString string
