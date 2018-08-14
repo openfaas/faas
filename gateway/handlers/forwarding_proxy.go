@@ -53,6 +53,9 @@ func buildUpstreamRequest(r *http.Request, url string) *http.Request {
 	}
 
 	upstreamReq, _ := http.NewRequest(r.Method, url, nil)
+	if len(r.Host) > 0 {
+		upstreamReq.Host = r.Host
+	}
 	copyHeaders(upstreamReq.Header, &r.Header)
 
 	upstreamReq.Header["X-Forwarded-For"] = []string{r.RemoteAddr}

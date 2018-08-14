@@ -68,6 +68,40 @@ func Test_buildUpstreamRequest_NoBody_GetMethod_NoQuery(t *testing.T) {
 
 }
 
+func Test_buildUpstreamRequest_HasHostHeaderWhenSet(t *testing.T) {
+	srcBytes := []byte("hello world")
+
+	reader := bytes.NewReader(srcBytes)
+	request, err := http.NewRequest(http.MethodPost, "http://gateway/function?code=1", reader)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	upstream := buildUpstreamRequest(request, "/")
+
+	if request.Host != upstream.Host {
+		t.Errorf("Host - want: %s, got: %s", request.Host, upstream.Host)
+	}
+}
+
+func Test_buildUpstreamRequest_HostHeader_Empty_WhenNotSet(t *testing.T) {
+	srcBytes := []byte("hello world")
+
+	reader := bytes.NewReader(srcBytes)
+	request, err := http.NewRequest(http.MethodPost, "/function", reader)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	upstream := buildUpstreamRequest(request, "/")
+
+	if request.Host != upstream.Host {
+		t.Errorf("Host - want: %s, got: %s", request.Host, upstream.Host)
+	}
+}
+
 func Test_getServiceName(t *testing.T) {
 	scenarios := []struct {
 		name        string
