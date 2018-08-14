@@ -15,7 +15,7 @@ import (
 )
 
 // MakeQueuedProxy accepts work onto a queue
-func MakeQueuedProxy(metrics metrics.MetricOptions, wildcard bool, canQueueRequests queue.CanQueueRequests) http.HandlerFunc {
+func MakeQueuedProxy(metrics metrics.MetricOptions, wildcard bool, canQueueRequests queue.CanQueueRequests, pathTransformer URLPathTransformer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 
@@ -49,6 +49,7 @@ func MakeQueuedProxy(metrics metrics.MetricOptions, wildcard bool, canQueueReque
 			Body:        body,
 			Method:      r.Method,
 			QueryString: r.URL.RawQuery,
+			Path:        pathTransformer.Transform(r),
 			Header:      r.Header,
 			Host:        r.Host,
 			CallbackURL: callbackURL,

@@ -29,12 +29,17 @@ type BaseURLResolver interface {
 	Resolve(r *http.Request) string
 }
 
+// RequestURLPathTransformer Transform the incoming URL path for upstream requests
+type URLPathTransformer interface {
+	Transform(r *http.Request) string
+}
+
 // MakeForwardingProxyHandler create a handler which forwards HTTP requests
-func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers []HTTPNotifier, baseURLResolver BaseURLResolver) http.HandlerFunc {
+func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers []HTTPNotifier, baseURLResolver BaseURLResolver, urlPathTransformer URLPathTransformer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		baseURL := baseURLResolver.Resolve(r)
 
-		requestURL := r.URL.Path
+		requestURL := urlPathTransformer.Transform(r)
 
 		start := time.Now()
 
@@ -51,23 +56,7 @@ func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers [
 }
 
 func buildUpstreamRequest(r *http.Request, baseURL string, requestURL string) *http.Request {
-	url := baseURL
-
-	if requestURL != "" {
-		// When forwarding to a function, since the `/function/xyz` portion
-		// of a path like `/function/xyz/rest/of/path` is only used or needed
-		// by the Gateway, we want to trim it down to `/rest/of/path` for the
-		// upstream request.  In the following regex, in the case of a match
-		// the requestURL will be at `0`, the function name at `1` and the
-		// rest of the path (the part we are interested in) at `2`.
-		matcher := functionMatcher.Copy()
-		parts := matcher.FindStringSubmatch(requestURL)
-		if 3 == len(parts) {
-			url += parts[2]
-		} else {
-			url += requestURL
-		}
-	}
+	url := baseURL + requestURL
 
 	if len(r.URL.RawQuery) > 0 {
 		url = fmt.Sprintf("%s?%s", url, r.URL.RawQuery)
@@ -210,4 +199,47 @@ func (f FunctionAsHostBaseURLResolver) Resolve(r *http.Request) string {
 	}
 
 	return fmt.Sprintf("http://%s%s:%d", svcName, suffix, watchdogPort)
+}
+
+// TransparentURLPathTransformer passes the requested URL path through untouched.
+type TransparentURLPathTransformer struct {
+}
+
+// Transform returns the URL path unchanged.
+func (f TransparentURLPathTransformer) Transform(r *http.Request) string {
+	return r.URL.Path
+}
+
+// PathTruncatingURLPathTransformer always truncated the path to "/".
+type PathTruncatingURLPathTransformer struct {
+}
+
+// Transform always return a path of "/".
+func (f PathTruncatingURLPathTransformer) Transform(r *http.Request) string {
+	return "/"
+}
+
+// FunctionPrefixTrimmingURLPathTransformer removes the "/function/servicename/" prefix from the URL path.
+type FunctionPrefixTrimmingURLPathTransformer struct {
+}
+
+// Transform removes the "/function/servicename/" prefix from the URL path.
+func (f FunctionPrefixTrimmingURLPathTransformer) Transform(r *http.Request) string {
+	ret := r.URL.Path
+
+	if ret != "" {
+		// When forwarding to a function, since the `/function/xyz` portion
+		// of a path like `/function/xyz/rest/of/path` is only used or needed
+		// by the Gateway, we want to trim it down to `/rest/of/path` for the
+		// upstream request.  In the following regex, in the case of a match
+		// the r.URL.Path will be at `0`, the function name at `1` and the
+		// rest of the path (the part we are interested in) at `2`.
+		matcher := functionMatcher.Copy()
+		parts := matcher.FindStringSubmatch(ret)
+		if 3 == len(parts) {
+			ret = parts[2]
+		}
+	}
+
+	return ret
 }

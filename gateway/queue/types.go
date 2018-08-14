@@ -12,6 +12,7 @@ type Request struct {
 	Host        string
 	Body        []byte
 	Method      string
+	Path        string
 	QueryString string
 	Function    string
 	CallbackURL *url.URL `json:"CallbackUrl"`
