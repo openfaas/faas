@@ -17,7 +17,7 @@ import (
 )
 
 // Parse out the service name (group 1) and rest of path (group 2).
-var functionMatcher = regexp.MustCompile("^/?function/([^/?]+)([^?]*)")
+var functionMatcher = regexp.MustCompile("^/?(?:async-)?function/([^/?]+)([^?]*)")
 
 // HTTPNotifier notify about HTTP request/response
 type HTTPNotifier interface {
