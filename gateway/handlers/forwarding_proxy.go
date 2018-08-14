@@ -210,13 +210,26 @@ func (f TransparentURLPathTransformer) Transform(r *http.Request) string {
 	return r.URL.Path
 }
 
-// PathTruncatingURLPathTransformer always truncated the path to "/".
-type PathTruncatingURLPathTransformer struct {
+// FunctionPathTruncatingURLPathTransformer always truncated the path to "/".
+type FunctionPathTruncatingURLPathTransformer struct {
 }
 
 // Transform always return a path of "/".
-func (f PathTruncatingURLPathTransformer) Transform(r *http.Request) string {
-	return "/"
+func (f FunctionPathTruncatingURLPathTransformer) Transform(r *http.Request) string {
+	ret := r.URL.Path
+
+	if ret != "" {
+		matcher := functionMatcher.Copy()
+		parts := matcher.FindStringSubmatch(ret)
+		// In the following regex, in the case of a match the r.URL.Path will be at `0`,
+		// the function name at `1` and the rest of the path (the part we are interested in)
+		// at `2`.  For this transformer, all we need to do is confirm it is a function.
+		if 3 == len(parts) {
+			ret = "/"
+		}
+	}
+
+	return ret
 }
 
 // FunctionPrefixTrimmingURLPathTransformer removes the "/function/servicename/" prefix from the URL path.
