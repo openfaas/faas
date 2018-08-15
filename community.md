@@ -19,6 +19,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Award/Mention                                          | Author(s)       | Source     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [KubeWeekly #145](https://mailchi.mp/cncf/kubeweekly-145?e=5c7c372824) | [KubeWeekly](https://twitter.com/kubeweekly?lang=en) | mailchi.mp | 15-Aug-2018 |
 | [The Cube interview at Cisco DevNet Create](https://www.youtube.com/watch?v=J8UYZ1GXNTQ) | The Cube | Youtube.com | 11-Apr-2018
 | [VMware hires OpenFaaS Founder](https://thenewstack.io/vmware-hires-openfaas-founder-dell-drops-code-initiative-2/) | The New Stack | thenewstack.io | 21-Feb-2018 |
 | [OpenFaaS added to CNCF Cloud Native Landscape - Serverless/Event-based](https://github.com/cncf/landscape/blob/master/landscape/CloudNativeLandscape_latest.jpg) | [Cloud Native Computing Foundation (CNCF)](https://www.cncf.io/) | Github | 23-Oct-2017 |
@@ -53,6 +54,9 @@ Key:
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Introducing OpenFaaS Cloud, a Developer-Friendly CI/CD Pipeline for Serverless](https://osseu18.sched.com/event/FxXx/introducing-openfaas-cloud-a-developer-friendly-cicd-pipeline-for-serverless-alex-ellis-openfaas-project-vmware) | Alex Ellis | Edinburgh, Scotland | 22-Oct-2018 |
+| [Goto conf - Serverless Beyond the Hype](https://gotocph.com/2018/sessions/592) | Alex Ellis | Copenhagen, DK | 19-Nov-2018 |
+| [ John Callaway: .NET Core on a Raspberry Pi Cluster with Docker and OpenFaaS](https://secure.meetup.com/register/?ctx=ref) | John Callaway | Orlando, FL, USA |16-Aug-2018 |
 | [Cloud Native Glasgow - Serverless on Kubernetes](https://www.meetup.com/CloudNativeGlasgow/events/251913059/) | John McCabe | Glasgow, UK | 5-July-2018 |
 | [Opsview & Kubernetes (incl. OpenFaaS)](https://www.meetup.com/Birmingham-digital-development-Meetup/events/250680464/) | Opsview | Birmingham, UK | 28-June-2018 |
 | [Meetup[4] - Pizza and OpenFaaS](https://www.meetup.com/Shirley-Software-Development-Meetup/events/251103825/) | [Steven Tsang](https://twitter.com/stetsang) | Shirley, UK | 27-June-2018 |
@@ -92,6 +96,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Serverless email sender using OpenFaaS and .NET Core](https://medium.com/@paulius.juozelskis/serverless-email-sender-using-openfaas-and-net-core-afdef152359) | Paulius Juozelskis | medium.com | 13-Aug-2018 |
 | [VMware CodeHouse: A Great Insight into the Future of Software Engineering](https://blogs.vmware.com/opensource/2018/08/07/vmware-codehouse-empowers-women/) | Jonas Rosland | blogs.vmware.com | 7-Aug-2018 |
 | [How to run Rust in OpenFaaS](https://booyaa.wtf/2018/run-rust-in-openfaas/) | Mark Sta Ana | booyaa.wtf | 4-Aug-2018 |
 | [Scale to Zero and Back Again with OpenFaaS](https://www.openfaas.com/blog/zero-scale/) | Alex Ellis | openfaas.com | 25-July-2018 |
