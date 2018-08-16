@@ -95,6 +95,8 @@ func main() {
 
 		faasHandlers.QueuedProxy = handlers.MakeQueuedProxy(metricsOptions, true, natsQueue)
 		faasHandlers.AsyncReport = handlers.MakeAsyncReport(metricsOptions)
+
+		faasHandlers.QueuedProxy = handlers.MakeCallIDMiddleware(faasHandlers.QueuedProxy)
 	}
 
 	prometheusQuery := metrics.NewPrometheusQuery(config.PrometheusHost, config.PrometheusPort, &http.Client{})
