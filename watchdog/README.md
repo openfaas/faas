@@ -45,9 +45,17 @@ ENV fprocess="/bin/cat"
 CMD ["fwatchdog"]
 ```
 
-**Implementing a Docker healthcheck**
+**Implementing a health-check**
 
-A Docker Healthcheck is not required but is best practice. It will make sure that the watchdog is ready to accept a request before forwarding requests via the API Gateway. If the function or watchdog runs into an unrecoverable issue Swarm will also be able to restart the container.
+At any point in time, if you detect that your function has become unhealthy and needs to restart, then you can delete the `/tmp/.lock` file which invalidates the check and causes Swarm to re-schedule the function.
+
+* Kubernetes
+
+For Kubernetes the health check is added through automation without you needing to alter the `Dockerfile`.
+
+* Swarm
+
+A Docker Swarm Healthcheck is required and is best practice. It will make sure that the watchdog is ready to accept a request before forwarding requests via the API Gateway. If the function or watchdog runs into an unrecoverable issue Swarm will also be able to restart the container.
 
 Here is an example of the `echo` function implementing a healthcheck with a 5-second checking interval.
 
