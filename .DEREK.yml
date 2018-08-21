@@ -2,19 +2,19 @@ maintainers:
  - alexellis
  - rgee0
  - johnmccabe
- - jockdarock
  - ericstoekl
- - itscaro
  - kenfdev
  - BurtonR
  - ivanayov
  - stefanprodan
- - ovation22
- - cpitkin
  - affix
  - viveksyngh
  - martindekov
  - ewilde
+ - bartsmykla
+ - LucasRoesler
+ - s8sg
+ - viveksyngh
 
 features:
  - dco_check
