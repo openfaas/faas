@@ -299,6 +299,7 @@ func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.
 		case
 			http.MethodPost,
 			http.MethodPut,
+			http.MethodPatch,
 			http.MethodDelete,
 			http.MethodGet:
 			pipeRequest(config, w, r, r.Method)
