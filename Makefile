@@ -7,5 +7,9 @@ build-gateway:
 	(cd gateway; ./build.sh latest-dev)
 test-ci:
 	./contrib/ci.sh
-ci-armhf:
-	(cd gateway; ./build.sh $(TAG)-armhf)
+
+ci-armhf-build:
+	(cd gateway; ./build.sh $(TAG))
+
+ci-armhf-push:
+	(cd gateway; ./push.sh $(TAG))
