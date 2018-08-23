@@ -225,7 +225,11 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
                 $scope.invocationResponse = "";
                 $scope.invocationStatus = "";
                 $scope.invocationInProgress = false;
-                $scope.invocation.contentType = "text";
+                if (fn.labels && fn.labels['com.openfaas.ui.ext']) {
+                  $scope.invocation.contentType = "binary";
+                } else {
+                  $scope.invocation.contentType = "text";
+                }
                 $scope.invocation.roundTripDuration = "";
             }
         };
