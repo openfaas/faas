@@ -29,7 +29,7 @@ const (
 
 // HTTPNotifier notify about HTTP request/response
 type HTTPNotifier interface {
-	Notify(method string, URL string, statusCode int, duration time.Duration)
+	Notify(method string, URL string, originalURL string, statusCode int, duration time.Duration)
 }
 
 // BaseURLResolver URL resolver for upstream requests
@@ -46,6 +46,7 @@ type URLPathTransformer interface {
 func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers []HTTPNotifier, baseURLResolver BaseURLResolver, urlPathTransformer URLPathTransformer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		baseURL := baseURLResolver.Resolve(r)
+		originalURL := r.URL.String()
 
 		requestURL := urlPathTransformer.Transform(r)
 
@@ -57,8 +58,9 @@ func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers [
 		if err != nil {
 			log.Printf("error with upstream request to: %s, %s\n", requestURL, err.Error())
 		}
+
 		for _, notifier := range notifiers {
-			notifier.Notify(r.Method, requestURL, statusCode, seconds)
+			notifier.Notify(r.Method, requestURL, originalURL, statusCode, seconds)
 		}
 	}
 }
@@ -133,9 +135,9 @@ type PrometheusFunctionNotifier struct {
 }
 
 // Notify records metrics in Prometheus
-func (p PrometheusFunctionNotifier) Notify(method string, URL string, statusCode int, duration time.Duration) {
+func (p PrometheusFunctionNotifier) Notify(method string, URL string, originalURL string, statusCode int, duration time.Duration) {
 	seconds := duration.Seconds()
-	serviceName := getServiceName(URL)
+	serviceName := getServiceName(originalURL)
 
 	p.Metrics.GatewayFunctionsHistogram.
 		WithLabelValues(serviceName).
@@ -171,8 +173,8 @@ type LoggingNotifier struct {
 }
 
 // Notify a log about a request
-func (LoggingNotifier) Notify(method string, URL string, statusCode int, duration time.Duration) {
-	log.Printf("Forwarded [%s] to %s - [%d] - %f seconds", method, URL, statusCode, duration.Seconds())
+func (LoggingNotifier) Notify(method string, URL string, originalURL string, statusCode int, duration time.Duration) {
+	log.Printf("Forwarded [%s] to %s - [%d] - %f seconds", method, originalURL, statusCode, duration.Seconds())
 }
 
 // SingleHostBaseURLResolver resolves URLs against a single BaseURL
