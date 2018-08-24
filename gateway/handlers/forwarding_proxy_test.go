@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -151,21 +152,30 @@ func Test_getServiceName(t *testing.T) {
 	}
 }
 
-func Test_buildUpstreamRequest_Body_Method_Query_Path(t *testing.T) {
+func Test_buildUpstreamRequest_WithPathNoQuery(t *testing.T) {
 	srcBytes := []byte("hello world")
-	path := "/my/deep/path"
+	functionPath := "/employee/info/300"
+
+	requestPath := fmt.Sprintf("/function/xyz%s", functionPath)
 
 	reader := bytes.NewReader(srcBytes)
-	request, _ := http.NewRequest(http.MethodPost, "/function/xyz"+path+"?code=1", reader)
+	request, _ := http.NewRequest(http.MethodPost, requestPath, reader)
 	request.Header.Set("X-Source", "unit-test")
 
-	if request.URL.RawQuery != "code=1" {
-		t.Errorf("Query - want: %s, got: %s", "code=1", request.URL.RawQuery)
+	queryWant := ""
+	if request.URL.RawQuery != queryWant {
+
+		t.Errorf("Query - want: %s, got: %s", queryWant, request.URL.RawQuery)
 		t.Fail()
 	}
 
 	transformer := FunctionPrefixTrimmingURLPathTransformer{}
 	transformedPath := transformer.Transform(request)
+
+	wantTransformedPath := functionPath
+	if transformedPath != wantTransformedPath {
+		t.Errorf("transformedPath want: %s, got %s", wantTransformedPath, transformedPath)
+	}
 
 	upstream := buildUpstreamRequest(request, "http://xyz:8080", transformedPath)
 
@@ -191,8 +201,118 @@ func Test_buildUpstreamRequest_Body_Method_Query_Path(t *testing.T) {
 		t.Fail()
 	}
 
-	if path != upstream.URL.Path {
-		t.Errorf("URL.Path - want: %s, got: %s", path, upstream.URL.Path)
+	if functionPath != upstream.URL.Path {
+		t.Errorf("URL.Path - want: %s, got: %s", functionPath, upstream.URL.Path)
+		t.Fail()
+	}
+
+}
+
+func Test_buildUpstreamRequest_WithNoPathNoQuery(t *testing.T) {
+	srcBytes := []byte("hello world")
+	functionPath := "/"
+
+	requestPath := fmt.Sprintf("/function/xyz%s", functionPath)
+
+	reader := bytes.NewReader(srcBytes)
+	request, _ := http.NewRequest(http.MethodPost, requestPath, reader)
+	request.Header.Set("X-Source", "unit-test")
+
+	queryWant := ""
+	if request.URL.RawQuery != queryWant {
+
+		t.Errorf("Query - want: %s, got: %s", queryWant, request.URL.RawQuery)
+		t.Fail()
+	}
+
+	transformer := FunctionPrefixTrimmingURLPathTransformer{}
+	transformedPath := transformer.Transform(request)
+
+	wantTransformedPath := "/"
+	if transformedPath != wantTransformedPath {
+		t.Errorf("transformedPath want: %s, got %s", wantTransformedPath, transformedPath)
+	}
+
+	upstream := buildUpstreamRequest(request, "http://xyz:8080", transformedPath)
+
+	if request.Method != upstream.Method {
+		t.Errorf("Method - want: %s, got: %s", request.Method, upstream.Method)
+		t.Fail()
+	}
+
+	upstreamBytes, _ := ioutil.ReadAll(upstream.Body)
+
+	if string(upstreamBytes) != string(srcBytes) {
+		t.Errorf("Body - want: %s, got: %s", string(upstreamBytes), string(srcBytes))
+		t.Fail()
+	}
+
+	if request.Header.Get("X-Source") != upstream.Header.Get("X-Source") {
+		t.Errorf("Header X-Source - want: %s, got: %s", request.Header.Get("X-Source"), upstream.Header.Get("X-Source"))
+		t.Fail()
+	}
+
+	if request.URL.RawQuery != upstream.URL.RawQuery {
+		t.Errorf("URL.RawQuery - want: %s, got: %s", request.URL.RawQuery, upstream.URL.RawQuery)
+		t.Fail()
+	}
+
+	if functionPath != upstream.URL.Path {
+		t.Errorf("URL.Path - want: %s, got: %s", functionPath, upstream.URL.Path)
+		t.Fail()
+	}
+
+}
+
+func Test_buildUpstreamRequest_WithPathAndQuery(t *testing.T) {
+	srcBytes := []byte("hello world")
+	functionPath := "/employee/info/300"
+
+	requestPath := fmt.Sprintf("/function/xyz%s?code=1", functionPath)
+
+	reader := bytes.NewReader(srcBytes)
+	request, _ := http.NewRequest(http.MethodPost, requestPath, reader)
+	request.Header.Set("X-Source", "unit-test")
+
+	if request.URL.RawQuery != "code=1" {
+		t.Errorf("Query - want: %s, got: %s", "code=1", request.URL.RawQuery)
+		t.Fail()
+	}
+
+	transformer := FunctionPrefixTrimmingURLPathTransformer{}
+	transformedPath := transformer.Transform(request)
+
+	wantTransformedPath := functionPath
+	if transformedPath != wantTransformedPath {
+		t.Errorf("transformedPath want: %s, got %s", wantTransformedPath, transformedPath)
+	}
+
+	upstream := buildUpstreamRequest(request, "http://xyz:8080", transformedPath)
+
+	if request.Method != upstream.Method {
+		t.Errorf("Method - want: %s, got: %s", request.Method, upstream.Method)
+		t.Fail()
+	}
+
+	upstreamBytes, _ := ioutil.ReadAll(upstream.Body)
+
+	if string(upstreamBytes) != string(srcBytes) {
+		t.Errorf("Body - want: %s, got: %s", string(upstreamBytes), string(srcBytes))
+		t.Fail()
+	}
+
+	if request.Header.Get("X-Source") != upstream.Header.Get("X-Source") {
+		t.Errorf("Header X-Source - want: %s, got: %s", request.Header.Get("X-Source"), upstream.Header.Get("X-Source"))
+		t.Fail()
+	}
+
+	if request.URL.RawQuery != upstream.URL.RawQuery {
+		t.Errorf("URL.RawQuery - want: %s, got: %s", request.URL.RawQuery, upstream.URL.RawQuery)
+		t.Fail()
+	}
+
+	if functionPath != upstream.URL.Path {
+		t.Errorf("URL.Path - want: %s, got: %s", functionPath, upstream.URL.Path)
 		t.Fail()
 	}
 

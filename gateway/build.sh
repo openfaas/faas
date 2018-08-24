@@ -19,7 +19,7 @@ if [ "$1" ] ; then
   fi
 fi
 
-NS=openfaas
+NS=alexellis
 
 echo Building $NS/gateway:$eTAG
 
