@@ -16,15 +16,15 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-// Parse out the service name (group 1) and rest of path (group 2).
+// functionMatcher parses out the service name (group 1) and rest of path (group 2).
 var functionMatcher = regexp.MustCompile("^/?(?:async-)?function/([^/?]+)([^?]*)")
 
 // Indicies and meta-data for functionMatcher regex parts
 const (
 	hasPathCount = 3
-	routeIndex   = 0
-	nameIndex    = 1
-	pathIndex    = 2
+	routeIndex   = 0 // routeIndex corresponds to /function/ or /async-function/
+	nameIndex    = 1 // nameIndex is the function name
+	pathIndex    = 2 // pathIndex is the path i.e. /employee/:id/
 )
 
 // HTTPNotifier notify about HTTP request/response
@@ -216,28 +216,6 @@ type TransparentURLPathTransformer struct {
 // Transform returns the URL path unchanged.
 func (f TransparentURLPathTransformer) Transform(r *http.Request) string {
 	return r.URL.Path
-}
-
-// FunctionPathTruncatingURLPathTransformer always truncated the path to "/".
-type FunctionPathTruncatingURLPathTransformer struct {
-}
-
-// Transform always return a path of "/".
-func (f FunctionPathTruncatingURLPathTransformer) Transform(r *http.Request) string {
-	ret := r.URL.Path
-
-	if ret != "" {
-		matcher := functionMatcher.Copy()
-		parts := matcher.FindStringSubmatch(ret)
-		// In the following regex, in the case of a match the r.URL.Path will be at `0`,
-		// the function name at `1` and the rest of the path (the part we are interested in)
-		// at `2`.  For this transformer, all we need to do is confirm it is a function.
-		if len(parts) == hasPathCount {
-			ret = "/"
-		}
-	}
-
-	return ret
 }
 
 // FunctionPrefixTrimmingURLPathTransformer removes the "/function/servicename/" prefix from the URL path.
