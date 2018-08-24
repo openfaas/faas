@@ -74,23 +74,17 @@ func main() {
 		functionURLResolver = urlResolver
 	}
 
-	urlTransformer := handlers.FunctionPathTruncatingURLPathTransformer{}
-	var functionURLTransformer handlers.URLPathTransformer
-
-	if config.PassURLPathsToFunctions {
-		functionURLTransformer = handlers.FunctionPrefixTrimmingURLPathTransformer{}
-	} else {
-		functionURLTransformer = urlTransformer
-	}
+	nilURLTransformer := handlers.TransparentURLPathTransformer{}
+	functionURLTransformer := handlers.FunctionPrefixTrimmingURLPathTransformer{}
 
 	faasHandlers.Proxy = handlers.MakeForwardingProxyHandler(reverseProxy, functionNotifiers, functionURLResolver, functionURLTransformer)
 
-	faasHandlers.RoutelessProxy = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, urlTransformer)
-	faasHandlers.ListFunctions = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, urlTransformer)
-	faasHandlers.DeployFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, urlTransformer)
-	faasHandlers.DeleteFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, urlTransformer)
-	faasHandlers.UpdateFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, urlTransformer)
-	queryFunction := handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, urlTransformer)
+	faasHandlers.RoutelessProxy = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
+	faasHandlers.ListFunctions = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
+	faasHandlers.DeployFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
+	faasHandlers.DeleteFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
+	faasHandlers.UpdateFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
+	queryFunction := handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
 
 	alertHandler := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL)
 	faasHandlers.Alert = handlers.MakeAlertHandler(alertHandler)
@@ -110,7 +104,7 @@ func main() {
 	faasHandlers.ListFunctions = metrics.AddMetricsHandler(faasHandlers.ListFunctions, prometheusQuery)
 	faasHandlers.Proxy = handlers.MakeCallIDMiddleware(faasHandlers.Proxy)
 
-	faasHandlers.ScaleFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, urlTransformer)
+	faasHandlers.ScaleFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
 
 	if credentials != nil {
 		faasHandlers.UpdateFunction =
@@ -123,7 +117,6 @@ func main() {
 			handlers.DecorateWithBasicAuth(faasHandlers.ListFunctions, credentials)
 		faasHandlers.ScaleFunction =
 			handlers.DecorateWithBasicAuth(faasHandlers.ScaleFunction, credentials)
-
 	}
 
 	r := mux.NewRouter()
@@ -147,7 +140,7 @@ func main() {
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/{params:.*}", functionProxy)
 
 	r.HandleFunc("/system/info", handlers.MakeInfoHandler(handlers.MakeForwardingProxyHandler(
-		reverseProxy, forwardingNotifiers, urlResolver, urlTransformer))).Methods(http.MethodGet)
+		reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer))).Methods(http.MethodGet)
 
 	r.HandleFunc("/system/alert", faasHandlers.Alert)
 
@@ -181,7 +174,7 @@ func main() {
 
 	metricsHandler := metrics.PrometheusHandler()
 	r.Handle("/metrics", metricsHandler)
-	r.HandleFunc("/healthz", handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, urlTransformer)).Methods(http.MethodGet)
+	r.HandleFunc("/healthz", handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)).Methods(http.MethodGet)
 
 	r.Handle("/", http.RedirectHandler("/ui/", http.StatusMovedPermanently)).Methods(http.MethodGet)
 

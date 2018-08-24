@@ -78,7 +78,7 @@ func Test_buildUpstreamRequest_HasHostHeaderWhenSet(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	upstream := buildUpstreamRequest(request, "/")
+	upstream := buildUpstreamRequest(request, "/", "/")
 
 	if request.Host != upstream.Host {
 		t.Errorf("Host - want: %s, got: %s", request.Host, upstream.Host)
@@ -95,7 +95,7 @@ func Test_buildUpstreamRequest_HostHeader_Empty_WhenNotSet(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	upstream := buildUpstreamRequest(request, "/")
+	upstream := buildUpstreamRequest(request, "/", "/")
 
 	if request.Host != upstream.Host {
 		t.Errorf("Host - want: %s, got: %s", request.Host, upstream.Host)

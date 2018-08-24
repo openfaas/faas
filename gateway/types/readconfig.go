@@ -105,8 +105,6 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 	cfg.DirectFunctions = parseBoolValue(hasEnv.Getenv("direct_functions"))
 	cfg.DirectFunctionsSuffix = hasEnv.Getenv("direct_functions_suffix")
 
-	cfg.PassURLPathsToFunctions = parseBoolValue(hasEnv.Getenv("pass_url_path_to_functions"))
-
 	cfg.UseBasicAuth = parseBoolValue(hasEnv.Getenv("basic_auth"))
 
 	secretPath := hasEnv.Getenv("secret_mount_path")
@@ -151,10 +149,6 @@ type GatewayConfig struct {
 
 	// If set this will be used to resolve functions directly
 	DirectFunctionsSuffix string
-
-	// If set to true, the requested path will be passed along to the function, minus the "/function/xyz"
-	// prefix, else the path will be truncated to "/" regardless of what the client sends.
-	PassURLPathsToFunctions bool
 
 	// If set, reads secrets from file-system for enabling basic auth.
 	UseBasicAuth bool
