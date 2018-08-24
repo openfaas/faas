@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: functions/gateway:0.8.1-armhf
+        image: openfaas/gateway:0.8.12-armhf
         networks:
             - functions
         environment:
@@ -17,6 +17,7 @@ services:
             direct_functions_suffix: ""
             basic_auth: "false"
             secret_mount_path: "/run/secrets/"
+            scale_from_zero: "false"
         deploy:
             resources:
                 # limits:   # uncomment to enable limits
@@ -34,11 +35,11 @@ services:
 
     # Docker Swarm provider
     faas-swarm:
+        image:  openfaas/faas-swarm:0.4.1-armhf
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
         # ports:
             # - 8081:8080
-        image:  functions/faas-swarm:0.2.7-armhf
         networks:
             - functions
         environment:
@@ -82,7 +83,7 @@ services:
                     - 'node.platform.os == linux'
 
     queue-worker:
-        image: functions/queue-worker:0.4.3-armhf
+        image: openfaas/queue-worker:0.4.9-armhf
         networks:
             - functions
         environment:
