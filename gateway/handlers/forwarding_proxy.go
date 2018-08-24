@@ -19,6 +19,14 @@ import (
 // Parse out the service name (group 1) and rest of path (group 2).
 var functionMatcher = regexp.MustCompile("^/?(?:async-)?function/([^/?]+)([^?]*)")
 
+// Indicies and meta-data for functionMatcher regex parts
+const (
+	hasPathCount = 3
+	routeIndex   = 0
+	nameIndex    = 1
+	pathIndex    = 2
+)
+
 // HTTPNotifier notify about HTTP request/response
 type HTTPNotifier interface {
 	Notify(method string, URL string, statusCode int, duration time.Duration)
@@ -29,7 +37,7 @@ type BaseURLResolver interface {
 	Resolve(r *http.Request) string
 }
 
-// RequestURLPathTransformer Transform the incoming URL path for upstream requests
+// URLPathTransformer Transform the incoming URL path for upstream requests
 type URLPathTransformer interface {
 	Transform(r *http.Request) string
 }
@@ -151,8 +159,8 @@ func getServiceName(urlValue string) string {
 		// will be the service name we need, and at `2` the rest of the path.
 		matcher := functionMatcher.Copy()
 		matches := matcher.FindStringSubmatch(urlValue)
-		if 3 == len(matches) {
-			serviceName = matches[1]
+		if len(matches) == hasPathCount {
+			serviceName = matches[nameIndex]
 		}
 	}
 	return strings.Trim(serviceName, "/")
@@ -224,7 +232,7 @@ func (f FunctionPathTruncatingURLPathTransformer) Transform(r *http.Request) str
 		// In the following regex, in the case of a match the r.URL.Path will be at `0`,
 		// the function name at `1` and the rest of the path (the part we are interested in)
 		// at `2`.  For this transformer, all we need to do is confirm it is a function.
-		if 3 == len(parts) {
+		if len(parts) == hasPathCount {
 			ret = "/"
 		}
 	}
@@ -249,8 +257,8 @@ func (f FunctionPrefixTrimmingURLPathTransformer) Transform(r *http.Request) str
 		// rest of the path (the part we are interested in) at `2`.
 		matcher := functionMatcher.Copy()
 		parts := matcher.FindStringSubmatch(ret)
-		if 3 == len(parts) {
-			ret = parts[2]
+		if len(parts) == hasPathCount {
+			ret = parts[pathIndex]
 		}
 	}
 
