@@ -102,6 +102,7 @@ Key:
 | [Monitor Arista Cloud vision network devices with OpenFaaS](https://github.com/burnyd/cvp-serverless-openfaas) | Daniel Hertzberg | github.com | 13-Aug-2018 |
 | [Serverless email sender using OpenFaaS and .NET Core](https://medium.com/@paulius.juozelskis/serverless-email-sender-using-openfaas-and-net-core-afdef152359) | Paulius Juozelskis | medium.com | 13-Aug-2018 |
 | [VMware CodeHouse: A Great Insight into the Future of Software Engineering](https://blogs.vmware.com/opensource/2018/08/07/vmware-codehouse-empowers-women/) | Jonas Rosland | blogs.vmware.com | 7-Aug-2018 |
+| [OpenFaaS on Cisco DevNet Sandbox](https://developer.cisco.com/docs/sandbox/#!cloud/all-cloud-sandboxes) | [Cisco DevNet Sandbox](https://developer.cisco.com/sandbox) | [Cisco DevNet](https://developer.cisco.com) | 8-Aug-2018 |
 | [How to run Rust in OpenFaaS](https://booyaa.wtf/2018/run-rust-in-openfaas/) | Mark Sta Ana | booyaa.wtf | 4-Aug-2018 |
 | [Scale to Zero and Back Again with OpenFaaS](https://www.openfaas.com/blog/zero-scale/) | Alex Ellis | openfaas.com | 25-July-2018 |
 | [PHP and OpenFaaS](https://mfyu.co.uk/post/php-and-openfaas) | Matt Brunt | mfyu.co.uk | 21-July-2018 |
@@ -132,6 +133,7 @@ Key:
 | [Raspberry Pi Cluster with Docker and OpenFaaS (and SETI)](http://6figuredev.com/learning/raspberry-pi-cluster-with-docker-and-openfaas-and-seti/) | John Callaway | 6FigureDev.com | 17-Jan-2018 |
 | [Podcast - Episode 022 – OpenFaaS with Docker Captain Alex Ellis](http://6figuredev.com/podcast/episode-022-openfaas-with-docker-captain-alex-ellis/) | The 6 Figure Developer Podcast | 6FigureDev.com | 15-Jan-2018 |
 | [Google Home + OpenFaaS: Write your own voice controlled functions](https://medium.com/@burtonr/google-home-openfaas-write-your-own-voice-controlled-functions-11f195398e3f) | Burton Rheutan | medium.com/@burtonr | 06-Jan-2018 |
+| [OpenFaaS At The Helm w/ Kubernetes in the DevNet Sandbox](https://blogs.cisco.com/developer/openfaas-at-the-helm-w-kubernetes-in-the-devnet-sandbox) | [Cisco DevNet Sandbox](https://developer.cisco.com/sandbox) | [Cisco DevNet](https://developer.cisco.com) | 2-Jan-2018 |
 
 ### 2017
 
