@@ -109,11 +109,11 @@ Maintainers are well-known contributors with a track record of:
 
 Varying levels of write access are made available via our project bot [Derek](https://github.com/alexellis/derek) to help regular contributors transition to maintainers.
 
-#### How do I work with Derek the bot?
+#### How do I work with Derek?
 
-If you have been added to the MAINTAINERS file in the root of an OpenFaaS repository then you can help us manage our community and contributions by issuing comments on Issues and Pull Requests. See [Derek](https://github.com/alexellis/derek) for available commands.
+If you have been added to the `.DEREK.yml` file in the root of an OpenFaaS repository then you can help us manage our community and contributions by issuing comments on Issues and Pull Requests. See [Derek](https://github.com/alexellis/derek) for available commands.
 
-### Who are the Core Contributors?**
+### Who are the Core Contributors?
 
 The Core Contributor group includes:
 
@@ -121,7 +121,7 @@ The Core Contributor group includes:
 - Richard Gee (@rgee0)
 - Stefan Prodan (@stefanprodan)
 - Burton Rheutan (@burtonr)
-- LucasRoesler (@LucasRoesler)
+- Lucas Roesler (@LucasRoesler)
 
 The Core Contributors have the ear of the project lead and help with strategy, project maintenance, community management and make a regular commitment of time to the project. Core Contributors attend all project meetings and calls.
 
