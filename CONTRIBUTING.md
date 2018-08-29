@@ -97,6 +97,9 @@ We use vendoring for projects written in Go. This means that we will maintain a 
 
 We use Golang's `dep` tool to manage dependencies for Golang projects - https://github.com/golang/dep
 
+### How are releases made?
+To cut a release please ask Alex via the #contributors [slack channel](https://docs.openfaas.com/community/#slack-workspace)
+
 ### How do I become a maintainer?
 
 Maintainers are well-known contributors with a track record of:
