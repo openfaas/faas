@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   description: OpenFaaS API documentation
-  version: 0.8.9
+  version: 0.8.12
   title: OpenFaaS API Gateway
   license:
     name: MIT
@@ -209,7 +209,7 @@ paths:
         '500':
           description: Internal server error
   '/system/scale-function/{functionName}':
-    get:
+    post:
       summary: Scale a function
       parameters:
       - in: path
