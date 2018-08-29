@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -14,6 +15,9 @@ import (
 	"github.com/openfaas/faas/gateway/types"
 	"github.com/prometheus/client_golang/prometheus"
 )
+
+// Parse out the service name (group 1) and rest of path (group 2).
+var functionMatcher = regexp.MustCompile("^/?(?:async-)?function/([^/?]+)([^?]*)")
 
 // HTTPNotifier notify about HTTP request/response
 type HTTPNotifier interface {
@@ -25,12 +29,17 @@ type BaseURLResolver interface {
 	Resolve(r *http.Request) string
 }
 
+// RequestURLPathTransformer Transform the incoming URL path for upstream requests
+type URLPathTransformer interface {
+	Transform(r *http.Request) string
+}
+
 // MakeForwardingProxyHandler create a handler which forwards HTTP requests
-func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers []HTTPNotifier, baseURLResolver BaseURLResolver) http.HandlerFunc {
+func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers []HTTPNotifier, baseURLResolver BaseURLResolver, urlPathTransformer URLPathTransformer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		baseURL := baseURLResolver.Resolve(r)
 
-		requestURL := r.URL.Path
+		requestURL := urlPathTransformer.Transform(r)
 
 		start := time.Now()
 
@@ -46,7 +55,8 @@ func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers [
 	}
 }
 
-func buildUpstreamRequest(r *http.Request, url string) *http.Request {
+func buildUpstreamRequest(r *http.Request, baseURL string, requestURL string) *http.Request {
+	url := baseURL + requestURL
 
 	if len(r.URL.RawQuery) > 0 {
 		url = fmt.Sprintf("%s?%s", url, r.URL.RawQuery)
@@ -69,7 +79,7 @@ func buildUpstreamRequest(r *http.Request, url string) *http.Request {
 
 func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Client, baseURL string, requestURL string, timeout time.Duration) (int, error) {
 
-	upstreamReq := buildUpstreamRequest(r, baseURL+requestURL)
+	upstreamReq := buildUpstreamRequest(r, baseURL, requestURL)
 	if upstreamReq.Body != nil {
 		defer upstreamReq.Body.Close()
 	}
@@ -134,7 +144,16 @@ func getServiceName(urlValue string) string {
 	var serviceName string
 	forward := "/function/"
 	if strings.HasPrefix(urlValue, forward) {
-		serviceName = urlValue[len(forward):]
+		// With a path like `/function/xyz/rest/of/path?q=a`, the service
+		// name we wish to locate is just the `xyz` portion.  With a postive
+		// match on the regex below, it will return a three-element slice.
+		// The item at index `0` is the same as `urlValue`, at `1`
+		// will be the service name we need, and at `2` the rest of the path.
+		matcher := functionMatcher.Copy()
+		matches := matcher.FindStringSubmatch(urlValue)
+		if 3 == len(matches) {
+			serviceName = matches[1]
+		}
 	}
 	return strings.Trim(serviceName, "/")
 }
@@ -180,4 +199,60 @@ func (f FunctionAsHostBaseURLResolver) Resolve(r *http.Request) string {
 	}
 
 	return fmt.Sprintf("http://%s%s:%d", svcName, suffix, watchdogPort)
+}
+
+// TransparentURLPathTransformer passes the requested URL path through untouched.
+type TransparentURLPathTransformer struct {
+}
+
+// Transform returns the URL path unchanged.
+func (f TransparentURLPathTransformer) Transform(r *http.Request) string {
+	return r.URL.Path
+}
+
+// FunctionPathTruncatingURLPathTransformer always truncated the path to "/".
+type FunctionPathTruncatingURLPathTransformer struct {
+}
+
+// Transform always return a path of "/".
+func (f FunctionPathTruncatingURLPathTransformer) Transform(r *http.Request) string {
+	ret := r.URL.Path
+
+	if ret != "" {
+		matcher := functionMatcher.Copy()
+		parts := matcher.FindStringSubmatch(ret)
+		// In the following regex, in the case of a match the r.URL.Path will be at `0`,
+		// the function name at `1` and the rest of the path (the part we are interested in)
+		// at `2`.  For this transformer, all we need to do is confirm it is a function.
+		if 3 == len(parts) {
+			ret = "/"
+		}
+	}
+
+	return ret
+}
+
+// FunctionPrefixTrimmingURLPathTransformer removes the "/function/servicename/" prefix from the URL path.
+type FunctionPrefixTrimmingURLPathTransformer struct {
+}
+
+// Transform removes the "/function/servicename/" prefix from the URL path.
+func (f FunctionPrefixTrimmingURLPathTransformer) Transform(r *http.Request) string {
+	ret := r.URL.Path
+
+	if ret != "" {
+		// When forwarding to a function, since the `/function/xyz` portion
+		// of a path like `/function/xyz/rest/of/path` is only used or needed
+		// by the Gateway, we want to trim it down to `/rest/of/path` for the
+		// upstream request.  In the following regex, in the case of a match
+		// the r.URL.Path will be at `0`, the function name at `1` and the
+		// rest of the path (the part we are interested in) at `2`.
+		matcher := functionMatcher.Copy()
+		parts := matcher.FindStringSubmatch(ret)
+		if 3 == len(parts) {
+			ret = parts[2]
+		}
+	}
+
+	return ret
 }
