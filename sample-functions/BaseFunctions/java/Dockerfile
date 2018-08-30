@@ -1,6 +1,6 @@
 FROM openjdk:8u121-jdk-alpine
 
-ADD https://github.com/openfaas/faas/releases/download/0.8.0/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/0.9.0/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
 WORKDIR /root/
