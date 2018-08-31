@@ -56,6 +56,7 @@ Key:
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [Introducing OpenFaaS Cloud, a Developer-Friendly CI/CD Pipeline for Serverless](https://osseu18.sched.com/event/FxXx/introducing-openfaas-cloud-a-developer-friendly-cicd-pipeline-for-serverless-alex-ellis-openfaas-project-vmware) | Alex Ellis | Edinburgh, Scotland | 22-Oct-2018 |
 | [Goto conf - Serverless Beyond the Hype](https://gotocph.com/2018/sessions/592) | Alex Ellis | Copenhagen, DK | 19-Nov-2018 |
+| [Building Cloud-Native Apps - FaaS: The Swiss Army Knife of Cloud Native](https://www.meetup.com/Cloud_Native_Meetup/events/254232936/) | James McAfee | Sydney, Australia | 12-Sep-2018 |
 | [ John Callaway: .NET Core on a Raspberry Pi Cluster with Docker and OpenFaaS](https://secure.meetup.com/register/?ctx=ref) | John Callaway | Orlando, FL, USA |16-Aug-2018 |
 | [Cloud Native Glasgow - Serverless on Kubernetes](https://www.meetup.com/CloudNativeGlasgow/events/251913059/) | John McCabe | Glasgow, UK | 5-July-2018 |
 | [Opsview & Kubernetes (incl. OpenFaaS)](https://www.meetup.com/Birmingham-digital-development-Meetup/events/250680464/) | Opsview | Birmingham, UK | 28-June-2018 |
