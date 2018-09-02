@@ -1,4 +1,5 @@
 // Copyright (c) Alex Ellis 2017. All rights reserved.
+// Copyright (c) OpenFaaS Author(s). All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package main
@@ -89,6 +90,8 @@ func main() {
 	alertHandler := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL)
 	faasHandlers.Alert = handlers.MakeAlertHandler(alertHandler)
 
+	infoHandler := handlers.MakeInfoHandler(handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer))
+
 	if config.UseNATS() {
 		log.Println("Async enabled: Using NATS Streaming.")
 		natsQueue, queueErr := natsHandler.CreateNatsQueue(*config.NATSAddress, *config.NATSPort, natsHandler.DefaultNatsConfig{})
@@ -117,6 +120,8 @@ func main() {
 			handlers.DecorateWithBasicAuth(faasHandlers.ListFunctions, credentials)
 		faasHandlers.ScaleFunction =
 			handlers.DecorateWithBasicAuth(faasHandlers.ScaleFunction, credentials)
+		infoHandler = handlers.DecorateWithBasicAuth(infoHandler, credentials)
+		queryFunction = handlers.DecorateWithBasicAuth(queryFunction, credentials)
 	}
 
 	r := mux.NewRouter()
@@ -139,9 +144,7 @@ func main() {
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/", functionProxy)
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/{params:.*}", functionProxy)
 
-	r.HandleFunc("/system/info", handlers.MakeInfoHandler(handlers.MakeForwardingProxyHandler(
-		reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer))).Methods(http.MethodGet)
-
+	r.HandleFunc("/system/info", infoHandler).Methods(http.MethodGet)
 	r.HandleFunc("/system/alert", faasHandlers.Alert)
 
 	r.HandleFunc("/system/function/{name:[-a-zA-Z_0-9]+}", queryFunction).Methods(http.MethodGet)
