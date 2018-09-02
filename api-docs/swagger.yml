@@ -440,6 +440,10 @@ definitions:
         type: object
         additionalProperties:
           type: string
+      annotations:
+        type: object
+        additionalProperties:
+          type: string
     required:
     - name
     - image
