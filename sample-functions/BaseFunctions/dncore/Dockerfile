@@ -1,7 +1,9 @@
 FROM microsoft/dotnet:sdk
 
-ADD https://github.com/openfaas/faas/releases/download/0.9.0/fwatchdog /usr/bin
-RUN chmod +x /usr/bin/fwatchdog
+RUN apt-get update && apt-get install -y curl \
+    && curl -sL https://github.com/openfaas/faas/releases/download/0.9.0/fwatchdog > /usr/bin/fwatchdog \
+    && chmod +x /usr/bin/fwatchdog \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV DOTNET_CLI_TELEMETRY_OPTOUT 1
 

@@ -1,7 +1,8 @@
 FROM node:6.9.1-alpine
 
-ADD https://github.com/openfaas/faas/releases/download/0.9.0/fwatchdog /usr/bin
-RUN chmod +x /usr/bin/fwatchdog
+RUN apk --no-cache add curl \
+    && curl -sL https://github.com/openfaas/faas/releases/download/0.9.0/fwatchdog > /usr/bin/fwatchdog \
+    && chmod +x /usr/bin/fwatchdog
 
 WORKDIR /root/
 

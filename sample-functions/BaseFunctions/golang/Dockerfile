@@ -8,8 +8,9 @@ COPY . /go/src/github.com/openfaas/faas/sample-functions/golang
 
 RUN go install
 
-ADD https://github.com/openfaas/faas/releases/download/0.9.0/fwatchdog /usr/bin
-RUN chmod +x /usr/bin/fwatchdog
+RUN apk --no-cache add curl \
+    && curl -sL https://github.com/openfaas/faas/releases/download/0.9.0/fwatchdog > /usr/bin/fwatchdog \
+    && chmod +x /usr/bin/fwatchdog
 
 ENV fprocess "/go/bin/golang"
 HEALTHCHECK --interval=1s CMD [ -e /tmp/.lock ] || exit 1
