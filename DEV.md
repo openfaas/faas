@@ -35,7 +35,7 @@ RUN go get github.com/microcosm-cc/bluemonday && \
 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 
-ADD https://github.com/openfaas/faas/releases/download/0.8.0/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/0.9.0/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
 ENV fprocess="/go/src/app/app"
@@ -61,7 +61,7 @@ Update the Docker stack with this:
 ```
 FROM alpine:latest
 
-ADD https://github.com/openfaas/faas/releases/download/0.8.0/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/0.9.0/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
 ENV fprocess="wc"
@@ -78,7 +78,23 @@ Update your Docker stack with this definition:
         networks:
             - functions
         environment:
-            fprocess:	"wc"
+            fprocess: "wc"
+```
+
+**Tip:**
+You can optimize Docker to cache getting the watchdog by using curl, instead of ADD.
+To do so, replace the related lines with:
+```
+RUN apt-get update && apt-get install -y curl \
+    && curl -sL https://github.com/openfaas/faas/releases/download/0.9.0/fwatchdog > /usr/bin/fwatchdog \
+    && chmod +x /usr/bin/fwatchdog \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+```
+or with the following for Alpine based images:
+```
+RUN apk --no-cache add curl \
+    && curl -sL https://github.com/openfaas/faas/releases/download/0.9.0/fwatchdog > /usr/bin/fwatchdog \
+    && chmod +x /usr/bin/fwatchdog
 ```
 
 ### Testing your function
