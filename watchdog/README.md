@@ -36,13 +36,22 @@ Example Dockerfile for an `echo` function:
 ```
 FROM alpine:3.7
 
-ADD https://github.com/openfaas/faas/releases/download/0.8.0/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/0.9.0/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
 # Define your binary here
 ENV fprocess="/bin/cat"
 
 CMD ["fwatchdog"]
+```
+
+**Tip:**
+You can optimize Docker to cache getting the watchdog by using curl, instead of ADD.
+To do so, replace the related lines with:
+```
+RUN apk --no-cache add curl \
+    && curl -sL https://github.com/openfaas/faas/releases/download/0.9.0/fwatchdog > /usr/bin/fwatchdog \
+    && chmod +x /usr/bin/fwatchdog
 ```
 
 **Implementing a health-check**
