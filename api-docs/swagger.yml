@@ -402,6 +402,9 @@ definitions:
           cpu:
             type: string
             example: "0.01"
+      readOnlyRootFilesystem:
+        type: string
+        description: if true, removes write-access from the root filesystem
     required:
     - service
     - image
@@ -444,6 +447,48 @@ definitions:
         type: object
         additionalProperties:
           type: string
+      network:
+        type: string
+        description: Docker swarm network, usually func_functions
+        example: func_functions
+      envVars:
+        type: object
+        additionalProperties:
+          type: string
+        description: Overrides to environmental variables
+      constraints:
+        type: array
+        items:
+          type: string
+          description: Constraints are specific to OpenFaaS Provider
+          example: "node.platform.os == linux"
+      secrets:
+        type: array
+        items:
+          type: string
+          description: An array of names of secrets that are required to be loaded from the Docker Swarm.
+          example: "secret-name-1"
+      limits:
+        type: object
+        properties:
+          memory:
+            type: string
+            example: "128M"
+          cpu:
+            type: string
+            example: "0.01"
+      requests:
+        type: object
+        properties:
+          memory:
+            type: string
+            example: "128M"
+          cpu:
+            type: string
+            example: "0.01"
+      readOnlyRootFilesystem:
+        type: string
+        description: if true, removes write-access from the root filesystem
     required:
     - name
     - image

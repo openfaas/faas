@@ -74,7 +74,25 @@ type Function struct {
 
 	// Annotations are metadata for functions which may be used by the
 	// back-end for management, orchestration, events and build tasks
-	Annotations *map[string]string `json:"annotations"`
+	Annotations *map[string]string `json:"annotations,omitempty"`
+
+	// Network is specific to Docker Swarm - default overlay network is: func_functions
+	Network string `json:"network,omitempty"`
+
+	// EnvVars provides overrides for functions.
+	EnvVars map[string]string `json:"envVars,omitempty"`
+
+	// Constraints are specific to back-end orchestration platform
+	Constraints []string `json:"constraints,omitempty"`
+
+	// Secrets list of secrets to be made available to function
+	Secrets []string `json:"secrets,omitempty"`
+
+	// Limits for function
+	Limits *FunctionResources `json:"limits"`
+
+	// Requests of resources requested by function
+	Requests *FunctionResources `json:"requests"`
 }
 
 // AsyncReport is the report from a function executed on a queue worker.
