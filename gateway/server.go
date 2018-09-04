@@ -1,5 +1,4 @@
 // Copyright (c) Alex Ellis 2017. All rights reserved.
-// Copyright (c) OpenFaaS Author(s). All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 package main
@@ -85,12 +84,11 @@ func main() {
 	faasHandlers.DeployFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
 	faasHandlers.DeleteFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
 	faasHandlers.UpdateFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
-	queryFunction := handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
+	faasHandlers.QueryFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
+	faasHandlers.InfoHandler = handlers.MakeInfoHandler(handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer))
 
 	alertHandler := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL)
 	faasHandlers.Alert = handlers.MakeAlertHandler(alertHandler)
-
-	infoHandler := handlers.MakeInfoHandler(handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer))
 
 	if config.UseNATS() {
 		log.Println("Async enabled: Using NATS Streaming.")
@@ -120,8 +118,8 @@ func main() {
 			handlers.DecorateWithBasicAuth(faasHandlers.ListFunctions, credentials)
 		faasHandlers.ScaleFunction =
 			handlers.DecorateWithBasicAuth(faasHandlers.ScaleFunction, credentials)
-		infoHandler = handlers.DecorateWithBasicAuth(infoHandler, credentials)
-		queryFunction = handlers.DecorateWithBasicAuth(queryFunction, credentials)
+		faasHandlers.QueryFunction = handlers.DecorateWithBasicAuth(faasHandlers.QueryFunction, credentials)
+		faasHandlers.InfoHandler = handlers.DecorateWithBasicAuth(faasHandlers.InfoHandler, credentials)
 	}
 
 	r := mux.NewRouter()
@@ -137,17 +135,17 @@ func main() {
 			ServiceQuery:         alertHandler,
 		}
 
-		functionProxy = handlers.MakeScalingHandler(faasHandlers.Proxy, queryFunction, scalingConfig)
+		functionProxy = handlers.MakeScalingHandler(faasHandlers.Proxy, faasHandlers.QueryFunction, scalingConfig)
 	}
 	// r.StrictSlash(false)	// This didn't work, so register routes twice.
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}", functionProxy)
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/", functionProxy)
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/{params:.*}", functionProxy)
 
-	r.HandleFunc("/system/info", infoHandler).Methods(http.MethodGet)
-	r.HandleFunc("/system/alert", faasHandlers.Alert)
+	r.HandleFunc("/system/info", faasHandlers.InfoHandler).Methods(http.MethodGet)
+	r.HandleFunc("/system/alert", faasHandlers.Alert).Methods(http.MethodPost)
 
-	r.HandleFunc("/system/function/{name:[-a-zA-Z_0-9]+}", queryFunction).Methods(http.MethodGet)
+	r.HandleFunc("/system/function/{name:[-a-zA-Z_0-9]+}", faasHandlers.QueryFunction).Methods(http.MethodGet)
 	r.HandleFunc("/system/functions", faasHandlers.ListFunctions).Methods(http.MethodGet)
 	r.HandleFunc("/system/functions", faasHandlers.DeployFunction).Methods(http.MethodPost)
 	r.HandleFunc("/system/functions", faasHandlers.DeleteFunction).Methods(http.MethodDelete)

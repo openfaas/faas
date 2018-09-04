@@ -89,6 +89,8 @@ services:
         environment:
             max_inflight: "1"
             ack_wait: "30s"    # Max duration of any async task / request
+            basic_auth: "false"
+            secret_mount_path: "/run/secrets/"
         deploy:
             resources:
                 limits:
