@@ -93,6 +93,8 @@ services:
         environment:
             max_inflight: "1"
             ack_wait: "300s"    # Max duration of any async task / request
+            basic_auth: "${BASIC_AUTH:-true}"
+            secret_mount_path: "/run/secrets/"
         deploy:
             resources:
                 limits:
@@ -107,6 +109,10 @@ services:
             placement:
                 constraints:
                     - 'node.platform.os == linux'
+        secrets:
+            - basic-auth-user
+            - basic-auth-password
+
     # End services
 
     # Start monitoring

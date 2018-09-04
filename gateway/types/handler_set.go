@@ -12,6 +12,9 @@ type HandlerSet struct {
 	RoutelessProxy http.HandlerFunc
 	UpdateFunction http.HandlerFunc
 
+	// QueryFunction - queries the metdata for a function
+	QueryFunction http.HandlerFunc
+
 	// QueuedProxy - queue work and return synchronous response
 	QueuedProxy http.HandlerFunc
 
@@ -20,4 +23,7 @@ type HandlerSet struct {
 
 	// ScaleFunction allows a function to be scaled
 	ScaleFunction http.HandlerFunc
+
+	// InfoHandler provides version and build info
+	InfoHandler http.HandlerFunc
 }
