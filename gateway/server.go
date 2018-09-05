@@ -119,8 +119,12 @@ func main() {
 			auth.DecorateWithBasicAuth(faasHandlers.ListFunctions, credentials)
 		faasHandlers.ScaleFunction =
 			auth.DecorateWithBasicAuth(faasHandlers.ScaleFunction, credentials)
-		faasHandlers.QueryFunction = auth.DecorateWithBasicAuth(faasHandlers.QueryFunction, credentials)
-		faasHandlers.InfoHandler = auth.DecorateWithBasicAuth(faasHandlers.InfoHandler, credentials)
+		faasHandlers.QueryFunction =
+			auth.DecorateWithBasicAuth(faasHandlers.QueryFunction, credentials)
+		faasHandlers.InfoHandler =
+			auth.DecorateWithBasicAuth(faasHandlers.InfoHandler, credentials)
+		faasHandlers.AsyncReport =
+			auth.DecorateWithBasicAuth(faasHandlers.AsyncReport, credentials)
 	}
 
 	r := mux.NewRouter()
