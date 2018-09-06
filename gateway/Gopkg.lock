@@ -73,6 +73,15 @@
   version = "v1.0.0"
 
 [[projects]]
+  name = "github.com/openfaas/faas-provider"
+  packages = [
+    ".",
+    "types"
+  ]
+  revision = "9ce928bc82cbb2642e6d534f93a7904116179e6c"
+  version = "0.7.0"
+
+[[projects]]
   name = "github.com/openfaas/nats-queue-worker"
   packages = ["handler"]
   revision = "15287c9b2af293cee0c545ccc014a68e1f0a4424"
@@ -112,6 +121,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f6e74bc55788e9ad6ea33f02d2be398013705f4606c29bbead71ac41a3c19514"
+  inputs-digest = "28590014be90eceddef008d7ef4843165d708e8358c428ad907c50e363af424f"
   solver-name = "gps-cdcl"
   solver-version = 1

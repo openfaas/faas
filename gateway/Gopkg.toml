@@ -25,3 +25,7 @@ ignored = ["github.com/openfaas/faas/gateway/queue"]
   name = "golang.org/x/net"
 
 
+
+[[constraint]]
+  name = "github.com/openfaas/faas-provider"
+  version = "0.7.0"

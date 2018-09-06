@@ -12,6 +12,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/openfaas/faas/gateway/handlers"
 
+	"github.com/openfaas/faas-provider/auth"
 	"github.com/openfaas/faas/gateway/metrics"
 	"github.com/openfaas/faas/gateway/plugin"
 	"github.com/openfaas/faas/gateway/types"
@@ -33,11 +34,11 @@ func main() {
 
 	log.Printf("Binding to external function provider: %s", config.FunctionsProviderURL)
 
-	var credentials *types.BasicAuthCredentials
+	var credentials *auth.BasicAuthCredentials
 
 	if config.UseBasicAuth {
 		var readErr error
-		reader := types.ReadBasicAuthFromDisk{
+		reader := auth.ReadBasicAuthFromDisk{
 			SecretMountPath: config.SecretMountPath,
 		}
 		credentials, readErr = reader.Read()
@@ -109,17 +110,17 @@ func main() {
 
 	if credentials != nil {
 		faasHandlers.UpdateFunction =
-			handlers.DecorateWithBasicAuth(faasHandlers.UpdateFunction, credentials)
+			auth.DecorateWithBasicAuth(faasHandlers.UpdateFunction, credentials)
 		faasHandlers.DeleteFunction =
-			handlers.DecorateWithBasicAuth(faasHandlers.DeleteFunction, credentials)
+			auth.DecorateWithBasicAuth(faasHandlers.DeleteFunction, credentials)
 		faasHandlers.DeployFunction =
-			handlers.DecorateWithBasicAuth(faasHandlers.DeployFunction, credentials)
+			auth.DecorateWithBasicAuth(faasHandlers.DeployFunction, credentials)
 		faasHandlers.ListFunctions =
-			handlers.DecorateWithBasicAuth(faasHandlers.ListFunctions, credentials)
+			auth.DecorateWithBasicAuth(faasHandlers.ListFunctions, credentials)
 		faasHandlers.ScaleFunction =
-			handlers.DecorateWithBasicAuth(faasHandlers.ScaleFunction, credentials)
-		faasHandlers.QueryFunction = handlers.DecorateWithBasicAuth(faasHandlers.QueryFunction, credentials)
-		faasHandlers.InfoHandler = handlers.DecorateWithBasicAuth(faasHandlers.InfoHandler, credentials)
+			auth.DecorateWithBasicAuth(faasHandlers.ScaleFunction, credentials)
+		faasHandlers.QueryFunction = auth.DecorateWithBasicAuth(faasHandlers.QueryFunction, credentials)
+		faasHandlers.InfoHandler = auth.DecorateWithBasicAuth(faasHandlers.InfoHandler, credentials)
 	}
 
 	r := mux.NewRouter()
@@ -168,7 +169,7 @@ func main() {
 
 	uiHandler := http.StripPrefix("/ui", fsCORS)
 	if credentials != nil {
-		r.PathPrefix("/ui/").Handler(handlers.DecorateWithBasicAuth(uiHandler.ServeHTTP, credentials)).Methods(http.MethodGet)
+		r.PathPrefix("/ui/").Handler(auth.DecorateWithBasicAuth(uiHandler.ServeHTTP, credentials)).Methods(http.MethodGet)
 	} else {
 		r.PathPrefix("/ui/").Handler(uiHandler).Methods(http.MethodGet)
 	}

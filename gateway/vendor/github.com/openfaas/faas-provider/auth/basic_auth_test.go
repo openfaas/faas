@@ -1,15 +1,13 @@
 // Copyright (c) OpenFaaS Author(s). All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-package handlers
+package auth
 
 import (
 	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"github.com/openfaas/faas/gateway/types"
 )
 
 func Test_AuthWithValidPassword_Gives200(t *testing.T) {
@@ -23,7 +21,7 @@ func Test_AuthWithValidPassword_Gives200(t *testing.T) {
 	wantPassword := "password"
 	r := httptest.NewRequest(http.MethodGet, "http://localhost:8080", nil)
 	r.SetBasicAuth(wantUser, wantPassword)
-	wantCredentials := &types.BasicAuthCredentials{
+	wantCredentials := &BasicAuthCredentials{
 		User:     wantUser,
 		Password: wantPassword,
 	}
@@ -52,7 +50,7 @@ func Test_AuthWithInvalidPassword_Gives403(t *testing.T) {
 	r := httptest.NewRequest(http.MethodGet, "http://localhost:8080", nil)
 	r.SetBasicAuth(wantUser, wantPassword)
 
-	wantCredentials := &types.BasicAuthCredentials{
+	wantCredentials := &BasicAuthCredentials{
 		User:     wantUser,
 		Password: "",
 	}
