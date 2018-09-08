@@ -1,18 +1,18 @@
 maintainers:
  - alexellis
+ - stefanprodan
  - rgee0
  - johnmccabe
- - kenfdev
+ - LucasRoesler
  - BurtonR
+ - kenfdev
  - ivanayov
- - stefanprodan
- - affix
  - viveksyngh
  - martindekov
  - ewilde
  - bartsmykla
- - LucasRoesler
  - s8sg
+ - affix
 
 features:
  - dco_check
