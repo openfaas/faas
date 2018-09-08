@@ -72,7 +72,7 @@ func Test_buildUpstreamRequest_NoBody_GetMethod_NoQuery(t *testing.T) {
 
 }
 
-func Test_buildUpstreamRequest_HasHostHeaderWhenSet(t *testing.T) {
+func Test_buildUpstreamRequest_HasXForwardedHostHeaderWhenSet(t *testing.T) {
 	srcBytes := []byte("hello world")
 
 	reader := bytes.NewReader(srcBytes)
@@ -84,12 +84,12 @@ func Test_buildUpstreamRequest_HasHostHeaderWhenSet(t *testing.T) {
 
 	upstream := buildUpstreamRequest(request, "/", "/")
 
-	if request.Host != upstream.Host {
-		t.Errorf("Host - want: %s, got: %s", request.Host, upstream.Host)
+	if request.Host != upstream.Header.Get("X-Forwarded-Host") {
+		t.Errorf("Host - want: %s, got: %s", request.Host, upstream.Header.Get("X-Forwarded-Host"))
 	}
 }
 
-func Test_buildUpstreamRequest_HostHeader_Empty_WhenNotSet(t *testing.T) {
+func Test_buildUpstreamRequest_XForwardedHostHeader_Empty_WhenNotSet(t *testing.T) {
 	srcBytes := []byte("hello world")
 
 	reader := bytes.NewReader(srcBytes)
@@ -101,8 +101,8 @@ func Test_buildUpstreamRequest_HostHeader_Empty_WhenNotSet(t *testing.T) {
 
 	upstream := buildUpstreamRequest(request, "/", "/")
 
-	if request.Host != upstream.Host {
-		t.Errorf("Host - want: %s, got: %s", request.Host, upstream.Host)
+	if request.Host != upstream.Header.Get("X-Forwarded-Host") {
+		t.Errorf("Host - want: %s, got: %s", request.Host, upstream.Header.Get("X-Forwarded-Host"))
 	}
 }
 
