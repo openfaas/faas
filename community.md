@@ -99,9 +99,9 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFass 介绍及源码分析 (OpenFaaS Deep-Dive / Code-Analysis) - Chinese](https://www.youtube.com/watch?v=bZtgrAVR9HQ&feature=youtu.be) | Zhu Zhenfeng | youtube.com | 07-Sept-2018 |
 | [Introducing stateless microservices for OpenFaaS](https://www.openfaas.com/blog/stateless-microservices/) | Alex Ellis | openfaas.com | 05-Sept-2018 |
 | [Serverless com OpenFaaS e PHP (Portuguese)](https://medium.com/@FernandoDebrand/serverless-com-openfaas-e-php-3dce499f8062) | Fernando Silva | medium.com | 04-Sept-2018 |
-| [OpenFaaS Deep-Dive / Code-Analysis (in Chinese)](https://www.youtube.com/watch?v=bZtgrAVR9HQ&feature=youtu.be) | Zhu Zhenfeng | youtube.com | 07-Sept-2018 |
 | [Deploy OpenFaaS and Kubernetes on DigitalOcean with Ansible](https://www.openfaas.com/blog/deploy-digitalocean-ansible/) | Richard Gee | openfaas.com | 27-Aug-2018 |
 | [Cerner ShipIt Hackathon - ShipIt XII](https://engineering.cerner.com/blog/shipit-xii/) | Caitie Oder | cerner.com | 30-Aug-2918 |
 | [5 tips and tricks for the OpenFaaS CLI](https://www.openfaas.com/blog/five-cli-tips/) | Alex Ellis | openfaas.com | 21-Aug-2018 |
@@ -181,6 +181,7 @@ Key:
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [Podcast - Hanselminutes - Serverless and OpenFaas with Alex Ellis](https://www.hanselminutes.com) | Scott Hanselman | hanselminutes.com | 29-Dec-2017
 | [Podcast - How Serverless Technologies Impact Kubernetes](https://thenewstack.io/serverless-technologies-impact-kubernetes/) | The New Stack Makers | thenewstack.io | 28-Dec-2017 |
+| [OpenFaaS快速入门指南 (OpenFaaS Quick Start Guide) - Chinese](https://jimmysong.io/posts/openfaas-quick-start/) | Jimmy Song | jimmysong.io | 26-Dec-2017 | 
 | [OpenFaaS on DCOS](https://medium.com/@realrealbot/openfaas-on-dcos-9d5927f4e725) | Alberto Quario | medium.com/@realrealbot  | 20-Dec-2017
 | [Deploying Kubernetes On-Premise with RKE and deploying OpenFaaS on it — Part 1](https://medium.com/@kenfdev/deploying-kubernetes-on-premise-with-rke-and-deploying-openfaas-on-it-part-1-69a35ddfa507) | Ken Fukuyama | medium.com/@kenfdev  | 10-Dec-2017
 | [Deploying Kubernetes On-Premise with RKE and deploying OpenFaaS on it — Part 2](https://medium.com/@kenfdev/deploying-kubernetes-on-premise-with-rke-and-deploying-openfaas-on-it-part-2-cc14004e7007) | Ken Fukuyama | medium.com/@kenfdev  | 10-Dec-2017
