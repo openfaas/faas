@@ -76,12 +76,15 @@ func buildUpstreamRequest(r *http.Request, baseURL string, requestURL string) *h
 	}
 
 	upstreamReq, _ := http.NewRequest(r.Method, url, nil)
-	if len(r.Host) > 0 {
-		upstreamReq.Host = r.Host
-	}
+
 	copyHeaders(upstreamReq.Header, &r.Header)
 
-	upstreamReq.Header["X-Forwarded-For"] = []string{r.RemoteAddr}
+	if len(r.Host) > 0 && upstreamReq.Header.Get("X-Forwarded-Host") == "" {
+		upstreamReq.Header["X-Forwarded-Host"] = []string{r.Host}
+	}
+	if upstreamReq.Header.Get("X-Forwarded-For") == "" {
+		upstreamReq.Header["X-Forwarded-For"] = []string{r.RemoteAddr}
+	}
 
 	if r.Body != nil {
 		upstreamReq.Body = r.Body
@@ -99,6 +102,8 @@ func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Cl
 
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
+
+	log.Printf("Upstream request to: %s, %+v\n", upstreamReq.URL.Path, upstreamReq)
 
 	res, resErr := proxyClient.Do(upstreamReq.WithContext(ctx))
 	if resErr != nil {
