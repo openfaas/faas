@@ -67,14 +67,14 @@ When you have OpenFaaS configured you can [get started with the CLI here](https:
 
 You can generate new functions using the FaaS-CLI and built-in templates or use any binary for Windows or Linux in a Docker container.
 
-* Python example:
+* Python 3 example:
 
 ```python
 import requests
 
 def handle(req):
     r =  requests.get(req, timeout = 1)
-    print(req +" => " + str(r.status_code))
+    return "{} => {:d}".format(req, r.status_code)
 ```
 *handler.py*
 
@@ -84,7 +84,8 @@ def handle(req):
 "use strict"
 
 module.exports = (callback, context) => {
-    callback(null, {"message": "You said: " + context})
+    var err;
+    callback(err, {"message": "You said: " + context})
 }
 ```
 *handler.js*
