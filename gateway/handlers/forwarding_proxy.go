@@ -103,8 +103,6 @@ func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Cl
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 
-	log.Printf("Upstream request to: %s, %+v\n", upstreamReq.URL.Path, upstreamReq)
-
 	res, resErr := proxyClient.Do(upstreamReq.WithContext(ctx))
 	if resErr != nil {
 		badStatus := http.StatusBadGateway
