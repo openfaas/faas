@@ -106,6 +106,24 @@ func Test_buildUpstreamRequest_XForwardedHostHeader_Empty_WhenNotSet(t *testing.
 	}
 }
 
+func Test_buildUpstreamRequest_XForwardedHostHeader_WhenAlreadyPresent(t *testing.T) {
+	srcBytes := []byte("hello world")
+	headerValue := "test.openfaas.com"
+	reader := bytes.NewReader(srcBytes)
+	request, err := http.NewRequest(http.MethodPost, "/function/test", reader)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	request.Header.Set("X-Forwarded-Host", headerValue)
+	upstream := buildUpstreamRequest(request, "/", "/")
+
+	if upstream.Header.Get("X-Forwarded-Host") != headerValue {
+		t.Errorf("X-Forwarded-Host - want: %s, got: %s", headerValue, upstream.Header.Get("X-Forwarded-Host"))
+	}
+}
+
 func Test_getServiceName(t *testing.T) {
 	scenarios := []struct {
 		name        string
