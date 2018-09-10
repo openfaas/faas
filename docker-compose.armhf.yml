@@ -35,11 +35,9 @@ services:
 
     # Docker Swarm provider
     faas-swarm:
-        image:  openfaas/faas-swarm:0.4.1-armhf
+        image:  openfaas/faas-swarm:0.4.2-armhf
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
-        # ports:
-            # - 8081:8080
         networks:
             - functions
         environment:

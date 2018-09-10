@@ -41,15 +41,15 @@ services:
     faas-swarm:
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
-        # ports:
-            # - 8081:8080
-        image:  openfaas/faas-swarm:0.4.1
+        image:  openfaas/faas-swarm:0.4.2
         networks:
             - functions
         environment:
             read_timeout:  "300s"   # set both here, and on your functions
             write_timeout: "300s"   # set both here, and on your functions
             DOCKER_API_VERSION: "1.30"
+            basic_auth: "${BASIC_AUTH:-true}"
+            secret_mount_path: "/run/secrets/"
         deploy:
             placement:
                 constraints:
@@ -65,6 +65,9 @@ services:
                 delay: 5s
                 max_attempts: 20
                 window: 380s
+        secrets:
+            - basic-auth-user
+            - basic-auth-password
 
     nats:
         image: nats-streaming:0.6.0
