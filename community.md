@@ -99,6 +99,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Vert.x + Graal = Java for Serverless = ❤️!](https://www.jetdrone.xyz/2018/09/07/Vertx-Serverless-5mb.html) | Paulo Lopes | jetdrone.xyz | 07-Sept-2018 |
 | [OpenFass 介绍及源码分析 (OpenFaaS Deep-Dive / Code-Analysis) - Chinese](https://www.youtube.com/watch?v=bZtgrAVR9HQ&feature=youtu.be) | Zhu Zhenfeng | youtube.com | 07-Sept-2018 |
 | [Introducing stateless microservices for OpenFaaS](https://www.openfaas.com/blog/stateless-microservices/) | Alex Ellis | openfaas.com | 05-Sept-2018 |
 | [Serverless com OpenFaaS e PHP (Portuguese)](https://medium.com/@FernandoDebrand/serverless-com-openfaas-e-php-3dce499f8062) | Fernando Silva | medium.com | 04-Sept-2018 |
