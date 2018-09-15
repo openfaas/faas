@@ -54,7 +54,7 @@ functions:
   nodeinfo:
     lang: dockerfile
     handler: ./nodeinfo
-    image: functions/node-info:latest
+    image: functions/nodeinfo:latest
   phantomjs:
     lang: dockerfile
     handler: ./phantomjs
