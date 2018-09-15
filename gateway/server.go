@@ -68,15 +68,16 @@ func main() {
 
 	urlResolver := handlers.SingleHostBaseURLResolver{BaseURL: config.FunctionsProviderURL.String()}
 	var functionURLResolver handlers.BaseURLResolver
+	var functionURLTransformer handlers.URLPathTransformer
+	nilURLTransformer := handlers.TransparentURLPathTransformer{}
 
 	if config.DirectFunctions {
 		functionURLResolver = handlers.FunctionAsHostBaseURLResolver{FunctionSuffix: config.DirectFunctionsSuffix}
+		functionURLTransformer = handlers.FunctionPrefixTrimmingURLPathTransformer{}
 	} else {
 		functionURLResolver = urlResolver
+		functionURLTransformer = nilURLTransformer
 	}
-
-	nilURLTransformer := handlers.TransparentURLPathTransformer{}
-	functionURLTransformer := handlers.FunctionPrefixTrimmingURLPathTransformer{}
 
 	faasHandlers.Proxy = handlers.MakeForwardingProxyHandler(reverseProxy, functionNotifiers, functionURLResolver, functionURLTransformer)
 

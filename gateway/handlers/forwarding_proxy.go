@@ -9,6 +9,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"regexp"
 	"strconv"
 	"strings"
@@ -98,6 +99,10 @@ func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Cl
 	upstreamReq := buildUpstreamRequest(r, baseURL, requestURL)
 	if upstreamReq.Body != nil {
 		defer upstreamReq.Body.Close()
+	}
+
+	if _, exists := os.LookupEnv("write_request_uri"); exists {
+		log.Printf("forwardRequest: %s %s\n", upstreamReq.Host, upstreamReq.URL.String())
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
