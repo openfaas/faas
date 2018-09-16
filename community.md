@@ -2,20 +2,26 @@
 
 Welcome to the OpenFaaS community page where you can find:
 
-* Accolades and function providers/back-ends
-* Events for 2017/18
-* Blog posts and write-ups for 2017/18
-* Repos - projects / samples / use cases
+* [Accolades](#industry-awards-and-mentions) 
+* [Function Providers/Back-ends](#openfaas-providers)
+* Events
+    * [2018](#events-in-2018)
+    * [2017](#events-in-2017)
+* Blog posts and write-ups
+    * [2018](#blog-posts-and-write-ups-2018)
+    * [2017](#blog-posts-and-write-ups-2017)
+* [Repositories - Projects, Samples, and Use Cases](#repositories)
 
 There are several key GitHub repositories for the project which are available under the [openfaas](https://github.com/openfaas) organisation. Incubator and experimental projects are under the [openfaas-incubator](https://github.com/openfaas-incubator) organisation.
 
-* How to submit a link to this page
+#### How to submit a link to this page
 
 It would be great to hear from you especially if you have any of the above and want to share it with the rest of the community. Pull Request or submit a Github Issue.
 
 > Note: You will need to sign-off the commit too using `git commit -s` or add `Signed-off-by: {your full name} <{your email address}>` to the commit message when using the UI.
 
 ### Industry awards and mentions
+[Back to top](#openfaas-community)
 
 | Award/Mention                                          | Author(s)       | Source     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
@@ -29,6 +35,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Open source project uses Docker for serverless computing](http://www.infoworld.com/article/3184757/open-source-tools/open-source-project-uses-docker-for-serverless-computing.html#tk.twt_ifw)| Serdar Yegulalp  | InfoWorld (from IDG)  | 27-Mar-2017 |
 
 ### OpenFaaS providers
+[Back to top](#openfaas-community)
 
 | Project name and description                                         | Author     | Site      | Status      | Official
 |----------------------------------------------------------------------|------------|-----------|-------------|----------|
@@ -52,6 +59,7 @@ Key:
 ### 2018
 
 #### Events in 2018
+[Back to top](#openfaas-community)
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
@@ -95,7 +103,8 @@ Key:
 | [OpenFaaS : a serverless framework on top of Docker and Kubernetes @ Snowcamp.io](https://snowcamp2018.sched.com/event/D2nX/openfaas-a-serverless-framework-on-top-of-docker-and-kubernetes?iframe=no&w=100%&sidebar=no&bg=no) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 25-Jan-2018 |
 | [Talk: Building a Raspberry Pi Kubernetes Cluster with OpenFaaS](https://ndc-london.com/talk/building-a-raspberry-pi-kubernetes-cluster-and-running-.net-core/) | Alex Ellis / Scott Hanselman | London | 18-Jan-2018 |
 
-#### Blog posts and write-ups 2018
+#### Blog posts and write-ups 2018 
+[Back to top](#openfaas-community)
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
@@ -147,6 +156,7 @@ Key:
 ### 2017
 
 #### Events in 2017
+[Back to top](#openfaas-community)
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
@@ -176,7 +186,8 @@ Key:
 | [FaaS on Hacker News](https://news.ycombinator.com/item?id=13920588)| Alex Ellis   | Online   | 22-Mar-2017 |
 
 
-### Blog posts and write-ups - 2017
+### Blog posts and write-ups 2017
+[Back to top](#openfaas-community)
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
@@ -240,7 +251,9 @@ Key:
 | [Functions as a Service (FaaS) in French](http://blog.alexellis.io/fonction-service/) | Alex Ellis | alexellis.io | 13-Jan-2017 |
 | [Functions as a Service (FaaS)](http://blog.alexellis.io/functions-as-a-service/) | Alex Ellis | alexellis.io | 4-Jan-2017 |
 
-### Repos - projects / samples / use cases
+### Repositories
+#### Projects, Samples, and Use Cases
+[Back to top](#openfaas-community)
 
 You can also find cool projects or submit your own to the [faas-and-furious organisation](https://github.com/faas-and-furious). Contact Alex for details on how.
 
