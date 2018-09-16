@@ -94,11 +94,16 @@
                                     {{function.name}}
                                 </span>
 
-                                <md-button ng-click="deleteFunction()" class="md-icon-button" aria-label="Delete">
-                                    <md-tooltip md-direction="left">Delete</md-tooltip>
-                                    <md-icon md-svg-icon="img/icons/ic_delete_black.svg"></md-icon>
-                                </md-button>
-
+                                <div layout="row" layout-align="end end">
+                                    <md-button ng-click="displayMetadata($event)" class="md-icon-button" aria-label="Metadata">
+                                        <md-tooltip md-direction="left">Metadata</md-tooltip>
+                                        <md-icon md-svg-src="img/icons/tags-solid.svg"></md-icon>
+                                    </md-button>
+                                    <md-button ng-click="deleteFunction()" class="md-icon-button" aria-label="Delete">
+                                        <md-tooltip md-direction="left">Delete</md-tooltip>
+                                        <md-icon md-svg-icon="img/icons/ic_delete_black.svg"></md-icon>
+                                    </md-button>
+                                </div>
                             </div>
 
                             <div layout-gt-sm="row">
@@ -159,7 +164,7 @@
                                     <md-radio-group ng-model="invocation.contentType" layout="row" layout-align="start center">
                                         <md-radio-button value="text" class="md-primary"> Text </md-radio-button>
                                         <md-radio-button value="json" class="md-primary"> JSON </md-radio-button>
-                                        <md-radio-button value="binary" class="md-primary"> Download </md-radio-button>                                        
+                                        <md-radio-button value="binary" class="md-primary"> Download </md-radio-button>
                                     </md-radio-group>
                                 </md-input-container>
                             </div>

@@ -4,12 +4,17 @@
 
 var app = angular.module('faasGateway', ['ngMaterial', 'faasGateway.funcStore']);
 
-app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$filter', '$mdDialog', '$mdToast', '$mdSidenav',
-    function($scope, $log, $http, $location, $interval, $filter, $mdDialog, $mdToast, $mdSidenav) {
+app.controller("home", ['$scope', '$window', '$log', '$http', '$location', '$interval', '$filter', '$mdDialog', '$mdToast', '$mdSidenav',
+    function($scope, $window, $log, $http, $location, $interval, $filter, $mdDialog, $mdToast, $mdSidenav) {
         var FUNCSTORE_DEPLOY_TAB_INDEX = 0;
         var MANUAL_DEPLOY_TAB_INDEX = 1;
 
         var newFuncTabIdx = FUNCSTORE_DEPLOY_TAB_INDEX;
+
+        var ANNOTATIONS_TAB_INDEX = 0;
+        var LABELS_TAB_INDEX = 1;
+        var metadataTabIdx = ANNOTATIONS_TAB_INDEX;
+
         $scope.functions = [];
         $scope.invocationInProgress = false;
         $scope.invocationRequest = "";
@@ -148,7 +153,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
 
                         var caught = tryDownload(data, filename);
                         if(caught) {
-                            console.log(caught);                         
+                            console.log(caught);
                             $scope.invocationResponse = caught
                         } else {
                             $scope.invocationResponse = data.byteLength + " byte(s) received";
@@ -212,9 +217,10 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
             cl(previous);
         }
 
-        var fetch = function() {
+        var fetch = function(cb) {
             $http.get("../system/functions").then(function(response) {
                 $scope.functions = response.data;
+                if (cb) { cb($scope.functions); }
             });
         };
 
@@ -344,6 +350,143 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
                 });
         };
 
+        $scope.displayMetadata = function($event) {
+            var parentEl = angular.element(document.body);
+
+            $mdDialog.show({
+                parent: parentEl,
+                targetEvent: $event,
+                templateUrl: "templates/metadata.html",
+                locals: {
+                    image: $scope.selectedFunction.image,
+                    service:$scope.selectedFunction.name,
+                    getAnnotations: function() { return $scope.selectedFunction.annotations; },
+                    getLabels: function() { return $scope.selectedFunction.labels; }
+                },
+                controller: MetadataController
+            });
+        }
+
+        var MetadataController = function($scope, $mdDialog, image, service, getAnnotations, getLabels) {
+            $scope.selectedTabIdx = metadataTabIdx;
+            $scope.service = service;
+            $scope.image = image;
+            $scope.getAnnotations = getAnnotations;
+            $scope.getLabels = getLabels;
+
+            $scope.itemKey = "";
+            $scope.itemValue = "";
+
+            $scope.fetchData = function() {
+              $scope.annotations = objectToList($scope.getAnnotations());
+              $scope.labels = objectToList($scope.getLabels());
+            }
+
+            $scope.onTabSelect = function(idx) {
+                metadataTabIdx = idx;
+            }
+
+            $scope.closeDialog = function() {
+                $mdDialog.hide();
+            };
+
+
+            var updateMetadata = function(list) {
+              var options = {
+                  url: "../system/functions",
+                  data: {
+                    service: $scope.service,
+                    image: $scope.image,
+                  },
+                  method: "PUT",
+                  responseType: "text",
+                  headers: { "Content-Type": "application/json" },
+              };
+
+              switch ($scope.selectedTabIdx) {
+                case ANNOTATIONS_TAB_INDEX: options.data["annotations"] = list; break;
+                case LABELS_TAB_INDEX: options.data["labels"] = list; break;
+              }
+              return $http(options);
+            }
+
+            $scope.addMetadata = function() {
+              var list;
+              switch ($scope.selectedTabIdx) {
+                case ANNOTATIONS_TAB_INDEX: list = $scope.annotations; break;
+                case LABELS_TAB_INDEX: list = $scope.labels; break;
+              }
+
+              var i = list.findIndex(function(x) { return x.key == $scope.itemKey; });
+
+              if (i>-1) {
+                list[i].value = $scope.itemValue;
+              } else {
+                list.push({
+                  key: $scope.itemKey,
+                  value: $scope.itemValue
+                })
+              }
+
+              $scope.itemKey = "";
+              $scope.itemValue = "";
+
+              updateMetadata(listToObject(list))
+                .then(function(response) {
+                    showPostInvokedToast("Metadata added");
+                    fetch(function(data) {
+                      var fn = data.find(function(i) { return i.name == $scope.service })
+                      if (fn) {
+                        $scope.annotations = objectToList(fn.annotations);
+                        $scope.labels = objectToList(fn.labels);
+                      }
+                    });
+                }).catch(function(error1) {
+                    showPostInvokedToast("Error");
+                    console.log("addMetadata/updateMetadata/error:", error1)
+                });
+            }
+
+            $scope.delMetadata = function(key) {
+              var list;
+              switch ($scope.selectedTabIdx) {
+                case ANNOTATIONS_TAB_INDEX: list = $scope.annotations; break;
+                case LABELS_TAB_INDEX: list = $scope.labels; break;
+              }
+
+              var i = list.findIndex(function(x) { return x.key == key; });
+
+              if (i > -1) {
+                list.splice(i, 1);
+                updateMetadata(listToObject(list))
+                  .then(function(response) {
+                      showPostInvokedToast("Metadata deleted");
+                      fetch(function(data) {
+                        var fn = data.find(function(i) { return i.name == $scope.service })
+                        if (fn) {
+                          $scope.annotations = objectToList(fn.annotations);
+                          $scope.labels = objectToList(fn.labels);
+                        }
+                      });
+                  }).catch(function(error1) {
+                      showPostInvokedToast("Error");
+                      console.log("delMetadata/updateMetadata/error:", error1)
+                  });
+              }
+            }
+
+            $scope.isUrl = function(value) {
+                return /https?:\/\/.*/.test(value);
+            }
+
+            $scope.openLink = function(url) {
+                $window.open(url, '_blank');
+                return false;
+            }
+
+            $scope.fetchData();
+        }
+
         fetch();
     }
 ]);
@@ -355,3 +498,21 @@ function uuidv4() {
     })
   }
   
+  var objectToList = function(obj) {
+      if (!obj) return null;
+      return Object.keys(obj).map(function(key) {
+          return {
+              key: key,
+              value: obj[key],
+              // isUrl: obj[key].match(/https?:\/\/.*/)
+          }
+      })
+  }
+
+  var listToObject = function(list) {
+    var obj = {}
+    list.forEach(function(e) {
+      obj[e.key] = e.value
+    })
+    return obj;
+  }

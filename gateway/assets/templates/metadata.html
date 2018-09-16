@@ -1,0 +1,118 @@
+<md-dialog id="metadata-dialog" aria-label="Metadata dialog" layout="column" flex="70">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Metadata</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="closeDialog()">
+                <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-padding">
+      <md-card>
+        <md-card-title>
+            <md-card-title-text>
+              Add values here
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          <form name="userForm">
+            <div layout-gt-xs="row">
+              <md-input-container class="md-block" flex-gt-sm>
+                <md-tooltip md-direction="bottom">Enter key</md-tooltip>
+                <label>Key</label>
+                <input name="itemKey" ng-model="itemKey">
+              </md-input-container>
+              <md-input-container class="md-block" flex-gt-sm>
+                <md-tooltip md-direction="bottom">Enter value</md-tooltip>
+                <label>Value</label>
+                <input name="itemValue" ng-model="itemValue">
+              </md-input-container>
+              <div layout="row" layout-align="end end">
+                <md-button ng-click="addMetadata()" ng-disabled="!itemKey || !itemValue" class="md-icon-button" aria-label="AddMetadata">
+                  <md-tooltip md-direction="left">Add</md-tooltip>
+                  <md-icon md-svg-src="img/icons/plus-solid.svg"></md-icon>
+                </md-button>
+              </div>
+            </div>
+          </form>
+        </md-card-content>
+      </md-card>
+        <md-tabs md-dynamic-height md-border-bottom md-selected="selectedTabIdx">
+            <md-tab label="Annotations" md-on-select="onTabSelect(0)">
+              <md-content class="md-padding">
+                <table>
+                  <tr>
+                      <th> Key </th>
+                      <th> Value </th>
+                      <th> </th>
+                  </tr>
+                    <tr ng-repeat="x in annotations">
+                      <td>{{ x.key }}</td>
+                      <td>
+                          {{ x.value }}
+                          <a href="#" ng-if="isUrl(x.value)" ng-click="openLink(x.value)">
+                              <md-icon class="md-icon-small" md-svg-icon="img/icons/open-in-new.svg"></md-icon>
+                          </a>
+                      </td>
+                      <td>
+                        <a href="#" ng-click="delMetadata(x.key)">
+                            <md-icon class="md-icon-small" md-svg-icon="img/icons/times-solid.svg"></md-icon>
+                        </a>
+                      </td>
+                    </tr>
+                </table>
+              </md-content>
+            </md-tab>
+            <md-tab label="Labels" md-on-select="onTabSelect(1)">
+              <md-content class="md-padding">
+                <table>
+                  <tr>
+                      <th> Key </th>
+                      <th> Value </th>
+                  </tr>
+                    <tr ng-repeat="x in labels">
+                      <td>{{ x.key }}</td>
+                      <td>{{ x.value }}</td>
+                    </tr>
+                </table>
+              </md-content>
+            </md-tab>
+        </md-tabs>
+        <!-- <table>
+        <tr>
+            <th> Key </th>
+            <th> Value </th>
+        </tr>
+          <tr ng-repeat="x in items">
+            <td>{{ x.key }}</td>
+            <td>
+                {{ x.value }}
+                <a href="#" ng-click="openLink(x.value)">
+                    <md-icon class="md-icon-small" md-svg-icon="img/icons/open-in-new.svg" ng-show="x.isUrl"></md-icon>
+                </a>
+            </td>
+          </tr>
+        </table> -->
+    </md-dialog-content>
+</md-dialog>
+
+<style>
+table, th , td {
+  border: none;
+  padding: 10px 10px;
+}
+th {
+    background-color: #f1f1f1;
+}
+td {
+    background-color: #ffffff;
+    border-bottom: 1px solid lightgray;
+}
+.md-icon-small {
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    min-height: 14px;
+}
+</style>
