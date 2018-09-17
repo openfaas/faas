@@ -1,5 +1,7 @@
-#!/bin/sh
+#!/bin/bash
+
 set -e
+
 export arch=$(uname -m)
 
 if [ "$arch" = "armv7l" ] ; then

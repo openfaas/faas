@@ -463,7 +463,7 @@ func TestHealthHandler_StatusInternalServerError_LockFileNotPresent(t *testing.T
 	handler := makeHealthHandler()
 	handler(rr, req)
 
-	required := http.StatusInternalServerError
+	required := http.StatusServiceUnavailable
 	if status := rr.Code; status != required {
 		t.Errorf("handler returned wrong status code - got: %v, want: %v", status, required)
 	}
