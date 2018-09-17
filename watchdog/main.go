@@ -11,25 +11,30 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
+	"sync/atomic"
 	"syscall"
 	"time"
 
 	"github.com/openfaas/faas/watchdog/types"
 )
 
-var version bool
+var (
+	versionFlag          bool
+	acceptingConnections int32
+)
 
 func main() {
-	flag.BoolVar(&version, "version", false, "Print the version and exit")
+	flag.BoolVar(&versionFlag, "version", false, "Print the version and exit")
 
 	flag.Parse()
 	printVersion()
 
-	if version == true {
+	if versionFlag {
 		return
 	}
 
-	acceptingConnections = false
+	atomic.StoreInt32(&acceptingConnections, 0)
 
 	osEnv := types.OsEnv{}
 	readConfig := ReadConfig{}
@@ -50,24 +55,25 @@ func main() {
 		MaxHeaderBytes: 1 << 20, // Max header of 1MB
 	}
 
+	log.Printf("Read/write timeout: %s, %s. Port: %d\n", readTimeout, writeTimeout, config.port)
 	http.HandleFunc("/_/health", makeHealthHandler())
 	http.HandleFunc("/", makeRequestHandler(&config))
 
-	if config.suppressLock == false {
-		path, writeErr := createLockFile()
+	shutdownTimeout := config.writeTimeout
 
-		if writeErr != nil {
-			log.Panicf("Cannot write %s. To disable lock-file set env suppress_lock=true.\n Error: %s.\n", path, writeErr.Error())
-		}
-	} else {
-		log.Println("Warning: \"suppress_lock\" is enabled. No automated health-checks will be in place for your function.")
-		acceptingConnections = true
-	}
-
-	listenUntilShutdown(config.writeTimeout, s)
+	listenUntilShutdown(shutdownTimeout, s, config.suppressLock)
 }
 
-func listenUntilShutdown(shutdownTimeout time.Duration, s *http.Server) {
+func markUnhealthy() error {
+	atomic.StoreInt32(&acceptingConnections, 0)
+
+	path := filepath.Join(os.TempDir(), ".lock")
+	log.Printf("Removing lock-file : %s\n", path)
+	removeErr := os.Remove(path)
+	return removeErr
+}
+
+func listenUntilShutdown(shutdownTimeout time.Duration, s *http.Server, suppressLock bool) {
 
 	idleConnsClosed := make(chan struct{})
 	go func() {
@@ -76,23 +82,46 @@ func listenUntilShutdown(shutdownTimeout time.Duration, s *http.Server) {
 
 		<-sig
 
-		log.Printf("SIGTERM received.. shutting down server")
+		log.Printf("SIGTERM received.. shutting down server in %s\n", shutdownTimeout.String())
 
-		acceptingConnections = false
+		healthErr := markUnhealthy()
+
+		if healthErr != nil {
+			log.Printf("Unable to mark unhealthy during shutdown: %s\n", healthErr.Error())
+		}
+
+		<-time.Tick(shutdownTimeout)
 
 		if err := s.Shutdown(context.Background()); err != nil {
 			// Error from closing listeners, or context timeout:
 			log.Printf("Error in Shutdown: %v", err)
 		}
 
+		log.Printf("No new connections allowed. Exiting in: %s\n", shutdownTimeout.String())
+
 		<-time.Tick(shutdownTimeout)
 
 		close(idleConnsClosed)
 	}()
 
-	if err := s.ListenAndServe(); err != http.ErrServerClosed {
-		log.Printf("Error ListenAndServe: %v", err)
-		close(idleConnsClosed)
+	// Run the HTTP server in a separate go-routine.
+	go func() {
+		if err := s.ListenAndServe(); err != http.ErrServerClosed {
+			log.Printf("Error ListenAndServe: %v", err)
+			close(idleConnsClosed)
+		}
+	}()
+
+	if suppressLock == false {
+		path, writeErr := createLockFile()
+
+		if writeErr != nil {
+			log.Panicf("Cannot write %s. To disable lock-file set env suppress_lock=true.\n Error: %s.\n", path, writeErr.Error())
+		}
+	} else {
+		log.Println("Warning: \"suppress_lock\" is enabled. No automated health-checks will be in place for your function.")
+
+		atomic.StoreInt32(&acceptingConnections, 1)
 	}
 
 	<-idleConnsClosed

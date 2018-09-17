@@ -14,12 +14,11 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/openfaas/faas/watchdog/types"
 )
-
-var acceptingConnections bool
 
 // buildFunctionInput for a GET method this is an empty byte array.
 func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error) {
@@ -270,7 +269,8 @@ func createLockFile() (string, error) {
 	path := filepath.Join(os.TempDir(), ".lock")
 	log.Printf("Writing lock-file to: %s\n", path)
 	writeErr := ioutil.WriteFile(path, []byte{}, 0660)
-	acceptingConnections = true
+
+	atomic.StoreInt32(&acceptingConnections, 1)
 
 	return path, writeErr
 }
@@ -279,13 +279,14 @@ func makeHealthHandler() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
-			if acceptingConnections == false || lockFilePresent() == false {
-				w.WriteHeader(http.StatusInternalServerError)
+			if atomic.LoadInt32(&acceptingConnections) == 0 || lockFilePresent() == false {
+				w.WriteHeader(http.StatusServiceUnavailable)
 				return
 			}
 
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte("OK"))
+
 			break
 		default:
 			w.WriteHeader(http.StatusMethodNotAllowed)

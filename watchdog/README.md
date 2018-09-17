@@ -111,6 +111,16 @@ A new version of the watchdog is being tested over at [openfaas-incubator/of-wat
 
 This re-write is mainly structural for on-going maintenance. It will be a drop-in replacement for the existing watchdog and also has binary releases available.
 
+### Graceful shutdowns
+
+The watchdog is capable of working with health-checks to provide a graceful shutdown.
+
+When a `SIGTERM` signal is detected within the watchdog process a Go routine will remove the `/tmp/.lock` file and mark the HTTP health-check as unhealthy and return HTTP 503. The code will then wait for the duration specified in `write_timeout`. During this window the container-orchestrator's health-check must run and complete.
+
+Now the orchestrator will mark this replica as unhealthy and remove it from the pool of valid HTTP endpoints.
+
+Now we will stop accepting new connections and wait for the value defined in `write_timeout` before finally allowing the process to exit.
+
 ### Working with HTTP headers
 
 Headers and other request information are injected into environmental variables in the following format:
