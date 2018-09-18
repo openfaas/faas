@@ -1,6 +1,6 @@
 provider:
   name: faas
-  gateway: http://localhost:8080  # can be a remote server
+  gateway: http://127.0.0.1:8080  # can be a remote server
 
 functions:
   # Pass a username as an argument to find how many images user has pushed to Docker Hub.
