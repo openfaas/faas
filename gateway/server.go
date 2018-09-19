@@ -53,7 +53,7 @@ func main() {
 	servicePollInterval := time.Second * 5
 
 	metricsOptions := metrics.BuildMetricsOptions()
-	exporter := metrics.NewExporter(metricsOptions)
+	exporter := metrics.NewExporter(metricsOptions, credentials)
 	exporter.StartServiceWatcher(*config.FunctionsProviderURL, metricsOptions, "func", servicePollInterval)
 	metrics.RegisterExporter(exporter)
 
@@ -89,7 +89,7 @@ func main() {
 	faasHandlers.QueryFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
 	faasHandlers.InfoHandler = handlers.MakeInfoHandler(handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer))
 
-	alertHandler := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL)
+	alertHandler := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL, credentials)
 	faasHandlers.Alert = handlers.MakeAlertHandler(alertHandler)
 
 	if config.UseNATS() {
