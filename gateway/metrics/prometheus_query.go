@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-// PrometheusQuery a PrometheusQuery
+// PrometheusQuery represents parameters for querying Prometheus
 type PrometheusQuery struct {
 	Port   int
 	Host   string
