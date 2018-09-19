@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: openfaas/gateway:0.9.2-armhf
+        image: openfaas/gateway:0.9.5-armhf
         networks:
             - functions
         environment:
@@ -35,7 +35,7 @@ services:
 
     # Docker Swarm provider
     faas-swarm:
-        image:  openfaas/faas-swarm:0.4.2-armhf
+        image:  openfaas/faas-swarm:0.4.3-armhf
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
         networks:
@@ -44,6 +44,7 @@ services:
             read_timeout:  "305s"   # set both here, and on your functions
             write_timeout: "305s"   # set both here, and on your functions
             DOCKER_API_VERSION: "1.30"
+            basic_auth: "false"
         deploy:
             placement:
                 constraints:
