@@ -1,11 +1,10 @@
 provider:
   name: faas
-  gateway: http://localhost:8080
 
 functions:
   alpinefunction:
     lang: dockerfile
-    handler: ./alpinefunction
+    handler: ./AlpineFunction
     image: functions/alpine:latest
   apikey-secret:
     lang: go
@@ -13,19 +12,19 @@ functions:
     image: functions/apikey-secret:0.1
   captainsintent:
     lang: dockerfile
-    handler: ./captainsintent
+    handler: ./CaptainsIntent
     image: functions/captainsintent:latest
   changecolorintent:
     lang: dockerfile
-    handler: ./changecolorintent
+    handler: ./ChangeColorIntent
     image: functions/alexa-leds:latest
   chelloworld:
     lang: dockerfile
-    handler: ./chelloworld
+    handler: ./CHelloWorld/src
     image: functions/helloc:latest
   dockerhubstats:
     lang: dockerfile
-    handler: ./dockerhubstats
+    handler: ./DockerHubStats
     image: functions/hubstats:latest
   echo:
     lang: dockerfile
@@ -35,29 +34,33 @@ functions:
     lang: dockerfile
     handler: ./gif-maker
     image: functions/gif-maker:latest
+    environment:
+      write_timeout: 60s
+      read_timeout: 60s
+
   haveibeenpwned:
     lang: go
     handler: ./haveibeenpwned
     image: functions/haveibeenpwned:0.1
   hostnameintent:
     lang: dockerfile
-    handler: ./hostnameintent
+    handler: ./HostnameIntent
     image: functions/hostname-intent:latest
   markdownrender:
     lang: dockerfile
-    handler: ./markdownrender
+    handler: ./MarkdownRender
     image: functions/markdown-render:latest
   nmap:
     lang: dockerfile
-    handler: ./nmap
+    handler: ./Nmap
     image: functions/nmap:0.1
   nodeinfo:
     lang: dockerfile
-    handler: ./nodeinfo
+    handler: ./NodeInfo
     image: functions/nodeinfo:latest
   phantomjs:
     lang: dockerfile
-    handler: ./phantomjs
+    handler: ./Phantomjs
     image: functions/phantomjs:latest
   pwgen:
     lang: dockerfile
@@ -65,17 +68,18 @@ functions:
     image: functions/pwgen-sample:latest
   resizeimagemagick:
     lang: dockerfile
-    handler: ./resizeimagemagick
+    handler: ./ResizeImageMagick
     image: functions/resizer:latest
   sentimentanalysis:
     lang: dockerfile
-    handler: ./sentimentanalysis
+    handler: ./SentimentAnalysis
     image: functions/sentimentanalysis:latest
   webhookstash:
     lang: dockerfile
-    handler: ./webhookstash
+    handler: ./WebhookStash
     image: functions/webhookstash:latest
   wordcountfunction:
     lang: dockerfile
-    handler: ./wordcountfunction
+    handler: ./WordCountFunction
     image: functions/wordcount:latest
+
