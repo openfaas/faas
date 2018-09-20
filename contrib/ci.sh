@@ -71,8 +71,9 @@ cd $GOPATH/src/github.com/openfaas/faas/gateway/tests/integration && \
    go test -v -count=1
 
 echo Running certifier
+export OPENFAAS_URL=http://127.0.0.1:8080
 cd $GOPATH/src/github.com/openfaas/certifier && \
-   make test
+   make test-swarm
 
 echo Integration tests all PASSED
 exit 0
