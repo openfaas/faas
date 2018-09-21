@@ -61,6 +61,7 @@ type ScaleServiceRequest struct {
 // GetReplicas replica count for function
 func (s ExternalServiceQuery) GetReplicas(serviceName string) (handlers.ServiceQueryResponse, error) {
 	var err error
+	var emptyServiceQueryResponse handlers.ServiceQueryResponse
 
 	function := requests.Function{}
 
@@ -88,6 +89,8 @@ func (s ExternalServiceQuery) GetReplicas(serviceName string) (handlers.ServiceQ
 			if err != nil {
 				log.Println(urlPath, err)
 			}
+		} else {
+			return emptyServiceQueryResponse, fmt.Errorf("server returned non-200 status code (%d) for function, %s", res.StatusCode, serviceName)
 		}
 	}
 
