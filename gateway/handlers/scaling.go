@@ -36,7 +36,6 @@ func MakeScalingHandler(next http.HandlerFunc, upstream http.HandlerFunc, config
 		}
 
 		queryResponse, err := config.ServiceQuery.GetReplicas(functionName)
-		cache.Set(functionName, queryResponse)
 
 		if err != nil {
 			var errStr string
@@ -47,6 +46,8 @@ func MakeScalingHandler(next http.HandlerFunc, upstream http.HandlerFunc, config
 			w.Write([]byte(errStr))
 			return
 		}
+
+		cache.Set(functionName, queryResponse)
 
 		if queryResponse.AvailableReplicas == 0 {
 			minReplicas := uint64(1)

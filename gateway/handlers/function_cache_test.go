@@ -73,3 +73,43 @@ func Test_CacheGivesHitWithLongExpiry(t *testing.T) {
 		t.Errorf("hit, want: %v, got %v", wantHit, hit)
 	}
 }
+
+func Test_CacheFunctionExists(t *testing.T) {
+	fnName := "echo"
+
+	cache := FunctionCache{
+		Cache:  make(map[string]*FunctionMeta),
+		Expiry: time.Millisecond * 10,
+	}
+
+	cache.Set(fnName, ServiceQueryResponse{AvailableReplicas: 1})
+	time.Sleep(time.Millisecond * 2)
+
+	_, hit := cache.Get(fnName)
+
+	wantHit := true
+
+	if hit != wantHit {
+		t.Errorf("hit, want: %v, got %v", wantHit, hit)
+	}
+}
+func Test_CacheFunctionNotExist(t *testing.T) {
+	fnName := "echo"
+	testName := "burt"
+
+	cache := FunctionCache{
+		Cache:  make(map[string]*FunctionMeta),
+		Expiry: time.Millisecond * 10,
+	}
+
+	cache.Set(fnName, ServiceQueryResponse{AvailableReplicas: 1})
+	time.Sleep(time.Millisecond * 2)
+
+	_, hit := cache.Get(testName)
+
+	wantHit := false
+
+	if hit != wantHit {
+		t.Errorf("hit, want: %v, got %v", wantHit, hit)
+	}
+}
