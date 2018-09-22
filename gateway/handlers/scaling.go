@@ -42,7 +42,7 @@ func MakeScalingHandler(next http.HandlerFunc, upstream http.HandlerFunc, config
 			errStr = fmt.Sprintf("error finding function %s: %s", functionName, err.Error())
 
 			log.Printf(errStr)
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusNotFound)
 			w.Write([]byte(errStr))
 			return
 		}
