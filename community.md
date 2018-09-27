@@ -109,6 +109,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Serverless Data Fetching stack with OpenFaaS & OpenFlow](https://blog.lapw.at/serverless-data-fetching-stack-openfaas-openflow/) | Quentin Lapointe | blog.lapw.at | 23-Sept-2018 |
 | [How To Install and Secure OpenFaaS Using Docker Swarm on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-openfaas-using-docker-swarm-on-ubuntu-16-04) | Marko Mudrinić | digitalocean.com | 19-Sept-2018 |
 | [Vert.x + Graal = Java for Serverless = ❤️!](https://www.jetdrone.xyz/2018/09/07/Vertx-Serverless-5mb.html) | Paulo Lopes | jetdrone.xyz | 07-Sept-2018 |
 | [OpenFass 介绍及源码分析 (OpenFaaS Deep-Dive / Code-Analysis) - Chinese](https://www.youtube.com/watch?v=bZtgrAVR9HQ&feature=youtu.be) | Zhu Zhenfeng | youtube.com | 07-Sept-2018 |
@@ -118,7 +119,7 @@ Key:
 | [Cerner ShipIt Hackathon - ShipIt XII](https://engineering.cerner.com/blog/shipit-xii/) | Caitie Oder | cerner.com | 30-Aug-2918 |
 | [5 tips and tricks for the OpenFaaS CLI](https://www.openfaas.com/blog/five-cli-tips/) | Alex Ellis | openfaas.com | 21-Aug-2018 |
 | [Multi-stage Serverless on Kubernetes with OpenFaaS and GKE](https://www.openfaas.com/blog/gke-multi-stage/) | Stefan Prodan | openfaas.com | 14-Aug-2018 |
-| [Managing state for Serverless Functions with Minio](https://blog.lapw.at/stateful-serverless-stack-openfaas-minio/) | Quentin Lapointe | lapw.at | 16-Aug-2018 | 
+| [Managing state for Serverless Functions with Minio](https://blog.lapw.at/stateful-serverless-stack-openfaas-minio/) | Quentin Lapointe | lapw.at | 14-Aug-2018 | 
 | [Monitor Arista Cloud vision network devices with OpenFaaS](https://github.com/burnyd/cvp-serverless-openfaas) | Daniel Hertzberg | github.com | 13-Aug-2018 |
 | [Serverless email sender using OpenFaaS and .NET Core](https://medium.com/@paulius.juozelskis/serverless-email-sender-using-openfaas-and-net-core-afdef152359) | Paulius Juozelskis | medium.com | 13-Aug-2018 |
 | [VMware CodeHouse: A Great Insight into the Future of Software Engineering](https://blogs.vmware.com/opensource/2018/08/07/vmware-codehouse-empowers-women/) | Jonas Rosland | blogs.vmware.com | 7-Aug-2018 |
