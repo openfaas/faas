@@ -26,6 +26,8 @@
 
 ## Your Environment
 <!--- Include as many relevant details about the environment you experienced the bug in -->
+* FaaS-CLI version ( Full output from: `faas-cli version` ):
+
 * Docker version `docker version` (e.g. Docker 17.0.05 ):
 
 * Are you using Docker Swarm or Kubernetes (FaaS-netes)?
