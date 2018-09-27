@@ -61,7 +61,7 @@ app.controller("home", ['$scope', '$window', '$log', '$http', '$location', '$int
         $scope.invocation.request = "";
         var fetchFunctionsDelay = 3500;
         var queryFunctionDelay = 2500;
-        
+
         var fetchFunctionsInterval = $interval(function() {
             refreshData();
         }, fetchFunctionsDelay);
@@ -104,7 +104,7 @@ app.controller("home", ['$scope', '$window', '$log', '$http', '$location', '$int
                 headers: { "Content-Type": requestContentType },
                 responseType: $scope.invocation.contentType == "binary" ? "arraybuffer" : $scope.invocation.contentType
             };
-            
+
             $scope.invocationInProgress = true;
             $scope.invocationResponse = "";
             $scope.invocationStatus = null;
@@ -114,10 +114,10 @@ app.controller("home", ['$scope', '$window', '$log', '$http', '$location', '$int
 
             var tryDownload = function(data, filename) {
                 var caught;
-            
+
                 try {
                     var blob = new Blob([data], { type: "binary/octet-stream" });
-            
+
                     if (window.navigator.msSaveBlob) { // // IE hack; see http://msdn.microsoft.com/en-us/library/ie/hh779016.aspx
                         window.navigator.msSaveOrOpenBlob(blob, filename);
                     }
@@ -129,7 +129,7 @@ app.controller("home", ['$scope', '$window', '$log', '$http', '$location', '$int
                         linkElement.click();
                         document.body.removeChild(linkElement);
                     }
-            
+
                 } catch (ex) {
                     caught = ex;
                 }
@@ -193,7 +193,7 @@ app.controller("home", ['$scope', '$window', '$log', '$http', '$location', '$int
                     if (response && response.data) {
                         if (previousItems.length != response.data.length) {
                             $scope.functions = response.data;
-                            
+
                             // update the selected function object because the newly fetched object from the API becomes a different object
                             var filteredSelectedFunction = $filter('filter')($scope.functions, {name: $scope.selectedFunction.name}, true);
                             if (filteredSelectedFunction && filteredSelectedFunction.length > 0) {
@@ -271,7 +271,7 @@ app.controller("home", ['$scope', '$window', '$log', '$http', '$location', '$int
 
                 $scope.selectedFunc = func;
             }
-            
+
             $scope.onTabSelect = function(idx) {
                 newFuncTabIdx = idx;
             }
@@ -390,39 +390,39 @@ app.controller("home", ['$scope', '$window', '$log', '$http', '$location', '$int
                 $mdDialog.hide();
             };
 
-
-            var updateMetadata = function(list) {
+            var updateMetadata = function(annotations, labels) {
               var options = {
                   url: "../system/functions",
                   data: {
                     service: $scope.service,
                     image: $scope.image,
+                    annotations,
+                    labels
                   },
                   method: "PUT",
                   responseType: "text",
                   headers: { "Content-Type": "application/json" },
               };
 
-              switch ($scope.selectedTabIdx) {
-                case ANNOTATIONS_TAB_INDEX: options.data["annotations"] = list; break;
-                case LABELS_TAB_INDEX: options.data["labels"] = list; break;
-              }
               return $http(options);
             }
 
             $scope.addMetadata = function() {
               var list;
               switch ($scope.selectedTabIdx) {
-                case ANNOTATIONS_TAB_INDEX: list = $scope.annotations; break;
-                case LABELS_TAB_INDEX: list = $scope.labels; break;
+                case ANNOTATIONS_TAB_INDEX: list = 'annotations'; break;
+                case LABELS_TAB_INDEX: list = 'labels'; break;
               }
 
-              var i = list.findIndex(function(x) { return x.key == $scope.itemKey; });
+              var i = -1;
+              if ($scope[list] && Array.isArray($scope[list])) {
+                  i = $scope[list].findIndex(function(x) { return x.key == $scope.itemKey; });
+              }
 
               if (i>-1) {
-                list[i].value = $scope.itemValue;
+                $scope[list][i].value = $scope.itemValue;
               } else {
-                list.push({
+                $scope[list].push({
                   key: $scope.itemKey,
                   value: $scope.itemValue
                 })
@@ -430,8 +430,7 @@ app.controller("home", ['$scope', '$window', '$log', '$http', '$location', '$int
 
               $scope.itemKey = "";
               $scope.itemValue = "";
-
-              updateMetadata(listToObject(list))
+              updateMetadata(listToObject($scope.annotations), listToObject($scope.labels))
                 .then(function(response) {
                     showPostInvokedToast("Metadata added");
                     fetch(function(data) {
@@ -450,15 +449,18 @@ app.controller("home", ['$scope', '$window', '$log', '$http', '$location', '$int
             $scope.delMetadata = function(key) {
               var list;
               switch ($scope.selectedTabIdx) {
-                case ANNOTATIONS_TAB_INDEX: list = $scope.annotations; break;
-                case LABELS_TAB_INDEX: list = $scope.labels; break;
+                case ANNOTATIONS_TAB_INDEX: list = 'annotations'; break;
+                case LABELS_TAB_INDEX: list = 'labels'; break;
               }
 
-              var i = list.findIndex(function(x) { return x.key == key; });
+              var i = -1;
+              if ($scope[list] && Array.isArray($scope[list])) {
+                  i = $scope[list].findIndex(function(x) { return x.key == key; });
+              }
 
               if (i > -1) {
-                list.splice(i, 1);
-                updateMetadata(listToObject(list))
+                $scope[list].splice(i, 1);
+                updateMetadata(listToObject($scope.annotations), listToObject($scope.labels))
                   .then(function(response) {
                       showPostInvokedToast("Metadata deleted");
                       fetch(function(data) {
@@ -484,6 +486,10 @@ app.controller("home", ['$scope', '$window', '$log', '$http', '$location', '$int
                 return false;
             }
 
+            $scope.labelCanBeDeleted = function(key) {
+                return ["com.openfaas.function", "com.openfaas.uid", "function"].indexOf(key) == -1;
+            }
+
             $scope.fetchData();
         }
 
@@ -497,9 +503,9 @@ function uuidv4() {
       return (c ^ cryptoInstance.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
     })
   }
-  
+
   var objectToList = function(obj) {
-      if (!obj) return null;
+      if (!obj) return [];
       return Object.keys(obj).map(function(key) {
           return {
               key: key,

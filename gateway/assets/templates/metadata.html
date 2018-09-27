@@ -70,10 +70,16 @@
                   <tr>
                       <th> Key </th>
                       <th> Value </th>
+                      <th> </th>
                   </tr>
                     <tr ng-repeat="x in labels">
                       <td>{{ x.key }}</td>
                       <td>{{ x.value }}</td>
+                      <td>
+                        <a href="#" ng-click="delMetadata(x.key)" ng-disabled="labelCanBeDeleted(x.key)" ng-hide="!labelCanBeDeleted(x.key)">
+                            <md-icon class="md-icon-small" md-svg-icon="img/icons/times-solid.svg"></md-icon>
+                        </a>
+                      </td>
                     </tr>
                 </table>
               </md-content>
