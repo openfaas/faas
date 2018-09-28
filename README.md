@@ -24,13 +24,17 @@ OpenFaaS&reg; (Functions as a Service) is a framework for building Serverless fu
 
 ![Stack](https://pbs.twimg.com/media/DFrkF4NXoAAJwN2.jpg)
 
-### Branding / sponsorship
+### Press / Branding / Sponsors
 
 For information on branding, the press-kit, registered entities and sponsorship head over to the [openfaas/media](https://github.com/openfaas/media/blob/master/README.md) repo. You can also order custom SWAG or take part in the weekly Twitter contest [#FaaSFriday](https://twitter.com/search?q=faasfriday&src=typd)
 
+Looking for statistics? This project does not use a mono-repo, but is split across several components. Use [Ken Fukuyama's dashboard](https://kenfdev.o6s.io/github-stats-page) to gather accurate counts on contributors, stars and forks across the [GitHub organisation](https://github.com/openfaas).
+
+Incubator projects are not counted in these totals and are hosted under [openfaas-incubator](https://github.com/openfaas) awaiting graduation.
+
 ### Governance
 
-OpenFaaS&reg; is an independent project founded by [Alex Ellis](https://www.alexellis.io) which is now being built and shaped by a growing community of contributors. Project website: [openfaas.com](https://www.openfaas.com).
+OpenFaaS&reg; is an independent project founded by [Alex Ellis](https://www.alexellis.io) which is now being built and shaped by a growing community of contributors, GitHub Organisation members, Core contributors and end-users. More at: [openfaas.com](https://www.openfaas.com).
 
 ### Users
 
@@ -96,17 +100,11 @@ module.exports = (callback, context) => {
 
 The easiest way to get started with functions is to take the workshop or one of the tutorials in the documentation.
 
-## Documentation
-
-We are building a new documentation site at [docs.openfaas.com](http://docs.openfaas.com). 
-The source repository for the documentation website is [openfaas/docs](https://github.com/openfaas/docs).
-
-For all other guides, tutorials, trouble-shooting and blog posts head over to our [guides page](https://github.com/openfaas/faas/tree/master/guide) on GitHub.
-
 ## Get started with OpenFaaS
 
 ### Official documentation and blog
-See our documentation on [docs.openfaas.com](https://docs.openfaas.com/)
+
+See our documentation on [docs.openfaas.com](https://docs.openfaas.com/). The source repository for the documentation website is [openfaas/docs](https://github.com/openfaas/docs).
 
 Read latest news on OpenFaaS from the community [blog](https://www.openfaas.com/blog/)
 
@@ -193,7 +191,7 @@ The roadmap for OpenFaaS is represented in [GitHub issues](https://github.com/op
 
 ##### Roadmap: OpenFaaS Cloud
 
-[OpenFaaS Cloud](https://github.com/openfaas/openfaas-cloud) is a platform built on top of the OpenFaaS framework which enables a multi-user experience driven by GitOps. It can be installed wherever you already have OpenFaaS and packages a dashboard along with CI/CD integration with GitHub so that you can push code to a private or public Git repo and get live HTTPS endpoints. 
+[OpenFaaS Cloud](https://github.com/openfaas/openfaas-cloud) is a platform built on top of the OpenFaaS framework which enables a multi-user experience driven by GitOps. It can be installed wherever you already have OpenFaaS and packages a dashboard along with CI/CD integration with GitHub so that you can push code to a private or public Git repo and get live HTTPS endpoints.
 
 #### Dashboards
 
