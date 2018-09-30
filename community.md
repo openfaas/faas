@@ -109,6 +109,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Serverless R functions with OpenFaaS](https://medium.com/@keyunie/serverless-r-functions-with-openfaas-1cd34905834d) | Keyu Nie | medium.com | 30-Sept-2018 |
 | [Serverless Data Fetching stack with OpenFaaS & OpenFlow](https://blog.lapw.at/serverless-data-fetching-stack-openfaas-openflow/) | Quentin Lapointe | blog.lapw.at | 23-Sept-2018 |
 | [How To Install and Secure OpenFaaS Using Docker Swarm on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-openfaas-using-docker-swarm-on-ubuntu-16-04) | Marko Mudrinić | digitalocean.com | 19-Sept-2018 |
 | [Vert.x + Graal = Java for Serverless = ❤️!](https://www.jetdrone.xyz/2018/09/07/Vertx-Serverless-5mb.html) | Paulo Lopes | jetdrone.xyz | 07-Sept-2018 |
