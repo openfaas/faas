@@ -61,7 +61,7 @@ Please read this whole guide and make sure you agree to our DCO agreement (inclu
 
 The first line of the commit message is the *subject*, this should be followed by a blank line and then a message describing the intent and purpose of the commit. These guidelines are based upon a [post by Chris Beams](https://chris.beams.io/posts/git-commit/).
 
-* When you run `git commit` make sure you sign-off the commit by typing `git commit -s`.
+* When you run `git commit` make sure you sign-off the commit by typing `git commit --signoff` or `git commit -s`.
 * The commit subject-line should start with an uppercase letter
 * The commit subject-line should not exceed 72 characters in length
 * The commit subject-line should not end with punctuation (., etc)
