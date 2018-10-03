@@ -14,23 +14,25 @@ import (
 	"github.com/openfaas/faas/gateway/requests"
 )
 
-// DefaultMinReplicas is the minimal amount of replicas for a service.
-const DefaultMinReplicas = 1
+const (
+	// DefaultMinReplicas is the minimal amount of replicas for a service.
+	DefaultMinReplicas = 1
 
-// DefaultMaxReplicas is the amount of replicas a service will auto-scale up to.
-const DefaultMaxReplicas = 20
+	// DefaultMaxReplicas is the amount of replicas a service will auto-scale up to.
+	DefaultMaxReplicas = 20
 
-// DefaultScalingFactor is the defining proportion for the scaling increments.
-const DefaultScalingFactor = 20
+	// DefaultScalingFactor is the defining proportion for the scaling increments.
+	DefaultScalingFactor = 20
 
-// MinScaleLabel label indicating min scale for a function
-const MinScaleLabel = "com.openfaas.scale.min"
+	// MinScaleLabel label indicating min scale for a function
+	MinScaleLabel = "com.openfaas.scale.min"
 
-// MaxScaleLabel label indicating max scale for a function
-const MaxScaleLabel = "com.openfaas.scale.max"
+	// MaxScaleLabel label indicating max scale for a function
+	MaxScaleLabel = "com.openfaas.scale.max"
 
-// ScalingFactorLabel label indicates the scaling factor for a function
-const ScalingFactorLabel = "com.openfaas.scale.factor"
+	// ScalingFactorLabel label indicates the scaling factor for a function
+	ScalingFactorLabel = "com.openfaas.scale.factor"
+)
 
 // MakeAlertHandler handles alerts from Prometheus Alertmanager
 func MakeAlertHandler(service ServiceQuery) http.HandlerFunc {
@@ -130,5 +132,6 @@ func CalculateReplicas(status string, currentReplicas uint64, maxReplicas uint64
 	} else { // Resolved event.
 		newReplicas = minReplicas
 	}
+
 	return newReplicas
 }

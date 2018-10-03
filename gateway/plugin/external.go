@@ -24,11 +24,13 @@ import (
 
 // NewExternalServiceQuery proxies service queries to external plugin via HTTP
 func NewExternalServiceQuery(externalURL url.URL, credentials *auth.BasicAuthCredentials) handlers.ServiceQuery {
+	timeout := 3 * time.Second
+
 	proxyClient := http.Client{
 		Transport: &http.Transport{
 			Proxy: http.ProxyFromEnvironment,
 			DialContext: (&net.Dialer{
-				Timeout:   3 * time.Second,
+				Timeout:   timeout,
 				KeepAlive: 0,
 			}).DialContext,
 			MaxIdleConns:          1,

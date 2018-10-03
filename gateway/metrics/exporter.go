@@ -60,11 +60,14 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions MetricOptions, label string, interval time.Duration) {
 	ticker := time.NewTicker(interval)
 	quit := make(chan struct{})
+
+	timeout := 3 * time.Second
+
 	proxyClient := http.Client{
 		Transport: &http.Transport{
 			Proxy: http.ProxyFromEnvironment,
 			DialContext: (&net.Dialer{
-				Timeout:   3 * time.Second,
+				Timeout:   timeout,
 				KeepAlive: 0,
 			}).DialContext,
 			MaxIdleConns:          1,

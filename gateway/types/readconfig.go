@@ -51,7 +51,7 @@ func parseIntOrDurationValue(val string, fallback time.Duration) time.Duration {
 	return duration
 }
 
-// Read fetches config from environmental variables.
+// Read fetches gateway server configuration from environmental variables
 func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 	cfg := GatewayConfig{
 		PrometheusHost: "prometheus",
@@ -117,7 +117,7 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 	return cfg
 }
 
-// GatewayConfig for the process.
+// GatewayConfig provides config for the API Gateway server process
 type GatewayConfig struct {
 
 	// HTTP timeout for reading a request from clients.

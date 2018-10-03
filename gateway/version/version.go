@@ -1,17 +1,20 @@
 package version
 
 var (
-	//Version release version of the provider
+	// Version release version of the provider
 	Version string
-	//GitCommit SHA of the last git commit
+
+	// GitCommitSHA is the Git SHA of the latest tag/release
 	GitCommitSHA string
-	//GitCommit message of the last commit
+
+	// GitCommitMessage as read from the latest tag/release
 	GitCommitMessage string
-	//DevVersion string for the development version
+
+	// DevVersion string for the development version
 	DevVersion = "dev"
 )
 
-//BuildVersion returns current version of the provider
+// BuildVersion returns current version of the provider
 func BuildVersion() string {
 	if len(Version) == 0 {
 		return DevVersion

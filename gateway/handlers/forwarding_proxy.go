@@ -23,7 +23,7 @@ import (
 // functionMatcher parses out the service name (group 1) and rest of path (group 2).
 var functionMatcher = regexp.MustCompile("^/?(?:async-)?function/([^/?]+)([^?]*)")
 
-// Indicies and meta-data for functionMatcher regex parts
+// Indices and meta-data for functionMatcher regex parts
 const (
 	hasPathCount = 3
 	routeIndex   = 0 // routeIndex corresponds to /function/ or /async-function/
