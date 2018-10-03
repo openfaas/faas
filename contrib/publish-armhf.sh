@@ -35,7 +35,7 @@ do
    echo "Latest release: $TAG"
 
    REPOSITORY=$(get_repo_name $i)
-   TAG_PRESENT=$(curl -s "https://hub.docker.com/v2/repositories/${REPOSITORY}/tags/${TAG}-armhf/" | jq -r ".detail")
+   TAG_PRESENT=$(curl -s "https://hub.docker.com/v2/repositories/${REPOSITORY}/tags/${TAG}-armhf/" | grep -Po '"detail": *"[^"]*"' | grep -o 'Not found')
 
    if [ "$TAG_PRESENT" = "Not found" ]; then
        make ci-armhf-build ci-armhf-push
