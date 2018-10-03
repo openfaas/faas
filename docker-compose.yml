@@ -70,9 +70,9 @@ services:
             - basic-auth-password
 
     nats:
-        image: nats-streaming:0.6.0
+        image: nats-streaming:0.11.0
         # Uncomment the following port mappings if you wish to expose the
-        # NATS client and/or management ports
+        # NATS client and/or management ports you must also add `-m 8222` to the command
         # ports:
         #     - 4222:4222
         #     - 8222:8222
