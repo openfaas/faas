@@ -20,6 +20,10 @@ import (
 	"github.com/openfaas/faas/watchdog/types"
 )
 
+type requestInfo struct {
+	headerWritten bool
+}
+
 // buildFunctionInput for a GET method this is an empty byte array.
 func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error) {
 	var res []byte
@@ -48,14 +52,11 @@ func buildFunctionInput(config *WatchdogConfig, r *http.Request) ([]byte, error)
 	return res, err
 }
 
+// debugHeaders prints HTTP headers as key/value pairs
 func debugHeaders(source *http.Header, direction string) {
 	for k, vv := range *source {
 		fmt.Printf("[%s] %s=%s\n", direction, k, vv)
 	}
-}
-
-type requestInfo struct {
-	headerWritten bool
 }
 
 func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request, method string) {

@@ -1,6 +1,9 @@
 // Copyright (c) Alex Ellis 2017. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+// Package main provides the OpenFaaS Classic Watchdog. The Classic Watchdog is a HTTP
+// shim for serverless functions providing health-checking, graceful shutdowns,
+// timeouts and a consistent logging experience.
 package main
 
 import (
@@ -73,6 +76,10 @@ func markUnhealthy() error {
 	return removeErr
 }
 
+// listenUntilShutdown will listen for HTTP requests until SIGTERM
+// is sent at which point the code will wait `shutdownTimeout` before
+// closing off connections and a futher `shutdownTimeout` before
+// exiting
 func listenUntilShutdown(shutdownTimeout time.Duration, s *http.Server, suppressLock bool) {
 
 	idleConnsClosed := make(chan struct{})

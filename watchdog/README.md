@@ -9,6 +9,10 @@ The watchdog provides an unmanaged and generic interface between the outside wor
 
 Every function needs to embed this binary and use it as its `ENTRYPOINT` or `CMD`, in effect it is the init process for your container. Once your process is forked the watchdog passses in the HTTP request via `stdin` and reads a HTTP response via `stdout`. This means your process does not need to know anything about the web or HTTP.
 
+### Next-gen: of-watchdog
+
+Are you looking for more control over your HTTP responses, "hot functions", persistent connection pools or to cache a machine-learning model in memory? Then check out the *http mode* of the new [of-watchdog](https://github.com/openfaas-incubator/of-watchdog).
+
 ## Create a new function the easy way
 
 **Create a function via the CLI**
@@ -34,7 +38,7 @@ Here's how to package your function if you don't want to use the CLI or have exi
 Example Dockerfile for an `echo` function:
 
 ```
-FROM alpine:3.7
+FROM alpine:3.8
 
 ADD https://github.com/openfaas/faas/releases/download/0.9.4/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog

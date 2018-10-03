@@ -20,7 +20,6 @@ Functions run as Docker containers with the Watchdog component embedded to handl
 
 You can find the [reference documentation for the Watchdog here](https://github.com/openfaas/faas/tree/master/watchdog).
 
-
 **Markdown Parser**
 
 This is the basis of a function which generates HTML from MarkDown:
@@ -82,15 +81,19 @@ Update your Docker stack with this definition:
 ```
 
 **Tip:**
+
 You can optimize Docker to cache getting the watchdog by using curl, instead of ADD.
 To do so, replace the related lines with:
+
 ```
 RUN apt-get update && apt-get install -y curl \
     && curl -sL https://github.com/openfaas/faas/releases/download/0.9.4/fwatchdog > /usr/bin/fwatchdog \
     && chmod +x /usr/bin/fwatchdog \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 ```
+
 or with the following for Alpine based images:
+
 ```
 RUN apk --no-cache add curl \
     && curl -sL https://github.com/openfaas/faas/releases/download/0.9.4/fwatchdog > /usr/bin/fwatchdog \

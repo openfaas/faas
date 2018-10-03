@@ -6,19 +6,19 @@ Guidelines for contributing.
 
 ### How can I get involved?
 
-First of all, we'd love to welcome you into our Slack community where we exchange ideas, ask questions and chat about OpenFaaS, Raspberry Pi and other cloud-native technology. (*See below for how to join*)
+The Slack community is the best place to keep up to date with the project and to get help contributing. Here we exchange ideas, ask questions and chat about OpenFaaS. There are also channels for Raspberry Pi/ARM, Kubernetes and other cloud-native topics. (*See below for how to join*)
 
-We have a number of areas where we can accept contributions:
+There are a number of areas where contributions can be accepted:
 
 * Write Golang code for the CLI, Gateway or other providers
-* Write for our front-end UI (JS, HTML, CSS)
+* Write features for the front-end UI (JS, HTML, CSS)
 * Write sample functions in any language
 * Review pull requests
 * Test out new features or work-in-progress
 * Get involved in design reviews and technical proof-of-concepts (PoCs)
-* Help us release and package OpenFaaS including the helm chart, compose files, kubectl YAML, marketplaces and stores
+* Help release and package OpenFaaS including the helm chart, compose files, `kubectl` YAML, marketplaces and stores
 * Manage, triage and research Issues and Pull Requests
-* Help our growing community feel at home
+* Engage with the growing community by providing technical support on Slack/GitHub
 * Create docs, guides and write blogs
 * Speak at meet-ups, conferences or by helping folks with OpenFaaS on Slack
 
@@ -48,20 +48,20 @@ If you are proposing a new tool or service please do due diligence. Does this to
 
 ### Paperwork for Pull Requests
 
-Please read this whole guide and make sure you agree to our DCO agreement (included below):
+Please read this whole guide and make sure you agree to the Developer Certificate of Origin (DCO) agreement (included below):
 
 * See guidelines on commit messages (below)
-* Sign-off your commits
+* Sign-off your commits (`git commit --signoff` or `-s`)
 * Complete the whole template for issues and pull requests
 * [Reference addressed issues](https://help.github.com/articles/closing-issues-using-keywords/) in the PR description & commit messages - use 'Fixes #IssueNo' 
 * Always give instructions for testing
-* Provide us CLI commands and output or screenshots where you can
+ * Provide us CLI commands and output or screenshots where you can
 
 ### Commit messages
 
 The first line of the commit message is the *subject*, this should be followed by a blank line and then a message describing the intent and purpose of the commit. These guidelines are based upon a [post by Chris Beams](https://chris.beams.io/posts/git-commit/).
 
-* When you run `git commit` make sure you sign-off the commit by typing `git commit --signoff` or `git commit -s`.
+* When you run `git commit` make sure you sign-off the commit by typing `git commit --signoff` or `git commit -s`
 * The commit subject-line should start with an uppercase letter
 * The commit subject-line should not exceed 72 characters in length
 * The commit subject-line should not end with punctuation (., etc)
@@ -70,7 +70,7 @@ When giving a commit body:
 * Leave a blank line after the subject-line
 * Make sure all lines are wrapped to 72 characters
 
-Here's an example:
+Here's an example that would be accepted:
 
 ```
 Add alexellis to the .DEREK.yml file
@@ -81,6 +81,21 @@ duties.
 Signed-off-by: Alex Ellis <alex@openfaas.com>
 ```
 
+Some invalid examples:
+
+```
+(feat) Add page about X to documentation
+```
+
+> This example does not follow the convention by adding a custom scheme of `(feat)`
+
+```
+Update the documentation for page X so including fixing A, B, C and D and F.
+```
+
+> This example will be truncated in the GitHub UI and via `git log --oneline`
+
+
 If you would like to ammend your commit follow this guide: [Git: Rewriting History](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History)
 
 #### Unit testing with Golang
@@ -89,20 +104,47 @@ Please follow style guide on [this blog post](https://blog.alexellis.io/golang-w
 
 #### I have a question, a suggestion or need help
 
-Please raise an Issue or email alex@openfaas.com for an invitation to our Slack community.
+If you have a simple question you can [join the Slack community](https://docs.openfaas.com/community) and ask there, but please bear in mind that contributors may live in a different timezone or be working to a different timeline to you. If you have an urgent request then let them know about this.
+
+If you have a deeply technical request or need help debugging your application then you should prepare a simple, public GitHub repository with the minimum amount of code required to reproduce the issue. 
+
+If you feel there is an issue with OpenFaaS or were unable to get the help you needed from the Slack channels then raise an issue on one of the GitHub repositories.
 
 #### I need to add a dependency
 
-We use vendoring for projects written in Go. This means that we will maintain a copy of the source-code of dependencies within Git. It allows a repeatable build and isolates change. 
+Vendoring is used for projects written in Go. This means that we will maintain a copy of the source-code of dependencies within Git in the `vendor` folder. This allows for a repeatable build and isolates change.
 
-We use Golang's `dep` tool to manage dependencies for Golang projects - https://github.com/golang/dep
+The vendoring tool in use is Golang's `dep`. You can get it here: https://github.com/golang/dep
 
 ### How are releases made?
-To cut a release please ask Alex via the #contributors [slack channel](https://docs.openfaas.com/community/#slack-workspace)
+
+Releases are made by the project lead when deemed necessary. If you want to request a new release then mention this on your PR or Issue.
+
+Releases are cut with Git tags and a successful Travis build results in new binary artifacts and Docker images being published to the Docker Hub and Quay.io. See the "Build" badge on each GitHub README file for more.
 
 ### How do I become a maintainer?
 
-Maintainers are well-known contributors with a track record of:
+In the OpenFaaS community there are three levels of maintainership:
+
+* Core Contributors
+* GitHub Organisation Members
+* Those with Derek access
+
+#### Who are the Core Contributors?
+
+The Core Contributor group includes:
+
+- Alex Ellis (@alexellis)
+- Richard Gee (@rgee0)
+- Stefan Prodan (@stefanprodan)
+- Lucas Roesler (@LucasRoesler)
+- Burton Rheutan (@burtonr)
+
+The Core Contributors have the ear of the project lead and help with strategy, project maintenance, community management and make a regular commitment of time to the project. Core Contributors attend all project meetings and calls.
+
+#### GitHub Organisation Members
+
+GitHub Organisation Members are well-known contributors with a track record of:
 
 * Fixing, testing and triaging issues
 * Joining contributor meetings and supporting new contributors
@@ -110,23 +152,13 @@ Maintainers are well-known contributors with a track record of:
 * Offering other project support and strategical advice
 * Attending contributors' meetings
 
-Varying levels of write access are made available via our project bot [Derek](https://github.com/alexellis/derek) to help regular contributors transition to maintainers.
+Varying levels of write access are made available via the project bot [Derek](https://github.com/alexellis/derek) to help regular contributors transition to GitHub Organisation Membership.
 
-#### How do I work with Derek?
+#### How do I get access to Derek?
 
-If you have been added to the `.DEREK.yml` file in the root of an OpenFaaS repository then you can help us manage our community and contributions by issuing comments on Issues and Pull Requests. See [Derek](https://github.com/alexellis/derek) for available commands.
+If you have been added to the `.DEREK.yml` file in the root of an OpenFaaS repository then you can help us manage the community and contributions by issuing comments on Issues and Pull Requests. See [Derek](https://github.com/alexellis/derek) for available commands.
 
-### Who are the Core Contributors?
-
-The Core Contributor group includes:
-
-- Alex Ellis (@alexellis)
-- Richard Gee (@rgee0)
-- Stefan Prodan (@stefanprodan)
-- Burton Rheutan (@burtonr)
-- Lucas Roesler (@LucasRoesler)
-
-The Core Contributors have the ear of the project lead and help with strategy, project maintenance, community management and make a regular commitment of time to the project. Core Contributors attend all project meetings and calls.
+If you are a regular contributor then you are welcome to request access.
 
 #### Community/project meetings and calls
 
