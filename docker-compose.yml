@@ -90,7 +90,7 @@ services:
                     - 'node.platform.os == linux'
 
     queue-worker:
-        image: openfaas/queue-worker:0.5.2
+        image: openfaas/queue-worker:0.5.3
         networks:
             - functions
         environment:
