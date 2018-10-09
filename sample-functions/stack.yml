@@ -6,6 +6,10 @@ functions:
     lang: dockerfile
     handler: ./AlpineFunction
     image: functions/alpine:latest
+  figlet:
+    lang: dockerfile
+    handler: ./figlet
+    image: functions/figlet:0.9.6
   apikey-secret:
     lang: go
     handler: ./apikey-secret
