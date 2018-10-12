@@ -25,6 +25,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Award/Mention                                          | Author(s)       | Source     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| 🏆🏆 [2018 Bossie Award Best OSS Cloud Computing](https://www.infoworld.com/article/3306455/cloud-computing/the-best-open-source-software-for-cloud-computing.html#slide13) | Jonathan Freeman et al. | InfoWorld.com | 26-Sep-2018 | 
 | [KubeWeekly #145](https://mailchi.mp/cncf/kubeweekly-145?e=5c7c372824) | [KubeWeekly](https://twitter.com/kubeweekly?lang=en) | mailchi.mp | 15-Aug-2018 |
 | [The Cube interview at Cisco DevNet Create](https://www.youtube.com/watch?v=J8UYZ1GXNTQ) | The Cube | Youtube.com | 11-Apr-2018
 | [VMware hires OpenFaaS Founder](https://thenewstack.io/vmware-hires-openfaas-founder-dell-drops-code-initiative-2/) | The New Stack | thenewstack.io | 21-Feb-2018 |
