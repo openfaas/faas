@@ -2,11 +2,13 @@
 
 Welcome to the OpenFaaS community page where you can find:
 
-* [Accolades](#industry-awards-and-mentions) 
+* [Industry awards, notable mentions and books](#industry-awards-notable-mentions-and-books) 
 * [Function Providers/Back-ends](#openfaas-providers)
+
 * Events
     * [2018](#events-in-2018)
     * [2017](#events-in-2017)
+
 * Blog posts and write-ups
     * [2018](#blog-posts-and-write-ups-2018)
     * [2017](#blog-posts-and-write-ups-2017)
@@ -21,6 +23,7 @@ It would be great to hear from you especially if you have any of the above and w
 > Note: You will need to sign-off the commit too using `git commit -s` or add `Signed-off-by: {your full name} <{your email address}>` to the commit message when using the UI.
 
 ### Industry awards, notable mentions and books
+
 [Back to top](#openfaas-community)
 
 | Award/Mention                                          | Author(s)       | Source     | Date        |
@@ -38,6 +41,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Open source project uses Docker for serverless computing](http://www.infoworld.com/article/3184757/open-source-tools/open-source-project-uses-docker-for-serverless-computing.html#tk.twt_ifw)| Serdar Yegulalp  | InfoWorld (from IDG)  | 27-Mar-2017 |
 
 ### OpenFaaS providers
+
 [Back to top](#openfaas-community)
 
 | Project name and description                                         | Author     | Site      | Status      | Official
@@ -54,8 +58,13 @@ It would be great to hear from you especially if you have any of the above and w
 
 Key:
 
+(Official)
+
 * Supported - stable and supported by the OpenFaaS project
 * Community - actively being developed, support provided by a third-party
+
+(Status)
+
 * Incubation - actively being developed, but not stable
 * Inception - more work needed. May work in happy path scenario, but unlikely to be suitable for production
 
@@ -112,6 +121,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [ACI Information Group: OpenFaaS among wish-list items for AWS Lambda](https://searchaws.techtarget.com/opinion/Lambda-support-for-OpenFaaS-among-wish-list-items) | Chris Moyer | techtarget.com | 11-Oct-2018 |
 | [Serverless R functions with OpenFaaS](https://medium.com/@keyunie/serverless-r-functions-with-openfaas-1cd34905834d) | Keyu Nie | medium.com | 30-Sept-2018 |
 | [Serverless Data Fetching stack with OpenFaaS & OpenFlow](https://blog.lapw.at/serverless-data-fetching-stack-openfaas-openflow/) | Quentin Lapointe | blog.lapw.at | 23-Sept-2018 |
 | [How To Install and Secure OpenFaaS Using Docker Swarm on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-openfaas-using-docker-swarm-on-ubuntu-16-04) | Marko Mudrinić | digitalocean.com | 19-Sept-2018 |
