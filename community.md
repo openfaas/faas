@@ -2,7 +2,7 @@
 
 Welcome to the OpenFaaS community page where you can find:
 
-* [Industry awards, notable mentions and books](#industry-awards-notable-mentions-and-books) 
+* [Industry awards, notable mentions and books](#industry-awards-notable-mentions-and-books)
 * [Function Providers/Back-ends](#openfaas-providers)
 
 * Events
@@ -28,7 +28,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Award/Mention                                          | Author(s)       | Source     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
-| 🏆🏆 [2018 Bossie Award Best OSS Cloud Computing](https://www.infoworld.com/article/3306455/cloud-computing/the-best-open-source-software-for-cloud-computing.html#slide13) | Jonathan Freeman et al. | InfoWorld.com | 26-Sep-2018 | 
+| 🏆🏆 [2018 Bossie Award Best OSS Cloud Computing](https://www.infoworld.com/article/3306455/cloud-computing/the-best-open-source-software-for-cloud-computing.html#slide13) | Jonathan Freeman et al. | InfoWorld.com | 26-Sep-2018 |
 | [KubeWeekly #145](https://mailchi.mp/cncf/kubeweekly-145?e=5c7c372824) | [KubeWeekly](https://twitter.com/kubeweekly?lang=en) | mailchi.mp | 15-Aug-2018 |
 | [Book: Docker for Serverless Applications with OpenFaaS - featuring OpenFaaS](https://www.packtpub.com/mapt/book/virtualization_and_cloud/9781788835268) | Chanwit Kaewkasi | packtpub.com | 01-Apr-2018 |
 | [The Cube interview at Cisco DevNet Create](https://www.youtube.com/watch?v=J8UYZ1GXNTQ) | The Cube | Youtube.com | 11-Apr-2018
@@ -44,25 +44,27 @@ It would be great to hear from you especially if you have any of the above and w
 
 [Back to top](#openfaas-community)
 
-| Project name and description                                         | Author     | Site      | Status      | Official
-|----------------------------------------------------------------------|------------|-----------|-------------|----------|
-| [faas-netes](https://github.com/openfaas/faas-netes) - Kubernetes provider | OpenFaaS | github.com | Supported | Yes |
-| [faas-swarm](https://github.com/openfaas/faas-swarm) - Docker Swarm provider | OpenFaaS | github.com | Supported | Yes |
-| [openfaas-operator](https://github.com/openfaas-incubator/openfaas-operator) - Kubernetes Operator provider | OpenFaaS | github.com | Incubation | Yes |
-| [faas-fargate](https://github.com/ewilde/faas-fargate) - AWS Fargate provider | Edward Wilde | github.com | Incubation | Community |
-| [faas-nomad](https://github.com/hashicorp/faas-nomad) - Nomad provider | Nic Jackson (Hashicorp) | github.com | Incubation  | Community |
-| [faas-rancher](https://github.com/kenfdev/faas-rancher) - Rancher/Cattle provider | Ken Fukuyama | github.com | Inception | Community |
-| [faas-dcos](https://github.com/realbot/faas-dcos) - DCOS provider | Alberto Quario | github.com | Inception  | Community |
-| [faas-hyper](https://github.com/hyperhq/faas-hyper) - Hyper.sh provider | Hyper | github.com | Inception |  n/a |
-| [faas-guardian](https://github.com/nwright-nz/openfaas-guardian-backend) - Guardian provider | Nigel Wright | github.com | Inception |  n/a |
-| [faas-ecs](https://github.com/stack360/faas-ecs) | Xicheng Chang (Huawei) | github.com | Inception | n/a |
+Official providers developed and supported by the OpenFaaS project
+
+| Project name and description                                         | Author     | Site      | Status      |
+|----------------------------------------------------------------------|------------|-----------|-------------|
+| **faas-netes**- Kubernetes provider | OpenFaaS | [github.com](https://github.com/openfaas/faas-netes) | Supported |
+| **faas-swarm** - Docker Swarm provider | OpenFaaS | [github.com](https://github.com/openfaas/faas-swarm) | Supported |
+| **openfaas-operator** - Kubernetes Operator provider | OpenFaaS | [github.com](https://github.com/openfaas-incubator/openfaas-operator) | Incubation |
+
+Community providers actively being developed and/or support provided by a third-party
+
+| Project name and description                                         | Author     | Site      | Status      |
+|----------------------------------------------------------------------|------------|-----------|-------------|
+| **faas-fargate** - AWS Fargate provider | Edward Wilde | [github.com](https://github.com/ewilde/faas-fargate) | Incubation |
+| **faas-nomad** - Nomad provider | Nic Jackson (Hashicorp) | [github.com](https://github.com/hashicorp/faas-nomad) | Incubation  |
+| **faas-rancher** - Rancher/Cattle provider | Ken Fukuyama | [github.com](https://github.com/kenfdev/faas-rancher) | Inception |
+| **faas-dcos** - DCOS provider | Alberto Quario | [github.com](https://github.com/realbot/faas-dcos) | Inception  |
+| **faas-hyper** - Hyper.sh provider | Hyper | [github.com](https://github.com/hyperhq/faas-hyper) | Inception |
+| **faas-guardian** - Guardian provider | Nigel Wright | [github.com](https://github.com/nwright-nz/openfaas-guardian-backend) | Inception |
+| **faas-ecs** | Xicheng Chang (Huawei) | [github.com](https://github.com/stack360/faas-ecs) | Inception |
 
 Key:
-
-(Official)
-
-* Supported - stable and supported by the OpenFaaS project
-* Community - actively being developed, support provided by a third-party
 
 (Status)
 
@@ -119,7 +121,7 @@ Key:
 | [OpenFaaS : a serverless framework on top of Docker and Kubernetes @ Snowcamp.io](https://snowcamp2018.sched.com/event/D2nX/openfaas-a-serverless-framework-on-top-of-docker-and-kubernetes?iframe=no&w=100%&sidebar=no&bg=no) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 25-Jan-2018 |
 | [Talk: Building a Raspberry Pi Kubernetes Cluster with OpenFaaS](https://ndc-london.com/talk/building-a-raspberry-pi-kubernetes-cluster-and-running-.net-core/) | Alex Ellis / Scott Hanselman | London | 18-Jan-2018 |
 
-#### Blog posts and write-ups 2018 
+#### Blog posts and write-ups 2018
 [Back to top](#openfaas-community)
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
@@ -136,7 +138,7 @@ Key:
 | [Cerner ShipIt Hackathon - ShipIt XII](https://engineering.cerner.com/blog/shipit-xii/) | Caitie Oder | cerner.com | 30-Aug-2918 |
 | [5 tips and tricks for the OpenFaaS CLI](https://www.openfaas.com/blog/five-cli-tips/) | Alex Ellis | openfaas.com | 21-Aug-2018 |
 | [Multi-stage Serverless on Kubernetes with OpenFaaS and GKE](https://www.openfaas.com/blog/gke-multi-stage/) | Stefan Prodan | openfaas.com | 14-Aug-2018 |
-| [Managing state for Serverless Functions with Minio](https://blog.lapw.at/stateful-serverless-stack-openfaas-minio/) | Quentin Lapointe | lapw.at | 14-Aug-2018 | 
+| [Managing state for Serverless Functions with Minio](https://blog.lapw.at/stateful-serverless-stack-openfaas-minio/) | Quentin Lapointe | lapw.at | 14-Aug-2018 |
 | [Monitor Arista Cloud vision network devices with OpenFaaS](https://github.com/burnyd/cvp-serverless-openfaas) | Daniel Hertzberg | github.com | 13-Aug-2018 |
 | [Serverless email sender using OpenFaaS and .NET Core](https://medium.com/@paulius.juozelskis/serverless-email-sender-using-openfaas-and-net-core-afdef152359) | Paulius Juozelskis | medium.com | 13-Aug-2018 |
 | [VMware CodeHouse: A Great Insight into the Future of Software Engineering](https://blogs.vmware.com/opensource/2018/08/07/vmware-codehouse-empowers-women/) | Jonas Rosland | blogs.vmware.com | 7-Aug-2018 |
@@ -214,7 +216,7 @@ Key:
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [Podcast - Hanselminutes - Serverless and OpenFaas with Alex Ellis](https://www.hanselminutes.com) | Scott Hanselman | hanselminutes.com | 29-Dec-2017
 | [Podcast - How Serverless Technologies Impact Kubernetes](https://thenewstack.io/serverless-technologies-impact-kubernetes/) | The New Stack Makers | thenewstack.io | 28-Dec-2017 |
-| [OpenFaaS快速入门指南 (OpenFaaS Quick Start Guide) - Chinese](https://jimmysong.io/posts/openfaas-quick-start/) | Jimmy Song | jimmysong.io | 26-Dec-2017 | 
+| [OpenFaaS快速入门指南 (OpenFaaS Quick Start Guide) - Chinese](https://jimmysong.io/posts/openfaas-quick-start/) | Jimmy Song | jimmysong.io | 26-Dec-2017 |
 | [OpenFaaS on DCOS](https://medium.com/@realrealbot/openfaas-on-dcos-9d5927f4e725) | Alberto Quario | medium.com/@realrealbot  | 20-Dec-2017
 | [Deploying Kubernetes On-Premise with RKE and deploying OpenFaaS on it — Part 1](https://medium.com/@kenfdev/deploying-kubernetes-on-premise-with-rke-and-deploying-openfaas-on-it-part-1-69a35ddfa507) | Ken Fukuyama | medium.com/@kenfdev  | 10-Dec-2017
 | [Deploying Kubernetes On-Premise with RKE and deploying OpenFaaS on it — Part 2](https://medium.com/@kenfdev/deploying-kubernetes-on-premise-with-rke-and-deploying-openfaas-on-it-part-2-cc14004e7007) | Ken Fukuyama | medium.com/@kenfdev  | 10-Dec-2017
