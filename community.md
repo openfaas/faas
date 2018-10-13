@@ -78,7 +78,9 @@ Key:
 | [GOTO Copenhagen: Serverless Beyond the Hype](https://gotocph.com/2018/sessions/592) | Alex Ellis | Copenhagen, DK | 19-Nov-2018 |
 | [ Serverless Computing London: FaaS and Furious – 0 to Serverless in 60 Seconds, Anywhere](https://serverlesscomputing.london/sessions/faas-furious-0-serverless-60-seconds-anywhere/) | Alex Ellis | London, UK | 12-Nov-2018 |
 | [Open Source Summit Europe: Introducing OpenFaaS Cloud, a Developer-Friendly CI/CD Pipeline for Serverless](https://osseu18.sched.com/event/FxXx/introducing-openfaas-cloud-a-developer-friendly-cicd-pipeline-for-serverless-alex-ellis-openfaas-project-vmware) | Alex Ellis | Edinburgh, Scotland | 22-Oct-2018 |
+| [Serverlessconf Tokyo 2018 Contributor Day](https://serverless.connpass.com/event/103404/) | Ken Fukuyama | Tokyo, JP | 13-Oct-2018 |
 | [DevOpenSpace - Mühelos Serverless mit GitOps](https://github.com/fpommerening/DevOpenSpace2018) | Frank Pommerening | Leipzig, Germany | 12-Oct-2018 |
+| [Serverlessconf Tokyo 2018 OpenFaaS Workshop](http://tokyo.serverlessconf.io/workshops.html) | Ken Fukuyama | Tokyo, JP | 28-Sep-2018 |
 | [Building Cloud-Native Apps - FaaS: The Swiss Army Knife of Cloud Native](https://www.meetup.com/Cloud_Native_Meetup/events/254232936/) | James McAfee | Sydney, Australia | 12-Sep-2018 |
 | [ John Callaway: .NET Core on a Raspberry Pi Cluster with Docker and OpenFaaS](https://secure.meetup.com/register/?ctx=ref) | John Callaway | Orlando, FL, USA |16-Aug-2018 |
 | [Cloud Native Glasgow - Serverless on Kubernetes](https://www.meetup.com/CloudNativeGlasgow/events/251913059/) | John McCabe | Glasgow, UK | 5-July-2018 |
@@ -156,6 +158,7 @@ Key:
 | [Securing Kubernetes for OpenFaaS and beyond](https://www.twistlock.com/2018/03/20/securing-kubernetes-openfaas-beyond) | Daniel Shapira | twistlock.com | 20-Mar-2018 |
 | [What Is OpenFaaS and How Can It Drive Innovation?](https://www.contino.io/insights/what-is-openfaas-and-why-is-it-an-alternative-to-aws-lambda-an-interview-with-creator-alex-ellis) | Ben Tannahill | contino.com | 19-Mar-2018 |
 | [Installing and securing OpenFaaS on a Google Cloud virtual machine](https://alexanderdevelopment.net/post/2018/02/25/installing-and-securing-openfaas-on-a-google-cloud-virtual-machine/) | Lucas Alexander | alexanderdevelopment.net | 25-Feb-2018 |
+| [OpenFaaS on a Kubernetes clusterの仕組み](https://qiita.com/TakanariKo/items/5e3117ea7c3afa948de5) | Takanari Ko | qiita.com | 21-Feb-2018 |
 | [VMware Welcomes Alex Ellis](https://blogs.vmware.com/opensource/2018/02/19/vmware-welcomes-alex-ellis/) | VMware team | vmware.com | 19-Feb-2018 |
 | [I'm going to be working on OpenFaaS full-time](https://blog.alexellis.io/full-time-openfaas/) | Alex Ellis | alexellis.io | 19-Feb-2018 |
 | [Stop installing CLI tools on your build server: CLI-as-a-Function with OpenFaaS](https://medium.com/@burtonr/stop-installing-cli-tools-on-your-build-server-cli-as-a-function-with-openfaas-80dd8d6be611) | Burton Rheutan | medium.com/@burtonr | 12-Feb-2018 |
