@@ -11,9 +11,10 @@ import (
 
 // MetricOptions to be used by web handlers
 type MetricOptions struct {
-	GatewayFunctionInvocation *prometheus.CounterVec
-	GatewayFunctionsHistogram *prometheus.HistogramVec
-	ServiceReplicasGauge      *prometheus.GaugeVec
+	GatewayFunctionInvocation       *prometheus.CounterVec
+	GatewayFunctionsHistogram       *prometheus.HistogramVec
+	ServiceReplicasGauge            *prometheus.GaugeVec
+	GatewayFunctionStatusIncovation *prometheus.HistogramVec
 }
 
 // PrometheusHandler Bootstraps prometheus for metrics collection
@@ -36,6 +37,14 @@ func BuildMetricsOptions() MetricOptions {
 		[]string{"function_name", "code"},
 	)
 
+	gatewayFunctionStatusHistogram := prometheus.NewHistogramVec(
+		prometheus.HistogramOpts{
+			Name: "gateway_function_seconds_status",
+			Help: "Function time taken by status",
+		},
+		[]string{"function_name", "code", "request_type"},
+	)
+
 	serviceReplicas := prometheus.NewGaugeVec(
 		prometheus.GaugeOpts{
 			Name: "gateway_service_count",
@@ -45,9 +54,10 @@ func BuildMetricsOptions() MetricOptions {
 	)
 
 	metricsOptions := MetricOptions{
-		GatewayFunctionsHistogram: gatewayFunctionsHistogram,
-		GatewayFunctionInvocation: gatewayFunctionInvocation,
-		ServiceReplicasGauge:      serviceReplicas,
+		GatewayFunctionsHistogram:       gatewayFunctionsHistogram,
+		GatewayFunctionInvocation:       gatewayFunctionInvocation,
+		ServiceReplicasGauge:            serviceReplicas,
+		GatewayFunctionStatusIncovation: gatewayFunctionStatusHistogram,
 	}
 
 	return metricsOptions
