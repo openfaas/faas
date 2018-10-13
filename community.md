@@ -52,7 +52,7 @@ Official providers developed and supported by the OpenFaaS project
 | **faas-swarm** - Docker Swarm provider | OpenFaaS | [github.com](https://github.com/openfaas/faas-swarm) | Supported |
 | **openfaas-operator** - Kubernetes Operator provider | OpenFaaS | [github.com](https://github.com/openfaas-incubator/openfaas-operator) | Incubation |
 
-Community providers actively being developed and/or support provided by a third-party
+Community providers actively being developed and/or supported by a third-party
 
 | Project name and description                                         | Author     | Site      | Status      |
 |----------------------------------------------------------------------|------------|-----------|-------------|
