@@ -58,6 +58,13 @@ func Test_Describe_DescribesThePrometheusMetrics(t *testing.T) {
 	if expectedServiceReplicasGaugeDesc != actualServiceReplicasGaugeDesc {
 		t.Errorf("Want %s, got: %s", expectedServiceReplicasGaugeDesc, actualServiceReplicasGaugeDesc)
 	}
+	d = (<-ch)
+	expectedGatewayFunctionStatusHistogramDesc := `Desc{fqName: "gateway_function_seconds_status", help: "Function time taken by status", constLabels: {}, variableLabels: [function_name code request_type]}`
+	actualGatewayFunctionStatusHistogram := d.String()
+	if expectedGatewayFunctionStatusHistogramDesc != actualGatewayFunctionStatusHistogram {
+		t.Errorf("Want %s, got: %s", expectedGatewayFunctionStatusHistogramDesc, actualGatewayFunctionStatusHistogram)
+	}
+
 }
 
 func Test_Collect_CollectsTheNumberOfReplicasOfAService(t *testing.T) {

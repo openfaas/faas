@@ -156,9 +156,36 @@ func (p PrometheusFunctionNotifier) Notify(method string, URL string, originalUR
 
 	code := strconv.Itoa(statusCode)
 
+	request_type := getRequestType(code)
+
 	p.Metrics.GatewayFunctionInvocation.
 		With(prometheus.Labels{"function_name": serviceName, "code": code}).
 		Inc()
+
+	p.Metrics.GatewayFunctionStatusIncovation.
+		With(prometheus.Labels{"function_name": serviceName, "code": code,
+			"request_type": request_type}).Observe(seconds)
+}
+
+func getRequestType(statusCode string) string {
+	statusType := string(statusCode[0])
+	var requestType string
+
+	switch statusType {
+	case "1":
+		requestType = "informational"
+	case "2":
+		requestType = "success"
+	case "3":
+		requestType = "redirection"
+	case "4":
+		requestType = "clientError"
+	case "5":
+		requestType = "internalServerError"
+	default:
+		requestType = statusType
+	}
+	return requestType
 }
 
 func getServiceName(urlValue string) string {

@@ -40,12 +40,14 @@ func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
 	e.metricOptions.GatewayFunctionInvocation.Describe(ch)
 	e.metricOptions.GatewayFunctionsHistogram.Describe(ch)
 	e.metricOptions.ServiceReplicasGauge.Describe(ch)
+	e.metricOptions.GatewayFunctionStatusIncovation.Describe(ch)
 }
 
 // Collect collects data to be consumed by prometheus
 func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 	e.metricOptions.GatewayFunctionInvocation.Collect(ch)
 	e.metricOptions.GatewayFunctionsHistogram.Collect(ch)
+	e.metricOptions.GatewayFunctionStatusIncovation.Collect(ch)
 
 	e.metricOptions.ServiceReplicasGauge.Reset()
 	for _, service := range e.services {
