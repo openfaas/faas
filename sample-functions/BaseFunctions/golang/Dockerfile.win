@@ -6,7 +6,7 @@ WORKDIR /go/src/github.com/openfaas/faas/sample-functions/golang
 COPY . /go/src/github.com/openfaas/faas/sample-functions/golang
 RUN go build
 
-ADD https://github.com/openfaas/faas/releases/download/0.9.4/fwatchdog.exe /watchdog.exe
+ADD https://github.com/openfaas/faas/releases/download/0.9.6/fwatchdog.exe /watchdog.exe
 
 EXPOSE 8080
 ENV fprocess="golang.exe"
