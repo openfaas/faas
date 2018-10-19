@@ -28,7 +28,11 @@ func NewHTTPClientReverseProxy(baseURL *url.URL, timeout time.Duration) *HTTPCli
 			ExpectContinueTimeout: 1500 * time.Millisecond,
 		},
 		Timeout: timeout,
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			return http.ErrUseLastResponse
+		},
 	}
+
 	return &h
 }
 
