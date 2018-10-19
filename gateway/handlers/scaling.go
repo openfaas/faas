@@ -55,6 +55,9 @@ func MakeScalingHandler(next http.HandlerFunc, upstream http.HandlerFunc, config
 				minReplicas = queryResponse.MinReplicas
 			}
 
+			log.Printf("[Scale] function=%s 0 => %d requested", functionName, minReplicas)
+			scalingStartTime := time.Now()
+
 			err := config.ServiceQuery.SetReplicas(functionName, minReplicas)
 			if err != nil {
 				errStr := fmt.Errorf("unable to scale function [%s], err: %s", functionName, err)
@@ -79,6 +82,8 @@ func MakeScalingHandler(next http.HandlerFunc, upstream http.HandlerFunc, config
 				}
 
 				if queryResponse.AvailableReplicas > 0 {
+					scalingDuration := time.Since(scalingStartTime)
+					log.Printf("[Scale] function=%s 0 => %d successful - %f seconds", functionName, queryResponse.AvailableReplicas, scalingDuration.Seconds())
 					break
 				}
 
