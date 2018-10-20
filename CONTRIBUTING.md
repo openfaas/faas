@@ -66,6 +66,8 @@ The first line of the commit message is the *subject*, this should be followed b
 * The commit subject-line should not exceed 72 characters in length
 * The commit subject-line should not end with punctuation (., etc)
 
+> Note: please do not use the GitHub suggestions feature, since it will not allow your commits to be signed-off.
+
 When giving a commit body:
 * Leave a blank line after the subject-line
 * Make sure all lines are wrapped to 72 characters
