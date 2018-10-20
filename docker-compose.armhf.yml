@@ -62,7 +62,7 @@ services:
                 window: 380s
 
     nats:
-        image: nats-streaming:0.11.0
+        image: nats-streaming:0.11.2
         # Uncomment the following port mappings if you wish to expose the
         # NATS client and/or management ports you must also add `-m 8222` to the command
         # ports:
