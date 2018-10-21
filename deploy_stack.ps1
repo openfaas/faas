@@ -2,8 +2,18 @@
 
 param (
     [switch] $noAuth,
-    [switch] $n
+    [switch] $n,
+    [switch] $help,
+    [switch] $h
 )
+
+if ($help -Or $h) {
+    Write-Host "Usage: "
+    Write-Host " [default]`tdeploy the OpenFaaS core services"
+    Write-Host " -noAuth [-n]`tdisable basic authentication"
+    Write-Host " -help [-h]`tdisplays this screen"
+    Exit
+}
 
 if (Get-Command docker -errorAction SilentlyContinue)
 {
