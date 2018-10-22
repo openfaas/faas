@@ -36,7 +36,7 @@ if (Get-Command docker -errorAction SilentlyContinue)
     }
     else
     {
-        $user | docker secret create $user_secret -
+        $user | docker secret create $user_secret - | out-null
     }
 
     $password_secret = "basic-auth-password"
@@ -47,7 +47,7 @@ if (Get-Command docker -errorAction SilentlyContinue)
     }
     else
     {
-        $secret | docker secret create $password_secret -
+        $secret | docker secret create $password_secret - | out-null
         Write-Host "[Credentials]"
         Write-Host " username: admin"
         Write-Host " password: $secret"
