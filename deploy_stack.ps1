@@ -67,7 +67,7 @@ if (Get-Command docker -errorAction SilentlyContinue)
         Write-Host ""
     }
 
-    Write-Host "Deploying stack"
+    Write-Host "Deploying OpenFaaS core services"
     docker stack deploy func --compose-file ./docker-compose.yml
 }
 else
