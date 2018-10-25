@@ -5,11 +5,10 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
-
-	"fmt"
 
 	"github.com/openfaas/faas/gateway/requests"
 )
@@ -119,7 +118,7 @@ func CalculateReplicas(status string, currentReplicas uint64, maxReplicas uint64
 	newReplicas := currentReplicas
 	step := uint64((float64(maxReplicas) / 100) * float64(scalingFactor))
 
-	if status == "firing" {
+	if status == "firing" && step > 0 {
 		if currentReplicas == 1 {
 			newReplicas = step
 		} else {

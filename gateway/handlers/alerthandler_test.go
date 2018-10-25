@@ -11,8 +11,8 @@ func TestDisabledScale(t *testing.T) {
 	minReplicas := uint64(1)
 	scalingFactor := uint64(0)
 	newReplicas := CalculateReplicas("firing", DefaultMinReplicas, DefaultMaxReplicas, minReplicas, scalingFactor)
-	if newReplicas != 0 {
-		t.Log("Expected not to scale")
+	if newReplicas != minReplicas {
+		t.Logf("Expected not to scale, but replicas were: %d", newReplicas)
 		t.Fail()
 	}
 }
@@ -23,6 +23,17 @@ func TestParameterEdge(t *testing.T) {
 	newReplicas := CalculateReplicas("firing", DefaultMinReplicas, DefaultMaxReplicas, minReplicas, scalingFactor)
 	if newReplicas != 0 {
 		t.Log("Expected not to scale")
+		t.Fail()
+	}
+}
+
+func TestScalingWithSameUpperLowerLimit(t *testing.T) {
+	minReplicas := uint64(1)
+	scalingFactor := uint64(20)
+	//	status string, currentReplicas uint64, maxReplicas uint64, minReplicas uint64, scalingFactor uint64)
+	newReplicas := CalculateReplicas("firing", minReplicas, minReplicas, minReplicas, scalingFactor)
+	if newReplicas != 1 {
+		t.Logf("Replicas - want: %d, got: %d", minReplicas, newReplicas)
 		t.Fail()
 	}
 }
