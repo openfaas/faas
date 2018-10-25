@@ -86,4 +86,7 @@ functions:
     lang: dockerfile
     handler: ./WordCountFunction
     image: functions/wordcount:latest
-
+  business-strategy-generator:
+    lang: go
+    handler: ./business-strategy-generator
+    image: functions/business-strategy-generator:0.1
