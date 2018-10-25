@@ -1,7 +1,6 @@
 #!/bin/bash
 
-declare -a repos=("openfaas-incubator/faas-idler" "openfaas/faas" "openfaas/faas-swarm" "openfaas/nats-queue-worker" "openfaas/faas-netes" "openfaas/faas-cli")
-
+declare -a repos=("openfaas-incubator/openfaas-operator" "openfaas-incubator/faas-idler" "openfaas/faas" "openfaas/faas-swarm" "openfaas/nats-queue-worker" "openfaas/faas-netes" "openfaas/faas-cli")
 HERE=`pwd`
 
 #if [ ! -z "$CACHED" ]; then
@@ -18,6 +17,8 @@ get_repo_name() {
         echo "openfaas/gateway"
     elif  [ "openfaas/nats-queue-worker" = $1 ]; then
         echo "openfaas/queue-worker"
+    elif  [ "openfaas-incubator/openfaas-operator" = $1 ]; then
+        echo "openfaas/openfaas-operator"
     else
         echo $1
     fi
