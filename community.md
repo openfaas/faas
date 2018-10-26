@@ -290,6 +290,7 @@ You can also find cool projects or submit your own to the [faas-and-furious orga
 
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| [OpenFaaS Crystal Template](https://github.com/TPei/crystal_openfaas) | Thomas Peikert | github.com | 26-Oct-2018 |
 | [OpenFaaS Terraform Provider](https://github.com/ewilde/terraform-provider-openfaas) | Edward Wilde | github.com | 12-Oct-2018 |
 | [OpenFaaS Swift Template](https://github.com/affix/openfaas-swift-template) | Keiran Smith | github.com | 22-May-2018 |
 | [OpenFaaS Code Eval](https://github.com/testdrivenio/openfass-code-eval) | Michael Herman | github.com | 30-Mar-2018 |
