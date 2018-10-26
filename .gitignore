@@ -6,3 +6,4 @@ fwatchdog-armhf
 .idea
 certifier
 .editorconfig
+/contrib/staging/
