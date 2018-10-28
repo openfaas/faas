@@ -129,6 +129,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [🇬🇧-use-express-with-openfaas](https://k33g.gitlab.io/articles/2018-10-28-OPENFAAS.html) | Philippe Charrière | GitLab.com | 28-Oct-2018 |
 | [First contact with OpenFaaS](https://k33g.gitlab.io/articles/2018-10-20-OPENFAAS.html) | Philippe Charrière | GitLab.com | 20-Oct-2018 |
 | [ACI Information Group: OpenFaaS among wish-list items for AWS Lambda](https://searchaws.techtarget.com/opinion/Lambda-support-for-OpenFaaS-among-wish-list-items) | Chris Moyer | techtarget.com | 11-Oct-2018 |
 | [Deploy a python app using OpenFaaS](https://saurabhlondhe.github.io/technology/linux/2018/10/10/python-app-with-openfaas.html) | Saurabh Londhe | saurabhlondhe.github.io | 10-Oct-2018 |
