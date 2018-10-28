@@ -12,15 +12,25 @@ import (
 
 // ScalingConfig for scaling behaviours
 type ScalingConfig struct {
-	MaxPollCount         uint
+	// MaxPollCount attempts to query a function before giving up
+	MaxPollCount uint
+
+	// FunctionPollInterval delay or interval between polling a function's readiness status
 	FunctionPollInterval time.Duration
-	CacheExpiry          time.Duration
-	ServiceQuery         ServiceQuery
+
+	// CacheExpiry life-time for a cache entry before considering invalid
+	CacheExpiry time.Duration
+
+	// ServiceQuery queries available/ready replicas for function
+	ServiceQuery ServiceQuery
 }
 
 // MakeScalingHandler creates handler which can scale a function from
-// zero to 1 replica(s).
-func MakeScalingHandler(next http.HandlerFunc, upstream http.HandlerFunc, config ScalingConfig) http.HandlerFunc {
+// zero to N replica(s). After scaling the next http.HandlerFunc will
+// be called. If the function is not ready after the configured
+// amount of attempts / queries then next will not be invoked and a status
+// will be returned to the client.
+func MakeScalingHandler(next http.HandlerFunc, config ScalingConfig) http.HandlerFunc {
 	cache := FunctionCache{
 		Cache:  make(map[string]*FunctionMeta),
 		Expiry: config.CacheExpiry,

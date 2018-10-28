@@ -141,7 +141,7 @@ func main() {
 			ServiceQuery:         alertHandler,
 		}
 
-		functionProxy = handlers.MakeScalingHandler(faasHandlers.Proxy, faasHandlers.QueryFunction, scalingConfig)
+		functionProxy = handlers.MakeScalingHandler(faasHandlers.Proxy, scalingConfig)
 	}
 	// r.StrictSlash(false)	// This didn't work, so register routes twice.
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}", functionProxy)
