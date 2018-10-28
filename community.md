@@ -131,6 +131,7 @@ Key:
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [First contact with OpenFaaS](https://k33g.gitlab.io/articles/2018-10-20-OPENFAAS.html) | Philippe Charrière | GitLab.com | 20-Oct-2018 |
 | [ACI Information Group: OpenFaaS among wish-list items for AWS Lambda](https://searchaws.techtarget.com/opinion/Lambda-support-for-OpenFaaS-among-wish-list-items) | Chris Moyer | techtarget.com | 11-Oct-2018 |
+| [Deploy a python app using OpenFaaS](https://saurabhlondhe.github.io/technology/linux/2018/10/10/python-app-with-openfaas.html) | Saurabh Londhe | saurabhlondhe.github.io | 10-Oct-2018 |
 | [Serverless R functions with OpenFaaS](https://medium.com/@keyunie/serverless-r-functions-with-openfaas-1cd34905834d) | Keyu Nie | medium.com | 30-Sept-2018 |
 | [Serverless Data Fetching stack with OpenFaaS & OpenFlow](https://blog.lapw.at/serverless-data-fetching-stack-openfaas-openflow/) | Quentin Lapointe | blog.lapw.at | 23-Sept-2018 |
 | [How To Install and Secure OpenFaaS Using Docker Swarm on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-openfaas-using-docker-swarm-on-ubuntu-16-04) | Marko Mudrinić | digitalocean.com | 19-Sept-2018 |
