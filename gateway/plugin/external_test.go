@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/openfaas/faas-provider/auth"
-	"github.com/openfaas/faas/gateway/handlers"
+	"github.com/openfaas/faas/gateway/scaling"
 )
 
 const fallbackValue = 120
@@ -70,11 +70,11 @@ func TestGetReplicasExistentFn(t *testing.T) {
 		}))
 	defer testServer.Close()
 
-	expectedSvcQryResp := handlers.ServiceQueryResponse{
+	expectedSvcQryResp := scaling.ServiceQueryResponse{
 		Replicas:          0,
-		MaxReplicas:       uint64(handlers.DefaultMaxReplicas),
-		MinReplicas:       uint64(handlers.DefaultMinReplicas),
-		ScalingFactor:     uint64(handlers.DefaultScalingFactor),
+		MaxReplicas:       uint64(scaling.DefaultMaxReplicas),
+		MinReplicas:       uint64(scaling.DefaultMinReplicas),
+		ScalingFactor:     uint64(scaling.DefaultScalingFactor),
 		AvailableReplicas: 0,
 	}
 

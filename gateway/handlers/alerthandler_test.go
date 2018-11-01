@@ -5,12 +5,14 @@ package handlers
 
 import (
 	"testing"
+
+	"github.com/openfaas/faas/gateway/scaling"
 )
 
 func TestDisabledScale(t *testing.T) {
 	minReplicas := uint64(1)
 	scalingFactor := uint64(0)
-	newReplicas := CalculateReplicas("firing", DefaultMinReplicas, DefaultMaxReplicas, minReplicas, scalingFactor)
+	newReplicas := CalculateReplicas("firing", scaling.DefaultMinReplicas, scaling.DefaultMaxReplicas, minReplicas, scalingFactor)
 	if newReplicas != minReplicas {
 		t.Logf("Expected not to scale, but replicas were: %d", newReplicas)
 		t.Fail()
@@ -20,7 +22,7 @@ func TestDisabledScale(t *testing.T) {
 func TestParameterEdge(t *testing.T) {
 	minReplicas := uint64(0)
 	scalingFactor := uint64(0)
-	newReplicas := CalculateReplicas("firing", DefaultMinReplicas, DefaultMaxReplicas, minReplicas, scalingFactor)
+	newReplicas := CalculateReplicas("firing", scaling.DefaultMinReplicas, scaling.DefaultMaxReplicas, minReplicas, scalingFactor)
 	if newReplicas != 0 {
 		t.Log("Expected not to scale")
 		t.Fail()
@@ -41,7 +43,7 @@ func TestScalingWithSameUpperLowerLimit(t *testing.T) {
 func TestMaxScale(t *testing.T) {
 	minReplicas := uint64(1)
 	scalingFactor := uint64(100)
-	newReplicas := CalculateReplicas("firing", DefaultMinReplicas, DefaultMaxReplicas, minReplicas, scalingFactor)
+	newReplicas := CalculateReplicas("firing", scaling.DefaultMinReplicas, scaling.DefaultMaxReplicas, minReplicas, scalingFactor)
 	if newReplicas != 20 {
 		t.Log("Expected ceiling of 20 replicas")
 		t.Fail()
@@ -51,7 +53,7 @@ func TestMaxScale(t *testing.T) {
 func TestInitialScale(t *testing.T) {
 	minReplicas := uint64(1)
 	scalingFactor := uint64(20)
-	newReplicas := CalculateReplicas("firing", DefaultMinReplicas, DefaultMaxReplicas, minReplicas, scalingFactor)
+	newReplicas := CalculateReplicas("firing", scaling.DefaultMinReplicas, scaling.DefaultMaxReplicas, minReplicas, scalingFactor)
 	if newReplicas != 4 {
 		t.Log("Expected the increment to equal 4")
 		t.Fail()
@@ -61,7 +63,7 @@ func TestInitialScale(t *testing.T) {
 func TestScale(t *testing.T) {
 	minReplicas := uint64(1)
 	scalingFactor := uint64(20)
-	newReplicas := CalculateReplicas("firing", 4, DefaultMaxReplicas, minReplicas, scalingFactor)
+	newReplicas := CalculateReplicas("firing", 4, scaling.DefaultMaxReplicas, minReplicas, scalingFactor)
 	if newReplicas != 8 {
 		t.Log("Expected newReplicas to equal 8")
 		t.Fail()
@@ -71,7 +73,7 @@ func TestScale(t *testing.T) {
 func TestScaleCeiling(t *testing.T) {
 	minReplicas := uint64(1)
 	scalingFactor := uint64(20)
-	newReplicas := CalculateReplicas("firing", 20, DefaultMaxReplicas, minReplicas, scalingFactor)
+	newReplicas := CalculateReplicas("firing", 20, scaling.DefaultMaxReplicas, minReplicas, scalingFactor)
 	if newReplicas != 20 {
 		t.Log("Expected ceiling of 20 replicas")
 		t.Fail()
@@ -81,7 +83,7 @@ func TestScaleCeiling(t *testing.T) {
 func TestScaleCeilingEdge(t *testing.T) {
 	minReplicas := uint64(1)
 	scalingFactor := uint64(20)
-	newReplicas := CalculateReplicas("firing", 19, DefaultMaxReplicas, minReplicas, scalingFactor)
+	newReplicas := CalculateReplicas("firing", 19, scaling.DefaultMaxReplicas, minReplicas, scalingFactor)
 	if newReplicas != 20 {
 		t.Log("Expected ceiling of 20 replicas")
 		t.Fail()
@@ -91,7 +93,7 @@ func TestScaleCeilingEdge(t *testing.T) {
 func TestBackingOff(t *testing.T) {
 	minReplicas := uint64(1)
 	scalingFactor := uint64(20)
-	newReplicas := CalculateReplicas("resolved", 8, DefaultMaxReplicas, minReplicas, scalingFactor)
+	newReplicas := CalculateReplicas("resolved", 8, scaling.DefaultMaxReplicas, minReplicas, scalingFactor)
 	if newReplicas != 1 {
 		t.Log("Expected backing off to 1 replica")
 		t.Fail()

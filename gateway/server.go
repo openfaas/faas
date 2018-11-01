@@ -11,6 +11,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/openfaas/faas/gateway/handlers"
+	"github.com/openfaas/faas/gateway/scaling"
 
 	"github.com/openfaas/faas-provider/auth"
 	"github.com/openfaas/faas/gateway/metrics"
@@ -134,7 +135,7 @@ func main() {
 	functionProxy := faasHandlers.Proxy
 
 	if config.ScaleFromZero {
-		scalingConfig := handlers.ScalingConfig{
+		scalingConfig := scaling.ScalingConfig{
 			MaxPollCount:         uint(1000),
 			FunctionPollInterval: time.Millisecond * 10,
 			CacheExpiry:          time.Second * 5, // freshness of replica values before going stale
