@@ -13,6 +13,7 @@ COPY types          types
 COPY queue          queue
 COPY plugin         plugin
 COPY version        version
+COPY scaling        scaling
 COPY server.go      .
 
 RUN GOARM=7 CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gateway .

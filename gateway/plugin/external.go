@@ -18,12 +18,12 @@ import (
 	"io/ioutil"
 
 	"github.com/openfaas/faas-provider/auth"
-	"github.com/openfaas/faas/gateway/handlers"
 	"github.com/openfaas/faas/gateway/requests"
+	"github.com/openfaas/faas/gateway/scaling"
 )
 
 // NewExternalServiceQuery proxies service queries to external plugin via HTTP
-func NewExternalServiceQuery(externalURL url.URL, credentials *auth.BasicAuthCredentials) handlers.ServiceQuery {
+func NewExternalServiceQuery(externalURL url.URL, credentials *auth.BasicAuthCredentials) scaling.ServiceQuery {
 	timeout := 3 * time.Second
 
 	proxyClient := http.Client{
@@ -61,9 +61,9 @@ type ScaleServiceRequest struct {
 }
 
 // GetReplicas replica count for function
-func (s ExternalServiceQuery) GetReplicas(serviceName string) (handlers.ServiceQueryResponse, error) {
+func (s ExternalServiceQuery) GetReplicas(serviceName string) (scaling.ServiceQueryResponse, error) {
 	var err error
-	var emptyServiceQueryResponse handlers.ServiceQueryResponse
+	var emptyServiceQueryResponse scaling.ServiceQueryResponse
 
 	function := requests.Function{}
 
@@ -96,17 +96,17 @@ func (s ExternalServiceQuery) GetReplicas(serviceName string) (handlers.ServiceQ
 		}
 	}
 
-	minReplicas := uint64(handlers.DefaultMinReplicas)
-	maxReplicas := uint64(handlers.DefaultMaxReplicas)
-	scalingFactor := uint64(handlers.DefaultScalingFactor)
+	minReplicas := uint64(scaling.DefaultMinReplicas)
+	maxReplicas := uint64(scaling.DefaultMaxReplicas)
+	scalingFactor := uint64(scaling.DefaultScalingFactor)
 	availableReplicas := function.AvailableReplicas
 
 	if function.Labels != nil {
 		labels := *function.Labels
 
-		minReplicas = extractLabelValue(labels[handlers.MinScaleLabel], minReplicas)
-		maxReplicas = extractLabelValue(labels[handlers.MaxScaleLabel], maxReplicas)
-		extractedScalingFactor := extractLabelValue(labels[handlers.ScalingFactorLabel], scalingFactor)
+		minReplicas = extractLabelValue(labels[scaling.MinScaleLabel], minReplicas)
+		maxReplicas = extractLabelValue(labels[scaling.MaxScaleLabel], maxReplicas)
+		extractedScalingFactor := extractLabelValue(labels[scaling.ScalingFactorLabel], scalingFactor)
 
 		if extractedScalingFactor >= 0 && extractedScalingFactor <= 100 {
 			scalingFactor = extractedScalingFactor
@@ -115,7 +115,7 @@ func (s ExternalServiceQuery) GetReplicas(serviceName string) (handlers.ServiceQ
 		}
 	}
 
-	return handlers.ServiceQueryResponse{
+	return scaling.ServiceQueryResponse{
 		Replicas:          function.Replicas,
 		MaxReplicas:       maxReplicas,
 		MinReplicas:       minReplicas,

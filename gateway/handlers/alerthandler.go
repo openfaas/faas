@@ -11,30 +11,11 @@ import (
 	"net/http"
 
 	"github.com/openfaas/faas/gateway/requests"
-)
-
-const (
-	// DefaultMinReplicas is the minimal amount of replicas for a service.
-	DefaultMinReplicas = 1
-
-	// DefaultMaxReplicas is the amount of replicas a service will auto-scale up to.
-	DefaultMaxReplicas = 20
-
-	// DefaultScalingFactor is the defining proportion for the scaling increments.
-	DefaultScalingFactor = 20
-
-	// MinScaleLabel label indicating min scale for a function
-	MinScaleLabel = "com.openfaas.scale.min"
-
-	// MaxScaleLabel label indicating max scale for a function
-	MaxScaleLabel = "com.openfaas.scale.max"
-
-	// ScalingFactorLabel label indicates the scaling factor for a function
-	ScalingFactorLabel = "com.openfaas.scale.factor"
+	"github.com/openfaas/faas/gateway/scaling"
 )
 
 // MakeAlertHandler handles alerts from Prometheus Alertmanager
-func MakeAlertHandler(service ServiceQuery) http.HandlerFunc {
+func MakeAlertHandler(service scaling.ServiceQuery) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Alert received.")
@@ -76,7 +57,7 @@ func MakeAlertHandler(service ServiceQuery) http.HandlerFunc {
 	}
 }
 
-func handleAlerts(req *requests.PrometheusAlert, service ServiceQuery) []error {
+func handleAlerts(req *requests.PrometheusAlert, service scaling.ServiceQuery) []error {
 	var errors []error
 	for _, alert := range req.Alerts {
 		if err := scaleService(alert, service); err != nil {
@@ -88,7 +69,7 @@ func handleAlerts(req *requests.PrometheusAlert, service ServiceQuery) []error {
 	return errors
 }
 
-func scaleService(alert requests.PrometheusInnerAlert, service ServiceQuery) error {
+func scaleService(alert requests.PrometheusInnerAlert, service scaling.ServiceQuery) error {
 	var err error
 	serviceName := alert.Labels.FunctionName
 
