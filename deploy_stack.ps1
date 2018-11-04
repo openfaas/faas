@@ -2,6 +2,7 @@
 
 param (
     [switch] $noAuth,
+    [switch] $noHash,
     [switch] $n,
     [switch] $help,
     [switch] $h
@@ -11,6 +12,7 @@ if ($help -Or $h) {
     Write-Host "Usage: "
     Write-Host " [default]`tdeploy the OpenFaaS core services"
     Write-Host " -noAuth [-n]`tdisable basic authentication"
+    Write-Host " -noHash`tprevents the password from being hashed (optional)"
     Write-Host " -help [-h]`tdisplays this screen"
     Exit
 }
@@ -23,8 +25,21 @@ if (Get-Command docker -errorAction SilentlyContinue)
         throw "Docker not in swarm mode, please initialise the cluster (`docker swarm init`) and retry"
     }
 
+    # AE: would be nice to avoid this dependency.
     Add-Type -AssemblyName System.Web
-    $secret = [System.Web.Security.Membership]::GeneratePassword(24,5)
+    $password = [System.Web.Security.Membership]::GeneratePassword(24,5)
+    $secret = ""
+
+    if (-Not $noHash)
+    {
+        $sha256 = [System.Security.Cryptography.HashAlgorithm]::Create('sha256')
+        $hash = $sha256.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($password))
+
+        $secret = [System.BitConverter]::ToString($hash).Replace('-', '').toLower()
+    } else {
+        $secret =$password 
+    }
+
     $user = 'admin'
 
     Write-Host "Attempting to create credentials for gateway.."
@@ -53,7 +68,7 @@ if (Get-Command docker -errorAction SilentlyContinue)
         Write-Host " password: $secret"
         Write-Host " Write-Output `"$secret`" | faas-cli login --username=$user --password-stdin"
     }
-    
+
     if ($noAuth -Or $n) {
         Write-Host ""
         Write-Host "Disabling basic authentication for gateway.."
@@ -68,9 +83,10 @@ if (Get-Command docker -errorAction SilentlyContinue)
     }
 
     Write-Host "Deploying OpenFaaS core services"
-    docker stack deploy func --compose-file ./docker-compose.yml
+    docker stack deploy func --compose-file ./docker-compose.yml  --orchestrator swarm
 }
 else
 {
     throw "Unable to find docker command, please install Docker (https://www.docker.com/) and retry"
 }
+
