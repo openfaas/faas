@@ -38,6 +38,17 @@ type FunctionScaleResult struct {
 // the minimum replicas metadata
 func (f *FunctionScaler) Scale(functionName string) FunctionScaleResult {
 	start := time.Now()
+
+	if cachedResponse, hit := f.Cache.Get(functionName); hit &&
+		cachedResponse.AvailableReplicas > 0 {
+		return FunctionScaleResult{
+			Error:     nil,
+			Available: true,
+			Found:     true,
+			Duration:  time.Since(start),
+		}
+	}
+
 	queryResponse, err := f.Config.ServiceQuery.GetReplicas(functionName)
 
 	if err != nil {
@@ -90,7 +101,9 @@ func (f *FunctionScaler) Scale(functionName string) FunctionScaleResult {
 
 		for i := 0; i < int(f.Config.MaxPollCount); i++ {
 			queryResponse, err := f.Config.ServiceQuery.GetReplicas(functionName)
-			f.Cache.Set(functionName, queryResponse)
+			if err == nil {
+				f.Cache.Set(functionName, queryResponse)
+			}
 			totalTime := time.Since(start)
 
 			if err != nil {
@@ -104,7 +117,8 @@ func (f *FunctionScaler) Scale(functionName string) FunctionScaleResult {
 
 			if queryResponse.AvailableReplicas > 0 {
 
-				log.Printf("[Scale] function=%s 0 => %d successful - %f seconds", functionName, queryResponse.AvailableReplicas, totalTime.Seconds())
+				log.Printf("[Scale] function=%s 0 => %d successful - %f seconds",
+					functionName, queryResponse.AvailableReplicas, totalTime.Seconds())
 
 				return FunctionScaleResult{
 					Error:     nil,
