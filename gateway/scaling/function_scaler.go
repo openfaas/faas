@@ -57,12 +57,31 @@ func (f *FunctionScaler) Scale(functionName string) FunctionScaleResult {
 			minReplicas = queryResponse.MinReplicas
 		}
 
-		log.Printf("[Scale] function=%s 0 => %d requested", functionName, minReplicas)
+		scaleResult := backoff(func(attempt int) error {
+			queryResponse, err := f.Config.ServiceQuery.GetReplicas(functionName)
+			if err != nil {
+				return err
+			}
 
-		setScaleErr := f.Config.ServiceQuery.SetReplicas(functionName, minReplicas)
-		if setScaleErr != nil {
+			f.Cache.Set(functionName, queryResponse)
+
+			if queryResponse.Replicas > 0 {
+				return nil
+			}
+
+			log.Printf("[Scale %d] function=%s 0 => %d requested", attempt, functionName, minReplicas)
+			setScaleErr := f.Config.ServiceQuery.SetReplicas(functionName, minReplicas)
+			if setScaleErr != nil {
+				return fmt.Errorf("unable to scale function [%s], err: %s", functionName, setScaleErr)
+			}
+
+			return nil
+
+		}, int(f.Config.SetScaleRetries), f.Config.FunctionPollInterval)
+
+		if scaleResult != nil {
 			return FunctionScaleResult{
-				Error:     fmt.Errorf("unable to scale function [%s], err: %s", functionName, err),
+				Error:     scaleResult,
 				Available: false,
 				Found:     true,
 				Duration:  time.Since(start),
@@ -105,4 +124,24 @@ func (f *FunctionScaler) Scale(functionName string) FunctionScaleResult {
 		Found:     true,
 		Duration:  time.Since(start),
 	}
+}
+
+type routine func(attempt int) error
+
+func backoff(r routine, attempts int, interval time.Duration) error {
+	var err error
+
+	for i := 0; i < attempts; i++ {
+		res := r(i)
+		if res != nil {
+			err = res
+
+			log.Printf("Attempt: %d, had error: %s\n", i, res)
+		} else {
+			err = nil
+			break
+		}
+		time.Sleep(interval)
+	}
+	return err
 }
