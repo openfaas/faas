@@ -141,6 +141,7 @@ The Core Contributor group includes:
 - Stefan Prodan (@stefanprodan)
 - Lucas Roesler (@LucasRoesler)
 - Burton Rheutan (@burtonr)
+- Ed Wilde (@ewilde)
 
 The Core Contributors have the ear of the project lead and help with strategy, project maintenance, community management and make a regular commitment of time to the project. Core Contributors attend all project meetings and calls.
 
