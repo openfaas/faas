@@ -30,7 +30,7 @@ For information on branding, the press-kit, registered entities and sponsorship 
 
 Looking for statistics? This project does not use a mono-repo, but is split across several components. Use [Ken Fukuyama's dashboard](https://kenfdev.o6s.io/github-stats-page) to gather accurate counts on contributors, stars and forks across the [GitHub organisation](https://github.com/openfaas).
 
-Incubator projects are not counted in these totals and are hosted under [openfaas-incubator](https://github.com/openfaas) awaiting graduation.
+Incubator projects are not counted in these totals and are hosted under [openfaas-incubator](https://github.com/openfaas-incubator) awaiting graduation.
 
 ### Governance
 
