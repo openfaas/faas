@@ -132,6 +132,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Serverless Computing: More Time for the Code](https://www.golem.de/news/serverless-computing-mehr-zeit-fuer-den-code-1811-137516-5.html) | Valentin Höbel | golem.de | 08-Nov-2018 |
 | [Using GraphQL in OpenFaaS functions](https://padiazg.github.io/graphql-on-opesfaas/) | Patricio Díaz | padiazg.github.io | 03-Nov-2018 |
 | [🇬🇧-use-express-with-openfaas](https://k33g.gitlab.io/articles/2018-10-28-OPENFAAS.html) | Philippe Charrière | GitLab.com | 28-Oct-2018 |
 | [First contact with OpenFaaS](https://k33g.gitlab.io/articles/2018-10-20-OPENFAAS.html) | Philippe Charrière | GitLab.com | 20-Oct-2018 |
