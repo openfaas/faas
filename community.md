@@ -132,6 +132,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [🇬🇧 Use Vert.x with OpenFaaS](https://k33g.gitlab.io/articles/2018-11-11-OPENFAAS.html) | Philippe Charrière | GitLab.com | 11-Nov-2018 |
 | [Serverless Computing: More Time for the Code](https://www.golem.de/news/serverless-computing-mehr-zeit-fuer-den-code-1811-137516-5.html) | Valentin Höbel | golem.de | 08-Nov-2018 |
 | [Using GraphQL in OpenFaaS functions](https://padiazg.github.io/graphql-on-opesfaas/) | Patricio Díaz | padiazg.github.io | 03-Nov-2018 |
 | [🇬🇧-use-express-with-openfaas](https://k33g.gitlab.io/articles/2018-10-28-OPENFAAS.html) | Philippe Charrière | GitLab.com | 28-Oct-2018 |
@@ -293,6 +294,7 @@ You can also find cool projects or submit your own to the [faas-and-furious orga
 
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| [OpenFaas Java 8 + Vert.x Template](https://gitlab.com/openfaas-experiments/java-8-vert-x-template) | Philippe Charrière | gitlab.com | 11-Nov-2018 |
 | [Faasflow - faas workflow as a function](https://github.com/s8sg/faasflow) | Swarvanu Sengupta | github.com | 11-Nov-2018 |
 | [OpenFaaS Crystal Template](https://github.com/TPei/crystal_openfaas) | Thomas Peikert | github.com | 26-Oct-2018 |
 | [OpenFaaS Terraform Provider](https://github.com/ewilde/terraform-provider-openfaas) | Edward Wilde | github.com | 12-Oct-2018 |
