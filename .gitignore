@@ -7,3 +7,4 @@ fwatchdog-armhf
 certifier
 .editorconfig
 /contrib/staging/
+**/*.sha256
