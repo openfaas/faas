@@ -34,6 +34,9 @@ after_success:
 
         fi
 
+before_deploy:
+  - ./ci/hashgen.sh
+
 deploy:
   provider: releases
   api_key:
@@ -43,6 +46,10 @@ deploy:
   - ./watchdog/fwatchdog-armhf
   - ./watchdog/fwatchdog-arm64
   - ./watchdog/fwatchdog.exe
+  - ./watchdog/fwatchdog.sha256
+  - ./watchdog/fwatchdog-armhf.sha256
+  - ./watchdog/fwatchdog-arm64.sha256
+  - ./watchdog/fwatchdog.exe.sha256
   skip_cleanup: true
   on:
     tags: true
