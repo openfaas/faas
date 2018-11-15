@@ -99,3 +99,14 @@ func TestBackingOff(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestScaledUpFrom1(t *testing.T) {
+	currentReplicas := uint64(1)
+	maxReplicas := uint64(5)
+	scalingFactor := uint64(30)
+	newReplicas := CalculateReplicas("firing", currentReplicas, maxReplicas, DefaultMinReplicas, scalingFactor)
+	if newReplicas == currentReplicas {
+		t.Log("Expected newReplicas > currentReplica")
+		t.Fail()
+	}
+}
