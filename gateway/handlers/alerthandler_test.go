@@ -54,8 +54,8 @@ func TestInitialScale(t *testing.T) {
 	minReplicas := uint64(1)
 	scalingFactor := uint64(20)
 	newReplicas := CalculateReplicas("firing", scaling.DefaultMinReplicas, scaling.DefaultMaxReplicas, minReplicas, scalingFactor)
-	if newReplicas != 4 {
-		t.Log("Expected the increment to equal 4")
+	if newReplicas != 5 {
+		t.Log("Expected the increment to equal 5")
 		t.Fail()
 	}
 }
@@ -104,7 +104,7 @@ func TestScaledUpFrom1(t *testing.T) {
 	currentReplicas := uint64(1)
 	maxReplicas := uint64(5)
 	scalingFactor := uint64(30)
-	newReplicas := CalculateReplicas("firing", currentReplicas, maxReplicas, DefaultMinReplicas, scalingFactor)
+	newReplicas := CalculateReplicas("firing", currentReplicas, maxReplicas, scaling.DefaultMinReplicas, scalingFactor)
 	if newReplicas == currentReplicas {
 		t.Log("Expected newReplicas > currentReplica")
 		t.Fail()
