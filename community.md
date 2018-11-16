@@ -91,6 +91,7 @@ Key:
 | [VMUG Ireland - Serverless, OpenFaaS and GitOps on Kubernetes](https://community.vmug.com/events/event-description?CalendarEventKey=081889a6-3ea0-451b-b5df-e3985fbe8256&CommunityKey=8c80c6de-4f79-4717-b7d1-55a43ba44624) | John McCabe | Dublin, Ireland | 4-Oct-2018 |
 | [Serverlessconf Tokyo 2018 OpenFaaS Workshop](http://tokyo.serverlessconf.io/workshops.html) | Ken Fukuyama | Tokyo, JP | 28-Sep-2018 |
 | [Building Cloud-Native Apps - FaaS: The Swiss Army Knife of Cloud Native](https://www.meetup.com/Cloud_Native_Meetup/events/254232936/) | James McAfee | Sydney, Australia | 12-Sep-2018 |
+| [ Creating Your First Serverless Function with OpenFaaS - VMworld 2018](https://www.youtube.com/watch?v=xiLkq1zQldE&t) | Kendrick Coleman | Las Vegas, NV, USA |28-Aug-2018 |
 | [ John Callaway: .NET Core on a Raspberry Pi Cluster with Docker and OpenFaaS](https://secure.meetup.com/register/?ctx=ref) | John Callaway | Orlando, FL, USA |16-Aug-2018 |
 | [Cloud Native Glasgow - Serverless on Kubernetes](https://www.meetup.com/CloudNativeGlasgow/events/251913059/) | John McCabe | Glasgow, UK | 5-July-2018 |
 | [Opsview & Kubernetes (incl. OpenFaaS)](https://www.meetup.com/Birmingham-digital-development-Meetup/events/250680464/) | Opsview | Birmingham, UK | 28-June-2018 |
