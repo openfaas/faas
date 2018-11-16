@@ -18,7 +18,7 @@ COPY server.go      .
 
 RUN GOARM=7 CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gateway .
 
-FROM alpine:3.7
+FROM alpine:3.8
 WORKDIR /root/
 
 EXPOSE 8080

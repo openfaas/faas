@@ -4,8 +4,8 @@ ARG GIT_COMMIT_MESSAGE
 ARG VERSION='dev'
 
 RUN curl -sSfL https://github.com/alexellis/license-check/releases/download/0.2.2/license-check \
-      > /usr/bin/license-check \
-      && chmod +x /usr/bin/license-check
+    > /usr/bin/license-check \
+    && chmod +x /usr/bin/license-check
 
 WORKDIR /go/src/github.com/openfaas/faas/gateway
 
@@ -28,19 +28,19 @@ RUN license-check -path ./ --verbose=false "Alex Ellis" "OpenFaaS Project" "Open
     && test -z "$(gofmt -l $(find . -type f -name '*.go' -not -path "./vendor/*"))" \
     && go test $(go list ./... | grep -v integration | grep -v /vendor/ | grep -v /template/) -cover \
     && CGO_ENABLED=0 GOOS=linux go build --ldflags "-s -w \
-     -X github.com/openfaas/faas/gateway/version.GitCommitSHA=${GIT_COMMIT_SHA}\
-     -X \"github.com/openfaas/faas/gateway/version.GitCommitMessage=${GIT_COMMIT_MESSAGE}\"\
-     -X github.com/openfaas/faas/gateway/version.Version=${VERSION}" \
+    -X github.com/openfaas/faas/gateway/version.GitCommitSHA=${GIT_COMMIT_SHA}\
+    -X \"github.com/openfaas/faas/gateway/version.GitCommitMessage=${GIT_COMMIT_MESSAGE}\"\
+    -X github.com/openfaas/faas/gateway/version.Version=${VERSION}" \
     -a -installsuffix cgo -o gateway .
 
-FROM alpine:3.7
+FROM alpine:3.8
 
 LABEL org.label-schema.license="MIT" \
-      org.label-schema.vcs-url="https://github.com/openfaas/faas" \
-      org.label-schema.vcs-type="Git" \
-      org.label-schema.name="openfaas/faas" \
-      org.label-schema.vendor="openfaas" \
-      org.label-schema.docker.schema-version="1.0"
+    org.label-schema.vcs-url="https://github.com/openfaas/faas" \
+    org.label-schema.vcs-type="Git" \
+    org.label-schema.name="openfaas/faas" \
+    org.label-schema.vendor="openfaas" \
+    org.label-schema.docker.schema-version="1.0"
 
 RUN addgroup -S app \
     && adduser -S -g app app

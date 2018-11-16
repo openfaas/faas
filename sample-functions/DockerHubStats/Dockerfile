@@ -13,7 +13,7 @@ COPY . /go/src/github.com/openfaas/faas/sample-functions/DockerHubStats
 
 RUN make install
 
-FROM alpine:3.7
+FROM alpine:3.8
 
 # Needed to reach the hub
 RUN apk --no-cache add ca-certificates 
