@@ -20,7 +20,7 @@ COPY server.go      .
 #RUN license-check -path ./ --verbose=false \
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gateway .
 
-FROM alpine:3.7
+FROM alpine:3.8
 
 RUN addgroup -S app \
     && adduser -S -g app app

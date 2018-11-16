@@ -1,4 +1,4 @@
-FROM alpine:3.7 as builder
+FROM alpine:3.8 as builder
 RUN apk add --no-cache curl \
     && curl -SL https://github.com/openfaas/faas/releases/download/0.9.6/fwatchdog > /usr/bin/fwatchdog \
     && chmod +x /usr/bin/fwatchdog \
@@ -7,12 +7,12 @@ RUN apk add --no-cache curl \
 WORKDIR /root/
 
 RUN apk add --no-cache gcc \
-                       musl-dev
+    musl-dev
 COPY main.c     .
 
 RUN gcc main.c -static -o /main \
- && chmod +x /main \
- && /main
+    && chmod +x /main \
+    && /main
 
 FROM scratch
 

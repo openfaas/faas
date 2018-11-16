@@ -142,7 +142,7 @@ $ faas-cli build -f callme.yml
  Building: alexellis/callme:armhf with node template. Please wait..
  docker build -t alexellis/callme:armhf .
  Sending build context to Docker daemon  8.704kB
- Step 1/16 : FROM alpine:3.7
+ Step 1/16 : FROM alpine:3.8
   ---> 16566b7ed19e
 ...
 

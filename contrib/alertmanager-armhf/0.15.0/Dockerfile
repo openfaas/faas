@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.8
 WORKDIR /root
 RUN apk add --update libarchive-tools
 ADD https://github.com/prometheus/alertmanager/releases/download/v0.15.0/alertmanager-0.15.0.linux-armv7.tar.gz /root/
@@ -14,4 +14,4 @@ WORKDIR    /alertmanager
 
 ENTRYPOINT [ "/bin/alertmanager" ]
 CMD        [ "--config.file=/etc/alertmanager/alertmanager.yml", \
-             "--storage.path=/alertmanager" ]
+    "--storage.path=/alertmanager" ]
