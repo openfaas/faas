@@ -26,4 +26,7 @@ type HandlerSet struct {
 
 	// InfoHandler provides version and build info
 	InfoHandler http.HandlerFunc
+
+	// SecretHandler allows secrets to be managed
+	SecretHandler http.HandlerFunc
 }

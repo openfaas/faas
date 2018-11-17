@@ -89,6 +89,7 @@ func main() {
 	faasHandlers.UpdateFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
 	faasHandlers.QueryFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
 	faasHandlers.InfoHandler = handlers.MakeInfoHandler(handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer))
+	faasHandlers.SecretHandler = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
 
 	alertHandler := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL, credentials)
 	faasHandlers.Alert = handlers.MakeAlertHandler(alertHandler)
@@ -127,6 +128,8 @@ func main() {
 			auth.DecorateWithBasicAuth(faasHandlers.InfoHandler, credentials)
 		faasHandlers.AsyncReport =
 			auth.DecorateWithBasicAuth(faasHandlers.AsyncReport, credentials)
+		faasHandlers.SecretHandler =
+			auth.DecorateWithBasicAuth(faasHandlers.SecretHandler, credentials)
 	}
 
 	r := mux.NewRouter()
@@ -159,6 +162,8 @@ func main() {
 	r.HandleFunc("/system/functions", faasHandlers.DeleteFunction).Methods(http.MethodDelete)
 	r.HandleFunc("/system/functions", faasHandlers.UpdateFunction).Methods(http.MethodPut)
 	r.HandleFunc("/system/scale-function/{name:[-a-zA-Z_0-9]+}", faasHandlers.ScaleFunction).Methods(http.MethodPost)
+
+	r.HandleFunc("/system/secrets", faasHandlers.SecretHandler).Methods(http.MethodGet, http.MethodPut, http.MethodPost)
 
 	if faasHandlers.QueuedProxy != nil {
 		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}/", faasHandlers.QueuedProxy).Methods(http.MethodPost)
