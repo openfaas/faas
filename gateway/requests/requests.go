@@ -90,3 +90,8 @@ type AsyncReport struct {
 type DeleteFunctionRequest struct {
 	FunctionName string `json:"functionName"`
 }
+
+// SecretRequest create, update a secret
+type SecretRequest struct {
+	Secrets *map[string]string `json:"secrets"`
+}

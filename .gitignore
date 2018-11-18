@@ -8,3 +8,4 @@ certifier
 .editorconfig
 /contrib/staging/
 **/*.sha256
+.vagrant
