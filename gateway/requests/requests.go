@@ -91,7 +91,19 @@ type DeleteFunctionRequest struct {
 	FunctionName string `json:"functionName"`
 }
 
-// SecretRequest create, update a secret
-type SecretRequest struct {
-	Secrets *map[string]string `json:"secrets"`
+// CreateSecretRequest create a secret w/ annotations
+type CreateSecretRequest struct {
+	Secret Secret `json:"secret"`
+}
+
+// DeleteSecretRequest remote a secret by name
+type DeleteSecretRequest struct {
+	SecretName string `json:"secretName"`
+}
+
+// Secret schema use Value only in write-only http verbs
+type Secret struct {
+	Name        string             `json:"name"`
+	Value       string             `json:"value"` // write-only
+	Annotations *map[string]string `json:"annotations"`
 }
