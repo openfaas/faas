@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math"
 	"net/http"
 
 	"github.com/openfaas/faas/gateway/requests"
@@ -97,7 +98,7 @@ func scaleService(alert requests.PrometheusInnerAlert, service scaling.ServiceQu
 // CalculateReplicas decides what replica count to set depending on current/desired amount
 func CalculateReplicas(status string, currentReplicas uint64, maxReplicas uint64, minReplicas uint64, scalingFactor uint64) uint64 {
 	newReplicas := currentReplicas
-	step := uint64((float64(maxReplicas) / 100) * float64(scalingFactor))
+	step := uint64(math.Ceil(float64(maxReplicas) / 100 * float64(scalingFactor)))
 
 	if status == "firing" && step > 0 {
 		if currentReplicas+step > maxReplicas {

@@ -110,3 +110,14 @@ func TestScaledUpFrom1(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestScaledUpWithSmallParam(t *testing.T) {
+	currentReplicas := uint64(1)
+	maxReplicas := uint64(4)
+	scalingFactor := uint64(1)
+	newReplicas := CalculateReplicas("firing", currentReplicas, maxReplicas, scaling.DefaultMinReplicas, scalingFactor)
+	if newReplicas == currentReplicas {
+		t.Log("Expected newReplicas > currentReplica")
+		t.Fail()
+	}
+}
