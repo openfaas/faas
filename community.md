@@ -79,6 +79,7 @@ Key:
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [KubeCon + CloudNativeCon: Digital Transformation of Vision Banco Paraguay with Serverless Functions](https://sched.co/GraO) | Alex Ellis & Patricio Diaz | Seattle, WA | 13-Dec-2018 |
+| [Serverless com OpenFaaS e PHP @ PHP Conference Brazil](https://phpconference.com.br) | Fernando Silva | Porto Alegre, BR | 07-Dec-2018 |
 | [The FaaS & The Furious](https://www.meetup.com/CloudAustin/events/gxwbkpyxpbbc/) | Burton Rheutan | Austin, TX | 27-Nov-2018 |
 | [GOTO Copenhagen: Serverless Beyond the Hype](https://gotocph.com/2018/sessions/592) | Alex Ellis | Copenhagen, DK | 19-Nov-2018 |
 | [OpenFaaS workshop @ Capitole du Libre](https://2018.capitoledulibre.org/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) <br /> [Adrien Blind](https://twitter.com/adrienBlind) <br /> [Ludovic Piot](https://twitter.com/lpiot)| Toulouse, France | 18-Nov-2018 |
