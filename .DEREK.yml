@@ -17,5 +17,6 @@ maintainers:
 features:
  - dco_check
  - comments
+ - pr_description_required
 
 contributing_url: https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md
