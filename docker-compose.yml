@@ -18,7 +18,7 @@ services:
             direct_functions_suffix: ""
             basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
-            scale_from_zero: "false"
+            scale_from_zero: "true"
         deploy:
             resources:
                 # limits:   # Enable if you want to limit memory usage
