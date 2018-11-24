@@ -137,9 +137,11 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Micro-tutorial: use Redis & Node.js with OpenFaaS](https://gist.github.com/alexellis/e05a7b573ae22b209f0214d5766ff07e) | Alex Ellis | github.com | 24-Nov-2018 |
 | [🇬🇧 Use Vert.x with OpenFaaS](https://k33g.gitlab.io/articles/2018-11-11-OPENFAAS.html) | Philippe Charrière | GitLab.com | 11-Nov-2018 |
 | [Serverless Computing: More Time for the Code](https://www.golem.de/news/serverless-computing-mehr-zeit-fuer-den-code-1811-137516-5.html) | Valentin Höbel | golem.de | 08-Nov-2018 |
 | [Using GraphQL in OpenFaaS functions](https://padiazg.github.io/graphql-on-opesfaas/) | Patricio Díaz | padiazg.github.io | 03-Nov-2018 |
+| [Micro-tutorial: Learn how to run OpenFaaS Function Store functions on Knative](https://gist.github.com/alexellis/5c1587cf24b634f940764427d50719bf) | Alex Ellis | github.com | 30-Oct-2018 |
 | [🇬🇧-use-express-with-openfaas](https://k33g.gitlab.io/articles/2018-10-28-OPENFAAS.html) | Philippe Charrière | GitLab.com | 28-Oct-2018 |
 | [First contact with OpenFaaS](https://k33g.gitlab.io/articles/2018-10-20-OPENFAAS.html) | Philippe Charrière | GitLab.com | 20-Oct-2018 |
 | [ACI Information Group: OpenFaaS among wish-list items for AWS Lambda](https://searchaws.techtarget.com/opinion/Lambda-support-for-OpenFaaS-among-wish-list-items) | Chris Moyer | techtarget.com | 11-Oct-2018 |
