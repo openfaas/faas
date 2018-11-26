@@ -85,6 +85,7 @@ Key:
 | [OpenFaaS workshop @ Capitole du Libre](https://2018.capitoledulibre.org/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) <br /> [Adrien Blind](https://twitter.com/adrienBlind) <br /> [Ludovic Piot](https://twitter.com/lpiot)| Toulouse, France | 18-Nov-2018 |
 | [OpenFaas on Kubernetes](https://www.meetup.com/kubernetes-openshift-India-Meetup/events/255794614) | Vivek Singh| Bangalore, IN | 17-Nov-2018 |
 | [🚀 2+ years of feedback @ Capitole du Libre](https://2018.capitoledulibre.org/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) <br /> [Adrien Blind](https://twitter.com/adrienBlind) <br /> [Ludovic Piot](https://twitter.com/lpiot) | Toulouse, France | 17-Nov-2018 |
+| [Functions as a Service - The Easy Way](https://www.istacon.org) | [Ivana Yovcheva](https://twitter.com/ivanabyov) | Sofia, Bulgaria | 15-Nov-2018 |
 | [OpenFaaS : a serverless framework on top of Docker and Kubernetes @ DevOpsDDay](https://2018.devops-dday.com/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Marseille, France | 15-Nov-2018 |
 | [ Serverless Computing London: FaaS and Furious – 0 to Serverless in 60 Seconds, Anywhere](https://serverlesscomputing.london/sessions/faas-furious-0-serverless-60-seconds-anywhere/) | Alex Ellis | London, UK | 12-Nov-2018 |
 | [Open Source Summit Europe: Introducing OpenFaaS Cloud, a Developer-Friendly CI/CD Pipeline for Serverless](https://osseu18.sched.com/event/FxXx/introducing-openfaas-cloud-a-developer-friendly-cicd-pipeline-for-serverless-alex-ellis-openfaas-project-vmware) | Alex Ellis | Edinburgh, Scotland | 22-Oct-2018 |
@@ -93,6 +94,8 @@ Key:
 | [DevOpenSpace - Mühelos Serverless mit GitOps](https://github.com/fpommerening/DevOpenSpace2018) | Frank Pommerening | Leipzig, Germany | 12-Oct-2018 |
 | [ScotlandPHP - Starting your Serverless Journey with OpenFaaS](https://conference.scotlandphp.co.uk/) | John McCabe | Edinburgh, Scotland | 6-Oct-2018 |
 | [VMUG Ireland - Serverless, OpenFaaS and GitOps on Kubernetes](https://community.vmug.com/events/event-description?CalendarEventKey=081889a6-3ea0-451b-b5df-e3985fbe8256&CommunityKey=8c80c6de-4f79-4717-b7d1-55a43ba44624) | John McCabe | Dublin, Ireland | 4-Oct-2018 |
+| [Writing Serverless functions in Python](https://www.openfest.org/2018/en/) | [Ivana Yovcheva](https://twitter.com/ivanabyov) | Sofia, Bulgaria | 3-Nov-2018 |
+| [Serverless functions made simple with Kubernetes (lightning talk)](https://www.openfest.org/2018/en/) | [Ivana Yovcheva](https://twitter.com/ivanabyov) | Sofia, Bulgaria | 3-Nov-2018 |
 | [Serverlessconf Tokyo 2018 OpenFaaS Workshop](http://tokyo.serverlessconf.io/workshops.html) | Ken Fukuyama | Tokyo, JP | 28-Sep-2018 |
 | [Building Cloud-Native Apps - FaaS: The Swiss Army Knife of Cloud Native](https://www.meetup.com/Cloud_Native_Meetup/events/254232936/) | James McAfee | Sydney, Australia | 12-Sep-2018 |
 | [ Creating Your First Serverless Function with OpenFaaS - VMworld 2018](https://www.youtube.com/watch?v=xiLkq1zQldE&t) | Kendrick Coleman | Las Vegas, NV, USA |28-Aug-2018 |
