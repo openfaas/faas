@@ -140,6 +140,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [.Net Core – OpenFaas – MongoDB](https://marcussmallman.io/2018/11/27/net-core-openfaas-mongodb/) | Marcus Smallman | marcussmallman.io | 28-Nov-2018 |
 | [Micro-tutorial: use Redis & Node.js with OpenFaaS](https://gist.github.com/alexellis/e05a7b573ae22b209f0214d5766ff07e) | Alex Ellis | github.com | 24-Nov-2018 |
 | [🇬🇧 Use Vert.x with OpenFaaS](https://k33g.gitlab.io/articles/2018-11-11-OPENFAAS.html) | Philippe Charrière | GitLab.com | 11-Nov-2018 |
 | [Serverless Computing: More Time for the Code](https://www.golem.de/news/serverless-computing-mehr-zeit-fuer-den-code-1811-137516-5.html) | Valentin Höbel | golem.de | 08-Nov-2018 |
@@ -304,6 +305,7 @@ You can also find cool projects or submit your own to the [faas-and-furious orga
 
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| [OpenFaas CSharp MongoDB Template](https://github.com/Marcus-Smallman/csharp-kestrel-mongo) | Marcus Smallman | github.com | 28-Nov-2018 |
 | [OpenFaas Java 8 + Vert.x Template](https://gitlab.com/openfaas-experiments/java-8-vert-x-template) | Philippe Charrière | gitlab.com | 11-Nov-2018 |
 | [Faasflow - faas workflow as a function](https://github.com/s8sg/faasflow) | Swarvanu Sengupta | github.com | 11-Nov-2018 |
 | [OpenFaaS Crystal Template](https://github.com/TPei/crystal_openfaas) | Thomas Peikert | github.com | 26-Oct-2018 |
