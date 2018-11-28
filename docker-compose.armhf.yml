@@ -35,7 +35,7 @@ services:
 
     # Docker Swarm provider
     faas-swarm:
-        image:  openfaas/faas-swarm:0.4.4-armhf
+        image:  openfaas/faas-swarm:0.5.0-armhf
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
         networks:
