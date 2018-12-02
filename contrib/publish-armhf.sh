@@ -2,6 +2,7 @@
 
 declare -a repos=("openfaas-incubator/openfaas-operator" "openfaas-incubator/faas-idler" "openfaas/faas" "openfaas/faas-swarm" "openfaas/nats-queue-worker" "openfaas/faas-netes" "openfaas/faas-cli")
 HERE=`pwd`
+ARCH=$(uname -m)
 
 #if [ ! -z "$CACHED" ]; then
     rm -rf staging || :
@@ -24,6 +25,14 @@ get_repo_name() {
     fi
 }
 
+if [ "$ARCH" = "armv7l" ] ; then
+   ARM_VERSION="armhf"
+elif [ "$ARCH" = "aarch64" ] ; then
+   ARM_VERSION="arm64"
+fi
+
+echo "Target architecture: ${ARM_VERSION}"
+
 for i in "${repos[@]}"
 do
    cd $HERE
@@ -36,11 +45,11 @@ do
    echo "Latest release: $TAG"
 
    REPOSITORY=$(get_repo_name $i)
-   TAG_PRESENT=$(curl -s "https://hub.docker.com/v2/repositories/${REPOSITORY}/tags/${TAG}-armhf/" | grep -Po '"detail": *"[^"]*"' | grep -o 'Not found')
+   TAG_PRESENT=$(curl -s "https://hub.docker.com/v2/repositories/${REPOSITORY}/tags/${TAG}-${ARM_VERSION}/" | grep -Po '"detail": *"[^"]*"' | grep -o 'Not found')
 
    if [ "$TAG_PRESENT" = "Not found" ]; then
-       make ci-armhf-build ci-armhf-push
+       make ci-${ARM_VERSION}-build ci-${ARM_VERSION}-push
    else
-       echo "Image is already present: ${REPOSITORY}:${TAG}-armhf"
+       echo "Image is already present: ${REPOSITORY}:${TAG}-${ARM_VERSION}"
    fi
 done
