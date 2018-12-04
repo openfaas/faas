@@ -253,6 +253,87 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+  '/system/secrets':
+    get:
+      summary: 'Get a list of secret names and metadata from the provider'
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: List of submitted secrets.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ListSecretsResponse'
+    post:
+      summary: Create a new secret.
+      description: ''
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: A new secret to create
+        required: true
+        schema:
+          $ref: '#/definitions/SecretInfo'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    put:
+      summary: Update a secret.
+      description: ''
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Secret to update
+        required: true
+        schema:
+          $ref: '#/definitions/SecretInfo'
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    delete:
+      summary: Remove a secret.
+      description: ''
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Secret to delete
+        required: true
+        schema:
+          $ref: '#/definitions/DeleteSecretRequest'
+      responses:
+        '204':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
   '/system/info':
     get:
       summary: Get info such as provider version number and provider orchestrator

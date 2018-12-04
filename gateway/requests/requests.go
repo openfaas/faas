@@ -91,9 +91,15 @@ type DeleteFunctionRequest struct {
 	FunctionName string `json:"functionName"`
 }
 
-// CreateSecretRequest create a secret w/ annotations
-type CreateSecretRequest struct {
-	Secret Secret `json:"secret"`
+// SecretInfo payload for PUT,POST secret w/ annotations
+type SecretInfo struct {
+	Secret      Secret            `json:"secret"`
+	Annotations map[string]string `json:"annotations,omitempty"`
+}
+
+// ListSecretsResponse GET response for secrets (value omitted)
+type ListSecretsResponse struct {
+	Secrets []SecretInfo `json:"secrets"`
 }
 
 // DeleteSecretRequest remote a secret by name
@@ -101,9 +107,8 @@ type DeleteSecretRequest struct {
 	SecretName string `json:"secretName"`
 }
 
-// Secret schema use Value only in write-only http verbs
+// Secret schema use Value only in PUT,POST http verbs
 type Secret struct {
-	Name        string             `json:"name"`
-	Value       string             `json:"value"` // write-only
-	Annotations *map[string]string `json:"annotations"`
+	Name  string `json:"name"`
+	Value string `json:"value,omitempty"` // write-only, base64
 }
