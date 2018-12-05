@@ -105,7 +105,7 @@ func TestScaledUpFrom1(t *testing.T) {
 	maxReplicas := uint64(5)
 	scalingFactor := uint64(30)
 	newReplicas := CalculateReplicas("firing", currentReplicas, maxReplicas, scaling.DefaultMinReplicas, scalingFactor)
-	if newReplicas == currentReplicas {
+	if newReplicas <= currentReplicas {
 		t.Log("Expected newReplicas > currentReplica")
 		t.Fail()
 	}
@@ -116,7 +116,7 @@ func TestScaledUpWithSmallParam(t *testing.T) {
 	maxReplicas := uint64(4)
 	scalingFactor := uint64(1)
 	newReplicas := CalculateReplicas("firing", currentReplicas, maxReplicas, scaling.DefaultMinReplicas, scalingFactor)
-	if newReplicas == currentReplicas {
+	if newReplicas <= currentReplicas {
 		t.Log("Expected newReplicas > currentReplica")
 		t.Fail()
 	}
