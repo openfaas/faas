@@ -71,6 +71,7 @@ The gateway can be configured through the following environment variables:
 | `faas_nats_port`    | Port for NATS service. Requrired for asynchronous mode |
 | `faas_prometheus_host`         | Host to connect to Prometheus. Default: `"prometheus"` |
 | `faas_promethus_port`         | Port to connect to Prometheus. Default: `9090` |
+| `metrics_endpoint`            | Gateway metrics endpoint scraped by Prometheus. Default: `/metrics` |
 | `direct_functions`            | `true` or `false` -  functions are invoked directly over overlay network by DNS name without passing through the provider |
 | `direct_functions_suffix`     | Provide a DNS suffix for invoking functions directly over overlay network  |
 | `basic_auth`              | Set to `true` or `false` to enable embedded basic auth on the /system and /ui endpoints (recommended) |
