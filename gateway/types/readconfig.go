@@ -102,6 +102,12 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 		cfg.PrometheusHost = prometheusHost
 	}
 
+	metricsEndpoint := hasEnv.Getenv("metrics_endpoint")
+	if len(metricsEndpoint) == 0 {
+		metricsEndpoint = "/metrics"
+	}
+	cfg.MetricsEndpoint = metricsEndpoint
+
 	cfg.DirectFunctions = parseBoolValue(hasEnv.Getenv("direct_functions"))
 	cfg.DirectFunctionsSuffix = hasEnv.Getenv("direct_functions_suffix")
 
@@ -143,6 +149,9 @@ type GatewayConfig struct {
 
 	// Port to connect to Prometheus.
 	PrometheusPort int
+
+	// Metrics endpoint that is going to be scraped by Prometheus
+	MetricsEndpoint string
 
 	// If set to true we will access upstream functions directly rather than through the upstream provider
 	DirectFunctions bool

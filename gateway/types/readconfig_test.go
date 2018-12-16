@@ -221,6 +221,32 @@ func TestRead_PrometheusDefaults(t *testing.T) {
 	}
 }
 
+func TestRead_MetricsEndpointNonDefaults(t *testing.T) {
+	defaults := NewEnvBucket()
+	defaults.Setenv("metrics_endpoint", "/server/metrics")
+	readConfig := ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.MetricsEndpoint != "/server/metrics" {
+		t.Logf("config.MetricsEndpoint, want: %s, got: %s\n", "/server/metrics", config.MetricsEndpoint)
+		t.Fail()
+	}
+}
+
+func TestRead_MetricsEndpointDefaults(t *testing.T) {
+	defaults := NewEnvBucket()
+
+	readConfig := ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.MetricsEndpoint != "/metrics" {
+		t.Logf("config.MetricsEndpoint, want: %s, got: %s\n", "/metrics", config.MetricsEndpoint)
+		t.Fail()
+	}
+}
+
 func TestRead_BasicAuthDefaults(t *testing.T) {
 	defaults := NewEnvBucket()
 

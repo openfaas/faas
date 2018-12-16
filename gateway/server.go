@@ -182,7 +182,7 @@ func main() {
 	}
 
 	metricsHandler := metrics.PrometheusHandler()
-	r.Handle("/metrics", metricsHandler)
+	r.Handle(config.MetricsEndpoint, metricsHandler)
 	r.HandleFunc("/healthz", handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)).Methods(http.MethodGet)
 
 	r.Handle("/", http.RedirectHandler("/ui/", http.StatusMovedPermanently)).Methods(http.MethodGet)
