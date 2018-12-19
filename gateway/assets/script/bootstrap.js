@@ -185,27 +185,25 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
 
             var cl = function (previousItems) {
                 $http.get("../system/functions").then(function (response) {
-                    if (response == null || response.data == null) {
-                        return
-                    }
+                    if (response && response.data) {
+                        if (previousItems.length != response.data.length) {
+                            $scope.functions = response.data;
 
-                    if (previousItems.length != response.data.length) {
-                        $scope.functions = response.data;
-
-                        // update the selected function object because the newly fetched object from the API becomes a different object
-                        var filteredSelectedFunction = $filter('filter')($scope.functions, { name: $scope.selectedFunction.name }, true);
-                        if (filteredSelectedFunction && filteredSelectedFunction.length > 0) {
-                            $scope.selectedFunction = filteredSelectedFunction[0];
+                            // update the selected function object because the newly fetched object from the API becomes a different object
+                            var filteredSelectedFunction = $filter('filter')($scope.functions, { name: $scope.selectedFunction.name }, true);
+                            if (filteredSelectedFunction && filteredSelectedFunction.length > 0) {
+                                $scope.selectedFunction = filteredSelectedFunction[0];
+                            } else {
+                                $scope.selectedFunction = undefined;
+                            }
                         } else {
-                            $scope.selectedFunction = undefined;
-                        }
-                    } else {
-                        for (var i = 0; i < $scope.functions.length; i++) {
-                            for (var j = 0; j < response.data.length; j++) {
-                                if ($scope.functions[i].name == response.data[j].name) {
-                                    $scope.functions[i].image = response.data[j].image;
-                                    $scope.functions[i].replicas = response.data[j].replicas;
-                                    $scope.functions[i].invocationCount = response.data[j].invocationCount;
+                            for (var i = 0; i < $scope.functions.length; i++) {
+                                for (var j = 0; j < response.data.length; j++) {
+                                    if ($scope.functions[i].name == response.data[j].name) {
+                                        $scope.functions[i].image = response.data[j].image;
+                                        $scope.functions[i].replicas = response.data[j].replicas;
+                                        $scope.functions[i].invocationCount = response.data[j].invocationCount;
+                                    }
                                 }
                             }
                         }
