@@ -109,10 +109,7 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 	var timer *time.Timer
 
 	if config.execTimeout > 0*time.Second {
-		timer = time.NewTimer(config.execTimeout)
-
-		go func() {
-			<-timer.C
+		timer = time.AfterFunc(config.execTimeout, func() {
 			log.Printf("Killing process: %s\n", config.faasProcess)
 			if targetCmd != nil && targetCmd.Process != nil {
 				ri.headerWritten = true
@@ -125,7 +122,7 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 					log.Printf("Killed process: %s - error %s\n", config.faasProcess, val.Error())
 				}
 			}
-		}()
+		})
 	}
 
 	// Write to pipe in separate go-routine to prevent blocking
