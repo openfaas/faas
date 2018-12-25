@@ -15,9 +15,9 @@ services:
             faas_nats_port: 4222
             direct_functions: "true"    # Functions are invoked directly over the overlay network
             direct_functions_suffix: ""
-            basic_auth: "false"
+            basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
-            scale_from_zero: "false"
+            scale_from_zero: "true"
         deploy:
             resources:
                 # limits:   # uncomment to enable limits
@@ -32,6 +32,10 @@ services:
             placement:
                 constraints:
                     - 'node.platform.os == linux'
+        secrets:
+            - basic-auth-user
+            - basic-auth-password
+
 
     # Docker Swarm provider
     faas-swarm:
@@ -44,7 +48,8 @@ services:
             read_timeout:  "305s"   # set both here, and on your functions
             write_timeout: "305s"   # set both here, and on your functions
             DOCKER_API_VERSION: "1.30"
-            basic_auth: "false"
+            basic_auth: "${BASIC_AUTH:-true}"
+            secret_mount_path: "/run/secrets/"
         deploy:
             placement:
                 constraints:
@@ -60,6 +65,10 @@ services:
                 delay: 5s
                 max_attempts: 20
                 window: 380s
+        secrets:
+            - basic-auth-user
+            - basic-auth-password
+
 
     nats:
         image: nats-streaming:0.11.2
@@ -176,3 +185,10 @@ networks:
         attachable: true
         labels:
           - "openfaas=true"
+
+secrets:
+    basic-auth-user:
+        external: true
+    basic-auth-password:
+        external: true
+
