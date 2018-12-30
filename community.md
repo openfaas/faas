@@ -71,6 +71,23 @@ Key:
 * Incubation - actively being developed, but not stable
 * Inception - more work needed. May work in happy path scenario, but unlikely to be suitable for production
 
+### 2019
+
+#### Events in 2019
+[Back to top](#openfaas-community)
+
+| Event name and description                                          | Speaker      | Location | Date        |
+|---------------------------------------------------------------------|--------------|----------|-------------|
+| [Serverless Architecture Conf: OpenFaaS - Keeping Serverless Simple](https://serverless-architecture.io/serverless-platforms-technology) | John McCabe | The Hague, Netherlands | 9-Apr-2019 |
+
+
+#### Blog posts and write-ups 2019
+[Back to top](#openfaas-community)
+
+| Blog/repo name and description                                          | Author       | Site     | Date        |
+|---------------------------------------------------------------------|--------------|----------|-------------|
+| | | | |
+
 ### 2018
 
 #### Events in 2018
