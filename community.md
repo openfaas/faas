@@ -157,6 +157,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Tracing Your Functions](http://www.nohuddleoffense.de/2018/12/27/tracing-your-functions/) | Thijs Metsch | nohuddleoffense.de | 27-Dec-2018 |
 | [Writing Serverless Functions in Crystal](https://medium.com/@t_pei/serverless-crystal-14b22ecc4352) | Thomas Peikert | medium.com | 05-Dec-2018 |
 | [.Net Core – OpenFaas – MongoDB](https://marcussmallman.io/2018/11/27/net-core-openfaas-mongodb/) | Marcus Smallman | marcussmallman.io | 28-Nov-2018 |
 | [Micro-tutorial: use Redis & Node.js with OpenFaaS](https://gist.github.com/alexellis/e05a7b573ae22b209f0214d5766ff07e) | Alex Ellis | github.com | 24-Nov-2018 |
