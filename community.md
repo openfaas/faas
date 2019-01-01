@@ -86,7 +86,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
-| | | | |
+| [Deploy OpenFaaS with MicroK8s](https://johnmccabe.net/technology/projects/openfaas-on-microk8s/) | John McCabe | johnmccabe.net | 01-Jan-2019 |
 
 ### 2018
 
