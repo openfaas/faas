@@ -6,14 +6,10 @@ Welcome to the OpenFaaS community page where you can find:
 * [Function Providers/Back-ends](#openfaas-providers)
 
 * Events
-    * [2019](#events-in-2019)
-    * [2018](#events-in-2018)
-    * [2017](#events-in-2017)
+    * [2019](#events-in-2019) [2018](#events-in-2018) [2017](#events-in-2017)
 
 * Blog posts and write-ups
-    * [2019](#blog-posts-and-write-ups-2019)
-    * [2018](#blog-posts-and-write-ups-2018)
-    * [2017](#blog-posts-and-write-ups-2017)
+    * [2019](#blog-posts-and-write-ups-2019) [2018](#blog-posts-and-write-ups-2018) [2017](#blog-posts-and-write-ups-2017)
 
 * [Repositories - Projects, Samples, and Use Cases](#repositories)
 
