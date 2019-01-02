@@ -86,6 +86,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Bash Functions as a Service](https://medium.com/@thomas.shaw78/bash-functions-as-a-service-b4033bc1ee97) | Thomas Shaw | medium.com | 02-Jan-2019 |
 | [4 Top Technology Predictions for 2019](https://medium.com/@filipSk/4-top-technology-predictions-for-2019-c9ddc9c345bd) | Filip Cieker | medium.com | 01-Jan-2019 |
 
 ### 2018
