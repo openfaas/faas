@@ -79,6 +79,7 @@ Key:
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [Serverless Architecture Conf: OpenFaaS - Keeping Serverless Simple](https://serverless-architecture.io/serverless-platforms-technology) | John McCabe | The Hague, Netherlands | 9-Apr-2019 |
+| [Jax - Serverless and Functions as a Service mit Java, Docker und OpenFaaS](https://jax.de/cloud-container-serverless/serverless-und-functions-as-a-service-mit-java-docker-und-openfaas/) | Dr. Halil-Cem Gürsoy | Mainz, Germany | 6-May-2019 |
 
 
 #### Blog posts and write-ups 2019
@@ -86,7 +87,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
-| | | | |
+| [4 Top Technology Predictions for 2019](https://medium.com/@filipSk/4-top-technology-predictions-for-2019-c9ddc9c345bd) | Filip Cieker | medium.com | 01-Jan-2019 |
 
 ### 2018
 
@@ -157,7 +158,9 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [3 Serverless Platform Approaches to Consider](https://searchmicroservices.techtarget.com/tip/3-serverless-platform-approaches-to-consider) | Twain Taylor | techtarget.com | 31-Dec-2018 |
 | [Tracing Your Functions](http://www.nohuddleoffense.de/2018/12/27/tracing-your-functions/) | Thijs Metsch | nohuddleoffense.de | 27-Dec-2018 |
+| [Routing URLs to OpenFaaS Functions](https://kamal.io/blog/routing-urls-to-openfaas-functions) | Kamal Nasser | kamal.io | 10-Dec-2018 |
 | [Writing Serverless Functions in Crystal](https://medium.com/@t_pei/serverless-crystal-14b22ecc4352) | Thomas Peikert | medium.com | 05-Dec-2018 |
 | [.Net Core – OpenFaas – MongoDB](https://marcussmallman.io/2018/11/27/net-core-openfaas-mongodb/) | Marcus Smallman | marcussmallman.io | 28-Nov-2018 |
 | [Micro-tutorial: use Redis & Node.js with OpenFaaS](https://gist.github.com/alexellis/e05a7b573ae22b209f0214d5766ff07e) | Alex Ellis | github.com | 24-Nov-2018 |
