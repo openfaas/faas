@@ -64,8 +64,12 @@ func main() {
 	prometheusNotifier := handlers.PrometheusFunctionNotifier{
 		Metrics: &metricsOptions,
 	}
+	prometheusServiceNotifier := handlers.PrometheusServiceNotifier{
+		ServiceMetrics: metricsOptions.ServiceMetrics,
+	}
+
 	functionNotifiers := []handlers.HTTPNotifier{loggingNotifier, prometheusNotifier}
-	forwardingNotifiers := []handlers.HTTPNotifier{loggingNotifier}
+	forwardingNotifiers := []handlers.HTTPNotifier{loggingNotifier, prometheusServiceNotifier}
 
 	urlResolver := handlers.SingleHostBaseURLResolver{BaseURL: config.FunctionsProviderURL.String()}
 	var functionURLResolver handlers.BaseURLResolver
