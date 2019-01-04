@@ -96,7 +96,7 @@ func main() {
 	faasHandlers.SecretHandler = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
 
 	alertHandler := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL, credentials)
-	faasHandlers.Alert = handlers.MakeAlertHandler(alertHandler)
+	faasHandlers.Alert = handlers.MakeNotifierWrapper(handlers.MakeAlertHandler(alertHandler), forwardingNotifiers)
 
 	if config.UseNATS() {
 		log.Println("Async enabled: Using NATS Streaming.")
@@ -174,7 +174,7 @@ func main() {
 		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}", faasHandlers.QueuedProxy).Methods(http.MethodPost)
 		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}/{params:.*}", faasHandlers.QueuedProxy).Methods(http.MethodPost)
 
-		r.HandleFunc("/system/async-report", faasHandlers.AsyncReport)
+		r.HandleFunc("/system/async-report", handlers.MakeNotifierWrapper(faasHandlers.AsyncReport, forwardingNotifiers))
 	}
 
 	fs := http.FileServer(http.Dir("./assets/"))
