@@ -14,6 +14,13 @@ type MetricOptions struct {
 	GatewayFunctionInvocation *prometheus.CounterVec
 	GatewayFunctionsHistogram *prometheus.HistogramVec
 	ServiceReplicasGauge      *prometheus.GaugeVec
+	ServiceMetrics            *ServiceMetricOptions
+}
+
+// ServiceMetricOptions provides RED metrics
+type ServiceMetricOptions struct {
+	Histogram *prometheus.HistogramVec
+	Counter   *prometheus.CounterVec
 }
 
 // PrometheusHandler Bootstraps prometheus for metrics collection
@@ -44,16 +51,40 @@ func BuildMetricsOptions() MetricOptions {
 		[]string{"function_name"},
 	)
 
+	// For automatic monitoring and alerting (RED method)
+	histogram := prometheus.NewHistogramVec(prometheus.HistogramOpts{
+		Subsystem: "http",
+		Name:      "request_duration_seconds",
+		Help:      "Seconds spent serving HTTP requests.",
+		Buckets:   prometheus.DefBuckets,
+	}, []string{"method", "path", "status"})
+
+	// Can be used Kubernetes HPA v2
+	counter := prometheus.NewCounterVec(
+		prometheus.CounterOpts{
+			Subsystem: "http",
+			Name:      "requests_total",
+			Help:      "The total number of HTTP requests.",
+		},
+		[]string{"status"},
+	)
+
+	serviceMetricOptions := &ServiceMetricOptions{
+		Counter:   counter,
+		Histogram: histogram,
+	}
+
 	metricsOptions := MetricOptions{
 		GatewayFunctionsHistogram: gatewayFunctionsHistogram,
 		GatewayFunctionInvocation: gatewayFunctionInvocation,
 		ServiceReplicasGauge:      serviceReplicas,
+		ServiceMetrics:            serviceMetricOptions,
 	}
 
 	return metricsOptions
 }
 
-//RegisterMetrics registers with Prometheus for tracking
+// RegisterExporter registers with Prometheus for tracking
 func RegisterExporter(exporter *Exporter) {
 	prometheus.MustRegister(exporter)
 }
