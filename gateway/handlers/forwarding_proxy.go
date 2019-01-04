@@ -140,6 +140,30 @@ func copyHeaders(destination http.Header, source *http.Header) {
 	}
 }
 
+type PrometheusServiceNotifier struct {
+	ServiceMetrics *metrics.ServiceMetricOptions
+}
+
+// Notify about service metrics
+func (psn PrometheusServiceNotifier) Notify(method string, URL string, originalURL string, statusCode int, duration time.Duration) {
+	code := fmt.Sprintf("%d", statusCode)
+	psn.ServiceMetrics.Counter.WithLabelValues(code).Inc()
+
+	psn.ServiceMetrics.Histogram.WithLabelValues(method, urlToLabel(URL), code).Observe(duration.Seconds())
+}
+
+var invalidChars = regexp.MustCompile(`[^a-zA-Z0-9]+`)
+
+// converts a URL path to a string compatible with Prometheus label value.
+func urlToLabel(path string) string {
+	result := invalidChars.ReplaceAllString(path, "_")
+	result = strings.ToLower(strings.Trim(result, "_"))
+	if result == "" {
+		result = "root"
+	}
+	return result
+}
+
 // PrometheusFunctionNotifier records metrics to Prometheus
 type PrometheusFunctionNotifier struct {
 	Metrics *metrics.MetricOptions
