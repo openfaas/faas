@@ -266,7 +266,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/ListSecretsResponse'
+              $ref: '#/definitions/Secret'
     post:
       summary: Create a new secret.
       description: ''
@@ -280,7 +280,7 @@ paths:
         description: A new secret to create
         required: true
         schema:
-          $ref: '#/definitions/SecretInfo'
+          $ref: '#/definitions/Secret'
       responses:
         '201':
           description: Created
@@ -301,7 +301,7 @@ paths:
         description: Secret to update
         required: true
         schema:
-          $ref: '#/definitions/SecretInfo'
+          $ref: '#/definitions/Secret'
       responses:
         '200':
           description: Ok
@@ -324,7 +324,7 @@ paths:
         description: Secret to delete
         required: true
         schema:
-          $ref: '#/definitions/DeleteSecretRequest'
+          $ref: '#/definitions/Secret'
       responses:
         '204':
           description: OK
@@ -533,6 +533,19 @@ definitions:
     - availableReplicas
     - envProcess
     - labels
+  Secret:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of secret
+        example: aws-key
+      value:
+        type: string
+        description: Value of secret in plain-text
+        example: changeme
+    required:
+    - name
 externalDocs:
   description: More documentation available on Github
   url: 'https://github.com/openfaas/faas'
