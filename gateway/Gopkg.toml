@@ -18,14 +18,12 @@ ignored = ["github.com/openfaas/faas/gateway/queue"]
 
 [[constraint]]
   name = "github.com/prometheus/client_golang"
-  version = "0.8.0"
+  version = "v0.9.2"
 
 [[constraint]]
   branch = "master"
   name = "golang.org/x/net"
 
-
-
 [[constraint]]
   name = "github.com/openfaas/faas-provider"
-  version = "0.7.0"
+  version = "0.8.1"

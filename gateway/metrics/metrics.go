@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 // MetricOptions to be used by web handlers
@@ -25,7 +26,7 @@ type ServiceMetricOptions struct {
 
 // PrometheusHandler Bootstraps prometheus for metrics collection
 func PrometheusHandler() http.Handler {
-	return prometheus.Handler()
+	return promhttp.Handler()
 }
 
 // BuildMetricsOptions builds metrics for tracking functions in the API gateway
