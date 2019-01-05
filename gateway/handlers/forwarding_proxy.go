@@ -11,13 +11,10 @@ import (
 	"net/http"
 	"os"
 	"regexp"
-	"strconv"
 	"strings"
 	"time"
 
-	"github.com/openfaas/faas/gateway/metrics"
 	"github.com/openfaas/faas/gateway/types"
-	"github.com/prometheus/client_golang/prometheus"
 )
 
 // functionMatcher parses out the service name (group 1) and rest of path (group 2).
@@ -30,11 +27,6 @@ const (
 	nameIndex    = 1 // nameIndex is the function name
 	pathIndex    = 2 // pathIndex is the path i.e. /employee/:id/
 )
-
-// HTTPNotifier notify about HTTP request/response
-type HTTPNotifier interface {
-	Notify(method string, URL string, originalURL string, statusCode int, duration time.Duration)
-}
 
 // BaseURLResolver URL resolver for upstream requests
 type BaseURLResolver interface {
@@ -138,78 +130,6 @@ func copyHeaders(destination http.Header, source *http.Header) {
 		copy(vClone, v)
 		(destination)[k] = vClone
 	}
-}
-
-type PrometheusServiceNotifier struct {
-	ServiceMetrics *metrics.ServiceMetricOptions
-}
-
-// Notify about service metrics
-func (psn PrometheusServiceNotifier) Notify(method string, URL string, originalURL string, statusCode int, duration time.Duration) {
-	code := fmt.Sprintf("%d", statusCode)
-	psn.ServiceMetrics.Counter.WithLabelValues(code).Inc()
-
-	psn.ServiceMetrics.Histogram.WithLabelValues(method, urlToLabel(URL), code).Observe(duration.Seconds())
-}
-
-var invalidChars = regexp.MustCompile(`[^a-zA-Z0-9]+`)
-
-// converts a URL path to a string compatible with Prometheus label value.
-func urlToLabel(path string) string {
-	result := invalidChars.ReplaceAllString(path, "_")
-	result = strings.ToLower(strings.Trim(result, "_"))
-	if result == "" {
-		result = "root"
-	}
-	return result
-}
-
-// PrometheusFunctionNotifier records metrics to Prometheus
-type PrometheusFunctionNotifier struct {
-	Metrics *metrics.MetricOptions
-}
-
-// Notify records metrics in Prometheus
-func (p PrometheusFunctionNotifier) Notify(method string, URL string, originalURL string, statusCode int, duration time.Duration) {
-	seconds := duration.Seconds()
-	serviceName := getServiceName(originalURL)
-
-	p.Metrics.GatewayFunctionsHistogram.
-		WithLabelValues(serviceName).
-		Observe(seconds)
-
-	code := strconv.Itoa(statusCode)
-
-	p.Metrics.GatewayFunctionInvocation.
-		With(prometheus.Labels{"function_name": serviceName, "code": code}).
-		Inc()
-}
-
-func getServiceName(urlValue string) string {
-	var serviceName string
-	forward := "/function/"
-	if strings.HasPrefix(urlValue, forward) {
-		// With a path like `/function/xyz/rest/of/path?q=a`, the service
-		// name we wish to locate is just the `xyz` portion.  With a postive
-		// match on the regex below, it will return a three-element slice.
-		// The item at index `0` is the same as `urlValue`, at `1`
-		// will be the service name we need, and at `2` the rest of the path.
-		matcher := functionMatcher.Copy()
-		matches := matcher.FindStringSubmatch(urlValue)
-		if len(matches) == hasPathCount {
-			serviceName = matches[nameIndex]
-		}
-	}
-	return strings.Trim(serviceName, "/")
-}
-
-// LoggingNotifier notifies a log about a request
-type LoggingNotifier struct {
-}
-
-// Notify a log about a request
-func (LoggingNotifier) Notify(method string, URL string, originalURL string, statusCode int, duration time.Duration) {
-	log.Printf("Forwarded [%s] to %s - [%d] - %f seconds", method, originalURL, statusCode, duration.Seconds())
 }
 
 // SingleHostBaseURLResolver resolves URLs against a single BaseURL
