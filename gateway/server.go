@@ -96,7 +96,10 @@ func main() {
 	faasHandlers.SecretHandler = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
 
 	alertHandler := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL, credentials)
-	faasHandlers.Alert = handlers.MakeNotifierWrapper(handlers.MakeAlertHandler(alertHandler), forwardingNotifiers)
+	faasHandlers.Alert = handlers.MakeNotifierWrapper(
+		handlers.MakeAlertHandler(alertHandler),
+		forwardingNotifiers,
+	)
 
 	if config.UseNATS() {
 		log.Println("Async enabled: Using NATS Streaming.")
@@ -105,8 +108,15 @@ func main() {
 			log.Fatalln(queueErr)
 		}
 
-		faasHandlers.QueuedProxy = handlers.MakeCallIDMiddleware(handlers.MakeQueuedProxy(metricsOptions, true, natsQueue, functionURLTransformer))
-		faasHandlers.AsyncReport = handlers.MakeAsyncReport(metricsOptions)
+		faasHandlers.QueuedProxy = handlers.MakeNotifierWrapper(
+			handlers.MakeCallIDMiddleware(handlers.MakeQueuedProxy(metricsOptions, true, natsQueue, functionURLTransformer)),
+			forwardingNotifiers,
+		)
+
+		faasHandlers.AsyncReport = handlers.MakeNotifierWrapper(
+			handlers.MakeAsyncReport(metricsOptions),
+			forwardingNotifiers,
+		)
 	}
 
 	prometheusQuery := metrics.NewPrometheusQuery(config.PrometheusHost, config.PrometheusPort, &http.Client{})

@@ -5,6 +5,7 @@ package metrics
 
 import (
 	"net/http"
+	"sync"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -22,6 +23,16 @@ type MetricOptions struct {
 type ServiceMetricOptions struct {
 	Histogram *prometheus.HistogramVec
 	Counter   *prometheus.CounterVec
+}
+
+// Synchronize to make sure MustRegister only called once
+var once = sync.Once{}
+
+// RegisterExporter registers with Prometheus for tracking
+func RegisterExporter(exporter *Exporter) {
+	once.Do(func() {
+		prometheus.MustRegister(exporter)
+	})
 }
 
 // PrometheusHandler Bootstraps prometheus for metrics collection
@@ -83,9 +94,4 @@ func BuildMetricsOptions() MetricOptions {
 	}
 
 	return metricsOptions
-}
-
-// RegisterExporter registers with Prometheus for tracking
-func RegisterExporter(exporter *Exporter) {
-	prometheus.MustRegister(exporter)
 }

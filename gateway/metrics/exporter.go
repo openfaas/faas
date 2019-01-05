@@ -37,6 +37,7 @@ func NewExporter(options MetricOptions, credentials *auth.BasicAuthCredentials) 
 
 // Describe is to describe the metrics for Prometheus
 func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
+
 	e.metricOptions.GatewayFunctionInvocation.Describe(ch)
 	e.metricOptions.GatewayFunctionsHistogram.Describe(ch)
 	e.metricOptions.ServiceReplicasGauge.Describe(ch)
