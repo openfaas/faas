@@ -17,12 +17,15 @@ import (
 // MakeQueuedProxy accepts work onto a queue
 func MakeQueuedProxy(metrics metrics.MetricOptions, wildcard bool, canQueueRequests queue.CanQueueRequests, pathTransformer URLPathTransformer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		defer r.Body.Close()
+		if r.Body != nil {
+			defer r.Body.Close()
+		}
 
 		body, err := ioutil.ReadAll(r.Body)
 
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
+
 			w.Write([]byte(err.Error()))
 			return
 		}
@@ -37,6 +40,7 @@ func MakeQueuedProxy(metrics metrics.MetricOptions, wildcard bool, canQueueReque
 			urlVal, urlErr := url.Parse(callbackURLHeader)
 			if urlErr != nil {
 				w.WriteHeader(http.StatusBadRequest)
+
 				w.Write([]byte(urlErr.Error()))
 				return
 			}
@@ -55,9 +59,7 @@ func MakeQueuedProxy(metrics metrics.MetricOptions, wildcard bool, canQueueReque
 			CallbackURL: callbackURL,
 		}
 
-		err = canQueueRequests.Queue(req)
-
-		if err != nil {
+		if err = canQueueRequests.Queue(req); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
 			fmt.Println(err)

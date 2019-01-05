@@ -78,7 +78,7 @@ func BuildMetricsOptions() MetricOptions {
 			Name:      "requests_total",
 			Help:      "The total number of HTTP requests.",
 		},
-		[]string{"status"},
+		[]string{"method", "path", "status"},
 	)
 
 	serviceMetricOptions := &ServiceMetricOptions{

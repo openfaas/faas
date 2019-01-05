@@ -27,5 +27,7 @@ func MakeAsyncReport(metrics metrics.MetricOptions) http.HandlerFunc {
 		var taken time.Duration
 		taken = time.Duration(report.TimeTaken)
 		trackTimeExact(taken, metrics, report.FunctionName)
+
+		w.WriteHeader(http.StatusAccepted)
 	}
 }
