@@ -2,7 +2,7 @@
 // Copyright (c) Alex Ellis 2017. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-var app = angular.module('faasGateway', ['ngMaterial', 'faasGateway.funcStore']);
+var app = angular.module('faasGateway', ['ngMaterial', 'ngMessages', 'faasGateway.funcStore']);
 
 app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$filter', '$mdDialog', '$mdToast', '$mdSidenav',
     function($scope, $log, $http, $location, $interval, $filter, $mdDialog, $mdToast, $mdSidenav) {
