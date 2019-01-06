@@ -28,13 +28,20 @@
                                 <md-tooltip md-direction="bottom">Docker image name and tag to use for function i.e. functions/alpine:latest</md-tooltip>
                                 <label>Docker image:</label>
                                 <input name="dockerImage" ng-model="item.image" required md-maxlength="200" minlength="2">
+                                <div ng-messages="userForm.dockerImage.$error">
+                                    <div ng-message="required">Docker image is required.</div>
+                                </div>
                             </md-input-container>
                         </div>
                         <div layout-gt-xs="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <md-tooltip md-direction="bottom">Name of the function - must be a valid DNS entry</md-tooltip>
                                 <label>Function name:</label>
-                                <input name="serviceName" ng-model="item.service" required md-maxlength="200" minlength="2">
+                                <input name="serviceName" ng-model="item.service" required md-maxlength="200" minlength="2" ng-pattern="/^[a-z0-9]([-a-z0-9]*[a-z0-9])?$/" />
+                                <div ng-messages="userForm.serviceName.$error">
+                                    <div ng-message="required">Function name is required.</div>
+                                    <div ng-message="pattern">Function name can only contain a-z, 0-9 and dashes</div>
+                                </div>
                             </md-input-container>
                         </div>
                         <div layout-gt-xs="row">
@@ -64,7 +71,7 @@
         <md-button ng-click="closeDialog()" class="md-secondary">
             Close Dialog
         </md-button>
-        <md-button ng-click="createFunc()" class="md-primary">
+        <md-button ng-disabled="userForm.$invalid" ng-click="createFunc()" class="md-primary">
             Deploy
         </md-button>
     </md-dialog-actions>
