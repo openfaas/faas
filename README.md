@@ -142,21 +142,23 @@ Here is a screenshot of the API gateway portal - designed for ease of use.
 
 ## Find out more about OpenFaaS
 
-### The Cube interview @ DevNet Create 2018
+### Digital Transformation of Vision Banco Paraguay with Serverless Functions @ KubeCon late-2018
+
+[HD video co-presenting at KubeCon with Patricio Diaz Senior Analyst, Vision Banco SAECA](https://kccna18.sched.com/event/GraO/digital-transformation-of-vision-banco-paraguay-with-serverless-functions-alex-ellis-vmware-patricio-diaz-vision-banco-saeca)
+
+### Serverless Beyond the Hype (goto Copenhagen) late-2018
+
+Overview of the Serverless landscape for Kubernetes, OpenFaaS and OpenFaaS Cloud with live demos and most update information. [View on Android or iPhone](https://gotocph.com/2018/sessions/592)
+
+### The Cube interview @ DevNet Create mid-2018
 
 * [2018 update on the OpenFaaS story](https://www.youtube.com/watch?v=J8UYZ1GXNTQ)
 
-### SkillsMatter video presentation 2017
+### TechFieldDay presentation (Dockercon EU) late-2017
 
-Overview of OpenFaaS features, users and roadmap
+15 minute overview with demos on Kubernetes and with Alexa - [HD YouTube video](https://www.youtube.com/watch?v=C3agSKv2s_w&list=PLlIapFDp305AiwA17mUNtgi5-u23eHm5j&index=1)
 
-* [HD Video](https://skillsmatter.com/skillscasts/10813-faas-and-furious-0-to-serverless-in-60-seconds-anywhere)
-
-### OpenFaaS presents to CNCF Serverless workgroup
-
-* [Video and blog post](https://blog.alexellis.io/openfaas-cncf-workgroup/)
-
-### Closing Keynote at Dockercon 2017
+### Closing Keynote at Dockercon early-2017
 
 Functions as a Service or FaaS was a winner in the Cool Hacks contest for Dockercon 2017.
 
