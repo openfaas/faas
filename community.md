@@ -78,6 +78,7 @@ Key:
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Docker and serverless: meetup](https://events.docker.com/events/details/docker-randstad-presents-docker-and-serverless/#/) | Edward Wilde | Utrecht, Netherlands | 24-Jan-2019 |
 | [Serverless Architecture Conf: OpenFaaS - Keeping Serverless Simple](https://serverless-architecture.io/serverless-platforms-technology) | John McCabe | The Hague, Netherlands | 9-Apr-2019 |
 | [Jax - Serverless and Functions as a Service mit Java, Docker und OpenFaaS](https://jax.de/cloud-container-serverless/serverless-und-functions-as-a-service-mit-java-docker-und-openfaas/) | Dr. Halil-Cem Gürsoy | Mainz, Germany | 6-May-2019 |
 
@@ -100,6 +101,7 @@ Key:
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Serverless, KubeCon and Kubernetes the easy way](https://www.meetup.com/Cloud-Native-Computing-Paris/events/257113168/) | Edward Wilde | Paris | 19-Dec-2018 |
 | [KubeCon + CloudNativeCon: Digital Transformation of Vision Banco Paraguay with Serverless Functions](https://sched.co/GraO) | Alex Ellis & Patricio Diaz | Seattle, WA | 13-Dec-2018 |
 | [Serverless com OpenFaaS e PHP @ PHP Conference Brazil](https://phpconference.com.br) | Fernando Silva | Porto Alegre, BR | 07-Dec-2018 |
 | [The FaaS & The Furious](https://www.meetup.com/CloudAustin/events/gxwbkpyxpbbc/) | Burton Rheutan | Austin, TX | 27-Nov-2018 |
