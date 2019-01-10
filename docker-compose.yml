@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: openfaas/gateway:0.9.11
+        image: openfaas/gateway:0.9.14
         networks:
             - functions
         environment:
@@ -41,7 +41,7 @@ services:
     faas-swarm:
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
-        image:  openfaas/faas-swarm:0.5.0
+        image:  openfaas/faas-swarm:0.6.1
         networks:
             - functions
         environment:
