@@ -88,6 +88,7 @@ Key:
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [Get Started with OpenFaaS and KinD](https://blog.alexellis.io/get-started-with-openfaas-and-kind/) | Alex Ellis | alexellis.io | 10-Jan-2019 |
+| [Transmute launches blockchain decentralised app engine using OpenFaaS](https://www.enterprisetimes.co.uk/2019/01/09/transmute-launches-blockchain-decentralised-app-engine/) | Charles Brett | enterprisetimes.co.uk | 09-Jan-2019
 | [Bash Functions as a Service](https://medium.com/@thomas.shaw78/bash-functions-as-a-service-b4033bc1ee97) | Thomas Shaw | medium.com | 02-Jan-2019 |
 | [Deploy OpenFaaS with MicroK8s](https://johnmccabe.net/technology/projects/openfaas-on-microk8s/) | John McCabe | johnmccabe.net | 01-Jan-2019 |
 | [4 Top Technology Predictions for 2019](https://medium.com/@filipSk/4-top-technology-predictions-for-2019-c9ddc9c345bd) | Filip Cieker | medium.com | 01-Jan-2019 |
