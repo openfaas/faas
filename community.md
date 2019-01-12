@@ -28,6 +28,7 @@ It would be great to hear from you especially if you have any of the above and w
 | Award/Mention                                          | Author(s)       | Source     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [Battle Over Serverless Computing Frameworks to Heat Up in 2019](https://www.itbusinessedge.com/articles/battle-over-serverless-computing-frameworks-to-heat-up-in-2019.html) | Mike Vizard | itbusinessedge.com | 03-Jan-2019 |
+| [Serverless Inside Out: Architecture & Practices](https://www.amazon.cn/dp/B07LD4KXG3/) | Nicholas Geng Chen | China Machine Press | 01-Jan-2019 |
 | 🏆🏆 [2018 Bossie Award Best OSS Cloud Computing](https://www.infoworld.com/article/3306455/cloud-computing/the-best-open-source-software-for-cloud-computing.html#slide13) | Jonathan Freeman et al. | InfoWorld.com | 26-Sep-2018 |
 | [KubeWeekly #145](https://mailchi.mp/cncf/kubeweekly-145?e=5c7c372824) | [KubeWeekly](https://twitter.com/kubeweekly?lang=en) | mailchi.mp | 15-Aug-2018 |
 | [Book: Docker for Serverless Applications with OpenFaaS - featuring OpenFaaS](https://www.packtpub.com/mapt/book/virtualization_and_cloud/9781788835268) | Chanwit Kaewkasi | packtpub.com | 01-Apr-2018 |
