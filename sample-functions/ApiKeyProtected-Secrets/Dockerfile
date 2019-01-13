@@ -4,7 +4,7 @@ MAINTAINER alex@openfaas.com
 ENTRYPOINT []
 
 RUN apk --no-cache add make curl \
-    && curl -sL https://github.com/openfaas/faas/releases/download/0.9.6/fwatchdog > /usr/bin/fwatchdog \
+    && curl -sL https://github.com/openfaas/faas/releases/download/0.9.14/fwatchdog > /usr/bin/fwatchdog \
     && chmod +x /usr/bin/fwatchdog
 
 WORKDIR /go/src/github.com/openfaas/faas/sample-functions/ApiKeyProtected

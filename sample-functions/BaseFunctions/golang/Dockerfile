@@ -9,7 +9,7 @@ COPY . /go/src/github.com/openfaas/faas/sample-functions/golang
 RUN go install
 
 RUN apk --no-cache add curl \
-    && curl -sL https://github.com/openfaas/faas/releases/download/0.9.6/fwatchdog > /usr/bin/fwatchdog \
+    && curl -sL https://github.com/openfaas/faas/releases/download/0.9.14/fwatchdog > /usr/bin/fwatchdog \
     && chmod +x /usr/bin/fwatchdog
 
 ENV fprocess "/go/bin/golang"
