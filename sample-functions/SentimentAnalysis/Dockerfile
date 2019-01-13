@@ -4,7 +4,7 @@ RUN pip install textblob && \
     python -m textblob.download_corpora
 
 RUN apk --no-cache add curl \
-    && curl -sL https://github.com/openfaas/faas/releases/download/0.9.6/fwatchdog > /usr/bin/fwatchdog \
+    && curl -sL https://github.com/openfaas/faas/releases/download/0.9.14/fwatchdog > /usr/bin/fwatchdog \
     && chmod +x /usr/bin/fwatchdog
 
 WORKDIR /root/
