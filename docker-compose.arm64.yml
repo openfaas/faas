@@ -1,29 +1,136 @@
-version: "3.2"
+version: "3.3"
 services:
     gateway:
-        volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
         ports:
             - 8080:8080
-        image: functions/gateway:0.7.0-arm64
+        image: openfaas/gateway:0.9.11-arm64
         networks:
             - functions
         environment:
-            read_timeout: 10    # set both here, and on your functions
-            write_timeout: 10   # set both here, and on your functions
-            dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
+            functions_provider_url: "http://faas-swarm:8080/"
+            read_timeout:  "305s"        # Maximum time to read HTTP request
+            write_timeout: "305s"        # Maximum time to write HTTP response
+            upstream_timeout: "300s"     # Maximum duration of upstream function call - should be more than read_timeout and write_timeout            dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
+            faas_nats_address: "nats"
+            faas_nats_port: 4222
+            direct_functions: "true"    # Functions are invoked directly over the overlay network
+            direct_functions_suffix: ""
+            basic_auth: "${BASIC_AUTH:-true}"
+            secret_mount_path: "/run/secrets/"
+            scale_from_zero: "true"
+        deploy:
+            resources:
+                # limits:   # uncomment to enable limits
+                #     memory: 100M
+                reservations:
+                    memory: 100M
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 20
+                window: 380s
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+        secrets:
+            - basic-auth-user
+            - basic-auth-password
+
+
+    # Docker Swarm provider
+    faas-swarm:
+        image:  openfaas/faas-swarm:0.6.1-arm64  # TODO: Provide ARM64 image
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+        networks:
+            - functions
+        environment:
+            read_timeout:  "305s"   # set both here, and on your functions
+            write_timeout: "305s"   # set both here, and on your functions
+            DOCKER_API_VERSION: "1.30"
+            basic_auth: "${BASIC_AUTH:-true}"
+            secret_mount_path: "/run/secrets/"
         deploy:
             placement:
                 constraints:
                     - 'node.role == manager'
                     - 'node.platform.os == linux'
+            resources:
+                # limits:   # uncomment to enable limits
+                #     memory: 100M
+                reservations:
+                    memory: 100M
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 20
+                window: 380s
+        secrets:
+            - basic-auth-user
+            - basic-auth-password
+
+
+    nats:
+        image: nats-streaming:0.11.2
+        # Uncomment the following port mappings if you wish to expose the
+        # NATS client and/or management ports you must also add `-m 8222` to the command
+        # ports:
+        #     - 4222:4222
+        #     - 8222:8222
+        command: "--store memory --cluster_id faas-cluster"
+        networks:
+            - functions
+        deploy:
+            resources:
+                limits:
+                    memory: 125M
+                reservations:
+                    memory: 50M
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+
+    queue-worker:
+        image: openfaas/queue-worker:0.5.5-arm64  # TODO: Provide ARM64 image
+        networks:
+            - functions
+        environment:
+            max_inflight: "1"
+            ack_wait: "30s"    # Max duration of any async task / request
+            basic_auth: "false"
+            secret_mount_path: "/run/secrets/"
+        deploy:
+            resources:
+                limits:
+                    memory: 50M
+                reservations:
+                    memory: 20M
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 20
+                window: 380s
+            placement:
+                constraints:
+                    - 'node.platform.os == linux'
+    # End services
+
+    # Start monitoring
+
     prometheus:
-        image: alexellis2/prometheus:1.5.2-arm64
-        command: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path=/prometheus -storage.local.memory-chunks=10000 --alertmanager.url=http://alertmanager:9093"
-        ports:
-            - 9090:9090
+        image: alexellis2/prometheus:2.3.1-arm64
         environment:
             no_proxy: "gateway"
+        configs:
+          - source: prometheus_config
+            target: /etc/prometheus/prometheus.yml
+          - source: prometheus_rules
+            target: /etc/prometheus/alert.rules.yml
+        command:
+          - '--config.file=/etc/prometheus/prometheus.yml'
+        #   - '-storage.local.path=/prometheus'
+        ports:
+            - 9090:9090
         networks:
             - functions
         deploy:
@@ -31,9 +138,57 @@ services:
                 constraints:
                     - 'node.role == manager'
                     - 'node.platform.os == linux'
+            resources:
+                limits:
+                    memory: 500M
+                reservations:
+                    memory: 200M
+
+    alertmanager:
+        image: alexellis2/alertmanager-armhf:0.5.1  # TODO: Provide ARM64 image
+        environment:
+            no_proxy: "gateway"
+        command:
+            - '-config.file=/alertmanager.yml'
+        networks:
+            - functions
+        # Uncomment the following port mapping if you wish to expose the Prometheus
+        # Alertmanager UI.
+        # ports:
+        #     - 9093:9093
+        deploy:
+            resources:
+                limits:
+                    memory: 50M
+                reservations:
+                    memory: 20M
+            placement:
+                constraints:
+                    - 'node.role == manager'
+                    - 'node.platform.os == linux'
+        configs:
+            - source: alertmanager_config
+              target: /alertmanager.yml
+
+
+configs:
+     prometheus_config:
+         file: ./prometheus/prometheus.yml
+     prometheus_rules:
+         file: ./prometheus/alert.rules.yml
+     alertmanager_config:
+         file: ./prometheus/alertmanager.yml
 
 networks:
     functions:
         driver: overlay
-        # Docker does not support this option yet - maybe create outside of the stack and reference as "external"?
-        #attachable: true
+        attachable: true
+        labels:
+          - "openfaas=true"
+
+secrets:
+    basic-auth-user:
+        external: true
+    basic-auth-password:
+        external: true
+
