@@ -40,6 +40,12 @@ type URLPathTransformer interface {
 
 // MakeForwardingProxyHandler create a handler which forwards HTTP requests
 func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers []HTTPNotifier, baseURLResolver BaseURLResolver, urlPathTransformer URLPathTransformer) http.HandlerFunc {
+
+	writeRequestURI := false
+	if _, exists := os.LookupEnv("write_request_uri"); exists {
+		writeRequestURI = exists
+	}
+
 	return func(w http.ResponseWriter, r *http.Request) {
 		baseURL := baseURLResolver.Resolve(r)
 		originalURL := r.URL.String()
@@ -48,16 +54,19 @@ func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers [
 
 		start := time.Now()
 
-		statusCode, err := forwardRequest(w, r, proxy.Client, baseURL, requestURL, proxy.Timeout)
+		statusCode, err := forwardRequest(w, r, proxy.Client, baseURL, requestURL, proxy.Timeout, writeRequestURI)
 
 		seconds := time.Since(start)
 		if err != nil {
 			log.Printf("error with upstream request to: %s, %s\n", requestURL, err.Error())
 		}
 
-		for _, notifier := range notifiers {
-			notifier.Notify(r.Method, requestURL, originalURL, statusCode, seconds)
-		}
+		defer func() {
+			for _, notifier := range notifiers {
+				notifier.Notify(r.Method, requestURL, originalURL, statusCode, seconds)
+			}
+		}()
+
 	}
 }
 
@@ -86,14 +95,14 @@ func buildUpstreamRequest(r *http.Request, baseURL string, requestURL string) *h
 	return upstreamReq
 }
 
-func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Client, baseURL string, requestURL string, timeout time.Duration) (int, error) {
+func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Client, baseURL string, requestURL string, timeout time.Duration, writeRequestURI bool) (int, error) {
 
 	upstreamReq := buildUpstreamRequest(r, baseURL, requestURL)
 	if upstreamReq.Body != nil {
 		defer upstreamReq.Body.Close()
 	}
 
-	if _, exists := os.LookupEnv("write_request_uri"); exists {
+	if writeRequestURI {
 		log.Printf("forwardRequest: %s %s\n", upstreamReq.Host, upstreamReq.URL.String())
 	}
 
