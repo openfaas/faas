@@ -53,3 +53,14 @@ do
        echo "Image is already present: ${REPOSITORY}:${TAG}-${ARM_VERSION}"
    fi
 done
+
+echo "Docker images"
+
+for i in "${repos[@]}"
+do
+   cd $HERE
+   cd ./staging/$i
+   export TAG=$(git describe --abbrev=0 --tags)
+   echo "$i"
+   echo " ${REPOSITORY}:${TAG}-${ARM_VERSION}"
+done
