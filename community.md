@@ -78,10 +78,10 @@ Key:
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Jax - Serverless and Functions as a Service mit Java, Docker und OpenFaaS](https://jax.de/cloud-container-serverless/serverless-und-functions-as-a-service-mit-java-docker-und-openfaas/) | Dr. Halil-Cem Gürsoy | Mainz, Germany | 6-May-2019 |
+| [Serverless Architecture Conf: OpenFaaS - Keeping Serverless Simple](https://serverless-architecture.io/serverless-platforms-technology) | John McCabe | The Hague, Netherlands | 9-Apr-2019 |
 | [Soirée OpenFaas et Firebase](https://www.meetup.com/fr-FR/GDG-Lille/events/258241972/?isFirstPublish=true)| Laurent Grangeau | Lille, France | 31-Jan-2019 |
 | [Docker and serverless: meetup](https://events.docker.com/events/details/docker-randstad-presents-docker-and-serverless/#/) | Edward Wilde | Utrecht, Netherlands | 24-Jan-2019 |
-| [Serverless Architecture Conf: OpenFaaS - Keeping Serverless Simple](https://serverless-architecture.io/serverless-platforms-technology) | John McCabe | The Hague, Netherlands | 9-Apr-2019 |
-| [Jax - Serverless and Functions as a Service mit Java, Docker und OpenFaaS](https://jax.de/cloud-container-serverless/serverless-und-functions-as-a-service-mit-java-docker-und-openfaas/) | Dr. Halil-Cem Gürsoy | Mainz, Germany | 6-May-2019 |
 
 
 #### Blog posts and write-ups 2019
@@ -107,6 +107,8 @@ Key:
 | [Serverless, KubeCon and Kubernetes the easy way](https://www.meetup.com/Cloud-Native-Computing-Paris/events/257113168/) | Edward Wilde | Paris | 19-Dec-2018 |
 | [KubeCon + CloudNativeCon: Digital Transformation of Vision Banco Paraguay with Serverless Functions](https://sched.co/GraO) | Alex Ellis & Patricio Diaz | Seattle, WA | 13-Dec-2018 |
 | [Serverless com OpenFaaS e PHP @ PHP Conference Brazil](https://phpconference.com.br) | Fernando Silva | Porto Alegre, BR | 07-Dec-2018 |
+| [Serverless - czy faktycznie chodzi serwery?](https://www.meetup.com/C_tech-Wrocław/events/256740066) | Bart Smykla | Wrocław, Poland | 04-Dec-2018 |
+| [OpenFaaS - Jak to się je?](https://www.meetup.com/Serverless-Wroclaw/events/256599672/) | Bart Smykla | Wrocław, Poland | 03-Dec-2018 |
 | [The FaaS & The Furious](https://www.meetup.com/CloudAustin/events/gxwbkpyxpbbc/) | Burton Rheutan | Austin, TX | 27-Nov-2018 |
 | [GOTO Copenhagen: Serverless Beyond the Hype](https://gotocph.com/2018/sessions/592) | Alex Ellis | Copenhagen, DK | 19-Nov-2018 |
 | [OpenFaaS workshop @ Capitole du Libre](https://2018.capitoledulibre.org/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) <br /> [Adrien Blind](https://twitter.com/adrienBlind) <br /> [Ludovic Piot](https://twitter.com/lpiot)| Toulouse, France | 18-Nov-2018 |
@@ -114,6 +116,7 @@ Key:
 | [🚀 2+ years of feedback @ Capitole du Libre](https://2018.capitoledulibre.org/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) <br /> [Adrien Blind](https://twitter.com/adrienBlind) <br /> [Ludovic Piot](https://twitter.com/lpiot) | Toulouse, France | 17-Nov-2018 |
 | [Functions as a Service - The Easy Way](https://www.istacon.org) | [Ivana Yovcheva](https://twitter.com/ivanabyov) | Sofia, Bulgaria | 15-Nov-2018 |
 | [OpenFaaS : a serverless framework on top of Docker and Kubernetes @ DevOpsDDay](https://2018.devops-dday.com/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Marseille, France | 15-Nov-2018 |
+| [ Serverless Computing London: Why Kubernetes is the right place for your functions](http://serverless2018.wpengine.com/sessions/kubernetes-right-place-functions/) | Bart Smykla | London, UK | 13-Nov-2018 |
 | [ Serverless Computing London: FaaS and Furious – 0 to Serverless in 60 Seconds, Anywhere](https://serverlesscomputing.london/sessions/faas-furious-0-serverless-60-seconds-anywhere/) | Alex Ellis | London, UK | 12-Nov-2018 |
 | [Open Source Summit Europe: Introducing OpenFaaS Cloud, a Developer-Friendly CI/CD Pipeline for Serverless](https://osseu18.sched.com/event/FxXx/introducing-openfaas-cloud-a-developer-friendly-cicd-pipeline-for-serverless-alex-ellis-openfaas-project-vmware) | Alex Ellis | Edinburgh, Scotland | 22-Oct-2018 |
 | Exploring the serverless framework with OpenFaaS @ DevFest Nantes | [Emmanuel Lebeaupin](https://twitter.com/elebeaup) | Nantes, France | 19-Oct-2018 |
