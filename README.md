@@ -26,11 +26,19 @@ OpenFaaS&reg; (Functions as a Service) is a framework for building Serverless fu
 
 ### Press / Branding / Sponsors
 
-For information on branding, the press-kit, registered entities and sponsorship head over to the [openfaas/media](https://github.com/openfaas/media/blob/master/README.md) repo. You can also order custom SWAG or take part in the weekly Twitter contest [#FaaSFriday](https://twitter.com/search?q=faasfriday&src=typd)
+* Press / Branding
 
-Looking for statistics? This project does not use a mono-repo, but is split across several components. Use [Ken Fukuyama's dashboard](https://kenfdev.o6s.io/github-stats-page) to gather accurate counts on contributors, stars and forks across the [GitHub organisation](https://github.com/openfaas).
+  For information on branding, the press-kit, registered entities and sponsorship head over to the [openfaas/media](https://github.com/openfaas/media/blob/master/README.md) repo. You can also order custom SWAG or take part in the weekly Twitter contest [#FaaSFriday](https://twitter.com/search?q=faasfriday&src=typd)
 
-Incubator projects are not counted in these totals and are hosted under [openfaas-incubator](https://github.com/openfaas-incubator) awaiting graduation.
+* Looking for statistics? This project does not use a mono-repo, but is split across several components. Use [Ken Fukuyama's dashboard](https://kenfdev.o6s.io/github-stats-page) to gather accurate counts on contributors, stars and forks across the [GitHub organisation](https://github.com/openfaas).
+
+  > Note: Incubator projects are not counted in these totals and are hosted under [openfaas-incubator](https://github.com/openfaas-incubator) awaiting graduation.
+
+* Sponsorship, Patreon and becoming a backer
+
+  You can support OpenFaaS by becoming a [backer on Patreon](https://www.patreon.com/alexellis) and pick a reward. Sponsors and some reward-levels mean you will be listed in [BACKERS.md](https://github.com/openfaas/faas/blob/master/BACKERS.md).
+
+  <a href="https://www.patreon.com/bePatron?u=8456397" data-patreon-widget-type="become-patron-button"><img width="170px" height="40px" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
 
 ### Governance
 

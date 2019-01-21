@@ -6,29 +6,25 @@ View this page for live data [on Patreon for everyone who has pledged](https://w
 
 ### OpenFaaS Sponsors
 
-Become the first sponsor and have your logo on the [OpenFaaS homepage](https://www.openfaas.com/). 
+Become a sponsor and have your logo placed on the [OpenFaaS website](https://www.openfaas.com/)
 
 ### Backers
 
 Listed by reward, followed by miscellaneous amounts. Names are (pending) until first pledge is taken by Patreon, this is at the start of each month.
 
-* José Roberto Almaráz Da Cunha Júnior
-* Wesley Kennedy
-* Owen Dall Sotomayor
-* Theo Pack
-* Toby Boudreaux
-* Pav Jimanov
-* Eric Stoekl
-* Alex DeBrie
-* Johnny Mkhael
-* Rafael Barbosa
 * Weston Steimel
-* Michael	Herman
-* Cody De Arkland
-* Richard Petersen-Hall
+* Wesley Kennedy
 * Sivaramakrishnan Malikkal
-* Lewis Denham-Parry
+* Richard Petersen-Hall
+* Rafael Barbosa
+* Pav Jimanov
+* Owen Dall Sotomayor
+* Murugappan Sevugan Chetty
 * Markus Fischbacher
+* Mark Jeromin
+* José Roberto Almaráz Da Cunha Júnior
+* Johnny Mkhael
+* Garden Germany GmbH
 
 Miscellaneous rewards/amounts are not shown.
 
@@ -41,5 +37,6 @@ The hall of fame shows contributors who made a sustained positive impact on the 
 * Robbie Page
 * Jock Reed
 * Eric Stoekl
+* Ken Fukuyama
 
 > Disclaimer: all Patrons are making a monthly pledge to support Alex Ellis in running and operating OpenFaaS. This does not represent an investment, stake or ownership in OpenFaaS Ltd or related entities.
