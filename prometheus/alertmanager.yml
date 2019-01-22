@@ -20,3 +20,7 @@ receivers:
   webhook_configs:
     - url: http://gateway:8080/system/alert
       send_resolved: true
+      http_config:
+            basic_auth:
+              username: admin
+              password_file: /run/secrets/basic-auth-password

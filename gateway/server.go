@@ -126,6 +126,8 @@ func main() {
 	faasHandlers.ScaleFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
 
 	if credentials != nil {
+		faasHandlers.Alert =
+			auth.DecorateWithBasicAuth(faasHandlers.Alert, credentials)
 		faasHandlers.UpdateFunction =
 			auth.DecorateWithBasicAuth(faasHandlers.UpdateFunction, credentials)
 		faasHandlers.DeleteFunction =
