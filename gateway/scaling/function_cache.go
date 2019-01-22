@@ -25,7 +25,7 @@ func (fm *FunctionMeta) Expired(expiry time.Duration) bool {
 type FunctionCache struct {
 	Cache  map[string]*FunctionMeta
 	Expiry time.Duration
-	Sync   sync.Mutex
+	Sync   sync.RWMutex
 }
 
 // Set replica count for functionName
@@ -37,23 +37,22 @@ func (fc *FunctionCache) Set(functionName string, serviceQueryResponse ServiceQu
 		fc.Cache[functionName] = &FunctionMeta{}
 	}
 
-	entry := fc.Cache[functionName]
-	entry.LastRefresh = time.Now()
-	entry.ServiceQueryResponse = serviceQueryResponse
-
+	fc.Cache[functionName].LastRefresh = time.Now()
+	fc.Cache[functionName].ServiceQueryResponse = serviceQueryResponse
+	// entry.LastRefresh = time.Now()
+	// entry.ServiceQueryResponse = serviceQueryResponse
 }
 
 // Get replica count for functionName
 func (fc *FunctionCache) Get(functionName string) (ServiceQueryResponse, bool) {
-
-	fc.Sync.Lock()
-	defer fc.Sync.Unlock()
-
 	replicas := ServiceQueryResponse{
 		AvailableReplicas: 0,
 	}
 
 	hit := false
+	fc.Sync.RLock()
+	defer fc.Sync.RUnlock()
+
 	if val, exists := fc.Cache[functionName]; exists {
 		replicas = val.ServiceQueryResponse
 		hit = !val.Expired(fc.Expiry)

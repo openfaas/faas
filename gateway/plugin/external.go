@@ -6,16 +6,14 @@ package plugin
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
 	"net/url"
 	"strconv"
 	"time"
-
-	"fmt"
-
-	"io/ioutil"
 
 	"github.com/openfaas/faas-provider/auth"
 	"github.com/openfaas/faas/gateway/requests"
@@ -62,6 +60,8 @@ type ScaleServiceRequest struct {
 
 // GetReplicas replica count for function
 func (s ExternalServiceQuery) GetReplicas(serviceName string) (scaling.ServiceQueryResponse, error) {
+	start := time.Now()
+
 	var err error
 	var emptyServiceQueryResponse scaling.ServiceQueryResponse
 
@@ -92,6 +92,7 @@ func (s ExternalServiceQuery) GetReplicas(serviceName string) (scaling.ServiceQu
 				log.Println(urlPath, err)
 			}
 		} else {
+			log.Printf("GetReplicas took: %fs", time.Since(start).Seconds())
 			return emptyServiceQueryResponse, fmt.Errorf("server returned non-200 status code (%d) for function, %s", res.StatusCode, serviceName)
 		}
 	}
@@ -114,6 +115,8 @@ func (s ExternalServiceQuery) GetReplicas(serviceName string) (scaling.ServiceQu
 			log.Printf("Bad Scaling Factor: %d, is not in range of [0 - 100]. Will fallback to %d", extractedScalingFactor, scalingFactor)
 		}
 	}
+
+	log.Printf("GetReplicas took: %fs", time.Since(start).Seconds())
 
 	return scaling.ServiceQueryResponse{
 		Replicas:          function.Replicas,
