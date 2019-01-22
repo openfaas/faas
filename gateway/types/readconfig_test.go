@@ -4,6 +4,7 @@
 package types
 
 import (
+	"fmt"
 	"testing"
 	"time"
 )
@@ -257,6 +258,44 @@ func TestRead_BasicAuth_SetTrue(t *testing.T) {
 	wantSecretsMount := "/etc/openfaas/"
 	if config.SecretMountPath != wantSecretsMount {
 		t.Logf("config.SecretMountPath, want: %s, got: %s\n", wantSecretsMount, config.SecretMountPath)
+		t.Fail()
+	}
+}
+
+func TestRead_MaxIdleConnsDefaults(t *testing.T) {
+	defaults := NewEnvBucket()
+
+	readConfig := ReadConfig{}
+
+	config := readConfig.Read(defaults)
+
+	if config.MaxIdleConns != 1024 {
+		t.Logf("config.MaxIdleConns, want: %d, got: %d\n", 1024, config.MaxIdleConns)
+		t.Fail()
+	}
+
+	if config.MaxIdleConnsPerHost != 1024 {
+		t.Logf("config.MaxIdleConnsPerHost, want: %d, got: %d\n", 1024, config.MaxIdleConnsPerHost)
+		t.Fail()
+	}
+}
+
+func TestRead_MaxIdleConns_Override(t *testing.T) {
+	defaults := NewEnvBucket()
+
+	readConfig := ReadConfig{}
+	defaults.Setenv("max_idle_conns", fmt.Sprintf("%d", 100))
+	defaults.Setenv("max_idle_conns_per_host", fmt.Sprintf("%d", 2))
+
+	config := readConfig.Read(defaults)
+
+	if config.MaxIdleConns != 100 {
+		t.Logf("config.MaxIdleConns, want: %d, got: %d\n", 100, config.MaxIdleConns)
+		t.Fail()
+	}
+
+	if config.MaxIdleConnsPerHost != 2 {
+		t.Logf("config.MaxIdleConnsPerHost, want: %d, got: %d\n", 2, config.MaxIdleConnsPerHost)
 		t.Fail()
 	}
 }

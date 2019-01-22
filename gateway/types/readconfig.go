@@ -114,6 +114,29 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 	cfg.SecretMountPath = secretPath
 	cfg.ScaleFromZero = parseBoolValue(hasEnv.Getenv("scale_from_zero"))
 
+	cfg.MaxIdleConns = 1024
+	cfg.MaxIdleConnsPerHost = 1024
+
+	maxIdleConns := hasEnv.Getenv("max_idle_conns")
+	if len(maxIdleConns) > 0 {
+		val, err := strconv.Atoi(maxIdleConns)
+		if err != nil {
+			log.Println("Invalid value for max_idle_conns")
+		} else {
+			cfg.MaxIdleConns = val
+		}
+	}
+
+	maxIdleConnsPerHost := hasEnv.Getenv("max_idle_conns_per_host")
+	if len(maxIdleConnsPerHost) > 0 {
+		val, err := strconv.Atoi(maxIdleConnsPerHost)
+		if err != nil {
+			log.Println("Invalid value for max_idle_conns_per_host")
+		} else {
+			cfg.MaxIdleConnsPerHost = val
+		}
+	}
+
 	return cfg
 }
 
@@ -155,8 +178,13 @@ type GatewayConfig struct {
 
 	// SecretMountPath specifies where to read secrets from for embedded basic auth
 	SecretMountPath string
+
 	// Enable the gateway to scale any service from 0 replicas to its configured "min replicas"
 	ScaleFromZero bool
+
+	MaxIdleConns int
+
+	MaxIdleConnsPerHost int
 }
 
 // UseNATS Use NATSor not

@@ -61,11 +61,11 @@ func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers [
 			log.Printf("error with upstream request to: %s, %s\n", requestURL, err.Error())
 		}
 
-		defer func() {
-			for _, notifier := range notifiers {
-				notifier.Notify(r.Method, requestURL, originalURL, statusCode, seconds)
-			}
-		}()
+		// defer func() {
+		for _, notifier := range notifiers {
+			notifier.Notify(r.Method, requestURL, originalURL, statusCode, seconds)
+		}
+		// }()
 
 	}
 }

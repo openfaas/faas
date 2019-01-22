@@ -11,7 +11,7 @@ import (
 )
 
 // NewHTTPClientReverseProxy proxies to an upstream host through the use of a http.Client
-func NewHTTPClientReverseProxy(baseURL *url.URL, timeout time.Duration) *HTTPClientReverseProxy {
+func NewHTTPClientReverseProxy(baseURL *url.URL, timeout time.Duration, maxIdleConns, maxIdleConnsPerHost int) *HTTPClientReverseProxy {
 	h := HTTPClientReverseProxy{
 		BaseURL: baseURL,
 		Timeout: timeout,
@@ -23,6 +23,13 @@ func NewHTTPClientReverseProxy(baseURL *url.URL, timeout time.Duration) *HTTPCli
 		return http.ErrUseLastResponse
 	}
 
+	// These overrides for the default client enable re-use of connections and prevent
+	// CoreDNS from rate limiting the gateway under high traffic
+	//
+	// See also two similar projects where this value was updated:
+	// https://github.com/prometheus/prometheus/pull/3592
+	// https://github.com/minio/minio/pull/5860
+
 	// Taken from http.DefaultTransport in Go 1.11
 	h.Client.Transport = &http.Transport{
 		Proxy: http.ProxyFromEnvironment,
@@ -31,8 +38,8 @@ func NewHTTPClientReverseProxy(baseURL *url.URL, timeout time.Duration) *HTTPCli
 			KeepAlive: timeout,
 			DualStack: true,
 		}).DialContext,
-		MaxIdleConns:          20000, // Overriden via https://github.com/errordeveloper/prometheus/commit/1f74477646aea93bebb7c098affa8e05132abb0c
-		MaxIdleConnsPerHost:   1024,  // Overriden via https://github.com/minio/minio/pull/5860
+		MaxIdleConns:          maxIdleConns,
+		MaxIdleConnsPerHost:   maxIdleConnsPerHost,
 		IdleConnTimeout:       90 * time.Second,
 		TLSHandshakeTimeout:   10 * time.Second,
 		ExpectContinueTimeout: 1 * time.Second,
