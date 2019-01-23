@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: openfaas/gateway:0.9.11-arm64
+        image: openfaas/gateway:0.10.1-arm64
         networks:
             - functions
         environment:
@@ -39,7 +39,7 @@ services:
 
     # Docker Swarm provider
     faas-swarm:
-        image:  openfaas/faas-swarm:0.6.1-arm64  # TODO: Provide ARM64 image
+        image:  openfaas/faas-swarm:0.6.1-arm64
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
         networks:
@@ -91,7 +91,7 @@ services:
                     - 'node.platform.os == linux'
 
     queue-worker:
-        image: openfaas/queue-worker:0.5.5-arm64  # TODO: Provide ARM64 image
+        image: openfaas/queue-worker:0.5.7-arm64
         networks:
             - functions
         environment:
@@ -118,7 +118,7 @@ services:
     # Start monitoring
 
     prometheus:
-        image: alexellis2/prometheus:2.3.1-arm64
+        image: functions/prometheus:2.3.1-arm64
         environment:
             no_proxy: "gateway"
         configs:
@@ -145,7 +145,7 @@ services:
                     memory: 200M
 
     alertmanager:
-        image: alexellis2/alertmanager-armhf:0.5.1  # TODO: Provide ARM64 image
+        image: functions/alertmanager:0.15.0-rc.0-arm64
         environment:
             no_proxy: "gateway"
         command:
