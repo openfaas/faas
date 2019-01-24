@@ -149,7 +149,8 @@ services:
         environment:
             no_proxy: "gateway"
         command:
-            - '-config.file=/alertmanager.yml'
+            - '--config.file=/alertmanager.yml'
+            - '--storage.path=/alertmanager'
         networks:
             - functions
         # Uncomment the following port mapping if you wish to expose the Prometheus
