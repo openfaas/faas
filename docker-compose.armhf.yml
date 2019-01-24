@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: openfaas/gateway:0.10.0-armhf
+        image: openfaas/gateway:0.9.14-armhf
         networks:
             - functions
         environment:
