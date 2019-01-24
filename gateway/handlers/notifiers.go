@@ -3,7 +3,6 @@ package handlers
 import (
 	"fmt"
 	"log"
-	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -30,16 +29,14 @@ func (psn PrometheusServiceNotifier) Notify(method string, URL string, originalU
 	psn.ServiceMetrics.Histogram.WithLabelValues(method, path, code).Observe(duration.Seconds())
 }
 
-var invalidChars = regexp.MustCompile(`[^a-zA-Z0-9]+`)
-
-// converts a URL path to a string compatible with Prometheus label value.
 func urlToLabel(path string) string {
-	result := invalidChars.ReplaceAllString(path, "_")
-	result = strings.ToLower(strings.Trim(result, "_"))
-	if result == "" {
-		result = "root"
+	if len(path) > 0 {
+		path = strings.TrimRight(path, "/")
 	}
-	return result
+	if path == "" {
+		path = "/"
+	}
+	return path
 }
 
 // PrometheusFunctionNotifier records metrics to Prometheus
