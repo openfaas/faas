@@ -25,7 +25,8 @@ type PrometheusServiceNotifier struct {
 func (psn PrometheusServiceNotifier) Notify(method string, URL string, originalURL string, statusCode int, duration time.Duration) {
 	code := fmt.Sprintf("%d", statusCode)
 	path := urlToLabel(URL)
-	psn.ServiceMetrics.Counter.WithLabelValues(code, method, path).Inc()
+
+	psn.ServiceMetrics.Counter.WithLabelValues(method, path, code).Inc()
 	psn.ServiceMetrics.Histogram.WithLabelValues(method, path, code).Observe(duration.Seconds())
 }
 
