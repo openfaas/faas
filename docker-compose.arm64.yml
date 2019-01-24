@@ -8,9 +8,10 @@ services:
             - functions
         environment:
             functions_provider_url: "http://faas-swarm:8080/"
-            read_timeout:  "305s"        # Maximum time to read HTTP request
-            write_timeout: "305s"        # Maximum time to write HTTP response
-            upstream_timeout: "300s"     # Maximum duration of upstream function call - should be more than read_timeout and write_timeout            dnsrr: "true"  # Temporarily use dnsrr in place of VIP while issue persists on PWD
+            read_timeout:  "300s"        # Maximum time to read HTTP request
+            write_timeout: "300s"        # Maximum time to write HTTP response
+            upstream_timeout: "300s"     # Maximum duration of upstream function call - should be more than read_timeout and write_timeout
+            dnsrr: "true"               # Temporarily use dnsrr in place of VIP while issue persists on PWD
             faas_nats_address: "nats"
             faas_nats_port: 4222
             direct_functions: "true"    # Functions are invoked directly over the overlay network
@@ -20,7 +21,7 @@ services:
             scale_from_zero: "true"
         deploy:
             resources:
-                # limits:   # uncomment to enable limits
+                # limits:   # Enable if you want to limit memory usage
                 #     memory: 100M
                 reservations:
                     memory: 100M
@@ -35,7 +36,6 @@ services:
         secrets:
             - basic-auth-user
             - basic-auth-password
-
 
     # Docker Swarm provider
     faas-swarm:
@@ -45,8 +45,8 @@ services:
         networks:
             - functions
         environment:
-            read_timeout:  "305s"   # set both here, and on your functions
-            write_timeout: "305s"   # set both here, and on your functions
+            read_timeout:  "300s"   # set both here, and on your functions
+            write_timeout: "300s"   # set both here, and on your functions
             DOCKER_API_VERSION: "1.30"
             basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
@@ -56,7 +56,7 @@ services:
                     - 'node.role == manager'
                     - 'node.platform.os == linux'
             resources:
-                # limits:   # uncomment to enable limits
+                # limits:   # Enable if you want to limit memory usage
                 #     memory: 100M
                 reservations:
                     memory: 100M
@@ -68,7 +68,6 @@ services:
         secrets:
             - basic-auth-user
             - basic-auth-password
-
 
     nats:
         image: nats-streaming:0.11.2
@@ -96,8 +95,8 @@ services:
             - functions
         environment:
             max_inflight: "1"
-            ack_wait: "30s"    # Max duration of any async task / request
-            basic_auth: "false"
+            ack_wait: "300s"    # Max duration of any async task / request
+            basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
         deploy:
             resources:
@@ -113,6 +112,10 @@ services:
             placement:
                 constraints:
                     - 'node.platform.os == linux'
+        secrets:
+            - basic-auth-user
+            - basic-auth-password
+
     # End services
 
     # Start monitoring
@@ -170,6 +173,8 @@ services:
         configs:
             - source: alertmanager_config
               target: /alertmanager.yml
+        secrets:
+            - basic-auth-password
 
 
 configs:
@@ -192,4 +197,3 @@ secrets:
         external: true
     basic-auth-password:
         external: true
-
