@@ -1,3 +1,2 @@
 build:
-	docker build -t alexellis2/prometheus:2.3.1-arm64 .
-
+	docker build -t functions/prometheus:2.3.1-arm64 .
