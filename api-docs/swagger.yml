@@ -444,15 +444,20 @@ definitions:
           description: Constraints are specific to OpenFaaS Provider
           example: "node.platform.os == linux"
       labels:
-        description: An array of labels used by the back-end for making scheduling or routing decisions
-        type: array
-        items:
+        description: A dictionary/hashmap used by the back-end for making scheduling or routing decisions
+        type: object
+        additionalProperties:
           type: string
+        example:
+          foo: bar
       annotations:
-        description: An array of annotations used by the back-end for management, orchestration, events and build tasks
-        type: array
-        items:
+        description: A dictionary/hashmap of annotations used by the back-end for management, orchestration, events and build tasks
+        type: object
+        additionalProperties:
           type: string
+        example:
+          topics: awesome-kafka-topic
+          foo: bar
       secrets:
         type: array
         items:
@@ -483,6 +488,9 @@ definitions:
           cpu:
             type: string
             example: "0.01"
+      readOnlyRootFilesystem:
+        type: boolean
+        description: Removes write-access from the root filesystem
     required:
     - service
     - image
@@ -518,13 +526,20 @@ definitions:
         type: string
         example: node main.js
       labels:
+        description: A dictionary/hashmap used by the back-end for making scheduling or routing decisions
         type: object
         additionalProperties:
           type: string
+        example:
+          foo: bar
       annotations:
+        description: A dictionary/hashmap of annotations used by the back-end for management, orchestration, events and build tasks
         type: object
         additionalProperties:
           type: string
+        example:
+          topics: awesome-kafka-topic
+          foo: bar
     required:
     - name
     - image
