@@ -444,14 +444,14 @@ definitions:
           description: Constraints are specific to OpenFaaS Provider
           example: "node.platform.os == linux"
       labels:
-        description: A dictionary/hashmap used by the back-end for making scheduling or routing decisions
+        description: A map of labels for making scheduling or routing decisions
         type: object
         additionalProperties:
           type: string
         example:
           foo: bar
       annotations:
-        description: A dictionary/hashmap of annotations used by the back-end for management, orchestration, events and build tasks
+        description: A map of annotations for management, orchestration, events and build tasks
         type: object
         additionalProperties:
           type: string
@@ -490,7 +490,7 @@ definitions:
             example: "0.01"
       readOnlyRootFilesystem:
         type: boolean
-        description: Removes write-access from the root filesystem
+        description: Make the root filesystem of the function read-only
     required:
     - service
     - image
@@ -526,14 +526,14 @@ definitions:
         type: string
         example: node main.js
       labels:
-        description: A dictionary/hashmap used by the back-end for making scheduling or routing decisions
+        description: A map of labels for making scheduling or routing decisions
         type: object
         additionalProperties:
           type: string
         example:
           foo: bar
       annotations:
-        description: A dictionary/hashmap of annotations used by the back-end for management, orchestration, events and build tasks
+        description: A map of annotations for management, orchestration, events and build tasks
         type: object
         additionalProperties:
           type: string
