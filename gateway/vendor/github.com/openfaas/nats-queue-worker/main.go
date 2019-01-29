@@ -10,14 +10,15 @@ import (
 	"net"
 	"os"
 	"os/signal"
-	"strconv"
 	"strings"
 	"time"
 
 	"net/http"
 
 	"github.com/nats-io/go-nats-streaming"
+	"github.com/openfaas/faas-provider/auth"
 	"github.com/openfaas/faas/gateway/queue"
+	"github.com/openfaas/nats-queue-worker/nats"
 )
 
 // AsyncReport is the report from a function executed on a queue worker.
@@ -49,41 +50,32 @@ func makeClient() http.Client {
 }
 
 func main() {
+	readConfig := ReadConfig{}
+	config := readConfig.Read()
 	log.SetFlags(0)
 
 	clusterID := "faas-cluster"
 	val, _ := os.Hostname()
-	clientID := "faas-worker-" + val
-
-	natsAddress := "nats"
-	gatewayAddress := "gateway"
-	functionSuffix := ""
-	var debugPrintBody bool
-
-	if val, exists := os.LookupEnv("faas_nats_address"); exists {
-		natsAddress = val
-	}
-
-	if val, exists := os.LookupEnv("faas_gateway_address"); exists {
-		gatewayAddress = val
-	}
-
-	if val, exists := os.LookupEnv("faas_function_suffix"); exists {
-		functionSuffix = val
-	}
-
-	if val, exists := os.LookupEnv("faas_print_body"); exists {
-		debugPrintBody = val == "1" || val == "true"
-	}
+	clientID := "faas-worker-" + nats.GetClientID(val)
 
 	var durable string
 	var qgroup string
 	var unsubscribe bool
+	var credentials *auth.BasicAuthCredentials
+	var err error
+
+	if os.Getenv("basic_auth") == "true" {
+		log.Printf("Loading basic authentication credentials")
+		credentials, err = LoadCredentials()
+		if err != nil {
+			log.Printf("Error with LoadCredentials: %s ", err.Error())
+		}
+	}
 
 	client := makeClient()
-	sc, err := stan.Connect(clusterID, clientID, stan.NatsURL("nats://"+natsAddress+":4222"))
+	sc, err := stan.Connect(clusterID, clientID, stan.NatsURL("nats://"+config.NatsAddress+":4222"))
 	if err != nil {
-		log.Fatalf("Can't connect: %v\n", err)
+		log.Fatalf("Can't connect to %s: %v\n", "nats://"+config.NatsAddress+":4222", err)
 	}
 
 	startOpt := stan.StartWithLastReceived()
@@ -104,8 +96,11 @@ func main() {
 			return
 		}
 
+		xCallID := req.Header.Get("X-Call-Id")
+
 		fmt.Printf("Request for %s.\n", req.Function)
-		if debugPrintBody {
+
+		if config.DebugPrintBody {
 			fmt.Println(string(req.Body))
 		}
 
@@ -114,7 +109,7 @@ func main() {
 			queryString = fmt.Sprintf("?%s", strings.TrimLeft(req.QueryString, "?"))
 		}
 
-		functionURL := fmt.Sprintf("http://%s%s:8080/%s", req.Function, functionSuffix, queryString)
+		functionURL := fmt.Sprintf("http://%s%s:8080/%s", req.Function, config.FunctionSuffix, queryString)
 
 		request, err := http.NewRequest(http.MethodPost, functionURL, bytes.NewReader(req.Body))
 		defer request.Body.Close()
@@ -134,7 +129,12 @@ func main() {
 			if req.CallbackURL != nil {
 				log.Printf("Callback to: %s\n", req.CallbackURL.String())
 
-				resultStatusCode, resultErr := postResult(&client, res, functionResult, req.CallbackURL.String())
+				resultStatusCode, resultErr := postResult(&client,
+					res,
+					functionResult,
+					req.CallbackURL.String(),
+					xCallID,
+					status)
 				if resultErr != nil {
 					log.Println(resultErr)
 				} else {
@@ -142,7 +142,7 @@ func main() {
 				}
 			}
 
-			statusCode, reportErr := postReport(&client, req.Function, status, timeTaken, gatewayAddress)
+			statusCode, reportErr := postReport(&client, req.Function, status, timeTaken, config.GatewayAddress, credentials)
 			if reportErr != nil {
 				log.Println(reportErr)
 			} else {
@@ -160,7 +160,12 @@ func main() {
 			if err != nil {
 				log.Println(err)
 			}
-			fmt.Println(string(functionResult))
+
+			if config.WriteDebug {
+				fmt.Println(string(functionResult))
+			} else {
+				fmt.Printf("Wrote %d Bytes\n", len(string(functionResult)))
+			}
 		}
 
 		timeTaken := time.Since(started).Seconds()
@@ -169,7 +174,12 @@ func main() {
 
 		if req.CallbackURL != nil {
 			log.Printf("Callback to: %s\n", req.CallbackURL.String())
-			resultStatusCode, resultErr := postResult(&client, res, functionResult, req.CallbackURL.String())
+			resultStatusCode, resultErr := postResult(&client,
+				res,
+				functionResult,
+				req.CallbackURL.String(),
+				xCallID,
+				res.StatusCode)
 			if resultErr != nil {
 				log.Println(resultErr)
 			} else {
@@ -177,7 +187,7 @@ func main() {
 			}
 		}
 
-		statusCode, reportErr := postReport(&client, req.Function, res.StatusCode, timeTaken, gatewayAddress)
+		statusCode, reportErr := postReport(&client, req.Function, res.StatusCode, timeTaken, config.GatewayAddress, credentials)
 
 		if reportErr != nil {
 			log.Println(reportErr)
@@ -189,29 +199,8 @@ func main() {
 	subj := "faas-request"
 	qgroup = "faas"
 
-	ackWait := time.Second * 30
-	maxInflight := 1
-
-	if value, exists := os.LookupEnv("max_inflight"); exists {
-		val, err := strconv.Atoi(value)
-		if err != nil {
-			log.Println("max_inflight error:", err)
-		} else {
-			maxInflight = val
-		}
-	}
-
-	if val, exists := os.LookupEnv("ack_wait"); exists {
-		ackWaitVal, durationErr := time.ParseDuration(val)
-		if durationErr != nil {
-			log.Println("ack_wait error:", durationErr)
-		} else {
-			ackWait = ackWaitVal
-		}
-	}
-
-	log.Println("Wait for ", ackWait)
-	sub, err := sc.QueueSubscribe(subj, qgroup, mcb, startOpt, stan.DurableName(durable), stan.MaxInflight(maxInflight), stan.AckWait(ackWait))
+	log.Println("Wait for ", config.AckWait)
+	sub, err := sc.QueueSubscribe(subj, qgroup, mcb, startOpt, stan.DurableName(durable), stan.MaxInflight(config.MaxInflight), stan.AckWait(config.AckWait))
 	if err != nil {
 		log.Panicln(err)
 	}
@@ -224,7 +213,7 @@ func main() {
 	cleanupDone := make(chan bool)
 	signal.Notify(signalChan, os.Interrupt)
 	go func() {
-		for _ = range signalChan {
+		for range signalChan {
 			fmt.Printf("\nReceived an interrupt, unsubscribing and closing connection...\n\n")
 			// Do not unsubscribe a durable on exit, except if asked to.
 			if durable == "" || unsubscribe {
@@ -237,7 +226,7 @@ func main() {
 	<-cleanupDone
 }
 
-func postResult(client *http.Client, functionRes *http.Response, result []byte, callbackURL string) (int, error) {
+func postResult(client *http.Client, functionRes *http.Response, result []byte, callbackURL string, xCallID string, statusCode int) (int, error) {
 	var reader io.Reader
 
 	if result != nil {
@@ -246,7 +235,15 @@ func postResult(client *http.Client, functionRes *http.Response, result []byte, 
 
 	request, err := http.NewRequest(http.MethodPost, callbackURL, reader)
 
-	copyHeaders(request.Header, &functionRes.Header)
+	if functionRes != nil {
+		copyHeaders(request.Header, &functionRes.Header)
+	}
+
+	request.Header.Set("X-Function-Status", fmt.Sprintf("%d", statusCode))
+
+	if len(xCallID) > 0 {
+		request.Header.Set("X-Call-Id", xCallID)
+	}
 
 	res, err := client.Do(request)
 
@@ -272,7 +269,7 @@ func copyHeaders(destination http.Header, source *http.Header) {
 	}
 }
 
-func postReport(client *http.Client, function string, statusCode int, timeTaken float64, gatewayAddress string) (int, error) {
+func postReport(client *http.Client, function string, statusCode int, timeTaken float64, gatewayAddress string, credentials *auth.BasicAuthCredentials) (int, error) {
 	req := AsyncReport{
 		FunctionName: function,
 		StatusCode:   statusCode,
@@ -282,6 +279,11 @@ func postReport(client *http.Client, function string, statusCode int, timeTaken 
 	targetPostback := "http://" + gatewayAddress + ":8080/system/async-report"
 	reqBytes, _ := json.Marshal(req)
 	request, err := http.NewRequest(http.MethodPost, targetPostback, bytes.NewReader(reqBytes))
+
+	if os.Getenv("basic_auth") == "true" && credentials != nil {
+		request.SetBasicAuth(credentials.User, credentials.Password)
+	}
+
 	defer request.Body.Close()
 
 	res, err := client.Do(request)

@@ -1,16 +1,1 @@
-maintainers:
- - alexellis
- - rgee0
- - johnmccabe
- - jockdarock
- - ericstoekl
- - austinfrey
- - itscaro
- - rorpage
- - kenfdev
- - BurtonR
-
-features:
- - dco_check
- - comments
- 
+redirect: https://raw.githubusercontent.com/openfaas/faas/master/.DEREK.yml

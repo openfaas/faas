@@ -10,12 +10,11 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/openfaas/faas/gateway/handlers"
-	"github.com/openfaas/faas/gateway/scaling"
-
 	"github.com/openfaas/faas-provider/auth"
+	"github.com/openfaas/faas/gateway/handlers"
 	"github.com/openfaas/faas/gateway/metrics"
 	"github.com/openfaas/faas/gateway/plugin"
+	"github.com/openfaas/faas/gateway/scaling"
 	"github.com/openfaas/faas/gateway/types"
 	natsHandler "github.com/openfaas/nats-queue-worker/handler"
 )
@@ -103,7 +102,12 @@ func main() {
 
 	if config.UseNATS() {
 		log.Println("Async enabled: Using NATS Streaming.")
-		natsQueue, queueErr := natsHandler.CreateNatsQueue(*config.NATSAddress, *config.NATSPort, natsHandler.DefaultNatsConfig{})
+		maxReconnect := 60
+		interval := time.Second * 2
+
+		defaultNATSConfig := natsHandler.NewDefaultNATSConfig(maxReconnect, interval)
+
+		natsQueue, queueErr := natsHandler.CreateNATSQueue(*config.NATSAddress, *config.NATSPort, defaultNATSConfig)
 		if queueErr != nil {
 			log.Fatalln(queueErr)
 		}

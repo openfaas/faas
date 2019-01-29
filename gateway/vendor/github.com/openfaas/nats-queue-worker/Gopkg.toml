@@ -31,7 +31,7 @@
 
 [[constraint]]
   name = "github.com/openfaas/faas"
-  version = "0.8.2"
+  version = "0.10.2"
 
 [[constraint]]
   name = "github.com/nats-io/go-nats"
@@ -40,3 +40,7 @@
 [prune]
   go-tests = true
   unused-packages = true
+
+[[constraint]]
+  name = "github.com/openfaas/faas-provider"
+  version = "0.7.0"

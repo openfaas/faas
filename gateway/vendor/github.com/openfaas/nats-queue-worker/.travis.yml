@@ -23,10 +23,16 @@ after_success:
     - if [ ! -z "$TRAVIS_TAG" ] ; then
     
         if [ -z $DOCKER_NS ] ; then
-          export DOCKER_NS=functions;
+          export DOCKER_NS=openfaas;
           fi
 
         docker tag $DOCKER_NS/queue-worker:latest-dev $DOCKER_NS/queue-worker:$TRAVIS_TAG;
         echo $DOCKER_PASSWORD | docker login -u=$DOCKER_USERNAME --password-stdin;
         docker push $DOCKER_NS/queue-worker:$TRAVIS_TAG;
+
+
+        docker tag $DOCKER_NS/queue-worker:latest-dev quay.io/$DOCKER_NS/queue-worker:$TRAVIS_TAG;
+        echo $QUAY_PASSWORD | docker login -u=$QUAY_USERNAME --password-stdin quay.io;
+        docker push quay.io/$DOCKER_NS/queue-worker:$TRAVIS_TAG;
+
         fi
