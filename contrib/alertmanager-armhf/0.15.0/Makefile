@@ -1,3 +1,7 @@
-build:
-	docker build -t alexellis2/alertmanager:v0.15.0-armv7 .
+.PHONY: ci-armhf-build
+ci-armhf-build:
+	docker build -t functions/alertmanager:0.15.0-armhf .
 
+.PHONY: ci-armhf-push
+ci-armhf-push:
+	docker push functions/alertmanager:0.15.0-armhf
