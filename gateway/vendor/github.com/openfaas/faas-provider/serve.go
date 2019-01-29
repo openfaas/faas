@@ -9,6 +9,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/openfaas/faas-provider/auth"
 	"github.com/openfaas/faas-provider/types"
 )
 
@@ -26,6 +27,28 @@ func Router() *mux.Router {
 
 // Serve load your handlers into the correct OpenFaaS route spec. This function is blocking.
 func Serve(handlers *types.FaaSHandlers, config *types.FaaSConfig) {
+
+	if config.EnableBasicAuth {
+		reader := auth.ReadBasicAuthFromDisk{
+			SecretMountPath: config.SecretMountPath,
+		}
+
+		credentials, err := reader.Read()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		handlers.FunctionReader = auth.DecorateWithBasicAuth(handlers.FunctionReader, credentials)
+		handlers.DeployHandler = auth.DecorateWithBasicAuth(handlers.DeployHandler, credentials)
+		handlers.DeleteHandler = auth.DecorateWithBasicAuth(handlers.DeleteHandler, credentials)
+		handlers.UpdateHandler = auth.DecorateWithBasicAuth(handlers.UpdateHandler, credentials)
+		handlers.ReplicaReader = auth.DecorateWithBasicAuth(handlers.ReplicaReader, credentials)
+		handlers.ReplicaUpdater = auth.DecorateWithBasicAuth(handlers.ReplicaUpdater, credentials)
+		handlers.InfoHandler = auth.DecorateWithBasicAuth(handlers.InfoHandler, credentials)
+		handlers.SecretHandler = auth.DecorateWithBasicAuth(handlers.SecretHandler, credentials)
+	}
+
+	// System (auth) endpoints
 	r.HandleFunc("/system/functions", handlers.FunctionReader).Methods("GET")
 	r.HandleFunc("/system/functions", handlers.DeployHandler).Methods("POST")
 	r.HandleFunc("/system/functions", handlers.DeleteHandler).Methods("DELETE")
@@ -33,11 +56,14 @@ func Serve(handlers *types.FaaSHandlers, config *types.FaaSConfig) {
 
 	r.HandleFunc("/system/function/{name:[-a-zA-Z_0-9]+}", handlers.ReplicaReader).Methods("GET")
 	r.HandleFunc("/system/scale-function/{name:[-a-zA-Z_0-9]+}", handlers.ReplicaUpdater).Methods("POST")
+	r.HandleFunc("/system/info", handlers.InfoHandler).Methods("GET")
 
+	r.HandleFunc("/system/secrets", handlers.SecretHandler).Methods(http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete)
+
+	// Open endpoints
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}", handlers.FunctionProxy)
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/", handlers.FunctionProxy)
-
-	r.HandleFunc("/system/info", handlers.InfoHandler).Methods("GET")
+	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/{params:.*}", handlers.FunctionProxy)
 
 	if config.EnableHealth {
 		r.HandleFunc("/healthz", handlers.Health).Methods("GET")

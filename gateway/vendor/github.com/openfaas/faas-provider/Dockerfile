@@ -1,4 +1,4 @@
-FROM golang:1.9.7-alpine
+FROM golang:1.10.4-alpine3.8
 
 RUN mkdir -p /go/src/github.com/openfaas/faas-provider/
 
@@ -12,7 +12,7 @@ COPY serve.go   .
 RUN go test ./auth/ -v \
     && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o faas-provider .
 
-FROM alpine:3.7
+FROM alpine:3.8
 RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 
