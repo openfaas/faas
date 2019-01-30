@@ -62,5 +62,6 @@ do
    cd ./staging/$i
    export TAG=$(git describe --abbrev=0 --tags)
    echo "$i"
+   REPOSITORY=$(get_repo_name $i)
    echo " ${REPOSITORY}:${TAG}-${ARM_VERSION}"
 done
