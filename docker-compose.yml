@@ -10,7 +10,7 @@ services:
             functions_provider_url: "http://faas-swarm:8080/"
             read_timeout:  "5m5s"           # Maximum time to read HTTP request
             write_timeout: "5m5s"           # Maximum time to write HTTP response
-            upstream_timeout: "5m"        # Maximum duration of upstream function call - should be more than read_timeout and write_timeout
+            upstream_timeout: "5m"          # Maximum duration of upstream function call - should be more than read_timeout and write_timeout
             dnsrr: "true"                   # Temporarily use dnsrr in place of VIP while issue persists on PWD
             faas_nats_address: "nats"
             faas_nats_port: 4222
@@ -19,7 +19,7 @@ services:
             basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
             scale_from_zero: "true"         # Enable if you want functions to scale from 0/0 to min replica count upon invoke
-            max_idle_conns: 1024            
+            max_idle_conns: 1024
             max_idle_conns_per_host: 1024
         deploy:
             resources:
