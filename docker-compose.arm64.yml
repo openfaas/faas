@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: openfaas/gateway:0.10.1-arm64
+        image: openfaas/gateway:0.10.2-arm64
         networks:
             - functions
         environment:
@@ -92,7 +92,7 @@ services:
                     - 'node.platform.os == linux'
 
     queue-worker:
-        image: openfaas/queue-worker:0.5.7-arm64
+        image: openfaas/queue-worker:0.6.0-arm64
         networks:
             - functions
         environment:
@@ -123,7 +123,7 @@ services:
     # Start monitoring
 
     prometheus:
-        image: functions/prometheus:2.3.1-arm64
+        image: functions/prometheus:2.6.1-arm64
         environment:
             no_proxy: "gateway"
         configs:
@@ -150,7 +150,7 @@ services:
                     memory: 200M
 
     alertmanager:
-        image: functions/alertmanager:0.15.0-rc.0-arm64
+        image: functions/alertmanager:0.15.0-arm64
         environment:
             no_proxy: "gateway"
         command:
