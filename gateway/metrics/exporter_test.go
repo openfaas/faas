@@ -36,7 +36,7 @@ func Test_Describe_DescribesThePrometheusMetrics(t *testing.T) {
 	exporter := NewExporter(metricsOptions, nil)
 
 	ch := make(chan *prometheus.Desc)
-	defer close(ch)
+	// defer close(ch)
 
 	go exporter.Describe(ch)
 
