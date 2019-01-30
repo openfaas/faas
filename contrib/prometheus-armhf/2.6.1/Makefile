@@ -1,3 +1,6 @@
+.PHONY: all
+all: ci-armhf-build ci-armhf-push
+
 .PHONY: ci-armhf-build
 ci-armhf-build:
 	docker build -t functions/prometheus:2.6.1-armhf .
