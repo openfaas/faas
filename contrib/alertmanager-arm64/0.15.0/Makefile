@@ -1,3 +1,6 @@
+.PHONY: all
+all: ci-arm64-build ci-arm64-push
+
 .PHONY: ci-arm64-build
 ci-arm64-build:
 	docker build -t functions/alertmanager:0.15.0-arm64 .

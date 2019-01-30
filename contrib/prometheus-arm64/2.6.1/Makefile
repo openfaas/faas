@@ -1,3 +1,6 @@
+.PHONY: all
+all: ci-arm64-build ci-arm64-push
+
 .PHONY: ci-arm64-build
 ci-arm64-build:
 	docker build -t functions/prometheus:2.6.1-arm64 .
