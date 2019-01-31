@@ -93,6 +93,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [How to split large Python Functions across multiple files](https://www.openfaas.com/blog/multifile-python-functions/) | Lucas Roesler | openfaas.com | 29-Jan-2019 |
 | [Introducing the OpenFaaS Clojure Template](http://www.tessellator.net/2019-01-25-introducing-openfaas-clojure-template/) | Chad Taylor | tessellator.net | 25-Jan-2019 |
 | [Awesomify anything or anyone with OpenFaaS!](https://medium.com/@diddledan/awesomify-anything-or-anyone-with-openfaas-6cb95512be9a) | Daniel Llewellyn | bowlhat.net | 17-Jan-2019 |
 | [Serverless sur Raspberry PI avec Docker Swarm et OpenFaas](https://blog.ineat-conseil.fr/2019/01/serverless-sur-raspberry-pi-avec-docker-swarm-et-openfaas-partie-1-installation-dopenfaas/) | Mathias Deremer-Accettone | blog.ineat-conseil.fr | 15-Jan-2019 |
