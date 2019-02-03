@@ -35,7 +35,7 @@ OpenFaaS&reg; (Functions as a Service) is a framework for building Serverless fu
   > Note: Incubator projects are not counted in these totals and are hosted under [openfaas-incubator](https://github.com/openfaas-incubator) awaiting graduation.
 
 * Support for OpenFaaS
-  OpenFaaS is free to use and completely open source under the MIT license. You can donate to the project to fund its ongoing development or become a sponsor. [Support OpenFaaS](https://www.openfaas/com/donate/)
+  OpenFaaS is free to use and completely open source under the MIT license. You can donate to the project to fund its ongoing development or become a sponsor. [Support OpenFaaS](https://www.openfaas.com/donate/)
 
 ### Governance
 
