@@ -34,11 +34,8 @@ OpenFaaS&reg; (Functions as a Service) is a framework for building Serverless fu
 
   > Note: Incubator projects are not counted in these totals and are hosted under [openfaas-incubator](https://github.com/openfaas-incubator) awaiting graduation.
 
-* Sponsorship, Patreon and becoming a backer
-
-  You can support OpenFaaS by becoming a [backer on Patreon](https://www.patreon.com/alexellis) and pick a reward. Sponsors and some reward-levels mean you will be listed in [BACKERS.md](https://github.com/openfaas/faas/blob/master/BACKERS.md).
-
-  <a href="https://www.patreon.com/bePatron?u=8456397" data-patreon-widget-type="become-patron-button"><img width="170px" height="40px" src="https://c5.patreon.com/external/logo/become_a_patron_button.png"/></a>
+* Support for OpenFaaS
+  OpenFaaS is free to use and completely open source under the MIT license. You can donate to the project to fund its ongoing development or become a sponsor. [Support OpenFaaS](https://www.openfaas/com/donate/)
 
 ### Governance
 
