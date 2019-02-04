@@ -123,7 +123,7 @@ services:
     # Start monitoring
 
     prometheus:
-        image: functions/prometheus:2.6.1-armhf
+        image: functions/prometheus:2.7.0-armhf
         environment:
             no_proxy: "gateway"
         configs:
