@@ -123,7 +123,7 @@ services:
     # Start monitoring
 
     prometheus:
-        image: prom/prometheus:v2.6.1
+        image: prom/prometheus:v2.7.0
         environment:
             no_proxy: "gateway"
         configs:
