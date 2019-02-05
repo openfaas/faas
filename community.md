@@ -94,6 +94,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Ride the Serverless Wave with DigitalOcean's One-click Droplet](https://www.openfaas.com/blog/digitalocean-one-click/) | Richard Gee | openfaas.com | 04-Feb-2019 |
 | [How to split large Python Functions across multiple files](https://www.openfaas.com/blog/multifile-python-functions/) | Lucas Roesler | openfaas.com | 29-Jan-2019 |
 | [Unifying Secrets for OpenFaaS](https://www.openfaas.com/blog/unified-secrets/) | Alex Ellis | openfaas.com | 24-Jan-2019 |
 | [Introducing the OpenFaaS Clojure Template](http://www.tessellator.net/2019-01-25-introducing-openfaas-clojure-template/) | Chad Taylor | tessellator.net | 25-Jan-2019 |
