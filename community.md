@@ -94,6 +94,7 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [How to resize your images on-the-fly with OpenFaaS](https://www.openfaas.com/blog/resize-images-on-the-fly/) | Tarun Mangukiya | openfaas.com | 08-Feb-2019 |
 | [Ride the Serverless Wave with DigitalOcean's One-click Droplet](https://www.openfaas.com/blog/digitalocean-one-click/) | Richard Gee | openfaas.com | 31-Feb-2019 |
 | [OpenFaaS Cloud in 100 seconds (ofc-bootstrap)](https://www.youtube.com/watch?v=Sa1VBSfVpK0&index=21&list=PLlIapFDp305DiIRhJFNzMuJXoBnzKdtpi) | Alex ellis | youtube.com | 31-Jan-2019 |
 | [How to split large Python Functions across multiple files](https://www.openfaas.com/blog/multifile-python-functions/) | Lucas Roesler | openfaas.com | 29-Jan-2019 |
