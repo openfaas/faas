@@ -94,11 +94,12 @@ Key:
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
-| [Ride the Serverless Wave with DigitalOcean's One-click Droplet](https://www.openfaas.com/blog/digitalocean-one-click/) | Richard Gee | openfaas.com | 04-Feb-2019 |
+| [Ride the Serverless Wave with DigitalOcean's One-click Droplet](https://www.openfaas.com/blog/digitalocean-one-click/) | Richard Gee | openfaas.com | 31-Feb-2019 |
+| [OpenFaaS Cloud in 100 seconds (ofc-bootstrap)](https://www.youtube.com/watch?v=Sa1VBSfVpK0&index=21&list=PLlIapFDp305DiIRhJFNzMuJXoBnzKdtpi) | Alex ellis | youtube.com | 31-Jan-2019 |
 | [How to split large Python Functions across multiple files](https://www.openfaas.com/blog/multifile-python-functions/) | Lucas Roesler | openfaas.com | 29-Jan-2019 |
 | [Unifying Secrets for OpenFaaS](https://www.openfaas.com/blog/unified-secrets/) | Alex Ellis | openfaas.com | 24-Jan-2019 |
 | [Introducing the OpenFaaS Clojure Template](http://www.tessellator.net/2019-01-25-introducing-openfaas-clojure-template/) | Chad Taylor | tessellator.net | 25-Jan-2019 |
-| [Evaluation of Serverless Technologies at Jet](https://medium.com/jettech/evaluation-of-serverless-technologies-at-jet-f40af12a1c39) | Khalid Hasanov |  [The Jet Tech blog](https://medium.com/jettech) | 21-Jan-2019 |
+| [Evaluation of Serverless Technologies at Jet](https://medium.com/jettech/evaluation-of-serverless-technologies-at-jet-f40af12a1c39) | Khalid Hasanov |  medium.com | 21-Jan-2019 |
 | [Awesomify anything or anyone with OpenFaaS!](https://medium.com/@diddledan/awesomify-anything-or-anyone-with-openfaas-6cb95512be9a) | Daniel Llewellyn | bowlhat.net | 17-Jan-2019 |
 | [Serverless sur Raspberry PI avec Docker Swarm et OpenFaas](https://blog.ineat-conseil.fr/2019/01/serverless-sur-raspberry-pi-avec-docker-swarm-et-openfaas-partie-1-installation-dopenfaas/) | Mathias Deremer-Accettone | blog.ineat-conseil.fr | 15-Jan-2019 |
 | [Get Started with OpenFaaS and KinD](https://blog.alexellis.io/get-started-with-openfaas-and-kind/) | Alex Ellis | alexellis.io | 10-Jan-2019 |
