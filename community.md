@@ -42,37 +42,6 @@ It would be great to hear from you especially if you have any of the above and w
 | 🏆 [Bossie Award for Cloud Computing 2017](https://www.infoworld.com/article/3227920/cloud-computing/bossie-awards-2017-the-best-cloud-computing-software.html#slide7) |  Martin Heller, Andrew C. Oliver and Serdar Yegulalp| InfoWorld (from IDG) |  27-Sep-2017 |
 | [Open source project uses Docker for serverless computing](http://www.infoworld.com/article/3184757/open-source-tools/open-source-project-uses-docker-for-serverless-computing.html#tk.twt_ifw)| Serdar Yegulalp  | InfoWorld (from IDG)  | 27-Mar-2017 |
 
-### OpenFaaS providers
-
-[Back to top](#openfaas-community)
-
-Official providers developed and supported by the OpenFaaS project
-
-| Project name and description                                         | Author     | Site      | Status      |
-|----------------------------------------------------------------------|------------|-----------|-------------|
-| **faas-netes**- Kubernetes provider | OpenFaaS | [github.com](https://github.com/openfaas/faas-netes) | Supported |
-| **faas-swarm** - Docker Swarm provider | OpenFaaS | [github.com](https://github.com/openfaas/faas-swarm) | Supported |
-| **openfaas-operator** - Kubernetes Operator provider | OpenFaaS | [github.com](https://github.com/openfaas-incubator/openfaas-operator) | Incubation |
-
-Community providers actively being developed and/or supported by a third-party
-
-| Project name and description                                         | Author     | Site      | Status      |
-|----------------------------------------------------------------------|------------|-----------|-------------|
-| **faas-fargate** - AWS Fargate provider | Edward Wilde | [github.com](https://github.com/ewilde/faas-fargate) | Incubation |
-| **faas-nomad** - Nomad provider | Nic Jackson (Hashicorp) | [github.com](https://github.com/hashicorp/faas-nomad) | Incubation  |
-| **faas-rancher** - Rancher/Cattle provider | Ken Fukuyama | [github.com](https://github.com/kenfdev/faas-rancher) | Inception |
-| **faas-dcos** - DCOS provider | Alberto Quario | [github.com](https://github.com/realbot/faas-dcos) | Inception  |
-| **faas-hyper** - Hyper.sh provider | Hyper | [github.com](https://github.com/hyperhq/faas-hyper) | Inception |
-| **faas-guardian** - Guardian provider | Nigel Wright | [github.com](https://github.com/nwright-nz/openfaas-guardian-backend) | Inception |
-| **faas-ecs** | Xicheng Chang (Huawei) | [github.com](https://github.com/stack360/faas-ecs) | Inception |
-
-Key:
-
-(Status)
-
-* Incubation - actively being developed, but not stable
-* Inception - more work needed. May work in happy path scenario, but unlikely to be suitable for production
-
 ### 2019
 
 #### Events in 2019
@@ -81,6 +50,8 @@ Key:
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [Jax - Serverless and Functions as a Service mit Java, Docker und OpenFaaS](https://jax.de/cloud-container-serverless/serverless-und-functions-as-a-service-mit-java-docker-und-openfaas/) | Dr. Halil-Cem Gürsoy | Mainz, Germany | 6-May-2019 |
+| [Hands-on Serverless with OpenFaaS and Python](https://gotochgo.com/2019/workshops/152) | Alex Ellis | Chicago, USA | 1-May-2019 |
+| [GOTO Chicago - Serverless Beyond the Hype](https://gotochgo.com/2019/sessions/728) | Alex Ellis | Chicago, USA | 30-Apr-2019 |
 | [Serverless Architecture Conf: OpenFaaS - Keeping Serverless Simple](https://serverless-architecture.io/serverless-platforms-technology) | John McCabe | The Hague, Netherlands | 9-Apr-2019 |
 | [Soirée OpenFaas et Firebase](https://www.meetup.com/fr-FR/GDG-Lille/events/258241972/?isFirstPublish=true)| Laurent Grangeau | Lille, France | 31-Jan-2019 |
 | UCL (University College London) professional practice talks: Serverless evolution with OpenFaaS | Edward Wilde | London, UK | 31-Jan-2019 |
@@ -375,3 +346,35 @@ You can also find cool projects or submit your own to the [faas-and-furious orga
 | [Dockercon FaaS demos including Alexa/Github](https://github.com/alexellis/faas-dockercon) | Alex Ellis | github.com | 14-Apr-2017 |
 | [Docker Birthday voting app ported to FaaS](https://github.com/alexellis/faas-example-voting-app) | Alex Ellis | github.com | 14-Apr-2017 |
 | [Github-Airtable Bug Tracker integration](https://github.com/aafrey/faas-demo) | Austin Frey | github.com/aafrey/faas-demo | 10-Apr-2017 |
+
+
+### OpenFaaS providers
+
+[Back to top](#openfaas-community)
+
+Official providers developed and supported by the OpenFaaS project
+
+| Project name and description                                         | Author     | Site      | Status      |
+|----------------------------------------------------------------------|------------|-----------|-------------|
+| **faas-netes**- Kubernetes provider | OpenFaaS | [github.com](https://github.com/openfaas/faas-netes) | Supported |
+| **faas-swarm** - Docker Swarm provider | OpenFaaS | [github.com](https://github.com/openfaas/faas-swarm) | Supported |
+| **openfaas-operator** - Kubernetes Operator provider | OpenFaaS | [github.com](https://github.com/openfaas-incubator/openfaas-operator) | Incubation |
+
+Community providers actively being developed and/or supported by a third-party
+
+| Project name and description                                         | Author     | Site      | Status      |
+|----------------------------------------------------------------------|------------|-----------|-------------|
+| **faas-fargate** - AWS Fargate provider | Edward Wilde | [github.com](https://github.com/ewilde/faas-fargate) | Incubation |
+| **faas-nomad** - Nomad provider | Nic Jackson (Hashicorp) | [github.com](https://github.com/hashicorp/faas-nomad) | Incubation  |
+| **faas-rancher** - Rancher/Cattle provider | Ken Fukuyama | [github.com](https://github.com/kenfdev/faas-rancher) | Inception |
+| **faas-dcos** - DCOS provider | Alberto Quario | [github.com](https://github.com/realbot/faas-dcos) | Inception  |
+| **faas-hyper** - Hyper.sh provider | Hyper | [github.com](https://github.com/hyperhq/faas-hyper) | Inception |
+| **faas-guardian** - Guardian provider | Nigel Wright | [github.com](https://github.com/nwright-nz/openfaas-guardian-backend) | Inception |
+| **faas-ecs** | Xicheng Chang (Huawei) | [github.com](https://github.com/stack360/faas-ecs) | Inception |
+
+Key:
+
+(Status)
+
+* Incubation - actively being developed, but not stable
+* Inception - more work needed. May work in happy path scenario, but unlikely to be suitable for production
