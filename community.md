@@ -65,6 +65,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [FaaS comes to Fargate: OpenFaaS with AWS Fargate](https://www.openfaas.com/blog/openfaas-on-fargate/) | Edward Wilde | openfaas.com | 12-Feb-2019 |
 | [My five highlights of working on OpenFaaS](https://medium.com/@ivana.yovcheva/my-five-highlights-of-working-on-openfaas-210f88d0c4da) | Ivana Yovcheva | medium.com | 8-Feb-2019 |
 | [How to resize your images on-the-fly with OpenFaaS](https://www.openfaas.com/blog/resize-images-on-the-fly/) | Tarun Mangukiya | openfaas.com | 08-Feb-2019 |
 | [Ride the Serverless Wave with DigitalOcean's One-click Droplet](https://www.openfaas.com/blog/digitalocean-one-click/) | Richard Gee | openfaas.com | 31-Feb-2019 |
