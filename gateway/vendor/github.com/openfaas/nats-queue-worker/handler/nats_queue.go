@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/nats-io/go-nats-streaming"
+	stan "github.com/nats-io/go-nats-streaming"
 	"github.com/openfaas/faas/gateway/queue"
 )
 
@@ -48,6 +48,8 @@ func (q *NATSQueue) Queue(req *queue.Request) error {
 }
 
 func (q *NATSQueue) connect() error {
+	log.Printf("Connect: %s\n", q.NATSURL)
+
 	nc, err := stan.Connect(
 		q.ClusterID,
 		q.ClientID,
@@ -71,8 +73,10 @@ func (q *NATSQueue) connect() error {
 }
 
 func (q *NATSQueue) reconnect() {
+	log.Printf("Reconnect\n")
+
 	for i := 0; i < q.maxReconnect; i++ {
-		time.Sleep(time.Second * time.Duration(i) * q.reconnectDelay)
+		time.Sleep(time.Duration(i) * q.reconnectDelay)
 
 		if err := q.connect(); err == nil {
 			log.Printf("Reconnecting (%d/%d) to %s. OK\n", i+1, q.maxReconnect, q.NATSURL)

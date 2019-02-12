@@ -14,7 +14,7 @@ ignored = ["github.com/openfaas/faas/gateway/queue"]
 
 [[constraint]]
   name = "github.com/openfaas/nats-queue-worker"
-  version = "0.6.0"
+  version = "0.7.0"
 
 [[constraint]]
   name = "github.com/prometheus/client_golang"

@@ -5,6 +5,7 @@ COPY vendor     vendor
 COPY handler    handler
 COPY nats       nats
 COPY main.go  .
+COPY types.go .
 COPY readconfig.go .
 COPY readconfig_test.go .
 COPY auth.go .

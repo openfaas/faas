@@ -19,7 +19,7 @@ func AddBasicAuth(req *http.Request) error {
 
 		credentials, err := reader.Read()
 		if err != nil {
-			return fmt.Errorf("Unable to read basic auth: %s", err.Error())
+			return fmt.Errorf("unable to read basic auth: %s", err.Error())
 		}
 
 		req.SetBasicAuth(credentials.User, credentials.Password)
@@ -37,7 +37,7 @@ func LoadCredentials() (*auth.BasicAuthCredentials, error) {
 
 	credentials, err := reader.Read()
 	if err != nil {
-		return nil, fmt.Errorf("Unable to read basic auth: %s", err.Error())
+		return nil, fmt.Errorf("unable to read basic auth: %s", err.Error())
 	}
 	return credentials, nil
 }

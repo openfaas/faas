@@ -8,58 +8,27 @@ import (
 	"io/ioutil"
 	"log"
 	"net"
+	"net/http"
 	"os"
 	"os/signal"
 	"strings"
+	"sync"
 	"time"
 
-	"net/http"
-
-	"github.com/nats-io/go-nats-streaming"
+	stan "github.com/nats-io/go-nats-streaming"
 	"github.com/openfaas/faas-provider/auth"
 	"github.com/openfaas/faas/gateway/queue"
 	"github.com/openfaas/nats-queue-worker/nats"
 )
-
-// AsyncReport is the report from a function executed on a queue worker.
-type AsyncReport struct {
-	FunctionName string  `json:"name"`
-	StatusCode   int     `json:"statusCode"`
-	TimeTaken    float64 `json:"timeTaken"`
-}
-
-func printMsg(m *stan.Msg, i int) {
-	log.Printf("[#%d] Received on [%s]: '%s'\n", i, m.Subject, m)
-}
-
-func makeClient() http.Client {
-	proxyClient := http.Client{
-		Transport: &http.Transport{
-			Proxy: http.ProxyFromEnvironment,
-			DialContext: (&net.Dialer{
-				Timeout:   30 * time.Second,
-				KeepAlive: 0,
-			}).DialContext,
-			MaxIdleConns:          1,
-			DisableKeepAlives:     true,
-			IdleConnTimeout:       120 * time.Millisecond,
-			ExpectContinueTimeout: 1500 * time.Millisecond,
-		},
-	}
-	return proxyClient
-}
 
 func main() {
 	readConfig := ReadConfig{}
 	config := readConfig.Read()
 	log.SetFlags(0)
 
-	clusterID := "faas-cluster"
-	val, _ := os.Hostname()
-	clientID := "faas-worker-" + nats.GetClientID(val)
+	hostname, _ := os.Hostname()
 
 	var durable string
-	var qgroup string
 	var unsubscribe bool
 	var credentials *auth.BasicAuthCredentials
 	var err error
@@ -73,18 +42,12 @@ func main() {
 	}
 
 	client := makeClient()
-	sc, err := stan.Connect(clusterID, clientID, stan.NatsURL("nats://"+config.NatsAddress+":4222"))
-	if err != nil {
-		log.Fatalf("Can't connect to %s: %v\n", "nats://"+config.NatsAddress+":4222", err)
-	}
-
-	startOpt := stan.StartWithLastReceived()
 
 	i := 0
-	mcb := func(msg *stan.Msg) {
+	messageHandler := func(msg *stan.Msg) {
 		i++
 
-		printMsg(msg, i)
+		log.Printf("[#%d] Received on [%s]: '%s'\n", i, msg.Subject, msg)
 
 		started := time.Now()
 
@@ -196,16 +159,30 @@ func main() {
 		}
 	}
 
-	subj := "faas-request"
-	qgroup = "faas"
+	natsURL := "nats://" + config.NatsAddress + ":4222"
 
-	log.Println("Wait for ", config.AckWait)
-	sub, err := sc.QueueSubscribe(subj, qgroup, mcb, startOpt, stan.DurableName(durable), stan.MaxInflight(config.MaxInflight), stan.AckWait(config.AckWait))
-	if err != nil {
-		log.Panicln(err)
+	natsQueue := NATSQueue{
+		clusterID: "faas-cluster",
+		clientID:  "faas-worker-" + nats.GetClientID(hostname),
+		natsURL:   natsURL,
+
+		connMutex:      &sync.RWMutex{},
+		maxReconnect:   config.MaxReconnect,
+		reconnectDelay: config.ReconnectDelay,
+		quitCh:         make(chan struct{}),
+
+		subject:        "faas-request",
+		qgroup:         "faas",
+		durable:        durable,
+		messageHandler: messageHandler,
+		startOption:    stan.StartWithLastReceived(),
+		maxInFlight:    stan.MaxInflight(config.MaxInflight),
+		ackWait:        config.AckWait,
 	}
 
-	log.Printf("Listening on [%s], clientID=[%s], qgroup=[%s] durable=[%s]\n", subj, clientID, qgroup, durable)
+	if initErr := natsQueue.connect(); initErr != nil {
+		log.Panic(initErr)
+	}
 
 	// Wait for a SIGINT (perhaps triggered by user with CTRL-C)
 	// Run cleanup when signal is received
@@ -217,13 +194,41 @@ func main() {
 			fmt.Printf("\nReceived an interrupt, unsubscribing and closing connection...\n\n")
 			// Do not unsubscribe a durable on exit, except if asked to.
 			if durable == "" || unsubscribe {
-				sub.Unsubscribe()
+				if err := natsQueue.unsubscribe(); err != nil {
+					log.Panicf(
+						"Cannot unsubscribe subject: %s from %s because of an error: %v",
+						natsQueue.subject,
+						natsQueue.natsURL,
+						err,
+					)
+				}
 			}
-			sc.Close()
+			if err := natsQueue.closeConnection(); err != nil {
+				log.Panicf("Cannot close connection to %s because of an error: %v\n", natsQueue.natsURL, err)
+			}
 			cleanupDone <- true
 		}
 	}()
 	<-cleanupDone
+}
+
+// makeClient constructs a HTTP client with keep-alive turned
+// off and a dial-timeout of 30 seconds.
+func makeClient() http.Client {
+	proxyClient := http.Client{
+		Transport: &http.Transport{
+			Proxy: http.ProxyFromEnvironment,
+			DialContext: (&net.Dialer{
+				Timeout:   30 * time.Second,
+				KeepAlive: 0,
+			}).DialContext,
+			MaxIdleConns:          1,
+			DisableKeepAlives:     true,
+			IdleConnTimeout:       120 * time.Millisecond,
+			ExpectContinueTimeout: 1500 * time.Millisecond,
+		},
+	}
+	return proxyClient
 }
 
 func postResult(client *http.Client, functionRes *http.Response, result []byte, callbackURL string, xCallID string, statusCode int) (int, error) {

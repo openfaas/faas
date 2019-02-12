@@ -16,3 +16,5 @@
 .DS_Store
 
 nats-queue-worker
+queue-worker
+
