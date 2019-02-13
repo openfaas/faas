@@ -207,7 +207,22 @@ func main() {
 	}
 
 	metricsHandler := metrics.PrometheusHandler()
-	r.Handle("/metrics", metricsHandler)
+
+	//Create a new server to serve /metrics endpoint
+	go func() {
+		routes := mux.NewRouter()
+		routes.Handle("/metrics", metricsHandler)
+		port := 8082
+		s := &http.Server{
+			Addr:           fmt.Sprintf(":%d", port),
+			ReadTimeout:    config.ReadTimeout,
+			WriteTimeout:   config.WriteTimeout,
+			MaxHeaderBytes: http.DefaultMaxHeaderBytes,
+			Handler:        routes,
+		}
+		log.Fatal(s.ListenAndServe())
+	}()
+
 	r.HandleFunc("/healthz", handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)).Methods(http.MethodGet)
 
 	r.Handle("/", http.RedirectHandler("/ui/", http.StatusMovedPermanently)).Methods(http.MethodGet)
