@@ -27,7 +27,7 @@ Here is a list of some of the sample functions included this repository.
 | echo                     | Uses `cat` from BusyBox to provide an echo function |
 | DockerHubStats           | Golang function gives the count of repos a user has on the Docker hub |
 | figlet                   | Generate ascii logos through the use of a binary |
-| git-maker                | Use gifsicle and ffmpeg packages from Alpine Linux to make gifs from video |
+| gif-maker                | Use gifsicle and ffmpeg packages from Alpine Linux to make gifs from video |
 | HostnameIntent           | Prints the hostname of a container |
 | MarkdownRender           | Use a Go function with vendoring to convert Markdown to HTML |
 | Nmap                     | The network scanning tool as a binary-based function |
