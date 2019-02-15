@@ -235,8 +235,8 @@ func runMetricsServer() {
 	router.HandleFunc("/healthz", healthzHandler)
 
 	port := 8082
-	readTimeout := time.Duration(30) * time.Second
-	writeTimeout := time.Duration(30) * time.Second
+	readTimeout := time.Duration(5) * time.Second
+	writeTimeout := time.Duration(5) * time.Second
 
 	s := &http.Server{
 		Addr:           fmt.Sprintf(":%d", port),
