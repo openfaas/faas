@@ -89,6 +89,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Not so FaaS, Hacker](https://www.brighttalk.com/webinar/no-so-faas-hacker/) | Aaron Weaver | Webinar | 21-Feb-2019 |
 | [Serverless, KubeCon and Kubernetes the easy way](https://www.meetup.com/Cloud-Native-Computing-Paris/events/257113168/) | Edward Wilde | Paris | 19-Dec-2018 |
 | [KubeCon + CloudNativeCon: Digital Transformation of Vision Banco Paraguay with Serverless Functions](https://sched.co/GraO) | Alex Ellis & Patricio Diaz | Seattle, WA | 13-Dec-2018 |
 | [Serverless com OpenFaaS e PHP @ PHP Conference Brazil](https://phpconference.com.br) | Fernando Silva | Porto Alegre, BR | 07-Dec-2018 |
