@@ -49,6 +49,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Knative, OpenFaaS, Kubeless : la guerre des frameworks serverless est lancée ! | Laurent Grangeau](https://mixitconf.org/) | Lyon, France | 24-May-2019 |
 | [Jax - Serverless and Functions as a Service mit Java, Docker und OpenFaaS](https://jax.de/cloud-container-serverless/serverless-und-functions-as-a-service-mit-java-docker-und-openfaas/) | Dr. Halil-Cem Gürsoy | Mainz, Germany | 6-May-2019 |
 | [Hands-on Serverless with OpenFaaS and Python](https://gotochgo.com/2019/workshops/152) | Alex Ellis | Chicago, USA | 1-May-2019 |
 | [GOTO Chicago - Serverless Beyond the Hype](https://gotochgo.com/2019/sessions/728) | Alex Ellis | Chicago, USA | 30-Apr-2019 |
@@ -65,6 +66,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Artifactory and OpenFaaS – Containers Everywhere!](https://jfrog.com/blog/artifactory-and-openfaas-containers-everywhere/) | Leon Stigter | jfrog.com | 19-Feb-2019 |
 | [FaaS comes to Fargate: OpenFaaS with AWS Fargate](https://www.openfaas.com/blog/openfaas-on-fargate/) | Edward Wilde | openfaas.com | 12-Feb-2019 |
 | [My five highlights of working on OpenFaaS](https://medium.com/@ivana.yovcheva/my-five-highlights-of-working-on-openfaas-210f88d0c4da) | Ivana Yovcheva | medium.com | 8-Feb-2019 |
 | [How to resize your images on-the-fly with OpenFaaS](https://www.openfaas.com/blog/resize-images-on-the-fly/) | Tarun Mangukiya | openfaas.com | 08-Feb-2019 |
