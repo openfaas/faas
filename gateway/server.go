@@ -232,11 +232,11 @@ func runMetricsServer() {
 	metricsHandler := metrics.PrometheusHandler()
 	router := mux.NewRouter()
 	router.Handle("/metrics", metricsHandler)
-	router.HandleFunc("/healthz", healthzHandler)
+	router.HandleFunc("/healthz", handlers.HealthzHandler)
 
 	port := 8082
-	readTimeout := time.Duration(5) * time.Second
-	writeTimeout := time.Duration(5) * time.Second
+	readTimeout := 5 * time.Second
+	writeTimeout := 5 * time.Second
 
 	s := &http.Server{
 		Addr:           fmt.Sprintf(":%d", port),
@@ -247,17 +247,4 @@ func runMetricsServer() {
 	}
 
 	log.Fatal(s.ListenAndServe())
-}
-
-func healthzHandler(w http.ResponseWriter, r *http.Request) {
-
-	switch r.Method {
-	case http.MethodGet:
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("OK"))
-		break
-
-	default:
-		w.WriteHeader(http.StatusMethodNotAllowed)
-	}
 }
