@@ -264,9 +264,7 @@ paths:
         '200':
           description: List of submitted secrets.
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Secret'
+            $ref: '#/definitions/SecretName'
     post:
       summary: Create a new secret.
       description: ''
@@ -324,7 +322,7 @@ paths:
         description: Secret to delete
         required: true
         schema:
-          $ref: '#/definitions/Secret'
+          $ref: '#/definitions/SecretName'
       responses:
         '204':
           description: OK
@@ -561,6 +559,13 @@ definitions:
         example: changeme
     required:
     - name
+  SecretName:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of secret
+        example: aws-key
 externalDocs:
   description: More documentation available on Github
   url: 'https://github.com/openfaas/faas'
