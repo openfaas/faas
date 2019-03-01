@@ -25,6 +25,7 @@ Listed by reward, followed by miscellaneous amounts. Names are (pending) until f
 * José Roberto Almaráz Da Cunha Júnior
 * Johnny Mkhael
 * Garden Germany GmbH
+* Younes Amardaya
 
 Miscellaneous rewards/amounts are not shown.
 
