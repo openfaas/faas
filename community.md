@@ -328,6 +328,7 @@ You can also find cool projects or submit your own to the [faas-and-furious orga
 
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| [OpenFaas Node Gatekeeper](https://github.com/cabrerabywaters/faas-node-gatekeeper) | Ignacio Cabrera | github.com | 01-Mar-2019 |
 | [OpenFaas CSharp MongoDB Template](https://github.com/Marcus-Smallman/csharp-kestrel-mongo) | Marcus Smallman | github.com | 28-Nov-2018 |
 | [OpenFaas Java 8 + Vert.x Template](https://gitlab.com/openfaas-experiments/java-8-vert-x-template) | Philippe Charrière | gitlab.com | 11-Nov-2018 |
 | [Faasflow - faas workflow as a function](https://github.com/s8sg/faasflow) | Swarvanu Sengupta | github.com | 11-Nov-2018 |
