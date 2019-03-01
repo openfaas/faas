@@ -26,6 +26,7 @@ Listed by reward, followed by miscellaneous amounts. Names are (pending) until f
 * Johnny Mkhael
 * Garden Germany GmbH
 * Younes Amardaya
+* Chad Taylor
 
 Miscellaneous rewards/amounts are not shown.
 
