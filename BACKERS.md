@@ -12,21 +12,22 @@ Become a sponsor and have your logo placed on the [OpenFaaS website](https://www
 
 Listed by reward, followed by miscellaneous amounts. Names are (pending) until first pledge is taken by Patreon, this is at the start of each month.
 
-* Weston Steimel
-* Wesley Kennedy
-* Sivaramakrishnan Malikkal
-* Richard Petersen-Hall
-* Rafael Barbosa
-* Pav Jimanov
-* Owen Dall Sotomayor
-* Murugappan Sevugan Chetty
-* Markus Fischbacher
-* Mark Jeromin
-* José Roberto Almaráz Da Cunha Júnior
-* Johnny Mkhael
-* Garden Germany GmbH
-* Younes Amardaya
+* Benjamin Neil
 * Chad Taylor
+* Garden Germany GmbH
+* Johnny Mkhael
+* José Roberto Almaráz Da Cunha Júnior
+* Mark Jeromin
+* Markus Fischbacher
+* Murugappan Sevugan Chetty
+* Owen Dall Sotomayor
+* Pav Jimanov
+* Rafael Barbosa
+* Richard Petersen-Hall
+* Sivaramakrishnan Malikkal
+* Wesley Kennedy
+* Weston Steimel
+* Younes Amardaya
 
 Miscellaneous rewards/amounts are not shown.
 
