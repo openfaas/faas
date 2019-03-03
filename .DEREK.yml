@@ -13,6 +13,7 @@ maintainers:
  - bartsmykla
  - s8sg
  - affix
+ - zeerorg
 
 features:
  - dco_check
