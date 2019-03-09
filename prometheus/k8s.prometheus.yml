@@ -32,6 +32,6 @@ scrape_configs:
     scrape_interval: 5s
     dns_sd_configs:
       - names: ['gateway.default.svc.cluster.local']
-        port: 8082
+        port: 8080
         type: A
         refresh_interval: 5s

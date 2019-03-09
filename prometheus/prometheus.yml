@@ -32,7 +32,7 @@ scrape_configs:
     scrape_interval: 5s
     dns_sd_configs:
       - names: ['tasks.gateway']
-        port: 8082
+        port: 8080
         type: A
         refresh_interval: 5s
 
