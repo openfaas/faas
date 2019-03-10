@@ -72,6 +72,16 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 		}
 	}
 
+	if len(hasEnv.Getenv("logs_provider_url")) > 0 {
+		var err error
+		cfg.LogsProviderURL, err = url.Parse(hasEnv.Getenv("logs_provider_url"))
+		if err != nil {
+			log.Fatal("If logs_provider_url is provided, then it should be a valid URL.", err)
+		}
+	} else if cfg.FunctionsProviderURL != nil {
+		cfg.LogsProviderURL, _ = url.Parse(cfg.FunctionsProviderURL.String())
+	}
+
 	faasNATSAddress := hasEnv.Getenv("faas_nats_address")
 	if len(faasNATSAddress) > 0 {
 		cfg.NATSAddress = &faasNATSAddress
@@ -157,6 +167,9 @@ type GatewayConfig struct {
 
 	// URL for alternate functions provider.
 	FunctionsProviderURL *url.URL
+
+	// URL for alternate function logs provider.
+	LogsProviderURL *url.URL
 
 	// Address of the NATS service. Required for async mode.
 	NATSAddress *string
