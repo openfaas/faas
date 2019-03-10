@@ -155,6 +155,10 @@ func copyHeaders(destination http.Header, source *http.Header) {
 		copy(vClone, v)
 		(destination)[k] = vClone
 	}
+
+	for _, h := range hopHeaders {
+		destination.Del(h)
+	}
 }
 
 func deleteHeaders(target *http.Header, exclude *[]string) {

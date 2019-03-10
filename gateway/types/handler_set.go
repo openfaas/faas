@@ -31,4 +31,7 @@ type HandlerSet struct {
 
 	// SecretHandler allows secrets to be managed
 	SecretHandler http.HandlerFunc
+
+	// LogProxyHandler allows streaming of logs for functions
+	LogProxyHandler http.HandlerFunc
 }
