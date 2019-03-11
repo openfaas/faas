@@ -68,18 +68,18 @@ It would be great to hear from you especially if you have any of the above and w
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [Process Google Forms Responses with OpenFaaS](https://www.openfaas.com/blog/google-form-response/) | Burton Rheutan | openfaas.com | 06-Mar-2019 |
-| [How to build a Serverless Single Page App](https://www.openfaas.com/blog/serverless-single-page-app/) | Alex Ellis | openfaas.com | 14-Feb-2019 |
-| [Event-driven interactions with vSphere using Functions as a Service](https://rguske.github.io/post/event-driven-interactions-with-vsphere-using-functions-as-a-service/) | Robert Guske | github.io | 05-Feb-2019 |
 | [Node Gatekeeper - a HMAC wrapper for Node.js](https://github.com/cabrerabywaters/faas-node-gatekeeper) | Ignacio Cabrera | github.com | 28-Feb-2019 |
-| [Favorite Tools - OpenFaaS](https://fischbacher.rocks/post/tools-openfaas/) | Markus Fischbacher | [fischbacher.rocks](fischbacher.rocks) | 5-Feb-2019 |  
+| [Favorite Tools - OpenFaaS](https://fischbacher.rocks/post/tools-openfaas/) | Markus Fischbacher | [fischbacher.rocks](fischbacher.rocks) | 5-Mar-2019 |  
 | [Serverless with OpenFaaS](https://blog.cloudstack.pl/serverless-with-openfaas/) | Daniel Noworyta | blog.cloudstack.pl | 5-Mar-2019 |
 | [OpenFaas on Docker Swarm on Raspberry Pi](http://www.timlevett.com/2019/03/openfaas-on-docker-swarm-on-raspberry-pi.html) | Tim Levett | timlevett.com | 4-Mar-2019  |
 | [Build your serverless functions with OpenFaaS on Azure](https://sajeetharan.com/2019/03/03/openfaas-revolution-is-here/) | Sajeetharan Sinnathurai | sajeetharan.com | 3-Mar-2019 |
 | [Artifactory and OpenFaaS – Containers Everywhere!](https://jfrog.com/blog/artifactory-and-openfaas-containers-everywhere/) | Leon Stigter | jfrog.com | 19-Feb-2019 |
+| [How to build a Serverless Single Page App](https://www.openfaas.com/blog/serverless-single-page-app/) | Alex Ellis | openfaas.com | 14-Feb-2019 |
 | [FaaS comes to Fargate: OpenFaaS with AWS Fargate](https://www.openfaas.com/blog/openfaas-on-fargate/) | Edward Wilde | openfaas.com | 12-Feb-2019 |
 | [My five highlights of working on OpenFaaS](https://medium.com/@ivana.yovcheva/my-five-highlights-of-working-on-openfaas-210f88d0c4da) | Ivana Yovcheva | medium.com | 8-Feb-2019 |
 | [How to resize your images on-the-fly with OpenFaaS](https://www.openfaas.com/blog/resize-images-on-the-fly/) | Tarun Mangukiya | openfaas.com | 08-Feb-2019 |
-| [Ride the Serverless Wave with DigitalOcean's One-click Droplet](https://www.openfaas.com/blog/digitalocean-one-click/) | Richard Gee | openfaas.com | 31-Feb-2019 |
+| [Event-driven interactions with vSphere using Functions as a Service](https://rguske.github.io/post/event-driven-interactions-with-vsphere-using-functions-as-a-service/) | Robert Guske | github.io | 05-Feb-2019 |
+| [Ride the Serverless Wave with DigitalOcean's One-click Droplet](https://www.openfaas.com/blog/digitalocean-one-click/) | Richard Gee | openfaas.com | 31-Jan-2019 |
 | [OpenFaaS Cloud in 100 seconds (ofc-bootstrap)](https://www.youtube.com/watch?v=Sa1VBSfVpK0&index=21&list=PLlIapFDp305DiIRhJFNzMuJXoBnzKdtpi) | Alex ellis | youtube.com | 31-Jan-2019 |
 | [How to split large Python Functions across multiple files](https://www.openfaas.com/blog/multifile-python-functions/) | Lucas Roesler | openfaas.com | 29-Jan-2019 |
 | [Unifying Secrets for OpenFaaS](https://www.openfaas.com/blog/unified-secrets/) | Alex Ellis | openfaas.com | 24-Jan-2019 |
