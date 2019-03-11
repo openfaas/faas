@@ -27,6 +27,12 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Award/Mention                                          | Author(s)       | Source     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Process Google Forms Responses with OpenFaaS](https://www.openfaas.com/blog/google-form-response/) | Burton Rheutan | openfaas.com | 06-Mar-2019 |
+| [How to build a Serverless Single Page App](https://www.openfaas.com/blog/serverless-single-page-app/) | Alex Ellis | openfaas.com | 14-Feb-2019 |
+| [FaaS comes to Fargate: OpenFaaS with AWS Fargate](https://www.openfaas.com/blog/openfaas-on-fargate/) | Ed Wilde | openfaas.com | 12-Feb-2019 |
+| [How to resize your images on-the-fly with OpenFaaS](https://www.openfaas.com/blog/resize-images-on-the-fly/) | Tarun Mangukiya | openfaas.com | 08-Feb-2019 |
+| [Event-driven interactions with vSphere using Functions as a Service](https://rguske.github.io/post/event-driven-interactions-with-vsphere-using-functions-as-a-service/) | Robert Guske | github.io | 5-Feb-2019 |
+| [Ride the Serverless Wave with DigitalOcean's One-click Droplet](https://www.openfaas.com/blog/digitalocean-one-click/) | Richard Gee | openfaas.com | 05-Feb-2019 |
 | [GOTO 2018, Serverless Beyond the Hype, Alex Ellis](https://www.youtube.com/watch?v=yOpYYYRuDQ0) | Alex Ellis | Youtube.com | 30-Jan-2019 |
 | [Battle Over Serverless Computing Frameworks to Heat Up in 2019](https://www.itbusinessedge.com/articles/battle-over-serverless-computing-frameworks-to-heat-up-in-2019.html) | Mike Vizard | itbusinessedge.com | 03-Jan-2019 |
 | [Serverless Inside Out: Architecture & Practices](https://www.amazon.cn/dp/B07LD4KXG3/) | Nicholas Geng Chen | China Machine Press | 01-Jan-2019 |
@@ -49,7 +55,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
-| [Knative, OpenFaaS, Kubeless : la guerre des frameworks serverless est lancée ! | Laurent Grangeau](https://mixitconf.org/) | Lyon, France | 24-May-2019 |
+| [Knative, OpenFaaS, Kubeless : la guerre des frameworks serverless est lancée !](https://mixitconf.org/)  | Laurent Grangeau | Lyon, France | 24-May-2019 |
 | [Jax - Serverless and Functions as a Service mit Java, Docker und OpenFaaS](https://jax.de/cloud-container-serverless/serverless-und-functions-as-a-service-mit-java-docker-und-openfaas/) | Dr. Halil-Cem Gürsoy | Mainz, Germany | 6-May-2019 |
 | [Hands-on Serverless with OpenFaaS and Python](https://gotochgo.com/2019/workshops/152) | Alex Ellis | Chicago, USA | 1-May-2019 |
 | [GOTO Chicago - Serverless Beyond the Hype](https://gotochgo.com/2019/sessions/728) | Alex Ellis | Chicago, USA | 30-Apr-2019 |
