@@ -22,8 +22,16 @@ Be the first.
 
 ### Bronze Sponsors
 
-* [Garden.io](https://garden.io)
 * [ASYNCY](https://asyncy.com)
+* [Serverless Nomad](https://www.serverlessnomad.com)
+
+<!---
+Pending start in April 2019 with first sponsorship payment:
+
+* [Garden.io](https://garden.io)
+* [Contiamo](https://www.contiamo.com)
+
+-->
 
 ## Backers
 
