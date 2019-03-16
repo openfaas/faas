@@ -41,12 +41,14 @@ Listed by reward, followed by miscellaneous amounts. Names are (pending) until f
 * Benjamin Neil
 * Chad Taylor
 * Contiamo
+* David Salek
 * Garden Germany GmbH
 * Johnny MKHAEL 
 * Julio
 * Lewis Bowman
 * Mark Jeromin
 * Matias Pan
+* Martin Dekov
 * Murugappan Sevugan Chetty
 * Owen Dall Sotomayor
 * Patricio Diaz
