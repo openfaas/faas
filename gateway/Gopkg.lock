@@ -154,6 +154,17 @@
   pruneopts = ""
   revision = "b15cd069a83443be3154b719d0cc9fe8117f09fb"
 
+[[projects]]
+  digest = "1:60bdcc3a64276ffef2e43430704d6b2488e3fd934475149e932e220251dbe131"
+  name = "go.uber.org/goleak"
+  packages = [
+    ".",
+    "internal/stack",
+  ]
+  pruneopts = ""
+  revision = "1ac8aeca0a53163331564467638f6ffb639636bf"
+  version = "v0.10.0"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
@@ -165,6 +176,7 @@
     "github.com/prometheus/client_golang/prometheus",
     "github.com/prometheus/client_golang/prometheus/promhttp",
     "github.com/prometheus/client_model/go",
+    "go.uber.org/goleak",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -27,3 +27,7 @@ ignored = ["github.com/openfaas/faas/gateway/queue"]
 [[constraint]]
   name = "github.com/openfaas/faas-provider"
   version = "0.9.1"
+
+[[constraint]]
+  name = "go.uber.org/goleak"
+  version = "0.10.0"
