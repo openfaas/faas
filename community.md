@@ -55,6 +55,8 @@ It would be great to hear from you especially if you have any of the above and w
 | [Hands-on Serverless with OpenFaaS and Python](https://gotochgo.com/2019/workshops/152) | Alex Ellis | Chicago, USA | 1-May-2019 |
 | [GOTO Chicago - Serverless Beyond the Hype](https://gotochgo.com/2019/sessions/728) | Alex Ellis | Chicago, USA | 30-Apr-2019 |
 | [Serverless Architecture Conf: OpenFaaS - Keeping Serverless Simple](https://serverless-architecture.io/serverless-platforms-technology) | John McCabe | The Hague, Netherlands | 9-Apr-2019 |
+| [Microservices North meetup: Kubernetes and AWS Lambda: OpenFaas Demo](https://www.meetup.com/Microservices-North/events/259957002/) | Edward Wilde | London, UK | 4-Apr-2019 |
+| [Open Infrastructure Days UK 2019: Kubernetes and AWS Lambda can play nicely together](https://sched.co/MASC) | Edward Wilde | London, UK | 1-Apr-2019 |
 | [Soirée OpenFaas et Firebase](https://www.meetup.com/fr-FR/GDG-Lille/events/258241972/?isFirstPublish=true)| Laurent Grangeau | Lille, France | 31-Jan-2019 |
 | UCL (University College London) professional practice talks: Serverless evolution with OpenFaaS | Edward Wilde | London, UK | 31-Jan-2019 |
 | [PythonPy Meetup Enero 2019](https://www.meetup.com/es-ES/Python-Paraguay/events/258171808) | Patricio Diaz | Asuncion, PY | 24-Jan-2019 |
