@@ -22,8 +22,12 @@ Be the first.
 
 ### Bronze Sponsors
 
-* [ASYNCY](https://asyncy.com)
-* [Serverless Nomad](https://www.serverlessnomad.com)
+<a href="https://asyncy.com"><img alt="ASYNCY" src="https://www.openfaas.com/images/sponsors/asyncy.png" width="100px" /></a>
+
+
+<a href="https://www.serverlessnomad.com"><img alt="Serverless Nomad" src="https://www.openfaas.com/images/sponsors/serverlessnomad.png" width="60px" /></a>
+
+*Serverless Nomad*
 
 <!---
 Pending start in April 2019 with first sponsorship payment:
