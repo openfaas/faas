@@ -1,13 +1,14 @@
-version: "3.3"
+version: "3.7"
 services:
     gateway:
-        ports:
-            - 8080:8080
+            #        ports:
+            # - 8090:8080
         image: openfaas/gateway:0.11.0-armhf
         networks:
             - functions
+            - traefik
         environment:
-            functions_provider_url: "http://faas-swarm:8080/"
+            functions_provider_url: "http://faas.cybertron.local/"
             read_timeout:  "5m5s"           # Maximum time to read HTTP request
             write_timeout: "5m5s"           # Maximum time to write HTTP response
             upstream_timeout: "5m"          # Maximum duration of upstream function call - should be more than read_timeout and write_timeout
@@ -22,6 +23,10 @@ services:
             max_idle_conns: 1024
             max_idle_conns_per_host: 1024
         deploy:
+            labels:
+                - "traefik.docker.network=traefik"
+                - "traefik.frontend.rule=Host:faas.cybertron.local"
+                - "traefik.port=8080"
             resources:
                 # limits:   # Enable if you want to limit memory usage
                 #     memory: 200M
@@ -35,6 +40,7 @@ services:
             placement:
                 constraints:
                     - 'node.platform.os == linux'
+                    - 'node.labels.arch == armhf'
         secrets:
             - basic-auth-user
             - basic-auth-password
@@ -57,6 +63,7 @@ services:
                 constraints:
                     - 'node.role == manager'
                     - 'node.platform.os == linux'
+                    - 'node.labels.arch == armhf'
             resources:
                 # limits:   # Enable if you want to limit memory usage
                 #     memory: 100M
@@ -90,6 +97,7 @@ services:
             placement:
                 constraints:
                     - 'node.platform.os == linux'
+                    - 'node.labels.arch == armhf'
 
     queue-worker:
         image: openfaas/queue-worker:0.6.0-armhf
@@ -114,6 +122,8 @@ services:
             placement:
                 constraints:
                     - 'node.platform.os == linux'
+                    - 'node.labels.arch == armhf'
+
         secrets:
             - basic-auth-user
             - basic-auth-password
@@ -134,15 +144,20 @@ services:
         command:
           - '--config.file=/etc/prometheus/prometheus.yml'
         #   - '-storage.local.path=/prometheus'
-        ports:
-            - 9090:9090
+        # ports:
+        #    - 9090:9090
         networks:
             - functions
         deploy:
+            labels:
+                - "traefik.docker.network=traefik"
+                - "traefik.frontend.rule=Host:prometheus.cybertron.local"
+                - "traefik.port=9090"
             placement:
                 constraints:
                     - 'node.role == manager'
                     - 'node.platform.os == linux'
+                    - 'node.labels.arch == armhf'
             resources:
                 limits:
                     memory: 500M
@@ -172,6 +187,7 @@ services:
                 constraints:
                     - 'node.role == manager'
                     - 'node.platform.os == linux'
+                    - 'node.labels.arch == armhf'
         configs:
             - source: alertmanager_config
               target: /alertmanager.yml
@@ -193,6 +209,9 @@ networks:
         attachable: true
         labels:
           - "openfaas=true"
+    traefik:
+        external: true
+        name: traefik
 
 secrets:
     basic-auth-user:
