@@ -69,6 +69,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Install OpenShift & OpenFaaS in a container with Weave Footloose](https://blog.alexellis.io/openshift-in-a-footloose-container/) | Alex Ellis | alexellis.io | 27-Mar-2019 |
 | [Sailing Through the Serverless Ocean with OpenFaaS Cloud](https://spotinst.com/blog/2019/03/25/sailing-through-the-serverless-ocean-with-openfaas-cloud/) | Pavel Klushin | spotinst.com | 25-Mar-2019 |
 | [Process Google Forms Responses with OpenFaaS](https://www.openfaas.com/blog/google-form-response/) | Burton Rheutan | openfaas.com | 06-Mar-2019 |
 | [Node Gatekeeper - a HMAC wrapper for Node.js](https://github.com/cabrerabywaters/faas-node-gatekeeper) | Ignacio Cabrera | github.com | 28-Feb-2019 |
