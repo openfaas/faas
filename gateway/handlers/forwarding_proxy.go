@@ -221,6 +221,7 @@ func (f FunctionPrefixTrimmingURLPathTransformer) Transform(r *http.Request) str
 // Connection header field. These are the headers defined by the
 // obsoleted RFC 2616 (section 13.5.1) and are used for backward
 // compatibility.
+// Copied from: https://golang.org/src/net/http/httputil/reverseproxy.go
 var hopHeaders = []string{
 	"Connection",
 	"Proxy-Connection", // non-standard but still sent by libcurl and rejected by e.g. google
