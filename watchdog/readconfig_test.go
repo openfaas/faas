@@ -243,3 +243,16 @@ func TestRead_ExecTimeoutConfig(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestRead_MetricsPort(t *testing.T) {
+	defaults := NewEnvBucket()
+
+	readConfig := ReadConfig{}
+	config := readConfig.Read(defaults)
+
+	want := 8081
+	if config.metricsPort != want {
+		t.Logf("metricsPort incorrect, got: %d - want: %d\n", config.metricsPort, want)
+		t.Fail()
+	}
+}
