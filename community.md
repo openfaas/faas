@@ -51,6 +51,7 @@ It would be great to hear from you especially if you have any of the above and w
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [Knative, OpenFaaS, Kubeless : la guerre des frameworks serverless est lancée !](https://mixitconf.org/)  | Laurent Grangeau | Lyon, France | 24-May-2019 |
 | [How LivePerson is Tailoring its Conversational Platform Using OpenFaaS - Simon Pelczer, LivePerson](https://kccnceu19.sched.com/event/MPeR/how-liveperson-is-tailoring-its-conversational-platform-using-openfaas-simon-pelczer-liveperson-ivana-yovcheva-vmware) | Simon Pelczer | KubeCon, Barcelona EU | 23-May-2019 |
+| [Merging Quickly in a Cloud Native World](https://kccnceu19.sched.com/event/MPZM/merging-quickly-in-a-cloud-native-world-lucas-roesler-contiamo) | Lucas Roesler | KubeCon, Barcelona EU | 22-May-2019 |
 | [Accelerating the Journey of an AI Algorithm to Production with OpenFaaS - Joost Noppen, BT PLC & Alex Ellis](https://kccnceu19.sched.com/event/MPeF/accelerating-the-journey-of-an-ai-algorithm-to-production-with-openfaas-joost-noppen-bt-plc-alex-ellis-vmware) | Joost Noppen & Alex Ellis | KubeCon, Barcelona EU | 22-May-2019 |
 | [Jax - Serverless and Functions as a Service mit Java, Docker und OpenFaaS](https://jax.de/cloud-container-serverless/serverless-und-functions-as-a-service-mit-java-docker-und-openfaas/) | Dr. Halil-Cem Gürsoy | Mainz, Germany | 6-May-2019 |
 | [goto Chicago masterclass: Serverless Kubernetes with OpenFaaS](https://gotochgo.com/2019/workshops/152) | Alex Ellis & Ed Wilde | Chicago, USA | 1-May-2019 |
@@ -76,7 +77,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Sailing Through the Serverless Ocean with OpenFaaS Cloud](https://spotinst.com/blog/2019/03/25/sailing-through-the-serverless-ocean-with-openfaas-cloud/) | Pavel Klushin | spotinst.com | 25-Mar-2019 |
 | [Process Google Forms Responses with OpenFaaS](https://www.openfaas.com/blog/google-form-response/) | Burton Rheutan | openfaas.com | 06-Mar-2019 |
 | [Node Gatekeeper - a HMAC wrapper for Node.js](https://github.com/cabrerabywaters/faas-node-gatekeeper) | Ignacio Cabrera | github.com | 28-Feb-2019 |
-| [Favorite Tools - OpenFaaS](https://fischbacher.rocks/post/tools-openfaas/) | Markus Fischbacher | [fischbacher.rocks](fischbacher.rocks) | 5-Mar-2019 |  
+| [Favorite Tools - OpenFaaS](https://fischbacher.rocks/post/tools-openfaas/) | Markus Fischbacher | [fischbacher.rocks](fischbacher.rocks) | 5-Mar-2019 |
 | [Serverless with OpenFaaS](https://blog.cloudstack.pl/serverless-with-openfaas/) | Daniel Noworyta | blog.cloudstack.pl | 5-Mar-2019 |
 | [OpenFaas on Docker Swarm on Raspberry Pi](http://www.timlevett.com/2019/03/openfaas-on-docker-swarm-on-raspberry-pi.html) | Tim Levett | timlevett.com | 4-Mar-2019  |
 | [Build your serverless functions with OpenFaaS on Azure](https://sajeetharan.com/2019/03/03/openfaas-revolution-is-here/) | Sajeetharan Sinnathurai | sajeetharan.com | 3-Mar-2019 |
@@ -174,7 +175,7 @@ It would be great to hear from you especially if you have any of the above and w
 [Back to top](#openfaas-community)
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
-|---------------------------------------------------------------------|--------------|----------|-------------| 
+|---------------------------------------------------------------------|--------------|----------|-------------|
 | [3 Serverless Platform Approaches to Consider](https://searchmicroservices.techtarget.com/tip/3-serverless-platform-approaches-to-consider) | Twain Taylor | techtarget.com | 31-Dec-2018 |
 | [Tracing Your Functions](http://www.nohuddleoffense.de/2018/12/27/tracing-your-functions/) | Thijs Metsch | nohuddleoffense.de | 27-Dec-2018 |
 | [Routing URLs to OpenFaaS Functions](https://kamal.io/blog/routing-urls-to-openfaas-functions) | Kamal Nasser | kamal.io | 10-Dec-2018 |
