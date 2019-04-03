@@ -49,6 +49,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFaaS in the VMware ecosystem - Webinar](https://www.terasky.com/news/openfaas-in-the-vmware-ecosystem-webinar-april-3rd-2019/) | Scott Rosenberg | Online webinar | 3-Apr-2019 |
 | [SFEIR Lunch #6](https://www.eventbrite.fr/e/billets-sfeir-lunch-6-58291769251) | Emmanuel Lebeaupin, Patrice De Saint Steban | Nantes, France | 26-March-2019 |
 | [Knative, OpenFaaS, Kubeless : la guerre des frameworks serverless est lancée !](https://mixitconf.org/)  | Laurent Grangeau | Lyon, France | 24-May-2019 |
 | [Jax - Serverless and Functions as a Service mit Java, Docker und OpenFaaS](https://jax.de/cloud-container-serverless/serverless-und-functions-as-a-service-mit-java-docker-und-openfaas/) | Dr. Halil-Cem Gürsoy | Mainz, Germany | 6-May-2019 |
