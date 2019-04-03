@@ -49,13 +49,15 @@ What makes a good proposal?
 * Mock-up screenshots or examples of how the CLI would work
 * Clear examples of how to reproduce any issue the proposal is addressing
 
-If you are proposing a new tool or service please do due diligence. Does this tool already exist? Can we reuse it? For example: a timer / CRON-type scheduler for invoking functions.
+Once your proposal receives a `design/approved` label you may go ahead and start work on your Pull Request.
+
+If you are proposing a new tool or service please do due diligence. Does this tool already exist in a 3rd party project or library? Can we reuse it? For example: a timer / CRON-type scheduler for invoking functions is a well-solved problem, do we need to reinvent the wheel?
 
 #### What happens if you ignore the process?
 
-If you raise a PR without following the process, it will be closed immediately and marked as invalid, this is because you have chosen not to honour the community guidelines.
+If you raise a PR without following the process, it will be closed immediately and marked as invalid. You may have also made an honest mistake or you may have have chosen not to follow the contribution guidelines.
 
-This is not the end of the discussion, but it's not a great first impression for the community either. At that point, you should request comment on your proposal issue from the project lead and core contributors.
+This is not the end of the discussion, but it's not a great first impression for the community either. At that point, you should request comment on your proposal issue from the project lead and core contributors. If a label of `design/approved` is applied to your proposal, it means that you can go ahead and start on your PR/implementation.
 
 #### Paperwork for Pull Requests
 
