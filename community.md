@@ -49,15 +49,15 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
-| [OpenFaaS in the VMware ecosystem - Webinar](https://www.terasky.com/news/openfaas-in-the-vmware-ecosystem-webinar-april-3rd-2019/) | Scott Rosenberg | Online webinar | 3-Apr-2019 |
-| [SFEIR Lunch #6](https://www.eventbrite.fr/e/billets-sfeir-lunch-6-58291769251) | Emmanuel Lebeaupin, Patrice De Saint Steban | Nantes, France | 26-March-2019 |
 | [Knative, OpenFaaS, Kubeless : la guerre des frameworks serverless est lancée !](https://mixitconf.org/)  | Laurent Grangeau | Lyon, France | 24-May-2019 |
 | [Jax - Serverless and Functions as a Service mit Java, Docker und OpenFaaS](https://jax.de/cloud-container-serverless/serverless-und-functions-as-a-service-mit-java-docker-und-openfaas/) | Dr. Halil-Cem Gürsoy | Mainz, Germany | 6-May-2019 |
-| [Hands-on Serverless with OpenFaaS and Python](https://gotochgo.com/2019/workshops/152) | Alex Ellis | Chicago, USA | 1-May-2019 |
-| [GOTO Chicago - Serverless Beyond the Hype](https://gotochgo.com/2019/sessions/728) | Alex Ellis | Chicago, USA | 30-Apr-2019 |
+| [goto Chicago masterclass: Serverless Kubernetes with OpenFaaS](https://gotochgo.com/2019/workshops/152) | Alex Ellis & Ed Wilde | Chicago, USA | 1-May-2019 |
+| [goto Chicago session: Welcome to Serverless 2.0](https://gotochgo.com/2019/sessions/728) | Alex Ellis | Chicago, USA | 30-Apr-2019 |
 | [Serverless Architecture Conf: OpenFaaS - Keeping Serverless Simple](https://serverless-architecture.io/serverless-platforms-technology) | John McCabe | The Hague, Netherlands | 9-Apr-2019 |
 | [Microservices North meetup: Kubernetes and AWS Lambda: OpenFaas Demo](https://www.meetup.com/Microservices-North/events/259957002/) | Edward Wilde | London, UK | 4-Apr-2019 |
+| [OpenFaaS in the VMware ecosystem - Webinar](https://www.terasky.com/news/openfaas-in-the-vmware-ecosystem-webinar-april-3rd-2019/) | Scott Rosenberg | Online webinar | 3-Apr-2019 |
 | [Open Infrastructure Days UK 2019: Kubernetes and AWS Lambda can play nicely together](https://sched.co/MASC) | Edward Wilde | London, UK | 1-Apr-2019 |
+| [SFEIR Lunch #6](https://www.eventbrite.fr/e/billets-sfeir-lunch-6-58291769251) | Emmanuel Lebeaupin, Patrice De Saint Steban | Nantes, France | 26-March-2019 |
 | [Soirée OpenFaas et Firebase](https://www.meetup.com/fr-FR/GDG-Lille/events/258241972/?isFirstPublish=true)| Laurent Grangeau | Lille, France | 31-Jan-2019 |
 | UCL (University College London) professional practice talks: Serverless evolution with OpenFaaS | Edward Wilde | London, UK | 31-Jan-2019 |
 | [PythonPy Meetup Enero 2019](https://www.meetup.com/es-ES/Python-Paraguay/events/258171808) | Patricio Diaz | Asuncion, PY | 24-Jan-2019 |
