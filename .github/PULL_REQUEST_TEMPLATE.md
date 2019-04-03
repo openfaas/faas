@@ -7,6 +7,7 @@
 <!--- Why is this change required? What problem does it solve? -->
 <!--- If it fixes an open issue, please link to the issue here. -->
 - [ ] I have raised an issue to propose this change ([required](https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md))
+- [ ] My issue has received approval from the maintainers or lead with the `design/approved` label
 
 
 ## How Has This Been Tested?
@@ -14,11 +15,13 @@
 <!--- Include details of your testing environment, and the tests you ran to -->
 <!--- see how your change affects other areas of the code, etc. -->
 
+
 ## Types of changes
 <!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to change)
+
 
 ## Checklist:
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
