@@ -24,11 +24,13 @@ There are a number of areas where contributions can be accepted:
 
 This is just a short list of ideas, if you have other ideas for contributing please make a suggestion.
 
-### I've found a typo
+### I want to contribute on GitHub
+
+#### I've found a typo
 
 * A Pull Request is not necessary. Raise an [Issue](https://github.com/openfaas/faas/issues) and we'll fix it as soon as we can. 
 
-### I have a (great) idea
+#### I have a (great) idea
 
 The OpenFaaS maintainers would like to make OpenFaaS the best it can be and welcome new contributions that align with the project's goals. Our time is limited so we'd like to make sure we agree on the proposed work before you spend time doing it. Saying "no" is hard which is why we'd rather say "yes" ahead of time. You need to raise a proposal.
 
@@ -45,10 +47,17 @@ What makes a good proposal?
 * Effort required for CI/CD, release, ongoing maintenance
 * Migration strategy / backwards-compatibility
 * Mock-up screenshots or examples of how the CLI would work
+* Clear examples of how to reproduce any issue the proposal is addressing
 
-If you are proposing a new tool or service please do due diligence. Does this tool already exist? Can we reuse it? For example: a timer / CRON-type scheduler for invoking functions. 
+If you are proposing a new tool or service please do due diligence. Does this tool already exist? Can we reuse it? For example: a timer / CRON-type scheduler for invoking functions.
 
-### Paperwork for Pull Requests
+#### What happens if you ignore the process?
+
+If you raise a PR without following the process, it will be closed immediately and marked as invalid, this is because you have chosen not to honour the community guidelines.
+
+This is not the end of the discussion, but it's not a great first impression for the community either. At that point, you should request comment on your proposal issue from the project lead and core contributors.
+
+#### Paperwork for Pull Requests
 
 Please read this whole guide and make sure you agree to the Developer Certificate of Origin (DCO) agreement (included below):
 
@@ -59,7 +68,7 @@ Please read this whole guide and make sure you agree to the Developer Certificat
 * Always give instructions for testing
  * Provide us CLI commands and output or screenshots where you can
 
-### Commit messages
+##### Commit messages
 
 The first line of the commit message is the *subject*, this should be followed by a blank line and then a message describing the intent and purpose of the commit. These guidelines are based upon a [post by Chris Beams](https://chris.beams.io/posts/git-commit/).
 
