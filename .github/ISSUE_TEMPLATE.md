@@ -1,7 +1,7 @@
 <!-- Due dilligence -->
 
-## I have
-- [ ] Followed the [troubleshooting guide](https://github.com/openfaas/faas/blob/master/guide/troubleshooting.md)
+## My actions before raising this issue
+- [ ] Followed the [troubleshooting guide](https://docs.openfaas.com/deployment/troubleshooting/)
 - [ ] Read/searched [the docs](https://docs.openfaas.com/)
 - [ ] Searched [past issues](/issues)
 
@@ -48,8 +48,7 @@
 
 * Code example or link to GitHub repo or gist to reproduce problem:
 
-* Other diagnostic information / logs from [troubleshooting guide](https://github.com/openfaas/faas/blob/master/guide/troubleshooting.md)
-
+* Other diagnostic information / logs from [troubleshooting guide](https://docs.openfaas.com/deployment/troubleshooting)
 
 ## Next steps
 
