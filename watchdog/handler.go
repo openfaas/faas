@@ -228,7 +228,7 @@ func getAdditionalEnvs(config *WatchdogConfig, r *http.Request, method string) [
 		}
 
 		envs = append(envs, fmt.Sprintf("Http_Method=%s", method))
-		// DEPRECATED: Http_ContentLength will be deprecated in favour
+		// Deprecation notice: Http_ContentLength will be deprecated
 		envs = append(envs, fmt.Sprintf("Http_ContentLength=%d", r.ContentLength))
 		envs = append(envs, fmt.Sprintf("Http_Content_Length=%d", r.ContentLength))
 
