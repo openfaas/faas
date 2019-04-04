@@ -1,8 +1,12 @@
-## Status
+## Status: deprecated
 
-This guide is not maintained by the project or community.
+This guide was written in September 2017 is not maintained by the project or community.
 
-# Integrate Kong with your OpenFaaS cluster on Docker Swarm
+If someone wants to maintain it, feel free to raise an issue and volunteer to do that.
+
+Official documentation is at [https://docs.openfaas.com/](https://docs.openfaas.com/)
+
+# Guide: Integrate Kong with your OpenFaaS cluster on Docker Swarm
 
 [Kong](https://getkong.org) is an API gateway that provides features such as security, logging, and rate limiting. By putting this in front of OpenFaaS you can quickly get access to these things and a lot more via [the many other plugins written](https://getkong.org/plugins/) for it.
 
@@ -14,23 +18,6 @@ If you haven't already setup OpenFaaS then you can follow one of the deployment 
 
 * [Docker Swarm](https://github.com/openfaas/faas/blob/master/guide/deployment_swarm.md)
 * [Kubernetes](https://github.com/openfaas/faas/blob/master/guide/deployment_k8s.md)
-
-Here is a quick reference for Docker Swarm:
-
-```
-$ docker swarm init --advertise-addr $(hostname -i)
-
-$ git clone https://github.com/openfaas/faas && \
-  cd faas && \
-  ./deploy_stack.sh
-```
-
-Check that one of the sample functions works
-
-```
-$ curl localhost:8080/function/func_echoit -d 'hello world'
-hello world
-```
 
 ## Setup Kong
 
