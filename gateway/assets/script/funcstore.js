@@ -20,7 +20,8 @@ funcStoreModule.component('funcStore', {
     controller: ['FuncStoreService', '$mdDialog', '$window', function FuncStoreController(FuncStoreService, $mdDialog, $window) {
         var self = this;
 
-        this.storeUrl = 'https://raw.githubusercontent.com/openfaas/store/master/store.json';
+        this.arch = "x86_64";
+        this.storeUrl = 'https://raw.githubusercontent.com/openfaas/store/master/functions.json';
         this.selectedFunc = null;
         this.functions = [];
         this.message = '';
@@ -47,7 +48,9 @@ funcStoreModule.component('funcStore', {
             FuncStoreService.fetchStore(self.storeUrl)
                 .then(function (data) {
                     self.loading = false;
-                    self.functions = data;
+                    self.functions = data.functions
+                                            .filter(f => f.images.hasOwnProperty(self.arch))
+                                            .map(f => Object.assign(f, { "image": f["images"][self.arch] }));
                 })
                 .catch(function (err) {
                     console.error(err);

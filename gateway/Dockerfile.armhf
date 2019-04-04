@@ -55,7 +55,7 @@ ENV https_proxy     ""
 COPY --from=build /go/src/github.com/openfaas/faas/gateway/gateway    .
 
 COPY assets     assets
-RUN sed -ie s/store.json/store-armhf.json/g /home/app/assets/script/funcstore.js
+RUN sed -ie s/x86_64/armhf/g /home/app/assets/script/funcstore.js
 RUN chown -R app:app ./
 USER app
 
