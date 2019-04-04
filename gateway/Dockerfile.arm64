@@ -43,7 +43,6 @@ RUN chown -R app:app ./
 
 USER app
 
-# Patch to ARM64 store
-RUN sed -ie s/store.json/store-arm64.json/g /home/app/assets/script/funcstore.js
+RUN sed -ie s/x86_64/arm64.json/g /home/app/assets/script/funcstore.js
 
 CMD ["./gateway"]
