@@ -1,4 +1,8 @@
-# Integrate Kong with your OpenFaaS cluster
+## Status
+
+This guide is not maintained by the project or community.
+
+# Integrate Kong with your OpenFaaS cluster on Docker Swarm
 
 [Kong](https://getkong.org) is an API gateway that provides features such as security, logging, and rate limiting. By putting this in front of OpenFaaS you can quickly get access to these things and a lot more via [the many other plugins written](https://getkong.org/plugins/) for it.
 
