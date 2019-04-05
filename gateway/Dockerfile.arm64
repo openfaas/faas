@@ -43,6 +43,6 @@ RUN chown -R app:app ./
 
 USER app
 
-RUN sed -ie s/x86_64/arm64.json/g /home/app/assets/script/funcstore.js
+RUN sed -ie s/x86_64/arm64/g /home/app/assets/script/funcstore.js
 
 CMD ["./gateway"]
