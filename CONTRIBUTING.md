@@ -127,15 +127,19 @@ If you feel there is an issue with OpenFaaS or were unable to get the help you n
 
 #### I need to add a dependency
 
-Vendoring is used for projects written in Go. This means that we will maintain a copy of the source-code of dependencies within Git in the `vendor` folder. This allows for a repeatable build and isolates change.
+The concept of `vendoring` is used in projects written in Go. This means that a copy of the source-code of dependencies is stored within each repository in the `vendor` folder. It allows for a repeatable build and isolates change.
 
-The vendoring tool in use is Golang's `dep`. You can get it here: https://github.com/golang/dep
+The chosen tool for vendoring code in the project is [dep](https://github.com/golang/dep).
+
+> Note: despite the availability of [Go modules](https://github.com/golang/go/wiki/Modules) in Go 1.11, they are not being used in the project at this time. If and when the decision is made to move, a complete overhaul of all repositories will need to be made in a coordinated fashion, including regression and integration testing. This is not a trivial task.
 
 ### How are releases made?
 
 Releases are made by the project lead when deemed necessary. If you want to request a new release then mention this on your PR or Issue.
 
-Releases are cut with Git tags and a successful Travis build results in new binary artifacts and Docker images being published to the Docker Hub and Quay.io. See the "Build" badge on each GitHub README file for more.
+Releases are cut with `git` tags and a successful Travis build results in new binary artifacts and Docker images being published to the Docker Hub and Quay.io. See the "Build" badge on each GitHub README file for more.
+
+Credentials for the `openfaas` and/or `functions` Docker Hub and quay.io accounts are coordinated by the project lead using.
 
 ### How do I become a maintainer?
 
