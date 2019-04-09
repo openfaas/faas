@@ -59,7 +59,7 @@ func (m *MetricsServer) Serve(cancel chan bool) {
 
 // InstrumentHandler returns a handler which records HTTP requests
 // as they are made
-func InstrumentHandler(next http.HandlerFunc, _http Http) http.HandlerFunc {
+func InstrumentHandler(next http.Handler, _http Http) http.HandlerFunc {
 	return promhttp.InstrumentHandlerCounter(_http.RequestsTotal,
 		promhttp.InstrumentHandlerDuration(_http.RequestDurationHistogram, next))
 }

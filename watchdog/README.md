@@ -102,6 +102,7 @@ The watchdog can be configured through environmental variables. You must always 
 | `exec_timeout`         | Hard timeout for process exec'd for each incoming request (in seconds). Disabled if set to 0 |
 | `write_debug`          | Write all output, error messages, and additional information to the logs. Default is false |
 | `combine_output`       | True by default - combines stdout/stderr in function response, when set to false `stderr` is written to the container logs and stdout is used for function response |
+| `max_inflight`         | Limit the maximum number of requests in flight |
 
 ## Advanced / tuning
 

@@ -17,6 +17,8 @@ import (
 	"sync/atomic"
 	"time"
 
+	limiter "github.com/openfaas/faas-middleware/concurrency-limiter"
+
 	"github.com/openfaas/faas/watchdog/types"
 )
 
@@ -294,8 +296,8 @@ func makeHealthHandler() func(http.ResponseWriter, *http.Request) {
 	}
 }
 
-func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.Request) {
-	return func(w http.ResponseWriter, r *http.Request) {
+func makeRequestHandler(config *WatchdogConfig) http.HandlerFunc {
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case
 			http.MethodPost,
@@ -309,5 +311,6 @@ func makeRequestHandler(config *WatchdogConfig) func(http.ResponseWriter, *http.
 			w.WriteHeader(http.StatusMethodNotAllowed)
 
 		}
-	}
+	})
+	return limiter.NewConcurrencyLimiter(handler, config.maxInflight).ServeHTTP
 }
