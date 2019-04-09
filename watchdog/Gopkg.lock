@@ -26,6 +26,14 @@
   version = "v1.0.1"
 
 [[projects]]
+  branch = "master"
+  digest = "1:cc8e0046e1076991a51c3aa9ab4827b8bf1bf4d7715cd45a95888663c2d851e3"
+  name = "github.com/openfaas/faas-middleware"
+  packages = ["concurrency-limiter"]
+  pruneopts = "UT"
+  revision = "6a78c3a94beb2a99d6aa443bca21331653840a23"
+
+[[projects]]
   digest = "1:ef03fb1dae4d010196652653f00a8002e94c19bcabdc8ca5100a804ffef63a47"
   name = "github.com/prometheus/client_golang"
   packages = [
@@ -70,6 +78,7 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/openfaas/faas-middleware/concurrency-limiter",
     "github.com/prometheus/client_golang/prometheus",
     "github.com/prometheus/client_golang/prometheus/promauto",
     "github.com/prometheus/client_golang/prometheus/promhttp",
