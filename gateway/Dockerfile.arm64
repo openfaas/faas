@@ -1,7 +1,9 @@
 FROM golang:1.10.4 as build
 WORKDIR /go/src/github.com/openfaas/faas/gateway
 
-#RUN curl -sL https://github.com/alexellis/license-check/releases/download/0.1/license-check > /usr/bin/license-check && chmod +x /usr/bin/license-check
+RUN curl -sLSf \
+  https://raw.githubusercontent.com/teamserverless/license-check/master/get.sh | sh \
+  && mv ./license-check /usr/bin/
 
 COPY vendor         vendor
 
@@ -18,10 +20,10 @@ COPY scaling        scaling
 COPY server.go      .
 
 # Run a gofmt and exclude all vendored code.
-#RUN license-check -path ./ --verbose=false \
+RUN license-check -path ./ --verbose=false \
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gateway .
 
-FROM alpine:3.8
+FROM alpine:3.9
 
 RUN addgroup -S app \
     && adduser -S -g app app
@@ -32,7 +34,6 @@ EXPOSE 8080
 EXPOSE 8082
 ENV http_proxy      ""
 ENV https_proxy     ""
-
 
 
 COPY --from=build /go/src/github.com/openfaas/faas/gateway/gateway    .

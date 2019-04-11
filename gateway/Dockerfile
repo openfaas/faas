@@ -3,9 +3,9 @@ ARG GIT_COMMIT_SHA
 ARG GIT_COMMIT_MESSAGE
 ARG VERSION='dev'
 
-RUN curl -sSfL https://github.com/alexellis/license-check/releases/download/0.2.2/license-check \
-    > /usr/bin/license-check \
-    && chmod +x /usr/bin/license-check
+RUN curl -sLSf \
+  https://raw.githubusercontent.com/teamserverless/license-check/master/get.sh | sh \
+  && mv ./license-check /usr/bin/
 
 WORKDIR /go/src/github.com/openfaas/faas/gateway
 
