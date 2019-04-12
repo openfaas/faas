@@ -49,7 +49,6 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
-| [IT Depends #1: Google Cloud na produkcji i serverless z OpenFaaS](https://www.meetup.com/meetup-group-zhlFJrTR/events/260534334/) | Sebastian Woldański | Katowice, Poland | 04-Apr-2019 |
 | [Knative, OpenFaaS, Kubeless : la guerre des frameworks serverless est lancée !](https://mixitconf.org/)  | Laurent Grangeau | Lyon, France | 24-May-2019 |
 | [How LivePerson is Tailoring its Conversational Platform Using OpenFaaS - Simon Pelczer, LivePerson](https://kccnceu19.sched.com/event/MPeR/how-liveperson-is-tailoring-its-conversational-platform-using-openfaas-simon-pelczer-liveperson-ivana-yovcheva-vmware) | Simon Pelczer | KubeCon, Barcelona EU | 23-May-2019 |
 | [Merging Quickly in a Cloud Native World](https://kccnceu19.sched.com/event/MPZM/merging-quickly-in-a-cloud-native-world-lucas-roesler-contiamo) | Lucas Roesler | KubeCon, Barcelona EU | 22-May-2019 |
@@ -58,6 +57,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Jax - Serverless and Functions as a Service mit Java, Docker und OpenFaaS](https://jax.de/cloud-container-serverless/serverless-und-functions-as-a-service-mit-java-docker-und-openfaas/) | Dr. Halil-Cem Gürsoy | Mainz, Germany | 6-May-2019 |
 | [goto Chicago masterclass: Serverless Kubernetes with OpenFaaS](https://gotochgo.com/2019/workshops/152) | Alex Ellis & Ed Wilde | Chicago, USA | 1-May-2019 |
 | [goto Chicago session: Welcome to Serverless 2.0](https://gotochgo.com/2019/sessions/728) | Alex Ellis | Chicago, USA | 30-Apr-2019 |
+| [IT Depends #1: Google Cloud na produkcji i serverless z OpenFaaS](https://www.meetup.com/meetup-group-zhlFJrTR/events/260534334/) | Sebastian Woldański | Katowice, Poland | 17-Apr-2019 |
 | [BelFOSS 2019: OpenFaaS - Keeping Serverless Simple](https://belfoss.eeecs.qub.ac.uk/agenda/) | John McCabe | Belfast, Northern Ireland | 12-Apr-2019 |
 | [Serverless Architecture Conf: OpenFaaS - Keeping Serverless Simple](https://serverless-architecture.io/serverless-platforms-technology) | John McCabe | The Hague, Netherlands | 9-Apr-2019 |
 | [Microservices North meetup: Kubernetes and AWS Lambda: OpenFaas Demo](https://www.meetup.com/Microservices-North/events/259957002/) | Edward Wilde | London, UK | 4-Apr-2019 |
