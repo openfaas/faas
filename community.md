@@ -59,6 +59,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [goto Chicago session: Welcome to Serverless 2.0](https://gotochgo.com/2019/sessions/728) | Alex Ellis | Chicago, USA | 30-Apr-2019 |
 | [IT Depends #1: Google Cloud na produkcji i serverless z OpenFaaS](https://www.meetup.com/meetup-group-zhlFJrTR/events/260534334/) | Sebastian Woldański | Katowice, Poland | 17-Apr-2019 |
 | [BelFOSS 2019: OpenFaaS - Keeping Serverless Simple](https://belfoss.eeecs.qub.ac.uk/agenda/) | John McCabe | Belfast, Northern Ireland | 12-Apr-2019 |
+| [Coworking Monterrey: Lightning Talks and Serverless Functions with OpenFaaS](https://www.facebook.com/events/546729195736337/) | Ernesto Celis | Monterrey, Nuevo León, México | 12-Apr-2019 |
 | [Serverless Architecture Conf: OpenFaaS - Keeping Serverless Simple](https://serverless-architecture.io/serverless-platforms-technology) | John McCabe | The Hague, Netherlands | 9-Apr-2019 |
 | [Microservices North meetup: Kubernetes and AWS Lambda: OpenFaas Demo](https://www.meetup.com/Microservices-North/events/259957002/) | Edward Wilde | London, UK | 4-Apr-2019 |
 | [OpenFaaS in the VMware ecosystem - Webinar](https://www.terasky.com/news/openfaas-in-the-vmware-ecosystem-webinar-april-3rd-2019/) | Scott Rosenberg | Online webinar | 3-Apr-2019 |
