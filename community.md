@@ -49,6 +49,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [IT Depends #1: Google Cloud na produkcji i serverless z OpenFaaS](https://www.meetup.com/meetup-group-zhlFJrTR/events/260534334/) | Sebastian Woldański | Katowice, Poland | 04-Apr-2019 |
 | [Knative, OpenFaaS, Kubeless : la guerre des frameworks serverless est lancée !](https://mixitconf.org/)  | Laurent Grangeau | Lyon, France | 24-May-2019 |
 | [How LivePerson is Tailoring its Conversational Platform Using OpenFaaS - Simon Pelczer, LivePerson](https://kccnceu19.sched.com/event/MPeR/how-liveperson-is-tailoring-its-conversational-platform-using-openfaas-simon-pelczer-liveperson-ivana-yovcheva-vmware) | Simon Pelczer | KubeCon, Barcelona EU | 23-May-2019 |
 | [Merging Quickly in a Cloud Native World](https://kccnceu19.sched.com/event/MPZM/merging-quickly-in-a-cloud-native-world-lucas-roesler-contiamo) | Lucas Roesler | KubeCon, Barcelona EU | 22-May-2019 |
