@@ -157,6 +157,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Going Serverless with OpenFaaS, Kubernetes, and Python @ PyCon](https://us.pycon.org/2018/schedule/presentation/40/) | [Michael Herman](https://twitter.com/mikeherman) |  Cleveland, OH | 9-May-2018 |
 | [OpenFaaS talk and workshop @ Cisco DevNet Create](https://devnetcreate.io/2018/pages/speaker/speaker.html#Alex-Ellis) | Alex Ellis | Mountain View, CA | 10/11-Apr-2018 |
 | [OpenFaaS : a serverless framework on top of Docker and Kubernetes @ Devoxx France](https://www.devoxx.fr/) | [Laurent Grangeau](https://twitter.com/laurentgrangeau) | Paris, France | 18-Apr-2018 |
+| [Serverless meetup - Serverless vs. Organizations: How Serverless forces us to *un*learn](https://www.meetup.com/Serverless-Dusseldorf/events/259557587/) | Thomas Peitz | Dusseldorf, Germany | 12-April-2018 |
 | [Deep Dive: Serverless Computing mit OpenFaaS - Magdeburger Developer Days](https://www.md-devdays.de/Act?id=34/) | Frank Pommerening | Magdeburg Germany | 10-April-2018 |
 | [.NET Core on a Raspberry Pi Cluster with Docker and OpenFaaS](https://www.meetup.com/St-Pete-NET-Meetup/events/247299483/) | John Callaway | St Petersburg, FL | 03-Apr-2018 |
 | [.NET Core on a Raspberry Pi Cluster with Docker and OpenFaaS](http://www.codepalousa.com/Sessions/1034) | John Callaway | Louisville, KY | 30-Mar-2018 |
