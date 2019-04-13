@@ -48,12 +48,12 @@ func Test_logsProxyDoesNotLeakGoroutinesWhenProviderClosesConnection(t *testing.
 
 	resp, err := http.Get(testSrv.URL + "?name=funcFoo")
 	if err != nil {
-		t.Fatalf("unexpected error sneding log request: %s", err)
+		t.Fatalf("unexpected error sending log request: %s", err)
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		t.Fatalf("unexpected error reading teh response body: %s", err)
+		t.Fatalf("unexpected error reading the response body: %s", err)
 	}
 
 	if string(body) != string(expectedMsg) {
