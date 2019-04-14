@@ -32,6 +32,14 @@ after_success:
         echo $QUAY_PASSWORD | docker login -u=$QUAY_USERNAME --password-stdin quay.io;
         docker push quay.io/$DOCKER_NS/gateway:$TRAVIS_TAG;
 
+        docker tag $DOCKER_NS/watchdog:latest-dev $DOCKER_NS/watchdog:$TRAVIS_TAG;
+        echo $DOCKER_PASSWORD | docker login -u=$DOCKER_USERNAME --password-stdin;
+        docker push $DOCKER_NS/watchdog:$TRAVIS_TAG;
+
+        docker tag $DOCKER_NS/watchdog:latest-dev quay.io/$DOCKER_NS/watchdog:$TRAVIS_TAG;
+        echo $QUAY_PASSWORD | docker login -u=$QUAY_USERNAME --password-stdin quay.io;
+        docker push quay.io/$DOCKER_NS/watchdog:$TRAVIS_TAG;
+
         fi
 
 before_deploy:

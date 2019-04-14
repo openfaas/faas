@@ -1,0 +1,7 @@
+FROM openfaas/watchdog:build as build
+FROM scratch
+
+COPY --from=build /go/src/github.com/openfaas/faas/watchdog/watchdog ./fwatchdog
+COPY --from=build /go/src/github.com/openfaas/faas/watchdog/watchdog-armhf ./fwatchdog-armhf
+COPY --from=build /go/src/github.com/openfaas/faas/watchdog/watchdog-arm64 ./fwatchdog-arm64
+COPY --from=build /go/src/github.com/openfaas/faas/watchdog/watchdog.exe ./fwatchdog.exe
