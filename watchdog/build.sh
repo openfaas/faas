@@ -22,6 +22,8 @@ else
     docker build --no-cache --build-arg VERSION=$VERSION --build-arg GIT_COMMIT=$GIT_COMMIT -t openfaas/watchdog:build .
 fi
 
+docker build --no-cache -t openfaas/watchdog:latest-dev . -f Dockerfile.packager
+
 docker create --name buildoutput openfaas/watchdog:build echo
 
 docker cp buildoutput:/go/src/github.com/openfaas/faas/watchdog/watchdog ./fwatchdog
@@ -30,4 +32,3 @@ docker cp buildoutput:/go/src/github.com/openfaas/faas/watchdog/watchdog-arm64 .
 docker cp buildoutput:/go/src/github.com/openfaas/faas/watchdog/watchdog.exe ./fwatchdog.exe
 
 docker rm buildoutput
-
