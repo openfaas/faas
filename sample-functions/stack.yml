@@ -9,11 +9,11 @@ functions:
   figlet:
     lang: dockerfile
     handler: ./figlet
-    image: functions/figlet:0.9.6
+    image: functions/figlet:0.13.0
   apikey-secret:
     lang: go
     handler: ./apikey-secret
-    image: functions/apikey-secret:0.1
+    image: functions/apikey-secret:0.13.0
   captainsintent:
     lang: dockerfile
     handler: ./CaptainsIntent
@@ -45,7 +45,7 @@ functions:
   haveibeenpwned:
     lang: go
     handler: ./haveibeenpwned
-    image: functions/haveibeenpwned:0.1
+    image: functions/haveibeenpwned:0.13.0
   hostnameintent:
     lang: dockerfile
     handler: ./HostnameIntent
@@ -57,7 +57,7 @@ functions:
   nmap:
     lang: dockerfile
     handler: ./Nmap
-    image: functions/nmap:0.1
+    image: functions/nmap:0.13.0
   nodeinfo:
     lang: dockerfile
     handler: ./NodeInfo
@@ -89,4 +89,4 @@ functions:
   business-strategy-generator:
     lang: go
     handler: ./business-strategy-generator
-    image: functions/business-strategy-generator:0.1
+    image: functions/business-strategy-generator:0.13.0
