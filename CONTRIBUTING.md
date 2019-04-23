@@ -177,9 +177,10 @@ Varying levels of write access are made available via the project bot [Derek](ht
 GitHub Organisation Members are expected to:
 
 * attend all community calls
-* participate daily in the private members channel, public #contributors and #openfaas channels
 * make regular contributions to the project codebase
-* respond to messages in a timely fashion
+* participate in the members channel and engage with the topics
+* take an active role in the public channels: #contributors and #openfaas
+* comment on and engage with project proposals
 
 This group is intended to be an active team that shares the load and collaborates together. Sometimes finding time to participate can be challenging when balanced with other commitments so if you are likely to be inactive or away for several weeks, then please contact the project lead.
 
