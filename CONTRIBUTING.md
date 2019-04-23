@@ -172,13 +172,22 @@ GitHub Organisation Members are well-known contributors with a track record of:
 * Offering other project support and strategical advice
 * Attending contributors' meetings
 
-Varying levels of write access are made available via the project bot [Derek](https://github.com/alexellis/derek) to help regular contributors transition to GitHub Organisation Membership.
+Varying levels of write access are made available via the project bot [Derek](https://github.com/alexellis/derek) to help regular contributors transition to GitHub Organisation Membership. Members gain access to a private Slack channel and are also featured on the Team page of the OpenFaaS website.
+
+GitHub Organisation Members are expected to:
+
+* attend all community calls
+* participate daily in the private members channel, public #contributors and #openfaas channels
+* make regular contributions to the project codebase
+* respond to messages in a timely fashion
+
+This group is intended to be an active team that shares the load and collaborates together. Sometimes finding time to be active can be harder to balance, if that's the case please contact the project lead. However, if GitHub Organisation Members stop participating in all of the above for several consecutive weeks without contacting the project lead, then they risk having their membership revoked.
 
 #### How do I get access to Derek?
 
 If you have been added to the `.DEREK.yml` file in the root of an OpenFaaS repository then you can help us manage the community and contributions by issuing comments on Issues and Pull Requests. See [Derek](https://github.com/alexellis/derek) for available commands.
 
-If you are a regular contributor then you are welcome to request access.
+If you are a contributor then you are welcome to request access.
 
 #### Community/project meetings and calls
 
