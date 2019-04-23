@@ -141,9 +141,9 @@ Simply follow the deployment guide for Swarm above in a new session
 
 * [Begin the TestDrive with Docker Swarm](https://github.com/openfaas/faas/blob/master/TestDrive.md)
 
-Here is a screenshot of the API gateway portal - designed for ease of use.
+Here is a screenshot of the API gateway portal - designed for ease of use with the inception function.
 
-![Portal](https://pbs.twimg.com/media/C7bkpZbWwAAnKsx.jpg)
+![Portal](/docs/inception.png)
 
 ## Find out more about OpenFaaS
 
