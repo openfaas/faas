@@ -160,7 +160,9 @@ The Core Contributor group includes:
 - Burton Rheutan (@burtonr)
 - Ed Wilde (@ewilde)
 
-The Core Contributors have the ear of the project lead and help with strategy, project maintenance, community management and make a regular commitment of time to the project. Core Contributors attend all project meetings and calls.
+The Core Contributors have the ear of the project lead and help with strategy, project maintenance, community management and make a regular commitment of time to the project. Core contributors will usually look after or be a subject-matter-expert (SME) for a sub-system of OpenFaaS. Core contributors may be granted write (push) access to one or more sub-systems.
+
+Core Contributors attend all project meetings and calls.
 
 #### GitHub Organisation Members
 
@@ -169,22 +171,19 @@ GitHub Organisation Members are well-known contributors with a track record of:
 * Fixing, testing and triaging issues
 * Joining contributor meetings and supporting new contributors
 * Testing and reviewing pull requests
-* Offering other project support and strategical advice
-* Attending contributors' meetings
+* Offering other project support, feedback and being available to help
 
 Varying levels of write access are made available via the project bot [Derek](https://github.com/alexellis/derek) to help regular contributors transition to GitHub Organisation Membership. Members gain access to a private Slack channel and are also featured on the Team page of the OpenFaaS website.
 
 GitHub Organisation Members are expected to:
 
-* attend all community calls
+* participate in community Zoom calls (when possible within your timezone)
 * make regular contributions to the project codebase
 * participate in the members channel and engage with the topics
 * take an active role in the public channels: #contributors and #openfaas
 * comment on and engage with project proposals
 
 This group is intended to be an active team that shares the load and collaborates together. Sometimes finding time to participate can be challenging when balanced with other commitments so if you are likely to be inactive or away for several weeks, then please contact the project lead.
-
-> Note: if GitHub Organisation Members stop participating in all of the above for several consecutive weeks without contacting the project lead, then they risk having their membership revoked.
 
 #### How do I get access to Derek?
 
