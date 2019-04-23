@@ -181,7 +181,9 @@ GitHub Organisation Members are expected to:
 * make regular contributions to the project codebase
 * respond to messages in a timely fashion
 
-This group is intended to be an active team that shares the load and collaborates together. Sometimes finding time to be active can be harder to balance, if that's the case please contact the project lead. However, if GitHub Organisation Members stop participating in all of the above for several consecutive weeks without contacting the project lead, then they risk having their membership revoked.
+This group is intended to be an active team that shares the load and collaborates together. Sometimes finding time to participate can be challenging when balanced with other commitments so if you are likely to be inactive or away for several weeks, then please contact the project lead.
+
+> Note: if GitHub Organisation Members stop participating in all of the above for several consecutive weeks without contacting the project lead, then they risk having their membership revoked.
 
 #### How do I get access to Derek?
 
