@@ -101,7 +101,7 @@ paths:
       parameters:
       - in: body
         name: body
-        description: Function to delete
+        description: Incoming alert
         schema:
           type: object
           example: |-
