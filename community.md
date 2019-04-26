@@ -55,6 +55,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Accelerating the Journey of an AI Algorithm to Production with OpenFaaS - Joost Noppen, BT PLC & Alex Ellis](https://kccnceu19.sched.com/event/MPeF/accelerating-the-journey-of-an-ai-algorithm-to-production-with-openfaas-joost-noppen-bt-plc-alex-ellis-vmware) | Joost Noppen & Alex Ellis | KubeCon, Barcelona EU | 22-May-2019 |
 | [Docker Birmingham: Staying on topic - Invoke your OpenFaaS functions through Kafka](https://www.meetup.com/Docker-Birmingham/events/260563667/?_xtd=gqFyqTI2MjQ0NTE2NKFwp2FuZHJvaWQ&from=ref) | Richard Gee | Birmingham, UK | 7-May-2019 |
 | [Jax - Serverless and Functions as a Service mit Java, Docker und OpenFaaS](https://jax.de/cloud-container-serverless/serverless-und-functions-as-a-service-mit-java-docker-und-openfaas/) | Dr. Halil-Cem Gürsoy | Mainz, Germany | 6-May-2019 |
+| [Dockercon OSS Summit: Serverless](https://www.docker.com/dockercon/agenda/opensource/) | Burton Rheutan & Pav Jimanov | Dockercon, San Fracisco CA | 2-May-2019 |
 | [PHP Shropshire: Staying on topic - Invoke your OpenFaaS functions through Kafka](https://www.meetup.com/PHP-Shropshire/events/260591121/) | Richard Gee | Telford, UK | 2-May-2019 |
 | [goto Chicago masterclass: Serverless Kubernetes with OpenFaaS](https://gotochgo.com/2019/workshops/152) | Alex Ellis & Ed Wilde | Chicago, USA | 1-May-2019 |
 | [goto Chicago session: Welcome to Serverless 2.0](https://gotochgo.com/2019/sessions/728) | Alex Ellis | Chicago, USA | 30-Apr-2019 |
