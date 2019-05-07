@@ -52,6 +52,8 @@ services:
             DOCKER_API_VERSION: "1.30"
             basic_auth: "${BASIC_AUTH:-true}"
             secret_mount_path: "/run/secrets/"
+            gateway_invoke: "true"
+            faas_gateway_address: "gateway"
         deploy:
             placement:
                 constraints:
