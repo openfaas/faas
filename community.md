@@ -58,6 +58,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Kubernetes and AWS Lambda can play nicely together with OpenFaaS](https://spseu19.sched.com/event/Nq4u/kubernetes-and-aws-lambda-can-play-nicely-together-with-openfaas) | Ed Wilde | Serverless Practitioners Summit/KubeCon | 20-May-2019 |
 | [A bright 2019 for OpenFaaS - project & community updates](https://spseu19.sched.com/event/Nq4i/a-bright-2019-for-openfaas-project-community-updates) | Alex Ellis | Serverless Practitioners Summit/KubeCon | 20-May-2019 |
 | [Going Serverless with Spotinst Ocean and OpenFaas Cloud](https://hubs.ly/H0hL-Zx0) @ 5pm BST | Alex Ellis / Tsahi Duek | Free Webinar | 15-May-2019 |
+| [DataScience as a Service](https://teqnation.nl/sessions/datascience-as-a-service/)  | Arno Broekhof | TEQnation, Netherlands EU | 15-May-2019 |
 | [Docker Birmingham: Staying on topic - Invoke your OpenFaaS functions through Kafka](https://www.meetup.com/Docker-Birmingham/events/260563667/?_xtd=gqFyqTI2MjQ0NTE2NKFwp2FuZHJvaWQ&from=ref) | Richard Gee | Birmingham, UK | 7-May-2019 |
 | [Jax - Serverless and Functions as a Service mit Java, Docker und OpenFaaS](https://jax.de/cloud-container-serverless/serverless-und-functions-as-a-service-mit-java-docker-und-openfaas/) | Dr. Halil-Cem Gürsoy | Mainz, Germany | 6-May-2019 |
 | [Dockercon OSS Summit: Serverless](https://www.docker.com/dockercon/agenda/opensource/) | Burton Rheutan & Pav Jimanov | Dockercon, San Fracisco CA | 2-May-2019 |
