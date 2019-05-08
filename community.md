@@ -84,6 +84,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Your first .NET Core Serverless function on OpenFaas](https://blogs.4dotnet.nl/your-first-net-core-serverless-function-on-openfaas/) | Prasenjit Sarkar | blogs.4dotnet.nl | 8-May-2019 |
 | [Handling Oracle Code Card using Python on OpenFaaS](https://blog.kube-mesh.io/handling-oracle-code-card-using-python-on-openfaas/) | Prasenjit Sarkar | blog.kube-mesh.io | 2-May-2019 | 
 | [Oracle Code Card met OpenFaaS](https://blog.kube-mesh.io/oracle-code-card-met-openfaas/) | Prasenjit Sarkar | blog.kube-mesh.io | 1-May-2019 |
 | [Install OpenShift & OpenFaaS in a container with Weave Footloose](https://blog.alexellis.io/openshift-in-a-footloose-container/) | Alex Ellis | alexellis.io | 27-Mar-2019 |
