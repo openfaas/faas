@@ -16,7 +16,7 @@
                   <func-store selected-func="selectedFunc" on-selected="onFuncSelected"></func-store>
                 </md-content>
               </md-tab>
-              <md-tab label="Manually" md-on-deselect="onManualTabDeselect()" md-on-select="onTabSelect(1)">
+              <md-tab label="Custom" md-on-deselect="onCustomTabDeselect()" md-on-select="onTabSelect(1)">
                 <md-content class="md-padding">
                     <div>
                         <label><i>Use this form to test a function or the <a ng-href="https://github.com/openfaas/faas-cli">faas-cli</a> for more options.</i></label>
@@ -58,6 +58,97 @@
                                 <input name="network" ng-model="item.network" md-maxlength="200" minlength="0">
                             </md-input-container>
                         </div>
+                        <br />
+                        <div layout-gt-xs="column">
+                            <div layout-gt-xs="row" ng-click="onEnvInputExpand()" stop-propagation>
+                                    Environment Variables
+                                    <md-icon class="expand-icon" ng-if="!envFieldsVisible" aria-label="env-expand" md-svg-src="img/icons/baseline-expand_more-24px.svg"></md-icon>
+                                    <md-icon class="expand-icon" ng-if="envFieldsVisible" aria-label="env-expand" md-svg-src="img/icons/baseline-expand_less-24px.svg"></md-icon>
+                            </div>
+                            <div ng-if="envFieldsVisible" layout-gt-xs="column" class="repeating-inputs">
+                                <div ng-repeat="envVar in envVarInputs track by $index" layout-gt-xs="row">
+                                    <md-input-container class="md-block" flex-gt-sm>                                
+                                        <md-tooltip md-direction="bottom">Environment variable key to be used in the function</md-tooltip>
+                                        <label>Key:</label>
+                                        <input name="envVarKey" ng-model="envVarInputs[$index].key" autofocus>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <md-tooltip md-direction="bottom">Environment variable value to be used in the function</md-tooltip>
+                                        <label>Value:</label>
+                                        <input name="envVarValue" ng-model="envVarInputs[$index].value">
+                                    </md-input-container>
+                                    <md-icon class="add-input-icon" ng-click="addEnvVar($index)" ng-show="$last" aria-label="add-env" md-svg-src="img/icons/baseline-add_circle_outline-24px.svg"></md-icon>
+                                    <md-icon class="remove-input-icon" ng-click="removeEnvVar($event,envVar)" ng-show="!$last" aria-label="remove-env" md-svg-src="img/icons/baseline-remove_circle_outline-24px.svg"></md-icon>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div layout-gt-xs="column">
+                            <div layout-gt-xs="row" ng-click="onSecretInputExpand()" stop-propagation>
+                                    Secrets
+                                    <md-icon class="expand-icon" ng-if="!secretFieldsVisible" aria-label="secret-expand" md-svg-src="img/icons/baseline-expand_more-24px.svg"></md-icon>
+                                    <md-icon class="expand-icon" ng-if="secretFieldsVisible" aria-label="secret-expand" md-svg-src="img/icons/baseline-expand_less-24px.svg"></md-icon>
+                            </div>
+                            <div ng-if="secretFieldsVisible" layout-gt-xs="column" class="repeating-inputs">
+                                <div ng-repeat="secret in secretInputs track by $index" layout-gt-xs="row">
+                                    <md-input-container class="md-block" flex-gt-sm>                                
+                                        <md-tooltip md-direction="bottom">Secret name to be used in the function</md-tooltip>
+                                        <label>Secret Name:</label>
+                                        <input name="secretField" ng-model="secretInputs[$index].name" autofocus>
+                                    </md-input-container>
+                                    <md-icon class="add-input-icon" ng-click="addSecret($index)" ng-show="$last" aria-label="add-secret" md-svg-src="img/icons/baseline-add_circle_outline-24px.svg"></md-icon>
+                                    <md-icon class="remove-input-icon" ng-click="removeSecret($event,secret)" ng-show="!$last" aria-label="remove-secret" md-svg-src="img/icons/baseline-remove_circle_outline-24px.svg"></md-icon>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div layout-gt-xs="column">
+                            <div layout-gt-xs="row" ng-click="onLabelInputExpand()" stop-propagation>
+                                    Labels
+                                    <md-icon class="expand-icon" ng-if="!labelFieldsVisible" aria-label="label-expand" md-svg-src="img/icons/baseline-expand_more-24px.svg"></md-icon>
+                                    <md-icon class="expand-icon" ng-if="labelFieldsVisible" aria-label="label-expand" md-svg-src="img/icons/baseline-expand_less-24px.svg"></md-icon>
+                            </div>
+                            <div ng-if="labelFieldsVisible" layout-gt-xs="column" class="repeating-inputs">
+                                <div ng-repeat="label in labelInputs track by $index" layout-gt-xs="row">
+                                    <md-input-container class="md-block" flex-gt-sm>                                
+                                        <md-tooltip md-direction="bottom">Label key to be used on the deployed function</md-tooltip>
+                                        <label>Key:</label>
+                                        <input name="labelKey" ng-model="labelInputs[$index].key" autofocus>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <md-tooltip md-direction="bottom">Label value to be used on the deployed function</md-tooltip>
+                                        <label>Value:</label>
+                                        <input name="labelValue" ng-model="labelInputs[$index].value">
+                                    </md-input-container>
+                                    <md-icon class="add-input-icon" ng-click="addLabel($index)" ng-show="$last" aria-label="add-label" md-svg-src="img/icons/baseline-add_circle_outline-24px.svg"></md-icon>
+                                    <md-icon class="remove-input-icon" ng-click="removeLabel($event,label)" ng-show="!$last" aria-label="remove-label" md-svg-src="img/icons/baseline-remove_circle_outline-24px.svg"></md-icon>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div layout-gt-xs="column">
+                            <div layout-gt-xs="row" ng-click="onAnnotationInputExpand()" stop-propagation>
+                                    Annotations
+                                    <md-icon class="expand-icon" ng-if="!annotationFieldsVisible" aria-label="annotation-expand" md-svg-src="img/icons/baseline-expand_more-24px.svg"></md-icon>
+                                    <md-icon class="expand-icon" ng-if="annotationFieldsVisible" aria-label="annotation-expand" md-svg-src="img/icons/baseline-expand_less-24px.svg"></md-icon>
+                            </div>
+                            <div ng-if="annotationFieldsVisible" layout-gt-xs="column" class="repeating-inputs">
+                                <div ng-repeat="annotation in annotationInputs track by $index" layout-gt-xs="row">
+                                    <md-input-container class="md-block" flex-gt-sm>                                
+                                        <md-tooltip md-direction="bottom">Annotation key to be used on the deployed function</md-tooltip>
+                                        <label>Key:</label>
+                                        <input name="annotationkey" ng-model="annotationInputs[$index].key" autofocus>
+                                    </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <md-tooltip md-direction="bottom">Annotation value to be used on the deployed function</md-tooltip>
+                                        <label>Value:</label>
+                                        <input name="annotationValue" ng-model="annotationInputs[$index].value">
+                                    </md-input-container>
+                                    <md-icon class="add-input-icon" ng-click="addAnnotation($index)" ng-show="$last" aria-label="add-annotation" md-svg-src="img/icons/baseline-add_circle_outline-24px.svg"></md-icon>
+                                    <md-icon class="remove-input-icon" ng-click="removeAnnotation($event,annotation)" ng-show="!$last" aria-label="remove-annotation" md-svg-src="img/icons/baseline-remove_circle_outline-24px.svg"></md-icon>
+                                </div>
+                            </div>
+                        </div>
                         <div class="validation-error" layout-gt-xs="row" layout-align="start end">
                             <span ng-show="validationError">{{ validationError }}</span>
                         </div>
@@ -70,6 +161,9 @@
     <md-dialog-actions>
         <md-button ng-click="closeDialog()" class="md-secondary">
             Close Dialog
+        </md-button>
+        <md-button ng-if="selectedFunc" ng-click="customizeStoreFunc()" class="md-warn">
+            Customize
         </md-button>
         <md-button ng-disabled="userForm.$invalid" ng-click="createFunc()" class="md-primary">
             Deploy
