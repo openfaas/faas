@@ -7,7 +7,7 @@ var app = angular.module('faasGateway', ['ngMaterial', 'ngMessages', 'faasGatewa
 app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$filter', '$mdDialog', '$mdToast', '$mdSidenav',
     function($scope, $log, $http, $location, $interval, $filter, $mdDialog, $mdToast, $mdSidenav) {
         var FUNCSTORE_DEPLOY_TAB_INDEX = 0;
-        var MANUAL_DEPLOY_TAB_INDEX = 1;
+        var CUSTOM_DEPLOY_TAB_INDEX = 1;
 
         var newFuncTabIdx = FUNCSTORE_DEPLOY_TAB_INDEX;
         $scope.functions = [];
@@ -50,7 +50,9 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
             network: "",
             service: "",
             envVars: {},
-            labels: {}
+            labels: {},
+            annotations: {},
+            secrets: []
         };
 
         $scope.invocation.request = "";
@@ -250,8 +252,20 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
 
         var DialogController = function($scope, $mdDialog, item) {
             $scope.selectedTabIdx = newFuncTabIdx;
-            $scope.item = item;
+            $scope.item = {};
             $scope.selectedFunc = null;
+            $scope.envFieldsVisible = false;
+            $scope.envVarInputs = [{key: "", value: ""}];
+
+            $scope.secretFieldsVisible = false;
+            $scope.secretInputs = [{name: ""}];
+
+            $scope.labelFieldsVisible = false;
+            $scope.labelInputs = [{key: "", value: ""}];
+
+            $scope.annotationFieldsVisible = false;
+            $scope.annotationInputs = [{key: "", value: ""}];
+            
             $scope.closeDialog = function() {
                 $mdDialog.hide();
             };
@@ -261,10 +275,16 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
                 $scope.item.service = func.name;
                 $scope.item.envProcess = func.fprocess;
                 $scope.item.network = func.network;
-                $scope.item.envVars = func.environment;
-                $scope.item.labels = func.labels;
+                $scope.envVarsToEnvVarInputs(func.environment);
+                $scope.labelsToLabelInputs(func.labels);
+                $scope.annotationsToAnnotationInputs(func.annotations);
+                $scope.secretsToSecretInputs(func.secrets);
 
                 $scope.selectedFunc = func;
+            }
+
+            $scope.customizeStoreFunc = function() {
+                $scope.selectedTabIdx = CUSTOM_DEPLOY_TAB_INDEX;
             }
             
             $scope.onTabSelect = function(idx) {
@@ -275,11 +295,16 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
                 $scope.selectedFunc = null;
             }
 
-            $scope.onManualTabDeselect = function() {
+            $scope.onCustomTabDeselect = function() {
                 $scope.item = {};
             }
 
             $scope.createFunc = function() {
+                $scope.item.envVars = $scope.envVarInputsToEnvVars();
+                $scope.item.secrets = $scope.secretInputsToSecrets();
+                $scope.item.labels = $scope.labelInputsToLabels();
+                $scope.item.annotations = $scope.annotationInputsToAnnotations();
+
                 var options = {
                     url: "../system/functions",
                     data: $scope.item,
@@ -296,16 +321,198 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
                         item.network = "";
                         item.envVars = {};
                         item.labels = {};
+                        item.annotations = {};
+                        item.secrets = [];
 
                         $scope.validationError = "";
                         $scope.closeDialog();
                         showPostInvokedToast("Function created");
                     }).catch(function(error1) {
                         showPostInvokedToast("Error");
-                        $scope.selectedTabIdx = MANUAL_DEPLOY_TAB_INDEX;
+                        $scope.selectedTabIdx = CUSTOM_DEPLOY_TAB_INDEX;
                         $scope.validationError = error1.data;
                     });
             };
+
+            $scope.onEnvInputExpand = function() {
+                $scope.envFieldsVisible = !$scope.envFieldsVisible;
+            }
+
+            $scope.addEnvVar = function(index) {
+                var newInput = {key: "", value: ""};
+                $scope.envVarInputs.splice(index + 1, 0, newInput);
+            }
+
+            $scope.removeEnvVar = function($event, envVar) {
+                var index = $scope.envVarInputs.indexOf(envVar);
+                if ($event.which == 1) {
+                    $scope.envVarInputs.splice(index, 1);
+                }
+            }
+
+            $scope.onSecretInputExpand = function() {
+                $scope.secretFieldsVisible = !$scope.secretFieldsVisible;
+            }
+
+            $scope.addSecret = function(index) {
+                var newInput = {name: ""};
+                $scope.secretInputs.splice(index + 1, 0, newInput);
+            }
+
+            $scope.removeSecret = function($event, secret) {
+                var index = $scope.secretInputs.indexOf(secret);
+                if ($event.which == 1) {
+                    $scope.secretInputs.splice(index, 1);
+                }
+            }
+
+            $scope.onLabelInputExpand = function() {
+                $scope.labelFieldsVisible = !$scope.labelFieldsVisible;
+            }
+
+            $scope.addLabel = function(index) {
+                var newInput = {key: "", value: ""};
+                $scope.labelInputs.splice(index + 1, 0, newInput);
+            }
+
+            $scope.removeLabel = function($event, label) {
+                var index = $scope.labelInputs.indexOf(label);
+                if ($event.which == 1) {
+                    $scope.labelInputs.splice(index, 1);
+                }
+            }
+
+            $scope.onAnnotationInputExpand = function() {
+                $scope.annotationFieldsVisible = !$scope.annotationFieldsVisible;
+            }
+
+            $scope.addAnnotation = function(index) {
+                var newInput = {key: "", value: ""};
+                $scope.annotationInputs.splice(index + 1, 0, newInput);
+            }
+
+            $scope.removeAnnotation = function($event, annotation) {
+                var index = $scope.annotationInputs.indexOf(annotation);
+                if ($event.which == 1) {
+                    $scope.annotationInputs.splice(index, 1);
+                }
+            }
+
+            $scope.envVarInputsToEnvVars = function() {
+                var self = this;
+                var result = {};
+                for(var i = 0; i < self.envVarInputs.length; i++) {
+                    if (self.envVarInputs[i].key && self.envVarInputs[i].value) {
+                        result[self.envVarInputs[i].key] = self.envVarInputs[i].value;
+                    }
+                }
+                
+                return result;
+            }
+
+            $scope.envVarsToEnvVarInputs = function(envVars) {
+                var result = [];
+                for (var e in envVars) {
+                    result.push({key: e, value: envVars[e]});
+                }
+
+                if (result.length > 0) {
+                    // make the fields visible if deploying from store with values
+                    $scope.envFieldsVisible = true;
+                } else {
+                    result.push({key: "", value: ""});
+                    $scope.envFieldsVisible = false;
+                }
+
+                $scope.envVarInputs = result;
+            }
+
+            $scope.secretInputsToSecrets = function() {
+                var self = this;
+                var result = [];
+                for(var i = 0; i < self.secretInputs.length; i++) {
+                    if (self.secretInputs[i].name) {
+                        result.push(self.secretInputs[i].name);
+                    }
+                }
+                
+                return result;
+            }
+
+            $scope.secretsToSecretInputs = function(secrets) {
+                var result = [];
+                for (var secret in secrets) {
+                    result.push({name: secret});
+                }
+
+                if (result.length > 0) {
+                    // make the fields visible if deploying from store with values
+                    $scope.secretFieldsVisible = true;
+                } else {
+                    result.push({name: ""});
+                    $scope.secretFieldsVisible = false;
+                }
+
+                $scope.secretInputs = result;
+            }
+    
+            $scope.labelInputsToLabels = function() {
+                var self = this;
+                var result = {};
+                for(var i = 0; i < self.labelInputs.length; i++) {
+                    if (self.labelInputs[i].key && self.labelInputs[i].value) {
+                        result[self.labelInputs[i].key] = self.labelInputs[i].value;
+                    }
+                }
+                
+                return result;
+            }
+
+            $scope.labelsToLabelInputs = function(labels) {
+                var result = [];
+                for (var l in labels) {
+                    result.push({key: l, value: labels[l]});
+                }
+
+                if (result.length > 0) {
+                    // make the fields visible if deploying from store with values
+                    $scope.labelFieldsVisible = true;
+                } else {
+                    result.push({key: "", value: ""});
+                    $scope.labelFieldsVisible = false;
+                }
+                
+                $scope.labelInputs = result;
+            }
+    
+            $scope.annotationInputsToAnnotations = function() {
+                var self = this;
+                var result = {};
+                for(var i = 0; i < self.annotationInputs.length; i++) {
+                    if (self.annotationInputs[i].key && self.annotationInputs[i].value) {
+                        result[self.annotationInputs[i].key] = self.annotationInputs[i].value;
+                    }
+                }
+                
+                return result;
+            }
+
+            $scope.annotationsToAnnotationInputs = function(annotations) {
+                var result = [];
+                for (var a in annotations) {
+                    result.push({key: a, value: annotations[a]});
+                }
+
+                if (result.length > 0) {
+                    // make the fields visible if deploying from store with values
+                    $scope.annotationFieldsVisible = true;
+                } else {
+                    result.push({key: "", value: ""});
+                    $scope.annotationFieldsVisible = false;
+                }
+                
+                $scope.annotationInputs = result;
+            }
         };
 
         $scope.newFunction = function() {
