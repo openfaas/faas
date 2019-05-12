@@ -110,3 +110,22 @@ md-input-container.function-url md-icon {
     display: inline-block;
     cursor: pointer;
 }
+
+.repeating-inputs {
+    padding-left: 20px !important;
+}
+
+.expand-icon {
+    margin: 0;
+    float: right;
+}
+
+.add-input-icon {
+    padding-top: 25px;
+    color: green;
+}
+
+.remove-input-icon {
+    padding-top: 25px;
+    color: red;
+}
