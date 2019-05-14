@@ -85,10 +85,15 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
-| [Creating a simple OpenFaas template](https://blogs.4dotnet.nl/creating-a-simple-openfaas-template/) | Erwin Staal | blogs.4dotnet.nl | 11-May-2019 |
+| [Creating a simple OpenFaaS template](https://blogs.4dotnet.nl/creating-a-simple-openfaas-template/) | Erwin Staal | blogs.4dotnet.nl | 11-May-2019 |
+| [Meet us at KubeCon 2019, Barcelona](https://www.openfaas.com/blog/meet-us-at-barcelona/) | Alex Ellis | openfaas.com | 10-May-2019 |
 | [Your first .NET Core Serverless function on OpenFaas](https://blogs.4dotnet.nl/your-first-net-core-serverless-function-on-openfaas/) | Erwin Staal | blogs.4dotnet.nl | 8-May-2019 |
 | [Handling Oracle Code Card using Python on OpenFaaS](https://blog.kube-mesh.io/handling-oracle-code-card-using-python-on-openfaas/) | Prasenjit Sarkar | blog.kube-mesh.io | 2-May-2019 | 
 | [Oracle Code Card met OpenFaaS](https://blog.kube-mesh.io/oracle-code-card-met-openfaas/) | Prasenjit Sarkar | blog.kube-mesh.io | 1-May-2019 |
+| [Get to grips with Serverless Kubernetes this Spring](https://www.openfaas.com/blog/spring-easter/) | Alex Ellis | openfaas.com | 18-Apr-2019 |
+| [Simple Serverless with Golang Functions and Microservices](https://www.openfaas.com/blog/golang-serverless/) | Alex Ellis | openfaas.com | 10-Apr-2019 |
+| [Run your OpenFaaS Functions on Google Cloud Run for free](https://www.openfaas.com/blog/openfaas-cloudrun/) | Alex Ellis | openfaas.com | 9-Apr-2019 |
+| [Introducing OpenFaaS Cloud with GitLab](https://www.openfaas.com/blog/openfaas-cloud-gitlab/) | Alex Ellis | openfaas.com | 28-Mar-2019 |
 | [Install OpenShift & OpenFaaS in a container with Weave Footloose](https://blog.alexellis.io/openshift-in-a-footloose-container/) | Alex Ellis | alexellis.io | 27-Mar-2019 |
 | [Sailing Through the Serverless Ocean with OpenFaaS Cloud](https://spotinst.com/blog/2019/03/25/sailing-through-the-serverless-ocean-with-openfaas-cloud/) | Pavel Klushin | spotinst.com | 25-Mar-2019 |
 | [Process Google Forms Responses with OpenFaaS](https://www.openfaas.com/blog/google-form-response/) | Burton Rheutan | openfaas.com | 06-Mar-2019 |
