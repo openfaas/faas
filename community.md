@@ -96,6 +96,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Introducing OpenFaaS Cloud with GitLab](https://www.openfaas.com/blog/openfaas-cloud-gitlab/) | Alex Ellis | openfaas.com | 28-Mar-2019 |
 | [Install OpenShift & OpenFaaS in a container with Weave Footloose](https://blog.alexellis.io/openshift-in-a-footloose-container/) | Alex Ellis | alexellis.io | 27-Mar-2019 |
 | [Sailing Through the Serverless Ocean with OpenFaaS Cloud](https://spotinst.com/blog/2019/03/25/sailing-through-the-serverless-ocean-with-openfaas-cloud/) | Pavel Klushin | spotinst.com | 25-Mar-2019 |
+| [Writing a face detection function for OpenFaaS](https://blog.matiaspan.dev/posts/writing-a-face-detection-function-for-openfaas/) | Matias Pan | blog.matiaspan.dev | 16-Mar-2019 |
 | [Process Google Forms Responses with OpenFaaS](https://www.openfaas.com/blog/google-form-response/) | Burton Rheutan | openfaas.com | 06-Mar-2019 |
 | [Node Gatekeeper - a HMAC wrapper for Node.js](https://github.com/cabrerabywaters/faas-node-gatekeeper) | Ignacio Cabrera | github.com | 28-Feb-2019 |
 | [Favorite Tools - OpenFaaS](https://fischbacher.rocks/post/tools-openfaas/) | Markus Fischbacher | [fischbacher.rocks](fischbacher.rocks) | 5-Mar-2019 |
@@ -367,6 +368,8 @@ You can also find cool projects or submit your own to the [faas-and-furious orga
 
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| [OpenFaaS Go 1.11 templates](https://github.com/matipan/openfaas-go111-template/) | Matias Pan | github.com | 15-May-2019 |
+| [OpenFaaS GoCV template](http://github.com/matipan/openfaas-gocv-template/) | Matias Pan | github.com | 16-Mar-2019 |
 | [OpenFaas CSharp MongoDB Template](https://github.com/Marcus-Smallman/csharp-kestrel-mongo) | Marcus Smallman | github.com | 28-Nov-2018 |
 | [OpenFaas Java 8 + Vert.x Template](https://gitlab.com/openfaas-experiments/java-8-vert-x-template) | Philippe Charrière | gitlab.com | 11-Nov-2018 |
 | [Faasflow - faas workflow as a function](https://github.com/s8sg/faasflow) | Swarvanu Sengupta | github.com | 11-Nov-2018 |
