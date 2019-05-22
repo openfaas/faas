@@ -52,6 +52,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [ContainerDays EU: Kubernetes and AWS Lambda can play nicely together with OpenFaaS](https://www.containerdays.io/program/) | Edward Wilde | ContainerDays | 25-June-2019 |
 | [Blockchain as a Service at Scale](https://devweeksea2019.sched.com/event/PVpz) | Dean Shelton | Seattle, USA | 31-May-2019 |
 | [OpenFaaS - mit Docker einfach Serverless](https://www.xing.com/events/openfaas-docker-einfach-serverless-2104708) | Frank Pommerening | Ratingen, Germany | 29-May-2019 |
+| [OpenFaaS - mit Docker einfach Serverless](https://www.meetup.com/de-DE/Koblenz-NET-Meetup/events/260738278/) | Frank Pommerening | Koblenz, Germany | 27-May-2019 |
 | [OpenFaaS in-person workshop](https://events.opensuse.org/conferences/oSC19/program/proposals/2576) | Ferenc Szekely | @openSUSE Conference | 25-May-2019 |
 | [Knative, OpenFaaS, Kubeless : la guerre des frameworks serverless est lancée !](https://mixitconf.org/)  | Laurent Grangeau | Lyon, France | 24-May-2019 |
 | [How LivePerson is Tailoring its Conversational Platform Using OpenFaaS - Simon Pelczer, LivePerson](https://kccnceu19.sched.com/event/MPeR/how-liveperson-is-tailoring-its-conversational-platform-using-openfaas-simon-pelczer-liveperson-ivana-yovcheva-vmware) | Simon Pelczer & Ivana Yovcheva | KubeCon, Barcelona EU | 23-May-2019 |
