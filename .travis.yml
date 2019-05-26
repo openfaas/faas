@@ -24,7 +24,7 @@ after_success:
         fi
 
     - if [ ! -z "$TRAVIS_TAG" ] ; then
-        echo '{"experimental": "enabled"}' | tee $HOME/.docker/config.json
+        export DOCKER_CLI_EXPERIMENTAL=enabled
 
         docker tag $DOCKER_NS/gateway:latest-dev $DOCKER_NS/gateway:$TRAVIS_TAG;
         echo $DOCKER_PASSWORD | docker login -u=$DOCKER_USERNAME --password-stdin;
