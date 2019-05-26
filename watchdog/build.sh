@@ -35,3 +35,4 @@ docker cp buildoutput:/go/src/github.com/openfaas/faas/watchdog/watchdog-arm64 .
 docker cp buildoutput:/go/src/github.com/openfaas/faas/watchdog/watchdog.exe ./fwatchdog.exe
 
 docker rm buildoutput
+
