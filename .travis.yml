@@ -23,7 +23,9 @@ after_success:
         export DOCKER_NS=openfaas;
         fi
 
-    - if [ ! -z "$TRAVIS_TAG" ] ; then 
+    - if [ ! -z "$TRAVIS_TAG" ] ; then
+        echo '{"experimental": "enabled"}' | tee $HOME/.docker/config.json
+
         docker tag $DOCKER_NS/gateway:latest-dev $DOCKER_NS/gateway:$TRAVIS_TAG;
         echo $DOCKER_PASSWORD | docker login -u=$DOCKER_USERNAME --password-stdin;
         docker push $DOCKER_NS/gateway:$TRAVIS_TAG;
