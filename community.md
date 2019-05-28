@@ -70,6 +70,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [goto Chicago masterclass: Serverless Kubernetes with OpenFaaS](https://gotochgo.com/2019/workshops/152) | Alex Ellis & Edward Wilde | Chicago, USA | 1-May-2019 |
 | [goto Chicago masterclass: Use Terraform to Scale your Team](https://gotochgo.com/2019/sessions/859) | Edward Wilde | Chicago, USA |  30-Apr-2019 |
 | [goto Chicago session: Welcome to Serverless 2.0](https://gotochgo.com/2019/sessions/728) | Alex Ellis | Chicago, USA | 30-Apr-2019 |
+| [Knative vs. OpenFaaS: Functions on Kubernetes](https://tmt.knect365.com/container-world/agenda/1#serverless-summit_knative-vs-openfaas-functions-on-kubernetes) | Carson Anderson | ContainerWorld | 17-Apr-2019 |
 | [IT Depends #1: Google Cloud na produkcji i serverless z OpenFaaS](https://www.meetup.com/meetup-group-zhlFJrTR/events/260534334/) | Sebastian Woldański | Katowice, Poland | 17-Apr-2019 |
 | [BelFOSS 2019: OpenFaaS - Keeping Serverless Simple](https://belfoss.eeecs.qub.ac.uk/agenda/) | John McCabe | Belfast, Northern Ireland | 12-Apr-2019 |
 | [Coworking Monterrey: Lightning Talks and Serverless Functions with OpenFaaS](https://www.facebook.com/events/546729195736337/) | Ernesto Celis | Monterrey, Nuevo León, México | 12-Apr-2019 |
