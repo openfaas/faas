@@ -94,6 +94,8 @@ It would be great to hear from you especially if you have any of the above and w
 | [Creating a simple OpenFaaS template](https://blogs.4dotnet.nl/creating-a-simple-openfaas-template/) | Erwin Staal | blogs.4dotnet.nl | 11-May-2019 |
 | [Meet us at KubeCon 2019, Barcelona](https://www.openfaas.com/blog/meet-us-at-barcelona/) | Alex Ellis | openfaas.com | 10-May-2019 |
 | [Your first .NET Core Serverless function on OpenFaas](https://blogs.4dotnet.nl/your-first-net-core-serverless-function-on-openfaas/) | Erwin Staal | blogs.4dotnet.nl | 8-May-2019 |
+| [code.talks commerce 2019 - Serverless with OpenFaaS - Live Example](https://www.youtube.com/watch?v=iWt9z1Myrsc) | Lars Rieche | youtube.com | 2-May-2019 |
+| [Dockercon 19 Open Source Summit: Serverless](https://www.youtube.com/watch?v=zeXWPV09QTs) | Burton Rheutan & Pav Jimanov | youtube.com | 2-May-2019 |
 | [Handling Oracle Code Card using Python on OpenFaaS](https://blog.kube-mesh.io/handling-oracle-code-card-using-python-on-openfaas/) | Prasenjit Sarkar | blog.kube-mesh.io | 2-May-2019 | 
 | [Oracle Code Card met OpenFaaS](https://blog.kube-mesh.io/oracle-code-card-met-openfaas/) | Prasenjit Sarkar | blog.kube-mesh.io | 1-May-2019 |
 | [Get to grips with Serverless Kubernetes this Spring](https://www.openfaas.com/blog/spring-easter/) | Alex Ellis | openfaas.com | 18-Apr-2019 |
