@@ -11,9 +11,9 @@ func MakeExternalAuthHandler(next http.HandlerFunc, upstreamTimeout time.Duratio
 	return func(w http.ResponseWriter, r *http.Request) {
 		req, _ := http.NewRequest(http.MethodGet, upstreamURL, nil)
 
-		deadlineContext, cancel := context.WithDeadline(
+		deadlineContext, cancel := context.WithTimeout(
 			context.Background(),
-			time.Now().Add(upstreamTimeout))
+			upstreamTimeout)
 
 		defer cancel()
 
