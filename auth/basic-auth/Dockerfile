@@ -25,4 +25,6 @@ RUN chown -R app /home/app
 
 USER app
 
-CMD ["/go/src/handler/handler"]
+WORKDIR /home/app
+
+CMD ["./handler"]
