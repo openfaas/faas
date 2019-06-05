@@ -1,6 +1,11 @@
 basic-auth
 ============
 
-This component provides plug-in authentication for the OpenFaaS gateway using basic authentication secrets.
+This component implements [Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication) as an OpenFaaS authentication plug-in.
 
-Wikipedia: [Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication)
+To run this plugin you will need to create and bind a secret named `basic-auth-user` and `basic-auth-password`
+
+| Option                 | Usage             |
+|------------------------|--------------|
+| `port`             | Set the HTTP port |
+| `secret_mount_path`             | It is recommended that this is set to `/var/openfaas/secrets` |
