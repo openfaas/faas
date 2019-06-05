@@ -299,3 +299,45 @@ func TestRead_MaxIdleConns_Override(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestRead_AuthProxy_Defaults(t *testing.T) {
+	defaults := NewEnvBucket()
+
+	readConfig := ReadConfig{}
+	wantURL := ""
+	wantBody := false
+
+	config := readConfig.Read(defaults)
+
+	if config.AuthProxyPassBody != wantBody {
+		t.Logf("config.AuthProxyPassBody, want: %t, got: %t\n", wantBody, config.AuthProxyPassBody)
+		t.Fail()
+	}
+
+	if config.AuthProxyURL != wantURL {
+		t.Logf("config.AuthProxyURL, want: %s, got: %s\n", wantURL, config.AuthProxyURL)
+		t.Fail()
+	}
+}
+
+func TestRead_AuthProxy_DefaultsOverrides(t *testing.T) {
+	defaults := NewEnvBucket()
+
+	readConfig := ReadConfig{}
+	wantURL := "http://auth.openfaas:8080/validate"
+	wantBody := true
+	defaults.Setenv("auth_proxy_url", wantURL)
+	defaults.Setenv("auth_proxy_pass_body", fmt.Sprintf("%t", wantBody))
+
+	config := readConfig.Read(defaults)
+
+	if config.AuthProxyPassBody != wantBody {
+		t.Logf("config.AuthProxyPassBody, want: %t, got: %t\n", wantBody, config.AuthProxyPassBody)
+		t.Fail()
+	}
+
+	if config.AuthProxyURL != wantURL {
+		t.Logf("config.AuthProxyURL, want: %s, got: %s\n", wantURL, config.AuthProxyURL)
+		t.Fail()
+	}
+}
