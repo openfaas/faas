@@ -6,6 +6,7 @@ if ! [ -x "$(command -v docker)" ]; then
 fi
 
 export BASIC_AUTH="true"
+export AUTH_URL="http://basic-auth-plugin:8080/validate"
 
 sha_cmd="shasum -a 256"
 if ! command -v shasum >/dev/null; then
@@ -17,6 +18,7 @@ do
 	case "$1" in
 		--no-auth | -n)
 			export BASIC_AUTH="false"
+      export AUTH_URL=""
 			;;
     --help | -h)
 			echo "Usage: \n [default]\tdeploy the OpenFaaS core services\n --no-auth [-n]\tdisable basic authentication.\n --help\tdisplays this screen"
