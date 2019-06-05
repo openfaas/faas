@@ -137,6 +137,9 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 		}
 	}
 
+	cfg.AuthProxyURL = hasEnv.Getenv("auth_proxy_url")
+	cfg.AuthProxyPassBody = parseBoolValue(hasEnv.Getenv("auth_proxy_pass_body"))
+
 	return cfg
 }
 
@@ -182,9 +185,17 @@ type GatewayConfig struct {
 	// Enable the gateway to scale any service from 0 replicas to its configured "min replicas"
 	ScaleFromZero bool
 
+	// MaxIdleConns with a default value of 1024, can be used for tuning HTTP proxy performance
 	MaxIdleConns int
 
+	// MaxIdleConnsPerHost with a default value of 1024, can be used for tuning HTTP proxy performance
 	MaxIdleConnsPerHost int
+
+	// AuthProxyURL specifies URL for an authenticating proxy, disabled when blank, enabled when valid URL i.e. http://basic-auth.openfaas:8080/validate
+	AuthProxyURL string
+
+	// AuthProxyPassBody pass body to validation proxy
+	AuthProxyPassBody bool
 }
 
 // UseNATS Use NATSor not
