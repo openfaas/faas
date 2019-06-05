@@ -60,9 +60,20 @@ func makeLogger(next http.Handler) func(w http.ResponseWriter, r *http.Request) 
 		next.ServeHTTP(rr, r)
 		log.Printf("Validated request %d.\n", rr.Code)
 
+		resHeader := rr.Header()
+		copyHeaders(w.Header(), &resHeader)
+
 		w.WriteHeader(rr.Code)
 		if rr.Body != nil {
 			w.Write(rr.Body.Bytes())
 		}
+	}
+}
+
+func copyHeaders(destination http.Header, source *http.Header) {
+	for k, v := range *source {
+		vClone := make([]string, len(v))
+		copy(vClone, v)
+		(destination)[k] = vClone
 	}
 }
