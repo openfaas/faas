@@ -91,6 +91,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Running GBFS bikeshare functions with OpenFaaS for fun and profit](http://blog.amosti.net/running-gbfs-bikeshare-functions-with-openfaas-for-fun-and-profit/) | Andreas Mosti | blog.amosti.net | 04-June-2019 |
 | [Deploying a FaaS platform on OVH Managed Kubernetes using OpenFaaS](https://www.ovh.com/fr/blog/deploying-a-faas-platform-on-ovh-managed-kubernetes-using-openfaas/) | Horacio Gonzalez | ovh.com | 24-May-2019 |
 | [Creating a simple OpenFaaS template](https://blogs.4dotnet.nl/creating-a-simple-openfaas-template/) | Erwin Staal | blogs.4dotnet.nl | 11-May-2019 |
 | [Meet us at KubeCon 2019, Barcelona](https://www.openfaas.com/blog/meet-us-at-barcelona/) | Alex Ellis | openfaas.com | 10-May-2019 |
