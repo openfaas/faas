@@ -9,9 +9,20 @@
   revision = "6a76a052deb12fd94b373c082963d8a8ad44d4d1"
   version = "0.9.0"
 
+[[projects]]
+  digest = "1:cf31692c14422fa27c83a05292eb5cbe0fb2775972e8f1f8446a71549bd8980b"
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "ba968bfe8b2f7e042a574c888954fccecfa385b4"
+  version = "v0.8.1"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/openfaas/faas-provider/auth"]
+  input-imports = [
+    "github.com/openfaas/faas-provider/auth",
+    "github.com/pkg/errors",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
