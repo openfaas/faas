@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func Test_makeLogger(t *testing.T) {
+func Test_makeLogger_CopiesResponseHeaders(t *testing.T) {
 	handler := http.HandlerFunc(makeLogger(http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("X-Unit-Test", "true")
