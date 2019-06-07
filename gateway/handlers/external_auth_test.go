@@ -53,6 +53,66 @@ func Test_External_Auth_Wrapper_PassesValidAuth(t *testing.T) {
 	}
 }
 
+func Test_External_Auth_Wrapper_WithoutRequiredHeaderFailsAuth(t *testing.T) {
+	wantToken := "secret-key"
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Header.Get("X-Token") == wantToken {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+		w.WriteHeader(http.StatusUnauthorized)
+	}))
+	defer s.Close()
+
+	next := func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNotImplemented)
+	}
+
+	passBody := false
+	handler := MakeExternalAuthHandler(next, time.Second*5, s.URL, passBody)
+
+	req := httptest.NewRequest(http.MethodGet, s.URL, nil)
+
+	// use an invalid token
+	req.Header.Set("X-Token", "invalid-key")
+
+	rr := httptest.NewRecorder()
+	handler(rr, req)
+	want := http.StatusUnauthorized
+	if rr.Code != want {
+		t.Errorf("Status incorrect, want: %d, but got %d", want, rr.Code)
+	}
+}
+
+func Test_External_Auth_Wrapper_WithRequiredHeaderPassesValidAuth(t *testing.T) {
+	wantToken := "secret-key"
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Header.Get("X-Token") == wantToken {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+		w.WriteHeader(http.StatusUnauthorized)
+	}))
+	defer s.Close()
+
+	next := func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNotImplemented)
+	}
+
+	passBody := false
+	handler := MakeExternalAuthHandler(next, time.Second*5, s.URL, passBody)
+
+	req := httptest.NewRequest(http.MethodGet, s.URL, nil)
+	req.Header.Set("X-Token", wantToken)
+
+	rr := httptest.NewRecorder()
+	handler(rr, req)
+	want := http.StatusNotImplemented
+	if rr.Code != want {
+		t.Errorf("Status incorrect, want: %d, but got %d", want, rr.Code)
+	}
+}
+
 func Test_External_Auth_Wrapper_TimeoutGivesInternalServerError(t *testing.T) {
 
 	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
