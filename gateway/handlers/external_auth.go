@@ -34,6 +34,7 @@ func MakeExternalAuthHandler(next http.HandlerFunc, upstreamTimeout time.Duratio
 			return
 		}
 
+		copyHeaders(w.Header(), &res.Header)
 		w.WriteHeader(res.StatusCode)
 	}
 }

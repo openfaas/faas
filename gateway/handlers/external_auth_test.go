@@ -84,6 +84,45 @@ func Test_External_Auth_Wrapper_WithoutRequiredHeaderFailsAuth(t *testing.T) {
 	}
 }
 
+func Test_External_Auth_Wrapper_WithoutRequiredHeaderFailsAuth_ProxiesServerHeaders(t *testing.T) {
+	wantToken := "secret-key"
+	wantRealm := `Basic realm="Restricted"`
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Header.Get("X-Token") == wantToken {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+
+		w.Header().Set("Www-Authenticate", wantRealm)
+		w.WriteHeader(http.StatusUnauthorized)
+	}))
+	defer s.Close()
+
+	next := func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNotImplemented)
+	}
+
+	passBody := false
+	handler := MakeExternalAuthHandler(next, time.Second*5, s.URL, passBody)
+
+	req := httptest.NewRequest(http.MethodGet, s.URL, nil)
+
+	// use an invalid token
+	req.Header.Set("X-Token", "invalid-key")
+
+	rr := httptest.NewRecorder()
+	handler(rr, req)
+	want := http.StatusUnauthorized
+	if rr.Code != want {
+		t.Errorf("Status incorrect, want: %d, but got %d", want, rr.Code)
+	}
+
+	got := rr.Header().Get("Www-Authenticate")
+	if got != wantRealm {
+		t.Errorf("Www-Authenticate header, want: %s, but got %s, %q", wantRealm, got, rr.Header())
+	}
+}
+
 func Test_External_Auth_Wrapper_WithRequiredHeaderPassesValidAuth(t *testing.T) {
 	wantToken := "secret-key"
 	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
