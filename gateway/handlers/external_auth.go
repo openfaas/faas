@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"io"
 	"net/http"
 	"time"
 )
@@ -36,5 +37,9 @@ func MakeExternalAuthHandler(next http.HandlerFunc, upstreamTimeout time.Duratio
 
 		copyHeaders(w.Header(), &res.Header)
 		w.WriteHeader(res.StatusCode)
+
+		if res.Body != nil {
+			io.Copy(w, res.Body)
+		}
 	}
 }

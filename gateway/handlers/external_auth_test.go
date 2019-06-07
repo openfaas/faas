@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -27,6 +28,36 @@ func Test_External_Auth_Wrapper_FailsInvalidAuth(t *testing.T) {
 
 	if rr.Code == http.StatusOK {
 		t.Errorf("Status incorrect, did not want: %d, but got %d", http.StatusOK, rr.Code)
+	}
+}
+
+func Test_External_Auth_Wrapper_FailsInvalidAuth_WritesBody(t *testing.T) {
+
+	wantBody := []byte(`invalid credentials`)
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusForbidden)
+		w.Write(wantBody)
+	}))
+
+	defer s.Close()
+
+	next := func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNotImplemented)
+	}
+
+	passBody := false
+	handler := MakeExternalAuthHandler(next, time.Second*5, s.URL, passBody)
+
+	req := httptest.NewRequest(http.MethodGet, s.URL, nil)
+	rr := httptest.NewRecorder()
+	handler(rr, req)
+
+	if rr.Code == http.StatusOK {
+		t.Errorf("Status incorrect, did not want: %d, but got %d", http.StatusOK, rr.Code)
+	}
+
+	if bytes.Compare(rr.Body.Bytes(), wantBody) != 0 {
+		t.Errorf("Body incorrect, want: %s, but got %s", []byte(wantBody), rr.Body)
 	}
 }
 
