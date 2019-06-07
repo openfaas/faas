@@ -83,6 +83,8 @@ func main() {
 		functionURLTransformer = nilURLTransformer
 	}
 
+	decorateExternalAuth := handlers.MakeExternalAuthHandler
+
 	faasHandlers.Proxy = handlers.MakeForwardingProxyHandler(reverseProxy, functionNotifiers, functionURLResolver, functionURLTransformer)
 
 	faasHandlers.RoutelessProxy = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer)
@@ -131,25 +133,25 @@ func main() {
 
 	if credentials != nil {
 		faasHandlers.Alert =
-			auth.DecorateWithBasicAuth(faasHandlers.Alert, credentials)
+			decorateExternalAuth(faasHandlers.Alert, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
 		faasHandlers.UpdateFunction =
-			auth.DecorateWithBasicAuth(faasHandlers.UpdateFunction, credentials)
+			decorateExternalAuth(faasHandlers.UpdateFunction, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
 		faasHandlers.DeleteFunction =
-			auth.DecorateWithBasicAuth(faasHandlers.DeleteFunction, credentials)
+			decorateExternalAuth(faasHandlers.DeleteFunction, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
 		faasHandlers.DeployFunction =
-			auth.DecorateWithBasicAuth(faasHandlers.DeployFunction, credentials)
+			decorateExternalAuth(faasHandlers.DeployFunction, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
 		faasHandlers.ListFunctions =
-			auth.DecorateWithBasicAuth(faasHandlers.ListFunctions, credentials)
+			decorateExternalAuth(faasHandlers.ListFunctions, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
 		faasHandlers.ScaleFunction =
-			auth.DecorateWithBasicAuth(faasHandlers.ScaleFunction, credentials)
+			decorateExternalAuth(faasHandlers.ScaleFunction, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
 		faasHandlers.QueryFunction =
-			auth.DecorateWithBasicAuth(faasHandlers.QueryFunction, credentials)
+			decorateExternalAuth(faasHandlers.QueryFunction, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
 		faasHandlers.InfoHandler =
-			auth.DecorateWithBasicAuth(faasHandlers.InfoHandler, credentials)
+			decorateExternalAuth(faasHandlers.InfoHandler, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
 		faasHandlers.AsyncReport =
-			auth.DecorateWithBasicAuth(faasHandlers.AsyncReport, credentials)
+			decorateExternalAuth(faasHandlers.AsyncReport, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
 		faasHandlers.SecretHandler =
-			auth.DecorateWithBasicAuth(faasHandlers.SecretHandler, credentials)
+			decorateExternalAuth(faasHandlers.SecretHandler, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
 	}
 
 	r := mux.NewRouter()
@@ -201,7 +203,7 @@ func main() {
 
 	uiHandler := http.StripPrefix("/ui", fsCORS)
 	if credentials != nil {
-		r.PathPrefix("/ui/").Handler(auth.DecorateWithBasicAuth(uiHandler.ServeHTTP, credentials)).Methods(http.MethodGet)
+		r.PathPrefix("/ui/").Handler(decorateExternalAuth(uiHandler.ServeHTTP, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)).Methods(http.MethodGet)
 	} else {
 		r.PathPrefix("/ui/").Handler(uiHandler).Methods(http.MethodGet)
 	}
