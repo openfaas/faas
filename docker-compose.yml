@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: openfaas/gateway:0.13.7-rc2
+        image: openfaas/gateway:0.13.7-rc4
         networks:
             - functions
         environment:
@@ -43,11 +43,13 @@ services:
 
     # auth service provide basic-auth plugin for system APIs
     basic-auth-plugin:
-        image: openfaas/basic-auth-plugin:0.1.0
+        image: openfaas/basic-auth-plugin:0.1.1
         networks:
             - functions
         environment:
             secret_mount_path: "/run/secrets/"
+            user_filename: "basic-auth-user"
+            pass_filename: "basic-auth-password"
         deploy:
             placement:
                 constraints:
