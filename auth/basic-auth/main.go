@@ -32,7 +32,9 @@ func main() {
 	}
 
 	credentialsReader := auth.ReadBasicAuthFromDisk{
-		SecretMountPath: os.Getenv("secret_mount_path"),
+		SecretMountPath:  os.Getenv("secret_mount_path"),
+		UserFilename:     os.Getenv("user_filename"),
+		PasswordFilename: os.Getenv("pass_filename"),
 	}
 
 	credentials, err := credentialsReader.Read()
