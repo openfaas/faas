@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/openfaas/faas-provider/auth"
+	"github.com/openfaas/faas/gateway/handlers"
 	"github.com/openfaas/faas/gateway/scaling"
 )
 
@@ -47,11 +47,10 @@ func TestGetReplicasNonExistentFn(t *testing.T) {
 		}))
 	defer testServer.Close()
 
-	var creds auth.BasicAuthCredentials
-
+	var injector handlers.AuthInjector
 	url, _ := url.Parse(testServer.URL + "/")
 
-	esq := NewExternalServiceQuery(*url, &creds)
+	esq := NewExternalServiceQuery(*url, injector)
 
 	svcQryResp, err := esq.GetReplicas("burt")
 
@@ -78,11 +77,10 @@ func TestGetReplicasExistentFn(t *testing.T) {
 		AvailableReplicas: 0,
 	}
 
-	var creds auth.BasicAuthCredentials
-
+	var injector handlers.AuthInjector
 	url, _ := url.Parse(testServer.URL + "/")
 
-	esq := NewExternalServiceQuery(*url, &creds)
+	esq := NewExternalServiceQuery(*url, injector)
 
 	svcQryResp, err := esq.GetReplicas("burt")
 
@@ -104,9 +102,9 @@ func TestSetReplicasNonExistentFn(t *testing.T) {
 		}))
 	defer testServer.Close()
 
-	var creds auth.BasicAuthCredentials
+	var injector handlers.AuthInjector
 	url, _ := url.Parse(testServer.URL + "/")
-	esq := NewExternalServiceQuery(*url, &creds)
+	esq := NewExternalServiceQuery(*url, injector)
 
 	err := esq.SetReplicas("burt", 1)
 
@@ -126,9 +124,10 @@ func TestSetReplicasExistentFn(t *testing.T) {
 		}))
 	defer testServer.Close()
 
-	var creds auth.BasicAuthCredentials
+	var injector handlers.AuthInjector
+
 	url, _ := url.Parse(testServer.URL + "/")
-	esq := NewExternalServiceQuery(*url, &creds)
+	esq := NewExternalServiceQuery(*url, injector)
 
 	err := esq.SetReplicas("burt", 1)
 

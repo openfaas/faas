@@ -39,7 +39,11 @@ type URLPathTransformer interface {
 }
 
 // MakeForwardingProxyHandler create a handler which forwards HTTP requests
-func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers []HTTPNotifier, baseURLResolver BaseURLResolver, urlPathTransformer URLPathTransformer) http.HandlerFunc {
+func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy,
+	notifiers []HTTPNotifier,
+	baseURLResolver BaseURLResolver,
+	urlPathTransformer URLPathTransformer,
+	serviceAuthInjector AuthInjector) http.HandlerFunc {
 
 	writeRequestURI := false
 	if _, exists := os.LookupEnv("write_request_uri"); exists {
@@ -54,7 +58,7 @@ func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy, notifiers [
 
 		start := time.Now()
 
-		statusCode, err := forwardRequest(w, r, proxy.Client, baseURL, requestURL, proxy.Timeout, writeRequestURI)
+		statusCode, err := forwardRequest(w, r, proxy.Client, baseURL, requestURL, proxy.Timeout, writeRequestURI, serviceAuthInjector)
 
 		seconds := time.Since(start)
 		if err != nil {
@@ -96,11 +100,22 @@ func buildUpstreamRequest(r *http.Request, baseURL string, requestURL string) *h
 	return upstreamReq
 }
 
-func forwardRequest(w http.ResponseWriter, r *http.Request, proxyClient *http.Client, baseURL string, requestURL string, timeout time.Duration, writeRequestURI bool) (int, error) {
+func forwardRequest(w http.ResponseWriter,
+	r *http.Request,
+	proxyClient *http.Client,
+	baseURL string,
+	requestURL string,
+	timeout time.Duration,
+	writeRequestURI bool,
+	serviceAuthInjector AuthInjector) (int, error) {
 
 	upstreamReq := buildUpstreamRequest(r, baseURL, requestURL)
 	if upstreamReq.Body != nil {
 		defer upstreamReq.Body.Close()
+	}
+
+	if serviceAuthInjector != nil {
+		serviceAuthInjector.Inject(upstreamReq)
 	}
 
 	if writeRequestURI {
