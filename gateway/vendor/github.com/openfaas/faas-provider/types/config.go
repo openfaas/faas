@@ -19,7 +19,7 @@ type FaaSHandlers struct {
 
 	// Optional: Update an existing function
 	UpdateHandler http.HandlerFunc
-	Health        http.HandlerFunc
+	HealthHandler http.HandlerFunc
 	InfoHandler   http.HandlerFunc
 }
 

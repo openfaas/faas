@@ -26,4 +26,4 @@ ignored = ["github.com/openfaas/faas/gateway/queue"]
 
 [[constraint]]
   name = "github.com/openfaas/faas-provider"
-  version = "0.8.1"
+  version = "0.9.1"

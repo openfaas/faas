@@ -7,7 +7,9 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"strings"
 	"testing"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -23,6 +25,58 @@ func testResolver(functionName string) (url.URL, error) {
 		Scheme: "http",
 		Host:   functionName,
 	}, nil
+}
+
+type mockResolver struct {
+	u   *url.URL
+	err error
+}
+
+func (m mockResolver) Resolve(name string) (url.URL, error) {
+	if m.u != nil {
+		return *m.u, m.err
+	}
+	return url.URL{}, m.err
+}
+
+func Test_ProxyHandler_StatusCode(t *testing.T) {
+
+	testcases := []int{200, 204, 400, 409, 422, 500, 503}
+
+	for _, tc := range testcases {
+		t.Run(fmt.Sprintf("returns %d when upstream returns %d", tc, tc), func(t *testing.T) {
+
+			// upstream represents the will be resolved and the function call then sent to
+			upstream := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				if tc > 399 {
+					http.Error(w, "upstream error", tc)
+					return
+				}
+				w.WriteHeader(tc)
+			}))
+
+			u, err := url.Parse(upstream.URL)
+			proxyHandler := NewHandlerFunc(time.Second, mockResolver{u, err})
+
+			rr := httptest.NewRecorder()
+			req, err := http.NewRequest("GET", "", nil)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			// we must set the function name URL variable to pass the validation in proxyRequest
+			req = mux.SetURLVars(req, map[string]string{"name": "foo"})
+			proxyHandler.ServeHTTP(rr, req)
+
+			if rr.Code != tc {
+				t.Fatalf("unexpected status code; got: %d, expected: %d", rr.Code, tc)
+			}
+
+			if tc > 399 && strings.TrimSpace(rr.Body.String()) != "upstream error" {
+				t.Fatalf("unexpected response body, got: %s", rr.Body.String())
+			}
+		})
+	}
 }
 
 func Test_pathParsing(t *testing.T) {

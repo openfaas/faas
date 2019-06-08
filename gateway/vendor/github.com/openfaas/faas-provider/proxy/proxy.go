@@ -129,7 +129,9 @@ func proxyRequest(w http.ResponseWriter, originalReq *http.Request, proxyClient 
 		writeError(w, http.StatusInternalServerError, "Failed to resolve service: %s.", functionName)
 		return
 	}
-	defer proxyReq.Body.Close()
+	if proxyReq.Body != nil {
+		defer proxyReq.Body.Close()
+	}
 
 	start := time.Now()
 	response, err := proxyClient.Do(proxyReq.WithContext(ctx))
@@ -148,7 +150,7 @@ func proxyRequest(w http.ResponseWriter, originalReq *http.Request, proxyClient 
 	copyHeaders(clientHeader, &response.Header)
 	w.Header().Set("Content-Type", getContentType(response.Header, originalReq.Header))
 
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(response.StatusCode)
 	io.Copy(w, response.Body)
 }
 

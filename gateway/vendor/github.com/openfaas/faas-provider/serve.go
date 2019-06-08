@@ -66,7 +66,7 @@ func Serve(handlers *types.FaaSHandlers, config *types.FaaSConfig) {
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/{params:.*}", handlers.FunctionProxy)
 
 	if config.EnableHealth {
-		r.HandleFunc("/healthz", handlers.Health).Methods("GET")
+		r.HandleFunc("/healthz", handlers.HealthHandler).Methods("GET")
 	}
 
 	readTimeout := config.ReadTimeout
