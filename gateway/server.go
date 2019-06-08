@@ -89,7 +89,11 @@ func main() {
 		functionURLTransformer = nilURLTransformer
 	}
 
-	serviceAuthInjector := &BasicAuthInjector{Credentials: credentials}
+	var serviceAuthInjector handlers.AuthInjector
+
+	if config.UseBasicAuth {
+		serviceAuthInjector = &handlers.BasicAuthInjector{Credentials: credentials}
+	}
 
 	decorateExternalAuth := handlers.MakeExternalAuthHandler
 
@@ -256,12 +260,4 @@ func runMetricsServer() {
 	}
 
 	log.Fatal(s.ListenAndServe())
-}
-
-type BasicAuthInjector struct {
-	Credentials *auth.BasicAuthCredentials
-}
-
-func (b BasicAuthInjector) Inject(r *http.Request) {
-	r.SetBasicAuth(b.Credentials.User, b.Credentials.Password)
 }

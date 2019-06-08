@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: openfaas/gateway:0.13.7-rc4
+        image: openfaas/gateway:0.13.7-rc5
         networks:
             - functions
         environment:
