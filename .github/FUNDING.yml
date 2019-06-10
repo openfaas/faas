@@ -1,6 +1,8 @@
 # For more - see https://www.openfaas.com/support/
 
-github: alexellis
+# When GitHub grants me access to the beta, I'll uncomment the below
+#github: alexellis
+
 patreon: alexellis
 community_bridge: openfaas
 custom: https://paypal.me/openfaas?locale.x=en_GB
