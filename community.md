@@ -130,6 +130,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Unifying Secrets for OpenFaaS](https://www.openfaas.com/blog/unified-secrets/) | Alex Ellis | openfaas.com | 24-Jan-2019 |
 | [Introducing the OpenFaaS Clojure Template](http://www.tessellator.net/2019-01-25-introducing-openfaas-clojure-template/) | Chad Taylor | tessellator.net | 25-Jan-2019 |
 | [Evaluation of Serverless Technologies at Jet](https://medium.com/jettech/evaluation-of-serverless-technologies-at-jet-f40af12a1c39) | Khalid Hasanov |  medium.com | 21-Jan-2019 |
+| [Get Started with the Kubernetes Python Client on OpenFaaS ](https://medium.com/@turcios.kevinj/get-started-with-the-kubernetes-python-client-on-openfaas-d5a8eb2f3eca) | Kevin Turcios | medium.com | 18-Jan-2019 |
 | [Awesomify anything or anyone with OpenFaaS!](https://medium.com/@diddledan/awesomify-anything-or-anyone-with-openfaas-6cb95512be9a) | Daniel Llewellyn | bowlhat.net | 17-Jan-2019 |
 | [Serverless sur Raspberry PI avec Docker Swarm et OpenFaas](https://blog.ineat-conseil.fr/2019/01/serverless-sur-raspberry-pi-avec-docker-swarm-et-openfaas-partie-1-installation-dopenfaas/) | Mathias Deremer-Accettone | blog.ineat-conseil.fr | 15-Jan-2019 |
 | [Making Legacy Legendary - A Windows 2003 Application Journey to the Cloud](https://youtu.be/I_vq5xuN41I?t=1454)| Indy Bains & Arthur Entwistle | DockerCon 18 Europe | 10-Jan-2019 |
