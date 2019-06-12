@@ -94,6 +94,7 @@ It would be great to hear from you especially if you have any of the above and w
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [Running GBFS bikeshare functions with OpenFaaS for fun and profit](http://blog.amosti.net/running-gbfs-bikeshare-functions-with-openfaas-for-fun-and-profit/) | Andreas Mosti | blog.amosti.net | 04-June-2019 |
 | [Deploying a FaaS platform on OVH Managed Kubernetes using OpenFaaS](https://www.ovh.com/fr/blog/deploying-a-faas-platform-on-ovh-managed-kubernetes-using-openfaas/) | Horacio Gonzalez | ovh.com | 24-May-2019 |
+| [Serverless Functions, Made Simple with OpenFaaS](https://www.roncrivera.io/post/serverless-functions-made-simple-with-openfaas/) | Ron Rivera | www.roncrivera.io | 15-May-2019 |
 | [Openfaas K3s Appliance](https://github.com/cloudnautique/k3d-openfaas-example) | Bill Maxwell | https://github.com/cloudnautique | 13-May-2019 |
 | [Creating a simple OpenFaaS template](https://blogs.4dotnet.nl/creating-a-simple-openfaas-template/) | Erwin Staal | blogs.4dotnet.nl | 11-May-2019 |
 | [Meet us at KubeCon 2019, Barcelona](https://www.openfaas.com/blog/meet-us-at-barcelona/) | Alex Ellis | openfaas.com | 10-May-2019 |
