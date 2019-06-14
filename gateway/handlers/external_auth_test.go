@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 	"time"
 )
@@ -205,6 +206,10 @@ func Test_External_Auth_Wrapper_TimeoutGivesInternalServerError(t *testing.T) {
 	want := http.StatusInternalServerError
 	if rr.Code != want {
 		t.Errorf("Status incorrect, want: %d, but got %d", want, rr.Code)
+	}
+	wantSubstring := "context deadline exceeded\n"
+	if !strings.HasSuffix(string(rr.Body.Bytes()), wantSubstring) {
+		t.Errorf("Body incorrect, want to have suffix: %q, but got %q", []byte(wantSubstring), rr.Body)
 	}
 }
 
