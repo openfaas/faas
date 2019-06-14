@@ -33,7 +33,7 @@ RUN license-check -path ./ --verbose=false "Alex Ellis" "OpenFaaS Project" "Open
     -X github.com/openfaas/faas/gateway/version.Version=${VERSION}" \
     -a -installsuffix cgo -o gateway .
 
-FROM alpine:3.8
+FROM alpine:3.9
 
 LABEL org.label-schema.license="MIT" \
     org.label-schema.vcs-url="https://github.com/openfaas/faas" \
@@ -43,7 +43,8 @@ LABEL org.label-schema.license="MIT" \
     org.label-schema.docker.schema-version="1.0"
 
 RUN addgroup -S app \
-    && adduser -S -g app app
+    && adduser -S -g app app \
+    && apk add --no-cache ca-certificates
 
 WORKDIR /home/app
 

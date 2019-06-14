@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"io"
+	"log"
 	"net/http"
 	"time"
 )
@@ -22,7 +23,8 @@ func MakeExternalAuthHandler(next http.HandlerFunc, upstreamTimeout time.Duratio
 
 		res, err := http.DefaultClient.Do(req.WithContext(deadlineContext))
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			log.Printf("ExternalAuthHandler: %s", err.Error())
 			return
 		}
 
