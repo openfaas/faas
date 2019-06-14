@@ -26,7 +26,8 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o gateway .
 FROM alpine:3.9
 
 RUN addgroup -S app \
-    && adduser -S -g app app
+    && adduser -S -g app app \
+    && apk add --no-cache ca-certificates
 
 WORKDIR /home/app
 
