@@ -49,6 +49,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Deploying Go Functions @ GoWayFest](https://goway.io) | Julien Bisconti | Minsk, Belarus | 05-Jul-2019 |
 | [ContainerDays EU: Kubernetes and AWS Lambda can play nicely together with OpenFaaS](https://www.containerdays.io/program/) | Edward Wilde | ContainerDays | 25-June-2019 |
 | [Blockchain as a Service at Scale](https://devweeksea2019.sched.com/event/PVpz) | Dean Shelton | Seattle, USA | 31-May-2019 |
 | [OpenFaaS - mit Docker einfach Serverless](https://www.xing.com/events/openfaas-docker-einfach-serverless-2104708) | Frank Pommerening | Ratingen, Germany | 29-May-2019 |
