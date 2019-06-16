@@ -282,10 +282,6 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
 
                 $scope.selectedFunc = func;
             }
-
-            $scope.customizeStoreFunc = function() {
-                $scope.selectedTabIdx = CUSTOM_DEPLOY_TAB_INDEX;
-            }
             
             $scope.onTabSelect = function(idx) {
                 newFuncTabIdx = idx;
