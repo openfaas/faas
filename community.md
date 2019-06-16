@@ -138,6 +138,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Making Legacy Legendary - A Windows 2003 Application Journey to the Cloud](https://youtu.be/I_vq5xuN41I?t=1454)| Indy Bains & Arthur Entwistle | DockerCon 18 Europe | 10-Jan-2019 |
 | [Get Started with OpenFaaS and KinD](https://blog.alexellis.io/get-started-with-openfaas-and-kind/) | Alex Ellis | alexellis.io | 10-Jan-2019 |
 | [Transmute launches blockchain decentralised app engine using OpenFaaS](https://www.enterprisetimes.co.uk/2019/01/09/transmute-launches-blockchain-decentralised-app-engine/) | Charles Brett | enterprisetimes.co.uk | 09-Jan-2019 |
+| [Serverless Panel Dockercon 2018](https://youtu.be/qtlMw8bJPuE?t=583) | Alex Ellis | youtube.com | 05-Jan-2019 |
 | [Bash Functions as a Service](https://medium.com/@thomas.shaw78/bash-functions-as-a-service-b4033bc1ee97) | Thomas Shaw | medium.com | 02-Jan-2019 |
 | [Deploy OpenFaaS with MicroK8s](https://johnmccabe.net/technology/projects/openfaas-on-microk8s/) | John McCabe | johnmccabe.net | 01-Jan-2019 |
 | [4 Top Technology Predictions for 2019](https://medium.com/@filipSk/4-top-technology-predictions-for-2019-c9ddc9c345bd) | Filip Cieker | medium.com | 01-Jan-2019 |
@@ -341,6 +342,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [OpenFaaS November Contributor Highlights](https://blog.alexellis.io/openfaas-contributors-highlights/) | Alex Ellis | alexellis.io | 15-Nov-2017 |
 | [Contributing to OpenFaaS without writing any code… (yet)](https://hackernoon.com/contributing-to-openfaas-without-writing-any-code-yet-846dd014514f) | Burton Rheutan | hackernoon.com/@burtonr | 11-Nov-2017 |
 | [How to start with OpenFaaS](http://panosgeorgiadis.com/blog/2017/11/08/how-to-start-with-openfaas/) | Panos Georgiadis | panosgeorgiadis.com | 08-Nov-2017 |
+| [From Zero to Serverless in 60 Seconds, Anywhere](https://www.youtube.com/watch?v=W9a-JmEnDkw) | Alex Ellis | youtube.com | 05-Nov-2017 |
 | [Build a Kubernetes Cluster w/ Raspberry Pi & .NET Core on OpenFaas](https://www.hanselman.com/blog/HowToBuildAKubernetesClusterWithARMRaspberryPiThenRunNETCoreOnOpenFaas.aspx) | Scott Hanselman | hanselman.com | 31-Oct-2017
 | [Kubernetes + OpenFaaS + runV + ARM64 Packet.net](https://medium.com/@resouer/kubernetes-openfaas-runv-arm64-packet-net-ea4c7b61c88f) | Harry Zhang | medium.com | 31-Oct-2017 |
 | [Serverless Kubernetes home-lab with your Raspberry Pis](https://blog.alexellis.io/serverless-kubernetes-on-raspberry-pi/) | Alex Ellis | alexellis.io | 27-Oct-2017 |
