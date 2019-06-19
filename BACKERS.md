@@ -30,6 +30,8 @@ Be the first.
 
 <a href="https://www.contiamo.com"><img alt="Contiamo" src="https://docs.openfaas.com/images/logos/contiamo.svg" width="100px" /></a>
 
+* [Brandon Lamb](https://github.com/brandonlamb)
+
 ## Backers
 
 Listed by reward, followed by miscellaneous amounts. Names are (pending) until first pledge is taken by Patreon, this is at the start of each month.
