@@ -14,7 +14,7 @@ const crlf = "\r\n"
 const upstreamLogsEndpoint = "/system/logs"
 
 // NewLogHandlerFunc creates and http HandlerFunc from the supplied log Requestor.
-func NewLogHandlerFunc(logProvider url.URL) http.HandlerFunc {
+func NewLogHandlerFunc(logProvider url.URL, timeout time.Duration) http.HandlerFunc {
 	writeRequestURI := false
 	if _, exists := os.LookupEnv("write_request_uri"); exists {
 		writeRequestURI = exists
@@ -23,7 +23,9 @@ func NewLogHandlerFunc(logProvider url.URL) http.HandlerFunc {
 	upstreamLogProviderBase := strings.TrimSuffix(logProvider.String(), "/")
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		ctx := r.Context()
+		ctx, cancelQuery := context.WithTimeout(r.Context(), timeout)
+		defer cancelQuery()
+
 		if r.Body != nil {
 			defer r.Body.Close()
 		}

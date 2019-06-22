@@ -113,7 +113,7 @@ func main() {
 		forwardingNotifiers,
 	)
 
-	faasHandlers.LogProxyHandler = handlers.NewLogHandlerFunc(*config.LogsProviderURL)
+	faasHandlers.LogProxyHandler = handlers.NewLogHandlerFunc(*config.LogsProviderURL, config.WriteTimeout)
 
 	if config.UseNATS() {
 		log.Println("Async enabled: Using NATS Streaming.")
