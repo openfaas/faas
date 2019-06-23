@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -66,17 +67,25 @@ func NewLogHandlerFunc(logProvider url.URL, timeout time.Duration) http.HandlerF
 		}
 		defer logResp.Body.Close()
 
-		// watch for connection closures and stream data
-		// connections and contexts should have cancel methods deferred already
-		select {
-		case err := <-copyNotify(&unbufferedWriter{wf}, logResp.Body):
-			if err != nil {
-				log.Printf("LogProxy: error while copy: %s", err.Error())
+		switch logResp.StatusCode {
+		case http.StatusNotFound, http.StatusNotImplemented:
+			w.WriteHeader(http.StatusNotImplemented)
+			return
+		case http.StatusOK:
+			// watch for connection closures and stream data
+			// connections and contexts should have cancel methods deferred already
+			select {
+			case err := <-copyNotify(&unbufferedWriter{wf}, logResp.Body):
+				if err != nil {
+					log.Printf("LogProxy: error while copy: %s", err.Error())
+					return
+				}
+			case <-cn.CloseNotify():
+				log.Printf("LogProxy: client connection closed")
 				return
 			}
-		case <-cn.CloseNotify():
-			log.Printf("LogProxy: client connection closed")
-			return
+		default:
+			http.Error(w, fmt.Sprintf("unknown log request error (%v)", logResp.StatusCode), http.StatusInternalServerError)
 		}
 
 		return
