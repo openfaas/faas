@@ -7,3 +7,4 @@ fi
 
 (cd gateway && ./build.sh)
 (cd watchdog && ./build.sh)
+(cd auth/basic-auth && ./build.sh)

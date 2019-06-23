@@ -11,17 +11,17 @@ ARCH=$(uname -m)
 
 #fi
 
-get_repo_name() {
+get_image_names() {
     if  [ "openfaas-incubator/faas-idler" = $1 ]; then
-        echo "openfaas/faas-idler"
+        images=("openfaas/faas-idler")
     elif  [ "openfaas/faas" = $1 ]; then
-        echo "openfaas/gateway"
+        images=("openfaas/gateway" "openfaas/basic-auth-plugin")
     elif  [ "openfaas/nats-queue-worker" = $1 ]; then
-        echo "openfaas/queue-worker"
+        images=("openfaas/queue-worker")
     elif  [ "openfaas-incubator/openfaas-operator" = $1 ]; then
-        echo "openfaas/openfaas-operator"
+        images=("openfaas/openfaas-operator")
     else
-        echo $1
+        images=($1)
     fi
 }
 
@@ -33,35 +33,48 @@ fi
 
 echo "Target architecture: ${ARM_VERSION}"
 
-for i in "${repos[@]}"
+for r in "${repos[@]}"
 do
    cd $HERE
 
-   echo -e "\nBuilding: $i\n"
-   git clone https://github.com/$i ./staging/$i
-   cd ./staging/$i
+   echo -e "\nBuilding: $r\n"
+   git clone https://github.com/$r ./staging/$r
+   cd ./staging/$r
    pwd
    export TAG=$(git describe --abbrev=0 --tags)
    echo "Latest release: $TAG"
 
-   REPOSITORY=$(get_repo_name $i)
-   TAG_PRESENT=$(curl -s "https://hub.docker.com/v2/repositories/${REPOSITORY}/tags/${TAG}-${ARM_VERSION}/" | grep -Po '"detail": *"[^"]*"' | grep -o 'Not found')
+   get_image_names $r
 
+   for IMAGE in "${images[@]}"
+   do
+      TAG_PRESENT=$(curl -s "https://hub.docker.com/v2/repositories/${IMAGE}/tags/${TAG}-${ARM_VERSION}/" | grep -Po '"detail": *"[^"]*"' | grep -o 'Not found')
+      if [ "$TAG_PRESENT" = "Not found" ]; then
+      break
+      fi
+   done
+   
    if [ "$TAG_PRESENT" = "Not found" ]; then
        make ci-${ARM_VERSION}-build ci-${ARM_VERSION}-push
    else
-       echo "Image is already present: ${REPOSITORY}:${TAG}-${ARM_VERSION}"
+     for IMAGE in "${images[@]}"
+     do
+       echo "Image is already present: ${IMAGE}:${TAG}-${ARM_VERSION}"
+     done
    fi
 done
 
 echo "Docker images"
 
-for i in "${repos[@]}"
+for r in "${repos[@]}"
 do
    cd $HERE
-   cd ./staging/$i
+   cd ./staging/$r
    export TAG=$(git describe --abbrev=0 --tags)
-   echo "$i"
-   REPOSITORY=$(get_repo_name $i)
-   echo " ${REPOSITORY}:${TAG}-${ARM_VERSION}"
+   echo "$r"
+   get_image_names $r
+   for IMAGE in "${images[@]}"
+   do
+   echo " ${IMAGE}:${TAG}-${ARM_VERSION}"
+   done
 done
