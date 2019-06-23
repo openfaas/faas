@@ -8,6 +8,7 @@ import (
 	"net/http/httptest"
 	"net/url"
 	"testing"
+	"time"
 
 	"go.uber.org/goleak"
 )
@@ -42,7 +43,7 @@ func Test_logsProxyDoesNotLeakGoroutinesWhenProviderClosesConnection(t *testing.
 
 	logProviderURL, _ := url.Parse(mockLogsUpstreamEndpoint.URL)
 
-	logHandler := NewLogHandlerFunc(*logProviderURL)
+	logHandler := NewLogHandlerFunc(*logProviderURL, time.Minute)
 	testSrv := httptest.NewServer(http.HandlerFunc(logHandler))
 	defer testSrv.Close()
 
@@ -107,7 +108,7 @@ func Test_logsProxyDoesNotLeakGoroutinesWhenClientClosesConnection(t *testing.T)
 
 	logProviderURL, _ := url.Parse(mockLogsUpstreamEndpoint.URL)
 
-	logHandler := NewLogHandlerFunc(*logProviderURL)
+	logHandler := NewLogHandlerFunc(*logProviderURL, time.Minute)
 	testSrv := httptest.NewServer(http.HandlerFunc(logHandler))
 	defer testSrv.Close()
 
