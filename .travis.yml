@@ -26,18 +26,26 @@ after_success:
     - if [ ! -z "$TRAVIS_TAG" ] ; then
         export DOCKER_CLI_EXPERIMENTAL=enabled
 
-        echo $DOCKER_PASSWORD | docker login -u=$DOCKER_USERNAME --password-stdin;
-        echo $QUAY_PASSWORD | docker login -u=$QUAY_USERNAME --password-stdin quay.io;
-        
-        ./ci/tagAndPush.sh "$DOCKER_NS/gateway";
-        ./ci/tagAndPush.sh "$DOCKER_NS/basic-auth-plugin";
-        ./ci/tagAndPush.sh "$DOCKER_NS/classic-watchdog" armhf;
-        ./ci/tagAndPush.sh "$DOCKER_NS/classic-watchdog" arm64;
-        ./ci/tagAndPush.sh "$DOCKER_NS/classic-watchdog" windows;
-        ./ci/tagAndPush.sh "$DOCKER_NS/classic-watchdog" x86_64;
+        export REGISTRY=docker.io;
+        ./ci/registryLogin.sh $REGISTRY; 
+        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/gateway";
+        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/basic-auth-plugin";
+        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" armhf;
+        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" arm64;
+        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" windows;
+        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" x86_64;
 
         ./watchdog/make_manifest.sh
         docker push $DOCKER_NS/classic-watchdog:$TRAVIS_TAG
+
+        export REGISTRY=quay.io;
+        ./ci/registryLogin.sh $REGISTRY;
+        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/gateway";
+        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/basic-auth-plugin";
+        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" armhf;
+        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" arm64;
+        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" windows;
+        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" x86_64;
 
         fi
 
