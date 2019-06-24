@@ -1,13 +1,17 @@
-FROM golang:1.10.4-alpine3.8 as build
+FROM golang:1.10-alpine3.9 as build
 
-RUN mkdir -p /go/src/handler
+RUN apk add --no-cache curl ca-certificates
+RUN curl -sLSf https://raw.githubusercontent.com/teamserverless/license-check/master/get.sh | sh \
+  && mv ./license-check /usr/bin/
+
 WORKDIR /go/src/handler
 COPY . .
 
 # Run a gofmt and exclude all vendored code.
-RUN test -z "$(gofmt -l $(find . -type f -name '*.go' -not -path "./vendor/*"))"
 
-RUN CGO_ENABLED=0 GOOS=linux \
+RUN license-check -path ./ --verbose=false "OpenFaaS Authors" "OpenFaaS Author(s)" \
+ && test -z "$(gofmt -l $(find . -type f -name '*.go' -not -path "./vendor/*"))" \
+ && CGO_ENABLED=0 GOOS=linux \
     go build --ldflags "-s -w" -a -installsuffix cgo -o handler . && \
     go test $(go list ./... | grep -v /vendor/) -cover
 
