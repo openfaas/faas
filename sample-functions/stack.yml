@@ -9,11 +9,11 @@ functions:
   figlet:
     lang: dockerfile
     handler: ./figlet
-    image: functions/figlet:0.13.0
+    image: functions/figlet:latest
   apikey-secret:
     lang: go
     handler: ./apikey-secret
-    image: functions/apikey-secret:0.13.0
+    image: functions/apikey-secret:latest
   captainsintent:
     lang: dockerfile
     handler: ./CaptainsIntent
