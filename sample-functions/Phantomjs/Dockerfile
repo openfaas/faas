@@ -1,11 +1,14 @@
+FROM openfaas/classic-watchdog:0.14.4 as watchdog
+
 FROM alexellis2/phantomjs-docker:latest
 
-RUN apt-get update && apt-get install -y curl \
-    && curl -sL https://github.com/openfaas/faas/releases/download/0.13.0/fwatchdog > /usr/bin/fwatchdog \
-    && chmod +x /usr/bin/fwatchdog \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
+RUN chmod +x /usr/bin/fwatchdog
 
 ENV fprocess="phantomjs /dev/stdin"
+
+RUN addgroup -g 1000 -S app && adduser -u 1000 -S app -G app
+USER 1000
 
 HEALTHCHECK --interval=5s CMD [ -e /tmp/.lock ] || exit 1
 CMD ["fwatchdog"]

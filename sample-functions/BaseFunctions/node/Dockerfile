@@ -1,14 +1,18 @@
+FROM openfaas/classic-watchdog:0.14.4 as watchdog
+
 FROM node:6.9.1-alpine
 
-RUN apk --no-cache add curl \
-    && curl -sL https://github.com/openfaas/faas/releases/download/0.13.0/fwatchdog > /usr/bin/fwatchdog \
-    && chmod +x /usr/bin/fwatchdog
-WORKDIR /root/
+COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
+RUN chmod +x /usr/bin/fwatchdog
+
+WORKDIR /application/
 
 COPY package.json .
 
 RUN npm i
 COPY handler.js .
+
+USER 1000
 
 ENV fprocess="node handler.js"
 

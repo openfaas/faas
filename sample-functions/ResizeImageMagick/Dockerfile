@@ -1,10 +1,14 @@
+FROM openfaas/classic-watchdog:0.14.4 as watchdog
+
 FROM v4tech/imagemagick
 
-RUN apk --no-cache add curl \
-    && curl -sL https://github.com/openfaas/faas/releases/download/0.13.0/fwatchdog > /usr/bin/fwatchdog \
-    && chmod +x /usr/bin/fwatchdog
+COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
+RUN chmod +x /usr/bin/fwatchdog
 
 ENV fprocess "convert - -resize 50% fd:1"
+
+RUN addgroup -g 1000 -S app && adduser -u 1000 -S app -G app
+USER 1000
 
 EXPOSE 8080
 
