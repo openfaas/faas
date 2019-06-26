@@ -1,10 +1,12 @@
-FROM alpine:3.8 as builder
-RUN apk add --no-cache curl \
-    && curl -SL https://github.com/openfaas/faas/releases/download/0.13.0/fwatchdog > /usr/bin/fwatchdog \
-    && chmod +x /usr/bin/fwatchdog \
-    && apk --no-cache del curl
+FROM openfaas/classic-watchdog:0.14.4 as watchdog
 
-WORKDIR /root/
+FROM alpine:3.10 as builder
+COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
+RUN chmod +x /usr/bin/fwatchdog
+
+WORKDIR /application/
+
+RUN addgroup -g 1000 -S app && adduser -u 1000 -S app -G app
 
 RUN apk add --no-cache gcc \
     musl-dev
@@ -18,11 +20,13 @@ FROM scratch
 
 COPY --from=builder /main               /
 COPY --from=builder /usr/bin/fwatchdog  /
-COPY --from=builder /tmp /tmp
 
 ENV fprocess="/main"
+ENV suppress_lock=true
 
-HEALTHCHECK --interval=5s CMD [ -e /tmp/.lock ] || exit 1
+COPY --from=builder /etc/passwd /etc/passwd
 
-CMD ["/fwatchdog"]
+USER 1000
+
+CMD ["fwatchdog"]
 
