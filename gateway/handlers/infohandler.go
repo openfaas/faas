@@ -48,6 +48,7 @@ func MakeInfoHandler(h http.Handler) http.HandlerFunc {
 				Name:          provider["provider"].(string),
 				Orchestration: provider["orchestration"].(string),
 			},
+			Arch: types.Arch,
 		}
 
 		jsonOut, marshalErr := json.Marshal(gatewayInfo)

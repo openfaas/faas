@@ -9,7 +9,9 @@ export eTAG="latest-dev"
 if [ "$arch" = "armv7l" ] ; then
    dockerfile="Dockerfile.armhf"
    eTAG="latest-armhf-dev"
+   arch="armhf"
 elif [ "$arch" = "aarch64" ] ; then
+   arch="arm64"
    dockerfile="Dockerfile.arm64"
    eTAG="latest-arm64-dev"
 fi
@@ -35,4 +37,5 @@ VERSION=$(git describe --all --exact-match `git rev-parse HEAD` | grep tags | se
 docker build --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_proxy \
   --build-arg GIT_COMMIT_MESSAGE="$GIT_COMMIT_MESSAGE" --build-arg GIT_COMMIT_SHA=$GIT_COMMIT_SHA \
   --build-arg VERSION=${VERSION:-dev} \
+  --build-arg ARCH=$arch \
   -t $NS/gateway:$eTAG . -f $dockerfile --no-cache
