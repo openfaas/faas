@@ -2,6 +2,7 @@ FROM golang:1.10.4 as build
 ARG GIT_COMMIT_SHA
 ARG GIT_COMMIT_MESSAGE
 ARG VERSION='dev'
+ARG ARCH
 
 RUN curl -sLSf \
   https://raw.githubusercontent.com/teamserverless/license-check/master/get.sh | sh \
@@ -30,7 +31,8 @@ RUN license-check -path ./ --verbose=false "Alex Ellis" "OpenFaaS Project" "Open
     && CGO_ENABLED=0 GOOS=linux go build --ldflags "-s -w \
     -X github.com/openfaas/faas/gateway/version.GitCommitSHA=${GIT_COMMIT_SHA}\
     -X \"github.com/openfaas/faas/gateway/version.GitCommitMessage=${GIT_COMMIT_MESSAGE}\"\
-    -X github.com/openfaas/faas/gateway/version.Version=${VERSION}" \
+    -X \"github.com/openfaas/faas/gateway/version.Version=${VERSION}\" \
+    -X github.com/openfaas/faas/gateway/types.Arch=${ARCH}"\
     -a -installsuffix cgo -o gateway .
 
 FROM alpine:3.9

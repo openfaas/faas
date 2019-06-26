@@ -46,3 +46,23 @@ func Test_InfoEndpoint_Returns_Gateway_Version_SHA_And_Message(t *testing.T) {
 		t.Errorf("length of commit message should be greater than 0. Json body was %s", body)
 	}
 }
+
+func Test_InfoEndpoint_Returns_Arch(t *testing.T) {
+	body, _, err := fireRequest("http://localhost:8080/system/info", http.MethodGet, "")
+
+	if err != nil {
+		t.Log(err)
+		t.Fail()
+	}
+
+	gatewayInfo := &types.GatewayInfo{}
+	err = json.Unmarshal([]byte(body), gatewayInfo)
+	if err != nil {
+		t.Errorf("Could not unmarshal gateway info, response body:%s, error:%s", body, err.Error())
+		t.Fail()
+	}
+
+	if len(gatewayInfo.Arch) == 0 {
+		t.Errorf("value of arch should be non-empty")
+	}
+}

@@ -434,6 +434,10 @@ definitions:
             type: string
             format: semver
             example: 0.8.9
+      arch:
+        type: string
+        description: "Platform architecture"
+        example: "x86_64"
     required:
     - provider
     - version
