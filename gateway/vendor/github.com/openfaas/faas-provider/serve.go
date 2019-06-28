@@ -46,6 +46,7 @@ func Serve(handlers *types.FaaSHandlers, config *types.FaaSConfig) {
 		handlers.ReplicaUpdater = auth.DecorateWithBasicAuth(handlers.ReplicaUpdater, credentials)
 		handlers.InfoHandler = auth.DecorateWithBasicAuth(handlers.InfoHandler, credentials)
 		handlers.SecretHandler = auth.DecorateWithBasicAuth(handlers.SecretHandler, credentials)
+		handlers.LogHandler = auth.DecorateWithBasicAuth(handlers.LogHandler, credentials)
 	}
 
 	// System (auth) endpoints
@@ -59,6 +60,7 @@ func Serve(handlers *types.FaaSHandlers, config *types.FaaSConfig) {
 	r.HandleFunc("/system/info", handlers.InfoHandler).Methods("GET")
 
 	r.HandleFunc("/system/secrets", handlers.SecretHandler).Methods(http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete)
+	r.HandleFunc("/system/logs", handlers.LogHandler).Methods(http.MethodGet)
 
 	// Open endpoints
 	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}", handlers.FunctionProxy)

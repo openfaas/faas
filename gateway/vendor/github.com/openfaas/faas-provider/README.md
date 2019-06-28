@@ -14,7 +14,7 @@ The faas-provider provides CRUD for functions and an invoke capability. If you c
 The following is used in OpenFaaS and recommended for those seeking to build their own back-ends:
 
 * License: MIT
-* Language: Golang 
+* Language: Golang
 
 ### How to use this project
 
@@ -25,6 +25,7 @@ For an example see the [server.go](https://github.com/openfaas/faas-netes/blob/m
 I.e.:
 
 ```go
+	timeout := 8 * time.Second
 	bootstrapHandlers := bootTypes.FaaSHandlers{
 		FunctionProxy:  handlers.MakeProxy(),
 		DeleteHandler:  handlers.MakeDeleteHandler(clientset),
@@ -33,13 +34,14 @@ I.e.:
 		ReplicaReader:  handlers.MakeReplicaReader(clientset),
 		ReplicaUpdater: handlers.MakeReplicaUpdater(clientset),
 		InfoHandler:    handlers.MakeInfoHandler(),
+		LogHandler: logs.NewLogHandlerFunc(requestor,timeout),
 	}
 
 	var port int
 	port = 8080
 	bootstrapConfig := bootTypes.FaaSConfig{
-		ReadTimeout:  time.Second * 8,
-		WriteTimeout: time.Second * 8,
+		ReadTimeout:  timeout,
+		WriteTimeout: timeout,
 		TCPPort:      &port,
 	}
 
