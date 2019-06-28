@@ -332,6 +332,41 @@ paths:
           description: Not Found
         '500':
           description: Internal Server Error
+  '/system/logs':
+      get:
+        summary: Get a stream of the logs for a specific function
+        produces:
+          - application/x-ndjson
+      parameters:
+      - in: query
+        name: name
+        description: Function name
+        type: string
+        required: true
+      - in: query
+        name: since
+        description: Only return logs after a specific date (RFC3339)
+        type: string
+        required: false
+      - in: query
+        name: tail
+        description: Sets the maximum number of log messages to return, <=0 means unlimited
+        type: integer
+        required: false
+      - in: query
+        name: follow
+        description: When true, the request will stream logs until the request timeout
+        type: boolean
+        required: false
+      responses:
+        '200':
+          description: Newline delimited stream of log messages
+          schema:
+            $ref: '#/definitions/LogEntry'
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
   '/system/info':
     get:
       summary: Get info such as provider version number and provider orchestrator
@@ -559,6 +594,22 @@ definitions:
         example: changeme
     required:
     - name
+  LogEntry:
+    type: object
+    property:
+      name:
+        type: string
+        description: the function name
+      instance:
+        type: string
+        description: the name/id of the specific function instance
+      timestamp:
+        type: string
+        format: date-time
+        description: the timestamp of when the log message was recorded
+      text:
+        type: string
+        description: raw log message content
   SecretName:
     type: object
     properties:
