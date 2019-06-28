@@ -341,3 +341,37 @@ func TestRead_AuthProxy_DefaultsOverrides(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestRead_LogsProviderURL(t *testing.T) {
+	defaults := NewEnvBucket()
+
+	t.Run("default value is nil when functions_provider_url is empty", func(t *testing.T) {
+		readConfig := ReadConfig{}
+		config := readConfig.Read(defaults)
+		if config.LogsProviderURL != nil {
+			t.Fatalf("config.LogsProviderURL, want: %s, got: %s\n", "", config.LogsProviderURL)
+		}
+	})
+
+	t.Run("default value is equal to functions_provider_url", func(t *testing.T) {
+		expected := "functions.example.com"
+		defaults.Setenv("functions_provider_url", expected)
+
+		readConfig := ReadConfig{}
+		config := readConfig.Read(defaults)
+		if config.LogsProviderURL.String() != expected {
+			t.Fatalf("config.LogsProviderURL, want: %s, got: %s\n", expected, config.LogsProviderURL)
+		}
+	})
+
+	t.Run("override by logs_provider_url", func(t *testing.T) {
+		expected := "logs.example.com"
+		defaults.Setenv("logs_provider_url", expected)
+
+		readConfig := ReadConfig{}
+		config := readConfig.Read(defaults)
+		if config.LogsProviderURL.String() != expected {
+			t.Fatalf("config.LogsProviderURL, want: %s, got: %s\n", expected, config.LogsProviderURL)
+		}
+	})
+}
