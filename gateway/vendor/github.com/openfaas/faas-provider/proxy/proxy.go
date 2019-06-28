@@ -21,7 +21,6 @@
 package proxy
 
 import (
-	"fmt"
 	"io"
 	"log"
 	"net"
@@ -30,6 +29,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/openfaas/faas-provider/httputils"
 )
 
 const (
@@ -112,7 +112,7 @@ func proxyRequest(w http.ResponseWriter, originalReq *http.Request, proxyClient 
 	pathVars := mux.Vars(originalReq)
 	functionName := pathVars["name"]
 	if functionName == "" {
-		writeError(w, http.StatusBadRequest, errMissingFunctionName)
+		httputils.Errorf(w, http.StatusBadRequest, errMissingFunctionName)
 		return
 	}
 
@@ -120,13 +120,13 @@ func proxyRequest(w http.ResponseWriter, originalReq *http.Request, proxyClient 
 	if resolveErr != nil {
 		// TODO: Should record the 404/not found error in Prometheus.
 		log.Printf("resolver error: cannot find %s: %s\n", functionName, resolveErr.Error())
-		writeError(w, http.StatusNotFound, "Cannot find service: %s.", functionName)
+		httputils.Errorf(w, http.StatusNotFound, "Cannot find service: %s.", functionName)
 		return
 	}
 
 	proxyReq, err := buildProxyRequest(originalReq, functionAddr, pathVars["params"])
 	if err != nil {
-		writeError(w, http.StatusInternalServerError, "Failed to resolve service: %s.", functionName)
+		httputils.Errorf(w, http.StatusInternalServerError, "Failed to resolve service: %s.", functionName)
 		return
 	}
 	if proxyReq.Body != nil {
@@ -140,7 +140,7 @@ func proxyRequest(w http.ResponseWriter, originalReq *http.Request, proxyClient 
 	if err != nil {
 		log.Printf("error with proxy request to: %s, %s\n", proxyReq.URL.String(), err.Error())
 
-		writeError(w, http.StatusInternalServerError, "Can't reach service for: %s.", functionName)
+		httputils.Errorf(w, http.StatusInternalServerError, "Can't reach service for: %s.", functionName)
 		return
 	}
 
@@ -213,11 +213,4 @@ func getContentType(request http.Header, proxyResponse http.Header) (headerConte
 	}
 
 	return headerContentType
-}
-
-// writeError sets the response status code and write formats the provided message as the
-// response body
-func writeError(w http.ResponseWriter, statusCode int, msg string, args ...interface{}) {
-	w.WriteHeader(statusCode)
-	w.Write([]byte(fmt.Sprintf(msg, args...)))
 }

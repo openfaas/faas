@@ -17,9 +17,23 @@
   revision = "e3702bed27f0d39777b0b37b664b6280e8ef8fbf"
   version = "v1.6.2"
 
+[[projects]]
+  digest = "1:9a1bb99a85e2ccddbc593aa0af084cdf6ea18ed081469eb90e7f6d0d303af6cd"
+  name = "go.uber.org/goleak"
+  packages = [
+    ".",
+    "internal/stack",
+  ]
+  pruneopts = "UT"
+  revision = "1ac8aeca0a53163331564467638f6ffb639636bf"
+  version = "v0.10.0"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/gorilla/mux"]
+  input-imports = [
+    "github.com/gorilla/mux",
+    "go.uber.org/goleak",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -86,7 +86,7 @@ func Test_ProxyHandler_MissingFunctionNameError(t *testing.T) {
 		t.Errorf("expected status code `%d`, got `%d`", http.StatusBadRequest, w.Code)
 	}
 
-	respBody := w.Body.String()
+	respBody := strings.TrimSpace(w.Body.String())
 	if respBody != errMissingFunctionName {
 		t.Errorf("expected error message `%s`, got `%s`", errMissingFunctionName, respBody)
 	}
@@ -109,7 +109,7 @@ func Test_ProxyHandler_ResolveError(t *testing.T) {
 		t.Errorf("expected status code `%d`, got `%d`", http.StatusBadRequest, w.Code)
 	}
 
-	respBody := w.Body.String()
+	respBody := strings.TrimSpace(w.Body.String())
 	if respBody != "Cannot find service: foo." {
 		t.Errorf("expected error message `%s`, got `%s`", "Cannot find service: foo.", respBody)
 	}
