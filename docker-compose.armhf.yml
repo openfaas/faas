@@ -125,7 +125,7 @@ services:
     # Start monitoring
 
     prometheus:
-        image: functions/prometheus:2.7.0-armhf
+        image: prom/prometheus:v2.10.0
         environment:
             no_proxy: "gateway"
         configs:
@@ -152,7 +152,7 @@ services:
                     memory: 200M
 
     alertmanager:
-        image: functions/alertmanager:0.15.0-armhf
+        image: prom/alertmanager:v0.17.0
         environment:
             no_proxy: "gateway"
         command:
