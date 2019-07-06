@@ -117,6 +117,14 @@ If you would like to ammend your commit follow this guide: [Git: Rewriting Histo
 
 Please follow style guide on [this blog post](https://blog.alexellis.io/golang-writing-unit-tests/) from [The Go Programming Language](https://www.amazon.co.uk/Programming-Language-Addison-Wesley-Professional-Computing/dp/0134190440)
 
+If you are making changes to code that use goroutines, consider adding `goleak` to your test to help ensure that we are not leaking any goroutines. Simply add
+
+```go
+defer goleak.VerifyNoLeaks(t)
+```
+
+at the very beginning of the test, and it will fail the test if it detects goroutines that were opened but never cleaned up at the end of the test.
+
 #### I have a question, a suggestion or need help
 
 If you have a simple question you can [join the Slack community](https://docs.openfaas.com/community) and ask there, but please bear in mind that contributors may live in a different timezone or be working to a different timeline to you. If you have an urgent request then let them know about this.
