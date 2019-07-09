@@ -49,6 +49,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Chicago Kubernetes Meetup: Going Serverless w/OpenFaaS + K8s Networking Revealed](https://www.meetup.com/Chicago-Kubernetes/events/262973241) | Saba Jamalian | Chicago, USA | 24-Jul-2019 |
 | [Deploying Go Functions @ GoWayFest](https://goway.io) | Julien Bisconti | Minsk, Belarus | 05-Jul-2019 |
 | [Serverless Functions Frameworks : OpenFaaS Day](https://www.meetup.com/Cloud-Native-Computing-Belo-Horizonte/events/262673508/) | Marcelo Umberto and Jefferson Otoni Lima | Belo Horizonte, Brazil | 04-Jul-2019 |
 | [ContainerDays EU: Kubernetes and AWS Lambda can play nicely together with OpenFaaS](https://www.containerdays.io/program/) | Edward Wilde | ContainerDays | 25-June-2019 |
@@ -93,6 +94,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [On-premises Serverless Computing for Event-Driven Data Processing Applications](https://www.grycap.upv.es/gmolto/publications/b2hd-Perez2019osc.html) | Alfonso Pérez | grycap.upv.es | 09-Jul-2019 |
 | [Running GBFS bikeshare functions with OpenFaaS for fun and profit](http://blog.amosti.net/running-gbfs-bikeshare-functions-with-openfaas-for-fun-and-profit/) | Andreas Mosti | blog.amosti.net | 04-June-2019 |
 | [Deploying a FaaS platform on OVH Managed Kubernetes using OpenFaaS](https://www.ovh.com/fr/blog/deploying-a-faas-platform-on-ovh-managed-kubernetes-using-openfaas/) | Horacio Gonzalez | ovh.com | 24-May-2019 |
 | [Serverless Functions, Made Simple with OpenFaaS](https://www.roncrivera.io/post/serverless-functions-made-simple-with-openfaas/) | Ron Rivera | www.roncrivera.io | 15-May-2019 |
