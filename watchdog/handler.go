@@ -94,6 +94,9 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 	var buildInputErr error
 	requestBody, buildInputErr = buildFunctionInput(config, r)
 	if buildInputErr != nil {
+		if config.writeDebug == true {
+			log.Printf("Error=%s, ReadLen=%d\n", buildInputErr.Error(), len(requestBody))
+		}
 		ri.headerWritten = true
 		w.WriteHeader(http.StatusBadRequest)
 		// I.e. "exit code 1"
