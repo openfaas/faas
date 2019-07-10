@@ -1,26 +1,32 @@
 # Project backers
 
-We need your support to keep delivering on Serverless Functions Made Simple so pledge to OpenFaaS and [become a backer or a sponsor](https://www.patreon.com/alexellis) with a unique set of rewards. Help us hit our goals and get to back a great project at the same time.
+OpenFaaS is licensed as MIT and completely Open Source and free to use. However the amount of effort needed to maintain and develop new features is not sustainable without proper financial backing.
 
-View this page for live data [on Patreon for everyone who has pledged](https://www.patreon.com/alexellis).
+## How to become a backer or Insider
 
-## OpenFaaS Sponsors
+## OpenFaaS Insiders
 
-You can [become a sponsor here](https://www.patreon.com/alexellis).
+You can get regular insider updates and become an Insider from as little as 5 USD / mo by sponsoring the lead and founder [Alex Ellis via GitHub Sponsors](https://www.openfaas.com/support/). You'll get regular updates with all the news, videos, blogs, content and early access to features.
 
-### Platinum Sponsors
+Become an Insider today: [GitHub Sponsors](https://www.openfaas.com/support/)
+
+### Homepage Sponsorship / OpenFaaS corporate sponsors
+
+Become a sponsor of openfaas.com and connect your brand to one of the fastest-growing developer communities with over 17.5k GitHub stars and dozens of well-known end-users. Use one of the funding options above, or email alex@openfaas.com to ask about how to sponsor by invoice through OpenFaaS Ltd.
+
+* Bronze - 150 USD / mo - logo in BACKERS.md (this file)
+* Gold - 500 USD / mo - small logo on openfaas.com
+* Platinum - 1500 USD / mo - normal-sized logo openfaas.com
+
+#### Platinum Sponsors (homepage sponsor)
 
 Be the first.
 
-### Gold Sponsors
+#### Gold Sponsors (homepage sponsor)
 
-Be the first.
+<a href="https://civo.com"><img alt="Civo" src="https://www.openfaas.com/images/sponsors/civo.svg" width="125px" /></a>
 
-### Silver Sponsors:
-
-Be the first.
-
-### Bronze Sponsors
+#### Bronze Sponsors
 
 <a href="https://asyncy.com"><img alt="ASYNCY" src="https://www.openfaas.com/images/sponsors/asyncy.png" width="100px" /></a>
 
@@ -34,9 +40,9 @@ Be the first.
 
 * [Brandon Lamb](https://github.com/brandonlamb)
 
-## Backers
+## Individual backers (Patreon / GitHub)
 
-Listed by reward, followed by miscellaneous amounts. Names are (pending) until first pledge is taken by Patreon, this is at the start of each month.
+Whatever tier, whether 5 USD or 500 USD, if you're a backer on Patreon, or a GitHub Sponsor, then please send a PR to have your name listed below:
 
 * Andrew Cornies
 * Benjamin Neil
@@ -57,14 +63,12 @@ Listed by reward, followed by miscellaneous amounts. Names are (pending) until f
 * Rafael Barbosa
 * Richard Petersen-Hall
 * Ruan Bekker
-* scott rosenberg
+* Scott Rosenberg
 * Sergey Radov
 * Sivaramakrishnan Malikkal
 * Steve Peak
 * Weston Steimel
 * Younes Amardaya
-
-Miscellaneous rewards/amounts are not shown.
 
 ### Hall of fame
 
@@ -76,5 +80,3 @@ The hall of fame shows contributors who made a sustained positive impact on the 
 * Jock Reed
 * Eric Stoekl
 * Ken Fukuyama
-
-> Disclaimer: all Patrons are making a monthly pledge to support Alex Ellis in running and operating OpenFaaS. This does not represent an investment, stake or ownership in OpenFaaS Ltd or related entities.
