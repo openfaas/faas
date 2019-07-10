@@ -67,6 +67,7 @@ Whatever tier, whether 5 USD or 500 USD, if you're a backer on Patreon, or a Git
 * Sergey Radov
 * Sivaramakrishnan Malikkal
 * Steve Peak
+* Vinod K Kottem
 * Weston Steimel
 * Younes Amardaya
 
