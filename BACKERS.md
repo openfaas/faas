@@ -30,6 +30,8 @@ Be the first.
 
 <a href="https://www.contiamo.com"><img alt="Contiamo" src="https://docs.openfaas.com/images/logos/contiamo.svg" width="100px" /></a>
 
+<a href="https://www.form3.tech"><img alt="Form3 Tech" src="https://docs.openfaas.com/images/logos/form3.svg" width="100px" /></a>
+
 * [Brandon Lamb](https://github.com/brandonlamb)
 
 ## Backers
