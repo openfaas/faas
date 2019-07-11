@@ -60,7 +60,13 @@ func main() {
 	}
 
 	httpMetrics := metrics.NewHttp()
-	log.Printf("Read/write timeout: %s, %s. Port: %d\n", readTimeout, writeTimeout, config.port)
+
+	log.Printf("Timeouts: read: %s, write: %s hard: %s.\n",
+		readTimeout,
+		writeTimeout,
+		config.execTimeout)
+	log.Printf("Listening on port: %d\n", config.port)
+
 	http.HandleFunc("/_/health", makeHealthHandler())
 	http.HandleFunc("/", metrics.InstrumentHandler(makeRequestHandler(&config), httpMetrics))
 

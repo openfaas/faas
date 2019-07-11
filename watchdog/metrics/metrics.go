@@ -39,7 +39,7 @@ func (m *MetricsServer) Register(metricsPort int) {
 
 // Serve http traffic in go routine, non-blocking
 func (m *MetricsServer) Serve(cancel chan bool) {
-	log.Printf("Metrics server. Port: %d\n", m.port)
+	log.Printf("Metrics listening on port: %d\n", m.port)
 
 	go func() {
 		if err := m.s.ListenAndServe(); err != http.ErrServerClosed {
