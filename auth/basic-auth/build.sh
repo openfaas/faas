@@ -10,6 +10,9 @@ if [ "$arch" = "armv7l" ] ; then
 elif [ "$arch" = "aarch64" ] ; then
    eTAG="latest-arm64-dev"
    DOCKERFILE="Dockerfile.arm64"
+elif [ "$arch" = "ppc64le" ] ; then
+   eTAG="latest-ppc64le-dev"
+   DOCKERFILE="Dockerfile.ppc64le"
 fi
 
 echo "$1"
@@ -19,6 +22,8 @@ if [ "$1" ] ; then
     eTAG="$1-armhf"
   elif [ "$arch" = "aarch64" ] ; then
     eTAG="$1-arm64"
+  elif [ "$arch" = "ppc64le" ] ; then
+    eTAG="$1-ppc64le"
   fi
 fi
 

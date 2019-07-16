@@ -24,6 +24,7 @@ fi
 
 docker build --no-cache --build-arg PLATFORM="-armhf" -t openfaas/classic-watchdog:latest-dev-armhf . -f Dockerfile.packager
 docker build --no-cache --build-arg PLATFORM="-arm64" -t openfaas/classic-watchdog:latest-dev-arm64 . -f Dockerfile.packager
+docker build --no-cache --build-arg PLATFORM="-ppc64le" -t openfaas/classic-watchdog:latest-dev-ppc64le . -f Dockerfile.packager
 docker build --no-cache --build-arg PLATFORM=".exe" -t openfaas/classic-watchdog:latest-dev-windows . -f Dockerfile.packager
 docker build --no-cache --build-arg PLATFORM="" -t openfaas/classic-watchdog:latest-dev-x86_64 . -f Dockerfile.packager
 
@@ -32,6 +33,7 @@ docker create --name buildoutput openfaas/watchdog:build echo
 docker cp buildoutput:/go/src/github.com/openfaas/faas/watchdog/watchdog ./fwatchdog
 docker cp buildoutput:/go/src/github.com/openfaas/faas/watchdog/watchdog-armhf ./fwatchdog-armhf
 docker cp buildoutput:/go/src/github.com/openfaas/faas/watchdog/watchdog-arm64 ./fwatchdog-arm64
+docker cp buildoutput:/go/src/github.com/openfaas/faas/watchdog/watchdog-ppc64le ./fwatchdog-ppc64le
 docker cp buildoutput:/go/src/github.com/openfaas/faas/watchdog/watchdog.exe ./fwatchdog.exe
 
 docker rm buildoutput

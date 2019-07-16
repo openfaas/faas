@@ -33,7 +33,11 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-s -w \
         -X main.GitCommit=$GIT_COMMIT \
         -X main.Version=$VERSION" \ 
         -installsuffix cgo -o watchdog-arm64 . \
-    && GOOS=windows CGO_ENABLED=0 go build -a -ldflags "-s -w \
+    && GOARCH=ppc64le CGO_ENABLED=0 GOOS=linux go build -a -ldflags "-s -w \ 
+        -X main.GitCommit=$GIT_COMMIT \
+        -X main.Version=$VERSION" \ 
+        -installsuffix cgo -o watchdog-ppc64le . \
+    && GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -a -ldflags "-s -w \
         -X main.GitCommit=$GIT_COMMIT \
         -X main.Version=$VERSION" \ 
         -installsuffix cgo -o watchdog.exe .

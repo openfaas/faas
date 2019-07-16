@@ -32,6 +32,7 @@ after_success:
         ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/basic-auth-plugin";
         ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" armhf;
         ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" arm64;
+        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" ppc64le;
         ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" windows;
         ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" x86_64;
 
@@ -44,6 +45,7 @@ after_success:
         ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/basic-auth-plugin";
         ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" armhf;
         ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" arm64;
+        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" ppc64le;
         ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" windows;
         ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" x86_64;
 
@@ -60,10 +62,12 @@ deploy:
   - ./watchdog/fwatchdog
   - ./watchdog/fwatchdog-armhf
   - ./watchdog/fwatchdog-arm64
+  - ./watchdog/fwatchdog-ppc64le
   - ./watchdog/fwatchdog.exe
   - ./watchdog/fwatchdog.sha256
   - ./watchdog/fwatchdog-armhf.sha256
   - ./watchdog/fwatchdog-arm64.sha256
+  - ./watchdog/fwatchdog-ppc64le.sha256
   - ./watchdog/fwatchdog.exe.sha256
   skip_cleanup: true
   on:
