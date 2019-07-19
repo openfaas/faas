@@ -89,6 +89,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [PythonPy Meetup Enero 2019](https://www.meetup.com/es-ES/Python-Paraguay/events/258171808) | Patricio Diaz | Asuncion, PY | 24-Jan-2019 |
 | [Docker and serverless: meetup](https://events.docker.com/events/details/docker-randstad-presents-docker-and-serverless/#/) | Edward Wilde | Utrecht, Netherlands | 24-Jan-2019 |
 | Docker Paraguay Meetup Enero 2019 | Patricio Diaz | Asuncion, PY | 04-Jan-2019 |
+| [Cloud Native Edinburgh](https://www.slideshare.net/mobile/KeiranSmith4/open-faas-and-linkerd) | Keiran Smith (@CLI) | Edinburgh Scotland | 16-Jul-2019 |
 
 
 #### Blog posts and write-ups 2019
