@@ -14,9 +14,8 @@ if [ "$arch" = "armv7l" ] ; then
    GOARM="7"
 elif [ "$arch" = "aarch64" ] ; then
    arch="arm64"
-   dockerfile="Dockerfile.arm64"
+   dockerfile="Dockerfile"
    eTAG="latest-arm64-dev"
-   GOARM="8"
 fi
 
 echo "$1"
