@@ -22,4 +22,11 @@ features:
  - comments
  - pr_description_required
 
+messages:
+  - name: slack
+    value: |
+           --
+           Join Slack to connect with the community
+           https://docs.openfaas.com
+
 contributing_url: https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md
