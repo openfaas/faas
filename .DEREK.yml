@@ -1,20 +1,18 @@
 maintainers:
- - alexellis
- - stefanprodan
- - rgee0
- - johnmccabe
- - LucasRoesler
  - BurtonR
- - kenfdev
- - ivanayov
- - viveksyngh
- - martindekov
- - ewilde
- - bartsmykla
- - s8sg
+ - LucasRoesler
  - affix
- - zeerorg
+ - alexellis
+ - ewilde
+ - ivanayov
+ - johnmccabe
+ - kenfdev
+ - martindekov
  - matipan
+ - rgee0
+ - s8sg
+ - stefanprodan
+ - viveksyngh
  - zeerorg
 
 features:
