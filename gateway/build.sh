@@ -18,12 +18,13 @@ elif [ "$arch" = "aarch64" ] ; then
    eTAG="latest-arm64-dev"
 fi
 
+# $arch has been mutated by this point, so check for the updated values
 echo "$1"
 if [ "$1" ] ; then
   eTAG=$1
-  if [ "$arch" = "armv7l" ] ; then
+  if [ "$arch" = "armhf" ] ; then
     eTAG="$1-armhf"
-  elif [ "$arch" = "aarch64" ] ; then
+  elif [ "$arch" = "arm64" ] ; then
     eTAG="$1-arm64"
   fi
 fi
