@@ -20,7 +20,7 @@ features:
  - comments
  - pr_description_required
 
-messages:
+custom_messages:
   - name: slack
     value: |
            --
