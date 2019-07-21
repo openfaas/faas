@@ -25,6 +25,6 @@ custom_messages:
     value: |
            --
            Join Slack to connect with the community
-           https://docs.openfaas.com
+           https://docs.openfaas.com/community
 
 contributing_url: https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md
