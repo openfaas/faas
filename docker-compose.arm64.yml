@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: openfaas/gateway:0.11.0-arm64
+        image: openfaas/gateway:0.15.3-arm64
         networks:
             - functions
         environment:
@@ -38,12 +38,41 @@ services:
         secrets:
             - basic-auth-user
             - basic-auth-password
+    
+    # auth service provide basic-auth plugin for system APIs
+    basic-auth-plugin:
+        image: openfaas/basic-auth-plugin:0.15.3-arm64
+        networks:
+            - functions
+        environment:
+            secret_mount_path: "/run/secrets/"
+            user_filename: "basic-auth-user"
+            pass_filename: "basic-auth-password"
+        deploy:
+            placement:
+                constraints:
+                    - "node.role == manager"
+                    - "node.platform.os == linux"
+            resources:
+                # limits:   # Enable if you want to limit memory usage
+                #     memory: 100M
+                reservations:
+                    memory: 50M
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 20
+                window: 380s
+        secrets:
+            - basic-auth-user
+            - basic-auth-password
+
 
     # Docker Swarm provider
     faas-swarm:
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
-        image:  openfaas/faas-swarm:0.6.1-arm64
+        image:  openfaas/faas-swarm:0.6.2-arm64
         networks:
             - functions
         environment:
@@ -94,7 +123,7 @@ services:
                     - 'node.platform.os == linux'
 
     queue-worker:
-        image: openfaas/queue-worker:0.6.0-arm64
+        image: openfaas/queue-worker:0.7.2-arm64
         networks:
             - functions
         environment:

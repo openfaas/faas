@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: openfaas/gateway:0.12.0-armhf
+        image: openfaas/gateway:0.15.3-armhf
         networks:
             - functions
         environment:
@@ -35,6 +35,34 @@ services:
             placement:
                 constraints:
                     - "node.platform.os == linux"
+        secrets:
+            - basic-auth-user
+            - basic-auth-password
+    
+    # auth service provide basic-auth plugin for system APIs
+    basic-auth-plugin:
+        image: openfaas/basic-auth-plugin:0.15.3-armhf
+        networks:
+            - functions
+        environment:
+            secret_mount_path: "/run/secrets/"
+            user_filename: "basic-auth-user"
+            pass_filename: "basic-auth-password"
+        deploy:
+            placement:
+                constraints:
+                    - "node.role == manager"
+                    - "node.platform.os == linux"
+            resources:
+                # limits:   # Enable if you want to limit memory usage
+                #     memory: 100M
+                reservations:
+                    memory: 50M
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 20
+                window: 380s
         secrets:
             - basic-auth-user
             - basic-auth-password
@@ -92,7 +120,7 @@ services:
                     - 'node.platform.os == linux'
 
     queue-worker:
-        image: openfaas/queue-worker:0.6.0-armhf
+        image: openfaas/queue-worker:0.7.2-armhf
         networks:
             - functions
         environment:
