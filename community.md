@@ -172,6 +172,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [ Serverless Computing London: FaaS and Furious – 0 to Serverless in 60 Seconds, Anywhere](https://serverlesscomputing.london/sessions/faas-furious-0-serverless-60-seconds-anywhere/) | Alex Ellis | London, UK | 12-Nov-2018 |
 | [Open Source Summit Europe: Introducing OpenFaaS Cloud, a Developer-Friendly CI/CD Pipeline for Serverless](https://osseu18.sched.com/event/FxXx/introducing-openfaas-cloud-a-developer-friendly-cicd-pipeline-for-serverless-alex-ellis-openfaas-project-vmware) | Alex Ellis | Edinburgh, Scotland | 22-Oct-2018 |
 | Exploring the serverless framework with OpenFaaS @ DevFest Nantes | [Emmanuel Lebeaupin](https://twitter.com/elebeaup) | Nantes, France | 19-Oct-2018 |
+| [OpenFaaS Tutorial: Build and Deploy Serverless Java Functions](https://www.upnxtblog.com/index.php/2018/10/19/openfaas-tutorial-build-and-deploy-serverless-java-functions/) | [Karthikeyan Shanmugam](https://twitter.com/karthi4india) | Chennai, India | 19-Oct-2018 |
 | [Serverlessconf Tokyo 2018 Contributor Day](https://serverless.connpass.com/event/103404/) | Ken Fukuyama | Tokyo, JP | 13-Oct-2018 |
 | [DevOpenSpace - Mühelos Serverless mit GitOps](https://github.com/fpommerening/DevOpenSpace2018) | Frank Pommerening | Leipzig, Germany | 12-Oct-2018 |
 | [ScotlandPHP - Starting your Serverless Journey with OpenFaaS](https://conference.scotlandphp.co.uk/) | John McCabe | Edinburgh, Scotland | 6-Oct-2018 |
