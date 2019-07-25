@@ -57,7 +57,7 @@ If you are proposing a new tool or service please do due diligence. Does this to
 
 If you raise a PR without following the process, it will be closed immediately and marked as invalid. You may have also made an honest mistake or you may have have chosen not to follow the contribution guidelines.
 
-This is not the end of the discussion, but it's not a great first impression for the community either. At that point, you should request comment on your proposal issue from the project lead and core contributors. If a label of `design/approved` is applied to your proposal, it means that you can go ahead and start on your PR/implementation.
+This is not the end of the discussion, but it's not a great first impression for the community either. At that point, you should request comment on your proposal issue from the *Project Lead* and *Core Team*. If a label of `design/approved` is applied to your proposal, it means that you can go ahead and start on your PR/implementation.
 
 #### Paperwork for Pull Requests
 
@@ -149,17 +149,27 @@ Releases are cut with `git` tags and a successful Travis build results in new bi
 
 Credentials for the `openfaas` and/or `functions` Docker Hub and quay.io accounts are coordinated by the project lead using.
 
+## Governance
+
+OpenFaaS is an independent open-source project which was created by the Project Lead Alex Ellis in 2016. OpenFaaS is now being built by Alex, a number of volunteer teams, and a wider community of open-source developers.
+
+OpenFaaS Ltd (company no. 11076587) sponsors the development and maintenance of OpenFaaS. OpenFaaS Ltd provides professional services, consultation and support.
+
+OpenFaaS &reg; is a registered trademark in England and Wales.
+
 ### How do I become a maintainer?
 
-In the OpenFaaS community there are three levels of maintainership:
+In the OpenFaaS community there are four levels of structure or maintainership:
 
-* Core Contributors
-* GitHub Organisation Members
+* Core Team (GitHub org)
+* Members Team (GitHub org)
 * Those with Derek access
 
-#### Who are the Core Contributors?
+The rest of the community.
 
-The Core Contributor group includes:
+#### Who are the Core Team?
+
+The Core Team includes:
 
 - Alex Ellis (@alexellis)
 - Richard Gee (@rgee0)
@@ -168,30 +178,70 @@ The Core Contributor group includes:
 - Burton Rheutan (@burtonr)
 - Ed Wilde (@ewilde)
 
-The Core Contributors have the ear of the project lead and help with strategy, project maintenance, community management and make a regular commitment of time to the project. Core contributors will usually look after or be a subject-matter-expert (SME) for a sub-system of OpenFaaS. Core contributors may be granted write (push) access to one or more sub-systems.
+The Core Team have the ear of the Project Lead. They help with strategy, project maintenance, community management, and make a regular commitment of time to the project on a weekly basis. The Core Team will usually be responsible for, or be a subject-matter-expert (SME) for a sub-system of OpenFaaS. Core Team may be granted write (push) access to one or more sub-systems.
 
-Core Contributors attend all project meetings and calls.
+The Core Team gain access to a private *core* channel and are expected to participate on a regular basis.
 
-#### GitHub Organisation Members
+The Core Team have the same expectations and perks of the Membership Team, in addition will need to keep in close contact with the rest of the Core Team and the Project Lead.
 
-GitHub Organisation Members are well-known contributors with a track record of:
+* Core Team are expected to attend 1:1 Zoom calls with the Project Lead up to once per month
+* Core Team members will notify the Project Lead and Core Team of any leave of a week or more and set a status in Slack of "away".
 
-* Fixing, testing and triaging issues
-* Joining contributor meetings and supporting new contributors
-* Testing and reviewing pull requests
-* Offering other project support, feedback and being available to help
+Core Team attend all project meetings and calls.
 
-Varying levels of write access are made available via the project bot [Derek](https://github.com/alexellis/derek) to help regular contributors transition to GitHub Organisation Membership. Members gain access to a private Slack channel and are also featured on the Team page of the OpenFaaS website.
+#### Members Team
 
-GitHub Organisation Members are expected to:
+The Members Team are contributors who are well-known to the community with a track record of:
 
+* fixing, testing and triaging issues and PRs
+* offering support to the project
+* providing feedback and being available to help where needed
+* testing and reviewing pull requests
+* joining contributor meetings and supporting new contributors
+
+> Note: An essential skill for being in a team is communication. If you cannot communicate with your team on a regular basis, then membership may not be for you and you are welcome to contribute as community.
+
+Varying levels of write access are made available via the project bot [Derek](https://github.com/alexellis/derek) to help regular contributors transition to the Members Team.
+
+Members Team Perks:
+* access to a private Slack channel
+* profile posted on the Team page of the OpenFaaS website
+* membership of the GitHub organisations openfaas/openfaas-incubator
+
+Upon request and subject to availability:
+* 1:1 coaching & mentorship
+* help with speaking opportunities and CfP submissions
+* help with CV, resume and LinkedIn profile
+* review, and promotion of blogs and tutorials on social media
+
+The Members Team are expected to:
+
+* participate in the members channel and engage with the topics
 * participate in community Zoom calls (when possible within your timezone)
 * make regular contributions to the project codebase
-* participate in the members channel and engage with the topics
 * take an active role in the public channels: #contributors and #openfaas
 * comment on and engage with project proposals
+* attend occasional 1:1 meetings with members of the Core Team or the Project Lead
 
-This group is intended to be an active team that shares the load and collaborates together. Sometimes finding time to participate can be challenging when balanced with other commitments so if you are likely to be inactive or away for several weeks, then please contact the project lead.
+This group is intended to be an active team that shares the load and collaborates together. This means engaging in topics on Slack, encouraging other teammates, sharing ideas, helping the users and raising issues with the Core Team.
+
+The Members Team will notify the Members Team of any leave of a week or more and set a status in Slack of "away".
+
+#### Changing team
+
+Every contributor to OpenFaaS is a volunteer, including the *Project Lead* and nobody is paid to work on OpenFaaS.
+
+Motivations and life-circumstances can change over time. If this is expected to be a short-term change, then speak to the *Project Lead* about a sabbatical arrangement with perks and membership retained for that time.
+
+You may move from the Core Team to the Members Team. Please notify the *Project Lead*.
+
+If you can no-longer commit to being part of a team, then you may move to Community Contributor status and retain your access to Derek for as long as it is useful to you.
+
+#### Stepping-down
+
+From the [Ubuntu community guidelines](https://ubuntu.com/community/code-of-conduct):
+
+> When somebody leaves or disengages from the project, we ask that they do so in a way that minimises disruption to the project. They should tell [*The Project Lead*, that] they are leaving and take the proper steps to ensure that others can pick up where they left off.
 
 #### How do I get access to Derek?
 
@@ -209,10 +259,6 @@ General format:
 - Round-table intros/updates
 - Demos of features/new work from community
 - Q&A
-
-## Governance
-
-OpenFaaS is an independent project created by Alex Ellis in 2016. OpenFaaS is led by Alex and is being built in the open by a growing community of contributors.
 
 ## Branding guidelines
 
