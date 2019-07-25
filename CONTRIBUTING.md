@@ -53,11 +53,12 @@ Once your proposal receives a `design/approved` label you may go ahead and start
 
 If you are proposing a new tool or service please do due diligence. Does this tool already exist in a 3rd party project or library? Can we reuse it? For example: a timer / CRON-type scheduler for invoking functions is a well-solved problem, do we need to reinvent the wheel?
 
+<!-- 
 #### What happens if you ignore the process?
 
-If you raise a PR without following the process, it will be closed immediately and marked as invalid. You may have also made an honest mistake or you may have have chosen not to follow the contribution guidelines.
+If you raise a PR without following the process, it could be closed and marked as invalid. You may have also made an honest mistake or you may have have chosen not to follow the contribution guidelines.
 
-This is not the end of the discussion, but it's not a great first impression for the community either. At that point, you should request comment on your proposal issue from the *Project Lead* and *Core Team*. If a label of `design/approved` is applied to your proposal, it means that you can go ahead and start on your PR/implementation.
+This is not the end of the discussion, but it's not a great first impression for the community either. At that point, you should request comment on your proposal issue from the *Project Lead* and *Core Team*. If a label of `design/approved` is applied to your proposal, it means that you can go ahead and start on your PR/implementation. -->
 
 #### Paperwork for Pull Requests
 
@@ -143,7 +144,7 @@ The chosen tool for vendoring code in the project is [dep](https://github.com/go
 
 ### How are releases made?
 
-Releases are made by the project lead when deemed necessary. If you want to request a new release then mention this on your PR or Issue.
+Releases are made by the *Project Lead* on a regular basis and when deemed necessary. If you want to request a new release then mention this on your PR or Issue.
 
 Releases are cut with `git` tags and a successful Travis build results in new binary artifacts and Docker images being published to the Docker Hub and Quay.io. See the "Build" badge on each GitHub README file for more.
 
@@ -156,6 +157,18 @@ OpenFaaS is an independent open-source project which was created by the Project 
 OpenFaaS Ltd (company no. 11076587) sponsors the development and maintenance of OpenFaaS. OpenFaaS Ltd provides professional services, consultation and support. Email: [sales@openfaas.com](mailto:sales@openfaas.com) to make a query.
 
 OpenFaaS &reg; is a registered trademark in England and Wales.
+
+#### Project Lead
+
+Responsibility for the project starts with the *Project Lead**, who delegates specific responsibilities and the corresponding authority to the Core and Members team.
+
+Some duties include:
+
+* Setting overall technical & community leadership
+* Engaging end-user community to advocate needs of end-users and to capture case-studies
+* Defining and curating roadmap for OpenFaaS & OpenFaaS Cloud
+* Building a community and team of contributors
+* Community & media briefings, out-bound communications, partnerships, relationship management and events
 
 ### How do I become a maintainer?
 
