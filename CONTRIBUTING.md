@@ -239,9 +239,9 @@ If you can no-longer commit to being part of a team, then you may move to Commun
 
 #### Stepping-down
 
-From the [Ubuntu community guidelines](https://ubuntu.com/community/code-of-conduct):
-
 > When somebody leaves or disengages from the project, we ask that they do so in a way that minimises disruption to the project. They should tell [*The Project Lead*, that] they are leaving and take the proper steps to ensure that others can pick up where they left off.
+
+Quoted from the [Ubuntu community guidelines](https://ubuntu.com/community/code-of-conduct).
 
 #### How do I get access to Derek?
 
@@ -260,27 +260,33 @@ General format:
 - Demos of features/new work from community
 - Q&A
 
+If you would like invites, sign-up to Slack and pick "Yes" to Community Events and Updates.
+
 ## Branding guidelines
 
 For press, branding, logos and marks see the [OpenFaaS media repository](https://github.com/openfaas/media).
 
 ## Community
 
-This project is written in Golang but many of the community contributions so far have been through blogging, speaking engagements, helping to test and drive the backlog of FaaS. If you'd like to help in any way then that would be more than welcome whatever your level of experience.
+This project is written in Golang but many of the community contributions so far have been through blogging, speaking engagements, helping to test and drive the backlog of OpenFaaS. If you'd like to help in any way then that would be more than welcome whatever your level of experience.
 
 ### Community file
 
-The [community.md](https://github.com/openfaas/faas/blob/master/community.md) file highlights blogs, talks and code repos with example FaaS functions and usages. Please send a Pull Request if you are doing something cool with FaaS.
-
-### Roadmap
-
-Checkout the [roadmap](https://github.com/openfaas/faas/blob/master/ROADMAP.md) and [open issues](https://github.com/openfaas/faas/issues).
+The [community.md](https://github.com/openfaas/faas/blob/master/community.md) file highlights blogs, talks and code repos with example FaaS functions and usages. Please send a Pull Request if you are doing something cool with OpenFaaS.
 
 ### Slack
 
-There is an Slack community which you are welcome to join to discuss FaaS, IoT and Raspberry Pi projects. Ping [Alex Ellis](https://github.com/alexellis) with your email address so that an invite can be sent out.
+There is an Slack community which you are welcome to join to discuss Kubernetes, Serverless, FaaS, IoT, and Raspberry Pi projects.
 
-Please send in a short one-line message about yourself to alex@openfaas.com so that we can give you a warm welcome and help you get started.
+[Join Slack here](https://docs.openfaas.com/support)
+
+### Roadmap
+
+* See the [2019 Project Update](https://www.openfaas.com/blog/project-update/)
+
+* Browse open issues in [openfaas/faas](https://github.com/openfaas/faas/issues)
+
+* Sign-up for the [2019 Trello board](http://bit.ly/2LGl6nd)
 
 ## License
 
