@@ -186,7 +186,7 @@ The Core Team have the same expectations and perks of the Membership Team, in ad
 * Core Team are expected to attend 1:1 Zoom calls with the Project Lead up to once per month
 * Core Team members will notify the Project Lead and Core Team of any leave of a week or more and set a status in Slack of "away".
 
-Core Team attend all project meetings and calls.
+Core Team attend all project meetings and calls. Allowances will be made for timezones and other commitments.
 
 #### Members Team
 
