@@ -232,7 +232,7 @@ The Members Team are expected to:
 
 This group is intended to be an active team that shares the load and collaborates together. This means engaging in topics on Slack, encouraging other teammates, sharing ideas, helping the users and raising issues with the Core Team.
 
-The Members Team will notify the Members Team of any leave of a week or more and set a status in Slack of "away".
+The Members Team will notify their team in the *members* channel about any planned leave of a week or more and set a status in Slack of "away".
 
 #### Changing teams
 
