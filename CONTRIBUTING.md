@@ -153,7 +153,7 @@ Credentials for the `openfaas` and/or `functions` Docker Hub and quay.io account
 
 OpenFaaS is an independent open-source project which was created by the Project Lead Alex Ellis in 2016. OpenFaaS is now being built by Alex, a number of volunteer teams, and a wider community of open-source developers.
 
-OpenFaaS Ltd (company no. 11076587) sponsors the development and maintenance of OpenFaaS. OpenFaaS Ltd provides professional services, consultation and support.
+OpenFaaS Ltd (company no. 11076587) sponsors the development and maintenance of OpenFaaS. OpenFaaS Ltd provides professional services, consultation and support. Email: [sales@openfaas.com](mailto:sales@openfaas.com) to make a query.
 
 OpenFaaS &reg; is a registered trademark in England and Wales.
 
@@ -164,10 +164,9 @@ In the OpenFaaS community there are four levels of structure or maintainership:
 * Core Team (GitHub org)
 * Members Team (GitHub org)
 * Those with Derek access
+* The rest of the community.
 
-The rest of the community.
-
-#### Who are the Core Team?
+#### Core Team
 
 The Core Team includes:
 
@@ -180,7 +179,7 @@ The Core Team includes:
 
 The Core Team have the ear of the Project Lead. They help with strategy, project maintenance, community management, and make a regular commitment of time to the project on a weekly basis. The Core Team will usually be responsible for, or be a subject-matter-expert (SME) for a sub-system of OpenFaaS. Core Team may be granted write (push) access to one or more sub-systems.
 
-The Core Team gain access to a private *core* channel and are expected to participate on a regular basis.
+The Core Team gain access to a private *core* channel and are required to participate on a regular basis.
 
 The Core Team have the same expectations and perks of the Membership Team, in addition will need to keep in close contact with the rest of the Core Team and the Project Lead.
 
@@ -243,7 +242,7 @@ If you can no-longer commit to being part of a team, then you may move to Commun
 
 Quoted from the [Ubuntu community guidelines](https://ubuntu.com/community/code-of-conduct).
 
-#### How do I get access to Derek?
+#### Access to Derek
 
 If you have been added to the `.DEREK.yml` file in the root of an OpenFaaS repository then you can help us manage the community and contributions by issuing comments on Issues and Pull Requests. See [Derek](https://github.com/alexellis/derek) for available commands.
 
@@ -276,7 +275,7 @@ The [community.md](https://github.com/openfaas/faas/blob/master/community.md) fi
 
 ### Slack
 
-There is an Slack community which you are welcome to join to discuss Kubernetes, Serverless, FaaS, IoT, and Raspberry Pi projects.
+There is an Slack community which you are welcome to join to discuss OpenFaaS, OpenFaaS Cloud, Kubernetes, Serverless, FaaS, IoT, and ARM / Raspberry Pi.
 
 [Join Slack here](https://docs.openfaas.com/support)
 
