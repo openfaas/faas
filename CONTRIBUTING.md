@@ -53,12 +53,7 @@ Once your proposal receives a `design/approved` label you may go ahead and start
 
 If you are proposing a new tool or service please do due diligence. Does this tool already exist in a 3rd party project or library? Can we reuse it? For example: a timer / CRON-type scheduler for invoking functions is a well-solved problem, do we need to reinvent the wheel?
 
-<!-- 
-#### What happens if you ignore the process?
-
-If you raise a PR without following the process, it could be closed and marked as invalid. You may have also made an honest mistake or you may have have chosen not to follow the contribution guidelines.
-
-This is not the end of the discussion, but it's not a great first impression for the community either. At that point, you should request comment on your proposal issue from the *Project Lead* and *Core Team*. If a label of `design/approved` is applied to your proposal, it means that you can go ahead and start on your PR/implementation. -->
+Every effort will be made to work with contributors who do not follow the process. Your PR may be closed or marked as `invalid` if it is left inactive, or the proposal cannot move into a `design/approved` status.
 
 #### Paperwork for Pull Requests
 
@@ -239,7 +234,7 @@ This group is intended to be an active team that shares the load and collaborate
 
 The Members Team will notify the Members Team of any leave of a week or more and set a status in Slack of "away".
 
-#### Changing team
+#### Changing teams
 
 Every contributor to OpenFaaS is a volunteer, including the *Project Lead* and nobody is paid to work on OpenFaaS.
 
