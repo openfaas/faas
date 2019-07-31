@@ -143,7 +143,7 @@ Releases are made by the *Project Lead* on a regular basis and when deemed neces
 
 Releases are cut with `git` tags and a successful Travis build results in new binary artifacts and Docker images being published to the Docker Hub and Quay.io. See the "Build" badge on each GitHub README file for more.
 
-Credentials for the `openfaas` and/or `functions` Docker Hub and quay.io accounts are coordinated by the project lead using.
+How are credentials managed for quay.io and the Docker Hub? These credentials are maintained by the *Project Lead*.
 
 ## Governance
 
@@ -155,7 +155,7 @@ OpenFaaS &reg; is a registered trademark in England and Wales.
 
 #### Project Lead
 
-Responsibility for the project starts with the *Project Lead**, who delegates specific responsibilities and the corresponding authority to the Core and Members team.
+Responsibility for the project starts with the *Project Lead*, who delegates specific responsibilities and the corresponding authority to the Core and Members team.
 
 Some duties include:
 
