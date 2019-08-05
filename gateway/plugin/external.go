@@ -15,8 +15,8 @@ import (
 	"strconv"
 	"time"
 
+	types "github.com/openfaas/faas-provider/types"
 	"github.com/openfaas/faas/gateway/handlers"
-	"github.com/openfaas/faas/gateway/requests"
 	"github.com/openfaas/faas/gateway/scaling"
 )
 
@@ -65,7 +65,7 @@ func (s ExternalServiceQuery) GetReplicas(serviceName string) (scaling.ServiceQu
 	var err error
 	var emptyServiceQueryResponse scaling.ServiceQueryResponse
 
-	function := requests.Function{}
+	function := types.FunctionStatus{}
 
 	urlPath := fmt.Sprintf("%ssystem/function/%s", s.URL.String(), serviceName)
 

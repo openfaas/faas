@@ -3,7 +3,7 @@ package metrics
 import (
 	"testing"
 
-	"github.com/openfaas/faas/gateway/requests"
+	types "github.com/openfaas/faas-provider/types"
 	"github.com/prometheus/client_golang/prometheus"
 	dto "github.com/prometheus/client_model/go"
 )
@@ -67,12 +67,12 @@ func Test_Collect_CollectsTheNumberOfReplicasOfAService(t *testing.T) {
 	metricsOptions := BuildMetricsOptions()
 	exporter := NewExporter(metricsOptions, nil)
 
-	expectedService := requests.Function{
+	expectedService := types.FunctionStatus{
 		Name:     "function_with_two_replica",
 		Replicas: 2,
 	}
 
-	exporter.services = []requests.Function{expectedService}
+	exporter.services = []types.FunctionStatus{expectedService}
 
 	ch := make(chan prometheus.Metric)
 	defer close(ch)
