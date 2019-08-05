@@ -2,7 +2,7 @@
 // Copyright (c) Alex Ellis 2017. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-var app = angular.module('faasGateway', ['ngMaterial', 'ngMessages', 'faasGateway.funcStore']);
+var app = angular.module('faasGateway', ['ngMaterial', 'ngMessages', 'faasGateway.funcStore', 'ngSanitize']);
 
 app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$filter', '$mdDialog', '$mdToast', '$mdSidenav',
     function($scope, $log, $http, $location, $interval, $filter, $mdDialog, $mdToast, $mdSidenav) {
@@ -52,7 +52,8 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
             envVars: {},
             labels: {},
             annotations: {},
-            secrets: []
+            secrets: [],
+            tutorialUrl: ""
         };
 
         $scope.invocation.request = "";
@@ -182,6 +183,21 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
                 });
         };
 
+        $scope.openTutorialPanel = function($event) {
+            $scope.showTutorialPanel = !$scope.showTutorialPanel;
+            if ($scope.showTutorialPanel) {
+                $http.get($scope.selectedFunction.tutorialUrl).then(function(response){
+                    showdown.setFlavor('github');
+                    var converter = new showdown.Converter()
+                    $scope.tutorialHtml = converter.makeHtml(response.data);
+                    var infoCard = document.getElementById('function-info-card');
+                    var invokeCard = document.getElementById('invocation-card');
+                    var tutorialCard = document.getElementById('tutorial-card');
+                    tutorialCard.style.height = infoCard.offsetHeight + invokeCard.offsetHeight + 16; //16 for the padding
+                });
+            }
+        }
+
         var refreshData = function () {
             var previous = $scope.functions;
 
@@ -223,6 +239,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
 
         $scope.showFunction = function(fn) {
             if ($scope.selectedFunction != fn) {
+                $scope.showTutorialPanel = false;
                 $scope.selectedFunction = fn;
                 $scope.invocation.request = "";
                 $scope.invocationResponse = "";

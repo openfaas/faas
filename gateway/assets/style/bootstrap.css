@@ -129,3 +129,12 @@ md-input-container.function-url md-icon {
     padding-top: 25px;
     color: red;
 }
+
+.tutorial-panel {
+    /* 50% of the area after the sidpanel */
+    max-width: calc(50% - 100px);
+}
+
+#tutorial-card {
+    padding: 10px;
+}

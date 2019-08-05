@@ -85,7 +85,7 @@
 
             <md-content flex layout="column" ng-repeat="function in functions" ng-if="function.name == selectedFunction.name">
 
-                <md-card md-theme="default" md-theme-watch>
+                <md-card id="function-info-card" md-theme="default" md-theme-watch>
                     <md-card-title>
                         <md-card-title-text>
 
@@ -138,7 +138,7 @@
                         </md-card-title-text>
                     </md-card-title>
                 </md-card>
-                <md-card>
+                <md-card id="invocation-card">
                     <md-card-title>
                         <md-card-title-text>
 
@@ -152,6 +152,13 @@
                                     </button>
                                 </md-input-container>
                                 <md-progress-circular md-mode="indeterminate" ng-show="invocationInProgress"></md-progress-circular>
+                                <span ng-if="function.tutorialUrl">
+                                    <md-button ng-click="openTutorialPanel()">
+                                        <md-tooltip md-direction="right">Help</md-tooltip>
+                                        <md-icon md-svg-icon="img/icons/baseline-help_outline-24px.svg"></md-icon>
+                                        Function Tutorial
+                                    </md-button>
+                                </span>
                             </div>
 
                             <div layout-gt-sm="row">
@@ -191,15 +198,22 @@
                     </md-card-title>
                 </md-card>
             </md-content>
+            <md-content class="tutorial-panel">
+                <md-card id="tutorial-card" ng-if="showTutorialPanel">
+                    <div ng-bind-html="tutorialHtml"></div>
+                </md-card>
+            </md-content>
         </section>
     </div>
 
 
     <script src="script/angularjs/1.6.9/angular.min.js"></script>
+    <script src="script/angularjs/1.6.9/ngSanitize.js"></script>
     <script src="script/angularjs/1.6.9/angular-animate.min.js"></script>
     <script src="script/angularjs/1.6.9/angular-aria.min.js"></script>
     <script src="script/angularjs/1.6.9/angular-messages.min.js"></script>
     <script src="script/angular_material/1.1.4/angular-material.min.js"></script>
+    <script src="script/showdownjs/1.9.0/showdown.min.js"></script>
     <script src="script/funcstore.js"></script>
     <script src="script/bootstrap.js"></script>
     </div>
