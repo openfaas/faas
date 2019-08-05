@@ -10,7 +10,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/openfaas/faas/gateway/requests"
+	types "github.com/openfaas/faas-provider/types"
 )
 
 // AddMetricsHandler wraps a http.HandlerFunc with Prometheus metrics
@@ -37,7 +37,7 @@ func AddMetricsHandler(handler http.HandlerFunc, prometheusQuery PrometheusQuery
 		}
 
 		upstreamBody, _ := ioutil.ReadAll(upstreamCall.Body)
-		var functions []requests.Function
+		var functions []types.FunctionStatus
 
 		err := json.Unmarshal(upstreamBody, &functions)
 
@@ -75,7 +75,7 @@ func AddMetricsHandler(handler http.HandlerFunc, prometheusQuery PrometheusQuery
 	}
 }
 
-func mixIn(functions *[]requests.Function, metrics *VectorQueryResponse) {
+func mixIn(functions *[]types.FunctionStatus, metrics *VectorQueryResponse) {
 	if functions == nil {
 		return
 	}

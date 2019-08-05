@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/openfaas/faas/gateway/requests"
+	types "github.com/openfaas/faas-provider/types"
 )
 
 type FakePrometheusQueryFetcher struct {
@@ -45,7 +45,7 @@ func Test_PrometheusMetrics_MixedInto_Services(t *testing.T) {
 	if len(body) == 0 {
 		t.Errorf("Want content-length > 0, got: %d", len(rr.Body.String()))
 	}
-	results := []requests.Function{}
+	results := []types.FunctionStatus{}
 	json.Unmarshal([]byte(rr.Body.String()), &results)
 	if len(results) == 0 {
 		t.Errorf("Want %d function, got: %d", 1, len(results))
@@ -82,8 +82,8 @@ func Test_FunctionsHandler_ReturnsJSONAndOneFunction(t *testing.T) {
 
 func makeFunctionsHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		functions := []requests.Function{
-			requests.Function{
+		functions := []types.FunctionStatus{
+			types.FunctionStatus{
 				Name:     "func_echoit",
 				Replicas: 0,
 			},

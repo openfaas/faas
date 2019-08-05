@@ -15,14 +15,14 @@ import (
 	"log"
 
 	"github.com/openfaas/faas-provider/auth"
-	"github.com/openfaas/faas/gateway/requests"
+	types "github.com/openfaas/faas-provider/types"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
 // Exporter is a prometheus exporter
 type Exporter struct {
 	metricOptions MetricOptions
-	services      []requests.Function
+	services      []types.FunctionStatus
 	credentials   *auth.BasicAuthCredentials
 }
 
@@ -30,7 +30,7 @@ type Exporter struct {
 func NewExporter(options MetricOptions, credentials *auth.BasicAuthCredentials) *Exporter {
 	return &Exporter{
 		metricOptions: options,
-		services:      []requests.Function{},
+		services:      []types.FunctionStatus{},
 		credentials:   credentials,
 	}
 }
@@ -95,7 +95,7 @@ func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions Metri
 					get.SetBasicAuth(e.credentials.User, e.credentials.Password)
 				}
 
-				services := []requests.Function{}
+				services := []types.FunctionStatus{}
 				res, err := proxyClient.Do(get)
 				if err != nil {
 					log.Println(err)

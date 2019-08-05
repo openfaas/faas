@@ -9,21 +9,22 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/openfaas/faas/gateway/requests"
+	types "github.com/openfaas/faas-provider/types"
+	requests "github.com/openfaas/faas/gateway/requests"
 )
 
-func createFunction(request requests.CreateFunctionRequest) (string, int, error) {
+func createFunction(request types.FunctionDeployment) (string, int, error) {
 	marshalled, _ := json.Marshal(request)
 	return fireRequest("http://localhost:8080/system/functions", http.MethodPost, string(marshalled))
 }
 
 func deleteFunction(name string) (string, int, error) {
-	marshalled, _ := json.Marshal(requests.DeleteFunctionRequest{name})
+	marshalled, _ := json.Marshal(requests.DeleteFunctionRequest{FunctionName: name})
 	return fireRequest("http://localhost:8080/system/functions", http.MethodDelete, string(marshalled))
 }
 
 func TestCreate_ValidRequest(t *testing.T) {
-	request := requests.CreateFunctionRequest{
+	request := types.FunctionDeployment{
 		Service:    "test_resizer",
 		Image:      "functions/resizer",
 		Network:    "func_functions",
@@ -47,7 +48,7 @@ func TestCreate_ValidRequest(t *testing.T) {
 }
 
 func TestCreate_InvalidImage(t *testing.T) {
-	request := requests.CreateFunctionRequest{
+	request := types.FunctionDeployment{
 		Service:    "test_resizer",
 		Image:      "a b c",
 		Network:    "func_functions",
@@ -75,7 +76,7 @@ func TestCreate_InvalidImage(t *testing.T) {
 }
 
 func TestCreate_InvalidNetwork(t *testing.T) {
-	request := requests.CreateFunctionRequest{
+	request := types.FunctionDeployment{
 		Service:    "test_resizer",
 		Image:      "functions/resizer",
 		Network:    "non_existent_network",
