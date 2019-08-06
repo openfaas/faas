@@ -30,8 +30,6 @@ Be the first.
 
 <a href="https://asyncy.com"><img alt="ASYNCY" src="https://www.openfaas.com/images/sponsors/asyncy.png" width="100px" /></a>
 
-<a href="https://www.serverlessnomad.com"><img alt="Serverless Nomad" src="https://www.openfaas.com/images/sponsors/serverlessnomad.png" width="40px" /></a>&nbsp; *Serverless Nomad*
-
 <a href="https://garden.io"><img alt="Garden.io" src="https://www.openfaas.com/images/sponsors/garden.png" width="100px" /></a>
 
 <a href="https://www.contiamo.com"><img alt="Contiamo" src="https://docs.openfaas.com/images/logos/contiamo.svg" width="100px" /></a>
