@@ -95,6 +95,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Building your own serverless functions with k3s and OpenFaaS on Raspberry Pi](https://blog.codecentric.de/en/2019/08/serverless-functions-k3s-openfaas-raspberry-pi/) | Andreas Muttscheller | codecentric.de | 07-Aug-2019 |
 | [OpenFaaS Creator on Open Source’s Community-Funding Model](https://thenewstack.io/openfaas-creator-on-open-sources-community-funding-model/) | The New Stack | thenewstack.io | 11-Jul-2009 |
 | [On-premises Serverless Computing for Event-Driven Data Processing Applications](https://www.grycap.upv.es/gmolto/publications/b2hd-Perez2019osc.html) | Alfonso Pérez | grycap.upv.es | 09-Jul-2019 |
 | [Running GBFS bikeshare functions with OpenFaaS for fun and profit](http://blog.amosti.net/running-gbfs-bikeshare-functions-with-openfaas-for-fun-and-profit/) | Andreas Mosti | blog.amosti.net | 04-June-2019 |
