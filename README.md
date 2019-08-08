@@ -153,7 +153,7 @@ Here is a screenshot of the API gateway portal - designed for ease of use with t
 
 ### Serverless Beyond the Hype (goto Copenhagen) late-2018
 
-Overview of the Serverless landscape for Kubernetes, OpenFaaS and OpenFaaS Cloud with live demos and most update information. [View on Android or iPhone](https://gotocph.com/2018/sessions/592)
+Overview of the Serverless landscape for Kubernetes, OpenFaaS and OpenFaaS Cloud with live demos and most update information. [Watch on YouTube](https://www.youtube.com/watch?time_continue=1&v=yOpYYYRuDQ0)
 
 ### The Cube interview @ DevNet Create mid-2018
 
