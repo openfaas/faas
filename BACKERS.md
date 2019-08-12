@@ -12,7 +12,7 @@ Become an Insider today: [GitHub Sponsors](https://www.openfaas.com/support/)
 
 ### Homepage Sponsorship / OpenFaaS corporate sponsors
 
-Become a sponsor of openfaas.com and connect your brand to one of the fastest-growing developer communities with over 17.5k GitHub stars and dozens of well-known end-users. Use one of the funding options above, or email alex@openfaas.com to ask about how to sponsor by invoice through OpenFaaS Ltd.
+Become a sponsor of openfaas.com and connect your brand to one of the fastest-growing developer communities with over 18k GitHub stars and dozens of well-known end-users. Use one of the funding options above, or email: [sales@openfaas.com](mailto:sales@openfaas.com) to ask about how to sponsor by invoice through OpenFaaS Ltd.
 
 * Bronze - 150 USD / mo - logo in BACKERS.md (this file)
 * Gold - 500 USD / mo - small logo on openfaas.com
