@@ -363,7 +363,7 @@ func (bw *blobWriter) removeResources(ctx context.Context) error {
 		default:
 			// This should be uncommon enough such that returning an error
 			// should be okay. At this point, the upload should be mostly
-			// complete, but perhaps the backend became unaccessible.
+			// complete, but perhaps the backend became inaccessible.
 			context.GetLogger(ctx).Errorf("unable to delete layer upload resources %q: %v", dirPath, err)
 			return err
 		}

@@ -77,7 +77,7 @@ func blobUploadDispatcher(ctx *Context, r *http.Request) http.Handler {
 
 		if size := upload.Size(); size != buh.State.Offset {
 			defer upload.Close()
-			ctxu.GetLogger(ctx).Errorf("upload resumed at wrong offest: %d != %d", size, buh.State.Offset)
+			ctxu.GetLogger(ctx).Errorf("upload resumed at wrong offset: %d != %d", size, buh.State.Offset)
 			return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				buh.Errors = append(buh.Errors, v2.ErrorCodeBlobUploadInvalid.WithDetail(err))
 				upload.Cancel(buh)

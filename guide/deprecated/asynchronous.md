@@ -39,7 +39,7 @@ You can also use asynchronous calls with a callback URL
 
 <img width="1440" alt="screen shot 2017-10-26 at 15 55 06" src="https://user-images.githubusercontent.com/6358735/32060205-04545692-ba66-11e7-9e6d-b800a07b9bf5.png">
 
-The reference implementation for asychronous processing uses NATS Streaming, but you are free to extend OpenFaaS and write your own [queue-worker](https://github.com/open-faas/nats-queue-worker).
+The reference implementation for asynchronous processing uses NATS Streaming, but you are free to extend OpenFaaS and write your own [queue-worker](https://github.com/open-faas/nats-queue-worker).
 
 > The asynchronous stack is now built-in by default. Previously it was an optional configuration.
 
