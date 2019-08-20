@@ -333,10 +333,10 @@ paths:
         '500':
           description: Internal Server Error
   '/system/logs':
-      get:
-        summary: Get a stream of the logs for a specific function
-        produces:
-          - application/x-ndjson
+    get:
+      summary: Get a stream of the logs for a specific function
+      produces:
+        - application/x-ndjson
       parameters:
       - in: query
         name: name
@@ -600,7 +600,7 @@ definitions:
     - name
   LogEntry:
     type: object
-    property:
+    properties:
       name:
         type: string
         description: the function name
