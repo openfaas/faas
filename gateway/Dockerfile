@@ -1,4 +1,5 @@
-FROM golang:1.10 as build
+FROM golang:1.11 as build
+ENV CGO_ENABLED=0
 
 ARG GIT_COMMIT_SHA
 ARG GIT_COMMIT_MESSAGE
