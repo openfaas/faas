@@ -16,7 +16,7 @@ RUN license-check -path ./ --verbose=false "OpenFaaS Authors" "OpenFaaS Author(s
     go build --ldflags "-s -w" -a -installsuffix cgo -o handler . && \
     go test $(go list ./... | grep -v /vendor/) -cover
 
-FROM alpine:3.10
+FROM alpine:3.10 as ship
 # Add non-root user
 RUN addgroup -S app && adduser -S -g app app \
     && mkdir -p /home/app \
