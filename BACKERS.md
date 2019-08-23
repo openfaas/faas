@@ -2,6 +2,16 @@
 
 OpenFaaS is licensed as MIT and completely Open Source and free to use. However the amount of effort needed to maintain and develop new features is not sustainable without proper financial backing.
 
+## `#FaaSFriday`
+
+To enter the `#FaaSFriday` contest you should tweet a photo (not a screenshot) to `@openfaas`. It
+could be of you, or of your computer / laptop / workstation / screen with whatever you're working on with OpenFaaS.
+
+Ideas: trying the workshop, a tutorial, writing some code, fixing an issue, implementing it at work
+and so on. See the [past entries](https://twitter.com/search?q=faasfriday&src=typed_query&f=live) for ideas.
+
+Winners are sent SWAG.
+
 ## How to become a backer or Insider
 
 ## OpenFaaS Insiders
