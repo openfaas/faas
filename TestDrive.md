@@ -20,7 +20,7 @@ We have provided several sample functions which are built-into the *Docker Stack
 
 ## Pre-reqs
 
-The guide makes use of a cloud playground service called [play-with-docker.com](https://play-with-docker.com/) that provides free Docker hosts for around 5 hours. If you want to try this on your own laptop just follow along.
+The guide makes use of a cloud playground service called [Play with Docker.com](https://labs.play-with-docker.com/) that provides free Docker hosts for around 5 hours. If you want to try this on your own laptop just follow along.
 
 Background info:
 
@@ -28,7 +28,7 @@ Background info:
 
 ## Start here
 
-* So let's head over to [https://play-with-docker.com/](https://play-with-docker.com/) and start a new session. You will probably have to fill out a Captcha.
+* So let's head over to [https://labs.play-with-docker.com/](https://labs.play-with-docker.com/) and start a new session. You will probably have to fill out a Captcha.
 
 * Click "Add New Instance" to create a single Docker host (more can be added later)
 

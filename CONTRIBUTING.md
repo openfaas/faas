@@ -285,7 +285,7 @@ The [community.md](https://github.com/openfaas/faas/blob/master/community.md) fi
 
 There is an Slack community which you are welcome to join to discuss OpenFaaS, OpenFaaS Cloud, Kubernetes, Serverless, FaaS, IoT, and ARM / Raspberry Pi.
 
-[Join Slack here](https://docs.openfaas.com/support)
+[Join Slack here](https://docs.openfaas.com/community/)
 
 ### Roadmap
 
