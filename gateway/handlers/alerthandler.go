@@ -10,6 +10,7 @@ import (
 	"log"
 	"math"
 	"net/http"
+	"sync"
 
 	"github.com/openfaas/faas/gateway/requests"
 	"github.com/openfaas/faas/gateway/scaling"
@@ -60,11 +61,34 @@ func MakeAlertHandler(service scaling.ServiceQuery) http.HandlerFunc {
 
 func handleAlerts(req *requests.PrometheusAlert, service scaling.ServiceQuery) []error {
 	var errors []error
+	var wg sync.WaitGroup
+
+	n := len(req.Alerts)
+	maxGoroutines := 5
+	errChan := make(chan error, n)
+	limit := make(chan struct{}, maxGoroutines)
+
+	wg.Add(n)
+
 	for _, alert := range req.Alerts {
-		if err := scaleService(alert, service); err != nil {
-			log.Println(err)
-			errors = append(errors, err)
-		}
+		alert := alert
+		go func() {
+			limit <- struct{}{}
+			if err := scaleService(alert, service); err != nil {
+				log.Println(err)
+				errChan <- err
+			}
+			<-limit
+			wg.Done()
+		}()
+	}
+
+	wg.Wait()
+
+	close(limit)
+	close(errChan)
+	for e := range errChan {
+		errors = append(errors, e)
 	}
 
 	return errors
