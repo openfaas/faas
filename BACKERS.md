@@ -88,3 +88,5 @@ The hall of fame shows contributors who made a sustained positive impact on the 
 * Jock Reed
 * Eric Stoekl
 * Ken Fukuyama
+* Richard Gee
+* Ivana Yocheva
