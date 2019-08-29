@@ -246,7 +246,11 @@ If you can no-longer commit to being part of a team, then you may move to Commun
 
 #### Stepping-down and emeritus status
 
-After stepping-down, you will have an emeritus status and will be listed in the [BACKERS.md](/BACKERS.md) file and will have a place on the team page.
+After stepping-down, you will have an [emeritus status](https://www.lexico.com/en/definition/emeritus) and will be listed in the [BACKERS.md](/BACKERS.md) file and will have a place on the team page.
+
+> emeritus: (of the former holder of an office, especially a university professor) having retired but allowed to retain their title as an honour.
+
+Some guidelines on stepping down:
 
 > When somebody leaves or disengages from the project, we ask that they do so in a way that minimises disruption to the project. They should tell [*The Project Lead*, that] they are leaving and take the proper steps to ensure that others can pick up where they left off.
 
