@@ -7,7 +7,7 @@ RUN chmod +x /usr/bin/fwatchdog
 
 ENV fprocess="phantomjs /dev/stdin"
 
-RUN addgroup -g 1000 -S app && adduser -u 1000 -S app -G app
+RUN adduser --uid 1000 --group app
 USER 1000
 
 HEALTHCHECK --interval=5s CMD [ -e /tmp/.lock ] || exit 1

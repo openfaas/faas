@@ -33,7 +33,7 @@ RUN license-check -path ./ --verbose=false "Alex Ellis" "OpenFaaS Project" "Open
     -X github.com/openfaas/faas/gateway/version.Version=${VERSION}" \
     -a -installsuffix cgo -o gateway .
 
-FROM alpine:3.9
+FROM alpine:3.10
 
 LABEL org.label-schema.license="MIT" \
     org.label-schema.vcs-url="https://github.com/openfaas/faas" \

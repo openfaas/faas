@@ -12,7 +12,7 @@ COPY main.go  		.
 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 
-FROM alpine:3.8
+FROM alpine:3.10
 
 RUN addgroup -S app \
   && adduser -S -g app app \

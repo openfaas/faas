@@ -244,11 +244,19 @@ You may move from the Core Team to the Members Team. Please notify the *Project 
 
 If you can no-longer commit to being part of a team, then you may move to Community Contributor status and retain your access to Derek for as long as it is useful to you.
 
-#### Stepping-down
+#### Stepping-down and emeritus status
+
+After stepping-down, you will have an [emeritus status](https://www.lexico.com/en/definition/emeritus) and will be listed in the [BACKERS.md](/BACKERS.md) file and will have a place on the team page.
+
+> emeritus: (of the former holder of an office, especially a university professor) having retired but allowed to retain their title as an honour.
+
+Some guidelines on stepping down:
 
 > When somebody leaves or disengages from the project, we ask that they do so in a way that minimises disruption to the project. They should tell [*The Project Lead*, that] they are leaving and take the proper steps to ensure that others can pick up where they left off.
 
 Quoted from the [Ubuntu community guidelines](https://ubuntu.com/community/code-of-conduct).
+
+It's reasonable to expect that some people may no longer be able to continue their Open Source contributions actively, but would like to remain a part of the project and to continue to be recognised.
 
 #### Access to Derek
 

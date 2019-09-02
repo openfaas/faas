@@ -1,4 +1,5 @@
-FROM golang:1.9.7-alpine as builder
+FROM golang:1.11-alpine as builder
+ENV CGO_ENABLED=0
 
 MAINTAINER alex@openfaas.com
 ENTRYPOINT []
