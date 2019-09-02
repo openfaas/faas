@@ -96,6 +96,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Mail from Slack by OpenFaaS Cloud](https://medium.com/red-gold/mail-from-slack-by-openfaas-6eeee2228cec) | Amir Movahedi | medium.com | 31-Aug-2019 |
 | [Deploying Machine Learning models with OpenFaaS with Warm Start](https://medium.com/@dwipam.katariya/deploying-machine-learning-models-with-openfaas-857f1ba0e9c2) | Dwipam Katariya | medium.com | 16-Aug-2019 |
 | [Building your own serverless functions with k3s and OpenFaaS on Raspberry Pi](https://blog.codecentric.de/en/2019/08/serverless-functions-k3s-openfaas-raspberry-pi/) | Andreas Muttscheller | codecentric.de | 07-Aug-2019 |
 | [OpenFaaS Creator on Open Source’s Community-Funding Model](https://thenewstack.io/openfaas-creator-on-open-sources-community-funding-model/) | The New Stack | thenewstack.io | 11-Jul-2009 |
