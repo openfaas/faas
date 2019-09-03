@@ -70,7 +70,7 @@ For Kubernetes the health check is added through automation without you needing 
 
 A Docker Swarm Healthcheck is required and is best practice. It will make sure that the watchdog is ready to accept a request before forwarding requests via the API Gateway. If the function or watchdog runs into an unrecoverable issue Swarm will also be able to restart the container.
 
-Here is an example of the `echo` function implementing a healthcheck with a 5-second checking interval.
+Here is an example of the `echo` function implementing a *health check* with a 5-second checking interval.
 
 ```
 FROM functions/alpine
@@ -199,7 +199,7 @@ To override the Content-Type of all your responses set the `content_type` enviro
 
 This is an unsupported use-case for the OpenFaaS project however if your container conforms to the requirements below then the OpenFaaS API gateway and other tooling will manage and scale your service.
 
-You will need to provide a lock-file at `/tmp/.lock` so that the orchestration system can run healthchecks on your container. If you are using Docker Swarm make sure you provide a `HEALTHCHECK` instruction in your Dockerfile - samples are given in the `faas` repository.
+You will need to provide a lock-file at `/tmp/.lock` so that the orchestration system can run *health checks* against your container. If you are using Docker Swarm make sure you provide a `HEALTHCHECK` instruction in your Dockerfile - samples are given in the `faas` repository.
 
 * Expose TCP port 8080 over HTTP
 * Create `/tmp/.lock` or in whatever location responds to the OS tempdir syscall
