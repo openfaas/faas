@@ -30,7 +30,7 @@ Become a sponsor of openfaas.com and connect your brand to one of the fastest-gr
 
 #### Platinum Sponsors (homepage sponsor)
 
-Be the first.
+<a href="https://rancher.com"><img alt="Rancher" src="https://www.openfaas.com/images/sponsors/rancher-logo-stacked-color.svg" width="125px" /></a>
 
 #### Gold Sponsors (homepage sponsor)
 
@@ -55,6 +55,7 @@ Whatever tier, whether 5 USD or 500 USD, if you're a backer on Patreon, or a Git
 * Andrew Cornies
 * Benjamin Neil
 * Chad Taylor
+* Christian Sakshaug
 * Contiamo
 * David Salek
 * Garden Germany GmbH
@@ -77,6 +78,10 @@ Whatever tier, whether 5 USD or 500 USD, if you're a backer on Patreon, or a Git
 * Steve Peak
 * Weston Steimel
 * Younes Amardaya
+
+See the complete list of *Public* sponsors on GitHub and:
+
+* [Sponsor today](https://github.com/users/alexellis/sponsorship)
 
 ### Hall of fame
 
