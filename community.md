@@ -54,10 +54,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [PLONK Stack - Prometheus, Linkerd, OpenFaaS, NATS, and Kubernetes @ Goto Berlin](https://gotober.com/2019/sessions/971) | Berlin, Germany | Alex Ellis | 23-Oct-2019 |
 | [Serverless 2.0: Get Started With The PLONK Stack](https://skillsmatter.com/conferences/11723-cloudnative-london-2019#program) | Alex Ellis | London, UK | 27-Sept-2019 |
 | [Serverless and the road to portability](https://techin.finance/featured-speaker-edward-wilde/) | Edward Wilde | Malaga, Spain | 20-Sept-2019 |
-| [Virtual Keynote on Openfaas Cloud](https://www.meetup.com/OpenFaaS-Community/events/264414959/) | Alex Ellis | Bangalore, India | 14-Sept-2019 |
-| [Introduction to K3s & K3sup with Demo](https://www.meetup.com/OpenFaaS-Community/events/264414959/) | Saiyam Pathak | Bangalore, India | 14-Sept-2019 |
-| [Hands-on Workshop - Python on OpenFaaS](https://www.meetup.com/OpenFaaS-Community/events/264414959/) | Vivek Singh | Bangalore, India | 14-Sept-2019 |
-| [OpenFaaS Architecture & Customer Use-Cases](https://www.meetup.com/OpenFaaS-Community/events/264414959/) | Vivek Sridhar | Bangalore, India | 14-Sept-2019 |
+| [OpenFaaS Bangalore meetup](https://www.meetup.com/OpenFaaS-Community/events/264414959/) | Bangalore, India | 14-Sept-2019 |
 | [Chicago Kubernetes Meetup: Going Serverless w/OpenFaaS + K8s Networking Revealed](https://www.meetup.com/Chicago-Kubernetes/events/262973241) | Saba Jamalian | Chicago, USA | 24-Jul-2019 |
 | [Serverless Week](https://slsweek.netlify.com) | Several | Online, Brazil | 22-Jul-2019 to 26-Jul-2019 |
 | [Deploying Go Functions @ GoWayFest](https://goway.io) | Julien Bisconti | Minsk, Belarus | 05-Jul-2019 |
