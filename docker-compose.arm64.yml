@@ -21,6 +21,8 @@ services:
             scale_from_zero: "true"         # Enable if you want functions to scale from 0/0 to min replica count upon invoke
             max_idle_conns: 1024
             max_idle_conns_per_host: 1024
+            auth_proxy_url: "${AUTH_URL:-}"
+            auth_proxy_pass_body: "false"
         deploy:
             resources:
                 # limits:   # Enable if you want to limit memory usage
