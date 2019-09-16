@@ -188,6 +188,12 @@ The deployment guide for Docker Swarm contains a simple one-line command to get 
 
 ## Find out more about OpenFaaS
 
+### Welcome to Serverless 2.0 @ Goto Chicago 2019
+
+Featuring a manifesto for Serverless 2.0 including comparisons and synergies between OpenFaaS, AWS Lambda, Knative, and Kubeless.
+
+* [Watch on YouTube](https://www.youtube.com/watch?v=JvXm-oHi5Mg)
+
 ### How LivePerson is Tailoring its Conversational Platform Using OpenFaaS @ KubeCon 2019
 
 > Hear how LivePerson took one of the most popular open source Serverless projects (OpenFaaS) and built it into their product to add value for customers. Functions allow customers to create custom chatbot behaviour, messaging extensions and commerce workflows. You’ll see a live demo and hear about how the team put together the solution
