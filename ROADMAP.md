@@ -28,7 +28,7 @@ Orchestrators: there is official support for Kubernetes and for Docker Swarm. Ku
 
 ## What is coming next?
 
-Proposals and feature requests are tracked in Trello and through the GitHub issue tracker of each project in the two organisations.
+Proposals and feature requests are tracked [on Trello](http://bit.ly/2LGl6nd) and through the GitHub issue tracker of each project in the two organisations.
 
 * [openfaas](https://github.com/openfaas/)
 * [openfaas-incubator](https://github.com/openfaas-incubator/)

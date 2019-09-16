@@ -6,17 +6,28 @@ Status](https://travis-ci.org/openfaas/faas.svg?branch=master)](https://travis-c
 
 ![OpenFaaS Logo](https://blog.alexellis.io/content/images/2017/08/faas_side.png)
 
-OpenFaaS&reg; (Functions as a Service) is a framework for building Serverless functions with Docker and Kubernetes which has first-class support for metrics. Any process can be packaged as a function enabling you to consume a range of web events without repetitive boiler-plate coding.
+OpenFaaS&reg; (Functions as a Service) is a framework for building Serverless functions with Docker & Kubernetes, which has first-class support for metrics. Any code can be packaged enabling you to consume a range of web events without repetitive boiler-plate coding.
 
 [![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/fold_left.svg?style=social&label=Follow%20%40openfaas)](https://twitter.com/openfaas)
 
 **Highlights**
 
 * Ease of use through UI portal and *one-click* install
-* Write functions in any language for Linux or Windows and package in Docker/OCI image format
-* Portable - runs on existing hardware or public/private cloud - [Kubernetes](https://github.com/openfaas/faas-netes) and Docker Swarm native
+* Write services and functions in any language with [Template Store](https://www.openfaas.com/blog/template-store/) or a Dockerfile
+* Build and ship your code in the Docker/OCI image format
+* Portable: runs on existing hardware or public/private cloud by leveraging [Kubernetes](https://github.com/openfaas/faas-netes)
 * [CLI](http://github.com/openfaas/faas-cli) available with YAML format for templating and defining functions
 * Auto-scales as demand increases [including to zero](https://www.openfaas.com/blog/zero-scale/)
+
+**Want to dig deeper into OpenFaaS?**
+
+* Trigger endpoints with either [HTTP or events sources such as AWS or Kafka](https://docs.openfaas.com/reference/triggers/).
+* Offload tasks to the built-in [queuing and background processing](https://docs.openfaas.com/reference/async/).
+* Quick-start your Kubernetes journey with [GitOps from OpenFaaS Cloud](https://docs.openfaas.com/openfaas-cloud/intro/)
+* Go secure or go home [with 5 must-know security tips](https://www.openfaas.com/blog/five-security-tips/)
+* Learn everything you need to know to [go to production](https://docs.openfaas.com/architecture/production/)
+* Integrate with Istio or Linkerd with [Featured Tutorials](https://docs.openfaas.com/tutorials/featured/#service-mesh)
+* Deploy to [Kubernetes or OpenShift](https://docs.openfaas.com/deployment/)
 
 ## Overview of OpenFaaS
 
@@ -24,22 +35,27 @@ OpenFaaS&reg; (Functions as a Service) is a framework for building Serverless fu
 
 ![Stack](https://pbs.twimg.com/media/DFrkF4NXoAAJwN2.jpg)
 
-### Press / Branding / Sponsors
+### Press / Branding / Website Sponsorship
 
-* Press / Branding
+* Individual Sponsorships / Insiders Track 🍻
+
+  OpenFaaS is free to use and completely open source under the MIT license. Users and contributors are encouraged to join their peers in supporting the work through [GitHub Sponsors](https://insiders.openfaas.io/), all tiers gain exclusive access to the [Insiders Track](BACKERS.md)
+
+* Website Sponsorship 🌎
+
+  Companies and brands are welcome to sponsor [openfaas.com](https://www.openfaas.com/), the Gold and Platinum tiers come with a homepage logo, [see costs and tiers](BACKERS.md). Website sponsorships can be paid by invoice to OpenFaaS Ltd.
+
+* Press / Branding 📸
 
   For information on branding, the press-kit, registered entities and sponsorship head over to the [openfaas/media](https://github.com/openfaas/media/blob/master/README.md) repo. You can also order custom SWAG or take part in the weekly Twitter contest [#FaaSFriday](https://twitter.com/search?q=faasfriday&src=typd)
 
-* Looking for statistics? This project does not use a mono-repo, but is split across several components. Use [Ken Fukuyama's dashboard](https://kenfdev.o6s.io/github-stats-page) to gather accurate counts on contributors, stars and forks across the [GitHub organisation](https://github.com/openfaas).
+  Looking for statistics? This project does not use a mono-repo, but is split across several components. Use [Ken Fukuyama's dashboard](https://kenfdev.o6s.io/github-stats-page) to gather accurate counts on contributors, stars and forks across the [GitHub organisation](https://github.com/openfaas).
 
   > Note: Incubator projects are not counted in these totals and are hosted under [openfaas-incubator](https://github.com/openfaas-incubator) awaiting graduation.
 
-* Support for OpenFaaS
-  OpenFaaS is free to use and completely open source under the MIT license. You can donate to the project to fund its ongoing development or become a sponsor. [Support OpenFaaS](https://www.openfaas.com/support/)
-
 ### Governance
 
-OpenFaaS&reg; is an independent project founded by [Alex Ellis](https://www.alexellis.io) which is now being built and shaped by a growing community of contributors, GitHub Organisation members, Core contributors and end-users. More at: [openfaas.com](https://www.openfaas.com).
+OpenFaaS&reg; is an independent project founded by [Alex Ellis](https://www.alexellis.io) which is now being built and shaped by a growing community of contributors, GitHub Organisation members, Core contributors and end-users. OpenFaaS Ltd hosts the OpenFaaS codebase and trademarks. Professional services, sponsorships, and commercial support packages are available [upon request](mailto:sales@openfaas.com).
 
 ### Users
 
@@ -78,32 +94,63 @@ When you have OpenFaaS configured you can [get started with the CLI here](https:
 
 You can generate new functions using the FaaS-CLI and built-in templates or use any binary for Windows or Linux in a Docker container.
 
-Official templates exist for many popular languages and are easily extensible with Dockerfiles. Here is an example with Python 3 and Node.js:
+Official templates exist for many popular languages and are easily extensible with Dockerfiles.
+
+* Node.js (`node10-express`) example:
+
+    ```js
+    "use strict"
+
+    module.exports = (event, context) => {
+
+    context
+        .headers({"Content-Type": "text/html"})
+        .status(200)
+        .succeed(`
+        <h1>
+            👋 Hello World 🌍
+        </h1>
+        `)
+    }
+    ```
+    *handler.js*
 
 * Python 3 example:
 
-```python
-import requests
+    ```python
+    import requests
 
-def handle(req):
-    r =  requests.get(req, timeout = 1)
-    return "{} => {:d}".format(req, r.status_code)
-```
-*handler.py*
+    def handle(req):
+        r =  requests.get(req, timeout = 1)
+        return "{} => {:d}".format(req, r.status_code)
+    ```
+    *handler.py*
 
-* Node.js example:
+    * Golang example (`golang-http`)
 
-```js
-"use strict"
+    ```golang
+    package function
 
-module.exports = (callback, context) => {
-    var err;
-    callback(err, {"message": "You said: " + context})
-}
-```
-*handler.js*
+    import (
+        "log"
 
-The easiest way to get started with functions is to take the workshop or one of the tutorials in the documentation.
+        "github.com/openfaas-incubator/go-function-sdk"
+    )
+
+    // Handle a function invocation
+    func Handle(req handler.Request) (handler.Response, error) {
+        var err error
+
+        return handler.Response{
+            Body: []byte("Try us out today!"),
+            Header: map[string][]string{
+                "X-Served-By": []string{"openfaas.com"},
+            },
+        }, err
+    }
+    ```
+
+The easiest way to get started with functions is to [take the workshop](https://github.com/openfaas/workshop) or one of the tutorials in the documentation.
 
 ## Get started with OpenFaaS
 
@@ -113,47 +160,53 @@ See our documentation on [docs.openfaas.com](https://docs.openfaas.com/). The so
 
 Read latest news on OpenFaaS from the community [blog](https://www.openfaas.com/blog/)
 
-### Hands-on labs (detailed getting started)
+### Workshop (hands-on learning)
 
 You can learn how to build functions with OpenFaaS using our hands-on labs in the [OpenFaaS workshop](http://github.com/openfaas/workshop).
 
-### TestDrive (classic getting started)
-
-**Kubernetes**
-
-OpenFaaS is Kubernetes-native - you can follow the [deployment guide here](http://docs.openfaas.com/deployment/kubernetes/).
-
-**Docker Swarm**
-
-The deployment guide for Docker Swarm contains a simple one-line command to get you up and running in around 60 seconds. It also includes a set of [sample functions](https://github.com/openfaas/faas/tree/master/sample-functions) which you can use with the TestDrive instructions below.
-
-[Deployment guide for Docker Swarm](http://docs.openfaas.com/deployment/docker-swarm/)
-
-**Docker Playground**
-
-You can quickly start OpenFaaS on Docker Swarm online using the community-run Docker playground: [Play-with-Docker](https://labs.play-with-docker.com/) (PWD)
-
-Simply follow the deployment guide for Swarm above in a new session
-
-> You will need a free Docker Hub account to get access. Get one here: [Docker Hub](https://hub.docker.com/)
-
-#### Begin the TestDrive
-
-* [Begin the TestDrive with Docker Swarm](https://github.com/openfaas/faas/blob/master/TestDrive.md)
+### Deploy OpenFaaS
 
 Here is a screenshot of the API gateway portal - designed for ease of use with the inception function.
 
 ![Portal](/docs/inception.png)
 
+#### Kubernetes**
+
+OpenFaaS is Kubernetes-native - you can follow the [deployment guide here](http://docs.openfaas.com/deployment/kubernetes/).
+
+#### Docker Swarm**
+
+The deployment guide for Docker Swarm contains a simple one-line command to get you up and running in around 60 seconds. It also includes a set of [sample functions](https://github.com/openfaas/faas/tree/master/sample-functions) which you can use with the TestDrive instructions below.
+
+[Deployment guide for Docker Swarm](http://docs.openfaas.com/deployment/docker-swarm/)
+
+* Docker Playground
+
+    You can quickly start OpenFaaS on Docker Swarm online using the community-run Docker playground: [Play-with-Docker](https://labs.play-with-docker.com/) (PWD)
+
+    Simply follow the deployment guide for Swarm above in a new session
+
+    > You will need a free Docker Hub account to get access. Get one here: [Docker Hub](https://hub.docker.com/)
+
 ## Find out more about OpenFaaS
+
+### How LivePerson is Tailoring its Conversational Platform Using OpenFaaS @ KubeCon 2019
+
+> Hear how LivePerson took one of the most popular open source Serverless projects (OpenFaaS) and built it into their product to add value for customers. Functions allow customers to create custom chatbot behaviour, messaging extensions and commerce workflows. You’ll see a live demo and hear about how the team put together the solution
+
+* [Watch on YouTube](https://youtu.be/bt06Z28uzPA)
 
 ### Digital Transformation of Vision Banco Paraguay with Serverless Functions @ KubeCon late-2018
 
-[HD video co-presenting at KubeCon with Patricio Diaz Senior Analyst, Vision Banco SAECA](https://kccna18.sched.com/event/GraO/digital-transformation-of-vision-banco-paraguay-with-serverless-functions-alex-ellis-vmware-patricio-diaz-vision-banco-saeca)
+Alex Ellis co-presents [at KubeCon](https://kccna18.sched.com/event/GraO/digital-transformation-of-vision-banco-paraguay-with-serverless-functions-alex-ellis-vmware-patricio-diaz-vision-banco-saeca) with Patricio Diaz Senior Analyst, Vision Banco SAECA
+
+* [Watch on YouTube](https://youtu.be/mPjI34qj5vU)
 
 ### Serverless Beyond the Hype (goto Copenhagen) late-2018
 
-Overview of the Serverless landscape for Kubernetes, OpenFaaS and OpenFaaS Cloud with live demos and most update information. [Watch on YouTube](https://www.youtube.com/watch?time_continue=1&v=yOpYYYRuDQ0)
+Overview of the Serverless landscape for Kubernetes, OpenFaaS and OpenFaaS Cloud with live demos and most update information.
+
+* [Watch on YouTube](https://www.youtube.com/watch?time_continue=1&v=yOpYYYRuDQ0)
 
 ### The Cube interview @ DevNet Create mid-2018
 
@@ -194,7 +247,7 @@ Please see the guide on [community & contributing](https://docs.openfaas.com/com
 
 #### Roadmap
 
-The roadmap for OpenFaaS is represented in [GitHub issues](https://github.com/openfaas/faas/issues) and a Trello board. There is also a historical ROADMAP file in the [main faas repository](https://github.com/openfaas/faas/blob/master/ROADMAP.md).
+The roadmap for OpenFaaS is represented in [GitHub issues](https://github.com/openfaas/faas/issues) and [a Trello board](http://bit.ly/2LGl6nd).
 
 ##### Roadmap: OpenFaaS Cloud
 
