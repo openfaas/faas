@@ -152,15 +152,20 @@ The easiest way to get started with functions is to [take the workshop](https://
 
 ## Get started with OpenFaaS
 
-### Official documentation and blog
+### Join the Community
 
-See our documentation on [docs.openfaas.com](https://docs.openfaas.com/). The source repository for the documentation website is [openfaas/docs](https://github.com/openfaas/docs).
+* [Join Slack](https://docs.openfaas.com/community)
+* [Become a GitHub sponsor](https://insiders.openfaas.io/)
 
-Read latest news on OpenFaaS from the community [blog](https://www.openfaas.com/blog/)
+### Official blog and documentation
+
+* Read the documentation: [docs.openfaas.com](https://docs.openfaas.com/)
+* Send a PR or raise an issue for the docs [openfaas/docs](https://github.com/openfaas/docs)
+* Read latest news and tutorials on the [Official Blog](https://www.openfaas.com/blog/)
 
 ### Workshop (hands-on learning)
 
-You can learn how to build functions with OpenFaaS using our hands-on labs in the [OpenFaaS workshop](http://github.com/openfaas/workshop).
+You can learn how to build functions and microservices with OpenFaaS using the [OpenFaaS workshop](http://github.com/openfaas/workshop). The Workshop has been curated carefully by dozens of community members to guide you through everything you need to know from setting up on Kubernetes to making use of secrets to integrating with GitHub and auto-scaling.
 
 ### Deploy OpenFaaS
 
@@ -168,11 +173,11 @@ Here is a screenshot of the API gateway portal - designed for ease of use with t
 
 ![Portal](/docs/inception.png)
 
-#### Kubernetes**
+#### Kubernetes
 
 OpenFaaS is Kubernetes-native - you can follow the [deployment guide here](http://docs.openfaas.com/deployment/kubernetes/).
 
-#### Docker Swarm**
+#### Docker Swarm
 
 The deployment guide for Docker Swarm contains a simple one-line command to get you up and running in around 60 seconds. It also includes a set of [sample functions](https://github.com/openfaas/faas/tree/master/sample-functions) which you can use with the TestDrive instructions below.
 
@@ -233,9 +238,9 @@ If you'd like to find the functions I used in the demos head over to the [faas-d
 * [Introducing OpenFaaS (Functions as a Service)](https://blog.alexellis.io/introducing-functions-as-a-service/) -  August 2017
 * [Functions as a Service (FaaS)](http://blog.alexellis.io/functions-as-a-service/) - January 2017
 
-### Community
+### Community events and blog posts
 
-Have you written a blog about OpenFaaS? Send a Pull Request to the community page below.
+Have you written a blog about OpenFaaS? Do you have a speaking event? Send a Pull Request to the community page below.
 
 * [Read blogs/articles and find events about OpenFaaS](https://github.com/openfaas/faas/blob/master/community.md)
 
