@@ -27,4 +27,38 @@ custom_messages:
            Join Slack to connect with the community
            https://docs.openfaas.com/community
 
+  - name: template
+    value: |
+           This project uses Issue and PR templates and requires that all
+           users fill out the template in detail before help can be given.
+
+           To continue please edit your Issue/PR or open a new one, and 
+           please provide all the fields requested.
+
+           Thank you for your contribution.
+
+  - name: propose
+    value: |
+           This project follows a contributing guide which states that all
+           changes must be proposed with an Issue before being worked on.
+           
+           Please raise an Issue and update your Pull Request to include
+           the ID or link as part of the description.
+
+           Thank you for your contribution.
+
+  - name: test
+    value: |
+           This project follows a contributing guide which requires that
+           all changes are tested before being merged. You should include
+           worked examples that a maintainer can run to prove that the
+           changes are good.
+
+           Screenshots and command line output are also accepted, but
+           must show the positive, and negative cases, not just that 
+           what was added worked as you expected.
+
+           Thank you for your contribution.
+
 contributing_url: https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md
+
