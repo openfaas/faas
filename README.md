@@ -80,17 +80,17 @@ If you're using OpenFaaS please let us know [on this thead](https://github.com/o
 
 #### CLI
 
-Any container or process in a Docker container can be a serverless function in FaaS. Using the [FaaS CLI](http://github.com/openfaas/faas-cli) you can deploy your functions quickly.
+Using the [faas-cli](http://github.com/openfaas/faas-cli) and `faas-cli up` you can create, build, distribute, and deploy your code in a very short period of time.
 
-Create new functions from templates for Node.js, Python, [Go](https://blog.alexellis.io/serverless-golang-with-openfaas/) and many more. If you can't find a suitable template you can also use a Dockerfile.
+Any container or process in a Docker container can be a serverless workload in OpenFaaS, as long as it [conforms to The Workload Contract](https://docs.openfaas.com/reference/workloads/).
 
-> The CLI is effectively a RESTful client for the API Gateway.
+Create new functions from templates for Node.js, Python, [Go](https://blog.alexellis.io/serverless-golang-with-openfaas/) and many more. If you can't find a suitable template you can also use a Dockerfile or create your own.
 
-When you have OpenFaaS configured you can [get started with the CLI here](https://blog.alexellis.io/quickstart-openfaas-cli/)
+The CLI is effectively a RESTful client for the API Gateway. When you have OpenFaaS configured you can [get started with the CLI here](https://blog.alexellis.io/quickstart-openfaas-cli/)
 
-#### Function examples
+#### Examples
 
-You can generate new functions using the FaaS-CLI and built-in templates or use any binary for Windows or Linux in a Docker container.
+You can generate new functions using the `faas-cli` and built-in templates or use any binary for Windows or Linux in a Docker container.
 
 Official templates exist for many popular languages and are easily extensible with Dockerfiles.
 
