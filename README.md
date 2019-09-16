@@ -21,8 +21,8 @@ OpenFaaS&reg; (Functions as a Service) is a framework for building Serverless fu
 
 **Want to dig deeper into OpenFaaS?**
 
-* Trigger endpoints with either [HTTP or events sources such as AWS or Kafka](https://docs.openfaas.com/reference/triggers/).
-* Offload tasks to the built-in [queuing and background processing](https://docs.openfaas.com/reference/async/).
+* Trigger endpoints with either [HTTP or events sources such as AWS or Kafka](https://docs.openfaas.com/reference/triggers/)
+* Offload tasks to the built-in [queuing and background processing](https://docs.openfaas.com/reference/async/)
 * Quick-start your Kubernetes journey with [GitOps from OpenFaaS Cloud](https://docs.openfaas.com/openfaas-cloud/intro/)
 * Go secure or go home [with 5 must-know security tips](https://www.openfaas.com/blog/five-security-tips/)
 * Learn everything you need to know to [go to production](https://docs.openfaas.com/architecture/production/)
@@ -124,7 +124,7 @@ Official templates exist for many popular languages and are easily extensible wi
     ```
     *handler.py*
 
-    * Golang example (`golang-http`)
+* Golang example (`golang-http`)
 
     ```golang
     package function
