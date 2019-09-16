@@ -29,17 +29,17 @@ OpenFaaS&reg; (Functions as a Service) is a framework for building Serverless fu
 * Integrate with Istio or Linkerd with [Featured Tutorials](https://docs.openfaas.com/tutorials/featured/#service-mesh)
 * Deploy to [Kubernetes or OpenShift](https://docs.openfaas.com/deployment/)
 
-## Overview of OpenFaaS
+## Overview of OpenFaaS (Serverless Functions Made Simple)
 
-> Serverless Functions Made Simple.
-
-![Stack](https://pbs.twimg.com/media/DFrkF4NXoAAJwN2.jpg)
+![Conceptual architecture](https://pbs.twimg.com/media/DFrkF4NXoAAJwN2.jpg)
 
 ### Press / Branding / Website Sponsorship
 
-* Individual Sponsorships / Insiders Track 🍻
+* Individual Sponsorships / End-users / Insiders Track 🍻
 
-  OpenFaaS is free to use and completely open source under the MIT license. Users and contributors are encouraged to join their peers in supporting the work through [GitHub Sponsors](https://insiders.openfaas.io/), all tiers gain exclusive access to the [Insiders Track](BACKERS.md)
+  OpenFaaS is free to use and completely open source under the MIT license, however financial backing is required to sustain the effort to maintain and develop the project.
+  
+  Users and contributors are encouraged to join their peers in supporting the work through [GitHub Sponsors](https://insiders.openfaas.io/), all tiers gain exclusive access to the [Insiders Track](BACKERS.md)
 
 * Website Sponsorship 🌎
 
@@ -59,11 +59,9 @@ OpenFaaS&reg; is an independent project founded by [Alex Ellis](https://www.alex
 
 ### Users
 
-[View our end-users](https://docs.openfaas.com/#users-of-openfaas) or get in touch to [have your company added](https://github.com/openfaas/faas/issues/776).
+View a selection of end-user companies who have given permission to have their logo listed at [openfaas.com](https://www.openfaas.com/).
 
-> Please support [OpenFaaS on Patreon](https://www.patreon.com/alexellis)) and back a great community at the same time. You will be listed as a [backers or sponsor here](https://github.com/openfaas/faas/blob/master/BACKERS.md).
-
-Thank you for your support.
+If you're using OpenFaaS please let us know [on this thead](https://github.com/openfaas/faas/issues/776). In addition, you are welcome to request to have your logo listed on the homepage. Thank you for your support.
 
 ### Technical overview
 
