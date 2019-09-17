@@ -6,6 +6,7 @@ maintainers:
  - ewilde
  - ivanayov
  - johnmccabe
+ - jonatasbaldin
  - kenfdev
  - martindekov
  - matipan
@@ -61,4 +62,3 @@ custom_messages:
            Thank you for your contribution.
 
 contributing_url: https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md
-
