@@ -24,9 +24,17 @@ Become an Insider today: [GitHub Sponsors](https://www.openfaas.com/support/)
 
 Become a sponsor of openfaas.com and connect your brand to one of the fastest-growing developer communities with over 18k GitHub stars and dozens of well-known end-users. Use one of the funding options above, or email: [sales@openfaas.com](mailto:sales@openfaas.com) to ask about how to sponsor by invoice through OpenFaaS Ltd.
 
-* Platinum - normal-sized logo openfaas.com, Tweet from @openfaas, and one-off feature in Insiders Updates.
-* Gold - small logo on openfaas.com
-* Bronze - logo in BACKERS.md (this file)
+* Platinum
+
+    normal-sized logo openfaas.com, Tweet from @openfaas, and one-off feature in Insiders Updates - (6 months minimum via invoice)
+
+* Gold
+
+    Small logo on openfaas.com - (12 months minimum via invoice)
+
+* Bronze
+
+    Logo in BACKERS.md (this file) - (monthly rolling via GitHub Sponsors)
 
 #### Platinum Sponsors (homepage sponsor)
 
