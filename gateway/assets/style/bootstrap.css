@@ -90,6 +90,22 @@ md-input-container .md-errors-spacer {
     font-weight: 500;
 }
 
+
+.md-toolbar-tools {
+    padding: 0px 0px 0px 0px;
+}
+
+.md-toolbar-tools img.md-logo { 
+    max-height: 38px;
+    height: 38px;
+}
+
+.md-toolbar-tools img.md-avatar { 
+    max-height: 74px;
+    height: 74px;
+}
+
+
 span.md-avatar {
     font-weight: bold;
     line-height: 40px;
@@ -129,3 +145,4 @@ md-input-container.function-url md-icon {
     padding-top: 25px;
     color: red;
 }
+
