@@ -51,7 +51,7 @@ It would be great to hear from you especially if you have any of the above and w
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [OpenFaaS Cloud + Linkerd: A Secure, Multi-Tenant Serverless Platform - KubeCon 2019, San Diego](https://kccncna19.sched.com/event/Uabn/openfaas-cloud-linkerd-a-secure-multi-tenant-serverless-platform-charles-pretzer-buoyant-alex-ellis-openfaas-ltd) | Charles Pretzer & Alex Ellis | San Diego, USA | 16-Nov-2019 |
 | [Meet Alex at KubeCon 2019, San Diego](https://events.linuxfoundation.org/events/kubecon-cloudnativecon-north-america-2019/) | Alex Ellis | San Diego, USA | 18-Nov-2019 |
-| [PLONK Stack - Prometheus, Linkerd, OpenFaaS, NATS, and Kubernetes @ Goto Berlin](https://gotober.com/2019/sessions/971) | Berlin, Germany | Alex Ellis | 23-Oct-2019 |
+| [PLONK Stack - Prometheus, Linkerd, OpenFaaS, NATS, and Kubernetes @ Goto Berlin](https://gotober.com/2019/sessions/971) | Alex Ellis | Berlin, Germany | 23-Oct-2019 |
 | [Serverless 2.0: Get Started With The PLONK Stack](https://skillsmatter.com/conferences/11723-cloudnative-london-2019#program) | Alex Ellis | London, UK | 27-Sept-2019 |
 | [Serverless and the road to portability](https://techin.finance/featured-speaker-edward-wilde/) | Edward Wilde | Malaga, Spain | 20-Sept-2019 |
 | [OpenFaaS Bangalore meetup](https://www.meetup.com/OpenFaaS-Community/events/264414959/) | Various | Bangalore, India | 14-Sept-2019 |
