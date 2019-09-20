@@ -179,7 +179,8 @@ func (s SingleHostBaseURLResolver) Resolve(r *http.Request) string {
 
 // FunctionAsHostBaseURLResolver resolves URLs using a function from the URL as a host
 type FunctionAsHostBaseURLResolver struct {
-	FunctionSuffix string
+	FunctionSuffix    string
+	FunctionNamespace string
 }
 
 // Resolve the base URL for a request
@@ -188,8 +189,13 @@ func (f FunctionAsHostBaseURLResolver) Resolve(r *http.Request) string {
 
 	const watchdogPort = 8080
 	var suffix string
+
 	if len(f.FunctionSuffix) > 0 {
-		suffix = "." + f.FunctionSuffix
+		if index := strings.LastIndex(svcName, "."); index > -1 && len(svcName) > index+1 {
+			suffix = strings.Replace(f.FunctionSuffix, f.FunctionNamespace, "", -1)
+		} else {
+			suffix = "." + f.FunctionSuffix
+		}
 	}
 
 	return fmt.Sprintf("http://%s%s:%d", svcName, suffix, watchdogPort)

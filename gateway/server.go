@@ -26,7 +26,11 @@ func main() {
 
 	osEnv := types.OsEnv{}
 	readConfig := types.ReadConfig{}
-	config := readConfig.Read(osEnv)
+	config, configErr := readConfig.Read(osEnv)
+
+	if configErr != nil {
+		log.Fatalln(configErr)
+	}
 
 	log.Printf("HTTP Read Timeout: %s", config.ReadTimeout)
 	log.Printf("HTTP Write Timeout: %s", config.WriteTimeout)
@@ -85,7 +89,10 @@ func main() {
 	nilURLTransformer := handlers.TransparentURLPathTransformer{}
 
 	if config.DirectFunctions {
-		functionURLResolver = handlers.FunctionAsHostBaseURLResolver{FunctionSuffix: config.DirectFunctionsSuffix}
+		functionURLResolver = handlers.FunctionAsHostBaseURLResolver{
+			FunctionSuffix:    config.DirectFunctionsSuffix,
+			FunctionNamespace: config.Namespace,
+		}
 		functionURLTransformer = handlers.FunctionPrefixTrimmingURLPathTransformer{}
 	} else {
 		functionURLResolver = urlResolver

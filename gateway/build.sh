@@ -42,4 +42,4 @@ docker build --build-arg https_proxy=$https_proxy --build-arg http_proxy=$http_p
   --build-arg VERSION="${VERSION:-dev}" \
   --build-arg GOARM="${GOARM}" \
   --build-arg ARCH="${arch}" \
-  -t $NS/gateway:$eTAG . -f $dockerfile --no-cache
+  -t $NS/gateway:$eTAG . -f $dockerfile
