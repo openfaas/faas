@@ -19,6 +19,9 @@ import (
 	natsHandler "github.com/openfaas/nats-queue-worker/handler"
 )
 
+// NameExpression for a function / service
+const NameExpression = "-a-zA-Z_0-9."
+
 func main() {
 
 	osEnv := types.OsEnv{}
@@ -185,28 +188,28 @@ func main() {
 
 		functionProxy = handlers.MakeScalingHandler(faasHandlers.Proxy, scalingConfig)
 	}
-	// r.StrictSlash(false)	// This didn't work, so register routes twice.
-	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}", functionProxy)
-	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/", functionProxy)
-	r.HandleFunc("/function/{name:[-a-zA-Z_0-9]+}/{params:.*}", functionProxy)
+
+	r.HandleFunc("/function/{name:["+NameExpression+"]+}", functionProxy)
+	r.HandleFunc("/function/{name:["+NameExpression+"]+}/", functionProxy)
+	r.HandleFunc("/function/{name:["+NameExpression+"]+}/{params:.*}", functionProxy)
 
 	r.HandleFunc("/system/info", faasHandlers.InfoHandler).Methods(http.MethodGet)
 	r.HandleFunc("/system/alert", faasHandlers.Alert).Methods(http.MethodPost)
 
-	r.HandleFunc("/system/function/{name:[-a-zA-Z_0-9]+}", faasHandlers.QueryFunction).Methods(http.MethodGet)
+	r.HandleFunc("/system/function/{name:["+NameExpression+"]+}", faasHandlers.QueryFunction).Methods(http.MethodGet)
 	r.HandleFunc("/system/functions", faasHandlers.ListFunctions).Methods(http.MethodGet)
 	r.HandleFunc("/system/functions", faasHandlers.DeployFunction).Methods(http.MethodPost)
 	r.HandleFunc("/system/functions", faasHandlers.DeleteFunction).Methods(http.MethodDelete)
 	r.HandleFunc("/system/functions", faasHandlers.UpdateFunction).Methods(http.MethodPut)
-	r.HandleFunc("/system/scale-function/{name:[-a-zA-Z_0-9]+}", faasHandlers.ScaleFunction).Methods(http.MethodPost)
+	r.HandleFunc("/system/scale-function/{name:["+NameExpression+"]+}", faasHandlers.ScaleFunction).Methods(http.MethodPost)
 
 	r.HandleFunc("/system/secrets", faasHandlers.SecretHandler).Methods(http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete)
 	r.HandleFunc("/system/logs", faasHandlers.LogProxyHandler).Methods(http.MethodGet)
 
 	if faasHandlers.QueuedProxy != nil {
-		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}/", faasHandlers.QueuedProxy).Methods(http.MethodPost)
-		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}", faasHandlers.QueuedProxy).Methods(http.MethodPost)
-		r.HandleFunc("/async-function/{name:[-a-zA-Z_0-9]+}/{params:.*}", faasHandlers.QueuedProxy).Methods(http.MethodPost)
+		r.HandleFunc("/async-function/{name:["+NameExpression+"]+}/", faasHandlers.QueuedProxy).Methods(http.MethodPost)
+		r.HandleFunc("/async-function/{name:["+NameExpression+"]+}", faasHandlers.QueuedProxy).Methods(http.MethodPost)
+		r.HandleFunc("/async-function/{name:["+NameExpression+"]+}/{params:.*}", faasHandlers.QueuedProxy).Methods(http.MethodPost)
 
 		r.HandleFunc("/system/async-report", handlers.MakeNotifierWrapper(faasHandlers.AsyncReport, forwardingNotifiers))
 	}
@@ -219,7 +222,8 @@ func main() {
 
 	uiHandler := http.StripPrefix("/ui", fsCORS)
 	if credentials != nil {
-		r.PathPrefix("/ui/").Handler(decorateExternalAuth(uiHandler.ServeHTTP, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)).Methods(http.MethodGet)
+		r.PathPrefix("/ui/").Handler(
+			decorateExternalAuth(uiHandler.ServeHTTP, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)).Methods(http.MethodGet)
 	} else {
 		r.PathPrefix("/ui/").Handler(uiHandler).Methods(http.MethodGet)
 	}
@@ -227,7 +231,8 @@ func main() {
 	//Start metrics server in a goroutine
 	go runMetricsServer()
 
-	r.HandleFunc("/healthz", handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer, serviceAuthInjector)).Methods(http.MethodGet)
+	r.HandleFunc("/healthz",
+		handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer, serviceAuthInjector)).Methods(http.MethodGet)
 
 	r.Handle("/", http.RedirectHandler("/ui/", http.StatusMovedPermanently)).Methods(http.MethodGet)
 

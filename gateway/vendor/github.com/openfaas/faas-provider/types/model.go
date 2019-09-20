@@ -46,6 +46,9 @@ type FunctionDeployment struct {
 	// ReadOnlyRootFilesystem removes write-access from the root filesystem
 	// mount-point.
 	ReadOnlyRootFilesystem bool `json:"readOnlyRootFilesystem"`
+
+	// Namespace for the function to be deployed into
+	Namespace string `json:"namespace,omitempty"`
 }
 
 // FunctionResources Memory and CPU
@@ -72,7 +75,8 @@ type FunctionStatus struct {
 	// EnvProcess is the process to pass to the watchdog, if in use
 	EnvProcess string `json:"envProcess"`
 
-	// AvailableReplicas is the count of replicas ready to receive invocations as reported by the backend
+	// AvailableReplicas is the count of replicas ready to receive
+	// invocations as reported by the backend
 	AvailableReplicas uint64 `json:"availableReplicas"`
 
 	// Labels are metadata for functions which may be used by the
@@ -82,4 +86,13 @@ type FunctionStatus struct {
 	// Annotations are metadata for functions which may be used by the
 	// backend for management, orchestration, events and build tasks
 	Annotations *map[string]string `json:"annotations"`
+
+	// Namespace where the function can be accessed
+	Namespace string `json:"namespace,omitempty"`
+}
+
+// Secret for underlying orchestrator
+type Secret struct {
+	Name  string `json:"name"`
+	Value string `json:"value,omitempty"`
 }
