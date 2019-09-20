@@ -4,10 +4,11 @@
 package types
 
 import (
-	"log"
+	"fmt"
 	"net/url"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -52,7 +53,7 @@ func parseIntOrDurationValue(val string, fallback time.Duration) time.Duration {
 }
 
 // Read fetches gateway server configuration from environmental variables
-func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
+func (ReadConfig) Read(hasEnv HasEnv) (*GatewayConfig, error) {
 	cfg := GatewayConfig{
 		PrometheusHost: "prometheus",
 		PrometheusPort: 9090,
@@ -68,7 +69,7 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 		var err error
 		cfg.FunctionsProviderURL, err = url.Parse(hasEnv.Getenv("functions_provider_url"))
 		if err != nil {
-			log.Fatal("If functions_provider_url is provided, then it should be a valid URL.", err)
+			return nil, fmt.Errorf("if functions_provider_url is provided, then it should be a valid URL, error: %s", err)
 		}
 	}
 
@@ -76,7 +77,7 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 		var err error
 		cfg.LogsProviderURL, err = url.Parse(hasEnv.Getenv("logs_provider_url"))
 		if err != nil {
-			log.Fatal("If logs_provider_url is provided, then it should be a valid URL.", err)
+			return nil, fmt.Errorf("if logs_provider_url is provided, then it should be a valid URL, error: %s", err)
 		}
 	} else if cfg.FunctionsProviderURL != nil {
 		cfg.LogsProviderURL, _ = url.Parse(cfg.FunctionsProviderURL.String())
@@ -93,7 +94,7 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 		if err == nil {
 			cfg.NATSPort = &port
 		} else {
-			log.Println("faas_nats_port invalid number: " + faasNATSPort)
+			return nil, fmt.Errorf("faas_nats_port invalid number: %s", faasNATSPort)
 		}
 	}
 
@@ -101,10 +102,10 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 	if len(prometheusPort) > 0 {
 		prometheusPortVal, err := strconv.Atoi(prometheusPort)
 		if err != nil {
-			log.Println("Invalid port for faas_prometheus_port")
-		} else {
-			cfg.PrometheusPort = prometheusPortVal
+			return nil, fmt.Errorf("faas_prometheus_port invalid number: %s", faasNATSPort)
 		}
+		cfg.PrometheusPort = prometheusPortVal
+
 	}
 
 	prometheusHost := hasEnv.Getenv("faas_prometheus_host")
@@ -131,26 +132,34 @@ func (ReadConfig) Read(hasEnv HasEnv) GatewayConfig {
 	if len(maxIdleConns) > 0 {
 		val, err := strconv.Atoi(maxIdleConns)
 		if err != nil {
-			log.Println("Invalid value for max_idle_conns")
-		} else {
-			cfg.MaxIdleConns = val
+			return nil, fmt.Errorf("invalid value for max_idle_conns: %s", maxIdleConns)
 		}
+		cfg.MaxIdleConns = val
+
 	}
 
 	maxIdleConnsPerHost := hasEnv.Getenv("max_idle_conns_per_host")
 	if len(maxIdleConnsPerHost) > 0 {
 		val, err := strconv.Atoi(maxIdleConnsPerHost)
 		if err != nil {
-			log.Println("Invalid value for max_idle_conns_per_host")
-		} else {
-			cfg.MaxIdleConnsPerHost = val
+			return nil, fmt.Errorf("invalid value for max_idle_conns_per_host: %s", maxIdleConnsPerHost)
 		}
+		cfg.MaxIdleConnsPerHost = val
+
 	}
 
 	cfg.AuthProxyURL = hasEnv.Getenv("auth_proxy_url")
 	cfg.AuthProxyPassBody = parseBoolValue(hasEnv.Getenv("auth_proxy_pass_body"))
 
-	return cfg
+	cfg.Namespace = hasEnv.Getenv("function_namespace")
+
+	if len(cfg.DirectFunctionsSuffix) > 0 && len(cfg.Namespace) > 0 {
+		if strings.HasPrefix(cfg.DirectFunctionsSuffix, cfg.Namespace) == false {
+			return nil, fmt.Errorf("function_namespace must be a sub-string of direct_functions_suffix")
+		}
+	}
+
+	return &cfg, nil
 }
 
 // GatewayConfig provides config for the API Gateway server process
@@ -209,6 +218,9 @@ type GatewayConfig struct {
 
 	// AuthProxyPassBody pass body to validation proxy
 	AuthProxyPassBody bool
+
+	// Namespace for endpoints
+	Namespace string
 }
 
 // UseNATS Use NATSor not

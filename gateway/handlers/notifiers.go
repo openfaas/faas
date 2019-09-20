@@ -66,7 +66,7 @@ func getServiceName(urlValue string) string {
 	forward := "/function/"
 	if strings.HasPrefix(urlValue, forward) {
 		// With a path like `/function/xyz/rest/of/path?q=a`, the service
-		// name we wish to locate is just the `xyz` portion.  With a postive
+		// name we wish to locate is just the `xyz` portion.  With a positive
 		// match on the regex below, it will return a three-element slice.
 		// The item at index `0` is the same as `urlValue`, at `1`
 		// will be the service name we need, and at `2` the rest of the path.

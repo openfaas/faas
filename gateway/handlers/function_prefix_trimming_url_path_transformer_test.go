@@ -32,6 +32,30 @@ func Test_Transform_RemovesFunctionPrefixWithSingleParam(t *testing.T) {
 	}
 }
 
+func Test_Transform_RemovesFunctionPrefixWithDotInName(t *testing.T) {
+
+	req, _ := http.NewRequest(http.MethodGet, "/function/figlet.fn", nil)
+	transformer := FunctionPrefixTrimmingURLPathTransformer{}
+	want := ""
+	got := transformer.Transform(req)
+
+	if want != got {
+		t.Errorf("want: %s, got: %s", want, got)
+	}
+}
+
+func Test_Transform_RemovesFunctionPrefixWithDotInNameAndPath(t *testing.T) {
+
+	req, _ := http.NewRequest(http.MethodGet, "/function/figlet.fn/employees", nil)
+	transformer := FunctionPrefixTrimmingURLPathTransformer{}
+	want := "/employees"
+	got := transformer.Transform(req)
+
+	if want != got {
+		t.Errorf("want: %s, got: %s", want, got)
+	}
+}
+
 func Test_Transform_RemovesFunctionPrefixWithParams(t *testing.T) {
 
 	req, _ := http.NewRequest(http.MethodGet, "/function/figlet/employees/100", nil)

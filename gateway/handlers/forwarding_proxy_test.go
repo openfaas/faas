@@ -136,6 +136,11 @@ func Test_getServiceName(t *testing.T) {
 			serviceName: "testFunc",
 		},
 		{
+			name:        "includes namespace",
+			url:         "/function/test1.fn",
+			serviceName: "test1.fn",
+		},
+		{
 			name:        "can handle request with trailing slash",
 			url:         "/function/testFunc/",
 			serviceName: "testFunc",

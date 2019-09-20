@@ -5,8 +5,10 @@ package handlers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
+	"strings"
 	"testing"
 )
 
@@ -27,6 +29,28 @@ func TestSingleHostBaseURLResolver(t *testing.T) {
 
 const watchdogPort = 8080
 
+func TestFunctionAsHostBaseURLResolver_WithNamespaceOverride(t *testing.T) {
+
+	suffix := "openfaas-fn.local.cluster.svc."
+	namespace := "openfaas-fn"
+	newNS := "production-fn"
+
+	r := FunctionAsHostBaseURLResolver{FunctionSuffix: suffix, FunctionNamespace: namespace}
+
+	req, _ := http.NewRequest(http.MethodGet, "http://localhost/function/hello."+newNS, nil)
+
+	resolved := r.Resolve(req)
+
+	newSuffix := strings.Replace(suffix, namespace, newNS, -1)
+
+	want := fmt.Sprintf("http://hello.%s:%d", newSuffix, watchdogPort)
+	log.Println(want)
+	if resolved != want {
+		t.Logf("r.Resolve failed, want: %s got: %s", want, resolved)
+		t.Fail()
+	}
+}
+
 func TestFunctionAsHostBaseURLResolver_WithSuffix(t *testing.T) {
 	suffix := "openfaas-fn.local.cluster.svc."
 	r := FunctionAsHostBaseURLResolver{FunctionSuffix: suffix}
@@ -35,7 +59,7 @@ func TestFunctionAsHostBaseURLResolver_WithSuffix(t *testing.T) {
 
 	resolved := r.Resolve(req)
 	want := fmt.Sprintf("http://hello.%s:%d", suffix, watchdogPort)
-
+	log.Println(want)
 	if resolved != want {
 		t.Logf("r.Resolve failed, want: %s got: %s", want, resolved)
 		t.Fail()
