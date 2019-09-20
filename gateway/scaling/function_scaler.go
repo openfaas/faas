@@ -36,10 +36,10 @@ type FunctionScaleResult struct {
 
 // Scale scales a function from zero replicas to 1 or the value set in
 // the minimum replicas metadata
-func (f *FunctionScaler) Scale(functionName string) FunctionScaleResult {
+func (f *FunctionScaler) Scale(functionName, namespace string) FunctionScaleResult {
 	start := time.Now()
 
-	if cachedResponse, hit := f.Cache.Get(functionName); hit &&
+	if cachedResponse, hit := f.Cache.Get(functionName, namespace); hit &&
 		cachedResponse.AvailableReplicas > 0 {
 		return FunctionScaleResult{
 			Error:     nil,
@@ -49,7 +49,7 @@ func (f *FunctionScaler) Scale(functionName string) FunctionScaleResult {
 		}
 	}
 
-	queryResponse, err := f.Config.ServiceQuery.GetReplicas(functionName)
+	queryResponse, err := f.Config.ServiceQuery.GetReplicas(functionName, namespace)
 
 	if err != nil {
 		return FunctionScaleResult{
@@ -60,7 +60,7 @@ func (f *FunctionScaler) Scale(functionName string) FunctionScaleResult {
 		}
 	}
 
-	f.Cache.Set(functionName, queryResponse)
+	f.Cache.Set(functionName, namespace, queryResponse)
 
 	if queryResponse.AvailableReplicas == 0 {
 		minReplicas := uint64(1)
@@ -69,19 +69,19 @@ func (f *FunctionScaler) Scale(functionName string) FunctionScaleResult {
 		}
 
 		scaleResult := backoff(func(attempt int) error {
-			queryResponse, err := f.Config.ServiceQuery.GetReplicas(functionName)
+			queryResponse, err := f.Config.ServiceQuery.GetReplicas(functionName, namespace)
 			if err != nil {
 				return err
 			}
 
-			f.Cache.Set(functionName, queryResponse)
+			f.Cache.Set(functionName, namespace, queryResponse)
 
 			if queryResponse.Replicas > 0 {
 				return nil
 			}
 
 			log.Printf("[Scale %d] function=%s 0 => %d requested", attempt, functionName, minReplicas)
-			setScaleErr := f.Config.ServiceQuery.SetReplicas(functionName, minReplicas)
+			setScaleErr := f.Config.ServiceQuery.SetReplicas(functionName, namespace, minReplicas)
 			if setScaleErr != nil {
 				return fmt.Errorf("unable to scale function [%s], err: %s", functionName, setScaleErr)
 			}
@@ -100,9 +100,9 @@ func (f *FunctionScaler) Scale(functionName string) FunctionScaleResult {
 		}
 
 		for i := 0; i < int(f.Config.MaxPollCount); i++ {
-			queryResponse, err := f.Config.ServiceQuery.GetReplicas(functionName)
+			queryResponse, err := f.Config.ServiceQuery.GetReplicas(functionName, namespace)
 			if err == nil {
-				f.Cache.Set(functionName, queryResponse)
+				f.Cache.Set(functionName, namespace, queryResponse)
 			}
 			totalTime := time.Since(start)
 

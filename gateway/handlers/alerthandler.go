@@ -16,7 +16,7 @@ import (
 )
 
 // MakeAlertHandler handles alerts from Prometheus Alertmanager
-func MakeAlertHandler(service scaling.ServiceQuery) http.HandlerFunc {
+func MakeAlertHandler(service scaling.ServiceQuery, defaultNamespace string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Alert received.")
@@ -42,7 +42,7 @@ func MakeAlertHandler(service scaling.ServiceQuery) http.HandlerFunc {
 			return
 		}
 
-		errors := handleAlerts(&req, service)
+		errors := handleAlerts(&req, service, defaultNamespace)
 		if len(errors) > 0 {
 			log.Println(errors)
 			var errorOutput string
@@ -58,10 +58,10 @@ func MakeAlertHandler(service scaling.ServiceQuery) http.HandlerFunc {
 	}
 }
 
-func handleAlerts(req *requests.PrometheusAlert, service scaling.ServiceQuery) []error {
+func handleAlerts(req *requests.PrometheusAlert, service scaling.ServiceQuery, defaultNamespace string) []error {
 	var errors []error
 	for _, alert := range req.Alerts {
-		if err := scaleService(alert, service); err != nil {
+		if err := scaleService(alert, service, defaultNamespace); err != nil {
 			log.Println(err)
 			errors = append(errors, err)
 		}
@@ -70,12 +70,13 @@ func handleAlerts(req *requests.PrometheusAlert, service scaling.ServiceQuery) [
 	return errors
 }
 
-func scaleService(alert requests.PrometheusInnerAlert, service scaling.ServiceQuery) error {
+func scaleService(alert requests.PrometheusInnerAlert, service scaling.ServiceQuery, defaultNamespace string) error {
 	var err error
-	serviceName := alert.Labels.FunctionName
+
+	serviceName, namespace := getNamespace(defaultNamespace, alert.Labels.FunctionName)
 
 	if len(serviceName) > 0 {
-		queryResponse, getErr := service.GetReplicas(serviceName)
+		queryResponse, getErr := service.GetReplicas(serviceName, namespace)
 		if getErr == nil {
 			status := alert.Status
 
@@ -86,7 +87,7 @@ func scaleService(alert requests.PrometheusInnerAlert, service scaling.ServiceQu
 				return nil
 			}
 
-			updateErr := service.SetReplicas(serviceName, newReplicas)
+			updateErr := service.SetReplicas(serviceName, namespace, newReplicas)
 			if updateErr != nil {
 				err = updateErr
 			}

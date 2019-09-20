@@ -29,22 +29,22 @@ type FunctionCache struct {
 }
 
 // Set replica count for functionName
-func (fc *FunctionCache) Set(functionName string, serviceQueryResponse ServiceQueryResponse) {
+func (fc *FunctionCache) Set(functionName, namespace string, serviceQueryResponse ServiceQueryResponse) {
 	fc.Sync.Lock()
 	defer fc.Sync.Unlock()
 
-	if _, exists := fc.Cache[functionName]; !exists {
-		fc.Cache[functionName] = &FunctionMeta{}
+	if _, exists := fc.Cache[functionName+"."+namespace]; !exists {
+		fc.Cache[functionName+"."+namespace] = &FunctionMeta{}
 	}
 
-	fc.Cache[functionName].LastRefresh = time.Now()
-	fc.Cache[functionName].ServiceQueryResponse = serviceQueryResponse
+	fc.Cache[functionName+"."+namespace].LastRefresh = time.Now()
+	fc.Cache[functionName+"."+namespace].ServiceQueryResponse = serviceQueryResponse
 	// entry.LastRefresh = time.Now()
 	// entry.ServiceQueryResponse = serviceQueryResponse
 }
 
 // Get replica count for functionName
-func (fc *FunctionCache) Get(functionName string) (ServiceQueryResponse, bool) {
+func (fc *FunctionCache) Get(functionName, namespace string) (ServiceQueryResponse, bool) {
 	replicas := ServiceQueryResponse{
 		AvailableReplicas: 0,
 	}
@@ -53,7 +53,7 @@ func (fc *FunctionCache) Get(functionName string) (ServiceQueryResponse, bool) {
 	fc.Sync.RLock()
 	defer fc.Sync.RUnlock()
 
-	if val, exists := fc.Cache[functionName]; exists {
+	if val, exists := fc.Cache[functionName+"."+namespace]; exists {
 		replicas = val.ServiceQueryResponse
 		hit = !val.Expired(fc.Expiry)
 	}
