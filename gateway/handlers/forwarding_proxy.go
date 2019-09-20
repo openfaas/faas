@@ -65,12 +65,9 @@ func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy,
 			log.Printf("error with upstream request to: %s, %s\n", requestURL, err.Error())
 		}
 
-		// defer func() {
 		for _, notifier := range notifiers {
 			notifier.Notify(r.Method, requestURL, originalURL, statusCode, seconds)
 		}
-		// }()
-
 	}
 }
 
@@ -89,6 +86,7 @@ func buildUpstreamRequest(r *http.Request, baseURL string, requestURL string) *h
 	if len(r.Host) > 0 && upstreamReq.Header.Get("X-Forwarded-Host") == "" {
 		upstreamReq.Header["X-Forwarded-Host"] = []string{r.Host}
 	}
+
 	if upstreamReq.Header.Get("X-Forwarded-For") == "" {
 		upstreamReq.Header["X-Forwarded-For"] = []string{r.RemoteAddr}
 	}

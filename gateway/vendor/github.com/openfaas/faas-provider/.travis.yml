@@ -1,4 +1,0 @@
-language: go
-go_import_path: github.com/openfaas/faas-provider
-script:
-  - make test
