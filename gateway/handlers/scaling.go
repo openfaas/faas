@@ -30,14 +30,13 @@ func MakeScalingHandler(next http.HandlerFunc, config scaling.ScalingConfig, def
 
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		functionName := getServiceName(r.URL.String())
-		_, namespace := getNamespace(defaultNamespace, functionName)
+		functionName, namespace := getNamespace(defaultNamespace, getServiceName(r.URL.String()))
 
 		res := scaler.Scale(functionName, namespace)
 
 		if !res.Found {
-			errStr := fmt.Sprintf("error finding function %s: %s", functionName, res.Error.Error())
-			log.Printf("Scaling: %s", errStr)
+			errStr := fmt.Sprintf("error finding function %s.%s: %s", functionName, namespace, res.Error.Error())
+			log.Printf("Scaling: %s\n", errStr)
 
 			w.WriteHeader(http.StatusNotFound)
 			w.Write([]byte(errStr))
@@ -45,8 +44,8 @@ func MakeScalingHandler(next http.HandlerFunc, config scaling.ScalingConfig, def
 		}
 
 		if res.Error != nil {
-			errStr := fmt.Sprintf("error finding function %s: %s", functionName, res.Error.Error())
-			log.Printf("Scaling: %s", errStr)
+			errStr := fmt.Sprintf("error finding function %s.%s: %s", functionName, namespace, res.Error.Error())
+			log.Printf("Scaling: %s\n", errStr)
 
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(errStr))
@@ -58,6 +57,6 @@ func MakeScalingHandler(next http.HandlerFunc, config scaling.ScalingConfig, def
 			return
 		}
 
-		log.Printf("[Scale] function=%s 0=>N timed-out after %f seconds", functionName, res.Duration.Seconds())
+		log.Printf("[Scale] function=%s.%s 0=>N timed-out after %f seconds\n", functionName, namespace, res.Duration.Seconds())
 	}
 }
