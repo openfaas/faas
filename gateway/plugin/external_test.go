@@ -52,7 +52,7 @@ func TestGetReplicasNonExistentFn(t *testing.T) {
 
 	esq := NewExternalServiceQuery(*url, injector)
 
-	svcQryResp, err := esq.GetReplicas("burt")
+	svcQryResp, err := esq.GetReplicas("figlet", "")
 
 	if err == nil {
 		t.Logf("Error was nil, expected non-nil - the service query response value was %+v ", svcQryResp)
@@ -82,7 +82,7 @@ func TestGetReplicasExistentFn(t *testing.T) {
 
 	esq := NewExternalServiceQuery(*url, injector)
 
-	svcQryResp, err := esq.GetReplicas("burt")
+	svcQryResp, err := esq.GetReplicas("figlet", "")
 
 	if err != nil {
 		t.Logf("Expected err to be nil got: %s ", err.Error())
@@ -106,7 +106,7 @@ func TestSetReplicasNonExistentFn(t *testing.T) {
 	url, _ := url.Parse(testServer.URL + "/")
 	esq := NewExternalServiceQuery(*url, injector)
 
-	err := esq.SetReplicas("burt", 1)
+	err := esq.SetReplicas("figlet", "", 1)
 
 	expectedErrStr := "error scaling HTTP code 500"
 
@@ -129,7 +129,7 @@ func TestSetReplicasExistentFn(t *testing.T) {
 	url, _ := url.Parse(testServer.URL + "/")
 	esq := NewExternalServiceQuery(*url, injector)
 
-	err := esq.SetReplicas("burt", 1)
+	err := esq.SetReplicas("figlet", "", 1)
 
 	if err != nil {
 		t.Logf("Expected err to be nil got: %s ", err.Error())

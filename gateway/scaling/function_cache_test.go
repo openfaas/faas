@@ -12,7 +12,7 @@ func Test_LastRefreshSet(t *testing.T) {
 	before := time.Now()
 
 	fnName := "echo"
-
+	namespace := ""
 	cache := FunctionCache{
 		Cache:  make(map[string]*FunctionMeta),
 		Expiry: time.Millisecond * 1,
@@ -23,14 +23,14 @@ func Test_LastRefreshSet(t *testing.T) {
 		t.Fail()
 	}
 
-	cache.Set(fnName, ServiceQueryResponse{AvailableReplicas: 1})
+	cache.Set(fnName, "", ServiceQueryResponse{AvailableReplicas: 1})
 
-	if _, exists := cache.Cache[fnName]; !exists {
+	if _, exists := cache.Cache[fnName+"."+namespace]; !exists {
 		t.Errorf("Expected entry to exist after setting %s", fnName)
 		t.Fail()
 	}
 
-	if cache.Cache[fnName].LastRefresh.Before(before) {
+	if cache.Cache[fnName+"."+namespace].LastRefresh.Before(before) {
 		t.Errorf("Expected LastRefresh for function to have been after start of test")
 		t.Fail()
 	}
@@ -38,16 +38,16 @@ func Test_LastRefreshSet(t *testing.T) {
 
 func Test_CacheExpiresIn1MS(t *testing.T) {
 	fnName := "echo"
-
+	namespace := ""
 	cache := FunctionCache{
 		Cache:  make(map[string]*FunctionMeta),
 		Expiry: time.Millisecond * 1,
 	}
 
-	cache.Set(fnName, ServiceQueryResponse{AvailableReplicas: 1})
+	cache.Set(fnName, namespace, ServiceQueryResponse{AvailableReplicas: 1})
 	time.Sleep(time.Millisecond * 2)
 
-	_, hit := cache.Get(fnName)
+	_, hit := cache.Get(fnName, namespace)
 
 	wantHit := false
 
@@ -58,15 +58,16 @@ func Test_CacheExpiresIn1MS(t *testing.T) {
 
 func Test_CacheGivesHitWithLongExpiry(t *testing.T) {
 	fnName := "echo"
+	namespace := ""
 
 	cache := FunctionCache{
 		Cache:  make(map[string]*FunctionMeta),
 		Expiry: time.Millisecond * 500,
 	}
 
-	cache.Set(fnName, ServiceQueryResponse{AvailableReplicas: 1})
+	cache.Set(fnName, namespace, ServiceQueryResponse{AvailableReplicas: 1})
+	_, hit := cache.Get(fnName, namespace)
 
-	_, hit := cache.Get(fnName)
 	wantHit := true
 
 	if hit != wantHit {
@@ -76,16 +77,17 @@ func Test_CacheGivesHitWithLongExpiry(t *testing.T) {
 
 func Test_CacheFunctionExists(t *testing.T) {
 	fnName := "echo"
+	namespace := ""
 
 	cache := FunctionCache{
 		Cache:  make(map[string]*FunctionMeta),
 		Expiry: time.Millisecond * 10,
 	}
 
-	cache.Set(fnName, ServiceQueryResponse{AvailableReplicas: 1})
+	cache.Set(fnName, namespace, ServiceQueryResponse{AvailableReplicas: 1})
 	time.Sleep(time.Millisecond * 2)
 
-	_, hit := cache.Get(fnName)
+	_, hit := cache.Get(fnName, namespace)
 
 	wantHit := true
 
@@ -93,19 +95,41 @@ func Test_CacheFunctionExists(t *testing.T) {
 		t.Errorf("hit, want: %v, got %v", wantHit, hit)
 	}
 }
-func Test_CacheFunctionNotExist(t *testing.T) {
+
+func Test_CacheFunctionExistsWithNamespace(t *testing.T) {
 	fnName := "echo"
-	testName := "burt"
+	namespace := "openfaas-fn"
 
 	cache := FunctionCache{
 		Cache:  make(map[string]*FunctionMeta),
 		Expiry: time.Millisecond * 10,
 	}
 
-	cache.Set(fnName, ServiceQueryResponse{AvailableReplicas: 1})
+	cache.Set(fnName, namespace, ServiceQueryResponse{AvailableReplicas: 1})
+
+	_, hit := cache.Get(fnName, namespace)
+
+	wantHit := true
+
+	if hit != wantHit {
+		t.Errorf("hit, want: %v, got %v", wantHit, hit)
+	}
+}
+
+func Test_CacheFunctionNotExist(t *testing.T) {
+	fnName := "echo"
+	testName := "burt"
+	namespace := ""
+
+	cache := FunctionCache{
+		Cache:  make(map[string]*FunctionMeta),
+		Expiry: time.Millisecond * 10,
+	}
+
+	cache.Set(fnName, namespace, ServiceQueryResponse{AvailableReplicas: 1})
 	time.Sleep(time.Millisecond * 2)
 
-	_, hit := cache.Get(testName)
+	_, hit := cache.Get(testName, namespace)
 
 	wantHit := false
 

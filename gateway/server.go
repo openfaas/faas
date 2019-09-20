@@ -117,9 +117,9 @@ func main() {
 	faasHandlers.InfoHandler = handlers.MakeInfoHandler(handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer, serviceAuthInjector))
 	faasHandlers.SecretHandler = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer, serviceAuthInjector)
 
-	alertHandler := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL, serviceAuthInjector)
+	externalServiceQuery := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL, serviceAuthInjector)
 	faasHandlers.Alert = handlers.MakeNotifierWrapper(
-		handlers.MakeAlertHandler(alertHandler),
+		handlers.MakeAlertHandler(externalServiceQuery, config.Namespace),
 		forwardingNotifiers,
 	)
 
@@ -190,10 +190,10 @@ func main() {
 			SetScaleRetries:      uint(20),
 			FunctionPollInterval: time.Millisecond * 50,
 			CacheExpiry:          time.Second * 5, // freshness of replica values before going stale
-			ServiceQuery:         alertHandler,
+			ServiceQuery:         externalServiceQuery,
 		}
 
-		functionProxy = handlers.MakeScalingHandler(faasHandlers.Proxy, scalingConfig)
+		functionProxy = handlers.MakeScalingHandler(faasHandlers.Proxy, scalingConfig, config.Namespace)
 	}
 
 	r.HandleFunc("/function/{name:["+NameExpression+"]+}", functionProxy)

@@ -7,23 +7,33 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/openfaas/faas/gateway/scaling"
 )
+
+func getNamespace(defaultNamespace, fullName string) (string, string) {
+	if index := strings.LastIndex(fullName, "."); index > -1 {
+		return fullName[:index], fullName[index+1:]
+	}
+	return fullName, defaultNamespace
+}
 
 // MakeScalingHandler creates handler which can scale a function from
 // zero to N replica(s). After scaling the next http.HandlerFunc will
 // be called. If the function is not ready after the configured
 // amount of attempts / queries then next will not be invoked and a status
 // will be returned to the client.
-func MakeScalingHandler(next http.HandlerFunc, config scaling.ScalingConfig) http.HandlerFunc {
+func MakeScalingHandler(next http.HandlerFunc, config scaling.ScalingConfig, defaultNamespace string) http.HandlerFunc {
 
 	scaler := scaling.NewFunctionScaler(config)
 
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		functionName := getServiceName(r.URL.String())
-		res := scaler.Scale(functionName)
+		_, namespace := getNamespace(defaultNamespace, functionName)
+
+		res := scaler.Scale(functionName, namespace)
 
 		if !res.Found {
 			errStr := fmt.Sprintf("error finding function %s: %s", functionName, res.Error.Error())
