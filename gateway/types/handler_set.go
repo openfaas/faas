@@ -14,24 +14,27 @@ type HandlerSet struct {
 
 	UpdateFunction http.HandlerFunc
 
-	// QueryFunction - queries the metdata for a function
+	// QueryFunction queries the metdata for a function
 	QueryFunction http.HandlerFunc
 
-	// QueuedProxy - queue work and return synchronous response
+	// QueuedProxy queue work and return synchronous response
 	QueuedProxy http.HandlerFunc
 
-	// AsyncReport - report a deferred execution result
+	// AsyncReport report a deferred execution result
 	AsyncReport http.HandlerFunc
 
-	// ScaleFunction allows a function to be scaled
+	// ScaleFunction enables a function to be scaled
 	ScaleFunction http.HandlerFunc
 
 	// InfoHandler provides version and build info
 	InfoHandler http.HandlerFunc
 
-	// SecretHandler allows secrets to be managed
+	// SecretHandler enables secrets to be managed
 	SecretHandler http.HandlerFunc
 
-	// LogProxyHandler allows streaming of logs for functions
+	// LogProxyHandler enables streaming of logs for functions
 	LogProxyHandler http.HandlerFunc
+
+	// NamespaceListerHandler lists namespaces
+	NamespaceListerHandler http.HandlerFunc
 }
