@@ -26,5 +26,6 @@ This is a list of adopters of OpenFaaS
 
 * [VMware](https://vmware.com) - used in "veba" VMware Event Broker Applicance to extend vSphere by adding event functionality. OpenFaaS functions and the vcenter-connector are used as an appliance. CAS / vRA8 - The Cloud Automation Services product has an option to deploy "FaaS on-premises", this actually deploys OpenFaaS white-boxed / white-labelled. [CAS Write-up from Swisscom](https://ict.swisscom.ch/2019/08/cloud-automation-services-on-prem-faas-provider-for-vsphere/)
 
-Feel free to comment on [this issue](https://github.com/openfaas/faas/issues/776), or to [send a PR], to have your logo listed on openfaas.com, contact [alex@openfaas.com](mailto:alex@openfaas.com).
+* [Ytel](https://www.ytel.com) - Ytel are a Google Cloud customer and deployed OpenFaaS vs. the vendor alternative due to its wide range of templates, Dockerfile support and easier access to services within the VPC. The Dockerfile template allowed for easy migration of existing code. The latency of transactions for customers during purchase process was reduced by offloading synchronous code to NATS which is built into OpenFaaS. OpenFaaS also allowed "hot path" code to be refactored from large services into multiple functions, to take advantage of horizontal scaling.
 
+Feel free to comment on [this issue](https://github.com/openfaas/faas/issues/776), or to [send a PR](https://github.com/openfaas/faas/edit/master/ADOPTERS.md), to have your logo listed on openfaas.com, contact [alex@openfaas.com](mailto:alex@openfaas.com).
