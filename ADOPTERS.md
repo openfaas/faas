@@ -20,7 +20,11 @@ This is a list of adopters of OpenFaaS
 
 * [Contiamo](https://www.contiamo.com) - data-science platform hosting jupyter notebooks and functions for multiple tenants.
 
-* [Dragonchain](https://dragonchain.com/) - At Dragonchain, we focus on creating a hybrid blockchain-as-a-service product, with integrations of OpenFaaS as our 'smart contract' platform, to be able to automatically run customer code based on interactions that occur on the blockchain. This allows us to be extremely flexible, as customers only have to create a docker container and give it to us in order to create a 'smart contract' which can have deep integrations with our blockchain itself.
+* [Dim Solution](https://dimsolution.com/) - "Dim Solution is using OpenFaaS in production"
+
+* [Dragonchain](https://dragonchain.com/) - "At Dragonchain, we focus on creating a hybrid blockchain-as-a-service product, with integrations of OpenFaaS as our 'smart contract' platform, to be able to automatically run customer code based on interactions that occur on the blockchain. This allows us to be extremely flexible, as customers only have to create a docker container and give it to us in order to create a 'smart contract' which can have deep integrations with our blockchain itself."
+
+* [GalaxyCard](https://www.galaxycard.in/) - "GalaxyCard is a happy user of OpenFaaS"
 
 * [GMO Internet](https://www.gmo.jp/en/)
 
@@ -28,19 +32,31 @@ This is a list of adopters of OpenFaaS
 
 * [Infotechpartners](www.infotechpartners.be)
 
+* [Intraffic](https://www.intraffic.nl/) - "Using OpenFaaS for integration and callable AI/ML models for asset management."
+
 * [LivePerson](https://www.liveperson.com/) - LivePerson extended their chat platform by allowing customers to write functions to execute in client chat flows. See [KubeCon video](https://www.youtube.com/watch?v=bt06Z28uzPA)
 
 * [MoneyLion](https://www.moneylion.com/)
 
-* [Naamio](https://naamio.cloud/) - Naamio are providing an event-based serverless API to developers to enable rapid development of decentralized applications on the cloud. By providing progressive enhancement within the developer tools, OpenFaaS has enabled Naamio to go from clustered Docker container deployments with REST APIs using Kubernetes, to load balanced deployable functions over an open event queue interface. It was key to enabling a standard multilingual development kit across cloud providers.
+* [Naamio](https://naamio.cloud/) - "Naamio are providing an event-based serverless API to developers to enable rapid development of decentralized applications on the cloud. By providing progressive enhancement within the developer tools, OpenFaaS has enabled Naamio to go from clustered Docker container deployments with REST APIs using Kubernetes, to load balanced deployable functions over an open event queue interface. It was key to enabling a standard multilingual development kit across cloud providers."
+
+* [Nexylan](nexylan.com/) - "We are a French professional hoster that use OpenFaaS in dev and production inside our private extranet. We use OpenFaaS to split our historic monolith project and then simplify development/maintainability and speed up development times."
 
 * [NGC](https://www.ngcsoftware.com/)
 
 * [Pentium Network](https://www.pentium.network/)
 
-* [Transmute Industries](https://www.transmute.industries/) - At Transmute we use OpenFaaS to develop identity and access integrations leveraging decentralized identities that integrate with legacy IAM systems. OpenFaaS helps Transmute and our customers avoid vendor lock in, encourages modularity, and helps us rapidly develop and release integrations for customers.
+* [Press Association](https://www.pressassociation.com/) - Press Association is using OpenFaaS in development and production as part of our deployment pipeline.
 
-* [Vision Banco](https://www.visionbanco.com) - self-service home banking portal and asynchronous report/PDF generation. See: [KubeCon Video](https://www.youtube.com/watch?v=mPjI34qj5vU&t=1417s)
+* [Transmute Industries](https://www.transmute.industries/) - "At Transmute we use OpenFaaS to develop identity and access integrations leveraging decentralized identities that integrate with legacy IAM systems. OpenFaaS helps Transmute and our customers avoid vendor lock in, encourages modularity, and helps us rapidly develop and release integrations for customers."
+
+* [Traversals](https://traversals.com/) - At Traversals, we use OpenFaaS for processing of incoming data. We take benefit from various programming languages available in OpenFaaS.
+
+* [UStore](http://ustore.com.br/) - "We're using OpenFaaS in production"
+
+* [Vision Banco SAECA](https://www.visionbanco.com) - self-service home banking portal and asynchronous report/PDF generation. See: [KubeCon Video](https://www.youtube.com/watch?v=mPjI34qj5vU&t=1417s)
+
+* [Virality](https://www.virality.de/)
 
 * [VMware](https://vmware.com) - used in "veba" VMware Event Broker Applicance to extend vSphere by adding event functionality. OpenFaaS functions and the vcenter-connector are used as an appliance. CAS / vRA8 - The Cloud Automation Services product has an option to deploy "FaaS on-premises", this actually deploys OpenFaaS white-boxed / white-labelled. [CAS Write-up from Swisscom](https://ict.swisscom.ch/2019/08/cloud-automation-services-on-prem-faas-provider-for-vsphere/)
 
