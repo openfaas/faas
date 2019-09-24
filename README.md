@@ -31,7 +31,7 @@ OpenFaaS&reg; (Functions as a Service) is a framework for building Serverless fu
 
 ## Overview of OpenFaaS (Serverless Functions Made Simple)
 
-![Conceptual architecture](https://pbs.twimg.com/media/DFrkF4NXoAAJwN2.jpg)
+![Conceptual architecture](/docs/of-layer-overview.png)
 
 ### Press / Branding / Website Sponsorship
 
