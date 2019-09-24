@@ -14,13 +14,31 @@ This is a list of adopters of OpenFaaS
 
 * [BT](https://www.bt.com) - BT are using OpenFaaS to enable collaboration between data-scientists and developers. The teams are going from 3-years to build and deliver a PoC, to 3 months. See: [KubeCon video](https://www.youtube.com/watch?v=y77HlN2Fa-w)
 
+* [BulletProof](https://www.bulletproof.co.uk/) - Bulletproof are using OpenFaaS to build an on demand and scalable Vulnerability Scanning (VA) engine. Using OpenFaaS allows us to use compute resource efficiently yet maintain the ability to grow to meet customer scanning demands. We also like the ability to use pure docker containers to compose multiple scanning tools with different technologies into a single, coherent interface. This has reduced the time need to add new tools to the platform.
+
 * [Citrix](https://www.citrix.com/en-gb/) - Citrix built out a closed-source multi-tenant functions platform and UI using OpenFaaS. It is used for testing hardware devices and for automated QA testing.
 
 * [Contiamo](https://www.contiamo.com) - data-science platform hosting jupyter notebooks and functions for multiple tenants.
 
+* [Dragonchain](https://dragonchain.com/) - At Dragonchain, we focus on creating a hybrid blockchain-as-a-service product, with integrations of OpenFaaS as our 'smart contract' platform, to be able to automatically run customer code based on interactions that occur on the blockchain. This allows us to be extremely flexible, as customers only have to create a docker container and give it to us in order to create a 'smart contract' which can have deep integrations with our blockchain itself.
+
+* [GMO Internet](https://www.gmo.jp/en/)
+
 * [Iconscout](https://iconscout.com) - e-commerce site for stock photography and icons. OpenFaaS is used to resize images and to bundle assets for customers.
 
+* [Infotechpartners](www.infotechpartners.be)
+
 * [LivePerson](https://www.liveperson.com/) - LivePerson extended their chat platform by allowing customers to write functions to execute in client chat flows. See [KubeCon video](https://www.youtube.com/watch?v=bt06Z28uzPA)
+
+* [MoneyLion](https://www.moneylion.com/)
+
+* [Naamio](https://naamio.cloud/) - Naamio are providing an event-based serverless API to developers to enable rapid development of decentralized applications on the cloud. By providing progressive enhancement within the developer tools, OpenFaaS has enabled Naamio to go from clustered Docker container deployments with REST APIs using Kubernetes, to load balanced deployable functions over an open event queue interface. It was key to enabling a standard multilingual development kit across cloud providers.
+
+* [NGC](https://www.ngcsoftware.com/)
+
+* [Pentium Network](https://www.pentium.network/)
+
+* [Transmute Industries](https://www.transmute.industries/) - At Transmute we use OpenFaaS to develop identity and access integrations leveraging decentralized identities that integrate with legacy IAM systems. OpenFaaS helps Transmute and our customers avoid vendor lock in, encourages modularity, and helps us rapidly develop and release integrations for customers.
 
 * [Vision Banco](https://www.visionbanco.com) - self-service home banking portal and asynchronous report/PDF generation. See: [KubeCon Video](https://www.youtube.com/watch?v=mPjI34qj5vU&t=1417s)
 
