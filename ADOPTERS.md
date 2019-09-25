@@ -18,7 +18,11 @@ This is a list of adopters of OpenFaaS
 
 * [Citrix](https://www.citrix.com/en-gb/) - Citrix built out a closed-source multi-tenant functions platform and UI using OpenFaaS. It is used for testing hardware devices and for automated QA testing.
 
+* [Civo](https://www.civo.com) - Civo Cloud provide a 1-click Kubernetes marketplace application for OpenFaaS
+
 * [Contiamo](https://www.contiamo.com) - data-science platform hosting jupyter notebooks and functions for multiple tenants.
+
+* [DigitalOcean](https://www.digitalocean.com) - DigitalOcean provide a one-click droplet and a 1-click Kubernetes marketplace application for OpenFaaS
 
 * [Dim Solution](https://dimsolution.com/) - "Dim Solution is using OpenFaaS in production"
 
