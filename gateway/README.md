@@ -13,7 +13,7 @@ In summary:
 * Scaling up from zero
 * REST API available documented with Swagger
 
-![](https://raw.githubusercontent.com/openfaas/faas/master/docs/of-overview.png)
+![OpenFaaS Gateway](https://docs.openfaas.com/images/of-conceptual-operator.png)
 
 *Pictured: conceptual architecture when Kubernetes is used as the orchestration provider*
 
