@@ -107,8 +107,7 @@ Official templates exist for many popular languages and are easily extensible wi
         .succeed(`
         <h1>
             👋 Hello World 🌍
-        </h1>
-        `)
+        </h1>`)
     }
     ```
     *handler.js*
@@ -135,7 +134,6 @@ Official templates exist for many popular languages and are easily extensible wi
         "github.com/openfaas-incubator/go-function-sdk"
     )
 
-    // Handle a function invocation
     func Handle(req handler.Request) (handler.Response, error) {
         var err error
 
