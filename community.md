@@ -58,6 +58,8 @@ It would be great to hear from you especially if you have any of the above and w
 | [OpenFaaS Bangalore meetup](https://www.meetup.com/OpenFaaS-Community/events/264414959/) | Various | Bangalore, India | 14-Sept-2019 |
 | [Chicago Kubernetes Meetup: Going Serverless w/OpenFaaS + K8s Networking Revealed](https://www.meetup.com/Chicago-Kubernetes/events/262973241) | Saba Jamalian | Chicago, USA | 24-Jul-2019 |
 | [Serverless Week](https://slsweek.netlify.com) | Several | Online, Brazil | 22-Jul-2019 to 26-Jul-2019 |
+| [Unlocking your serverless functions with OpenFaaS for AI chatbot projects](https://conferences.oreilly.com/oscon/oscon-or-2019/public/schedule/detail/76105) | Sergio Méndez @sergioarmgpl | OSCON, Portland Oregon | 17-Jul-2019 |
+| [Cloud Native Edinburgh](https://www.slideshare.net/mobile/KeiranSmith4/open-faas-and-linkerd) | Keiran Smith (@CLI) | Edinburgh Scotland | 16-Jul-2019 |
 | [Deploying Go Functions @ GoWayFest](https://goway.io) | Julien Bisconti | Minsk, Belarus | 05-Jul-2019 |
 | [Serverless Functions Frameworks : OpenFaaS Day](https://www.meetup.com/Cloud-Native-Computing-Belo-Horizonte/events/262673508/) | Marcelo Umberto and Jefferson Otoni Lima | Belo Horizonte, Brazil | 04-Jul-2019 |
 | [ContainerDays EU: Kubernetes and AWS Lambda can play nicely together with OpenFaaS](https://www.containerdays.io/program/) | Edward Wilde | ContainerDays | 25-June-2019 |
@@ -95,8 +97,6 @@ It would be great to hear from you especially if you have any of the above and w
 | [PythonPy Meetup Enero 2019](https://www.meetup.com/es-ES/Python-Paraguay/events/258171808) | Patricio Diaz | Asuncion, PY | 24-Jan-2019 |
 | [Docker and serverless: meetup](https://events.docker.com/events/details/docker-randstad-presents-docker-and-serverless/#/) | Edward Wilde | Utrecht, Netherlands | 24-Jan-2019 |
 | Docker Paraguay Meetup Enero 2019 | Patricio Diaz | Asuncion, PY | 04-Jan-2019 |
-| [Cloud Native Edinburgh](https://www.slideshare.net/mobile/KeiranSmith4/open-faas-and-linkerd) | Keiran Smith (@CLI) | Edinburgh Scotland | 16-Jul-2019 |
-| [Unlocking your serverless functions with OpenFaaS for AI chatbot projects](https://conferences.oreilly.com/oscon/oscon-or-2019/public/schedule/detail/76105) | Sergio Méndez @sergioarmgpl | OSCON, Portland Oregon | 17-Jul-2019 |
 
 #### Blog posts and write-ups 2019
 [Back to top](#openfaas-community)
