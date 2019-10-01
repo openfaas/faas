@@ -37,9 +37,9 @@ OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and 
 
 * Individual Sponsorships / End-users / Insiders Track 🍻
 
-  OpenFaaS is free to use and completely open source under the MIT license, however financial backing is required to sustain the effort to maintain and develop the project.
+  OpenFaaS is free-to-use and completely open-source under the MIT license, however financial backing is required to sustain the effort to maintain and develop the project.
   
-  Users and contributors are encouraged to join their peers in supporting the work through [GitHub Sponsors](https://insiders.openfaas.io/), all tiers gain exclusive access to the [Insiders Track](BACKERS.md)
+  Users and contributors are encouraged to join their peers in supporting the work through [GitHub Sponsors](https://insiders.openfaas.io/), all tiers gain exclusive access to the [Insiders Track](BACKERS.md).
 
 * Website Sponsorship 🌎
 
@@ -47,7 +47,7 @@ OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and 
 
 * Press / Branding 📸
 
-  For information on branding, the press-kit, registered entities and sponsorship head over to the [openfaas/media](https://github.com/openfaas/media/blob/master/README.md) repo. You can also order custom SWAG or take part in the weekly Twitter contest [#FaaSFriday](https://twitter.com/search?q=faasfriday&src=typd)
+  For information on branding, the press-kit, registered entities and sponsorship, head over to the [openfaas/media](https://github.com/openfaas/media/blob/master/README.md) repo. You can also order custom SWAG or take part in the weekly Twitter contest [#FaaSFriday](https://twitter.com/search?q=faasfriday&src=typd)
 
   Looking for statistics? This project does not use a mono-repo, but is split across several components. Use [Ken Fukuyama's dashboard](https://kenfdev.o6s.io/github-stats-page) to gather accurate counts on contributors, stars and forks across the [GitHub organisation](https://github.com/openfaas).
 
@@ -55,13 +55,13 @@ OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and 
 
 ### Governance
 
-OpenFaaS&reg; is an independent project founded by [Alex Ellis](https://www.alexellis.io) which is now being built and shaped by a growing community of contributors, GitHub Organisation members, Core contributors and end-users. OpenFaaS Ltd hosts the OpenFaaS codebase and trademarks. Professional services, sponsorships, and commercial support packages are available [upon request](mailto:sales@openfaas.com).
+OpenFaaS&reg; is an independent project founded by [Alex Ellis](https://www.alexellis.io), which is now being built and shaped by a growing community of contributors, GitHub Organisation members, core contributors and end-users. OpenFaaS Ltd hosts the OpenFaaS codebase and trademarks. Professional services, sponsorships, and commercial support packages are available [upon request](mailto:sales@openfaas.com).
 
 ### Users
 
 View a selection of end-user companies who have given permission to have their logo listed at [openfaas.com](https://www.openfaas.com/).
 
-If you're using OpenFaaS please let us know [on this thead](https://github.com/openfaas/faas/issues/776). In addition, you are welcome to request to have your logo listed on the homepage. Thank you for your support.
+If you're using OpenFaaS, please let us know [on this thead](https://github.com/openfaas/faas/issues/776). In addition, you are welcome to request to have your logo listed on the homepage. Thank you for your support!
 
 ### Technical overview
 
@@ -80,11 +80,11 @@ If you're using OpenFaaS please let us know [on this thead](https://github.com/o
 
 #### CLI
 
-Using the [faas-cli](http://github.com/openfaas/faas-cli) and `faas-cli up` you can create, build, distribute, and deploy your code in a very short period of time.
+Using the [faas-cli](http://github.com/openfaas/faas-cli) and `faas-cli up`, you can create, build, distribute, and deploy your code in a very short period of time.
 
 Any container or process in a Docker container can be a serverless workload in OpenFaaS, as long as it [conforms to The Workload Contract](https://docs.openfaas.com/reference/workloads/).
 
-Create new functions from templates for Node.js, Python, [Go](https://blog.alexellis.io/serverless-golang-with-openfaas/) and many more. If you can't find a suitable template you can also use a Dockerfile or create your own.
+Create new functions from templates for Node.js, Python, [Go](https://blog.alexellis.io/serverless-golang-with-openfaas/) and many more. If you can't find a suitable template, you can also use a Dockerfile or create your own.
 
 The CLI is effectively a RESTful client for the API Gateway. When you have OpenFaaS configured you can [get started with the CLI here](https://blog.alexellis.io/quickstart-openfaas-cli/)
 
@@ -177,7 +177,7 @@ OpenFaaS is Kubernetes-native - you can follow the [deployment guide here](http:
 
 #### Docker Swarm
 
-The deployment guide for Docker Swarm contains a simple one-line command to get you up and running in around 60 seconds. It also includes a set of [sample functions](https://github.com/openfaas/faas/tree/master/sample-functions) which you can use with the TestDrive instructions below.
+The deployment guide for Docker Swarm contains a simple one-line command to get you up and running in around 60 seconds. It also includes a set of [sample functions](https://github.com/openfaas/faas/tree/master/sample-functions), which you can use with the TestDrive instructions below.
 
 [Deployment guide for Docker Swarm](http://docs.openfaas.com/deployment/docker-swarm/)
 
@@ -185,7 +185,7 @@ The deployment guide for Docker Swarm contains a simple one-line command to get 
 
     You can quickly start OpenFaaS on Docker Swarm online using the community-run Docker playground: [Play-with-Docker](https://labs.play-with-docker.com/) (PWD)
 
-    Simply follow the deployment guide for Swarm above in a new session
+    Simply follow the deployment guide for Swarm above in a new session.
 
     > You will need a free Docker Hub account to get access. Get one here: [Docker Hub](https://hub.docker.com/)
 
@@ -199,13 +199,13 @@ Featuring a manifesto for Serverless 2.0 including comparisons and synergies bet
 
 ### How LivePerson is Tailoring its Conversational Platform Using OpenFaaS @ KubeCon 2019
 
-> Hear how LivePerson took one of the most popular open source Serverless projects (OpenFaaS) and built it into their product to add value for customers. Functions allow customers to create custom chatbot behaviour, messaging extensions and commerce workflows. You’ll see a live demo and hear about how the team put together the solution
+> Hear how LivePerson took one of the most popular open source Serverless projects (OpenFaaS) and built it into their product to add value for customers. Functions allow customers to create custom chatbot behaviour, messaging extensions and commerce workflows. You’ll see a live demo and hear about how the team put together the solution.
 
 * [Watch on YouTube](https://youtu.be/bt06Z28uzPA)
 
 ### Digital Transformation of Vision Banco Paraguay with Serverless Functions @ KubeCon late-2018
 
-Alex Ellis co-presents [at KubeCon](https://kccna18.sched.com/event/GraO/digital-transformation-of-vision-banco-paraguay-with-serverless-functions-alex-ellis-vmware-patricio-diaz-vision-banco-saeca) with Patricio Diaz Senior Analyst, Vision Banco SAECA
+Alex Ellis co-presents [at KubeCon](https://kccna18.sched.com/event/GraO/digital-transformation-of-vision-banco-paraguay-with-serverless-functions-alex-ellis-vmware-patricio-diaz-vision-banco-saeca) with Patricio Diaz Senior Analyst, Vision Banco SAECA.
 
 * [Watch on YouTube](https://youtu.be/mPjI34qj5vU)
 
@@ -229,7 +229,7 @@ Functions as a Service or FaaS was a winner in the Cool Hacks contest for Docker
 
 * [Watch my FaaS keynote at Dockercon 2017](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/)
 
-If you'd like to find the functions I used in the demos head over to the [faas-dockercon](https://github.com/alexellis/faas-dockercon/) repository.
+If you'd like to find the functions I used in the demos, head over to the [faas-dockercon](https://github.com/alexellis/faas-dockercon/) repository.
 
 **Background story**
 
