@@ -37,7 +37,7 @@ OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and 
 
 * Individual Sponsorships / End-users / Insiders Track 🍻
 
-  OpenFaaS is free to use and completely open source under the MIT license, however financial backing is required to sustain the effort to maintain and develop the project.
+  OpenFaaS is free to use and completely open-source under the MIT license, however financial backing is required to sustain the effort to maintain and develop the project.
   
   Users and contributors are encouraged to join their peers in supporting the work through [GitHub Sponsors](https://insiders.openfaas.io/), all tiers gain exclusive access to the [Insiders Track](BACKERS.md)
 
@@ -49,30 +49,30 @@ OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and 
 
   For information on branding, the press-kit, registered entities and sponsorship head over to the [openfaas/media](https://github.com/openfaas/media/blob/master/README.md) repo. You can also order custom SWAG or take part in the weekly Twitter contest [#FaaSFriday](https://twitter.com/search?q=faasfriday&src=typd)
 
-  Looking for statistics? This project does not use a mono-repo, but is split across several components. Use [Ken Fukuyama's dashboard](https://kenfdev.o6s.io/github-stats-page) to gather accurate counts on contributors, stars and forks across the [GitHub organisation](https://github.com/openfaas).
+  Looking for statistics? This project does not use a mono-repo but is split across several components. Use [Ken Fukuyama's dashboard](https://kenfdev.o6s.io/github-stats-page) to gather accurate counts on contributors, stars and forks across the [GitHub organization](https://github.com/openfaas).
 
   > Note: Incubator projects are not counted in these totals and are hosted under [openfaas-incubator](https://github.com/openfaas-incubator) awaiting graduation.
 
 ### Governance
 
-OpenFaaS&reg; is an independent project founded by [Alex Ellis](https://www.alexellis.io) which is now being built and shaped by a growing community of contributors, GitHub Organisation members, Core contributors and end-users. OpenFaaS Ltd hosts the OpenFaaS codebase and trademarks. Professional services, sponsorships, and commercial support packages are available [upon request](mailto:sales@openfaas.com).
+OpenFaaS&reg; is an independent project founded by [Alex Ellis](https://www.alexellis.io) which is now being built and shaped by a growing community of contributors, GitHub Organisation members, Core contributors, and end-users. OpenFaaS Ltd hosts the OpenFaaS codebase and trademarks. Professional services, sponsorships, and commercial support packages are available [upon request](mailto:sales@openfaas.com).
 
 ### Users
 
-View a selection of end-user companies who have given permission to have their logo listed at [openfaas.com](https://www.openfaas.com/).
+View a selection of end-user companies that have permitted to have their logo listed at [openfaas.com](https://www.openfaas.com/).
 
-If you're using OpenFaaS please let us know [on this thead](https://github.com/openfaas/faas/issues/776). In addition, you are welcome to request to have your logo listed on the homepage. Thank you for your support.
+If you're using OpenFaaS please let us know [on this thead](https://github.com/openfaas/faas/issues/776). Besides, you are welcome to request to have your logo listed on the homepage. Thank you for your support.
 
 ### Technical overview
 
 #### Function Watchdog
 
 * You can make any Docker image into a serverless function by adding the *Function Watchdog* (a tiny Golang HTTP server)
-* The *Function Watchdog* is the entrypoint allowing HTTP requests to be forwarded to the target process via STDIN or HTTP. The response is sent back to the caller by writing to STDOUT or HTTP from your application.
+* The *Function Watchdog* is the entry point allowing HTTP requests to be forwarded to the target process via STDIN or HTTP. The response is sent back to the caller by writing to STDOUT or HTTP from your application.
 
 #### API Gateway / UI Portal
 
-* The API Gateway provides an external route into your functions and collects Cloud Native metrics through Prometheus.
+* The API Gateway provides an external route into your functions and collects Cloud-Native metrics through Prometheus.
 * Your API Gateway will scale functions according to demand by altering the service replica count in the Docker Swarm or Kubernetes API.
 * A UI is baked in allowing you to invoke functions in your browser and create new ones as needed.
 
@@ -199,7 +199,7 @@ Featuring a manifesto for Serverless 2.0 including comparisons and synergies bet
 
 ### How LivePerson is Tailoring its Conversational Platform Using OpenFaaS @ KubeCon 2019
 
-> Hear how LivePerson took one of the most popular open source Serverless projects (OpenFaaS) and built it into their product to add value for customers. Functions allow customers to create custom chatbot behaviour, messaging extensions and commerce workflows. You’ll see a live demo and hear about how the team put together the solution
+> Hear how LivePerson took one of the most popular open-source Serverless projects (OpenFaaS) and built it into their product to add value for customers. Functions allow customers to create custom chatbot behavior, messaging extensions, and commerce workflows. You’ll see a live demo and hear about how the team put together the solution
 
 * [Watch on YouTube](https://youtu.be/bt06Z28uzPA)
 
@@ -221,7 +221,7 @@ Overview of the Serverless landscape for Kubernetes, OpenFaaS and OpenFaaS Cloud
 
 ### TechFieldDay presentation (Dockercon EU) late-2017
 
-15 minute overview with demos on Kubernetes and with Alexa - [HD YouTube video](https://www.youtube.com/watch?v=C3agSKv2s_w&list=PLlIapFDp305AiwA17mUNtgi5-u23eHm5j&index=1)
+15-minute overview with demos on Kubernetes and with Alexa - [HD YouTube video](https://www.youtube.com/watch?v=C3agSKv2s_w&list=PLlIapFDp305AiwA17mUNtgi5-u23eHm5j&index=1)
 
 ### Closing Keynote at Dockercon early-2017
 
@@ -242,11 +242,11 @@ Have you written a blog about OpenFaaS? Do you have a speaking event? Send a Pul
 
 * [Read blogs/articles and find events about OpenFaaS](https://github.com/openfaas/faas/blob/master/community.md)
 
-If you'd like to join OpenFaaS community Slack channel to chat with contributors or get some help then check out [this page on community](https://docs.openfaas.com/community).
+If you'd like to join the OpenFaaS community Slack channel to chat with contributors or get some help then check out [this page on community](https://docs.openfaas.com/community).
 
 ### Roadmap and contributing
 
-OpenFaaS is written in Golang and is MIT licensed - contributions are welcomed whether that means providing feedback, testing existing and new feature or hacking on the source.
+OpenFaaS is written in Golang and is MIT licensed - contributions are welcomed whether that means providing feedback, testing existing and new features or hacking on the source.
 
 #### How do I become a contributor?
 
@@ -262,7 +262,7 @@ The roadmap for OpenFaaS is represented in [GitHub issues](https://github.com/op
 
 #### Dashboards
 
-Example of a Grafana dashboards linked to OpenFaaS showing auto-scaling live in action: [here](https://grafana.com/dashboards/3526)
+Example of a Grafana dashboard linked to OpenFaaS showing auto-scaling live in action: [here](https://grafana.com/dashboards/3526)
 
 ![](https://pbs.twimg.com/media/C9caE6CXUAAX_64.jpg:large)
 
