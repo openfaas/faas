@@ -102,7 +102,9 @@ It would be great to hear from you especially if you have any of the above and w
 [Back to top](#openfaas-community)
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
-|---------------------------------------------------------------------|--------------|----------|-------------|
+|-------------------------------------------------------------------------|--------------|----------|-------------|
+| [FaaS for the Rubyist](https://blog.alexellis.io/faas-for-the-rubyist/) | Alex Ellis | alexellis.io | 2-Oct-2019 |
+| [Video: Serverless 2.0: Get Started With The PLONK Stack](https://skillsmatter.com/skillscasts/14268-serverless-2-0-get-started-with-the-plonk-stack) | Alex Ellis | skillsmatter.com | 1-Oct-2019 |
 | [Getting Started with OpenFaaS and the OpenFaaS Community Cluster](https://mickey.dev/posts/getting-started-with-openfaas/) | [Josh Michielsen](https://twitter.com/jmickey_) | mickey.dev | 30-Sept-2019 |
 | [Functions 101 - SOSC2019](https://cloud-pg.github.io/SOSC2019/events/) | Diego Ciangottini | cloud-pg.github.io | 20-Sep-2019 |
 | [Mail from Slack by OpenFaaS Cloud](https://medium.com/red-gold/mail-from-slack-by-openfaas-6eeee2228cec) | Amir Movahedi | medium.com | 31-Aug-2019 |
