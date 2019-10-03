@@ -19,6 +19,7 @@ type DeleteFunctionRequest struct {
 
 // Secret for underlying orchestrator
 type Secret struct {
-	Name  string `json:"name"`
-	Value string `json:"value,omitempty"`
+	Name      string `json:"name"`
+	Namespace string `json:"namespace"`
+	Value     string `json:"value,omitempty"`
 }
