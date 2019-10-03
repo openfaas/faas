@@ -16,10 +16,3 @@ type AsyncReport struct {
 type DeleteFunctionRequest struct {
 	FunctionName string `json:"functionName"`
 }
-
-// Secret for underlying orchestrator
-type Secret struct {
-	Name      string `json:"name"`
-	Namespace string `json:"namespace"`
-	Value     string `json:"value,omitempty"`
-}
