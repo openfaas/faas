@@ -1,3 +1,16 @@
+// Copyright 2018 The Prometheus Authors
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package procfs
 
 import (
@@ -49,19 +62,9 @@ type IPVSBackendStatus struct {
 	Weight uint64
 }
 
-// NewIPVSStats reads the IPVS statistics.
-func NewIPVSStats() (IPVSStats, error) {
-	fs, err := NewFS(DefaultMountPoint)
-	if err != nil {
-		return IPVSStats{}, err
-	}
-
-	return fs.NewIPVSStats()
-}
-
-// NewIPVSStats reads the IPVS statistics from the specified `proc` filesystem.
-func (fs FS) NewIPVSStats() (IPVSStats, error) {
-	file, err := os.Open(fs.Path("net/ip_vs_stats"))
+// IPVSStats reads the IPVS statistics from the specified `proc` filesystem.
+func (fs FS) IPVSStats() (IPVSStats, error) {
+	file, err := os.Open(fs.proc.Path("net/ip_vs_stats"))
 	if err != nil {
 		return IPVSStats{}, err
 	}
@@ -118,19 +121,9 @@ func parseIPVSStats(file io.Reader) (IPVSStats, error) {
 	return stats, nil
 }
 
-// NewIPVSBackendStatus reads and returns the status of all (virtual,real) server pairs.
-func NewIPVSBackendStatus() ([]IPVSBackendStatus, error) {
-	fs, err := NewFS(DefaultMountPoint)
-	if err != nil {
-		return []IPVSBackendStatus{}, err
-	}
-
-	return fs.NewIPVSBackendStatus()
-}
-
-// NewIPVSBackendStatus reads and returns the status of all (virtual,real) server pairs from the specified `proc` filesystem.
-func (fs FS) NewIPVSBackendStatus() ([]IPVSBackendStatus, error) {
-	file, err := os.Open(fs.Path("net/ip_vs"))
+// IPVSBackendStatus reads and returns the status of all (virtual,real) server pairs from the specified `proc` filesystem.
+func (fs FS) IPVSBackendStatus() ([]IPVSBackendStatus, error) {
+	file, err := os.Open(fs.proc.Path("net/ip_vs"))
 	if err != nil {
 		return nil, err
 	}

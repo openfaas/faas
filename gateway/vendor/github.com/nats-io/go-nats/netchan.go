@@ -52,7 +52,7 @@ func chPublish(c *EncodedConn, chVal reflect.Value, subject string) {
 				if c.Conn.isClosed() {
 					go c.Conn.Opts.AsyncErrorCB(c.Conn, nil, e)
 				} else {
-					c.Conn.ach <- func() { c.Conn.Opts.AsyncErrorCB(c.Conn, nil, e) }
+					c.Conn.ach.push(func() { c.Conn.Opts.AsyncErrorCB(c.Conn, nil, e) })
 				}
 			}
 			return
@@ -88,7 +88,7 @@ func (c *EncodedConn) bindRecvChan(subject, queue string, channel interface{}) (
 		if err := c.Enc.Decode(m.Subject, m.Data, oPtr.Interface()); err != nil {
 			c.Conn.err = errors.New("nats: Got an error trying to unmarshal: " + err.Error())
 			if c.Conn.Opts.AsyncErrorCB != nil {
-				c.Conn.ach <- func() { c.Conn.Opts.AsyncErrorCB(c.Conn, m.Sub, c.Conn.err) }
+				c.Conn.ach.push(func() { c.Conn.Opts.AsyncErrorCB(c.Conn, m.Sub, c.Conn.err) })
 			}
 			return
 		}
