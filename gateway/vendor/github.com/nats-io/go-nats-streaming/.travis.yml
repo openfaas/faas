@@ -1,26 +1,22 @@
 language: go
 sudo: false
 go:
-- 1.8.x
-- 1.9.x
-- 1.10.x
+- 1.11.x
+- 1.12.x
 install:
 - go get -t ./...
 - go get github.com/nats-io/nats-streaming-server
 - go get github.com/mattn/goveralls
 - go get github.com/wadey/gocovmerge
-- go get -u honnef.co/go/tools/cmd/megacheck
+- go get -u honnef.co/go/tools/cmd/staticcheck
 - go get -u github.com/client9/misspell/cmd/misspell
 before_script:
 - $(exit $(go fmt ./... | wc -l))
 - go vet ./...
 - misspell -error -locale US .
-- megacheck ./...
+- staticcheck ./...
 script:
 - go test -i -race ./...
 - go test -v -race ./...
 after_success:
-- if [[ "$TRAVIS_GO_VERSION" == 1.9.* ]]; then ./scripts/cov.sh TRAVIS; fi
-env:
-  global:
-    secure: OoCemKSHHH/SkkamHLWd0qh9qgQDx4/3fGuykYuzW/gjUhLlL0ThyUXOr3HOandoh3wTU8Ntj184WU6Sjh1oXzdDAYcI/ryNQXSmJ/DyGC6ffoj4Je/Rwj3sbwpaFTl1imawL8Lv6+5Dkb2JSbbbqapjbO3BhrrNfqLuQulqrLJKVaOyS5nOByiGFYsgjf/ac7Qrr9AnHhlkWRXoR+q8GlGG7qcKtLlmG5OqxifqfgQ+pcVtyeleT6zGPI0LUyr9gWHRZtMK9nYfxXuQK2d7V+SW4NBW1jdDKBHZbeJRxZ8N8rU8Nk3ka54YHXC2PeD8EloiAr5HkALuHbIdzyy40Y3rJyHfxyY6EYBcZEy+ZCRoqkVJ4NN4R46YE588BpYhT48YHK+lptM7YxrPtf08X+Cugc206X0hk/YFqqsaaNIwMfiTPbapuHxa8S4kgT2vDn3OTI53ZTrDiLVY3ZDp+EdUO1hiYFR6cpu5el/EQN5G0iW6sI69gOv26UmGI369D3fezbYPFPHHDao8xq7s8HdYUZleDNL0oCWK1MgL2g/Irbt5Kr6JjT/tpQOiiagqeR5dlV9mAiOZFr88gg7aqwOuSqmlULWVB4qYncQ6IBoednIHtrLW6H+2RfrZU01cI6tGSrXD+VoFnQ7aZwLxLc71VyN5khYPk0gGvyQhZxk=
+- if [[ "$TRAVIS_GO_VERSION" =~ 1.12 ]]; then ./scripts/cov.sh TRAVIS; fi

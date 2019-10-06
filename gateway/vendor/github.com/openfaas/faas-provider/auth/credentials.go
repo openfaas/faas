@@ -17,7 +17,7 @@ type BasicAuthCredentials struct {
 }
 
 type ReadBasicAuth interface {
-	Read() (error, *BasicAuthCredentials)
+	Read() (*BasicAuthCredentials, error)
 }
 
 type ReadBasicAuthFromDisk struct {
