@@ -107,11 +107,13 @@ It would be great to hear from you especially if you have any of the above and w
 | [FaaS for the Rubyist](https://blog.alexellis.io/faas-for-the-rubyist/) | Alex Ellis | alexellis.io | 2-Oct-2019 |
 | [Video: Serverless 2.0: Get Started With The PLONK Stack](https://skillsmatter.com/skillscasts/14268-serverless-2-0-get-started-with-the-plonk-stack) | Alex Ellis | skillsmatter.com | 1-Oct-2019 |
 | [Getting Started with OpenFaaS and the OpenFaaS Community Cluster](https://mickey.dev/posts/getting-started-with-openfaas/) | [Josh Michielsen](https://twitter.com/jmickey_) | mickey.dev | 30-Sept-2019 |
+| [Action Packed Functions](https://lucasroesler.com/2019/09/action-packed-functions/) | Lucas Roesler| lucasroesler.com| 28-Sept-2019 |
 | [Functions 101 - SOSC2019](https://cloud-pg.github.io/SOSC2019/events/) | Diego Ciangottini | cloud-pg.github.io | 20-Sep-2019 |
 | [Mail from Slack by OpenFaaS Cloud](https://medium.com/red-gold/mail-from-slack-by-openfaas-6eeee2228cec) | Amir Movahedi | medium.com | 31-Aug-2019 |
 | [Deploying Machine Learning models with OpenFaaS with Warm Start](https://medium.com/@dwipam.katariya/deploying-machine-learning-models-with-openfaas-857f1ba0e9c2) | Dwipam Katariya | medium.com | 16-Aug-2019 |
 | [How to Develop a Serverless App with OpenFaaS and Okteto](https://medium.com/okteto/how-to-develop-a-serverless-app-with-openfaas-and-okteto-d85435f0eca1) | Ramiro Berrelleza | medium.com | 13-Aug-2019 |
 | [Building your own serverless functions with k3s and OpenFaaS on Raspberry Pi](https://blog.codecentric.de/en/2019/08/serverless-functions-k3s-openfaas-raspberry-pi/) | Andreas Muttscheller | codecentric.de | 07-Aug-2019 |
+|---------------------------------------------------------------------|--------------|----------|-------------|
 | [OpenFaaS Creator on Open Source’s Community-Funding Model](https://thenewstack.io/openfaas-creator-on-open-sources-community-funding-model/) | The New Stack | thenewstack.io | 11-Jul-2009 |
 | [On-premises Serverless Computing for Event-Driven Data Processing Applications](https://www.grycap.upv.es/gmolto/publications/b2hd-Perez2019osc.html) | Alfonso Pérez | grycap.upv.es | 09-Jul-2019 |
 | [OpenFaaS multi-stage with Istio on Kubernetes](https://medium.com/@qolzam/openfaas-multi-stage-with-istio-on-kubernetes-bf184d3b6955) | Amir Movahedi | medium.com | 27-June-2019 |
@@ -124,7 +126,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Your first .NET Core Serverless function on OpenFaas](https://blogs.4dotnet.nl/your-first-net-core-serverless-function-on-openfaas/) | Erwin Staal | blogs.4dotnet.nl | 8-May-2019 |
 | [code.talks commerce 2019 - Serverless with OpenFaaS - Live Example](https://www.youtube.com/watch?v=iWt9z1Myrsc) | Lars Rieche | youtube.com | 2-May-2019 |
 | [Dockercon 19 Open Source Summit: Serverless](https://www.youtube.com/watch?v=zeXWPV09QTs) | Burton Rheutan & Pav Jimanov | youtube.com | 2-May-2019 |
-| [Handling Oracle Code Card using Python on OpenFaaS](https://blog.kube-mesh.io/handling-oracle-code-card-using-python-on-openfaas/) | Prasenjit Sarkar | blog.kube-mesh.io | 2-May-2019 | 
+| [Handling Oracle Code Card using Python on OpenFaaS](https://blog.kube-mesh.io/handling-oracle-code-card-using-python-on-openfaas/) | Prasenjit Sarkar | blog.kube-mesh.io | 2-May-2019 |
 | [Oracle Code Card met OpenFaaS](https://blog.kube-mesh.io/oracle-code-card-met-openfaas/) | Prasenjit Sarkar | blog.kube-mesh.io | 1-May-2019 |
 | [Get to grips with Serverless Kubernetes this Spring](https://www.openfaas.com/blog/spring-easter/) | Alex Ellis | openfaas.com | 18-Apr-2019 |
 | [Ansible configuration to setup a k3s cluster](https://github.com/FlorentClarret/pi-k3s-cluster) | Florent Clarret | https://github.com/FlorentClarret | 16-Apr-2019 |
