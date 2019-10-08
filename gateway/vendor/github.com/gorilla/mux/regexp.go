@@ -113,13 +113,6 @@ func newRouteRegexp(tpl string, typ regexpType, options routeRegexpOptions) (*ro
 	if typ != regexpTypePrefix {
 		pattern.WriteByte('$')
 	}
-
-	var wildcardHostPort bool
-	if typ == regexpTypeHost {
-		if !strings.Contains(pattern.String(), ":") {
-			wildcardHostPort = true
-		}
-	}
 	reverse.WriteString(raw)
 	if endSlash {
 		reverse.WriteByte('/')
@@ -138,14 +131,13 @@ func newRouteRegexp(tpl string, typ regexpType, options routeRegexpOptions) (*ro
 
 	// Done!
 	return &routeRegexp{
-		template:         template,
-		regexpType:       typ,
-		options:          options,
-		regexp:           reg,
-		reverse:          reverse.String(),
-		varsN:            varsN,
-		varsR:            varsR,
-		wildcardHostPort: wildcardHostPort,
+		template:   template,
+		regexpType: typ,
+		options:    options,
+		regexp:     reg,
+		reverse:    reverse.String(),
+		varsN:      varsN,
+		varsR:      varsR,
 	}, nil
 }
 
@@ -166,22 +158,11 @@ type routeRegexp struct {
 	varsN []string
 	// Variable regexps (validators).
 	varsR []*regexp.Regexp
-	// Wildcard host-port (no strict port match in hostname)
-	wildcardHostPort bool
 }
 
 // Match matches the regexp against the URL host or path.
 func (r *routeRegexp) Match(req *http.Request, match *RouteMatch) bool {
-	if r.regexpType == regexpTypeHost {
-		host := getHost(req)
-		if r.wildcardHostPort {
-			// Don't be strict on the port match
-			if i := strings.Index(host, ":"); i != -1 {
-				host = host[:i]
-			}
-		}
-		return r.regexp.MatchString(host)
-	} else {
+	if r.regexpType != regexpTypeHost {
 		if r.regexpType == regexpTypeQuery {
 			return r.matchQueryString(req)
 		}
@@ -191,6 +172,8 @@ func (r *routeRegexp) Match(req *http.Request, match *RouteMatch) bool {
 		}
 		return r.regexp.MatchString(path)
 	}
+
+	return r.regexp.MatchString(getHost(req))
 }
 
 // url builds a URL part using the given values.
@@ -284,7 +267,7 @@ type routeRegexpGroup struct {
 }
 
 // setMatch extracts the variables from the URL once a route matches.
-func (v routeRegexpGroup) setMatch(req *http.Request, m *RouteMatch, r *Route) {
+func (v *routeRegexpGroup) setMatch(req *http.Request, m *RouteMatch, r *Route) {
 	// Store host variables.
 	if v.host != nil {
 		host := getHost(req)
@@ -313,7 +296,7 @@ func (v routeRegexpGroup) setMatch(req *http.Request, m *RouteMatch, r *Route) {
 					} else {
 						u.Path += "/"
 					}
-					m.Handler = http.RedirectHandler(u.String(), http.StatusMovedPermanently)
+					m.Handler = http.RedirectHandler(u.String(), 301)
 				}
 			}
 		}
@@ -329,13 +312,17 @@ func (v routeRegexpGroup) setMatch(req *http.Request, m *RouteMatch, r *Route) {
 }
 
 // getHost tries its best to return the request host.
-// According to section 14.23 of RFC 2616 the Host header
-// can include the port number if the default value of 80 is not used.
 func getHost(r *http.Request) string {
 	if r.URL.IsAbs() {
 		return r.URL.Host
 	}
-	return r.Host
+	host := r.Host
+	// Slice off any port information.
+	if i := strings.Index(host, ":"); i != -1 {
+		host = host[:i]
+	}
+	return host
+
 }
 
 func extractVars(input string, matches []int, names []string, output map[string]string) {

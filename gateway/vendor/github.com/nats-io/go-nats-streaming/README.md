@@ -5,7 +5,6 @@ NATS Streaming is an extremely performant, lightweight reliable streaming platfo
 [![License Apache 2](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Build Status](https://travis-ci.org/nats-io/go-nats-streaming.svg?branch=master)](http://travis-ci.org/nats-io/go-nats-streaming)
 [![Coverage Status](https://coveralls.io/repos/nats-io/go-nats-streaming/badge.svg?branch=master)](https://coveralls.io/r/nats-io/go-nats-streaming?branch=master)
-[![GoDoc](https://godoc.org/github.com/nats-io/go-nats-streaming?status.svg)](http://godoc.org/github.com/nats-io/go-nats-streaming)
 
 NATS Streaming provides the following high-level feature set:
 - Log based persistence
@@ -28,7 +27,6 @@ go get github.com/nats-io/go-nats-streaming
 ## Basic Usage
 
 ```go
-import stan "github.com/nats-io/go-nats-streaming"
 
 sc, _ := stan.Connect(clusterID, clientID)
 
@@ -241,27 +239,6 @@ NATS Streaming subscriptions **do not** support wildcards.
 
 ## Advanced Usage
 
-### Connection configuration such as TLS, etc..
-
-If you want more advanced configuration of the underlying NATS Connection, you will need
-to create a NATS connection and pass that connection to the `stan.Connect()` call with
-the `stan.NatsConn()` option.
-
-```go
-// Create a NATS connection that you can configure the way you want
-nc, err = nats.Connect("tls://localhost:4443", nats.ClientCert("mycerts/client-cert.pem", "mycerts/client-key.pem"))
-if (err != nil)
- ...
-
-// Then pass it to the stan.Connect() call.
-sc, err = stan.Connect("test-cluster", "me", stan.NatsConn(nc))
-if (err != nil)
- ...
-
-// Note that you will be responsible for closing the NATS Connection after the streaming
-// connection has been closed.
-```
-
 ### Connection Status
 
 The fact that the NATS Streaming server and clients are not directly connected poses a challenge when it comes to know if a client is still valid.
@@ -329,6 +306,7 @@ Advanced users may wish to process these publish acknowledgements manually to ac
         }
     }
 
+    // can also use PublishAsyncWithReply(subj, replysubj, payload, ah)
     nuid, err := sc.PublishAsync("foo", []byte("Hello World"), ackHandler) // returns immediately
     if err != nil {
         log.Printf("Error publishing msg %s: %v\n", nuid, err.Error())

@@ -21,7 +21,7 @@ import (
 	"time"
 
 	// Default Encoders
-	"github.com/nats-io/go-nats/encoders/builtin"
+	. "github.com/nats-io/go-nats/encoders/builtin"
 )
 
 // Encoder interface is for all register encoders
@@ -43,9 +43,9 @@ const (
 func init() {
 	encMap = make(map[string]Encoder)
 	// Register json, gob and default encoder
-	RegisterEncoder(JSON_ENCODER, &builtin.JsonEncoder{})
-	RegisterEncoder(GOB_ENCODER, &builtin.GobEncoder{})
-	RegisterEncoder(DEFAULT_ENCODER, &builtin.DefaultEncoder{})
+	RegisterEncoder(JSON_ENCODER, &JsonEncoder{})
+	RegisterEncoder(GOB_ENCODER, &GobEncoder{})
+	RegisterEncoder(DEFAULT_ENCODER, &DefaultEncoder{})
 }
 
 // EncodedConn are the preferred way to interface with NATS. They wrap a bare connection to
@@ -67,7 +67,7 @@ func NewEncodedConn(c *Conn, encType string) (*EncodedConn, error) {
 	}
 	ec := &EncodedConn{Conn: c, Enc: EncoderForType(encType)}
 	if ec.Enc == nil {
-		return nil, fmt.Errorf("no encoder registered for '%s'", encType)
+		return nil, fmt.Errorf("No encoder registered for '%s'", encType)
 	}
 	return ec, nil
 }
@@ -207,9 +207,9 @@ func (c *EncodedConn) subscribe(subject, queue string, cb Handler) (*Subscriptio
 			}
 			if err := c.Enc.Decode(m.Subject, m.Data, oPtr.Interface()); err != nil {
 				if c.Conn.Opts.AsyncErrorCB != nil {
-					c.Conn.ach.push(func() {
+					c.Conn.ach <- func() {
 						c.Conn.Opts.AsyncErrorCB(c.Conn, m.Sub, errors.New("nats: Got an error trying to unmarshal: "+err.Error()))
-					})
+					}
 				}
 				return
 			}
@@ -252,15 +252,6 @@ func (c *EncodedConn) Flush() error {
 // all blocking calls, such as Flush(), etc.
 func (c *EncodedConn) Close() {
 	c.Conn.Close()
-}
-
-// Drain will put a connection into a drain state. All subscriptions will
-// immediately be put into a drain state. Upon completion, the publishers
-// will be drained and can not publish any additional messages. Upon draining
-// of the publishers, the connection will be closed. Use the ClosedCB()
-// option to know when the connection has moved from draining to closed.
-func (c *EncodedConn) Drain() error {
-	return c.Conn.Drain()
 }
 
 // LastError reports the last error encountered via the Connection.

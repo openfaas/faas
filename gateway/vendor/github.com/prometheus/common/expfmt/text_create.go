@@ -14,45 +14,13 @@
 package expfmt
 
 import (
-	"bufio"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"math"
-	"strconv"
 	"strings"
-	"sync"
-
-	"github.com/prometheus/common/model"
 
 	dto "github.com/prometheus/client_model/go"
-)
-
-// enhancedWriter has all the enhanced write functions needed here. bufio.Writer
-// implements it.
-type enhancedWriter interface {
-	io.Writer
-	WriteRune(r rune) (n int, err error)
-	WriteString(s string) (n int, err error)
-	WriteByte(c byte) error
-}
-
-const (
-	initialNumBufSize = 24
-)
-
-var (
-	bufPool = sync.Pool{
-		New: func() interface{} {
-			return bufio.NewWriter(ioutil.Discard)
-		},
-	}
-	numBufPool = sync.Pool{
-		New: func() interface{} {
-			b := make([]byte, 0, initialNumBufSize)
-			return &b
-		},
-	}
+	"github.com/prometheus/common/model"
 )
 
 // MetricFamilyToText converts a MetricFamily proto message into text format and
@@ -64,90 +32,37 @@ var (
 // will result in invalid text format output.
 //
 // This method fulfills the type 'prometheus.encoder'.
-func MetricFamilyToText(out io.Writer, in *dto.MetricFamily) (written int, err error) {
+func MetricFamilyToText(out io.Writer, in *dto.MetricFamily) (int, error) {
+	var written int
+
 	// Fail-fast checks.
 	if len(in.Metric) == 0 {
-		return 0, fmt.Errorf("MetricFamily has no metrics: %s", in)
+		return written, fmt.Errorf("MetricFamily has no metrics: %s", in)
 	}
 	name := in.GetName()
 	if name == "" {
-		return 0, fmt.Errorf("MetricFamily has no name: %s", in)
+		return written, fmt.Errorf("MetricFamily has no name: %s", in)
 	}
-
-	// Try the interface upgrade. If it doesn't work, we'll use a
-	// bufio.Writer from the sync.Pool.
-	w, ok := out.(enhancedWriter)
-	if !ok {
-		b := bufPool.Get().(*bufio.Writer)
-		b.Reset(out)
-		w = b
-		defer func() {
-			bErr := b.Flush()
-			if err == nil {
-				err = bErr
-			}
-			bufPool.Put(b)
-		}()
-	}
-
-	var n int
 
 	// Comments, first HELP, then TYPE.
 	if in.Help != nil {
-		n, err = w.WriteString("# HELP ")
+		n, err := fmt.Fprintf(
+			out, "# HELP %s %s\n",
+			name, escapeString(*in.Help, false),
+		)
 		written += n
 		if err != nil {
-			return
+			return written, err
 		}
-		n, err = w.WriteString(name)
-		written += n
-		if err != nil {
-			return
-		}
-		err = w.WriteByte(' ')
-		written++
-		if err != nil {
-			return
-		}
-		n, err = writeEscapedString(w, *in.Help, false)
-		written += n
-		if err != nil {
-			return
-		}
-		err = w.WriteByte('\n')
-		written++
-		if err != nil {
-			return
-		}
-	}
-	n, err = w.WriteString("# TYPE ")
-	written += n
-	if err != nil {
-		return
-	}
-	n, err = w.WriteString(name)
-	written += n
-	if err != nil {
-		return
 	}
 	metricType := in.GetType()
-	switch metricType {
-	case dto.MetricType_COUNTER:
-		n, err = w.WriteString(" counter\n")
-	case dto.MetricType_GAUGE:
-		n, err = w.WriteString(" gauge\n")
-	case dto.MetricType_SUMMARY:
-		n, err = w.WriteString(" summary\n")
-	case dto.MetricType_UNTYPED:
-		n, err = w.WriteString(" untyped\n")
-	case dto.MetricType_HISTOGRAM:
-		n, err = w.WriteString(" histogram\n")
-	default:
-		return written, fmt.Errorf("unknown metric type %s", metricType.String())
-	}
+	n, err := fmt.Fprintf(
+		out, "# TYPE %s %s\n",
+		name, strings.ToLower(metricType.String()),
+	)
 	written += n
 	if err != nil {
-		return
+		return written, err
 	}
 
 	// Finally the samples, one line for each.
@@ -160,8 +75,9 @@ func MetricFamilyToText(out io.Writer, in *dto.MetricFamily) (written int, err e
 				)
 			}
 			n, err = writeSample(
-				w, name, "", metric, "", 0,
+				name, metric, "", "",
 				metric.Counter.GetValue(),
+				out,
 			)
 		case dto.MetricType_GAUGE:
 			if metric.Gauge == nil {
@@ -170,8 +86,9 @@ func MetricFamilyToText(out io.Writer, in *dto.MetricFamily) (written int, err e
 				)
 			}
 			n, err = writeSample(
-				w, name, "", metric, "", 0,
+				name, metric, "", "",
 				metric.Gauge.GetValue(),
+				out,
 			)
 		case dto.MetricType_UNTYPED:
 			if metric.Untyped == nil {
@@ -180,8 +97,9 @@ func MetricFamilyToText(out io.Writer, in *dto.MetricFamily) (written int, err e
 				)
 			}
 			n, err = writeSample(
-				w, name, "", metric, "", 0,
+				name, metric, "", "",
 				metric.Untyped.GetValue(),
+				out,
 			)
 		case dto.MetricType_SUMMARY:
 			if metric.Summary == nil {
@@ -191,26 +109,29 @@ func MetricFamilyToText(out io.Writer, in *dto.MetricFamily) (written int, err e
 			}
 			for _, q := range metric.Summary.Quantile {
 				n, err = writeSample(
-					w, name, "", metric,
-					model.QuantileLabel, q.GetQuantile(),
+					name, metric,
+					model.QuantileLabel, fmt.Sprint(q.GetQuantile()),
 					q.GetValue(),
+					out,
 				)
 				written += n
 				if err != nil {
-					return
+					return written, err
 				}
 			}
 			n, err = writeSample(
-				w, name, "_sum", metric, "", 0,
+				name+"_sum", metric, "", "",
 				metric.Summary.GetSampleSum(),
+				out,
 			)
-			written += n
 			if err != nil {
-				return
+				return written, err
 			}
+			written += n
 			n, err = writeSample(
-				w, name, "_count", metric, "", 0,
+				name+"_count", metric, "", "",
 				float64(metric.Summary.GetSampleCount()),
+				out,
 			)
 		case dto.MetricType_HISTOGRAM:
 			if metric.Histogram == nil {
@@ -219,42 +140,46 @@ func MetricFamilyToText(out io.Writer, in *dto.MetricFamily) (written int, err e
 				)
 			}
 			infSeen := false
-			for _, b := range metric.Histogram.Bucket {
+			for _, q := range metric.Histogram.Bucket {
 				n, err = writeSample(
-					w, name, "_bucket", metric,
-					model.BucketLabel, b.GetUpperBound(),
-					float64(b.GetCumulativeCount()),
+					name+"_bucket", metric,
+					model.BucketLabel, fmt.Sprint(q.GetUpperBound()),
+					float64(q.GetCumulativeCount()),
+					out,
 				)
 				written += n
 				if err != nil {
-					return
+					return written, err
 				}
-				if math.IsInf(b.GetUpperBound(), +1) {
+				if math.IsInf(q.GetUpperBound(), +1) {
 					infSeen = true
 				}
 			}
 			if !infSeen {
 				n, err = writeSample(
-					w, name, "_bucket", metric,
-					model.BucketLabel, math.Inf(+1),
+					name+"_bucket", metric,
+					model.BucketLabel, "+Inf",
 					float64(metric.Histogram.GetSampleCount()),
+					out,
 				)
-				written += n
 				if err != nil {
-					return
+					return written, err
 				}
+				written += n
 			}
 			n, err = writeSample(
-				w, name, "_sum", metric, "", 0,
+				name+"_sum", metric, "", "",
 				metric.Histogram.GetSampleSum(),
+				out,
 			)
-			written += n
 			if err != nil {
-				return
+				return written, err
 			}
+			written += n
 			n, err = writeSample(
-				w, name, "_count", metric, "", 0,
+				name+"_count", metric, "", "",
 				float64(metric.Histogram.GetSampleCount()),
+				out,
 			)
 		default:
 			return written, fmt.Errorf(
@@ -263,204 +188,116 @@ func MetricFamilyToText(out io.Writer, in *dto.MetricFamily) (written int, err e
 		}
 		written += n
 		if err != nil {
-			return
+			return written, err
 		}
 	}
-	return
+	return written, nil
 }
 
-// writeSample writes a single sample in text format to w, given the metric
+// writeSample writes a single sample in text format to out, given the metric
 // name, the metric proto message itself, optionally an additional label name
-// with a float64 value (use empty string as label name if not required), and
-// the value. The function returns the number of bytes written and any error
-// encountered.
+// and value (use empty strings if not required), and the value. The function
+// returns the number of bytes written and any error encountered.
 func writeSample(
-	w enhancedWriter,
-	name, suffix string,
+	name string,
 	metric *dto.Metric,
-	additionalLabelName string, additionalLabelValue float64,
+	additionalLabelName, additionalLabelValue string,
 	value float64,
+	out io.Writer,
 ) (int, error) {
 	var written int
-	n, err := w.WriteString(name)
+	n, err := fmt.Fprint(out, name)
 	written += n
 	if err != nil {
 		return written, err
 	}
-	if suffix != "" {
-		n, err = w.WriteString(suffix)
-		written += n
-		if err != nil {
-			return written, err
-		}
-	}
-	n, err = writeLabelPairs(
-		w, metric.Label, additionalLabelName, additionalLabelValue,
+	n, err = labelPairsToText(
+		metric.Label,
+		additionalLabelName, additionalLabelValue,
+		out,
 	)
 	written += n
 	if err != nil {
 		return written, err
 	}
-	err = w.WriteByte(' ')
-	written++
-	if err != nil {
-		return written, err
-	}
-	n, err = writeFloat(w, value)
+	n, err = fmt.Fprintf(out, " %v", value)
 	written += n
 	if err != nil {
 		return written, err
 	}
 	if metric.TimestampMs != nil {
-		err = w.WriteByte(' ')
-		written++
-		if err != nil {
-			return written, err
-		}
-		n, err = writeInt(w, *metric.TimestampMs)
+		n, err = fmt.Fprintf(out, " %v", *metric.TimestampMs)
 		written += n
 		if err != nil {
 			return written, err
 		}
 	}
-	err = w.WriteByte('\n')
-	written++
+	n, err = out.Write([]byte{'\n'})
+	written += n
 	if err != nil {
 		return written, err
 	}
 	return written, nil
 }
 
-// writeLabelPairs converts a slice of LabelPair proto messages plus the
+// labelPairsToText converts a slice of LabelPair proto messages plus the
 // explicitly given additional label pair into text formatted as required by the
-// text format and writes it to 'w'. An empty slice in combination with an empty
-// string 'additionalLabelName' results in nothing being written. Otherwise, the
-// label pairs are written, escaped as required by the text format, and enclosed
-// in '{...}'. The function returns the number of bytes written and any error
-// encountered.
-func writeLabelPairs(
-	w enhancedWriter,
+// text format and writes it to 'out'. An empty slice in combination with an
+// empty string 'additionalLabelName' results in nothing being
+// written. Otherwise, the label pairs are written, escaped as required by the
+// text format, and enclosed in '{...}'. The function returns the number of
+// bytes written and any error encountered.
+func labelPairsToText(
 	in []*dto.LabelPair,
-	additionalLabelName string, additionalLabelValue float64,
+	additionalLabelName, additionalLabelValue string,
+	out io.Writer,
 ) (int, error) {
 	if len(in) == 0 && additionalLabelName == "" {
 		return 0, nil
 	}
-	var (
-		written   int
-		separator byte = '{'
-	)
+	var written int
+	separator := '{'
 	for _, lp := range in {
-		err := w.WriteByte(separator)
-		written++
-		if err != nil {
-			return written, err
-		}
-		n, err := w.WriteString(lp.GetName())
+		n, err := fmt.Fprintf(
+			out, `%c%s="%s"`,
+			separator, lp.GetName(), escapeString(lp.GetValue(), true),
+		)
 		written += n
-		if err != nil {
-			return written, err
-		}
-		n, err = w.WriteString(`="`)
-		written += n
-		if err != nil {
-			return written, err
-		}
-		n, err = writeEscapedString(w, lp.GetValue(), true)
-		written += n
-		if err != nil {
-			return written, err
-		}
-		err = w.WriteByte('"')
-		written++
 		if err != nil {
 			return written, err
 		}
 		separator = ','
 	}
 	if additionalLabelName != "" {
-		err := w.WriteByte(separator)
-		written++
-		if err != nil {
-			return written, err
-		}
-		n, err := w.WriteString(additionalLabelName)
+		n, err := fmt.Fprintf(
+			out, `%c%s="%s"`,
+			separator, additionalLabelName,
+			escapeString(additionalLabelValue, true),
+		)
 		written += n
-		if err != nil {
-			return written, err
-		}
-		n, err = w.WriteString(`="`)
-		written += n
-		if err != nil {
-			return written, err
-		}
-		n, err = writeFloat(w, additionalLabelValue)
-		written += n
-		if err != nil {
-			return written, err
-		}
-		err = w.WriteByte('"')
-		written++
 		if err != nil {
 			return written, err
 		}
 	}
-	err := w.WriteByte('}')
-	written++
+	n, err := out.Write([]byte{'}'})
+	written += n
 	if err != nil {
 		return written, err
 	}
 	return written, nil
 }
 
-// writeEscapedString replaces '\' by '\\', new line character by '\n', and - if
-// includeDoubleQuote is true - '"' by '\"'.
 var (
-	escaper       = strings.NewReplacer("\\", `\\`, "\n", `\n`)
-	quotedEscaper = strings.NewReplacer("\\", `\\`, "\n", `\n`, "\"", `\"`)
+	escape                = strings.NewReplacer("\\", `\\`, "\n", `\n`)
+	escapeWithDoubleQuote = strings.NewReplacer("\\", `\\`, "\n", `\n`, "\"", `\"`)
 )
 
-func writeEscapedString(w enhancedWriter, v string, includeDoubleQuote bool) (int, error) {
+// escapeString replaces '\' by '\\', new line character by '\n', and - if
+// includeDoubleQuote is true - '"' by '\"'.
+func escapeString(v string, includeDoubleQuote bool) string {
 	if includeDoubleQuote {
-		return quotedEscaper.WriteString(w, v)
-	} else {
-		return escaper.WriteString(w, v)
+		return escapeWithDoubleQuote.Replace(v)
 	}
-}
 
-// writeFloat is equivalent to fmt.Fprint with a float64 argument but hardcodes
-// a few common cases for increased efficiency. For non-hardcoded cases, it uses
-// strconv.AppendFloat to avoid allocations, similar to writeInt.
-func writeFloat(w enhancedWriter, f float64) (int, error) {
-	switch {
-	case f == 1:
-		return 1, w.WriteByte('1')
-	case f == 0:
-		return 1, w.WriteByte('0')
-	case f == -1:
-		return w.WriteString("-1")
-	case math.IsNaN(f):
-		return w.WriteString("NaN")
-	case math.IsInf(f, +1):
-		return w.WriteString("+Inf")
-	case math.IsInf(f, -1):
-		return w.WriteString("-Inf")
-	default:
-		bp := numBufPool.Get().(*[]byte)
-		*bp = strconv.AppendFloat((*bp)[:0], f, 'g', -1, 64)
-		written, err := w.Write(*bp)
-		numBufPool.Put(bp)
-		return written, err
-	}
-}
-
-// writeInt is equivalent to fmt.Fprint with an int64 argument but uses
-// strconv.AppendInt with a byte slice taken from a sync.Pool to avoid
-// allocations.
-func writeInt(w enhancedWriter, i int64) (int, error) {
-	bp := numBufPool.Get().(*[]byte)
-	*bp = strconv.AppendInt((*bp)[:0], i, 10)
-	written, err := w.Write(*bp)
-	numBufPool.Put(bp)
-	return written, err
+	return escape.Replace(v)
 }

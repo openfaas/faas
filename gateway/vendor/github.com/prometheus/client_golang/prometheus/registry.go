@@ -325,17 +325,9 @@ func (r *Registry) Register(c Collector) error {
 		return nil
 	}
 	if existing, exists := r.collectorsByID[collectorID]; exists {
-		switch e := existing.(type) {
-		case *wrappingCollector:
-			return AlreadyRegisteredError{
-				ExistingCollector: e.unwrapRecursively(),
-				NewCollector:      c,
-			}
-		default:
-			return AlreadyRegisteredError{
-				ExistingCollector: e,
-				NewCollector:      c,
-			}
+		return AlreadyRegisteredError{
+			ExistingCollector: existing,
+			NewCollector:      c,
 		}
 	}
 	// If the collectorID is new, but at least one of the descs existed
@@ -688,7 +680,7 @@ func processMetric(
 // Gatherers is a slice of Gatherer instances that implements the Gatherer
 // interface itself. Its Gather method calls Gather on all Gatherers in the
 // slice in order and returns the merged results. Errors returned from the
-// Gather calls are all returned in a flattened MultiError. Duplicate and
+// Gather calles are all returned in a flattened MultiError. Duplicate and
 // inconsistent Metrics are skipped (first occurrence in slice order wins) and
 // reported in the returned error.
 //
