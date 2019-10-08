@@ -6,6 +6,8 @@ set -e
 
 docker service update func_gateway --image=openfaas/gateway:latest-dev
 
+docker service ps --no-trunc func_gateway
+
 # Script makes sure OpenFaaS API gateway is ready before running tests
 wait_success=false
 for i in {1..30};
