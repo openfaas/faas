@@ -9,5 +9,7 @@ RUN apk add --no-cache nmap
 
 ENV fprocess="xargs nmap"
 
+RUN addgroup -g 1000 -S app && adduser -u 1000 -S app -G app
+USER 1000
 
 CMD ["fwatchdog"]
