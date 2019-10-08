@@ -21,4 +21,7 @@ RUN chmod +x /usr/bin/fwatchdog
 COPY --from=builder /go/bin/MarkdownRender  /usr/bin/MarkdownRender
 ENV fprocess "/usr/bin/MarkdownRender"
 
+RUN addgroup -g 1000 -S app && adduser -u 1000 -S app -G app
+USER 1000
+
 CMD ["/usr/bin/fwatchdog"]
