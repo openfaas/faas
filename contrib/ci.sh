@@ -4,9 +4,11 @@ set -e
 
 ./deploy_stack.sh --no-auth
 
-docker service update func_gateway --image=openfaas/gateway:latest-dev
-
-docker service ps --no-trunc func_gateway
+# The timeout is required on Travis due to some tasks not starting in
+# time and being deemed to have failed.
+docker service update func_gateway --image=openfaas/gateway:latest-dev \
+  --update-failure-action=continue \
+  --update-monitor=20s
 
 # Script makes sure OpenFaaS API gateway is ready before running tests
 wait_success=false
