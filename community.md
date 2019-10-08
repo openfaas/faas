@@ -57,6 +57,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Serverless 2.0: Get Started With The PLONK Stack](https://skillsmatter.com/conferences/11723-cloudnative-london-2019#program) | Alex Ellis | London, UK | 27-Sept-2019 |
 | [Serverless and the road to portability](https://techin.finance/featured-speaker-edward-wilde/) | Edward Wilde | Malaga, Spain | 20-Sept-2019 |
 | [OpenFaaS Bangalore meetup](https://www.meetup.com/OpenFaaS-Community/events/264414959/) | Various | Bangalore, India | 14-Sept-2019 |
+| [OpenFaaS Community Call - August](https://www.youtube.com/watch?v=hhlqA78V8Jo) | Various | Online webinar | 02-Aug-2019 |
 | [Chicago Kubernetes Meetup: Going Serverless w/OpenFaaS + K8s Networking Revealed](https://www.meetup.com/Chicago-Kubernetes/events/262973241) | Saba Jamalian | Chicago, USA | 24-Jul-2019 |
 | [Serverless Week](https://slsweek.netlify.com) | Several | Online, Brazil | 22-Jul-2019 to 26-Jul-2019 |
 | [Unlocking your serverless functions with OpenFaaS for AI chatbot projects](https://conferences.oreilly.com/oscon/oscon-or-2019/public/schedule/detail/76105) | Sergio Méndez @sergioarmgpl | OSCON, Portland Oregon | 17-Jul-2019 |
