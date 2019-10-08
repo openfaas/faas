@@ -20,4 +20,7 @@ RUN chmod +x /usr/bin/fwatchdog
 COPY --from=builder /go/bin/WebhookStash  /usr/bin/WebhookStash
 ENV fprocess "/usr/bin/WebhookStash"
 
+RUN addgroup -g 1000 -S app && adduser -u 1000 -S app -G app
+USER 1000
+
 CMD ["/usr/bin/fwatchdog"]
