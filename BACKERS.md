@@ -38,7 +38,10 @@ Become a sponsor of openfaas.com and connect your brand to one of the fastest-gr
 
 #### Platinum Sponsors (homepage sponsor)
 
+<a href="https://digitalocean.com"><img alt="DigitalOcean" src="https://www.openfaas.com/images/sponsors/digitalocean.svg" width="125px" /></a>
+
 <a href="https://rancher.com"><img alt="Rancher" src="https://www.openfaas.com/images/sponsors/rancher-logo-stacked-color.svg" width="125px" /></a>
+
 
 #### Gold Sponsors (homepage sponsor)
 
@@ -53,6 +56,8 @@ Become a sponsor of openfaas.com and connect your brand to one of the fastest-gr
 <a href="https://www.contiamo.com"><img alt="Contiamo" src="https://docs.openfaas.com/images/logos/contiamo.svg" width="100px" /></a>
 
 <a href="https://www.form3.tech"><img alt="Form3 Tech" src="https://docs.openfaas.com/images/logos/form3.svg" width="100px" /></a>
+
+<a href="https://dragonchain.com"><img alt="Dragonchain" src="https://www.openfaas.com/images/users-logos/dragonchain.svg" width="100px" /></a>
 
 * [Brandon Lamb](https://github.com/brandonlamb)
 
