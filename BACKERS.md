@@ -42,6 +42,7 @@ Become a sponsor of openfaas.com and connect your brand to one of the fastest-gr
 
 <a href="https://rancher.com"><img alt="Rancher" src="https://www.openfaas.com/images/sponsors/rancher-logo-stacked-color.svg" width="125px" /></a>
 
+<a href="https://dx.no"><img alt="DX" src="https://www.openfaas.com/images/users-logos/dx.png" width="125px" /></a>
 
 #### Gold Sponsors (homepage sponsor)
 
