@@ -93,23 +93,32 @@
   version = "v1.0.1"
 
 [[projects]]
-  digest = "1:340f4e2e095ead4e0a15b4646da3e4533f8b6520e3a382eaf586e8166f3bbcb5"
+  digest = "1:7185714c9e0d3e7f49516df22328ab92e56d3397499d8c77be7f65856599a939"
   name = "github.com/openfaas/faas"
-  packages = ["gateway/queue"]
+  packages = [
+    "gateway/handlers",
+    "gateway/metrics",
+    "gateway/plugin",
+    "gateway/queue",
+    "gateway/requests",
+    "gateway/scaling",
+    "gateway/types",
+    "gateway/version",
+  ]
   pruneopts = "UT"
   revision = "bfa869ec8c0c04c26c5b0ed434bc367e712dcaef"
   version = "0.10.2"
 
 [[projects]]
-  digest = "1:4a97aa8ada0b2f865ca69a3a3bc0a2524c24f31c578c995d5c52cecb6913a9dc"
+  digest = "1:63153ec3ac1c4e93e615b6f5b271a35ad8ced327eba70530903edac0b1f3e652"
   name = "github.com/openfaas/faas-provider"
   packages = [
     "auth",
     "types",
   ]
   pruneopts = "UT"
-  revision = "478f741b64cbcfaaee852156b060514be56623b3"
-  version = "0.12.0"
+  revision = "8699aa7d3999c17851f88640c0dd2291daafd45e"
+  version = "0.13.0"
 
 [[projects]]
   digest = "1:f7b0087a32b4f017ce89562494ae510f21e7d22e70cc1911640a32ebe583e92e"
@@ -204,6 +213,14 @@
     "github.com/gorilla/mux",
     "github.com/openfaas/faas-provider/auth",
     "github.com/openfaas/faas-provider/types",
+    "github.com/openfaas/faas/gateway/handlers",
+    "github.com/openfaas/faas/gateway/metrics",
+    "github.com/openfaas/faas/gateway/plugin",
+    "github.com/openfaas/faas/gateway/queue",
+    "github.com/openfaas/faas/gateway/requests",
+    "github.com/openfaas/faas/gateway/scaling",
+    "github.com/openfaas/faas/gateway/types",
+    "github.com/openfaas/faas/gateway/version",
     "github.com/openfaas/nats-queue-worker/handler",
     "github.com/prometheus/client_golang/prometheus",
     "github.com/prometheus/client_golang/prometheus/promhttp",
