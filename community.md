@@ -52,7 +52,9 @@ It would be great to hear from you especially if you have any of the above and w
 | [How we moved from JIRA to GitHub for fun and profit using Serverless](https://gotocph.com/2019/sessions/1016) | Edward Wilde | Copenhagen, Denmark | 19-Nov-2019 |
 | [Meet Alex at KubeCon 2019, San Diego](https://events.linuxfoundation.org/events/kubecon-cloudnativecon-north-america-2019/) | Alex Ellis | San Diego, USA | 18-Nov-2019 |
 | [OpenFaaS Cloud + Linkerd: A Secure, Multi-Tenant Serverless Platform - KubeCon 2019, San Diego](https://kccncna19.sched.com/event/Uabn/openfaas-cloud-linkerd-a-secure-multi-tenant-serverless-platform-charles-pretzer-buoyant-alex-ellis-openfaas-ltd) | Charles Pretzer & Alex Ellis | San Diego, USA | 16-Nov-2019 |
+| [Déployer Webapp/µServices/Functions sur OpenFaaS avec GitLab CI ... en local 😱](https://www.meetup.com/fr-FR/AlpesJUG/events/265653698) | Philippe Charrière | Grenoble, France | 24-Oct-2019 |
 | [PLONK Stack - Prometheus, Linkerd, OpenFaaS, NATS, and Kubernetes @ Goto Berlin](https://gotober.com/2019/sessions/971) | Alex Ellis | Berlin, Germany | 23-Oct-2019 |
+| [Deploying Function and Microservices with OpenFaaS](https://www.meetup.com/Golang-Houston/events/265463301/) | Michael and David M. | Houston, USA | 17-Oct-2019 |
 | [Serverless with OpenFaaS and Python](https://in.pycon.org/cfp/workshops-2019/proposals/serverless-with-openfaas-and-python~aAkBd/) | Vivek Singh & Farhan Khan | PyCon India 2019 @ Chennai, IN | 14-Oct-2019 |
 | [Serverless 2.0: Get Started With The PLONK Stack](https://skillsmatter.com/conferences/11723-cloudnative-london-2019#program) | Alex Ellis | London, UK | 27-Sept-2019 |
 | [Serverless and the road to portability](https://techin.finance/featured-speaker-edward-wilde/) | Edward Wilde | Malaga, Spain | 20-Sept-2019 |
