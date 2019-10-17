@@ -141,7 +141,9 @@ If you feel there is an issue with OpenFaaS or were unable to get the help you n
 
 * Doesn't Open Source mean that everything is free?
 
-    The OpenFaaS projects are licensed as MIT which means that you are free to use, modify and distribute the software within the terms of the license. Contributions, suggestions and feedback is welcomed in the appropriate channels as outlined in this guide. The MIT license does not cover support and professional services which you may require, which are not free and have a cost. Where possible, this time may be volunteered for free, but it is not unlimited.
+    The OpenFaaS projects are licensed as MIT which means that you are free to use, modify and distribute the software within the terms of the license.
+    
+    Contributions, suggestions and feedback is welcomed in the appropriate channels as outlined in this guide. The MIT license does not cover support for PRs, Issues, Slack questions, feature requests and technical support/professional services which you may require; the preceding are not free and have a cost to those providing the services. Where possible, this time may be volunteered for free, but it is not unlimited.
 
 * What is the SLA for my Issue?
 
