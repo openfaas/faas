@@ -139,6 +139,10 @@ If you feel there is an issue with OpenFaaS or were unable to get the help you n
 
     The Slack workspace is the best place to ask questions, suggest features, and to get help. The GitHub issue tracker can be used for suspected issues with the codebase or deployment artifacts.
 
+* Doesn't Open Source mean that everything is free?
+
+    The OpenFaaS projects are licensed as MIT which means that you are free to use, modify and distribute the software within the terms of the license. Contributions, suggestions and feedback is welcomed in the appropriate channels as outlined in this guide. The MIT license does not cover support and professional services which you may require, which are not free and have a cost. Where possible, this time may be volunteered for free, but it is not unlimited.
+
 * What is the SLA for my Issue?
 
     Issues are examined, triaged and answered on a best effort basis by volunteers and community contributors. This means that you may receive an initial response within any time period such as: 1 minute, 1 hour, 1 day, or 1 week. There is no implicit meaning to the time between you raising an issue and it being answered or resolved.
