@@ -4,7 +4,6 @@
 package auth
 
 import (
-	"crypto/subtle"
 	"net/http"
 )
 
@@ -13,13 +12,10 @@ func DecorateWithBasicAuth(next http.HandlerFunc, credentials *BasicAuthCredenti
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		user, password, ok := r.BasicAuth()
+		w.Header().Set("WWW-Authenticate", `Basic realm="Restricted"`)
 
-		const noMatch = 0
-		if !ok ||
-			user != credentials.User ||
-			subtle.ConstantTimeCompare([]byte(credentials.Password), []byte(password)) == noMatch {
+		if !ok || !(credentials.Password == password && user == credentials.User) {
 
-			w.Header().Set("WWW-Authenticate", `Basic realm="Restricted"`)
 			w.WriteHeader(http.StatusUnauthorized)
 			w.Write([]byte("invalid credentials"))
 			return
