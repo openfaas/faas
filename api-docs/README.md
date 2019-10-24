@@ -1,6 +1,6 @@
 ## Exploring or editing the Swagger API documentation
 
-The `swagger.yml` file can be viewed and edited in the Swagger UI.
+The `swagger.yml` file can be viewed and edited in the __Swagger UI__.
 
 * Head over to the [Swagger editor](http://editor.swagger.io/)
 
