@@ -32,9 +32,9 @@ This is just a short list of ideas, if you have other ideas for contributing ple
 
 #### I have a (great) idea
 
-The OpenFaaS maintainers would like to make OpenFaaS the best it can be and welcome new contributions that align with the project's goals. Our time is limited so we'd like to make sure we agree on the proposed work before you spend time doing it. Saying "no" is hard which is why we'd rather say "yes" ahead of time. You need to raise a proposal.
+The OpenFaaS maintainers would like to make OpenFaaS the best it can be and welcome new contributions that align with the project's goals. Our time is limited so we'd like to make sure we agree on the proposed work before you spend time doing it. Saying "no" is hard, which is why we'd rather say "yes" ahead of time. You need to raise a proposal.
 
-Every feature carries a cost - a cost if developed wrong, a cost to carry and maintain it and if it wasn't needed in the first place then this is an unnecessary burden. See [Yagni from Martin Fowler](https://martinfowler.com/bliki/Yagni.html). The best proposals are defensible with real data and are more than a hypothesis.
+Every feature carries a cost - a cost if developed wrong, a cost to carry and maintain it and if it wasn't needed in the first place, then this is an unnecessary burden. See [Yagni from Martin Fowler](https://martinfowler.com/bliki/Yagni.html). The best proposals are defensible with real data and are more than a hypothesis.
 
 **Please do not raise a proposal after doing the work - this is counter to the spirit of the project. It is hard to be objective about something which has already been done**
 
@@ -107,7 +107,7 @@ Update the documentation for page X so including fixing A, B, C and D and F.
 > This example will be truncated in the GitHub UI and via `git log --oneline`
 
 
-If you would like to ammend your commit follow this guide: [Git: Rewriting History](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History)
+If you would like to amend your commit follow this guide: [Git: Rewriting History](https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History)
 
 #### Unit testing with Golang
 
@@ -345,7 +345,7 @@ The [community.md](https://github.com/openfaas/faas/blob/master/community.md) fi
 
 ### Slack
 
-There is an Slack community which you are welcome to join to discuss OpenFaaS, OpenFaaS Cloud, Kubernetes, Serverless, FaaS, IoT, and ARM / Raspberry Pi.
+There is a Slack community which you are welcome to join to discuss OpenFaaS, OpenFaaS Cloud, Kubernetes, Serverless, FaaS, IoT, and ARM / Raspberry Pi.
 
 [Join Slack here](https://docs.openfaas.com/community/)
 
