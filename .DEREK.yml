@@ -1,20 +1,17 @@
 maintainers:
  - BurtonR
  - LucasRoesler
- - affix
  - alexellis
  - ewilde
- - ivanayov
  - johnmccabe
  - jonatasbaldin
  - kenfdev
  - martindekov
  - matipan
  - rgee0
- - s8sg
  - stefanprodan
  - viveksyngh
- - zeerorg
+ - Waterdrips
 
 features:
  - dco_check
