@@ -22,8 +22,6 @@ RUN addgroup -S app && adduser -S -g app app \
     && mkdir -p /home/app \
     && chown app /home/app
 
-WORKDIR /home/app
-
 COPY --from=build /go/src/handler/handler    .
 
 RUN chown -R app /home/app
