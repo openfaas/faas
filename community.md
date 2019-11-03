@@ -46,8 +46,8 @@ It would be great to hear from you especially if you have any of the above and w
 
 [Back to top](#openfaas-community)
 
-| Title                                          | Show | Date        |
-|---------------------------------------------------------------------|--------------|----------|-------------|
+| Title                                                               | Show       | Date        |
+|---------------------------------------------------------------------|--------------|----------|
 | [OpenFaaS Creator on Open Source’s Community-Funding Model](https://thenewstack.io/openfaas-creator-on-open-sources-community-funding-model/) | The New Stack | 11-Jul-2019 |
 | [Running functions anywhere with OpenFaaS - featuring Alex Ellis](https://changelog.com/podcast/343) | The Changelog | 25-Apr-2019 |
 | [Episode 022 – OpenFaaS with Docker Captain](https://changelog.com/podcast/343) | The 6 Figure Developer Podcast | 15-Jan-2018 |
