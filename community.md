@@ -66,6 +66,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Painless Serverless Function Development In Kubernetes - Serverless Summit @ KubeCon, 1.20pm](https://spsna19.sched.com/event/Wb2t/painless-serverless-function-development-in-kubernetes-ramiro-berrelleza-okteto) | Ramiro Berrelleza | San Diego, USA | 18-Nov-2019 |
 | [Getting Beyond FaaS: The PLONK Stack for Kubernetes Developers - Serverless Summit @ KubeCon, 11.20am](https://spsna19.sched.com/event/Wb2n/getting-beyond-faas-the-plonk-stack-for-kubernetes-developers-alex-ellis-openfaas-ltd) | Alex Ellis | San Diego, USA | 18-Nov-2019 |
 | [Still waiting for IPv6? Get ingress to any Kubernetes cluster with inlets, 4.30pm](https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-na-2019/talk/377BS9/) | Alex Ellis | San Diego | 16-Nov-2019 |
+| ["If This Then That" for vSphere - The Power of Event-Driven Automation (CODE1379E) @ VMworld Europe](https://videos.vmworld.com/global/2019?q=CODE1379E) | William Lam & Michael Gasch | Barcelona, Spain | 7-Nov-2019 |
 | [Get started with PLONK: the Stack for Cloud Native Developers @ Serverless Computing London, 2.00pm](https://serverlesscomputing.london/sessions/get-started-with-plonk-the-stack-for-cloud-native-developers/) | Alex Ellis | London, UK | 6-Nov-2019 |
 | [Déployer Webapp/µServices/Functions sur OpenFaaS avec GitLab CI ... en local 😱](https://www.meetup.com/fr-FR/AlpesJUG/events/265653698) | Philippe Charrière | Grenoble, France | 24-Oct-2019 |
 | [PLONK Stack - Prometheus, Linkerd, OpenFaaS, NATS, and Kubernetes @ Goto Berlin](https://gotober.com/2019/sessions/971) | Alex Ellis | Berlin, Germany | 23-Oct-2019 |
@@ -441,6 +442,7 @@ You can also find cool projects or submit your own to the [faas-and-furious orga
 
 | Project name and description                                         | Author     | Site      | Date        |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| [vCenter Event Broker Appliance](https://flings.vmware.com/vcenter-event-broker-appliance)|Gasch/Lam | [VMware Flings](https://flings.vmware.com/) | 11-November-2019 |
 | [OpenFaaS PowerShell Polaris template](https://github.com/chelnak/openfaas-powershell-polaris)|Craig Gumbley | github.com | 23-September-2019 |
 | [BikeshareFunction for GBFS Bikeshare Systems](https://github.com/andmos/BikeshareFunction) | Andreas Mosti | github.com | 25-May-2019 |
 | [OpenFaaS Go 1.11 templates](https://github.com/matipan/openfaas-go111-template/) | Matias Pan | github.com | 15-May-2019 |
