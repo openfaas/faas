@@ -349,6 +349,17 @@ There is an Slack community which you are welcome to join to discuss OpenFaaS, O
 
 [Join Slack here](https://docs.openfaas.com/community/)
 
+Getting the best out of Slack
+
+* Explore the channels and post your question or comment into one of them
+* Don't post the same question into multiple channels if you don't get an answer immediately
+* Slack is asynchronous and you may not receive an answer to your question. Commercial support is available, but you are also welcome to ask the question again or in a different way after a reasonable amount of time has passed.
+* Shorter, specific questions are more likely to be answered than longer bodies of text
+* If you can share a code example, it may improve the chances of getting help. There is no need to share confidential code, instead try to create a small sample that reproduces the issue.
+
+* Please be kind to your other participants within the community and bear in mind that English may not be everybody's first language.
+* Moderators reserve the right to remove messages which may be deemed to be antagonistic, lacking context, a plug for a product, or off-topic. 
+
 ### Roadmap
 
 * See the [2019 Project Update](https://www.openfaas.com/blog/project-update/)
