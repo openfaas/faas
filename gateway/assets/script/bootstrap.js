@@ -225,6 +225,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
                                         $scope.functions[i].image = response.data[j].image;
                                         $scope.functions[i].replicas = response.data[j].replicas;
                                         $scope.functions[i].invocationCount = response.data[j].invocationCount;
+                                        $scope.functions[i].namespace = response.data[j].namespace;
                                     }
                                 }
                             }
