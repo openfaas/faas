@@ -28,6 +28,8 @@ This is a list of adopters of OpenFaaS
 
 * [Dragonchain](https://dragonchain.com/) - "At Dragonchain, we focus on creating a hybrid blockchain-as-a-service product, with integrations of OpenFaaS as our 'smart contract' platform, to be able to automatically run customer code based on interactions that occur on the blockchain. This allows us to be extremely flexible, as customers only have to create a docker container and give it to us in order to create a 'smart contract' which can have deep integrations with our blockchain itself.". Blog: [Dragonchain & OpenFaaS](https://dragonchain.com/blog/blockchain-as-a-service-at-scale-for-enterprise)
 
+* [Fonix Telematics](https://fonixtelematics.com) - "We are using OpenFaaS to build our new generation of APIs."
+
 * [GalaxyCard](https://www.galaxycard.in/) - "GalaxyCard is a happy user of OpenFaaS"
 
 * [GMO Internet](https://www.gmo.jp/en/)
