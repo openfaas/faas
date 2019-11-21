@@ -124,6 +124,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Serverless Kotlin with OpenFaaS](https://kotlinexpertise.com/serverless-kotlin/) | Simon Wirtz | kotlinexpertise.com | 21-Nov-2019 |
 | [Migrate your AWS Node.js Lambda Function to OpenFaaS](https://sysadmins.co.za/migrate-your-aws-node-js-lambda-function-to-openfaas/) | Ruan Bekker | sysadmins.co.za | 09-Oct-2019 |
 | [Migrate Your AWS Lambda Functions to Kubernetes with OpenFaaS](https://www.openfaas.com/blog/lambda-to-openfaas/) | Burton Rheutan | openfaas.com | 8-Oct-2019 |
 | [FaaS for the Rubyist](https://blog.alexellis.io/faas-for-the-rubyist/) | Alex Ellis | alexellis.io | 2-Oct-2019 |
