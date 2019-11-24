@@ -17,6 +17,8 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
         $scope.invocationStatus = "";
         $scope.invocationStart = new Date().getTime();
         $scope.roundTripDuration = "";
+        $scope.selectedNamespace = "openfaas-fn";
+        $scope.allNamespaces = ["openfaas-fn"];
         $scope.invocation = {
             contentType: "text"
         };
@@ -56,11 +58,19 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
         };
 
         $scope.invocation.request = "";
+
         var fetchFunctionsDelay = 3500;
         var queryFunctionDelay = 2500;
+
+        var fetchNamespacesInterval = function() {
+            $http.get("../system/namespaces")
+                .then(function(response) {
+                    $scope.allNamespaces = response.data;
+                })
+        };
         
         var fetchFunctionsInterval = $interval(function() {
-            refreshData();
+            refreshData($scope.selectedNamespace);
         }, fetchFunctionsDelay);
 
         var queryFunctionInterval = $interval(function() {
@@ -69,8 +79,13 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
             }
         }, queryFunctionDelay);
 
+        $scope.setNamespace = function(namespace) {
+            $scope.selectedNamespace = namespace;
+          refreshData($scope.selectedNamespace)
+        }
+
         var refreshFunction = function(functionInstance) {
-            $http.get("../system/function/" + functionInstance.name)
+            $http.get("../system/function/" + functionInstance.name + "?namespace=" + $scope.selectedNamespace)
             .then(function(response) {
                 functionInstance.ready = (response.data && response.data.availableReplicas && response.data.availableReplicas > 0);
             })
@@ -94,8 +109,9 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
                 requestContentType = "binary/octet-stream";
             }
 
+            var fnNamespace = ($scope.selectedNamespace !== "openfaas-fn") ? "." + $scope.selectedNamespace : "";
             var options = {
-                url: "../function/" + $scope.selectedFunction.name,
+                url: "../function/" + $scope.selectedFunction.name + fnNamespace,
                 data: $scope.invocation.request,
                 method: "POST",
                 headers: { "Content-Type": requestContentType },
@@ -182,11 +198,11 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
                 });
         };
 
-        var refreshData = function () {
+        var refreshData = function (selectedNamespace) {
             var previous = $scope.functions;
 
             var cl = function (previousItems) {
-                $http.get("../system/functions").then(function (response) {
+                $http.get("../system/functions?namespace=" + selectedNamespace).then(function (response) {
                     if (response && response.data) {
                         if (previousItems.length != response.data.length) {
                             $scope.functions = response.data;
@@ -216,7 +232,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
         }
 
         var fetch = function() {
-            $http.get("../system/functions").then(function(response) {
+            $http.get("../system/functions?namespace=" + $scope.selectedNamespace).then(function(response) {
                 $scope.functions = response.data;
             });
         };
@@ -527,7 +543,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
             $mdDialog.show(confirm)
                 .then(function() {
                     var options = {
-                        url: "../system/functions",
+                        url: "../system/functions?namespace=" + $scope.selectedNamespace,
                         data: {
                             functionName: $scope.selectedFunction.name
                         },
@@ -549,6 +565,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
         };
 
         fetch();
+        fetchNamespacesInterval();
     }
 ]);
 

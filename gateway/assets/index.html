@@ -46,6 +46,15 @@
                 </md-toolbar>
 
                 <md-content layout-padding>
+
+                    <md-input-container>
+                        <md-select ng-model="namespaceSelect" placeholder="Select a Namespace">
+                            <md-option ng-click="setNamespace(namespace)" ng-value="namespace" ng-repeat="namespace in allNamespaces">
+                                Namespace(s): {{ namespace }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+
                     <md-list>
                         <md-list-item class="primary-item" ng-disabled="isFunctionBeingCreated" ng-click="newFunction()">
                             <md-icon style="margin-right: 16px" md-svg-icon="img/icons/ic_shop_two_black_24px.svg"></md-icon>
@@ -125,7 +134,7 @@
                                 </md-input-container>
                                 <md-input-container class="md-block function-url" flex-gt-sm>
                                     <label>URL</label>
-                                    <input ng-value="baseUrl + 'function/' + function.name" type="text" readonly="readonly">
+                                    <input ng-value="function.namespace === 'openfaas-fn' ? baseUrl + 'function/' + function.name : baseUrl + 'function/' + function.name + '.' + function.namespace" type="text" readonly="readonly">
                                     <md-icon ng-if="canCopyToClipboard" md-svg-src="img/icons/outline-file_copy-24px.svg" ng-click="copyClicked($event)"></md-icon>
                                 </md-input-container>
                             </div>
