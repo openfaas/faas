@@ -70,8 +70,9 @@ The gateway can be configured through the following environment variables:
 | `read_timeout`         | HTTP timeout for reading the payload from the client caller (in seconds). Default: `8` |
 | `functions_provider_url`             | URL of upstream [functions provider](https://github.com/openfaas/faas-provider/) - i.e. Swarm, Kubernetes, Nomad etc  |
 | `logs_provider_url` | URL of the upstream function logs api provider, optional, when empty the `functions_provider_url` is used |
-| `faas_nats_address`          | Address of NATS service. Required for asynchronous mode |
-| `faas_nats_port`    | Port for NATS service. Requrired for asynchronous mode |
+| `faas_nats_address`          | The host at which NATS Streaming can be reached. Required for asynchronous mode |
+| `faas_nats_port`    | The port at which NATS Streaming can be reached. Required for asynchronous mode |
+| `faas_nats_cluster_name` | The name of the target NATS Streaming cluster. Defaults to `faas-cluster` for backwards-compatibility |
 | `faas_prometheus_host`         | Host to connect to Prometheus. Default: `"prometheus"` |
 | `faas_promethus_port`         | Port to connect to Prometheus. Default: `9090` |
 | `direct_functions`            | `true` or `false` -  functions are invoked directly over overlay network by DNS name without passing through the provider |
