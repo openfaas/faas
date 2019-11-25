@@ -47,20 +47,21 @@
 
                 <md-content layout-padding>
 
-                    <md-input-container>
-                        <md-select ng-model="namespaceSelect" placeholder="Select a Namespace">
-                            <md-option ng-click="setNamespace(namespace)" ng-value="namespace" ng-repeat="namespace in allNamespaces">
-                                Namespace(s): {{ namespace }}
-                            </md-option>
-                        </md-select>
-                    </md-input-container>
-
                     <md-list>
                         <md-list-item class="primary-item" ng-disabled="isFunctionBeingCreated" ng-click="newFunction()">
                             <md-icon style="margin-right: 16px" md-svg-icon="img/icons/ic_shop_two_black_24px.svg"></md-icon>
                             <p>Deploy New Function</p>
                         </md-list-item>
                     </md-list>
+
+                    <md-input-container>
+                        <label>Namespace</label>
+                        <md-select  ng-model="namespaceSelect" placeholder="Select a Namespace">
+                            <md-option ng-click="setNamespace(namespace)" ng-value="namespace" ng-repeat="namespace in allNamespaces">
+                                {{ namespace }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
 
                     <md-input-container ng-hide="functions.length === 0" class="md-block" flex-gt-sm>
                         <label style="padding-left: 8px">Search for Function</label>
