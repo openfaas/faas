@@ -112,15 +112,15 @@
   version = "0.12.0"
 
 [[projects]]
-  digest = "1:f7b0087a32b4f017ce89562494ae510f21e7d22e70cc1911640a32ebe583e92e"
+  digest = "1:28692259e850b777eb6db1ee8937ecd14d4d1172204d583f8b71ac11455a737e"
   name = "github.com/openfaas/nats-queue-worker"
   packages = [
     "handler",
     "nats",
   ]
   pruneopts = "UT"
-  revision = "6ac9962b0323727171ac7143a24816af421c8d22"
-  version = "0.8.0"
+  revision = "8dff9cb169398f4f131565702c7f695e76247ed6"
+  version = "0.8.2"
 
 [[projects]]
   digest = "1:eb04f69c8991e52eff33c428bd729e04208bf03235be88e4df0d88497c6861b9"

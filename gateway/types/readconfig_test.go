@@ -236,6 +236,33 @@ func TestRead_UseNATS(t *testing.T) {
 		t.Log("NATS was requested in config, but not enabled.")
 		t.Fail()
 	}
+
+	wantNATSAddress := "nats"
+	if *config.NATSAddress != wantNATSAddress {
+		t.Logf("faas_nats_address: want %s, got %s", wantNATSAddress, *config.NATSAddress)
+		t.Fail()
+	}
+
+	wantNATSPort := 6222
+	if *config.NATSPort != wantNATSPort {
+		t.Logf("faas_nats_port: want %d, got %d", wantNATSPort, *config.NATSPort)
+		t.Fail()
+	}
+
+	wantNATSClusterName := "faas-cluster"
+	if *config.NATSClusterName != wantNATSClusterName {
+		t.Logf("faas_nats_cluster_name: want %s, got %s", wantNATSClusterName, *config.NATSClusterName)
+		t.Fail()
+	}
+
+	defaults.Setenv("faas_nats_cluster_name", "example-nats-cluster")
+	config, _ = readConfig.Read(defaults)
+
+	wantNATSClusterName = "example-nats-cluster"
+	if *config.NATSClusterName != wantNATSClusterName {
+		t.Logf("faas_nats_cluster_name: want %s, got %s", wantNATSClusterName, *config.NATSClusterName)
+		t.Fail()
+	}
 }
 
 func TestRead_UseNATSBadPort(t *testing.T) {
@@ -243,6 +270,7 @@ func TestRead_UseNATSBadPort(t *testing.T) {
 	defaults := NewEnvBucket()
 	defaults.Setenv("faas_nats_address", "nats")
 	defaults.Setenv("faas_nats_port", "6fff")
+	defaults.Setenv("faas_nats_cluster_name", "example-nats-cluster")
 	readConfig := ReadConfig{}
 
 	_, err := readConfig.Read(defaults)
