@@ -2,6 +2,8 @@
 
 OpenFaaS is licensed as MIT and completely Open Source and free to use. However the amount of effort needed to maintain and develop new features is not sustainable without proper financial backing.
 
+Companies using OpenFaaS with their products or projects are encouraged to join at Gold or Platinum tier. Commercial support is also available.
+
 ## `#FaaSFriday`
 
 To enter the `#FaaSFriday` contest you should tweet a photo (not a screenshot) to `@openfaas`. It
@@ -82,50 +84,13 @@ Email [sales@openfaas.com](mailto:sales@openfaas.com) for a quote.
 
 * [Brandon Lamb](https://github.com/brandonlamb)
 
-## Individual backers (Patreon / GitHub)
+## Individual backers
 
-Whatever tier, whether 5 USD or 500 USD, if you're a backer on Patreon, or a GitHub Sponsor, then please send a PR to have your name listed below:
+As an individual your support can go a long way, please join on GitHub Sponsors.
 
-* Andrew Cornies
-* Benjamin Neil
-* Chad Taylor
-* Christian Sakshaug
-* Contiamo
-* David Salek
-* Garden Germany GmbH
-* Johnny MKHAEL 
-* Julio
-* Lewis Bowman
-* Mark Jeromin
-* Matias Pan
-* Martin Dekov
-* Murugappan Sevugan Chetty
-* Owen Dall Sotomayor
-* Patricio Diaz
-* Pav Jimanov
-* Rafael Barbosa
-* Richard Petersen-Hall
-* Ruan Bekker
-* Scott Rosenberg
-* Sergey Radov
-* Sivaramakrishnan Malikkal
-* Steve Peak
-* Weston Steimel
-* Younes Amardaya
+* View or join our [GitHub sponsors](https://insiders.openfaas.io/)
 
-See the complete list of *Public* sponsors on GitHub and:
+Patreon takes a processing and pay-out fee, so GitHub sponsors is recommended for maximum impact.
 
-* [Sponsor today](https://github.com/users/alexellis/sponsorship)
+* View or join the [Patreon backers](https://www.patreon.com/alexellis)
 
-### Hall of fame
-
-The hall of fame shows contributors who made a sustained positive impact on the project and community, but are no longer able to remain active in Open Source or OpenFaaS.
-
-* John Mccabe
-* Austin Frey
-* Robbie Page
-* Jock Reed
-* Eric Stoekl
-* Ken Fukuyama
-* Richard Gee
-* Ivana Yocheva
