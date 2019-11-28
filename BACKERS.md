@@ -1,4 +1,4 @@
-# Project backers
+# OpenFaaS Project Backers
 
 OpenFaaS is licensed as MIT and completely Open Source and free to use. However the amount of effort needed to maintain and develop new features is not sustainable without proper financial backing.
 
