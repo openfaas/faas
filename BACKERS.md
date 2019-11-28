@@ -62,9 +62,9 @@ Email [sales@openfaas.com](mailto:sales@openfaas.com) for a quote.
 
 <a href="https://rancher.com"><img alt="Rancher" src="https://www.openfaas.com/images/sponsors/rancher-logo-stacked-color.svg" width="110px" /></a>
 
-<a href="https://dx.no"><img alt="DX" src="https://www.openfaas.com/images/users-logos/dx.png" width="110px" /></a>
-
 <a href="https://www.thectoadvisor.com"><img alt="CTO Advisor" src="https://www.openfaas.com/images/sponsors/cto-advisor.png" width="110px" /></a>
+
+<a href="https://dx.no"><img alt="DX" src="https://www.openfaas.com/images/users-logos/dx.png" width="110px" /></a>
 
 #### Gold Sponsors (homepage sponsor)
 
@@ -83,6 +83,8 @@ Email [sales@openfaas.com](mailto:sales@openfaas.com) for a quote.
 <a href="https://dragonchain.com"><img alt="Dragonchain" src="https://www.openfaas.com/images/users-logos/dragonchain.svg" width="90px" /></a>
 
 * [Brandon Lamb](https://github.com/brandonlamb)
+
+* [Chris Richard](https://github.com/chrisrichard)
 
 ## Individual backers
 
