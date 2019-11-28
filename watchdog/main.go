@@ -24,14 +24,30 @@ import (
 )
 
 var (
-	versionFlag          bool
 	acceptingConnections int32
 )
 
 func main() {
+	var runHealthcheck bool
+	var versionFlag bool
+
 	flag.BoolVar(&versionFlag, "version", false, "Print the version and exit")
+	flag.BoolVar(&runHealthcheck,
+		"run-healthcheck",
+		false,
+		"Check for the a lock-file, when using an exec healthcheck. Exit 0 for present, non-zero when not found.")
 
 	flag.Parse()
+
+	if runHealthcheck {
+		if lockFilePresent() {
+			os.Exit(0)
+		}
+
+		fmt.Fprintf(os.Stderr, "unable to find lock file.\n")
+		os.Exit(1)
+	}
+
 	printVersion()
 
 	if versionFlag {
