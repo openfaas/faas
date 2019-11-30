@@ -124,6 +124,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Going Serverless with OpenFaaS and Golang - Building Optimized Templates](https://martinheinz.dev/blog/11) | Martin Heinz | martinheinz.dev | 29-Nov-2019 |
 | [Serverless Kotlin with OpenFaaS](https://kotlinexpertise.com/serverless-kotlin/) | Simon Wirtz | kotlinexpertise.com | 21-Nov-2019 |
 | [Going Serverless with OpenFaaS and Golang - The Ultimate Setup and Workflow](https://martinheinz.dev/blog/10) | Martin Heinz | martinheinz.dev | 16-Nov-2019 |
 | [Migrate your AWS Node.js Lambda Function to OpenFaaS](https://sysadmins.co.za/migrate-your-aws-node-js-lambda-function-to-openfaas/) | Ruan Bekker | sysadmins.co.za | 09-Oct-2019 |
