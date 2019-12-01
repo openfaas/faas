@@ -8,7 +8,7 @@ First, and least secure, is the ability to set environment variables at deploy t
 
 ```yaml
 provider:
-  name: faas
+  name: openfaas
   gateway: http://localhost:8080
 
 functions:
@@ -78,7 +78,7 @@ Your `samples.yml` stack file looks like this
 
 ```yaml
 provider:
-  name: faas
+  name: openfaas
   gateway: http://localhost:8080
 
 functions:
