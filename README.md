@@ -62,7 +62,7 @@ OpenFaaS&reg; is an independent project founded by [Alex Ellis](https://www.alex
 
 View a selection of end-user companies who have given permission to have their logo listed at [openfaas.com](https://www.openfaas.com/).
 
-If you're using OpenFaaS please let us know [on this thead](https://github.com/openfaas/faas/issues/776). In addition, you are welcome to request to have your logo listed on the homepage. Thank you for your support.
+If you're using OpenFaaS please let us know [on this thread](https://github.com/openfaas/faas/issues/776). In addition, you are welcome to request to have your logo listed on the homepage. Thank you for your support.
 
 ### Technical overview
 
