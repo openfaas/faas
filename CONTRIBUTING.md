@@ -233,7 +233,6 @@ In the OpenFaaS community there are four levels of structure or maintainership:
 The Core Team includes:
 
 - Alex Ellis (@alexellis)
-- Richard Gee (@rgee0)
 - Stefan Prodan (@stefanprodan)
 - Lucas Roesler (@LucasRoesler)
 - Burton Rheutan (@burtonr)
