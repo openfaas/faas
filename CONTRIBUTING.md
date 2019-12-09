@@ -242,7 +242,7 @@ The Core Team have the ear of the Project Lead. They help with strategy, project
 
 The Core Team gain access to a private *core* channel and are required to participate on a regular basis.
 
-The Core Team have the same expectations and perks of the Membership Team, in addition will need to keep in close contact with the rest of the Core Team and the Project Lead.
+The Core Team have the same responsibilities and perks of the Membership Team, in addition will need to keep in close contact with the rest of the Core Team and the Project Lead.
 
 * Core Team are expected to attend 1:1 Zoom calls with the Project Lead up to once per month
 * Core Team members will notify the Project Lead and Core Team of any leave of a week or more and set a status in Slack of "away".
@@ -259,7 +259,7 @@ The Members Team are contributors who are well-known to the community with a tra
 * testing and reviewing pull requests
 * joining contributor meetings and supporting new contributors
 
-> Note: An essential skill for being in a team is communication. If you cannot communicate with your team on a regular basis, then membership may not be for you and you are welcome to contribute as community.
+> Note: An essential skill for being in a team is communication. If it is not possible to communicate on a regular basis then, then membership may not be for you. You are welcome to contribute as part of the wider community.
 
 Varying levels of write access are made available via the project bot [Derek](https://github.com/alexellis/derek) to help regular contributors transition to the Members Team.
 
@@ -283,7 +283,7 @@ The Members Team are expected to:
 * comment on and engage with project proposals
 * attend occasional 1:1 meetings with members of the Core Team or the Project Lead
 
-This group is intended to be an active team that shares the load and collaborates together. This means engaging in topics on Slack, encouraging other teammates, sharing ideas, helping the users and raising issues with the Core Team.
+This group is intended to be an active team that shares the load and collaborates together. This means engaging in topics on Slack, working with other teammates, sharing ideas, helping the users and raising issues with the Core Team.
 
 The Members Team will notify their team in the *members* channel about any planned leave of a week or more and set a status in Slack of "away".
 
