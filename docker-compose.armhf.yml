@@ -68,6 +68,7 @@ services:
         secrets:
             - basic-auth-user
             - basic-auth-password
+            - http-signing-public-key
 
     # Docker Swarm provider
     faas-swarm:
@@ -149,6 +150,7 @@ services:
         secrets:
             - basic-auth-user
             - basic-auth-password
+            - http-signing-private-key
 
     # End services
 
@@ -230,4 +232,8 @@ secrets:
     basic-auth-user:
         external: true
     basic-auth-password:
+        external: true
+    http-signing-public-key:
+        external: true
+    http-signing-private-key:
         external: true

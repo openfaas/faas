@@ -248,7 +248,7 @@ func main() {
 
 	r.HandleFunc("/healthz",
 		handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer, serviceAuthInjector)).Methods(http.MethodGet)
-
+	r.Handle("/certificates/{id}", handlers.MakeCertificatesHandler(&handlers.FileSecretsReader{SecretMountPath: config.SecretMountPath}))
 	r.Handle("/", http.RedirectHandler("/ui/", http.StatusMovedPermanently)).Methods(http.MethodGet)
 
 	tcpPort := 8080

@@ -51,6 +51,20 @@ else
   echo ""
 fi
 
+# Setup http signatures keys
+rm signing.key > /dev/null 2>&1 || true && rm signing.key.pub > /dev/null 2>&1 || true
+docker secret rm http-signing-private-key > /dev/null 2>&1 || true
+docker secret rm http-signing-public-key > /dev/null 2>&1 || true
+
+ssh-keygen -t rsa -b 2048 -N "" -m PEM -f signing.key > /dev/null 2>&1
+openssl rsa -in ./signing.key -pubout -outform PEM -out signing.key.pub > /dev/null 2>&1
+
+cat signing.key | docker secret create http-signing-private-key - > /dev/null 2>&1 || true
+cat signing.key.pub | docker secret create http-signing-public-key - > /dev/null 2>&1 || true
+
+rm signing.key || true && rm signing.key.pub || true
+echo "Http encryption settings enabled..\n"
+
 arch=$(uname -m)
 case "$arch" in
 

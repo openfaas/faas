@@ -40,6 +40,7 @@ services:
         secrets:
             - basic-auth-user
             - basic-auth-password
+            - http-signing-public-key
 
     # auth service provide basic-auth plugin for system APIs
     basic-auth-plugin:
@@ -150,6 +151,7 @@ services:
         secrets:
             - basic-auth-user
             - basic-auth-password
+            - http-signing-private-key
 
     # End services
 
@@ -231,4 +233,8 @@ secrets:
     basic-auth-user:
         external: true
     basic-auth-password:
+        external: true
+    http-signing-public-key:
+        external: true
+    http-signing-private-key:
         external: true
