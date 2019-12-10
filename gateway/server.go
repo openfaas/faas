@@ -135,7 +135,7 @@ func main() {
 
 		defaultNATSConfig := natsHandler.NewDefaultNATSConfig(maxReconnect, interval)
 
-		natsQueue, queueErr := natsHandler.CreateNATSQueue(*config.NATSAddress, *config.NATSPort, *config.NATSClusterName, defaultNATSConfig)
+		natsQueue, queueErr := natsHandler.CreateNATSQueue(*config.NATSAddress, *config.NATSPort, *config.NATSClusterName, *config.NATSChannel, defaultNATSConfig)
 		if queueErr != nil {
 			log.Fatalln(queueErr)
 		}

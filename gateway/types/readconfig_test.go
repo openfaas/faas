@@ -255,12 +255,27 @@ func TestRead_UseNATS(t *testing.T) {
 		t.Fail()
 	}
 
+	wantNATSChannel := "faas-request"
+	if *config.NATSChannel != wantNATSChannel {
+		t.Logf("faas_nats_channel: want %s, got %s", wantNATSChannel, *config.NATSChannel)
+		t.Fail()
+	}
+
 	defaults.Setenv("faas_nats_cluster_name", "example-nats-cluster")
 	config, _ = readConfig.Read(defaults)
 
 	wantNATSClusterName = "example-nats-cluster"
 	if *config.NATSClusterName != wantNATSClusterName {
 		t.Logf("faas_nats_cluster_name: want %s, got %s", wantNATSClusterName, *config.NATSClusterName)
+		t.Fail()
+	}
+
+	defaults.Setenv("faas_nats_channel", "foo")
+	config, _ = readConfig.Read(defaults)
+
+	wantNATSChannel = "foo"
+	if *config.NATSChannel != wantNATSChannel {
+		t.Logf("faas_nats_channel: want %s, got %s", wantNATSChannel, *config.NATSChannel)
 		t.Fail()
 	}
 }
