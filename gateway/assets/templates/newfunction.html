@@ -58,12 +58,12 @@
                                 <input name="network" ng-model="item.network" md-maxlength="200" minlength="0">
                             </md-input-container>
                         </div>
-                        <div layout-gt-xs="row">
+                        <div layout-gt-xs="row" ng-if="allNamespaces.length > 1">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <md-tooltip md-direction="bottom">Namespace your function runs in i.e. 'openfaas-fn'. Only namespaces OpenFaaS can manage will show here</md-tooltip>
                                 <label>Namespace</label>
                                 <md-select name="namespace" ng-model="namespaceSelect" placeholder="Select a Namespace">
-                                    <md-option ng-value="namespace" ng-repeat="namespace in allNamespaces">
+                                    <md-option ng-click="fnNamespaceSelected(namespace)" ng-value="namespace" ng-repeat="namespace in allNamespaces">
                                         {{ namespace }}
                                     </md-option>
                                 </md-select>

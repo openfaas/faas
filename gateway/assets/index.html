@@ -54,9 +54,9 @@
                         </md-list-item>
                     </md-list>
 
-                    <md-input-container>
+                    <md-input-container ng-show="allNamespaces.length > 1">
                         <label>Namespace</label>
-                        <md-select  ng-model="namespaceSelect" placeholder="Select a Namespace">
+                        <md-select  ng-model="namespaceSelectDropdown" placeholder="Select a Namespace">
                             <md-option ng-click="setNamespace(namespace)" ng-value="namespace" ng-repeat="namespace in allNamespaces">
                                 {{ namespace }}
                             </md-option>
@@ -127,7 +127,7 @@
                                     <input ng-model="function.invocationCount" type="text" readonly="readonly">
                                 </md-input-container>
 
-                                <md-input-container class="md-block" flex-gt-sm>
+                                <md-input-container class="md-block" flex-gt-sm ng-show="allNamespaces.length > 1">
                                     <label>Namespace</label>
                                     <input ng-model="function.namespace" type="text" readonly="readonly">
                                 </md-input-container>

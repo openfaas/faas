@@ -23,7 +23,6 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
             contentType: "text"
         };
 
-        $scope.namespaceSelect = $scope.selectedNamespace;
         $scope.baseUrl = $location.absUrl().replace(/\ui\/$/, '');
         try {
             $scope.canCopyToClipboard = document.queryCommandSupported('copy');
@@ -42,6 +41,8 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
             var msg = copySuccessful ? 'Copied to Clipboard' : 'Copy failed. Please copy it manually';
             showPostInvokedToast(msg);
         }
+
+
 
         $scope.toggleSideNav = function() {
             $mdSidenav('left').toggle();
@@ -310,7 +311,7 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
                 $scope.labelsToLabelInputs(func.labels);
                 $scope.annotationsToAnnotationInputs(func.annotations);
                 $scope.secretsToSecretInputs(func.secrets);
-                $scope.item.namespace = func.selectedNamespace;
+                $scope.item.namespace = $scope.namespaceSelected();
 
 
                 $scope.selectedFunc = func;
@@ -364,6 +365,10 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
                         $scope.validationError = error1.data;
                     });
             };
+
+            $scope.fnNamespaceSelected = function(inputNamespace) {
+                $scope.namespaceSelect = inputNamespace;
+            }
 
             $scope.onEnvInputExpand = function() {
                 $scope.envFieldsVisible = !$scope.envFieldsVisible;
