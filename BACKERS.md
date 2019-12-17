@@ -84,7 +84,7 @@ Email [sales@openfaas.com](mailto:sales@openfaas.com) for a quote.
 
 * [Brandon Lamb](https://github.com/brandonlamb)
 
-* [Chris Richard](https://github.com/chrisrichard)
+<a href="https://ratehub.ca"><img alt="ratehub.ca" src="https://www.ratehub.ca/images/logo-small-right.png" width="90px" /></a>
 
 ## Individual backers
 
@@ -92,7 +92,7 @@ As an individual your support can go a long way, please join on GitHub Sponsors.
 
 * View or join our [GitHub sponsors](https://insiders.openfaas.io/)
 
-Patreon takes a processing and pay-out fee, so GitHub sponsors is recommended for maximum impact.
+Patreon takes a processing fees and an additional pay-out fee, so GitHub sponsors is recommended for maximum impact.
 
 * View or join the [Patreon backers](https://www.patreon.com/alexellis)
 
