@@ -63,7 +63,7 @@
                                 <md-tooltip md-direction="bottom">Namespace your function runs in i.e. 'openfaas-fn'. Only namespaces OpenFaaS can manage will show here</md-tooltip>
                                 <label>Namespace</label>
                                 <md-select name="namespace" ng-model="namespaceSelect" placeholder="Select a Namespace">
-                                    <md-option ng-click="fnNamespaceSelected(namespace)" ng-value="namespace" ng-repeat="namespace in allNamespaces">
+                                    <md-option ng-click="fnNamespaceSelected(namespace)" ng-value="namespace" ng-repeat="namespace in allNamespaces" ng-selected="namespace === namespaceSelect">
                                         {{ namespace }}
                                     </md-option>
                                 </md-select>
