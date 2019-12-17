@@ -146,3 +146,6 @@ md-input-container.function-url md-icon {
     color: red;
 }
 
+.display-flex {
+    display: flex;
+}
