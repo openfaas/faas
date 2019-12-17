@@ -190,13 +190,15 @@ The deployment guide for Docker Swarm contains a simple one-line command to get 
 
     > You will need a free Docker Hub account to get access. Get one here: [Docker Hub](https://hub.docker.com/)
 
-## Find out more about OpenFaaS
+## Video presentations
 
-### Welcome to Serverless 2.0 @ Goto Chicago 2019
+### OpenFaaS Cloud + Linkerd: A Secure, Multi-Tenant Serverless Platform
 
-Featuring a manifesto for Serverless 2.0 including comparisons and synergies between OpenFaaS, AWS Lambda, Knative, and Kubeless.
+[From KubeCon North America 2019 with Charles Pretzer from Buoyant & Alex Ellis, OpenFaaS Ltd](https://www.youtube.com/watch?v=sD7hCwq3Gw0&feature=emb_title)
 
-* [Watch on YouTube](https://www.youtube.com/watch?v=JvXm-oHi5Mg)
+### The PLONK Stack/Serverless 2.0 for Kubernetes with OpenFaaS
+
+[Getting Beyond FaaS: The PLONK Stack for Kubernetes Developers - Alex Ellis, OpenFaaS Ltd](https://www.youtube.com/watch?v=NckMekZXRt8&feature=emb_title)
 
 ### How LivePerson is Tailoring its Conversational Platform Using OpenFaaS @ KubeCon 2019
 
@@ -206,36 +208,13 @@ Featuring a manifesto for Serverless 2.0 including comparisons and synergies bet
 
 ### Digital Transformation of Vision Banco Paraguay with Serverless Functions @ KubeCon late-2018
 
-Alex Ellis co-presents [at KubeCon](https://kccna18.sched.com/event/GraO/digital-transformation-of-vision-banco-paraguay-with-serverless-functions-alex-ellis-vmware-patricio-diaz-vision-banco-saeca) with Patricio Diaz Senior Analyst, Vision Banco SAECA
-
-* [Watch on YouTube](https://youtu.be/mPjI34qj5vU)
-
-### Serverless Beyond the Hype (goto Copenhagen) late-2018
-
-Overview of the Serverless landscape for Kubernetes, OpenFaaS and OpenFaaS Cloud with live demos and most update information.
-
-* [Watch on YouTube](https://www.youtube.com/watch?time_continue=1&v=yOpYYYRuDQ0)
-
-### The Cube interview @ DevNet Create mid-2018
-
-* [2018 update on the OpenFaaS story](https://www.youtube.com/watch?v=J8UYZ1GXNTQ)
-
-### TechFieldDay presentation (Dockercon EU) late-2017
-
-15 minute overview with demos on Kubernetes and with Alexa - [HD YouTube video](https://www.youtube.com/watch?v=C3agSKv2s_w&list=PLlIapFDp305AiwA17mUNtgi5-u23eHm5j&index=1)
+[From KubeCon North America 2018 with Alex and Patricio Diaz Senior Analyst, Vision Banco SAECA](https://kccna18.sched.com/event/GraO/digital-transformation-of-vision-banco-paraguay-with-serverless-functions-alex-ellis-vmware-patricio-diaz-vision-banco-saeca)
 
 ### Closing Keynote at Dockercon early-2017
 
 Functions as a Service or FaaS was a winner in the Cool Hacks contest for Dockercon 2017.
 
-* [Watch my FaaS keynote at Dockercon 2017](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/)
-
-If you'd like to find the functions I used in the demos head over to the [faas-dockercon](https://github.com/alexellis/faas-dockercon/) repository.
-
-**Background story**
-
-* [Introducing OpenFaaS (Functions as a Service)](https://blog.alexellis.io/introducing-functions-as-a-service/) -  August 2017
-* [Functions as a Service (FaaS)](http://blog.alexellis.io/functions-as-a-service/) - January 2017
+* [Watch Alex present "FaaS" during the Dockercon 2017 keynote](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/)
 
 ### Community events and blog posts
 
