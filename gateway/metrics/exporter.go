@@ -41,6 +41,7 @@ func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
 	e.metricOptions.GatewayFunctionInvocation.Describe(ch)
 	e.metricOptions.GatewayFunctionsHistogram.Describe(ch)
 	e.metricOptions.ServiceReplicasGauge.Describe(ch)
+	e.metricOptions.StartedCounter.Describe(ch)
 
 	e.metricOptions.ServiceMetrics.Counter.Describe(ch)
 	e.metricOptions.ServiceMetrics.Histogram.Describe(ch)
@@ -50,6 +51,8 @@ func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
 func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 	e.metricOptions.GatewayFunctionInvocation.Collect(ch)
 	e.metricOptions.GatewayFunctionsHistogram.Collect(ch)
+
+	e.metricOptions.StartedCounter.Collect(ch)
 
 	e.metricOptions.ServiceReplicasGauge.Reset()
 	for _, service := range e.services {

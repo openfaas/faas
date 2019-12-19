@@ -18,7 +18,7 @@ func MakeNotifierWrapper(next http.HandlerFunc, notifiers []HTTPNotifier) http.H
 
 		url := r.URL.String()
 		for _, notifier := range notifiers {
-			notifier.Notify(r.Method, url, url, writer.Status(), time.Since(then))
+			notifier.Notify(r.Method, url, url, writer.Status(), "completed", time.Since(then))
 		}
 	}
 }
