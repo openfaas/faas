@@ -28,7 +28,7 @@ COPY queue          queue
 COPY plugin         plugin
 COPY version        version
 COPY scaling        scaling
-COPY server.go      .
+COPY main.go      .
 
 # Run a gofmt and exclude all vendored code.
 RUN license-check -path ./ --verbose=false "Alex Ellis" "OpenFaaS Authors" "OpenFaaS Author(s)" \

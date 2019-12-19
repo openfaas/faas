@@ -13,7 +13,7 @@ import (
 
 // HTTPNotifier notify about HTTP request/response
 type HTTPNotifier interface {
-	Notify(method string, URL string, originalURL string, statusCode int, duration time.Duration)
+	Notify(method string, URL string, originalURL string, statusCode int, event string, duration time.Duration)
 }
 
 // PrometheusServiceNotifier notifier for core service endpoints
@@ -22,7 +22,7 @@ type PrometheusServiceNotifier struct {
 }
 
 // Notify about service metrics
-func (psn PrometheusServiceNotifier) Notify(method string, URL string, originalURL string, statusCode int, duration time.Duration) {
+func (psn PrometheusServiceNotifier) Notify(method string, URL string, originalURL string, statusCode int, event string, duration time.Duration) {
 	code := fmt.Sprintf("%d", statusCode)
 	path := urlToLabel(URL)
 
@@ -46,19 +46,26 @@ type PrometheusFunctionNotifier struct {
 }
 
 // Notify records metrics in Prometheus
-func (p PrometheusFunctionNotifier) Notify(method string, URL string, originalURL string, statusCode int, duration time.Duration) {
-	seconds := duration.Seconds()
-	serviceName := getServiceName(originalURL)
+func (p PrometheusFunctionNotifier) Notify(method string, URL string, originalURL string, statusCode int, event string, duration time.Duration) {
+	if event == "completed" {
 
-	p.Metrics.GatewayFunctionsHistogram.
-		WithLabelValues(serviceName).
-		Observe(seconds)
+		seconds := duration.Seconds()
+		serviceName := getServiceName(originalURL)
 
-	code := strconv.Itoa(statusCode)
+		p.Metrics.GatewayFunctionsHistogram.
+			WithLabelValues(serviceName).
+			Observe(seconds)
 
-	p.Metrics.GatewayFunctionInvocation.
-		With(prometheus.Labels{"function_name": serviceName, "code": code}).
-		Inc()
+		code := strconv.Itoa(statusCode)
+
+		p.Metrics.GatewayFunctionInvocation.
+			With(prometheus.Labels{"function_name": serviceName, "code": code}).
+			Inc()
+	} else if event == "started" {
+		serviceName := getServiceName(originalURL)
+		p.Metrics.StartedCounter.WithLabelValues(serviceName).Inc()
+	}
+
 }
 
 func getServiceName(urlValue string) string {
@@ -83,7 +90,9 @@ func getServiceName(urlValue string) string {
 type LoggingNotifier struct {
 }
 
-// Notify a log about a request
-func (LoggingNotifier) Notify(method string, URL string, originalURL string, statusCode int, duration time.Duration) {
-	log.Printf("Forwarded [%s] to %s - [%d] - %fs", method, originalURL, statusCode, duration.Seconds())
+// Notify the LoggingNotifier about a request
+func (LoggingNotifier) Notify(method string, URL string, originalURL string, statusCode int, event string, duration time.Duration) {
+	if event == "completed" {
+		log.Printf("Forwarded [%s] to %s - [%d] - %fs seconds", method, originalURL, statusCode, duration.Seconds())
+	}
 }

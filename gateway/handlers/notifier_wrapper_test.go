@@ -84,6 +84,6 @@ type testNotifier struct {
 }
 
 // Notify about service metrics
-func (tf *testNotifier) Notify(method string, URL string, originalURL string, statusCode int, duration time.Duration) {
+func (tf *testNotifier) Notify(method string, URL string, originalURL string, statusCode int, event string, duration time.Duration) {
 	tf.StatusReceived = statusCode
 }
