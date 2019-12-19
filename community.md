@@ -492,13 +492,23 @@ Community providers actively being developed and/or supported by a third-party
 
 | Project name and description                                         | Author     | Site      | Status      |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| **faas-nomad** - Nomad provider | Andrew Cornies & Nic Jackson (Hashicorp) | [github.com](https://github.com/hashicorp/faas-nomad) | Incubation  |
+| **faas-memory** - In-memory provider | Ed Wilde / Alex Ellis | [github.com](https://github.com/openfaas-incubator/faas-memory) | Inception |
+| **faas-federation** - federation provider to route between one or more providers | Ed Wilde / Alex Ellis | [github.com](https://github.com/openfaas-incubator/faas-federation) | Inception |
 | **faas-fargate** - AWS Fargate provider | Edward Wilde | [github.com](https://github.com/ewilde/faas-fargate) | Incubation |
-| **faas-nomad** - Nomad provider | Nic Jackson (Hashicorp) | [github.com](https://github.com/hashicorp/faas-nomad) | Incubation  |
+| **faas-lambda** - AWS Lambda provider | Ed Wilde / Alex Ellis | [sales@openfaas.com](mailto:sales@openfaas.com) | Incubation |
+| **faas-containerd** - containerd provider for single node / edge | Alex Ellis | [github.com](https://github.com/alexellis/faas-containerd) | Inception |
+
+Community providers no-longer being maintained
+
+| Project name and description                                         | Author     | Site      | Status      |
+|----------------------------------------------------------------------|------------|-----------|-------------|
 | **faas-rancher** - Rancher/Cattle provider | Ken Fukuyama | [github.com](https://github.com/kenfdev/faas-rancher) | Inception |
 | **faas-dcos** - DCOS provider | Alberto Quario | [github.com](https://github.com/realbot/faas-dcos) | Inception  |
 | **faas-hyper** - Hyper.sh provider | Hyper | [github.com](https://github.com/hyperhq/faas-hyper) | Inception |
 | **faas-guardian** - Guardian provider | Nigel Wright | [github.com](https://github.com/nwright-nz/openfaas-guardian-backend) | Inception |
 | **faas-ecs** | Xicheng Chang (Huawei) | [github.com](https://github.com/stack360/faas-ecs) | Inception |
+| **faas-opendns** | OpenDNS / Cisco / EC2  | [medium.com](https://medium.com/@codeboten/faas-tastic-implementing-the-openfaas-provider-in-24-hours-5a1f1f2f0461) | Inception |
 
 Key:
 
