@@ -87,13 +87,14 @@ func main() {
 	var functionURLResolver handlers.BaseURLResolver
 	var functionURLTransformer handlers.URLPathTransformer
 	nilURLTransformer := handlers.TransparentURLPathTransformer{}
+	trimURLTransformer := handlers.FunctionPrefixTrimmingURLPathTransformer{}
 
 	if config.DirectFunctions {
 		functionURLResolver = handlers.FunctionAsHostBaseURLResolver{
 			FunctionSuffix:    config.DirectFunctionsSuffix,
 			FunctionNamespace: config.Namespace,
 		}
-		functionURLTransformer = handlers.FunctionPrefixTrimmingURLPathTransformer{}
+		functionURLTransformer = trimURLTransformer
 	} else {
 		functionURLResolver = urlResolver
 		functionURLTransformer = nilURLTransformer
@@ -141,7 +142,7 @@ func main() {
 		}
 
 		faasHandlers.QueuedProxy = handlers.MakeNotifierWrapper(
-			handlers.MakeCallIDMiddleware(handlers.MakeQueuedProxy(metricsOptions, true, natsQueue, functionURLTransformer)),
+			handlers.MakeCallIDMiddleware(handlers.MakeQueuedProxy(metricsOptions, true, natsQueue, trimURLTransformer)),
 			forwardingNotifiers,
 		)
 
