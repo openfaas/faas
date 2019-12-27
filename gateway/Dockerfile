@@ -40,7 +40,7 @@ RUN license-check -path ./ --verbose=false "Alex Ellis" "OpenFaaS Authors" "Open
     -X github.com/openfaas/faas/gateway/types.Arch=${ARCH}"\
     -a -installsuffix cgo -o gateway .
 
-FROM alpine:3.10
+FROM alpine:3.11
 
 ARG ARCH="x86_64"
 

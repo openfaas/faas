@@ -1,4 +1,4 @@
-FROM openfaas/classic-watchdog:0.14.4 as watchdog
+FROM openfaas/classic-watchdog:0.18.8 as watchdog
 
 FROM arm32v7/python:2.7-slim
 
