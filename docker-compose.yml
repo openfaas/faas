@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: openfaas/gateway:0.18.4
+        image: openfaas/gateway:0.18.10
         networks:
             - functions
         environment:
@@ -43,7 +43,7 @@ services:
 
     # auth service provide basic-auth plugin for system APIs
     basic-auth-plugin:
-        image: openfaas/basic-auth-plugin:0.18.4
+        image: openfaas/basic-auth-plugin:0.18.10
         networks:
             - functions
         environment:
