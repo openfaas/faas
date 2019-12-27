@@ -1,4 +1,7 @@
-FROM golang:1.10-alpine3.9 as build
+FROM golang:1.12-alpine3.11 as build
+
+ENV GO111MODULE=off
+ENV CGO_ENABLED=0
 
 RUN apk add --no-cache curl ca-certificates gcc musl-dev
 RUN curl -sLSf https://raw.githubusercontent.com/teamserverless/license-check/master/get.sh | sh \

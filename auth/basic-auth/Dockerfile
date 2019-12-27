@@ -1,4 +1,6 @@
-FROM golang:1.11-alpine3.10 as build
+FROM golang:1.12-alpine3.11 as build
+
+ENV GO111MODULE=off
 ENV CGO_ENABLED=0
 
 RUN apk add --no-cache curl ca-certificates
