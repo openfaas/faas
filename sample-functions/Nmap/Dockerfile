@@ -1,6 +1,6 @@
-FROM openfaas/classic-watchdog:0.14.4 as watchdog
+FROM openfaas/classic-watchdog:0.18.8 as watchdog
 
-FROM alpine:3.10
+FROM alpine:3.11
 
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog

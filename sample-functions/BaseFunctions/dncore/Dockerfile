@@ -1,4 +1,4 @@
-FROM openfaas/classic-watchdog:0.14.4 as watchdog
+FROM openfaas/classic-watchdog:0.18.8 as watchdog
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.1 as build
 

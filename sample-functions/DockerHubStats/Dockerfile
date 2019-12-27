@@ -1,4 +1,4 @@
-FROM openfaas/classic-watchdog:0.14.4 as watchdog
+FROM openfaas/classic-watchdog:0.18.8 as watchdog
 
 FROM golang:1.11-alpine as builder
 ENV CGO_ENABLED=0
@@ -10,7 +10,7 @@ WORKDIR /go/src/github.com/openfaas/faas/sample-functions/DockerHubStats
 COPY . /go/src/github.com/openfaas/faas/sample-functions/DockerHubStats
 RUN set -ex && apk add make && make install
 
-FROM alpine:3.10
+FROM alpine:3.11
 
 # Needed to reach the hub
 RUN apk --no-cache add ca-certificates 
