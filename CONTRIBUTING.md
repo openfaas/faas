@@ -189,7 +189,7 @@ The concept of `vendoring` is used in projects written in Go. This means that a 
 
 The chosen tool for vendoring code in the project is [dep](https://github.com/golang/dep).
 
-> Note: despite the availability of [Go modules](https://github.com/golang/go/wiki/Modules) in Go 1.11, they are not being used in the project at this time. If and when the decision is made to move, a complete overhaul of all repositories will need to be made in a coordinated fashion, including regression and integration testing. This is not a trivial task.
+> Note: despite the availability of [Go modules](https://github.com/golang/go/wiki/Modules) in Go 1.11, they are not being used in the project at this time. If and when the decision is made to move, a complete overhaul of all repositories will need to be made in a coordinated fashion including: CI, releases, unit-, integration- and e2e-tests. This is not a trivial amount of effort.
 
 ### How are releases made?
 
