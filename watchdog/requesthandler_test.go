@@ -26,6 +26,45 @@ func TestHandler_make(t *testing.T) {
 	}
 }
 
+func TestHandler_TransferEncodingPassedToFunction(t *testing.T) {
+	rr := httptest.NewRecorder()
+
+	body := "Message"
+	req, err := http.NewRequest(http.MethodPost, "/", bytes.NewBufferString(body))
+	req.TransferEncoding = []string{
+		"chunked",
+	}
+	req.ContentLength = -1
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	config := WatchdogConfig{
+		faasProcess: "env",
+		cgiHeaders:  true,
+	}
+	handler := makeRequestHandler(&config)
+	handler(rr, req)
+
+	required := http.StatusOK
+	if status := rr.Code; status != required {
+		t.Errorf("handler returned wrong status code - got: %v, want: %v",
+			status, required)
+	}
+
+	read, _ := ioutil.ReadAll(rr.Body)
+	val := string(read)
+	if !strings.Contains(val, `Http_ContentLength=-1`) {
+		t.Errorf(config.faasProcess+" should print: Http_ContentLength=-1, got: %s\n", val)
+	}
+
+	if !strings.Contains(val, "Http_Transfer_Encoding") {
+		t.Errorf(config.faasProcess+" should print: Http_Transfer_Encoding=chunked, got: %s\n", val)
+	}
+
+}
+
 func TestHandler_HasCustomHeaderInFunction_WithCgi_Mode(t *testing.T) {
 	rr := httptest.NewRecorder()
 
