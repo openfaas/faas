@@ -237,6 +237,10 @@ func getAdditionalEnvs(config *WatchdogConfig, r *http.Request, method string) [
 		envs = append(envs, fmt.Sprintf("Http_ContentLength=%d", r.ContentLength))
 		envs = append(envs, fmt.Sprintf("Http_Content_Length=%d", r.ContentLength))
 
+		if len(r.TransferEncoding) > 0 {
+			envs = append(envs, fmt.Sprintf("Http_Transfer_Encoding=%s", r.TransferEncoding[0]))
+		}
+
 		if config.writeDebug {
 			log.Println("Query ", r.URL.RawQuery)
 		}

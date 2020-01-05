@@ -38,9 +38,9 @@ Here's how to package your function if you don't want to use the CLI or have exi
 Example Dockerfile for an `echo` function:
 
 ```
-FROM alpine:3.8
+FROM alpine:3.11
 
-ADD https://github.com/openfaas/faas/releases/download/0.9.14/fwatchdog /usr/bin
+ADD https://github.com/openfaas/faas/releases/download/0.18.10/fwatchdog /usr/bin
 RUN chmod +x /usr/bin/fwatchdog
 
 # Define your binary here
@@ -134,9 +134,10 @@ The `X-Forwarded-By` header becomes available as `Http_X_Forwarded_By`
 
 * `Http_Method` - GET/POST etc
 * `Http_Query` - QueryString value
-* `Http_ContentLength` - gives the total content-length of the incoming HTTP request received by the watchdog.
+* `Http_ContentLength` and `Http_Content_Length` - gives the total content-length of the incoming HTTP request received by the watchdog, see note below
+* `Http_Transfer_Encoding` - only set when provided, if set to `chunked` the Content-Length will be `-1` to show that it does not apply
 
-> This behaviour is enabled by the `cgi_headers` environmental variable which is enabled by default.
+> This behaviour is enabled by the `cgi_headers` environmental variable which is enabled (`true`) by default.
 
 Here's an example of a POST request with an additional header and a query-string.
 
