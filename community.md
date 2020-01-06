@@ -79,6 +79,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFaaS Community Call - December OpenFaaS is 3!](https://www.youtube.com/watch?v=wXnYx-wD4Zk) | Various | Online webinar | 18-Dec-2019 |
 | [OpenFaaS Cloud + Linkerd: A Secure, Multi-Tenant Serverless Platform @ KubeCon 2019, 3:20pm](https://kccncna19.sched.com/event/Uabn/openfaas-cloud-linkerd-a-secure-multi-tenant-serverless-platform-charles-pretzer-buoyant-alex-ellis-openfaas-ltd) | Charles Pretzer & Alex Ellis | San Diego, USA | 20-Nov-2019 |
 | [How we moved from JIRA to GitHub for fun and profit using Serverless @ Goto](https://gotocph.com/2019/sessions/1016) | Edward Wilde | Copenhagen, Denmark | 19-Nov-2019 |
 | [Painless Serverless Function Development In Kubernetes - Serverless Summit @ KubeCon, 1.20pm](https://spsna19.sched.com/event/Wb2t/painless-serverless-function-development-in-kubernetes-ramiro-berrelleza-okteto) | Ramiro Berrelleza | San Diego, USA | 18-Nov-2019 |
@@ -142,7 +143,10 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [faasd - lightweight Serverless for your Raspberry Pi](https://blog.alexellis.io/faasd-for-lightweight-serverless/)| Alex Ellis | blog.alexellis.io | 30-Dec-2019 |
 | [My 2019 in review - Hello Open Source!](https://blog.heyal.co.uk/My-2019/)| Alistair Hey | blog.heyal.co.uk| 30-Dec-2019 |
+| [Build a CRUD API with Postgresql and Node.js With OpenFaaS](https://www.civo.com/learn/guide-to-build-a-crud-api-with-postgresl-and-node-js-with-openfaas)| Alex Ellis | www.civo.com | 19-Dec-2019 |
+| [Build ASP.NET Core APIs with Kubernetes and OpenFaaS](https://www.openfaas.com/blog/asp-net-core/)| Alex Ellis | www.openfaas.com| 03-Dec-2019 |
 | [Going Serverless with OpenFaaS and Golang - Building Optimized Templates](https://martinheinz.dev/blog/11) | Martin Heinz | martinheinz.dev | 29-Nov-2019 |
 | [Serverless Kotlin with OpenFaaS](https://kotlinexpertise.com/serverless-kotlin/) | Simon Wirtz | kotlinexpertise.com | 21-Nov-2019 |
 | [Going Serverless with OpenFaaS and Golang - The Ultimate Setup and Workflow](https://martinheinz.dev/blog/10) | Martin Heinz | martinheinz.dev | 16-Nov-2019 |
