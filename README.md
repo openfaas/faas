@@ -95,21 +95,21 @@ You can generate new functions using the `faas-cli` and built-in templates or us
 
 Official templates exist for many popular languages and are easily extensible with Dockerfiles.
 
-* Node.js (`node10-express`) example:
+* Node.js (`node12`) example:
 
     ```js
-    "use strict"
-
-    module.exports = (event, context) => {
-
-    context
-        .headers({"Content-Type": "text/html"})
-        .status(200)
-        .succeed(`
-        <h1>
-            👋 Hello World 🌍
-        </h1>`)
+   "use strict"
+   
+    module.exports = async (event, context) => {
+        return context
+            .status(200)
+            .headers({"Content-Type": "text/html"})
+            .succeed(`
+            <h1>
+                👋 Hello World 🌍
+            </h1>`);
     }
+ 
     ```
     *handler.js*
 
