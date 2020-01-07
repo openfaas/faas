@@ -307,6 +307,8 @@ paths:
           description: Bad Request
         '404':
           description: Not Found
+        '405':
+          description: Method Not Allowed. Secret update is not allowed in faas-swarm.
         '500':
           description: Internal Server Error
     delete:
