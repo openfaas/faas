@@ -6,14 +6,14 @@ package metrics
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
+	"log"
 	"net"
 	"net/http"
 	"net/url"
 	"path"
 	"time"
-
-	"log"
 
 	"github.com/openfaas/faas-provider/auth"
 	types "github.com/openfaas/faas-provider/types"
@@ -66,7 +66,7 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 }
 
 // StartServiceWatcher starts a ticker and collects service replica counts to expose to prometheus
-func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions MetricOptions, label string, interval time.Duration) {
+func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions MetricOptions, label string, interval time.Duration) error {
 	ticker := time.NewTicker(interval)
 	quit := make(chan struct{})
 
@@ -91,7 +91,7 @@ func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions Metri
 	// The request here can be cached safely as long as the body is nil.
 	serviceReq, err := http.NewRequest(http.MethodGet, endpointURL.String(), nil)
 	if err != nil {
-		log.Println(err)
+		return fmt.Errorf("Failed to create a new service request: %v", err)
 	}
 
 	if e.credentials != nil {
@@ -127,4 +127,6 @@ func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions Metri
 			}
 		}
 	}()
+
+	return nil
 }

@@ -62,7 +62,15 @@ func main() {
 
 	metricsOptions := metrics.BuildMetricsOptions()
 	exporter := metrics.NewExporter(metricsOptions, credentials)
-	exporter.StartServiceWatcher(*config.FunctionsProviderURL, metricsOptions, "func", servicePollInterval)
+	if err := exporter.StartServiceWatcher(
+		*config.FunctionsProviderURL,
+		metricsOptions,
+		"func",
+		servicePollInterval,
+	); err != nil {
+		log.Fatalf("Failed to start service watcher: %v", err)
+	}
+
 	metrics.RegisterExporter(exporter)
 
 	reverseProxy := types.NewHTTPClientReverseProxy(config.FunctionsProviderURL,
