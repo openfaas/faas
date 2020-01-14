@@ -10,6 +10,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"path"
 	"time"
 
 	"log"
@@ -85,23 +86,24 @@ func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions Metri
 		},
 	}
 
+	endpointURL.Path = path.Join(endpointURL.Path, "system/functions")
+
+	// The request here can be cached safely as long as the body is nil.
+	serviceReq, err := http.NewRequest(http.MethodGet, endpointURL.String(), nil)
+	if err != nil {
+		log.Println(err)
+	}
+
+	if e.credentials != nil {
+		serviceReq.SetBasicAuth(e.credentials.User, e.credentials.Password)
+	}
+
 	go func() {
 		for {
 			select {
 			case <-ticker.C:
-
-				get, err := http.NewRequest(http.MethodGet, endpointURL.String()+"system/functions", nil)
-				if err != nil {
-					log.Println(err)
-					continue
-				}
-
-				if e.credentials != nil {
-					get.SetBasicAuth(e.credentials.User, e.credentials.Password)
-				}
-
 				services := []types.FunctionStatus{}
-				res, err := proxyClient.Do(get)
+				res, err := proxyClient.Do(serviceReq)
 				if err != nil {
 					log.Println(err)
 					continue
