@@ -1,25 +1,22 @@
-maintainers:
- - BurtonR
- - LucasRoesler
+curators:
  - alexellis
+ - burtonr
  - ewilde
- - johnmccabe
- - jonatasbaldin
- - kenfdev
+ - LucasRoesler
  - martindekov
- - matipan
- - rgee0
  - stefanprodan
+ - utsavanand2
  - viveksyngh
  - Waterdrips
- - utsavanand2
 
 features:
  - dco_check
  - comments
  - pr_description_required
-# - hacktoberfest
  - release_notes
+# - hacktoberfest # Enable each October
+
+contributing_url: https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md
 
 custom_messages:
   - name: slack
@@ -60,5 +57,3 @@ custom_messages:
            what was added worked as you expected.
 
            Thank you for your contribution.
-
-contributing_url: https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md
