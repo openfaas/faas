@@ -191,7 +191,9 @@ The chosen tool for vendoring code in the project is [dep](https://github.com/go
 
 > Note: despite the availability of [Go modules](https://github.com/golang/go/wiki/Modules) in Go 1.11, they are not being used in the project at this time. If and when the decision is made to move, a complete overhaul of all repositories will need to be made in a coordinated fashion including: CI, releases, unit-, integration- and e2e-tests. This is not a trivial amount of effort.
 
-A limited effort is being made by the maintainers to move some projects to Go Modules and Go 1.13. This will [retain the use of the vendor folder as specified in the Go documentation](https://github.com/golang/go/wiki/Modules). We are not inviting the broader community to submit PRs to convert additional projects at this time.
+**An update on Go modules*
+
+A limited effort is being made by the maintainers to move some projects to Go Modules and Go 1.13. This approach will retain the use of the vendor folder, which is a valid strategy for adopting Go modules and is [documented in the Go wiki](https://github.com/golang/go/wiki/Modules). There are different trade-offs between using a vendor folder and not. If you do not understand these trade-offs well, you may explore the topic at your own leisure. We are not inviting the broader community to submit PRs to convert additional projects at this time.
 
 ### How are releases made?
 
