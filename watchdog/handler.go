@@ -215,9 +215,9 @@ func pipeRequest(config *WatchdogConfig, w http.ResponseWriter, r *http.Request,
 	}
 
 	if len(bytesWritten) > 0 {
-		log.Printf("%s - Duration: %f seconds", bytesWritten, execDuration)
+		log.Printf("%s - Duration: %fs", bytesWritten, execDuration)
 	} else {
-		log.Printf("Duration: %f seconds", execDuration)
+		log.Printf("Duration: %fs", execDuration)
 	}
 }
 

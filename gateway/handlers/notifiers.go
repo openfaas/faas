@@ -85,5 +85,5 @@ type LoggingNotifier struct {
 
 // Notify a log about a request
 func (LoggingNotifier) Notify(method string, URL string, originalURL string, statusCode int, duration time.Duration) {
-	log.Printf("Forwarded [%s] to %s - [%d] - %f seconds", method, originalURL, statusCode, duration.Seconds())
+	log.Printf("Forwarded [%s] to %s - [%d] - %fs", method, originalURL, statusCode, duration.Seconds())
 }
