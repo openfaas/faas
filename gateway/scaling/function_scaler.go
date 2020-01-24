@@ -117,7 +117,7 @@ func (f *FunctionScaler) Scale(functionName, namespace string) FunctionScaleResu
 
 			if queryResponse.AvailableReplicas > 0 {
 
-				log.Printf("[Scale] function=%s 0 => %d successful - %f seconds",
+				log.Printf("[Scale] function=%s 0 => %d successful - %fs",
 					functionName, queryResponse.AvailableReplicas, totalTime.Seconds())
 
 				return FunctionScaleResult{
