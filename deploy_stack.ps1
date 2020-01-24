@@ -74,16 +74,19 @@ if (Get-Command docker -errorAction SilentlyContinue)
         Write-Host "Disabling basic authentication for gateway.."
         Write-Host ""
         $env:BASIC_AUTH="false";
+        $env:AUTH_URL=""
     }
     else 
     {
         Write-Host ""
         Write-Host "Enabling basic authentication for gateway.."
         Write-Host ""
+        $env:BASIC_AUTH="true";
+        $env:AUTH_URL="http://basic-auth-plugin:8080/validate"
     }
 
     Write-Host "Deploying OpenFaaS core services"
-    docker stack deploy func --compose-file ./docker-compose.yml  --orchestrator swarm
+    docker stack deploy func --compose-file ./docker-compose.yml
 }
 else
 {
