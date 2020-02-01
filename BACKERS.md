@@ -60,8 +60,6 @@ Email [sales@openfaas.com](mailto:sales@openfaas.com) for a quote.
 
 <a href="https://digitalocean.com"><img alt="DigitalOcean" src="https://www.openfaas.com/images/sponsors/digitalocean.svg" width="110px" /></a>
 
-<a href="https://rancher.com"><img alt="Rancher" src="https://www.openfaas.com/images/sponsors/rancher-logo-stacked-color.svg" width="110px" /></a>
-
 <a href="https://www.thectoadvisor.com"><img alt="CTO Advisor" src="https://www.openfaas.com/images/sponsors/cto-advisor.png" width="110px" /></a>
 
 <a href="https://dx.no"><img alt="DX" src="https://www.openfaas.com/images/users-logos/dx.png" width="110px" /></a>
@@ -72,8 +70,6 @@ Email [sales@openfaas.com](mailto:sales@openfaas.com) for a quote.
 
 #### Bronze Sponsors
 
-<a href="https://asyncy.com"><img alt="ASYNCY" src="https://www.openfaas.com/images/sponsors/asyncy.png" width="90px" /></a>
-
 <a href="https://garden.io"><img alt="Garden.io" src="https://www.openfaas.com/images/sponsors/garden.png" width="90px" /></a>
 
 <a href="https://www.form3.tech"><img alt="Form3 Tech" src="https://docs.openfaas.com/images/logos/form3.svg" width="90px" /></a>
@@ -81,6 +77,12 @@ Email [sales@openfaas.com](mailto:sales@openfaas.com) for a quote.
 <a href="https://dragonchain.com"><img alt="Dragonchain" src="https://www.openfaas.com/images/users-logos/dragonchain.svg" width="90px" /></a>
 
 <a href="https://ratehub.ca"><img alt="ratehub.ca" src="https://www.ratehub.ca/images/logo-small-right.png" width="90px" /></a>
+
+<a href="https://asyncy.com"><img alt="ASYNCY" src="https://www.openfaas.com/images/sponsors/asyncy.png" width="90px" /></a>
+
+<a href="https://github.com/opvizordz">opvizordz</a>
+
+<a href="https://cloudux.io/">cloudux.io</a>
 
 ## Individual backers
 
