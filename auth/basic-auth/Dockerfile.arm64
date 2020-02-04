@@ -1,11 +1,12 @@
+FROM teamserverless/license-check:0.3.6 as license-check
+
 FROM golang:1.12-alpine3.11 as build
 
 ENV GO111MODULE=off
 ENV CGO_ENABLED=0
 
 RUN apk add --no-cache curl ca-certificates gcc musl-dev
-RUN curl -sLSf https://raw.githubusercontent.com/teamserverless/license-check/master/get.sh | sh \
-  && mv ./license-check /usr/bin/
+COPY --from=license-check /license-check /usr/bin/
 
 WORKDIR /go/src/handler
 COPY . .

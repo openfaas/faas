@@ -1,3 +1,5 @@
+FROM teamserverless/license-check:0.3.6 as license-check
+
 FROM golang:1.12 as build
 
 ENV GO111MODULE=off
@@ -10,9 +12,7 @@ ARG ARCH="x86_64"
 ARG GOOS=linux
 ARG GOARM
 
-RUN curl -sLSf \
-  https://raw.githubusercontent.com/teamserverless/license-check/master/get.sh | sh \
-  && mv ./license-check /usr/bin/
+COPY --from=license-check /license-check /usr/bin/
 
 WORKDIR /go/src/github.com/openfaas/faas/gateway
 
