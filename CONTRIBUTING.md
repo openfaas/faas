@@ -369,7 +369,9 @@ Getting the best out of Slack
 
 * Browse open issues in [openfaas/faas](https://github.com/openfaas/faas/issues)
 
-* Sign-up for the [2019 Trello board](http://bit.ly/2LGl6nd)
+* Join the [2020 Roadmap on Trello](https://trello.com/invite/b/5OpMyrBP/ade103a10ae1e38eb5d3eee7955260a9/2020-openfaas-roadmap)
+
+For commercial users, please feel free to ask about support, backlog prioritisation and feature development. Email sales@openfaas.com.
 
 ## License
 
