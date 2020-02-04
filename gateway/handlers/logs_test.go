@@ -122,13 +122,17 @@ func Test_logsProxyDoesNotLeakGoroutinesWhenClientClosesConnection(t *testing.T)
 		t.Fatalf("unexpected error sending log request: %s", err)
 	}
 
+	errCh := make(chan error, 1)
 	go func() {
 		defer resp.Body.Close()
+		defer close(errCh)
 		_, err := ioutil.ReadAll(resp.Body)
-		if err != context.Canceled {
-			t.Fatalf("unexpected error reading the response body: %s", err)
-		}
+		errCh <- err
 	}()
-
 	cancel()
+	err = <-errCh
+	if err != context.Canceled {
+		t.Fatalf("unexpected error reading the response body: %s", err)
+	}
+
 }
