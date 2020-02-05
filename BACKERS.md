@@ -64,6 +64,8 @@ Email [sales@openfaas.com](mailto:sales@openfaas.com) for a quote.
 
 <a href="https://dx.no"><img alt="DX" src="https://www.openfaas.com/images/users-logos/dx.png" width="110px" /></a>
 
+<a href="https://rancher.com"><img alt="Rancher" src="https://www.openfaas.com/images/sponsors/rancher-logo-stacked-color.svg" width="110px" /></a>
+
 #### Gold Sponsors (homepage sponsor)
 
 <a href="https://civo.com"><img alt="Civo" src="https://www.openfaas.com/images/sponsors/civo.svg" width="100px" /></a>
