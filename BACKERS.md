@@ -76,11 +76,7 @@ Email [sales@openfaas.com](mailto:sales@openfaas.com) for a quote.
 
 <a href="https://www.form3.tech"><img alt="Form3 Tech" src="https://docs.openfaas.com/images/logos/form3.svg" width="90px" /></a>
 
-<a href="https://dragonchain.com"><img alt="Dragonchain" src="https://www.openfaas.com/images/users-logos/dragonchain.svg" width="90px" /></a>
-
 <a href="https://ratehub.ca"><img alt="ratehub.ca" src="https://www.ratehub.ca/images/logo-small-right.png" width="90px" /></a>
-
-<a href="https://asyncy.com"><img alt="ASYNCY" src="https://www.openfaas.com/images/sponsors/asyncy.png" width="90px" /></a>
 
 <a href="https://github.com/opvizordz">opvizordz</a>
 
