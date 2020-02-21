@@ -65,6 +65,8 @@ It would be great to hear from you especially if you have any of the above and w
 | [Service Mesh and Serverless Chatbots with Linkerd K8s and OpenFaaS](https://kccnceu20.sched.com/event/Zemu/service-mesh-and-serverless-chatbots-with-linkerd-k8s-and-openfaas-sergio-mendez-universidad-san-calors-de-guatemala)| Sergio Méndez | Kubecon EU| 02-Apr-2020 |
 | [Strangling Our Venue Management Monolith at DX with Kubernetes and OpenFaaS](https://kccnceu20.sched.com/event/Zelz/strangling-our-venue-management-monolith-at-dx-with-kubernetes-and-openfaas-christian-sakshaug-dialog-exe-dx-alex-ellis-openfaas-ltd)| Alex Ellis & Christian Sakshaug | Kubecon EU| 02-Apr-2020 |
 | [Sending Billions of Payments Using Hybrid Cloud and Open-source Technologies](https://kccnceu20.sched.com/event/ZejH/sending-billions-of-payments-using-hybrid-open-source-serverless-edward-wilde-bruno-miguel-custodio-form3)| Edward Wilde & Bruno Miguel Custódio | Kubecon EU| 02-Apr-2020 |
+| [The Need for a Cloud Native Tunnel](https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-2020/talk/MB7AMY/) | Alex Ellis | Cloud Native Rejekts, Amsterdam | 23-Mar-2020 |
+| Meet faasd. Look ma’ no Kubernetes! | Alex Ellis | Serverless Practitioners Summit @ KubeCon Amsterdam | 24-Mar-2020 |
 | Kubernetes the easy way with k3sup, OpenFaaS and inlets | Alex Ellis & Alistair Hey | Online Webinar for Traefik | 12-Mar-2022 |
 
 #### Blog posts and write-ups 2020
@@ -74,12 +76,14 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFaaS comes to k9s, the Kubernetes CUI](https://blog.alexellis.io/k9s-the-kubernetes-cui-comes-to-openfaas/) | Alex Ellis | alexellis.io | 14-Feb-2020 |
+| [New OpenFaaS SWAG store launched and Insiders Subscription](https://www.openfaas.com/blog/swag-store-launch/) | Alex Ellis | openfaas.com | 14-Feb-2020 |
 | [Get storage for your functions with Python and MongoDB](https://www.openfaas.com/blog/get-started-with-python-mongo/) | Alex Ellis | openfaas.com | 12-Feb-2020 |
 | [Build a Serverless appliance with faasd](https://blog.alexellis.io/deploy-serverless-faasd-with-cloud-init/) | Alex Ellis | alexellis.io | 06-Feb-2020 |
 | [Painless Serverless Development with Kubernetes, OpenFaaS and Okteto](https://www.openfaas.com/blog/painless-serverless-development/) | Ramiro Berrelleza | alexellis.io | 24-Jan-2020 |
 | [Introduction to OpenFaaS: Serverless made accessible](https://www.objectif-libre.com/en/blog/2020/01/17/openfaas-made-accessible/) | Florian Davasse | www.objectif-libre.com | 17-Jan-2020| 
-| [Applying GitOps to OpenFaaS with Flux Helm Operator](https://www.openfaas.com/blog/openfaas-flux/) | Stefan Prodan | www.openfaas.com | 16-Jan-2020| 
-| [OpenFaaS 3rd Birthday Celebrations](https://www.openfaas.com/blog/birthday-teamserverless/) | Alex Ellis | www.openfaas.com | 14-Jan-2020| 
+| [Applying GitOps to OpenFaaS with Flux Helm Operator](https://www.openfaas.com/blog/openfaas-flux/) | Stefan Prodan | openfaas.com| 16-Jan-2020| 
+| [OpenFaaS 3rd Birthday Celebrations](https://www.openfaas.com/blog/birthday-teamserverless/) | Alex Ellis | openfaas.com| 14-Jan-2020| 
 | [How To Get Started Contributing to OpenFaaS](https://blog.heyal.co.uk/developing-openfaas/)| Alistair Hey | blog.heyal.co.uk| 04-Jan-2020 |
 
 ### 2019
