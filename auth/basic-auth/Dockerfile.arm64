@@ -1,6 +1,6 @@
 FROM teamserverless/license-check:0.3.6 as license-check
 
-FROM golang:1.12-alpine3.11 as build
+FROM golang:1.13-alpine3.11 as build
 
 ENV GO111MODULE=off
 ENV CGO_ENABLED=0
