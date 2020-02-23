@@ -54,6 +54,17 @@ It would be great to hear from you especially if you have any of the above and w
 | [Episode 022 – OpenFaaS with Docker Captain](https://changelog.com/podcast/343) | The 6 Figure Developer Podcast | 15-Jan-2018 |
 | [Serverless and OpenFaas with Alex Ellis](https://hanselminutes.com/612/serverless-and-openfaas-with-alex-ellis) | The Hanselminutes Podcast | 29-Dec-2019 |
 
+### Featured Videos
+
+[Back to top](#openfaas-community)
+
+| Title                                                              | Presenter       | Date      |
+| ------------------------------------------------------------------ | --------------- | --------- |
+| [Getting Beyond FaaS: The PLONK Stack for Kubernetes Developers](https://www.youtube.com/watch?v=NckMekZXRt8) | Alex Ellis | 21-Nov-2019 |
+| [OpenFaaS Cloud + Linkerd: A Secure, Multi-Tenant Serverless Platform](https://www.youtube.com/watch?v=sD7hCwq3Gw0) | Charles Pretzer & Alex Ellis | 20-Nov-2019 |
+| [OpenFaaS Community Call - December OpenFaaS is 3!](https://www.youtube.com/watch?v=wXnYx-wD4Zk) | Various | 18-Dec-2019 |
+| [OpenFaaS Cloud in 100 seconds (ofc-bootstrap)](https://www.youtube.com/watch?v=Sa1VBSfVpK0&index=21&list=PLlIapFDp305DiIRhJFNzMuJXoBnzKdtpi) | Alex Ellis | 31-Jan-2019 |
+
 ### 2020
 
 #### Events in 2020
@@ -102,15 +113,10 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
-<<<<<<< HEAD
 | [faasd - lightweight Serverless for your Raspberry Pi](https://blog.alexellis.io/faasd-for-lightweight-serverless/) | Alex Ellis | alexellis.io | 30-Dec-2020 |
 | [OpenFaaS Community Call - December OpenFaaS is 3!](https://www.youtube.com/watch?v=wXnYx-wD4Zk) | Various | Online webinar | 18-Dec-2019 |
 | [The RISC V Journey Through Containers to the Cloud @ RISC-V Summit 2019](https://www.youtube.com/watch?v=AX4bx03D3RQ) | Carlos Eduardo de Paula | San Jose, USA | 10-Dec-2019 |
 | [OpenFaaS Cloud + Linkerd: A Secure, Multi-Tenant Serverless Platform @ KubeCon 2019, 3:20pm](https://kccncna19.sched.com/event/Uabn/openfaas-cloud-linkerd-a-secure-multi-tenant-serverless-platform-charles-pretzer-buoyant-alex-ellis-openfaas-ltd) | Charles Pretzer & Alex Ellis | San Diego, USA | 20-Nov-2019 |
-=======
-| [Getting Beyond FaaS: The PLONK Stack for Kubernetes Developers](https://www.youtube.com/watch?v=NckMekZXRt8) | Alex Ellis | Serverless Practitioners Summit/KubeCon | 21-Nov-2019 |
-| [OpenFaaS Cloud + Linkerd: A Secure, Multi-Tenant Serverless Platform @ KubeCon 2019, 3:20pm](https://kccncna19.sched.com/event/Uabn/openfaas-cloud-linkerd-a-secure-multi-tenant-serverless-platform-charles-pretzer-buoyant-alex-ellis-openfaas-ltd) \| [video](https://www.youtube.com/watch?v=sD7hCwq3Gw0) | Charles Pretzer & Alex Ellis | San Diego, USA | 20-Nov-2019 |
->>>>>>> Add 3 KubeCon video links to community file
 | [How we moved from JIRA to GitHub for fun and profit using Serverless @ Goto](https://gotocph.com/2019/sessions/1016) | Edward Wilde | Copenhagen, Denmark | 19-Nov-2019 |
 | [Painless Serverless Function Development In Kubernetes - Serverless Summit @ KubeCon, 1.20pm](https://spsna19.sched.com/event/Wb2t/painless-serverless-function-development-in-kubernetes-ramiro-berrelleza-okteto) | Ramiro Berrelleza | San Diego, USA | 18-Nov-2019 |
 | [Getting Beyond FaaS: The PLONK Stack for Kubernetes Developers - Serverless Summit @ KubeCon, 11.20am](https://spsna19.sched.com/event/Wb2n/getting-beyond-faas-the-plonk-stack-for-kubernetes-developers-alex-ellis-openfaas-ltd) | Alex Ellis | San Diego, USA | 18-Nov-2019 |
@@ -143,7 +149,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Accelerating the Journey of an AI Algorithm to Production with OpenFaaS - Joost Noppen, BT PLC & Alex Ellis](https://kccnceu19.sched.com/event/MPeF/accelerating-the-journey-of-an-ai-algorithm-to-production-with-openfaas-joost-noppen-bt-plc-alex-ellis-vmware) | Joost Noppen & Alex Ellis | KubeCon, Barcelona EU | 22-May-2019 |
 | [OpenFaaS Birds of a Feather Session](https://spseu19.sched.com/event/Nq5C/bof-open-faas) | Alex Ellis et al. | Serverless Practitioners Summit/KubeCon | 20-May-2019 |
 | [Kubernetes and AWS Lambda can play nicely together with OpenFaaS](https://spseu19.sched.com/event/Nq4u/kubernetes-and-aws-lambda-can-play-nicely-together-with-openfaas) | Edward Wilde | Serverless Practitioners Summit/KubeCon | 20-May-2019 |
-| [A bright 2019 for OpenFaaS - project & community updates](https://spseu19.sched.com/event/Nq4i/a-bright-2019-for-openfaas-project-community-updates) \| [video](https://www.youtube.com/watch?v=LQa8-JvIeWA) | Alex Ellis | Serverless Practitioners Summit/KubeCon | 20-May-2019 |
+| [A bright 2019 for OpenFaaS - project & community updates](https://spseu19.sched.com/event/Nq4i/a-bright-2019-for-openfaas-project-community-updates) | Alex Ellis | Serverless Practitioners Summit/KubeCon | 20-May-2019 |
 | [Going Serverless with Spotinst Ocean and OpenFaas Cloud](https://hubs.ly/H0hL-Zx0) @ 5pm BST | Alex Ellis / Tsahi Duek | Free Webinar | 15-May-2019 |
 | [DataScience as a Service](https://teqnation.nl/sessions/datascience-as-a-service/)  | Arno Broekhof | TEQnation, Netherlands EU | 15-May-2019 |
 | [Docker Birmingham: Staying on topic - Invoke your OpenFaaS functions through Kafka](https://www.meetup.com/Docker-Birmingham/events/260563667/?_xtd=gqFyqTI2MjQ0NTE2NKFwp2FuZHJvaWQ&from=ref) | Richard Gee | Birmingham, UK | 7-May-2019 |
