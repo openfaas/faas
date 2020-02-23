@@ -21,7 +21,7 @@ do
       export AUTH_URL=""
 			;;
     --help | -h)
-			echo "Usage: \n [default]\tdeploy the OpenFaaS core services\n --no-auth [-n]\tdisable basic authentication.\n --help\tdisplays this screen"
+			printf "Usage: \n [default]\tdeploy the OpenFaaS core services\n --no-auth [-n]\tdisable basic authentication.\n --help\tdisplays this screen"
       exit
 			;;
 	esac
@@ -35,9 +35,9 @@ secret=$(head -c 16 /dev/urandom| $sha_cmd | cut -d " " -f 1)
 echo "$secret" | docker secret create basic-auth-password -
 if [ $? = 0 ];
 then
-  echo "[Credentials]\n username: admin \n password: $secret\n echo -n "$secret" | faas-cli login --username=admin --password-stdin"
+  printf "[Credentials]\n username: admin \n password: $secret\n echo -n ""$secret"" | faas-cli login --username=admin --password-stdin"
 else
-  echo "[Credentials]\n already exist, not creating"
+  printf "[Credentials]\n already exist, not creating"
 fi
 
 if [ $BASIC_AUTH = "true" ];
