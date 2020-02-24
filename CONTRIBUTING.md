@@ -236,10 +236,10 @@ In the OpenFaaS community there are four levels of structure or maintainership:
 
 The Core Team includes:
 
-- Alex Ellis (@alexellis)
-- Stefan Prodan (@stefanprodan)
-- Lucas Roesler (@LucasRoesler)
-- Burton Rheutan (@burtonr)
+- Alex Ellis (@alexellis) - Lead
+- Stefan Prodan (@stefanprodan) - SME for Kubernetes
+- Lucas Roesler (@LucasRoesler) - SME for logs, provider model and secrets
+- Burton Rheutan (@burtonr) - SME for CLI and Swarm
 
 The Core Team have the ear of the Project Lead. They help with strategy, project maintenance, community management, and make a regular commitment of time to the project on a weekly basis. The Core Team will usually be responsible for, or be a subject-matter-expert (SME) for a sub-system of OpenFaaS. Core Team may be granted write (push) access to one or more sub-systems.
 
