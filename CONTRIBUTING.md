@@ -240,7 +240,6 @@ The Core Team includes:
 - Stefan Prodan (@stefanprodan)
 - Lucas Roesler (@LucasRoesler)
 - Burton Rheutan (@burtonr)
-- Ed Wilde (@ewilde)
 
 The Core Team have the ear of the Project Lead. They help with strategy, project maintenance, community management, and make a regular commitment of time to the project on a weekly basis. The Core Team will usually be responsible for, or be a subject-matter-expert (SME) for a sub-system of OpenFaaS. Core Team may be granted write (push) access to one or more sub-systems.
 
