@@ -79,6 +79,7 @@ It would be great to hear from you especially if you have any of the above and w
 |-------------------------------------------------------------------------|--------------|----------|-------------|
 | [Walk-through — install Kubernetes to your Raspberry Pi in 15 minutes](https://medium.com/@alexellisuk/walk-through-install-kubernetes-to-your-raspberry-pi-in-15-minutes-84a8492dc95a) | Alex Ellis | medium.com | 01-Mar-2020 |
 | [arkade by example — Kubernetes apps, the easy way](https://medium.com/@alexellisuk/kubernetes-apps-the-easy-way-f06d9e5cad3c) | Alex Ellis | medium.com | 01-Mar-2020 |
+| [Introducing Arkade - The Kubernetes app installer](https://blog.heyal.co.uk/introducing-arkade/) | Alistair Hey | blog.heyal.co.uk | 28-Feb-2020 |
 | [Running Faasd in LXC](https://dukemon.leetserve.com/posts/2020/02/faasd-in-lxc/) | Gabriel Duke | dukemon.leetserve.com | 28-Feb-2020 |
 | [Create your own private cloud with OpenFaaS Cloud](https://www.openfaas.com/blog/ofc-private-cloud/) | Alex Ellis | openfaas.com | 28-Feb-2020 |
 | [OpenFaaS comes to k9s, the Kubernetes CUI](https://blog.alexellis.io/k9s-the-kubernetes-cui-comes-to-openfaas/) | Alex Ellis | alexellis.io | 14-Feb-2020 |
