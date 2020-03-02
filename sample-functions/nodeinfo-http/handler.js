@@ -10,7 +10,7 @@ module.exports = async (event, context) => {
   let res = await info(content)
   return context
     .status(200)
-    .headers("Content-Type", "text/plain")
+    .headers({"Content-Type": "text/plain"})
     .succeed(res)
 }
 

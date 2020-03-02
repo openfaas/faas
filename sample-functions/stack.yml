@@ -96,5 +96,3 @@ functions:
     image: functions/nodeinfo-http:latest
     environment:
       RAW_BODY: true
-
-
