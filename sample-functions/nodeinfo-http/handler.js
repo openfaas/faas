@@ -10,6 +10,7 @@ module.exports = async (event, context) => {
   let res = await info(content)
   return context
     .status(200)
+    .headers("Content-Type", "text/plain")
     .succeed(res)
 }
 
@@ -18,9 +19,10 @@ async function info(content, callback) {
 
    let val  = "";
    val += "Hostname: " + data +"\n";
-   val += "Platform: " + os.platform()+"\n";
    val += "Arch: " + os.arch() + "\n";
    val += "CPU count: " + os.cpus().length+ "\n";
+   val += "Total mem: "+ os.totalmem() + "\n";
+   val += "Platform: " + os.platform()+"\n";
 
    val += "Uptime: " + os.uptime()+ "\n";
 
