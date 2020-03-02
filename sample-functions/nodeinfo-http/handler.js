@@ -20,8 +20,8 @@ async function info(content, callback) {
    let val  = "";
    val += "Hostname: " + data +"\n";
    val += "Arch: " + os.arch() + "\n";
-   val += "CPU count: " + os.cpus().length+ "\n";
-   val += "Total mem: "+ os.totalmem() + "\n";
+   val += "CPUs: " + os.cpus().length+ "\n";
+   val += "Total mem: " + (os.totalmem()/1024/1024).toFixed(0) + "MB\n";
    val += "Platform: " + os.platform()+"\n";
 
    val += "Uptime: " + os.uptime()+ "\n";
