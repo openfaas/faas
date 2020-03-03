@@ -77,6 +77,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Tutorial to get OpenFaas running on top of a Kubernetes cluster on Clear Linux OS](https://docs.01.org/clearlinux/latest/tutorials/openfaas.html) | Clear Linux | docs.01.org | 03-Mar-2020
 | [Walk-through — install Kubernetes to your Raspberry Pi in 15 minutes](https://medium.com/@alexellisuk/walk-through-install-kubernetes-to-your-raspberry-pi-in-15-minutes-84a8492dc95a) | Alex Ellis | medium.com | 01-Mar-2020 |
 | [arkade by example — Kubernetes apps, the easy way](https://medium.com/@alexellisuk/kubernetes-apps-the-easy-way-f06d9e5cad3c) | Alex Ellis | medium.com | 01-Mar-2020 |
 | [Introducing Arkade - The Kubernetes app installer](https://blog.heyal.co.uk/introducing-arkade/) | Alistair Hey | blog.heyal.co.uk | 28-Feb-2020 |
