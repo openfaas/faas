@@ -69,7 +69,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Meet faasd. Look ma’ no Kubernetes!](https://spseu20.sched.com/event/ZWeT/meet-faasd-look-ma-no-kubernetes-alex-ellis-openfaas-ltd) | Alex Ellis | Serverless Practitioners Summit @ KubeCon Amsterdam | 30-Mar-2020 |
 | [WebAssembly + OpenFaaS, the Universal Runtime for Serverless Functions](https://spseu20.sched.com/event/aYpr/webassembly-openfaas-the-universal-runtime-for-serverless-functions-ramiro-berrelleza-okteto)| Ramiro Berrelleza | Kubecon EU| 30-March-2020 |
 | [The State of Open Source Serverless](https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-2020/talk/VDHD7C/) | Jonatas Baldin | Cloud Native Rejekts EU '20 | 28-Mar-2020 |
-| Kubernetes the easy way with k3sup, OpenFaaS and inlets | Alex Ellis & Alistair Hey | Online Webinar for Traefik | 12-Mar-2022 |
+| [Kubernetes the easy way with k3sup, OpenFaaS and inlets](https://zoom.us/webinar/register/WN_UEhl9ieUT52BVQlhrSdZQw) | Alex Ellis & Alistair Hey | Online Webinar for Traefik | 12-Mar-2022 |
 
 #### Blog posts and write-ups 2020
 
