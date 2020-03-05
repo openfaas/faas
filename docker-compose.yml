@@ -43,7 +43,7 @@ services:
 
     # auth service provide basic-auth plugin for system APIs
     basic-auth-plugin:
-        image: openfaas/basic-auth-plugin:0.18.10
+        image: openfaas/basic-auth-plugin:0.18.11
         networks:
             - functions
         environment:
