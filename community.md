@@ -76,11 +76,12 @@ It would be great to hear from you especially if you have any of the above and w
 | [Service Mesh and Serverless Chatbots with Linkerd K8s and OpenFaaS](https://kccnceu20.sched.com/event/Zemu/service-mesh-and-serverless-chatbots-with-linkerd-k8s-and-openfaas-sergio-mendez-universidad-san-calors-de-guatemala)| Sergio Méndez | Kubecon EU| 02-Apr-2020 |
 | [Strangling Our Venue Management Monolith at DX with Kubernetes and OpenFaaS](https://kccnceu20.sched.com/event/Zelz/strangling-our-venue-management-monolith-at-dx-with-kubernetes-and-openfaas-christian-sakshaug-dialog-exe-dx-alex-ellis-openfaas-ltd)| Alex Ellis & Christian Sakshaug | Kubecon EU| 02-Apr-2020 |
 | [Sending Billions of Payments Using Hybrid Cloud and Open-source Technologies](https://kccnceu20.sched.com/event/ZejH/sending-billions-of-payments-using-hybrid-open-source-serverless-edward-wilde-bruno-miguel-custodio-form3)| Edward Wilde & Bruno Miguel Custódio | Kubecon EU| 02-Apr-2020 |
-| [The Need for a Cloud Native Tunnel](https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-2020/talk/MB7AMY/) | Alex Ellis | Cloud Native Rejekts, Amsterdam | 23-Mar-2020 |
 | [Meet faasd. Look ma’ no Kubernetes!](https://spseu20.sched.com/event/ZWeT/meet-faasd-look-ma-no-kubernetes-alex-ellis-openfaas-ltd) | Alex Ellis | Serverless Practitioners Summit @ KubeCon Amsterdam | 30-Mar-2020 |
 | [WebAssembly + OpenFaaS, the Universal Runtime for Serverless Functions](https://spseu20.sched.com/event/aYpr/webassembly-openfaas-the-universal-runtime-for-serverless-functions-ramiro-berrelleza-okteto)| Ramiro Berrelleza | Kubecon EU| 30-March-2020 |
+| [Finding Managed Services in a Serverless World with Crossplane and OpenFaaS](https://spseu20.sched.com/event/aYq0/finding-managed-services-in-a-serverless-world-with-crossplane-and-openfaas-daniel-mangum-upbound) | Daniel Mangum | Serverless Practitioners Summit - KubeCon EU | 30-Mar-2020 |
 | [The State of Open Source Serverless](https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-2020/talk/VDHD7C/) | Jonatas Baldin | Cloud Native Rejekts EU '20 | 28-Mar-2020 |
-| [Kubernetes the easy way with k3sup, OpenFaaS and inlets](https://zoom.us/webinar/register/WN_UEhl9ieUT52BVQlhrSdZQw) | Alex Ellis & Alistair Hey | Online Webinar for Traefik | 12-Mar-2022 |
+| [The Need for a Cloud Native Tunnel](https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-2020/talk/MB7AMY/) | Alex Ellis | Cloud Native Rejekts, Amsterdam | 23-Mar-2020 |
+| [Kubernetes the easy way with k3sup, OpenFaaS and inlets](https://zoom.us/webinar/register/WN_UEhl9ieUT52BVQlhrSdZQw) | Alex Ellis & Alistair Hey | Online Webinar for Traefik | 12-Mar-2020 |
 
 #### Blog posts and write-ups 2020
 
