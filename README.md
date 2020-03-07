@@ -236,7 +236,7 @@ Please see the guide on [community & contributing](https://docs.openfaas.com/com
 
 #### Roadmap
 
-The roadmap for OpenFaaS is represented in [GitHub issues](https://github.com/openfaas/faas/issues) and [a Trello board](http://bit.ly/2LGl6nd).
+The roadmap for OpenFaaS is represented in [GitHub issues](https://github.com/openfaas/faas/issues) and [a Trello board](https://trello.com/b/5OpMyrBP/2020-openfaas-roadmap).
 
 ##### Roadmap: OpenFaaS Cloud
 
