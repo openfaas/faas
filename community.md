@@ -82,6 +82,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [The State of Open Source Serverless](https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-2020/talk/VDHD7C/) | Jonatas Baldin | Cloud Native Rejekts EU '20 | 28-Mar-2020 |
 | [The Need for a Cloud Native Tunnel](https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-2020/talk/MB7AMY/) | Alex Ellis | Cloud Native Rejekts, Amsterdam | 23-Mar-2020 |
 | [Kubernetes the easy way with k3sup, OpenFaaS and inlets](https://zoom.us/webinar/register/WN_UEhl9ieUT52BVQlhrSdZQw) | Alex Ellis & Alistair Hey | Online Webinar for Traefik | 12-Mar-2020 |
+| [Service Mesh and Serverless Chatbots with Linkerd, K8s and OpenFaaS](https://www.meetup.com/de-DE/cloud-native-plus-gt/events/269147693/) | Sergio M. | Zoom | 12-Mar-2020 |
 
 #### Blog posts and write-ups 2020
 
@@ -89,6 +90,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Pi & Kubernetes with k3s, k3sup, arkade and OpenFaaS](https://www.youtube.com/watch?v=ZiR3QEfBivk) | DJ Adams | Youtube | 08-Mar-2020
 | [Tutorial to get OpenFaas running on top of a Kubernetes cluster on Clear Linux OS](https://docs.01.org/clearlinux/latest/tutorials/openfaas.html) | Clear Linux | docs.01.org | 03-Mar-2020
 | [Turn your Raspberry Pi into a serverless platform with faasd](https://myedes.io/serverless-on-raspberrypi/) | Mehdi Yedes | myedes.io | 01-Mar-2020
 | [Walk-through — install Kubernetes to your Raspberry Pi in 15 minutes](https://medium.com/@alexellisuk/walk-through-install-kubernetes-to-your-raspberry-pi-in-15-minutes-84a8492dc95a) | Alex Ellis | medium.com | 01-Mar-2020 |
