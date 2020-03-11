@@ -1,4 +1,5 @@
 #!ps1
+#Requires -PSEdition Desktop
 
 param (
     [switch] $noAuth,
