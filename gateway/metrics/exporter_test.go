@@ -41,7 +41,7 @@ func Test_Describe_DescribesThePrometheusMetrics(t *testing.T) {
 	go exporter.Describe(ch)
 
 	d := <-ch
-	expectedGatewayFunctionInvocationDesc := `Desc{fqName: "gateway_function_invocation_total", help: "Individual function metrics", constLabels: {}, variableLabels: [function_name code]}`
+	expectedGatewayFunctionInvocationDesc := `Desc{fqName: "gateway_function_invocation_total", help: "Function metrics", constLabels: {}, variableLabels: [function_name code]}`
 	actualGatewayFunctionInvocationDesc := d.String()
 	if expectedGatewayFunctionInvocationDesc != actualGatewayFunctionInvocationDesc {
 		t.Errorf("Want %s, got: %s", expectedGatewayFunctionInvocationDesc, actualGatewayFunctionInvocationDesc)
@@ -55,7 +55,7 @@ func Test_Describe_DescribesThePrometheusMetrics(t *testing.T) {
 	}
 
 	d = <-ch
-	expectedServiceReplicasGaugeDesc := `Desc{fqName: "gateway_service_count", help: "Docker service replicas", constLabels: {}, variableLabels: [function_name]}`
+	expectedServiceReplicasGaugeDesc := `Desc{fqName: "gateway_service_count", help: "Service replicas", constLabels: {}, variableLabels: [function_name]}`
 	actualServiceReplicasGaugeDesc := d.String()
 	if expectedServiceReplicasGaugeDesc != actualServiceReplicasGaugeDesc {
 		t.Errorf("Want %s, got: %s", expectedServiceReplicasGaugeDesc, actualServiceReplicasGaugeDesc)
