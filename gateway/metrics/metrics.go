@@ -50,16 +50,19 @@ func BuildMetricsOptions() MetricOptions {
 
 	gatewayFunctionInvocation := prometheus.NewCounterVec(
 		prometheus.CounterOpts{
-			Name: "gateway_function_invocation_total",
-			Help: "Individual function metrics",
+			Namespace: "gateway",
+			Subsystem: "function",
+			Name:      "invocation_total",
+			Help:      "Function metrics",
 		},
 		[]string{"function_name", "code"},
 	)
 
 	serviceReplicas := prometheus.NewGaugeVec(
 		prometheus.GaugeOpts{
-			Name: "gateway_service_count",
-			Help: "Docker service replicas",
+			Namespace: "gateway",
+			Name:      "service_count",
+			Help:      "Service replicas",
 		},
 		[]string{"function_name"},
 	)
