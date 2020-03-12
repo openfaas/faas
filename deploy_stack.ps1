@@ -25,9 +25,7 @@ if (Get-Command docker -errorAction SilentlyContinue)
         throw "Docker not in swarm mode, please initialise the cluster (`docker swarm init`) and retry"
     }
 
-    # AE: would be nice to avoid this dependency.
-    Add-Type -AssemblyName System.Web
-    $password = [System.Web.Security.Membership]::GeneratePassword(24,5)
+    $password = -join ((33..126) * 120 | Get-Random -Count 24 | ForEach-Object { [char]$_ })
     $secret = ""
 
     if (-Not $noHash)
