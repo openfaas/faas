@@ -13,11 +13,11 @@ import (
 
 // MetricOptions to be used by web handlers
 type MetricOptions struct {
-	GatewayFunctionInvocation *prometheus.CounterVec
-	GatewayFunctionsHistogram *prometheus.HistogramVec
-	ServiceReplicasGauge      *prometheus.GaugeVec
-	ServiceMetrics            *ServiceMetricOptions
-	StartedCounter            *prometheus.CounterVec
+	GatewayFunctionInvocation        *prometheus.CounterVec
+	GatewayFunctionsHistogram        *prometheus.HistogramVec
+	GatewayFunctionInvocationStarted *prometheus.CounterVec
+	ServiceReplicasGauge             *prometheus.GaugeVec
+	ServiceMetrics                   *ServiceMetricOptions
 }
 
 // ServiceMetricOptions provides RED metrics
@@ -82,7 +82,7 @@ func BuildMetricsOptions() MetricOptions {
 		[]string{"method", "path", "status"},
 	)
 
-	startedCounter := prometheus.NewCounterVec(
+	gatewayFunctionInvocationStarted := prometheus.NewCounterVec(
 		prometheus.CounterOpts{
 			Namespace: "gateway",
 			Subsystem: "function",
@@ -98,11 +98,11 @@ func BuildMetricsOptions() MetricOptions {
 	}
 
 	metricsOptions := MetricOptions{
-		GatewayFunctionsHistogram: gatewayFunctionsHistogram,
-		GatewayFunctionInvocation: gatewayFunctionInvocation,
-		ServiceReplicasGauge:      serviceReplicas,
-		ServiceMetrics:            serviceMetricOptions,
-		StartedCounter:            startedCounter,
+		GatewayFunctionsHistogram:        gatewayFunctionsHistogram,
+		GatewayFunctionInvocation:        gatewayFunctionInvocation,
+		ServiceReplicasGauge:             serviceReplicas,
+		ServiceMetrics:                   serviceMetricOptions,
+		GatewayFunctionInvocationStarted: gatewayFunctionInvocationStarted,
 	}
 
 	return metricsOptions

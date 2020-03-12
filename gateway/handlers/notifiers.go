@@ -63,7 +63,7 @@ func (p PrometheusFunctionNotifier) Notify(method string, URL string, originalUR
 			Inc()
 	} else if event == "started" {
 		serviceName := getServiceName(originalURL)
-		p.Metrics.StartedCounter.WithLabelValues(serviceName).Inc()
+		p.Metrics.GatewayFunctionInvocationStarted.WithLabelValues(serviceName).Inc()
 	}
 
 }
