@@ -91,6 +91,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFaaS: Send email by a simple web application using Nodemailer](https://medium.com/red-gold/openfaas-send-email-web-application-using-nodemailer-8ec8d8ca714e) | Amir Movahedi | medium.com | 15-Mar-2020
 | [Pi & Kubernetes with k3s, k3sup, arkade and OpenFaaS](https://www.youtube.com/watch?v=ZiR3QEfBivk) | DJ Adams | Youtube | 08-Mar-2020
 | [Tutorial to get OpenFaas running on top of a Kubernetes cluster on Clear Linux OS](https://docs.01.org/clearlinux/latest/tutorials/openfaas.html) | Clear Linux | docs.01.org | 03-Mar-2020
 | [Turn your Raspberry Pi into a serverless platform with faasd](https://myedes.io/serverless-on-raspberrypi/) | Mehdi Yedes | myedes.io | 01-Mar-2020
