@@ -68,7 +68,9 @@ Email [sales@openfaas.com](mailto:sales@openfaas.com) for a quote.
 
 #### Gold Sponsors (homepage sponsor)
 
-<a href="https://civo.com"><img alt="Civo" src="https://www.openfaas.com/images/sponsors/civo.svg" width="100px" /></a>
+Be the first
+
+<!-- <a href="https://civo.com"><img alt="Civo" src="https://www.openfaas.com/images/sponsors/civo.svg" width="100px" /></a> -->
 
 #### Bronze Sponsors
 
