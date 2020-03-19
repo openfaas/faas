@@ -125,7 +125,7 @@ services:
                     - 'node.platform.os == linux'
 
     queue-worker:
-        image: openfaas/queue-worker:0.8.5-arm64
+        image: openfaas/queue-worker:0.9.0-arm64
         networks:
             - functions
         environment:
