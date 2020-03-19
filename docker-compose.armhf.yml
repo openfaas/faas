@@ -73,7 +73,7 @@ services:
     faas-swarm:
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
-        image:  openfaas/faas-swarm:0.8.5-armhf
+        image: openfaas/faas-swarm:0.8.5-armhf
         networks:
             - functions
         environment:
