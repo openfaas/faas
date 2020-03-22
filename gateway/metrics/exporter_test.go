@@ -33,7 +33,7 @@ func readGauge(g prometheus.Metric) metricResult {
 
 func Test_Describe_DescribesThePrometheusMetrics(t *testing.T) {
 	metricsOptions := BuildMetricsOptions()
-	exporter := NewExporter(metricsOptions, nil)
+	exporter := NewExporter(metricsOptions, nil, "openfaas-fn")
 
 	ch := make(chan *prometheus.Desc)
 	// defer close(ch)
@@ -65,7 +65,7 @@ func Test_Describe_DescribesThePrometheusMetrics(t *testing.T) {
 
 func Test_Collect_CollectsTheNumberOfReplicasOfAService(t *testing.T) {
 	metricsOptions := BuildMetricsOptions()
-	exporter := NewExporter(metricsOptions, nil)
+	exporter := NewExporter(metricsOptions, nil, "openfaas-fn")
 
 	expectedService := types.FunctionStatus{
 		Name:     "function_with_two_replica",

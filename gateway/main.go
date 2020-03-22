@@ -65,7 +65,7 @@ func main() {
 	fmt.Println(metadataQuery)
 
 	metricsOptions := metrics.BuildMetricsOptions()
-	exporter := metrics.NewExporter(metricsOptions, credentials)
+	exporter := metrics.NewExporter(metricsOptions, credentials, config.Namespace)
 	exporter.StartServiceWatcher(*config.FunctionsProviderURL, metricsOptions, "func", servicePollInterval)
 	metrics.RegisterExporter(exporter)
 
