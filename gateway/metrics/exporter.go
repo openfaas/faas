@@ -23,17 +23,19 @@ import (
 
 // Exporter is a prometheus exporter
 type Exporter struct {
-	metricOptions MetricOptions
-	services      []types.FunctionStatus
-	credentials   *auth.BasicAuthCredentials
+	metricOptions     MetricOptions
+	services          []types.FunctionStatus
+	credentials       *auth.BasicAuthCredentials
+	FunctionNamespace string
 }
 
 // NewExporter creates a new exporter for the OpenFaaS gateway metrics
-func NewExporter(options MetricOptions, credentials *auth.BasicAuthCredentials) *Exporter {
+func NewExporter(options MetricOptions, credentials *auth.BasicAuthCredentials, namespace string) *Exporter {
 	return &Exporter{
-		metricOptions: options,
-		services:      []types.FunctionStatus{},
-		credentials:   credentials,
+		metricOptions:     options,
+		services:          []types.FunctionStatus{},
+		credentials:       credentials,
+		FunctionNamespace: namespace,
 	}
 }
 
@@ -91,8 +93,7 @@ func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions Metri
 				}
 
 				if len(namespaces) == 0 {
-					emptyNamespace := ""
-					services, err := e.getFunctions(endpointURL, emptyNamespace)
+					services, err := e.getFunctions(endpointURL, e.FunctionNamespace)
 					if err != nil {
 						log.Println(err)
 						continue
@@ -170,8 +171,9 @@ func (e *Exporter) getFunctions(endpointURL url.URL, namespace string) ([]types.
 
 func (e *Exporter) getNamespaces(endpointURL url.URL) ([]string, error) {
 	namespaces := []string{}
+	endpointURL.Path = path.Join(endpointURL.Path, "system/namespaces")
 
-	get, _ := http.NewRequest(http.MethodGet, endpointURL.String()+"system/namespaces", nil)
+	get, _ := http.NewRequest(http.MethodGet, endpointURL.String(), nil)
 	if e.credentials != nil {
 		get.SetBasicAuth(e.credentials.User, e.credentials.Password)
 	}

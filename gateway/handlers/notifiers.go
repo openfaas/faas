@@ -51,7 +51,7 @@ type PrometheusFunctionNotifier struct {
 func (p PrometheusFunctionNotifier) Notify(method string, URL string, originalURL string, statusCode int, event string, duration time.Duration) {
 	serviceName := getServiceName(originalURL)
 	if len(p.FunctionNamespace) > 0 {
-		if index := strings.Index(serviceName, "."); index == -1 {
+		if !strings.Contains(serviceName, ".") {
 			serviceName = fmt.Sprintf("%s.%s", serviceName, p.FunctionNamespace)
 		}
 	}
