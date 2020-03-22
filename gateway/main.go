@@ -77,7 +77,8 @@ func main() {
 	loggingNotifier := handlers.LoggingNotifier{}
 
 	prometheusNotifier := handlers.PrometheusFunctionNotifier{
-		Metrics: &metricsOptions,
+		Metrics:           &metricsOptions,
+		FunctionNamespace: config.Namespace,
 	}
 
 	prometheusServiceNotifier := handlers.PrometheusServiceNotifier{
