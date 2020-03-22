@@ -43,15 +43,21 @@ func urlToLabel(path string) string {
 // PrometheusFunctionNotifier records metrics to Prometheus
 type PrometheusFunctionNotifier struct {
 	Metrics *metrics.MetricOptions
+	//FunctionNamespace default namespace of the function
+	FunctionNamespace string
 }
 
 // Notify records metrics in Prometheus
 func (p PrometheusFunctionNotifier) Notify(method string, URL string, originalURL string, statusCode int, event string, duration time.Duration) {
+	serviceName := getServiceName(originalURL)
+	if len(p.FunctionNamespace) > 0 {
+		if index := strings.Index(serviceName, "."); index == -1 {
+			serviceName = fmt.Sprintf("%s.%s", serviceName, p.FunctionNamespace)
+		}
+	}
+
 	if event == "completed" {
-
 		seconds := duration.Seconds()
-		serviceName := getServiceName(originalURL)
-
 		p.Metrics.GatewayFunctionsHistogram.
 			WithLabelValues(serviceName).
 			Observe(seconds)
@@ -62,7 +68,6 @@ func (p PrometheusFunctionNotifier) Notify(method string, URL string, originalUR
 			With(prometheus.Labels{"function_name": serviceName, "code": code}).
 			Inc()
 	} else if event == "started" {
-		serviceName := getServiceName(originalURL)
 		p.Metrics.GatewayFunctionInvocationStarted.WithLabelValues(serviceName).Inc()
 	}
 
