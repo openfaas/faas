@@ -91,6 +91,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Telar Social one-click setup: OpenFaaS Cloud Community Cluster](https://medium.com/red-gold/telar-social-one-click-setup-openfaas-cloud-community-cluster-68814b3bf47c) | Amir Movahedi | medium.com | 22-Mar-2020
 | [OpenFaaS: Send email by a simple web application using Nodemailer](https://medium.com/red-gold/openfaas-send-email-web-application-using-nodemailer-8ec8d8ca714e) | Amir Movahedi | medium.com | 15-Mar-2020
 | [Pi & Kubernetes with k3s, k3sup, arkade and OpenFaaS](https://www.youtube.com/watch?v=ZiR3QEfBivk) | DJ Adams | Youtube | 08-Mar-2020
 | [Tutorial to get OpenFaas running on top of a Kubernetes cluster on Clear Linux OS](https://docs.01.org/clearlinux/latest/tutorials/openfaas.html) | Clear Linux | docs.01.org | 03-Mar-2020
