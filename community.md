@@ -74,16 +74,23 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [The Need for a Cloud Native Tunnel](https://virtual.rejekts.io) | Alex Ellis | Virtual Cloud Native Rejekts | 1-Apr-2020 |
+| [TBS[13] Crossplane and OpenFaaS livestream](https://www.youtube.com/watch?v=XphQgB87U-s&feature=youtu.be)| Daniel Mangum & Alex Ellis | YouTube | 26-Mar-2020 |
+| [Kubernetes the easy way with k3sup, OpenFaaS and inlets](https://zoom.us/webinar/register/WN_UEhl9ieUT52BVQlhrSdZQw) | Alex Ellis & Alistair Hey | Online Webinar for Traefik | 12-Mar-2020 |
+| [Service Mesh and Serverless Chatbots with Linkerd, K8s and OpenFaaS](https://www.meetup.com/de-DE/cloud-native-plus-gt/events/269147693/) | Sergio M. | Zoom | 12-Mar-2020 |
+
+Postponed events for 2020
+
+| Event name and description                                          | Speaker      | Location | Date        |
+|---------------------------------------------------------------------|--------------|----------|-------------|
 | [Service Mesh and Serverless Chatbots with Linkerd K8s and OpenFaaS](https://kccnceu20.sched.com/event/Zemu/service-mesh-and-serverless-chatbots-with-linkerd-k8s-and-openfaas-sergio-mendez-universidad-san-calors-de-guatemala)| Sergio Méndez | Kubecon EU| 02-Apr-2020 |
 | [Strangling Our Venue Management Monolith at DX with Kubernetes and OpenFaaS](https://kccnceu20.sched.com/event/Zelz/strangling-our-venue-management-monolith-at-dx-with-kubernetes-and-openfaas-christian-sakshaug-dialog-exe-dx-alex-ellis-openfaas-ltd)| Alex Ellis & Christian Sakshaug | Kubecon EU| 02-Apr-2020 |
 | [Sending Billions of Payments Using Hybrid Cloud and Open-source Technologies](https://kccnceu20.sched.com/event/ZejH/sending-billions-of-payments-using-hybrid-open-source-serverless-edward-wilde-bruno-miguel-custodio-form3)| Edward Wilde & Bruno Miguel Custódio | Kubecon EU| 02-Apr-2020 |
-| [Meet faasd. Look ma’ no Kubernetes!](https://spseu20.sched.com/event/ZWeT/meet-faasd-look-ma-no-kubernetes-alex-ellis-openfaas-ltd) | Alex Ellis | Serverless Practitioners Summit @ KubeCon Amsterdam | 30-Mar-2020 |
-| [WebAssembly + OpenFaaS, the Universal Runtime for Serverless Functions](https://spseu20.sched.com/event/aYpr/webassembly-openfaas-the-universal-runtime-for-serverless-functions-ramiro-berrelleza-okteto)| Ramiro Berrelleza | Kubecon EU| 30-March-2020 |
 | [Finding Managed Services in a Serverless World with Crossplane and OpenFaaS](https://spseu20.sched.com/event/aYq0/finding-managed-services-in-a-serverless-world-with-crossplane-and-openfaas-daniel-mangum-upbound) | Daniel Mangum | Serverless Practitioners Summit - KubeCon EU | 30-Mar-2020 |
+| [Meet faasd. Look ma’ no Kubernetes!](https://spseu20.sched.com/event/ZWeT/meet-faasd-look-ma-no-kubernetes-alex-ellis-openfaas-ltd) | Alex Ellis | Serverless Practitioners Summit @ KubeCon Amsterdam | 30-Mar-2020 |
 | [The State of Open Source Serverless](https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-2020/talk/VDHD7C/) | Jonatas Baldin | Cloud Native Rejekts EU '20 | 28-Mar-2020 |
 | [The Need for a Cloud Native Tunnel](https://cfp.cloud-native.rejekts.io/cloud-native-rejekts-eu-2020/talk/MB7AMY/) | Alex Ellis | Cloud Native Rejekts, Amsterdam | 23-Mar-2020 |
-| [Kubernetes the easy way with k3sup, OpenFaaS and inlets](https://zoom.us/webinar/register/WN_UEhl9ieUT52BVQlhrSdZQw) | Alex Ellis & Alistair Hey | Online Webinar for Traefik | 12-Mar-2020 |
-| [Service Mesh and Serverless Chatbots with Linkerd, K8s and OpenFaaS](https://www.meetup.com/de-DE/cloud-native-plus-gt/events/269147693/) | Sergio M. | Zoom | 12-Mar-2020 |
+| [WebAssembly + OpenFaaS, the Universal Runtime for Serverless Functions](https://spseu20.sched.com/event/aYpr/webassembly-openfaas-the-universal-runtime-for-serverless-functions-ramiro-berrelleza-okteto)| Ramiro Berrelleza | Kubecon EU| 30-March-2020 |
 
 #### Blog posts and write-ups 2020
 
@@ -91,6 +98,9 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+|[Building Serverless CRUD services in Go with OpenFaaS, Arkade, MongoDB and k3d](https://dev.to/wingkwong/building-serverless-crud-services-in-go-with-openfaas-arkade-mongodb-and-k3d-1d93) | Wing-Kam Wong | dev.to | 29-Mar-2020 |
+|[Raspberry Pi Kubernetes Cluster with OpenFaaS for Serverless Functions](https://www.shogan.co.uk/kubernetes/raspberry-pi-kubernetes-cluster-with-openfaas-for-serverless-functions-part-4/) | Sean Duffy | shogan.co.uk | 24-Mar-2020 |
+| [Telar Social one-click setup: OpenFaaS Cloud Community Cluster](https://medium.com/red-gold/telar-social-one-click-setup-openfaas-cloud-community-cluster-68814b3bf47c) | Amir Movahedi | medium.com | 22-Mar-2020
 | [OpenFaaS: Send email by a simple web application using Nodemailer](https://medium.com/red-gold/openfaas-send-email-web-application-using-nodemailer-8ec8d8ca714e) | Amir Movahedi | medium.com | 15-Mar-2020
 | [Pi & Kubernetes with k3s, k3sup, arkade and OpenFaaS](https://www.youtube.com/watch?v=ZiR3QEfBivk) | DJ Adams | Youtube | 08-Mar-2020
 | [Tutorial to get OpenFaas running on top of a Kubernetes cluster on Clear Linux OS](https://docs.01.org/clearlinux/latest/tutorials/openfaas.html) | Clear Linux | docs.01.org | 03-Mar-2020
