@@ -41,7 +41,7 @@ OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and 
 * Individual Sponsorships / End-users / Insiders Track 🍻
 
   OpenFaaS is free to use and completely open source under the MIT license, however financial backing is required to sustain the effort to maintain and develop the project.
-  
+
   Users and contributors are encouraged to join their peers in supporting the work through [GitHub Sponsors](https://insiders.openfaas.io/), all tiers gain exclusive access to the [Insiders Track](BACKERS.md)
 
 * Website Sponsorship 🌎
@@ -101,7 +101,7 @@ Official templates exist for many popular languages and are easily extensible wi
 
     ```js
    "use strict"
-   
+
     module.exports = async (event, context) => {
         return context
             .status(200)
@@ -111,7 +111,7 @@ Official templates exist for many popular languages and are easily extensible wi
                 👋 Hello World 🌍
             </h1>`);
     }
- 
+
     ```
     *handler.js*
 
@@ -249,3 +249,4 @@ Example of a Grafana dashboards linked to OpenFaaS showing auto-scaling live in 
 ![](https://pbs.twimg.com/media/C9caE6CXUAAX_64.jpg:large)
 
 An alternative community dashboard is [available here](https://grafana.com/dashboards/3434)
+
