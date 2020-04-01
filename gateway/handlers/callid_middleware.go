@@ -4,7 +4,6 @@
 package handlers
 
 import (
-	"context"
 	"fmt"
 	"net/http"
 	"time"
@@ -25,20 +24,6 @@ func MakeCallIDMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		r.Header.Add("X-Start-Time", fmt.Sprintf("%d", start.UTC().UnixNano()))
 		w.Header().Add("X-Start-Time", fmt.Sprintf("%d", start.UTC().UnixNano()))
 
-		printContextStatus(r.Context())
-
 		next(w, r)
-
-		printContextStatus(r.Context())
-	}
-}
-
-func printContextStatus(ctx context.Context) {
-	select {
-	case <-ctx.Done():
-		fmt.Println("Context closed")
-		fmt.Println(ctx.Err())
-	default:
-		fmt.Println("Context is still valid")
 	}
 }
