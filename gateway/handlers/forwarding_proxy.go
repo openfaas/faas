@@ -123,7 +123,7 @@ func forwardRequest(w http.ResponseWriter,
 		log.Printf("forwardRequest: %s %s\n", upstreamReq.Host, upstreamReq.URL.String())
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	ctx, cancel := context.WithTimeout(r.Context(), timeout)
 	defer cancel()
 
 	res, resErr := proxyClient.Do(upstreamReq.WithContext(ctx))
