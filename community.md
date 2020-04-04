@@ -98,6 +98,7 @@ Postponed events for 2020
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+|[Tracking Stripe Payments with Slack and faasd](https://myedes.io/stripe-serverless-webhook-faasd/) | Mehdi Yedes | myedes.io | 04-Apr-2020
 |[Building Serverless CRUD services in Go with OpenFaaS, Arkade, MongoDB and k3d](https://dev.to/wingkwong/building-serverless-crud-services-in-go-with-openfaas-arkade-mongodb-and-k3d-1d93) | Wing-Kam Wong | dev.to | 29-Mar-2020 |
 |[Raspberry Pi Kubernetes Cluster with OpenFaaS for Serverless Functions](https://www.shogan.co.uk/kubernetes/raspberry-pi-kubernetes-cluster-with-openfaas-for-serverless-functions-part-4/) | Sean Duffy | shogan.co.uk | 24-Mar-2020 |
 | [Telar Social one-click setup: OpenFaaS Cloud Community Cluster](https://medium.com/red-gold/telar-social-one-click-setup-openfaas-cloud-community-cluster-68814b3bf47c) | Amir Movahedi | medium.com | 22-Mar-2020
