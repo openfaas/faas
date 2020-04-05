@@ -49,7 +49,7 @@ functions:
   hey:
     lang: dockerfile
     handler: ./hey
-    image: functions/hey:latest
+    image: functions/hey:0.1.0
   hostnameintent:
     lang: dockerfile
     handler: ./HostnameIntent
