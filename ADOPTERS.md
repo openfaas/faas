@@ -54,6 +54,10 @@ This is a list of adopters of OpenFaaS
 
 * [Pentium Network](https://www.pentium.network/)
 
+* [PiperCI](https://piperci.dreamer-labs.net) - PiperCI is a task management framework that provides users with a standard library of CI/CD-centric tasks and the [OpenFaas](https://www.openfaas.com/) and [Kubernetes](https://kubernetes.io/) based infrastructure required to run them. PiperCI can be used in conjunction with existing CI/CD orchestrators like GitlabCI, Jenkins, TravisCI, or others to create a more scalable, robust, and functional CI/CD system.
+
+* [Polarpoint](https://polarpoint.io/) - "Using OpenFaaS with our clients"
+
 * [Press Association](https://www.pressassociation.com/) - Press Association is using OpenFaaS in development and production as part of our deployment pipeline.
 
 * [Ratehub](https://www.ratehub.ca) - Ratehub is Canada's leading personal finance comparison site. We're breaking apart our monolithic PHP and Java codebases into Node, PHP and Java OpenFaaS functions; there's not much that we don't plan on moving to FaaS!
@@ -75,4 +79,5 @@ This is a list of adopters of OpenFaaS
 * [Ytel](https://www.ytel.com) - Ytel are a Google Cloud customer and deployed OpenFaaS vs. the vendor alternative due to its wide range of templates, Dockerfile support and easier access to services within the VPC. The Dockerfile template allowed for easy migration of existing code. The latency of transactions for customers during purchase process was reduced by offloading synchronous code to NATS which is built into OpenFaaS. OpenFaaS also allowed "hot path" code to be refactored from large services into multiple functions, to take advantage of horizontal scaling.
 
 Feel free to comment on [this issue](https://github.com/openfaas/faas/issues/776), or to [send a PR](https://github.com/openfaas/faas/edit/master/ADOPTERS.md), to have your logo listed on openfaas.com, contact [alex@openfaas.com](mailto:alex@openfaas.com).
+
 
