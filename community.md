@@ -74,6 +74,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [GitOps meets Serverless with OpenFaaS and Flux ](https://www.meetup.com/Weave-User-Group/events/269899027/) | Alex Ellis | Weave Online User Group | 29-Apr-2020 |
 | [The Need for a Cloud Native Tunnel](https://virtual.rejekts.io) | Alex Ellis | Virtual Cloud Native Rejekts | 1-Apr-2020 |
 | [TBS[13] Crossplane and OpenFaaS livestream](https://www.youtube.com/watch?v=XphQgB87U-s&feature=youtu.be)| Daniel Mangum & Alex Ellis | YouTube | 26-Mar-2020 |
 | [Kubernetes the easy way with k3sup, OpenFaaS and inlets](https://zoom.us/webinar/register/WN_UEhl9ieUT52BVQlhrSdZQw) | Alex Ellis & Alistair Hey | Online Webinar for Traefik | 12-Mar-2020 |
