@@ -41,8 +41,6 @@ It would be great to hear from you especially if you have any of the above and w
 | [Functions-as-a-Service Landscape](https://medium.com/memory-leak/this-year-gartner-added-serverless-to-its-hype-cycle-of-emerging-technologies-reflecting-the-5dfe43d818f0) | Astasia Myers | Redpoint Ventures | 4-Oct-2017 |
 | 🏆 [Bossie Award for Cloud Computing 2017](https://www.infoworld.com/article/3227920/cloud-computing/bossie-awards-2017-the-best-cloud-computing-software.html#slide7) |  Martin Heller, Andrew C. Oliver and Serdar Yegulalp| InfoWorld (from IDG) |  27-Sep-2017 |
 | [Open source project uses Docker for serverless computing](http://www.infoworld.com/article/3184757/open-source-tools/open-source-project-uses-docker-for-serverless-computing.html#tk.twt_ifw)| Serdar Yegulalp  | InfoWorld (from IDG)  | 27-Mar-2017 |
-| [POPCAST Episode 5 - Going independent and Cloud Native Open Source](https://www.youtube.com/watch?v=66mMC9w-dM4) | Dan "POP" Papandrea | 09-04-2020 |
-| [How OpenFaaS Found its groove with arm](https://www.worksonarm.com/blog/how-openfaas-found-its-groove-with-arm/) | Stacey Norwood (WorksOnArm) | 20-04-2020 |
 
 ### Interviews and podcasts
 
@@ -55,6 +53,8 @@ It would be great to hear from you especially if you have any of the above and w
 | [Running functions anywhere with OpenFaaS - featuring Alex Ellis](https://changelog.com/podcast/343) | The Changelog | 25-Apr-2019 |
 | [Episode 022 – OpenFaaS with Docker Captain](https://changelog.com/podcast/343) | The 6 Figure Developer Podcast | 15-Jan-2018 |
 | [Serverless and OpenFaas with Alex Ellis](https://hanselminutes.com/612/serverless-and-openfaas-with-alex-ellis) | The Hanselminutes Podcast | 29-Dec-2019 |
+| [POPCAST Episode 5 - Going independent and Cloud Native Open Source](https://www.youtube.com/watch?v=66mMC9w-dM4) | Popcast | 09-04-2020 |
+| [How OpenFaaS Found its groove with arm](https://www.worksonarm.com/blog/how-openfaas-found-its-groove-with-arm/) | WorksOnArm | 20-04-2020 |
 
 ### Featured Videos
 
