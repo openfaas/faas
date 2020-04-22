@@ -1,4 +1,4 @@
-// Copyright 2012-2018 The NATS Authors
+// Copyright 2012-2019 The NATS Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -21,7 +21,7 @@ import (
 	"time"
 
 	// Default Encoders
-	"github.com/nats-io/go-nats/encoders/builtin"
+	"github.com/nats-io/nats.go/encoders/builtin"
 )
 
 // Encoder interface is for all register encoders
@@ -33,7 +33,7 @@ type Encoder interface {
 var encMap map[string]Encoder
 var encLock sync.Mutex
 
-// Indexe names into the Registered Encoders.
+// Indexed names into the Registered Encoders.
 const (
 	JSON_ENCODER    = "json"
 	GOB_ENCODER     = "gob"
@@ -109,7 +109,7 @@ func (c *EncodedConn) PublishRequest(subject, reply string, v interface{}) error
 
 // Request will create an Inbox and perform a Request() call
 // with the Inbox reply for the data v. A response will be
-// decoded into the vPtrResponse.
+// decoded into the vPtr Response.
 func (c *EncodedConn) Request(subject string, v interface{}, vPtr interface{}, timeout time.Duration) error {
 	b, err := c.Enc.Encode(subject, v)
 	if err != nil {
@@ -234,7 +234,7 @@ func (c *EncodedConn) subscribe(subject, queue string, cb Handler) (*Subscriptio
 		cbValue.Call(oV)
 	}
 
-	return c.Conn.subscribe(subject, queue, natsCB, nil)
+	return c.Conn.subscribe(subject, queue, natsCB, nil, false)
 }
 
 // FlushTimeout allows a Flush operation to have an associated timeout.

@@ -20,20 +20,10 @@ _cgo_export.*
 _testmain.go
 
 *.exe
+*.test
+*.prof
 
-# Emacs
-*~
-\#*\#
-.\#*
-
-# vi/vim
-.??*.swp
-
-# Mac
-.DS_Store
-
-# Eclipse
+# Eclipse stuff
 .project
 .settings/
-
-# bin
+.idea

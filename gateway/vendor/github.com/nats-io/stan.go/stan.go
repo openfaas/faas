@@ -20,17 +20,17 @@ import (
 	"sync"
 	"time"
 
-	"github.com/nats-io/go-nats"
-	"github.com/nats-io/go-nats-streaming/pb"
+	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nuid"
+	"github.com/nats-io/stan.go/pb"
 )
 
 // Version is the NATS Streaming Go Client version
-const Version = "0.4.4"
+const Version = "0.6.0"
 
 const (
 	// DefaultNatsURL is the default URL the client connects to
-	DefaultNatsURL = "nats://localhost:4222"
+	DefaultNatsURL = "nats://127.0.0.1:4222"
 	// DefaultConnectWait is the default timeout used for the connect operation
 	DefaultConnectWait = 2 * time.Second
 	// DefaultDiscoverPrefix is the prefix subject used to connect to the NATS Streaming server
@@ -48,6 +48,7 @@ const (
 
 // Conn represents a connection to the NATS Streaming subsystem. It can Publish and
 // Subscribe to messages within the NATS Streaming cluster.
+// The connection is safe to use in multiple Go routines concurrently.
 type Conn interface {
 	// Publish will publish to the cluster and wait for an ACK.
 	Publish(subject string, data []byte) error
@@ -99,7 +100,7 @@ const (
 
 // Errors
 var (
-	ErrConnectReqTimeout = errors.New("stan: connect request timeout")
+	ErrConnectReqTimeout = errors.New("stan: connect request timeout (possibly wrong cluster ID?)")
 	ErrCloseReqTimeout   = errors.New("stan: close request timeout")
 	ErrSubReqTimeout     = errors.New("stan: subscribe request timeout")
 	ErrUnsubReqTimeout   = errors.New("stan: unsubscribe request timeout")
@@ -156,9 +157,12 @@ type Options struct {
 	// calls block.
 	MaxPubAcksInflight int
 
+	// DEPRECATED: Please use PingInterval instead
+	PingIterval int
+
 	// PingInterval is the interval at which client sends PINGs to the server
 	// to detect the loss of a connection.
-	PingIterval int
+	PingInterval int
 
 	// PingMaxOut specifies the maximum number of PINGs without a corresponding
 	// PONG before declaring the connection permanently lost.
@@ -169,16 +173,24 @@ type Options struct {
 	ConnectionLostCB ConnectionLostHandler
 }
 
-// DefaultOptions are the NATS Streaming client's default options
-var DefaultOptions = Options{
-	NatsURL:            DefaultNatsURL,
-	ConnectTimeout:     DefaultConnectWait,
-	AckTimeout:         DefaultAckWait,
-	DiscoverPrefix:     DefaultDiscoverPrefix,
-	MaxPubAcksInflight: DefaultMaxPubAcksInflight,
-	PingIterval:        DefaultPingInterval,
-	PingMaxOut:         DefaultPingMaxOut,
+// GetDefaultOptions returns default configuration options for the client.
+func GetDefaultOptions() Options {
+	return Options{
+		NatsURL:            DefaultNatsURL,
+		ConnectTimeout:     DefaultConnectWait,
+		AckTimeout:         DefaultAckWait,
+		DiscoverPrefix:     DefaultDiscoverPrefix,
+		MaxPubAcksInflight: DefaultMaxPubAcksInflight,
+		PingInterval:       DefaultPingInterval,
+		PingMaxOut:         DefaultPingMaxOut,
+	}
 }
+
+// DEPRECATED: Use GetDefaultOptions() instead.
+// DefaultOptions is not safe for use by multiple clients.
+// For details see https://github.com/nats-io/nats.go/issues/308.
+// DefaultOptions are the NATS Streaming client's default options
+var DefaultOptions = GetDefaultOptions()
 
 // Option is a function on the options for a connection.
 type Option func(*Options) error
@@ -242,11 +254,11 @@ func Pings(interval, maxOut int) Option {
 		// by the library as milliseconds. If this test boolean is set,
 		// do not check values.
 		if !testAllowMillisecInPings {
-			if interval < 1 || maxOut <= 2 {
+			if interval < 1 || maxOut < 2 {
 				return fmt.Errorf("invalid ping values: interval=%v (min>0) maxOut=%v (min=2)", interval, maxOut)
 			}
 		}
-		o.PingIterval = interval
+		o.PingInterval = interval
 		o.PingMaxOut = maxOut
 		return nil
 	}
@@ -279,21 +291,27 @@ type conn struct {
 	subMap           map[string]*subscription
 	pubAckMap        map[string]*ack
 	pubAckChan       chan (struct{})
+	pubAckCloseChan  chan (struct{})
 	opts             Options
 	nc               *nats.Conn
 	ncOwned          bool       // NATS Streaming created the connection, so needs to close it.
 	pubNUID          *nuid.NUID // NUID generator for published messages.
 	connLostCB       ConnectionLostHandler
+	closed           bool
+	ping             pingInfo
+}
 
-	pingMu       sync.Mutex
-	pingSub      *nats.Subscription
-	pingTimer    *time.Timer
-	pingBytes    []byte
-	pingRequests string
-	pingInbox    string
-	pingInterval time.Duration
-	pingMaxOut   int
-	pingOut      int
+// Holds all field related to the client-to-server pings
+type pingInfo struct {
+	mu       sync.Mutex
+	sub      *nats.Subscription
+	timer    *time.Timer
+	proto    []byte
+	requests string
+	inbox    string
+	interval time.Duration
+	maxOut   int
+	out      int
 }
 
 // Closure for ack contexts.
@@ -307,7 +325,15 @@ type ack struct {
 // Note that clientID can contain only alphanumeric and `-` or `_` characters.
 func Connect(stanClusterID, clientID string, options ...Option) (Conn, error) {
 	// Process Options
-	c := conn{clientID: clientID, opts: DefaultOptions, connID: []byte(nuid.Next()), pubNUID: nuid.New()}
+	c := conn{
+		clientID:        clientID,
+		opts:            DefaultOptions,
+		connID:          []byte(nuid.Next()),
+		pubNUID:         nuid.New(),
+		pubAckMap:       make(map[string]*ack),
+		pubAckCloseChan: make(chan struct{}),
+		subMap:          make(map[string]*subscription),
+	}
 	for _, opt := range options {
 		if err := opt(&c.opts); err != nil {
 			return nil, err
@@ -347,7 +373,8 @@ func Connect(stanClusterID, clientID string, options ...Option) (Conn, error) {
 	// Prepare a subscription on ping responses, even if we are not
 	// going to need it, so that if that fails, it fails before initiating
 	// a connection.
-	if c.pingSub, err = c.nc.Subscribe(nats.NewInbox(), c.processPingResponse); err != nil {
+	p := &c.ping
+	if p.sub, err = c.nc.Subscribe(nats.NewInbox(), c.processPingResponse); err != nil {
 		c.failConnect(err)
 		return nil, err
 	}
@@ -359,7 +386,7 @@ func Connect(stanClusterID, clientID string, options ...Option) (Conn, error) {
 		HeartbeatInbox: hbInbox,
 		ConnID:         c.connID,
 		Protocol:       protocolOne,
-		PingInterval:   int32(c.opts.PingIterval),
+		PingInterval:   int32(c.opts.PingInterval),
 		PingMaxOut:     int32(c.opts.PingMaxOut),
 	}
 	b, _ := req.Marshal()
@@ -399,11 +426,7 @@ func Connect(stanClusterID, clientID string, options ...Option) (Conn, error) {
 		c.Close()
 		return nil, err
 	}
-	c.ackSubscription.SetPendingLimits(1024*1024, 32*1024*1024)
-	c.pubAckMap = make(map[string]*ack)
-
-	// Create Subscription map
-	c.subMap = make(map[string]*subscription)
+	c.ackSubscription.SetPendingLimits(-1, -1)
 
 	c.pubAckChan = make(chan struct{}, c.opts.MaxPubAcksInflight)
 
@@ -423,28 +446,28 @@ func Connect(stanClusterID, clientID string, options ...Option) (Conn, error) {
 			unsubPingSub = false
 
 			// These will be immutable.
-			c.pingRequests = cr.PingRequests
-			c.pingInbox = c.pingSub.Subject
+			p.requests = cr.PingRequests
+			p.inbox = p.sub.Subject
 			// In test, it is possible that we get a negative value
 			// to represent milliseconds.
 			if testAllowMillisecInPings && cr.PingInterval < 0 {
-				c.pingInterval = time.Duration(cr.PingInterval*-1) * time.Millisecond
+				p.interval = time.Duration(cr.PingInterval*-1) * time.Millisecond
 			} else {
 				// PingInterval is otherwise assumed to be in seconds.
-				c.pingInterval = time.Duration(cr.PingInterval) * time.Second
+				p.interval = time.Duration(cr.PingInterval) * time.Second
 			}
-			c.pingMaxOut = int(cr.PingMaxOut)
-			c.pingBytes, _ = (&pb.Ping{ConnID: c.connID}).Marshal()
+			p.maxOut = int(cr.PingMaxOut)
+			p.proto, _ = (&pb.Ping{ConnID: c.connID}).Marshal()
 			// Set the timer now that we are set. Use lock to create
 			// synchronization point.
-			c.pingMu.Lock()
-			c.pingTimer = time.AfterFunc(c.pingInterval, c.pingServer)
-			c.pingMu.Unlock()
+			p.mu.Lock()
+			p.timer = time.AfterFunc(p.interval, c.pingServer)
+			p.mu.Unlock()
 		}
 	}
 	if unsubPingSub {
-		c.pingSub.Unsubscribe()
-		c.pingSub = nil
+		p.sub.Unsubscribe()
+		p.sub = nil
 	}
 
 	return &c, nil
@@ -466,24 +489,24 @@ func (sc *conn) failConnect(err error) {
 // If the total number is > than the PingMaxOut option, then the connection
 // is closed, and connection error callback invoked if one was specified.
 func (sc *conn) pingServer() {
-	sc.pingMu.Lock()
+	p := &sc.ping
+	p.mu.Lock()
 	// In case the timer fired while we were stopping it.
-	if sc.pingTimer == nil {
-		sc.pingMu.Unlock()
+	if p.timer == nil {
+		p.mu.Unlock()
 		return
 	}
-	sc.pingOut++
-	if sc.pingOut > sc.pingMaxOut {
-		sc.pingMu.Unlock()
+	p.out++
+	if p.out > p.maxOut {
+		p.mu.Unlock()
 		sc.closeDueToPing(ErrMaxPings)
 		return
 	}
-	sc.pingTimer.Reset(sc.pingInterval)
-	nc := sc.nc
-	sc.pingMu.Unlock()
-	// Send the PING now. If the NATS connection is reported closed,
-	// we are done.
-	if err := nc.PublishRequest(sc.pingRequests, sc.pingInbox, sc.pingBytes); err == nats.ErrConnectionClosed {
+	p.timer.Reset(p.interval)
+	p.mu.Unlock()
+	// Send the PING now. If the NATS connection is reported closed, we are done.
+	// sc.nc is immutable and never nil, even if connection is closed.
+	if err := sc.nc.PublishRequest(p.requests, p.inbox, p.proto); err == nats.ErrConnectionClosed {
 		sc.closeDueToPing(err)
 	}
 }
@@ -509,16 +532,17 @@ func (sc *conn) processPingResponse(m *nats.Msg) {
 		}
 	}
 	// Do not attempt to decrement, simply reset to 0.
-	sc.pingMu.Lock()
-	sc.pingOut = 0
-	sc.pingMu.Unlock()
+	p := &sc.ping
+	p.mu.Lock()
+	p.out = 0
+	p.mu.Unlock()
 }
 
 // Closes a connection and invoke the connection error callback if one
 // was registered when the connection was created.
 func (sc *conn) closeDueToPing(err error) {
 	sc.Lock()
-	if sc.nc == nil {
+	if sc.closed {
 		sc.Unlock()
 		return
 	}
@@ -529,10 +553,8 @@ func (sc *conn) closeDueToPing(err error) {
 	if sc.ncOwned && !sc.nc.IsClosed() {
 		sc.nc.Close()
 	}
-	// Mark this streaming connection as closed. Do this under pingMu lock.
-	sc.pingMu.Lock()
-	sc.nc = nil
-	sc.pingMu.Unlock()
+	// Mark this streaming connection as closed.
+	sc.closed = true
 	// Capture callback (even though this is immutable).
 	cb := sc.connLostCB
 	sc.Unlock()
@@ -545,12 +567,13 @@ func (sc *conn) closeDueToPing(err error) {
 // Do some cleanup when connection is lost or closed.
 // Connection lock is held on entry, and sc.nc is guaranteed not to be nil.
 func (sc *conn) cleanupOnClose(err error) {
-	sc.pingMu.Lock()
-	if sc.pingTimer != nil {
-		sc.pingTimer.Stop()
-		sc.pingTimer = nil
+	p := &sc.ping
+	p.mu.Lock()
+	if p.timer != nil {
+		p.timer.Stop()
+		p.timer = nil
 	}
-	sc.pingMu.Unlock()
+	p.mu.Unlock()
 
 	// Unsubscribe only if the NATS connection is not already closed
 	// and we don't own it (otherwise connection is going to be closed
@@ -559,8 +582,8 @@ func (sc *conn) cleanupOnClose(err error) {
 		if sc.hbSubscription != nil {
 			sc.hbSubscription.Unsubscribe()
 		}
-		if sc.pingSub != nil {
-			sc.pingSub.Unsubscribe()
+		if p.sub != nil {
+			p.sub.Unsubscribe()
 		}
 		if sc.ackSubscription != nil {
 			sc.ackSubscription.Unsubscribe()
@@ -568,20 +591,34 @@ func (sc *conn) cleanupOnClose(err error) {
 	}
 
 	// Fail all pending pubs
-	for guid, pubAck := range sc.pubAckMap {
-		if pubAck.t != nil {
-			pubAck.t.Stop()
+	if len(sc.pubAckMap) > 0 {
+		// Collect only the ones that have a timer that can be stopped.
+		// All others will be handled either in publishAsync() or their
+		// timer has already fired.
+		acks := map[string]*ack{}
+		for guid, pubAck := range sc.pubAckMap {
+			if pubAck.t != nil && pubAck.t.Stop() {
+				delete(sc.pubAckMap, guid)
+				acks[guid] = pubAck
+			}
 		}
-		if pubAck.ah != nil {
-			pubAck.ah(guid, err)
-		} else if pubAck.ch != nil {
-			pubAck.ch <- err
-		}
-		delete(sc.pubAckMap, guid)
-		if len(sc.pubAckChan) > 0 {
-			<-sc.pubAckChan
+		// If we collected any, start a go routine that will do the job.
+		// We can't do it in place in case user's ackHandler uses the connection.
+		if len(acks) > 0 {
+			go func() {
+				for guid, a := range acks {
+					if a.ah != nil {
+						a.ah(guid, ErrConnectionClosed)
+					} else if a.ch != nil {
+						a.ch <- ErrConnectionClosed
+					}
+				}
+			}()
 		}
 	}
+	// Prevent publish calls that have passed the connection close check but
+	// not yet send to pubAckChan to be possibly blocked.
+	close(sc.pubAckCloseChan)
 }
 
 // Close a connection to the stan system.
@@ -589,30 +626,24 @@ func (sc *conn) Close() error {
 	sc.Lock()
 	defer sc.Unlock()
 
-	if sc.nc == nil {
+	if sc.closed {
 		// We are already closed.
 		return nil
 	}
+	// Signals we are closed.
+	sc.closed = true
 
 	// Capture for NATS calls below.
-	nc := sc.nc
 	if sc.ncOwned {
-		defer nc.Close()
+		defer sc.nc.Close()
 	}
 
 	// Now close ourselves.
 	sc.cleanupOnClose(ErrConnectionClosed)
 
-	// Signals we are closed.
-	// Do this also under pingMu lock so that we don't need
-	// to grab sc's lock in pingServer.
-	sc.pingMu.Lock()
-	sc.nc = nil
-	sc.pingMu.Unlock()
-
 	req := &pb.CloseRequest{ClientID: sc.clientID}
 	b, _ := req.Marshal()
-	reply, err := nc.Request(sc.closeRequests, b, sc.opts.ConnectTimeout)
+	reply, err := sc.nc.Request(sc.closeRequests, b, sc.opts.ConnectTimeout)
 	if err != nil {
 		if err == nats.ErrTimeout {
 			return ErrCloseReqTimeout
@@ -636,6 +667,9 @@ func (sc *conn) Close() error {
 func (sc *conn) NatsConn() *nats.Conn {
 	sc.RLock()
 	nc := sc.nc
+	if sc.closed {
+		nc = nil
+	}
 	sc.RUnlock()
 	return nc
 }
@@ -643,12 +677,8 @@ func (sc *conn) NatsConn() *nats.Conn {
 // Process a heartbeat from the NATS Streaming cluster
 func (sc *conn) processHeartBeat(m *nats.Msg) {
 	// No payload assumed, just reply.
-	sc.RLock()
-	nc := sc.nc
-	sc.RUnlock()
-	if nc != nil {
-		nc.Publish(m.Reply, nil)
-	}
+	// sc.nc is immutable and never nil, even if connection is closed.
+	sc.nc.Publish(m.Reply, nil)
 }
 
 // Process an ack from the NATS Streaming cluster
@@ -698,7 +728,7 @@ func (sc *conn) PublishAsync(subject string, data []byte, ah AckHandler) (string
 func (sc *conn) publishAsync(subject string, data []byte, ah AckHandler, ch chan error) (string, error) {
 	a := &ack{ah: ah, ch: ch}
 	sc.Lock()
-	if sc.nc == nil {
+	if sc.closed {
 		sc.Unlock()
 		return "", ErrConnectionClosed
 	}
@@ -717,18 +747,28 @@ func (sc *conn) publishAsync(subject string, data []byte, ah AckHandler, ch chan
 	// snapshot
 	ackSubject := sc.ackSubject
 	ackTimeout := sc.opts.AckTimeout
-	pac := sc.pubAckChan
-	nc := sc.nc
 	sc.Unlock()
 
 	// Use the buffered channel to control the number of outstanding acks.
-	pac <- struct{}{}
+	select {
+	case sc.pubAckChan <- struct{}{}:
+	default:
+		// It seems faster to first try to send to pubAckChan and only if
+		// it fails to retry with the check on pubAckCloseChan than having
+		// simply only the select with the 2 cases.
+		select {
+		case sc.pubAckChan <- struct{}{}:
+		case <-sc.pubAckCloseChan:
+			return "", ErrConnectionClosed
+		}
+	}
 
-	err := nc.PublishRequest(subj, ackSubject, b)
+	// sc.nc is immutable and never nil once connection is created.
+	err := sc.nc.PublishRequest(subj, ackSubject, b)
 
 	// Setup the timer for expiration.
 	sc.Lock()
-	if err != nil || sc.nc == nil {
+	if err != nil || sc.closed {
 		sc.Unlock()
 		// If we got and error on publish or the connection has been closed,
 		// we need to return an error only if:
@@ -797,8 +837,7 @@ func (sc *conn) processMsg(raw *nats.Msg) {
 	var sub *subscription
 	// Lookup the subscription
 	sc.RLock()
-	nc := sc.nc
-	isClosed := nc == nil
+	isClosed := sc.closed
 	if !isClosed {
 		sub = sc.subMap[raw.Subject]
 	}
@@ -825,10 +864,11 @@ func (sc *conn) processMsg(raw *nats.Msg) {
 	}
 
 	// Process auto-ack
-	if !isManualAck && nc != nil {
+	if !isManualAck {
 		ack := &pb.Ack{Subject: msg.Subject, Sequence: msg.Sequence}
 		b, _ := ack.Marshal()
 		// FIXME(dlc) - Async error handler? Retry?
-		nc.Publish(ackSubject, b)
+		// sc.nc is immutable and never nil once connection is created.
+		sc.nc.Publish(ackSubject, b)
 	}
 }

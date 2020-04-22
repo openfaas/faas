@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	stan "github.com/nats-io/go-nats-streaming"
+	stan "github.com/nats-io/stan.go"
 	"github.com/openfaas/faas/gateway/queue"
 )
 

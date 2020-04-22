@@ -3,9 +3,9 @@
 NATS Streaming is an extremely performant, lightweight reliable streaming platform powered by [NATS](https://nats.io).
 
 [![License Apache 2](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Build Status](https://travis-ci.org/nats-io/go-nats-streaming.svg?branch=master)](http://travis-ci.org/nats-io/go-nats-streaming)
-[![Coverage Status](https://coveralls.io/repos/nats-io/go-nats-streaming/badge.svg?branch=master)](https://coveralls.io/r/nats-io/go-nats-streaming?branch=master)
-[![GoDoc](https://godoc.org/github.com/nats-io/go-nats-streaming?status.svg)](http://godoc.org/github.com/nats-io/go-nats-streaming)
+[![Build Status](https://travis-ci.org/nats-io/stan.go.svg?branch=master)](http://travis-ci.org/nats-io/stan.go)
+[![Coverage Status](https://coveralls.io/repos/nats-io/stan.go/badge.svg?branch=master)](https://coveralls.io/r/nats-io/stan.go?branch=master)
+[![GoDoc](https://godoc.org/github.com/nats-io/stan.go?status.svg)](http://godoc.org/github.com/nats-io/stan.go)
 
 NATS Streaming provides the following high-level feature set:
 - Log based persistence
@@ -16,19 +16,27 @@ NATS Streaming provides the following high-level feature set:
 
 ## Notes
 
-- Please raise questions/issues via the [Issue Tracker](https://github.com/nats-io/go-nats-streaming/issues).
+- Please raise questions/issues via the [Issue Tracker](https://github.com/nats-io/stan.go/issues).
 
 ## Installation
 
 ```bash
 # Go client
-go get github.com/nats-io/go-nats-streaming
+go get github.com/nats-io/stan.go/
+```
+
+When using or transitioning to Go modules support:
+
+```bash
+# Go client latest or explicit version
+go get github.com/nats-io/stan.go/@latest
+go get github.com/nats-io/stan.go/@v0.6.0
 ```
 
 ## Basic Usage
 
 ```go
-import stan "github.com/nats-io/go-nats-streaming"
+import stan "github.com/nats-io/stan.go"
 
 sc, _ := stan.Connect(clusterID, clientID)
 

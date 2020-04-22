@@ -1,0 +1,24 @@
+language: go
+sudo: false
+go:
+- 1.13.x
+- 1.12.x
+env:
+- GO111MODULE=off
+go_import_path: github.com/nats-io/nats.go
+install:
+- go get -t ./...
+- go get github.com/nats-io/nats-server
+- go get github.com/mattn/goveralls
+- go get github.com/wadey/gocovmerge
+- go get -u honnef.co/go/tools/cmd/staticcheck
+- go get -u github.com/client9/misspell/cmd/misspell
+before_script:
+- $(exit $(go fmt ./... | wc -l))
+- go vet ./...
+- find . -type f -name "*.go" | xargs misspell -error -locale US
+- staticcheck ./...
+script:
+- go test -i -race ./...
+- go test -v -run=TestNoRace -p=1 ./...
+- if [[ "$TRAVIS_GO_VERSION" =~ 1.13 ]]; then ./scripts/cov.sh TRAVIS; else go test -race -v -p=1 ./... --failfast; fi
