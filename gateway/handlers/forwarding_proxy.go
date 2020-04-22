@@ -14,6 +14,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/openfaas/faas/gateway/pkg/middleware"
 	"github.com/openfaas/faas/gateway/types"
 )
 
@@ -43,7 +44,7 @@ func MakeForwardingProxyHandler(proxy *types.HTTPClientReverseProxy,
 	notifiers []HTTPNotifier,
 	baseURLResolver BaseURLResolver,
 	urlPathTransformer URLPathTransformer,
-	serviceAuthInjector AuthInjector) http.HandlerFunc {
+	serviceAuthInjector middleware.AuthInjector) http.HandlerFunc {
 
 	writeRequestURI := false
 	if _, exists := os.LookupEnv("write_request_uri"); exists {
@@ -108,7 +109,7 @@ func forwardRequest(w http.ResponseWriter,
 	requestURL string,
 	timeout time.Duration,
 	writeRequestURI bool,
-	serviceAuthInjector AuthInjector) (int, error) {
+	serviceAuthInjector middleware.AuthInjector) (int, error) {
 
 	upstreamReq := buildUpstreamRequest(r, baseURL, requestURL)
 	if upstreamReq.Body != nil {

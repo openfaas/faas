@@ -101,12 +101,12 @@
   version = "v0.6.0"
 
 [[projects]]
-  digest = "1:340f4e2e095ead4e0a15b4646da3e4533f8b6520e3a382eaf586e8166f3bbcb5"
+  digest = "1:437d6b220b852cd40c465c4eaf01ec26fd1dfdfb9c8c67933a256d0c97fdabb8"
   name = "github.com/openfaas/faas"
   packages = ["gateway/queue"]
   pruneopts = "UT"
-  revision = "bfa869ec8c0c04c26c5b0ed434bc367e712dcaef"
-  version = "0.10.2"
+  revision = "a7c6c39200782ea2e1a1b005d56e3edd51e761a7"
+  version = "0.18.16"
 
 [[projects]]
   digest = "1:4a97aa8ada0b2f865ca69a3a3bc0a2524c24f31c578c995d5c52cecb6913a9dc"
@@ -120,15 +120,15 @@
   version = "0.12.0"
 
 [[projects]]
-  digest = "1:1cf86a1a93c110ebcf836468bd917e8c116d6d2fc7612829c15e946b02dbf864"
+  digest = "1:e40ae4e58551013ed5ad4085b337718c9fba314372c0751713ed9fe8082a323d"
   name = "github.com/openfaas/nats-queue-worker"
   packages = [
     "handler",
     "nats",
   ]
   pruneopts = "UT"
-  revision = "a1835cb71db56e6b814b91df027acf62425a76ad"
-  version = "0.10.0"
+  revision = "1f4e16e1f7afe1fbd464fcaa8a7dabaa3e4ef0bb"
+  version = "0.10.1"
 
 [[projects]]
   digest = "1:eb04f69c8991e52eff33c428bd729e04208bf03235be88e4df0d88497c6861b9"

@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/openfaas/faas/gateway/handlers"
+	middleware "github.com/openfaas/faas/gateway/pkg/middleware"
 	"github.com/openfaas/faas/gateway/scaling"
 )
 
@@ -47,7 +47,7 @@ func TestGetReplicasNonExistentFn(t *testing.T) {
 		}))
 	defer testServer.Close()
 
-	var injector handlers.AuthInjector
+	var injector middleware.AuthInjector
 	url, _ := url.Parse(testServer.URL + "/")
 
 	esq := NewExternalServiceQuery(*url, injector)
@@ -77,7 +77,7 @@ func TestGetReplicasExistentFn(t *testing.T) {
 		AvailableReplicas: 0,
 	}
 
-	var injector handlers.AuthInjector
+	var injector middleware.AuthInjector
 	url, _ := url.Parse(testServer.URL + "/")
 
 	esq := NewExternalServiceQuery(*url, injector)
@@ -102,7 +102,7 @@ func TestSetReplicasNonExistentFn(t *testing.T) {
 		}))
 	defer testServer.Close()
 
-	var injector handlers.AuthInjector
+	var injector middleware.AuthInjector
 	url, _ := url.Parse(testServer.URL + "/")
 	esq := NewExternalServiceQuery(*url, injector)
 
@@ -124,7 +124,7 @@ func TestSetReplicasExistentFn(t *testing.T) {
 		}))
 	defer testServer.Close()
 
-	var injector handlers.AuthInjector
+	var injector middleware.AuthInjector
 
 	url, _ := url.Parse(testServer.URL + "/")
 	esq := NewExternalServiceQuery(*url, injector)

@@ -28,6 +28,7 @@ COPY queue          queue
 COPY plugin         plugin
 COPY version        version
 COPY scaling        scaling
+COPY pkg            pkg
 COPY main.go      .
 
 # Run a gofmt and exclude all vendored code.

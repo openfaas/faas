@@ -8,21 +8,16 @@ import (
 
 // NewFunctionScaler create a new scaler with the specified
 // ScalingConfig
-func NewFunctionScaler(config ScalingConfig) FunctionScaler {
-	cache := FunctionCache{
-		Cache:  make(map[string]*FunctionMeta),
-		Expiry: config.CacheExpiry,
-	}
-
+func NewFunctionScaler(config ScalingConfig, functionCacher FunctionCacher) FunctionScaler {
 	return FunctionScaler{
-		Cache:  &cache,
+		Cache:  functionCacher,
 		Config: config,
 	}
 }
 
 // FunctionScaler scales from zero
 type FunctionScaler struct {
-	Cache  *FunctionCache
+	Cache  FunctionCacher
 	Config ScalingConfig
 }
 
