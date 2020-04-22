@@ -11,7 +11,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package stan is a Go client for the NATS Streaming messaging system (https://nats.io).
 package stan
 
 import (
@@ -19,8 +18,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/nats-io/go-nats"
-	"github.com/nats-io/go-nats-streaming/pb"
+	"github.com/nats-io/nats.go"
+	"github.com/nats-io/stan.go/pb"
 )
 
 const (
@@ -40,6 +39,7 @@ type Msg struct {
 
 // Subscription represents a subscription within the NATS Streaming cluster. Subscriptions
 // will be rate matched and follow at-least once delivery semantics.
+// The subscription is safe to use in multiple Go routines concurrently.
 type Subscription interface {
 	// Unsubscribe removes interest in the subscription.
 	// For durables, it means that the durable interest is also removed from
@@ -56,7 +56,7 @@ type Subscription interface {
 	// These functions have been added for expert-users that need to get details
 	// about the low level NATS Subscription used internally to receive messages
 	// for this streaming subscription. They are documented in the Go client
-	// library: https://godoc.org/github.com/nats-io/go-nats#Subscription.ClearMaxPending
+	// library: https://godoc.org/github.com/nats-io/nats.go#Subscription.ClearMaxPending
 
 	// ClearMaxPending resets the maximums seen so far.
 	ClearMaxPending() error
@@ -238,25 +238,27 @@ func (sc *conn) subscribe(subject, qgroup string, cb MsgHandler, options ...Subs
 		}
 	}
 	sc.Lock()
-	if sc.nc == nil {
+	if sc.closed {
 		sc.Unlock()
 		return nil, ErrConnectionClosed
 	}
 
 	// Register subscription.
 	sc.subMap[sub.inbox] = sub
-	nc := sc.nc
 	sc.Unlock()
 
 	// Hold lock throughout.
 	sub.Lock()
 	defer sub.Unlock()
 
+	// sc.nc is immutable and never nil once connection is created.
+
 	// Listen for actual messages.
-	nsub, err := nc.Subscribe(sub.inbox, sc.processMsg)
+	nsub, err := sc.nc.Subscribe(sub.inbox, sc.processMsg)
 	if err != nil {
 		return nil, err
 	}
+	nsub.SetPendingLimits(-1, -1)
 	sub.inboxSub = nsub
 
 	// Create a subscription request
@@ -281,7 +283,7 @@ func (sc *conn) subscribe(subject, qgroup string, cb MsgHandler, options ...Subs
 	}
 
 	b, _ := sr.Marshal()
-	reply, err := nc.Request(sc.subRequests, b, sc.opts.ConnectTimeout)
+	reply, err := sc.nc.Request(sc.subRequests, b, sc.opts.ConnectTimeout)
 	if err != nil {
 		sub.inboxSub.Unsubscribe()
 		if err == nats.ErrTimeout {
@@ -407,7 +409,7 @@ func (sub *subscription) closeOrUnsubscribe(doClose bool) error {
 	sub.Unlock()
 
 	sc.Lock()
-	if sc.nc == nil {
+	if sc.closed {
 		sc.Unlock()
 		return ErrConnectionClosed
 	}
@@ -421,11 +423,9 @@ func (sub *subscription) closeOrUnsubscribe(doClose bool) error {
 			return ErrNoServerSupport
 		}
 	}
-
-	// Snapshot connection to avoid data race, since the connection may be
-	// closing while we try to send the request
-	nc := sc.nc
 	sc.Unlock()
+
+	// sc.nc is immutable and never nil once connection is created.
 
 	usr := &pb.UnsubscribeRequest{
 		ClientID: sc.clientID,
@@ -433,7 +433,7 @@ func (sub *subscription) closeOrUnsubscribe(doClose bool) error {
 		Inbox:    sub.ackInbox,
 	}
 	b, _ := usr.Marshal()
-	reply, err := nc.Request(reqSubject, b, sc.opts.ConnectTimeout)
+	reply, err := sc.nc.Request(reqSubject, b, sc.opts.ConnectTimeout)
 	if err != nil {
 		if err == nats.ErrTimeout {
 			if doClose {
@@ -485,16 +485,15 @@ func (msg *Msg) Ack() error {
 	if sc == nil {
 		return ErrBadSubscription
 	}
-	// Get nc from the connection (needs locking to avoid race)
-	sc.RLock()
-	nc := sc.nc
-	sc.RUnlock()
-	if nc == nil {
-		return ErrBadConnection
-	}
+
+	// sc.nc is immutable and never nil once connection is created.
 
 	// Ack here.
 	ack := &pb.Ack{Subject: msg.Subject, Sequence: msg.Sequence}
 	b, _ := ack.Marshal()
-	return nc.Publish(ackSubject, b)
+	err := sc.nc.Publish(ackSubject, b)
+	if err == nats.ErrConnectionClosed {
+		return ErrBadConnection
+	}
+	return err
 }

@@ -54,27 +54,24 @@
   version = "v1.0.1"
 
 [[projects]]
-  digest = "1:2ca73053216eb11c8eea2855c8099ad82773638522f91cc0542ec9759163ff3c"
-  name = "github.com/nats-io/go-nats"
+  digest = "1:9b8ee267e79a1730cde2e326cc53035913fce52ceef48142c24f3a15e3c65cb3"
+  name = "github.com/nats-io/jwt"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "0c3fc7aed8bb2534e7bfdf0968a75890402d48cd"
+  version = "v0.3.2"
+
+[[projects]]
+  digest = "1:2e964212558ab7559cec820aebdf9f04c369f27aafe8581932ae5f0b6826572b"
+  name = "github.com/nats-io/nats.go"
   packages = [
     ".",
     "encoders/builtin",
     "util",
   ]
   pruneopts = "UT"
-  revision = "70fe06cee50d4b6f98248d9675fb55f2a3aa7228"
-  version = "v1.7.2"
-
-[[projects]]
-  digest = "1:25a0458641a719a972fa7850c900aaae6b12e74efa6fe35c9bd7a772543bc635"
-  name = "github.com/nats-io/go-nats-streaming"
-  packages = [
-    ".",
-    "pb",
-  ]
-  pruneopts = "UT"
-  revision = "7cd94c239033c0405a43454be55a0810d3a3ca89"
-  version = "v0.4.4"
+  revision = "4d5d5d17e7df8f8e3bf3c1426a5ed759012faab8"
+  version = "v1.9.2"
 
 [[projects]]
   digest = "1:237d85e4f5e91ac6cfc13bad508627570ff29efa28f523d41aac2d39ca15950f"
@@ -91,6 +88,17 @@
   pruneopts = "UT"
   revision = "4b96681fa6d28dd0ab5fe79bac63b3a493d9ee94"
   version = "v1.0.1"
+
+[[projects]]
+  digest = "1:30147647e2ded41b85f4991e306053e478c009a817f4b53ce5e55ee7b5d2fbf6"
+  name = "github.com/nats-io/stan.go"
+  packages = [
+    ".",
+    "pb",
+  ]
+  pruneopts = "UT"
+  revision = "e2d4c025a5eea41d9566dc8e978c7ee697470b64"
+  version = "v0.6.0"
 
 [[projects]]
   digest = "1:340f4e2e095ead4e0a15b4646da3e4533f8b6520e3a382eaf586e8166f3bbcb5"
@@ -112,15 +120,15 @@
   version = "0.12.0"
 
 [[projects]]
-  digest = "1:b7c06bdc590871ac5c88f8a85acc9f892c994d6327de311ec5871aaecb6f9489"
+  digest = "1:1cf86a1a93c110ebcf836468bd917e8c116d6d2fc7612829c15e946b02dbf864"
   name = "github.com/openfaas/nats-queue-worker"
   packages = [
     "handler",
     "nats",
   ]
   pruneopts = "UT"
-  revision = "dea1c90b8cc66dc73597b7531a4fd29a32b5f88c"
-  version = "0.9.0"
+  revision = "a1835cb71db56e6b814b91df027acf62425a76ad"
+  version = "0.10.0"
 
 [[projects]]
   digest = "1:eb04f69c8991e52eff33c428bd729e04208bf03235be88e4df0d88497c6861b9"
