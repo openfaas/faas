@@ -13,6 +13,7 @@ import (
 	"github.com/openfaas/faas-provider/auth"
 	"github.com/openfaas/faas/gateway/handlers"
 	"github.com/openfaas/faas/gateway/metrics"
+	"github.com/openfaas/faas/gateway/pkg/middleware"
 	"github.com/openfaas/faas/gateway/plugin"
 	"github.com/openfaas/faas/gateway/scaling"
 	"github.com/openfaas/faas/gateway/types"
@@ -60,6 +61,9 @@ func main() {
 
 	servicePollInterval := time.Second * 5
 
+	metadataQuery := metrics.NewMetadataQuery(credentials)
+	fmt.Println(metadataQuery)
+
 	metricsOptions := metrics.BuildMetricsOptions()
 	exporter := metrics.NewExporter(metricsOptions, credentials)
 	exporter.StartServiceWatcher(*config.FunctionsProviderURL, metricsOptions, "func", servicePollInterval)
@@ -100,10 +104,10 @@ func main() {
 		functionURLTransformer = nilURLTransformer
 	}
 
-	var serviceAuthInjector handlers.AuthInjector
+	var serviceAuthInjector middleware.AuthInjector
 
 	if config.UseBasicAuth {
-		serviceAuthInjector = &handlers.BasicAuthInjector{Credentials: credentials}
+		serviceAuthInjector = &middleware.BasicAuthInjector{Credentials: credentials}
 	}
 
 	decorateExternalAuth := handlers.MakeExternalAuthHandler
@@ -129,6 +133,21 @@ func main() {
 
 	faasHandlers.LogProxyHandler = handlers.NewLogHandlerFunc(*config.LogsProviderURL, config.WriteTimeout)
 
+	scalingConfig := scaling.ScalingConfig{
+		MaxPollCount:         uint(1000),
+		SetScaleRetries:      uint(20),
+		FunctionPollInterval: time.Millisecond * 50,
+		CacheExpiry:          time.Second * 5, // freshness of replica values before going stale
+		ServiceQuery:         externalServiceQuery,
+	}
+
+	functionProxy := faasHandlers.Proxy
+	if config.ScaleFromZero {
+		scalingFunctionCache := scaling.NewFunctionCache(scalingConfig.CacheExpiry)
+		scaler := scaling.NewFunctionScaler(scalingConfig, scalingFunctionCache)
+		functionProxy = handlers.MakeScalingHandler(faasHandlers.Proxy, scaler, scalingConfig, config.Namespace)
+	}
+
 	if config.UseNATS() {
 		log.Println("Async enabled: Using NATS Streaming.")
 		maxReconnect := 60
@@ -141,8 +160,9 @@ func main() {
 			log.Fatalln(queueErr)
 		}
 
+		queueFunctionCache := scaling.NewFunctionCache(scalingConfig.CacheExpiry)
 		faasHandlers.QueuedProxy = handlers.MakeNotifierWrapper(
-			handlers.MakeCallIDMiddleware(handlers.MakeQueuedProxy(metricsOptions, true, natsQueue, trimURLTransformer)),
+			handlers.MakeCallIDMiddleware(handlers.MakeQueuedProxy(metricsOptions, true, natsQueue, trimURLTransformer, config.Namespace, queueFunctionCache, externalServiceQuery)),
 			forwardingNotifiers,
 		)
 
@@ -187,20 +207,6 @@ func main() {
 
 	r := mux.NewRouter()
 	// max wait time to start a function = maxPollCount * functionPollInterval
-
-	functionProxy := faasHandlers.Proxy
-
-	if config.ScaleFromZero {
-		scalingConfig := scaling.ScalingConfig{
-			MaxPollCount:         uint(1000),
-			SetScaleRetries:      uint(20),
-			FunctionPollInterval: time.Millisecond * 50,
-			CacheExpiry:          time.Second * 5, // freshness of replica values before going stale
-			ServiceQuery:         externalServiceQuery,
-		}
-
-		functionProxy = handlers.MakeScalingHandler(faasHandlers.Proxy, scalingConfig, config.Namespace)
-	}
 
 	r.HandleFunc("/function/{name:["+NameExpression+"]+}", functionProxy)
 	r.HandleFunc("/function/{name:["+NameExpression+"]+}/", functionProxy)

@@ -16,4 +16,5 @@ type ServiceQueryResponse struct {
 	MinReplicas       uint64
 	ScalingFactor     uint64
 	AvailableReplicas uint64
+	Annotations       *map[string]string
 }

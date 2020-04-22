@@ -43,8 +43,3 @@ type Request struct {
 type RequestQueuer interface {
 	Queue(req *Request) error
 }
-
-// CanQueueRequests can take on asynchronous requests
-type CanQueueRequests interface {
-	Queue(req *Request) error
-}
