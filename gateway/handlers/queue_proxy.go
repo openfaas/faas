@@ -17,8 +17,10 @@ import (
 	"github.com/openfaas/faas/gateway/scaling"
 )
 
+const queueAnnotation = "com.openfaas.queue"
+
 // MakeQueuedProxy accepts work onto a queue
-func MakeQueuedProxy(metrics metrics.MetricOptions, wildcard bool, queuer queue.RequestQueuer, pathTransformer URLPathTransformer, defaultNS string, functionCacher scaling.FunctionCacher, serviceQuery scaling.ServiceQuery) http.HandlerFunc {
+func MakeQueuedProxy(metrics metrics.MetricOptions, queuer queue.RequestQueuer, pathTransformer URLPathTransformer, defaultNS string, functionQuery scaling.FunctionQuery) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Body != nil {
 			defer r.Body.Close()
@@ -40,7 +42,7 @@ func MakeQueuedProxy(metrics metrics.MetricOptions, wildcard bool, queuer queue.
 		vars := mux.Vars(r)
 		name := vars["name"]
 
-		queueName, err := getQueueName(name, functionCacher, serviceQuery)
+		queueName, err := getQueueName(name, functionQuery)
 
 		req := &queue.Request{
 			Function:    name,
@@ -68,29 +70,6 @@ func MakeQueuedProxy(metrics metrics.MetricOptions, wildcard bool, queuer queue.
 	}
 }
 
-func getQueueName(name string, cache scaling.FunctionCacher, serviceQuery scaling.ServiceQuery) (queueName string, err error) {
-	fn, ns := getNameParts(name)
-
-	query, hit := cache.Get(fn, ns)
-	if !hit {
-		queryResponse, err := serviceQuery.GetReplicas(fn, ns)
-		if err != nil {
-			return "", err
-		}
-		cache.Set(fn, ns, queryResponse)
-	}
-
-	query, _ = cache.Get(fn, ns)
-
-	queueName = ""
-	if query.Annotations != nil {
-		if v := (*query.Annotations)["com.openfaas.queue"]; len(v) > 0 {
-			queueName = v
-		}
-	}
-	return queueName, err
-}
-
 func getCallbackURLHeader(header http.Header) (*url.URL, error) {
 	value := header.Get("X-Callback-Url")
 	var callbackURL *url.URL
@@ -105,6 +84,21 @@ func getCallbackURLHeader(header http.Header) (*url.URL, error) {
 	}
 
 	return callbackURL, nil
+}
+
+func getQueueName(name string, fnQuery scaling.FunctionQuery) (queueName string, err error) {
+	fn, ns := getNameParts(name)
+
+	annotations, err := fnQuery.GetAnnotations(fn, ns)
+	if err != nil {
+		return "", err
+	}
+	queueName = ""
+	if v := annotations[queueAnnotation]; len(v) > 0 {
+		queueName = v
+	}
+
+	return queueName, err
 }
 
 func getNameParts(name string) (fn, ns string) {

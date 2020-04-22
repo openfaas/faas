@@ -161,8 +161,10 @@ func main() {
 		}
 
 		queueFunctionCache := scaling.NewFunctionCache(scalingConfig.CacheExpiry)
+		functionQuery := scaling.NewCachedFunctionQuery(queueFunctionCache, externalServiceQuery)
+
 		faasHandlers.QueuedProxy = handlers.MakeNotifierWrapper(
-			handlers.MakeCallIDMiddleware(handlers.MakeQueuedProxy(metricsOptions, true, natsQueue, trimURLTransformer, config.Namespace, queueFunctionCache, externalServiceQuery)),
+			handlers.MakeCallIDMiddleware(handlers.MakeQueuedProxy(metricsOptions, natsQueue, trimURLTransformer, config.Namespace, functionQuery)),
 			forwardingNotifiers,
 		)
 
