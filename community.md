@@ -103,6 +103,7 @@ Postponed events for 2020
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Self-hosting serverless with OpenFaaS](https://www.mskog.com/posts/self-hosting-serverless-with-openfaas/) | Magnus Skog | mskog.com | 03-May-2020 |
 | [Call OpenFaaS Serverless Functions with Gloo API Gateway](https://medium.com/alterway/call-openfaas-serverless-functions-with-gloo-api-gateway-678a00710481?source=rss------kubernetes-5) | Hervé Leclerc | medium.com | 21-Apr-2020 |
 | [Data Pipelines with OpenFaas on K3s](https://medium.com/@yoav.nordmann/data-pipelines-with-openfaas-on-k3s-b92e97bc125b) | Yoav Nordmann | medium.com | 19-Apr-2020 |
 |[Tracking Stripe Payments with Slack and faasd](https://myedes.io/stripe-serverless-webhook-faasd/) | Mehdi Yedes | myedes.io | 04-Apr-2020
