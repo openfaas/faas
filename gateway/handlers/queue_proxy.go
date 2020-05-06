@@ -43,6 +43,10 @@ func MakeQueuedProxy(metrics metrics.MetricOptions, queuer queue.RequestQueuer, 
 		name := vars["name"]
 
 		queueName, err := getQueueName(name, functionQuery)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 
 		req := &queue.Request{
 			Function:    name,
