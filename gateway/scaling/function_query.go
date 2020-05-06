@@ -42,6 +42,8 @@ func (c *CachedFunctionQuery) Get(fn string, ns string) (ServiceQueryResponse, e
 			return ServiceQueryResponse{}, err
 		}
 		c.cache.Set(fn, ns, queryResponse)
+	} else {
+		return query, nil
 	}
 
 	// At this point the value almost certainly must be present, so if not
