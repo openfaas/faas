@@ -129,7 +129,7 @@ Postponed events for 2020
 | [Applying GitOps to OpenFaaS with Flux Helm Operator](https://www.openfaas.com/blog/openfaas-flux/) | Stefan Prodan | openfaas.com| 16-Jan-2020| 
 | [OpenFaaS 3rd Birthday Celebrations](https://www.openfaas.com/blog/birthday-teamserverless/) | Alex Ellis | openfaas.com| 14-Jan-2020| 
 | [How To Get Started Contributing to OpenFaaS](https://blog.heyal.co.uk/developing-openfaas/)| Alistair Hey | blog.heyal.co.uk| 04-Jan-2020 |
-| [OpenFaaS on Kubernetes](https://www.katacoda.com/courses/serverless/openfaas)| Jonathan Johnson |www.katacoda.com/courses/serverless| 04-Jan-2020 |
+| [OpenFaaS on Kubernetes](https://www.katacoda.com/courses/serverless/openfaas)| Jonathan Johnson | katacoda.com/courses/serverless| 04-Jan-2020 |
 ### 2019
 
 #### Events in 2019
