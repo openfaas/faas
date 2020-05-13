@@ -90,7 +90,3 @@ As an individual your support can go a long way, please join on GitHub Sponsors.
 
 * View or join our [GitHub sponsors](https://insiders.openfaas.io/)
 
-Patreon takes a processing fees and an additional pay-out fee, so GitHub sponsors is recommended for maximum impact.
-
-* View or join the [Patreon backers](https://www.patreon.com/alexellis)
-
