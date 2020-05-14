@@ -105,7 +105,8 @@ Postponed events for 2020
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
 | [An openFAAS multipart body processing custom language template based on node12 and restify](https://medium.com/@therealburningman/an-openfaas-multipart-body-processing-custom-language-template-based-on-node12-and-restify-7e9e8a78f9be) | Hans van den Akker | medium.com | 15-May-2020 |
-| [OpenFaaS, what's it all about?](https://blog.heyal.co.uk/openfaas-whats-it-about/)| Alistair Hey | blog.heyal.co.uk | 12-05-2020 | 
+| [Create Serverless Functions with OpenFaaS](https://medium.com/appfleet/create-serverless-functions-with-openfaas-1b2ba1dff8cf) | Appfleet Team | medium.com | 14-May-2020 |
+| [OpenFaaS, what's it all about?](https://blog.heyal.co.uk/openfaas-whats-it-about/)| Alistair Hey | blog.heyal.co.uk | 12-05-2020 |
 | [Self-hosting serverless with OpenFaaS](https://www.mskog.com/posts/self-hosting-serverless-with-openfaas/) | Magnus Skog | mskog.com | 03-May-2020 |
 | [Why I Created an OpenFaaS Template for COBOL](https://unnecessary.tech/posts/openfaas-cobol/) | Christopher De Vries | unnecessary.tech | 27-Apr-2020 |
 | [Call OpenFaaS Serverless Functions with Gloo API Gateway](https://medium.com/alterway/call-openfaas-serverless-functions-with-gloo-api-gateway-678a00710481?source=rss------kubernetes-5) | Hervé Leclerc | medium.com | 21-Apr-2020 |
