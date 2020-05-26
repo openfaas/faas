@@ -54,6 +54,8 @@ This is a list of adopters of OpenFaaS
 
 * [Pentium Network](https://www.pentium.network/)
 
+* [PiperCI](https://piperci.dreamer-labs.net) - PiperCI is a task management framework that provides users with a standard library of CI/CD-centric tasks and the [OpenFaas](https://www.openfaas.com/) and [Kubernetes](https://kubernetes.io/) based infrastructure required to run them. PiperCI can be used in conjunction with existing CI/CD orchestrators like GitlabCI, Jenkins, TravisCI, or others to create a more scalable, robust, and functional CI/CD system.
+
 * [Press Association](https://www.pressassociation.com/) - Press Association is using OpenFaaS in development and production as part of our deployment pipeline.
 
 * [Ratehub](https://www.ratehub.ca) - Ratehub is Canada's leading personal finance comparison site. We're breaking apart our monolithic PHP and Java codebases into Node, PHP and Java OpenFaaS functions; there's not much that we don't plan on moving to FaaS!
