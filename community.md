@@ -104,6 +104,9 @@ Postponed events for 2020
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Using Azure Storage + lowdb and Node.js to manage state in OpenFaaS functions](https://medium.com/@therealburningman/using-azure-storage-lowdb-and-node-js-to-manage-state-in-openfaas-functions-5776f214e84d) | Hans van den Akker | medium.com | 27-May-2020 |
+| [Powerful dynamic Email processing using SendGrid, node.JS, OpenFaaS (faasnetes), Azure Service Bus and Microsoft Flow](https://itnext.io/powerful-dynamic-email-processing-using-sendgrid-node-js-52ac68f37eeb) | Hans van den Akker
+ | medium.com | 16-May-2020 |
 | [An openFAAS multipart body processing custom language template based on node12 and restify](https://medium.com/@therealburningman/an-openfaas-multipart-body-processing-custom-language-template-based-on-node12-and-restify-7e9e8a78f9be) | Hans van den Akker | medium.com | 15-May-2020 |
 | [Create Serverless Functions with OpenFaaS](https://medium.com/appfleet/create-serverless-functions-with-openfaas-1b2ba1dff8cf) | Appfleet Team | medium.com | 14-May-2020 |
 | [OpenFaaS, what's it all about?](https://blog.heyal.co.uk/openfaas-whats-it-about/)| Alistair Hey | blog.heyal.co.uk | 12-05-2020 |
