@@ -50,6 +50,12 @@
 
 * Other diagnostic information / logs from [troubleshooting guide](https://docs.openfaas.com/deployment/troubleshooting)
 
+If using Swarm, run the following and include the output:
+
+```
+curl -sLS https://raw.githubusercontent.com/moby/moby/master/contrib/check-config.sh | bash
+```
+
 ## Next steps
 
 You may [join Slack](https://docs.openfaas.com/community) for community support.
