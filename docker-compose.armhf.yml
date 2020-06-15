@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: openfaas/gateway:0.18.13-armhf
+        image: openfaas/gateway:0.18.17-armhf
         networks:
             - functions
         environment:
@@ -43,7 +43,7 @@ services:
 
     # auth service provide basic-auth plugin for system APIs
     basic-auth-plugin:
-        image: openfaas/basic-auth-plugin:0.18.13-armhf
+        image: openfaas/basic-auth-plugin:0.18.17-armhf
         networks:
             - functions
         environment:
@@ -77,16 +77,16 @@ services:
         networks:
             - functions
         environment:
-            read_timeout:  "5m5s"       # set both here, and on your functions
-            write_timeout: "5m5s"       # set both here, and on your functions
+            read_timeout: "5m5s" # set both here, and on your functions
+            write_timeout: "5m5s" # set both here, and on your functions
             DOCKER_API_VERSION: "1.30"
             basic_auth: "${BASIC_AUTH:-false}"
             secret_mount_path: "/run/secrets/"
         deploy:
             placement:
                 constraints:
-                    - 'node.role == manager'
-                    - 'node.platform.os == linux'
+                    - "node.role == manager"
+                    - "node.platform.os == linux"
             resources:
                 # limits:   # Enable if you want to limit memory usage
                 #     memory: 100M
@@ -102,7 +102,7 @@ services:
             - basic-auth-password
 
     nats:
-        image: nats-streaming:0.11.2
+        image: nats-streaming:0.17.0
         # Uncomment the following port mappings if you wish to expose the
         # NATS client and/or management ports you must also add `-m 8222` to the command
         # ports:
@@ -119,15 +119,15 @@ services:
                     memory: 50M
             placement:
                 constraints:
-                    - 'node.platform.os == linux'
+                    - "node.platform.os == linux"
 
     queue-worker:
-        image: openfaas/queue-worker:0.9.0-armhf
+        image: openfaas/queue-worker:0.11.2
         networks:
             - functions
         environment:
             max_inflight: "1"
-            ack_wait: "5m5s"    # Max duration of any async task / request
+            ack_wait: "5m5s" # Max duration of any async task / request
             basic_auth: "${BASIC_AUTH:-false}"
             secret_mount_path: "/run/secrets/"
             gateway_invoke: "true"
@@ -145,7 +145,7 @@ services:
                 window: 380s
             placement:
                 constraints:
-                    - 'node.platform.os == linux'
+                    - "node.platform.os == linux"
         secrets:
             - basic-auth-user
             - basic-auth-password
@@ -159,12 +159,12 @@ services:
         environment:
             no_proxy: "gateway"
         configs:
-          - source: prometheus_config
-            target: /etc/prometheus/prometheus.yml
-          - source: prometheus_rules
-            target: /etc/prometheus/alert.rules.yml
+            - source: prometheus_config
+              target: /etc/prometheus/prometheus.yml
+            - source: prometheus_rules
+              target: /etc/prometheus/alert.rules.yml
         command:
-          - '--config.file=/etc/prometheus/prometheus.yml'
+            - "--config.file=/etc/prometheus/prometheus.yml"
         #   - '-storage.local.path=/prometheus'
         ports:
             - 9090:9090
@@ -173,8 +173,8 @@ services:
         deploy:
             placement:
                 constraints:
-                    - 'node.role == manager'
-                    - 'node.platform.os == linux'
+                    - "node.role == manager"
+                    - "node.platform.os == linux"
             resources:
                 limits:
                     memory: 500M
@@ -186,8 +186,8 @@ services:
         environment:
             no_proxy: "gateway"
         command:
-            - '--config.file=/alertmanager.yml'
-            - '--storage.path=/alertmanager'
+            - "--config.file=/alertmanager.yml"
+            - "--storage.path=/alertmanager"
         networks:
             - functions
         # Uncomment the following port mapping if you wish to expose the Prometheus
@@ -202,29 +202,28 @@ services:
                     memory: 20M
             placement:
                 constraints:
-                    - 'node.role == manager'
-                    - 'node.platform.os == linux'
+                    - "node.role == manager"
+                    - "node.platform.os == linux"
         configs:
             - source: alertmanager_config
               target: /alertmanager.yml
         secrets:
             - basic-auth-password
 
-
 configs:
-     prometheus_config:
-         file: ./prometheus/prometheus.yml
-     prometheus_rules:
-         file: ./prometheus/alert.rules.yml
-     alertmanager_config:
-         file: ./prometheus/alertmanager.yml
+    prometheus_config:
+        file: ./prometheus/prometheus.yml
+    prometheus_rules:
+        file: ./prometheus/alert.rules.yml
+    alertmanager_config:
+        file: ./prometheus/alertmanager.yml
 
 networks:
     functions:
         driver: overlay
         attachable: true
         labels:
-          - "openfaas=true"
+            - "openfaas=true"
 
 secrets:
     basic-auth-user:
