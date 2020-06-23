@@ -76,5 +76,7 @@ This is a list of adopters of OpenFaaS
 
 * [Ytel](https://www.ytel.com) - Ytel are a Google Cloud customer and deployed OpenFaaS vs. the vendor alternative due to its wide range of templates, Dockerfile support and easier access to services within the VPC. The Dockerfile template allowed for easy migration of existing code. The latency of transactions for customers during purchase process was reduced by offloading synchronous code to NATS which is built into OpenFaaS. OpenFaaS also allowed "hot path" code to be refactored from large services into multiple functions, to take advantage of horizontal scaling.
 
+* [Spruce](https://spruce.casa) - We use faasd as part of our base Encryption as a Service platform which were manually managed docker containers. As NATS based platform we were able to scale to every size we want, but deployment takes many labor time as we need to deal with OSes and customer limitations. Now we can use "faas install/up" to accomplish 80% of deployment effort.
+
 Feel free to comment on [this issue](https://github.com/openfaas/faas/issues/776), or to [send a PR](https://github.com/openfaas/faas/edit/master/ADOPTERS.md), to have your logo listed on openfaas.com, contact [alex@openfaas.com](mailto:alex@openfaas.com).
 
