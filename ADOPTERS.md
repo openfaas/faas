@@ -52,6 +52,8 @@ This is a list of adopters of OpenFaaS
 
 * [NGC](https://www.ngcsoftware.com/)
 
+* [PathfinderZA](https://www.pathfinderza.com) - PathfinderZA is an IOT security firm selling underground sensors that transmits warnings to users if a person or vehicle goes past it. We're using OpenFaas, with Dockerised functions written in Java (Quarkus) and Rust (Actix/Rocket-RS).
+
 * [Pentium Network](https://www.pentium.network/)
 
 * [PiperCI](https://piperci.dreamer-labs.net) - PiperCI is a task management framework that provides users with a standard library of CI/CD-centric tasks and the [OpenFaas](https://www.openfaas.com/) and [Kubernetes](https://kubernetes.io/) based infrastructure required to run them. PiperCI can be used in conjunction with existing CI/CD orchestrators like GitlabCI, Jenkins, TravisCI, or others to create a more scalable, robust, and functional CI/CD system.
