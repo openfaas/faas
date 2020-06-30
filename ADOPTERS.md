@@ -66,6 +66,8 @@ This is a list of adopters of OpenFaaS
 
 * [Sprucee](https://spruce.casa) - We use [faasd](https://github.com/openfaas/faasd) as part of our base Encryption as a Service platform which were manually managed docker containers. As NATS based platform we were able to scale to every size we want, but deployment takes many labor time as we need to deal with OS level and customer limitations. Now we can use "faas install/up" to accomplish 80% of deployment effort.
 
+* [SURF](https://www.surf.nl) - [The Green Village](https://www.thegreenvillage.org/) is a living lab at Delft University of Technology. It is an experimental, real-life setting with the goal to accelerate innovation for a sustainable future. [SURF](https://www.surf.nl/), a cooperative association of Dutch educational and research institutions providing digital infrastructure and ICT services, has developed a [digital platform](https://youtu.be/_WYVzoBuWKk) for The Green Village that uses OpenFaaS to classify and sort incoming sensor data at scale.
+
 * [Transmute Industries](https://www.transmute.industries/) - "At Transmute we use OpenFaaS to develop identity and access integrations leveraging decentralized identities that integrate with legacy IAM systems. OpenFaaS helps Transmute and our customers avoid vendor lock in, encourages modularity, and helps us rapidly develop and release integrations for customers."
 
 * [Traversals](https://traversals.com/) - At Traversals, we use OpenFaaS for processing of incoming data. We take benefit from various programming languages available in OpenFaaS.
