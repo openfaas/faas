@@ -104,6 +104,7 @@ Postponed events for 2020
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Serverless with OpenFaaS – DevOps Series, Part 17](https://blogs.cisco.com/developer/serverless-openfaas-devops-17) | Julio Gomez| blogs.cisco.com | 30-June-2020 |
 | [Building serverless Java applications using Micronaut and OpenFaaS](https://openvalue.blog/articles/2020/05/serverless-java-applications.html) | Paulien van Alst | openvalue.blog | 22-June-2020 |
 | [Using Azure Storage + lowdb and Node.js to manage state in OpenFaaS functions](https://medium.com/@therealburningman/using-azure-storage-lowdb-and-node-js-to-manage-state-in-openfaas-functions-5776f214e84d) | Hans van den Akker | medium.com | 27-May-2020 |
 | [Powerful dynamic Email processing using SendGrid, node.JS, OpenFaaS (faasnetes), Azure Service Bus and Microsoft Flow](https://itnext.io/powerful-dynamic-email-processing-using-sendgrid-node-js-52ac68f37eeb) | Hans van den Akker
