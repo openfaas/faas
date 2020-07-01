@@ -24,6 +24,8 @@ This is a list of adopters of OpenFaaS
 
 * [Contiamo](https://www.contiamo.com) - data-science platform hosting jupyter notebooks and functions for multiple tenants.
 
+* [DB2 Limited](https://db2.io) - mobile and web development company in Ukraine. Our internal projects using OpenFaaS functions to run customers code in Kubernetes cluster.
+
 * [DigitalOcean](https://www.digitalocean.com) - DigitalOcean provide a one-click droplet and a 1-click Kubernetes marketplace application for OpenFaaS
 
 * [Dim Solution](https://dimsolution.com/) - "Dim Solution is using OpenFaaS in production"
