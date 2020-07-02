@@ -22,6 +22,8 @@ This is a list of adopters of OpenFaaS
 
 * [Civo](https://www.civo.com) - Civo Cloud provide a 1-click Kubernetes marketplace application for OpenFaaS
 
+* [Cognite](https://www.cognite.com) - Cognite targets heavy asset industries such as oil and gas, shipping and energy sector. They provide data integration tools that help you extract, import, and transform data from siloed source systems, and OpenFaaS is used to provide a cloud function service for heavy tasks.
+
 * [Contiamo](https://www.contiamo.com) - data-science platform hosting jupyter notebooks and functions for multiple tenants.
 
 * [DB2 Limited](https://db2.io) - mobile and web development company in Ukraine. Our internal projects using OpenFaaS functions to run customers code in Kubernetes cluster.
