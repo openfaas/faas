@@ -80,6 +80,8 @@ This is a list of adopters of OpenFaaS
 
 * [UStore](http://ustore.com.br/) - "We're using OpenFaaS in production"
 
+* [Very Good Security](https://www.verygoodsecurity.com) - VGS uses OpenFaaS to build a solid foundation for the development, deployment, and execution of custom logic on customer payloads as part of their secure compute platform.
+
 * [Vision Banco SAECA](https://www.visionbanco.com) - self-service home banking portal and asynchronous report/PDF generation. See: [KubeCon Video](https://www.youtube.com/watch?v=mPjI34qj5vU&t=1417s)
 
 * [Virality](https://www.virality.de/)
