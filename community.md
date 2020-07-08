@@ -77,6 +77,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFaaS: Serverless platform with no strings attached?](https://ndcoslo.com/talk/lightning-talks-3/) | Andreas Mosti | NDC Oslo 2020 Online | 12-Jun-2020 |
 | [GitOps meets Serverless with OpenFaaS and Flux ](https://www.meetup.com/Weave-User-Group/events/269899027/) | Alex Ellis | Weave Online User Group | 29-Apr-2020 |
 | [Service Mesh and Serverless Chatbots with Linkerd, K8s and OpenFaaS](https://sg.com.mx/sgvirtual/sessions/service-mesh-and-serverless-chatbots-with-linkerd-k8s-and-openfaas/) | Sergio Méndez | SG Virtual Conference | 21-Apr-2020 |
 | [Serverless for Kubernetes with NATS and PLONK](https://youtu.be/J0zbYbvYiM8?t=1135) | Alex Ellis | NATS Connect | 16-Apr-2020 |
@@ -106,6 +107,7 @@ Postponed events for 2020
 |-------------------------------------------------------------------------|--------------|----------|-------------|
 | [Serverless with OpenFaaS – DevOps Series, Part 17](https://blogs.cisco.com/developer/serverless-openfaas-devops-17) | Julio Gomez| blogs.cisco.com | 30-June-2020 |
 | [Building serverless Java applications using Micronaut and OpenFaaS](https://openvalue.blog/articles/2020/05/serverless-java-applications.html) | Paulien van Alst | openvalue.blog | 22-June-2020 |
+| [OpenFaaS: Serverless platform with no strings attached?](https://speakerdeck.com/andmos/openfaas-serverless-platform-with-no-strings-attached-2b403d2f-bd80-4e6f-b61c-52b8fa1f83fe) | Andreas Mosti | Speakerdeck | 12-Jun-2020 |
 | [Using Azure Storage + lowdb and Node.js to manage state in OpenFaaS functions](https://medium.com/@therealburningman/using-azure-storage-lowdb-and-node-js-to-manage-state-in-openfaas-functions-5776f214e84d) | Hans van den Akker | medium.com | 27-May-2020 |
 | [Powerful dynamic Email processing using SendGrid, node.JS, OpenFaaS (faasnetes), Azure Service Bus and Microsoft Flow](https://itnext.io/powerful-dynamic-email-processing-using-sendgrid-node-js-52ac68f37eeb) | Hans van den Akker
  | medium.com | 16-May-2020 |
