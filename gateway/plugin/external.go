@@ -27,13 +27,6 @@ type ExternalServiceQuery struct {
 	AuthInjector middleware.AuthInjector
 }
 
-// ScaleServiceRequest request scaling of replica
-type ScaleServiceRequest struct {
-	ServiceName      string `json:"serviceName"`
-	ServiceNamespace string `json:"serviceNamespace"`
-	Replicas         uint64 `json:"replicas"`
-}
-
 // NewExternalServiceQuery proxies service queries to external plugin via HTTP
 func NewExternalServiceQuery(externalURL url.URL, authInjector middleware.AuthInjector) scaling.ServiceQuery {
 	timeout := 3 * time.Second
@@ -134,10 +127,9 @@ func (s ExternalServiceQuery) GetReplicas(serviceName, serviceNamespace string) 
 func (s ExternalServiceQuery) SetReplicas(serviceName, serviceNamespace string, count uint64) error {
 	var err error
 
-	scaleReq := ScaleServiceRequest{
-		ServiceName:      serviceName,
-		Replicas:         count,
-		ServiceNamespace: serviceNamespace,
+	scaleReq := types.ScaleServiceRequest{
+		ServiceName: serviceName,
+		Replicas:    count,
 	}
 
 	requestBody, err := json.Marshal(scaleReq)
