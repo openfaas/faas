@@ -14,7 +14,7 @@ type FakePrometheusQueryFetcher struct {
 }
 
 func (q FakePrometheusQueryFetcher) Fetch(query string) (*VectorQueryResponse, error) {
-	val := []byte(`{"status":"success","data":{"resultType":"vector","result":[{"metric":{"code":"200","function_name":"func_echoit"},"value":[1509267827.752,"1"]}]}}`)
+	val := []byte(`{"status":"success","data":{"resultType":"vector","result":[{"metric":{"code":"200","function_name":"func_echoit.openfaas-fn"},"value":[1509267827.752,"1"]}]}}`)
 	queryRes := VectorQueryResponse{}
 	err := json.Unmarshal(val, &queryRes)
 	return &queryRes, err
@@ -84,8 +84,9 @@ func makeFunctionsHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		functions := []types.FunctionStatus{
 			types.FunctionStatus{
-				Name:     "func_echoit",
-				Replicas: 0,
+				Name:      "func_echoit",
+				Replicas:  0,
+				Namespace: "openfaas-fn",
 			},
 		}
 		bytesOut, marshalErr := json.Marshal(&functions)
