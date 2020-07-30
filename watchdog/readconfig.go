@@ -66,6 +66,7 @@ func (ReadConfig) Read(hasEnv HasEnv) WatchdogConfig {
 
 	cfg.readTimeout = parseIntOrDurationValue(hasEnv.Getenv("read_timeout"), time.Second*5)
 	cfg.writeTimeout = parseIntOrDurationValue(hasEnv.Getenv("write_timeout"), time.Second*5)
+	cfg.shutdownTimeout = parseIntOrDurationValue(hasEnv.Getenv("shutdown_timeout"), cfg.writeTimeout)
 
 	cfg.execTimeout = parseIntOrDurationValue(hasEnv.Getenv("exec_timeout"), time.Second*0)
 	cfg.port = parseIntValue(hasEnv.Getenv("port"), 8080)
@@ -105,6 +106,11 @@ type WatchdogConfig struct {
 
 	// HTTP write timeout
 	writeTimeout time.Duration
+
+	// when SIGTERM is sent the server will wait `shutdownTimeout` before
+	// closing off connections and a futher `shutdownTimeout` before exiting
+	// defaults to `writeTimeout` if not specified
+	shutdownTimeout time.Duration
 
 	// faasProcess is the process to exec
 	faasProcess string
