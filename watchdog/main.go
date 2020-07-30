@@ -93,7 +93,7 @@ func main() {
 
 	go metricsServer.Serve(cancel)
 
-	shutdownTimeout := config.writeTimeout
+	shutdownTimeout := config.shutdownTimeout
 	listenUntilShutdown(shutdownTimeout, s, config.suppressLock)
 }
 
