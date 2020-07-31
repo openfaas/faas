@@ -100,6 +100,7 @@ The watchdog can be configured through environmental variables. You must always 
 | `read_timeout`         | HTTP timeout for reading the payload from the client caller (in seconds) |
 | `suppress_lock`        | The watchdog will attempt to write a lockfile to /tmp/ for swarm healthchecks - set this to true to disable behaviour. |
 | `exec_timeout`         | Hard timeout for process exec'd for each incoming request (in seconds). Disabled if set to 0 |
+| `shutdown_timeout`     | Graceful shutdowns will last a least twice this number (in seconds). See section: *Graceful shutdowns* for more detail. Defaults to `write_timeout` |
 | `write_debug`          | Write all output, error messages, and additional information to the logs. Default is false |
 | `combine_output`       | True by default - combines stdout/stderr in function response, when set to false `stderr` is written to the container logs and stdout is used for function response |
 | `max_inflight`         | Limit the maximum number of requests in flight |
@@ -120,11 +121,11 @@ This re-write is mainly structural for on-going maintenance. It will be a drop-i
 
 The watchdog is capable of working with health-checks to provide a graceful shutdown.
 
-When a `SIGTERM` signal is detected within the watchdog process a Go routine will remove the `/tmp/.lock` file and mark the HTTP health-check as unhealthy and return HTTP 503. The code will then wait for the duration specified in `write_timeout`. During this window the container-orchestrator's health-check must run and complete.
+When a `SIGTERM` signal is detected within the watchdog process a Go routine will remove the `/tmp/.lock` file and mark the HTTP health-check as unhealthy and return HTTP 503. The code will then wait for the duration specified in `shutdown_timeout`. During this window the container-orchestrator's health-check must run and complete.
 
 Now the orchestrator will mark this replica as unhealthy and remove it from the pool of valid HTTP endpoints.
 
-Now we will stop accepting new connections and wait for the value defined in `write_timeout` before finally allowing the process to exit.
+Now we will stop accepting new connections and wait for the value defined in `shutdown_timeout` before finally allowing the process to exit.
 
 ### Working with HTTP headers
 
