@@ -54,8 +54,9 @@ It would be great to hear from you especially if you have any of the above and w
 | [Running functions anywhere with OpenFaaS - featuring Alex Ellis](https://changelog.com/podcast/343) | The Changelog | 25-Apr-2019 |
 | [Episode 022 – OpenFaaS with Docker Captain](https://changelog.com/podcast/343) | The 6 Figure Developer Podcast | 15-Jan-2018 |
 | [Serverless and OpenFaas with Alex Ellis](https://hanselminutes.com/612/serverless-and-openfaas-with-alex-ellis) | The Hanselminutes Podcast | 29-Dec-2019 |
-| [POPCAST Episode 5 - Going independent and Cloud Native Open Source](https://www.youtube.com/watch?v=66mMC9w-dM4) | Popcast | 09-04-2020 |
 | [How OpenFaaS Found its groove with arm](https://www.worksonarm.com/blog/how-openfaas-found-its-groove-with-arm/) | WorksOnArm | 20-04-2020 |
+| [POPCAST Episode 5 - Going independent and Cloud Native Open Source](https://www.youtube.com/watch?v=66mMC9w-dM4) | Popcast | 09-04-2020 |
+| [The explosive growth of CNCF, what is Kubernetes and independent open source](https://blog.newrelic.com/engineering/observy-mcobservface-episode-no-2-alex-ellis/) | Observy McObservface | 29-07-2020 |
 
 ### Featured Videos
 
