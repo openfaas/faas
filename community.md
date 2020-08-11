@@ -106,9 +106,11 @@ Postponed events for 2020
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFAAS with TLS via Faasd and Terraform on Openstack](https://markopolo123.github.io/posts/openfaas-openstack/) | Mark Sharpley| markopolo123.github.io | 06-Aug-2020 |
 | [Serverless with OpenFaaS – DevOps Series, Part 17](https://blogs.cisco.com/developer/serverless-openfaas-devops-17) | Julio Gomez| blogs.cisco.com | 30-June-2020 |
 | [Building serverless Java applications using Micronaut and OpenFaaS](https://openvalue.blog/articles/2020/05/serverless-java-applications.html) | Paulien van Alst | openvalue.blog | 22-June-2020 |
 | [OpenFaaS: Serverless platform with no strings attached?](https://speakerdeck.com/andmos/openfaas-serverless-platform-with-no-strings-attached-2b403d2f-bd80-4e6f-b61c-52b8fa1f83fe) | Andreas Mosti | Speakerdeck | 12-Jun-2020 |
+| [Running OpenFaaS and MongoDB on Raspbian 64bit](https://dev.to/itzikkotler/running-openfaas-and-mongodb-on-raspbian-64bit-j75) | Itzik Kotler| dev.to | 09-Jun-2020 |
 | [Using Azure Storage + lowdb and Node.js to manage state in OpenFaaS functions](https://medium.com/@therealburningman/using-azure-storage-lowdb-and-node-js-to-manage-state-in-openfaas-functions-5776f214e84d) | Hans van den Akker | medium.com | 27-May-2020 |
 | [Powerful dynamic Email processing using SendGrid, node.JS, OpenFaaS (faasnetes), Azure Service Bus and Microsoft Flow](https://itnext.io/powerful-dynamic-email-processing-using-sendgrid-node-js-52ac68f37eeb) | Hans van den Akker
  | medium.com | 16-May-2020 |
@@ -219,6 +221,7 @@ Postponed events for 2020
 |-------------------------------------------------------------------------|--------------|----------|-------------|
 | [faasd - lightweight Serverless for your Raspberry Pi](https://blog.alexellis.io/faasd-for-lightweight-serverless/)| Alex Ellis | blog.alexellis.io | 30-Dec-2019 |
 | [My 2019 in review - Hello Open Source!](https://blog.heyal.co.uk/My-2019/)| Alistair Hey | blog.heyal.co.uk| 30-Dec-2019 |
+| [OpenFAAS via Containerd on a Raspberry PI 4](https://markopolo123.github.io/posts/pi4-containerd-openfaas/) | Mark Sharpley| markopolo123.github.io | 20-Dec-2019 |
 | [Nodeless OpenFaaS with AWS EKS and Fargate](https://blog.alexellis.io/nodeless-openfaas-with-aws-eks-and-fargate/) | Alex Ellis | alexellis.io | 05-Dec-2019 |
 | [Build a CRUD API with Postgresql and Node.js With OpenFaaS](https://www.civo.com/learn/guide-to-build-a-crud-api-with-postgresl-and-node-js-with-openfaas)| Alex Ellis | www.civo.com | 19-Dec-2019 |
 | [Build ASP.NET Core APIs with Kubernetes and OpenFaaS](https://www.openfaas.com/blog/asp-net-core/)| Alex Ellis | www.openfaas.com| 03-Dec-2019 |
