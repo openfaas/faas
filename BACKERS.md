@@ -4,7 +4,7 @@ OpenFaaS is licensed as MIT and completely Open Source and free to use. However 
 
 Companies using OpenFaaS with their products or projects are encouraged to join at Gold or Platinum tier. Commercial support is also available.
 
-## How to become a backer or Insider
+## How to become a Sponsor or Insider
 
 ## Insiders Subscription
 
@@ -16,7 +16,7 @@ Read a free sample or Become an Insider today:
 
 Alternatively, you can [become a GitHub sponsor for OpenFaaS](https://github.com/sponsors/openfaas)
 
-### Homepage Sponsorship / OpenFaaS corporate sponsors
+## Homepage Sponsorship / OpenFaaS corporate sponsors
 
 Become a sponsor of openfaas.com and connect your brand to one of the fastest-growing developer communities with over 18k GitHub stars and dozens of well-known end-users. Use one of the funding options above, or email: [sales@openfaas.com](mailto:sales@openfaas.com) to ask about how to sponsor by invoice through OpenFaaS Ltd.
 
@@ -34,25 +34,27 @@ Become a sponsor of openfaas.com and connect your brand to one of the fastest-gr
 
 * Bronze
 
-    Logo in BACKERS.md (this file) - (monthly rolling via GitHub Sponsors)
+    Logo in BACKERS.md (this file) - (monthly rolling via [GitHub Sponsors](http://github.com/sponsors/openfaas))
 
-### Support
+## Support
 
 Get support, backlog, issue & PR prioritization, and professional services with your sponsorship from OpenFaaS Ltd, the host and curator of OpenFaaS.
 
 Email [sales@openfaas.com](mailto:sales@openfaas.com) for a quote.
 
-#### Platinum Sponsors (homepage sponsor)
+## Current sponsors
+
+### Platinum Sponsors (homepage sponsor)
 
 <a href="https://digitalocean.com"><img alt="DigitalOcean" src="https://www.openfaas.com/images/sponsors/digitalocean.svg" width="110px" /></a>
 
 <a href="https://rancher.com"><img alt="Rancher" src="https://www.openfaas.com/images/sponsors/rancher-logo-stacked-color.svg" width="110px" /></a>
 
-#### Gold Sponsors (homepage sponsor)
+### Gold Sponsors (homepage sponsor)
 
 Be the first
 
-#### Bronze Sponsors
+### Bronze Sponsors
 
 <a href="https://garden.io"><img alt="Garden.io" src="https://www.openfaas.com/images/sponsors/garden.png" width="90px" /></a>
 
