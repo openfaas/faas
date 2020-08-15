@@ -78,6 +78,9 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Meet faasd. Look Ma’ No Kubernetes!](https://spseu20.sched.com/event/ZWeT/meet-faasd-look-ma-no-kubernetes-alex-ellis-openfaas-ltd) | Alex Ellis | SPS, KubeCon EU | 17-Aug-2020 |
+| [WebAssembly + OpenFaas, the Universal Runtime for Serverless Functions](https://spseu20.sched.com/event/aYpr) | Ramiro Berrelleza | SPS, KubeCon EU | 17-Aug-2020 |
+| [Finding Managed Services in a Serverless World with Crossplane and OpenFaaS](https://spseu20.sched.com/event/aYq0/finding-managed-services-in-a-serverless-world-with-crossplane-and-openfaas-daniel-mangum-upbound) | Daniel Mangum | SPS, KubeCon EU | 17-Aug-2020 |
 | [OpenFaaS: Serverless platform with no strings attached?](https://ndcoslo.com/talk/lightning-talks-3/) | Andreas Mosti | NDC Oslo 2020 Online | 12-Jun-2020 |
 | [GitOps meets Serverless with OpenFaaS and Flux ](https://www.meetup.com/Weave-User-Group/events/269899027/) | Alex Ellis | Weave Online User Group | 29-Apr-2020 |
 | [Service Mesh and Serverless Chatbots with Linkerd, K8s and OpenFaaS](https://sg.com.mx/sgvirtual/sessions/service-mesh-and-serverless-chatbots-with-linkerd-k8s-and-openfaas/) | Sergio Méndez | SG Virtual Conference | 21-Apr-2020 |
@@ -106,7 +109,9 @@ Postponed events for 2020
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
-| [OpenFAAS with TLS via Faasd and Terraform on Openstack](https://markopolo123.github.io/posts/openfaas-openstack/) | Mark Sharpley| markopolo123.github.io | 06-Aug-2020 |
+| [Create Serverless Functions with OpenFaaS](https://dev.to/appfleet/create-serverless-functions-with-openfaas-37ob) | Dmitriy Akulov | dev.to | 13-Aug-2020 |
+| [Live reload for OpenFaaS functions](https://simonemms.com/blog/2020/08/12/live-reload-for-openfaas/) | Simon Emms | simonemms.com | 12-Aug-2020 |
+| [OpenFaaS with TLS via Faasd and Terraform on Openstack](https://markopolo123.github.io/posts/openfaas-openstack/) | Mark Sharpley| markopolo123.github.io | 06-Aug-2020 |
 | [Serverless with OpenFaaS – DevOps Series, Part 17](https://blogs.cisco.com/developer/serverless-openfaas-devops-17) | Julio Gomez| blogs.cisco.com | 30-June-2020 |
 | [Building serverless Java applications using Micronaut and OpenFaaS](https://openvalue.blog/articles/2020/05/serverless-java-applications.html) | Paulien van Alst | openvalue.blog | 22-June-2020 |
 | [OpenFaaS: Serverless platform with no strings attached?](https://speakerdeck.com/andmos/openfaas-serverless-platform-with-no-strings-attached-2b403d2f-bd80-4e6f-b61c-52b8fa1f83fe) | Andreas Mosti | Speakerdeck | 12-Jun-2020 |
