@@ -42,6 +42,8 @@ This is a list of adopters of OpenFaaS
 
 * [Iconscout](https://iconscout.com) - e-commerce site for stock photography and icons. OpenFaaS is used to resize images and to bundle assets for customers.
 
+* [Ingrooves](https://ingrooves.com) - Ingrooves is a global music distribution, tech & marketing company, and OpenFaaS is a key component in its finance system for report generation, event publishing, and data ingestion.
+
 * [Infotechpartners](www.infotechpartners.be)
 
 * [Intraffic](https://www.intraffic.nl/) - "Using OpenFaaS for integration and callable AI/ML models for asset management."
