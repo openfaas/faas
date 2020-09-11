@@ -4,6 +4,7 @@ Welcome to the OpenFaaS community page where you can find:
 
 * [Industry awards, notable mentions and books](#industry-awards-notable-mentions-and-books)
 * [Function Providers/Back-ends](#openfaas-providers)
+* [Commercial adoption and end-users](https://github.com/openfaas/faas/blob/master/ADOPTERS.md)
 
 * Events
     * [2017](#events-in-2017) [2018](#events-in-2018) [2019](#events-in-2019) [2020](#events-in-2020)
