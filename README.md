@@ -76,7 +76,7 @@ If you're using OpenFaaS please let us know [on this thread](https://github.com/
 #### API Gateway / UI Portal
 
 * The API Gateway provides an external route into your functions and collects Cloud Native metrics through Prometheus.
-* Your API Gateway will scale functions according to demand by altering the service replica count in the Docker Swarm or Kubernetes API.
+* Your API Gateway will scale functions according to demand by altering the service replica count in the container platform
 * A UI is baked in allowing you to invoke functions in your browser and create new ones as needed.
 
 > The API Gateway is a RESTful micro-service and you can view the [Swagger docs here](https://github.com/openfaas/faas/tree/master/api-docs).
@@ -149,50 +149,48 @@ Official templates exist for many popular languages and are easily extensible wi
     }
     ```
 
-The easiest way to get started with functions is to [take the workshop](https://github.com/openfaas/workshop) or one of the tutorials in the documentation.
-
 ## Get started with OpenFaaS
-
-### Join the Community
-
-* [Join Slack](https://docs.openfaas.com/community)
-* [Become a GitHub sponsor](https://insiders.openfaas.io/)
 
 ### Official blog and documentation
 
-* Read the documentation: [docs.openfaas.com](https://docs.openfaas.com/)
-* Send a PR or raise an issue for the docs [openfaas/docs](https://github.com/openfaas/docs)
+* Read the documentation: [docs.openfaas.com](https://docs.openfaas.com/deployment)
 * Read latest news and tutorials on the [Official Blog](https://www.openfaas.com/blog/)
 
-### Workshop (hands-on learning)
+### Support & getting help
 
-You can learn how to build functions and microservices with OpenFaaS using the [OpenFaaS workshop](http://github.com/openfaas/workshop). The Workshop has been curated carefully by dozens of community members to guide you through everything you need to know from setting up on Kubernetes to making use of secrets to integrating with GitHub and auto-scaling.
+* [Consulting](https://www.openfaas.com/consulting) - get hands-on expert help with your cloud, Kubernetes and OpenFaaS migration and projects
+* [Commercial support](https://www.openfaas.com/support) - a subscription service from OpenFaaS Ltd
+* [Join Slack](https://docs.openfaas.com/community) - run by community volunteers
 
-### Deploy OpenFaaS
+### Online training
 
-Here is a screenshot of the API gateway portal - designed for ease of use with the inception function.
+* **New**: Training course from the LinuxFoundation: [Introduction to Serverless on Kubernetes](https://www.edx.org/course/introduction-to-serverless-on-kubernetes)
+
+    This training course "Introduction to Serverless on Kubernetes" written by the project founder and commissioned by the LinuxFoundation provides an overview of what you need to know to build functions and operate OpenFaaS on public cloud.
+
+* [Self-paced workshop written by the community on GitHub](https://github.com/openfaas/workshop)
+
+    You may also like to try the self-paced workshop on GitHub written by the OpenFaaS community
+
+* Corporate trainings
+
+    If you wish to arrange a training session for your team, or a consultation, feel free to contact OpenFaaS Ltd at sales@openfaas.com
+
+### Quickstart
+
 
 ![Portal](/docs/inception.png)
 
-#### Kubernetes
+> Here is a screenshot of the API gateway portal - designed for ease of use with the inception function.
 
-OpenFaaS is Kubernetes-native - you can follow the [deployment guide here](http://docs.openfaas.com/deployment/kubernetes/).
-
-#### Docker Swarm
-
-The deployment guide for Docker Swarm contains a simple one-line command to get you up and running in around 60 seconds. It also includes a set of [sample functions](https://github.com/openfaas/faas/tree/master/sample-functions) which you can use with the TestDrive instructions below.
-
-[Deployment guide for Docker Swarm](http://docs.openfaas.com/deployment/docker-swarm/)
-
-* Docker Playground
-
-    You can quickly start OpenFaaS on Docker Swarm online using the community-run Docker playground: [Play-with-Docker](https://labs.play-with-docker.com/) (PWD)
-
-    Simply follow the deployment guide for Swarm above in a new session
-
-    > You will need a free Docker Hub account to get access. Get one here: [Docker Hub](https://hub.docker.com/)
+Deploy OpenFaaS to Kubernetes, OpenShift, or faasd [deployment guides](./deployment/)
 
 ## Video presentations
+
+
+### Meet faasd. Look Ma’ No Kubernetes!
+
+[Meet faasd. Look Ma’ No Kubernetes!](https://www.youtube.com/watch?v=ZnZJXI377ak&feature=youtu.be)
 
 ### OpenFaaS Cloud + Linkerd: A Secure, Multi-Tenant Serverless Platform
 
@@ -201,12 +199,6 @@ The deployment guide for Docker Swarm contains a simple one-line command to get 
 ### The PLONK Stack/Serverless 2.0 for Kubernetes with OpenFaaS
 
 [Getting Beyond FaaS: The PLONK Stack for Kubernetes Developers - Alex Ellis, OpenFaaS Ltd](https://www.youtube.com/watch?v=NckMekZXRt8&feature=emb_title)
-
-### How LivePerson is Tailoring its Conversational Platform Using OpenFaaS @ KubeCon 2019
-
-> Hear how LivePerson took one of the most popular open source Serverless projects (OpenFaaS) and built it into their product to add value for customers. Functions allow customers to create custom chatbot behaviour, messaging extensions and commerce workflows. You’ll see a live demo and hear about how the team put together the solution
-
-* [Watch on YouTube](https://youtu.be/bt06Z28uzPA)
 
 ### Digital Transformation of Vision Banco Paraguay with Serverless Functions @ KubeCon late-2018
 
