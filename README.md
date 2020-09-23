@@ -42,13 +42,15 @@ OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and 
 
 * Individual Sponsorships / End-users / Insiders Track 🍻
 
-  OpenFaaS is free to use and completely open source under the MIT license, however financial backing is required to sustain the effort to maintain and develop the project.
-  
-  Users and contributors are encouraged to join their peers in supporting the work through [GitHub Sponsors](https://insiders.openfaas.io/), all tiers gain exclusive access to the [Insiders Track](BACKERS.md)
+    The source code for OpenFaaS is free to use and open source under the terms of the MIT license.
+
+    OpenFaaS Ltd offers [commercial support and enterprise add-ons](https://www.openfaas.com/support) for end-users and [training and consulting services for Cloud and Kubernetes](https://www.openfaas.com/consulting).
+
+    Users and contributors are encouraged to join their peers in supporting the project through [GitHub Sponsors](https://www.openfaas.com/support).
 
 * Website Sponsorship 🌎
 
-  Companies and brands are welcome to sponsor [openfaas.com](https://www.openfaas.com/), the Gold and Platinum tiers come with a homepage logo, [see costs and tiers](BACKERS.md). Website sponsorships can be paid by invoice to OpenFaaS Ltd.
+  Companies and brands are welcome to sponsor [openfaas.com](https://www.openfaas.com/), the Gold and Platinum tiers come with a homepage logo, [see costs and tiers](BACKERS.md). Website sponsorships are payable by invoice.
 
 * Press / Branding 📸
 
@@ -174,29 +176,13 @@ OpenFaaS users can subscribe to a weekly Community Newsletter called Insiders Up
 
 Deploy OpenFaaS to Kubernetes, OpenShift, or faasd [deployment guides](./deployment/)
 
-## Video presentations
+### Video presentations
 
-### Meet faasd. Look Ma’ No Kubernetes!
-
-[Meet faasd. Look Ma’ No Kubernetes!](https://www.youtube.com/watch?v=ZnZJXI377ak&feature=youtu.be)
-
-### OpenFaaS Cloud + Linkerd: A Secure, Multi-Tenant Serverless Platform
-
-[From KubeCon North America 2019 with Charles Pretzer from Buoyant & Alex Ellis, OpenFaaS Ltd](https://www.youtube.com/watch?v=sD7hCwq3Gw0&feature=emb_title)
-
-### The PLONK Stack/Serverless 2.0 for Kubernetes with OpenFaaS
-
-[Getting Beyond FaaS: The PLONK Stack for Kubernetes Developers - Alex Ellis, OpenFaaS Ltd](https://www.youtube.com/watch?v=NckMekZXRt8&feature=emb_title)
-
-### Digital Transformation of Vision Banco Paraguay with Serverless Functions @ KubeCon late-2018
-
-[From KubeCon North America 2018 with Alex and Patricio Diaz Senior Analyst, Vision Banco SAECA](https://kccna18.sched.com/event/GraO/digital-transformation-of-vision-banco-paraguay-with-serverless-functions-alex-ellis-vmware-patricio-diaz-vision-banco-saeca)
-
-### Closing Keynote at Dockercon early-2017
-
-Functions as a Service or FaaS was a winner in the Cool Hacks contest for Dockercon 2017.
-
-* [Watch Alex present "FaaS" during the Dockercon 2017 keynote](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/)
+* [Meet faasd. Look Ma’ No Kubernetes!](https://www.youtube.com/watch?v=ZnZJXI377ak&feature=youtu.be)
+* [OpenFaaS Cloud + Linkerd: A Secure, Multi-Tenant Serverless Platform](https://www.youtube.com/watch?v=sD7hCwq3Gw0&feature=emb_title)
+* [Getting Beyond FaaS: The PLONK Stack for Kubernetes Developers](https://www.youtube.com/watch?v=NckMekZXRt8&feature=emb_title)
+* [Digital Transformation of Vision Banco Paraguay with Serverless Functions @ KubeCon late-2018](https://kccna18.sched.com/event/GraO/digital-transformation-of-vision-banco-paraguay-with-serverless-functions-alex-ellis-vmware-patricio-diaz-vision-banco-saeca)
+* [Introducing "faas" - Cool Hacks Keynote at Dockercon 2017](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/)
 
 ### Community events and blog posts
 
