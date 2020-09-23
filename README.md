@@ -36,6 +36,8 @@ OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and 
 
 ![Conceptual architecture](/docs/of-layer-overview.png)
 
+> Conceptual architecture and stack, [more detail available in the docs](https://docs.openfaas.com/architecture/stack/)
+
 ### Press / Branding / Website Sponsorship
 
 * Individual Sponsorships / End-users / Insiders Track 🍻
