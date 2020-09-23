@@ -54,11 +54,13 @@ OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and 
 
   Looking for statistics? This project does not use a mono-repo, but is split across several components. Use [Ken Fukuyama's dashboard](https://kenfdev.o6s.io/github-stats-page) to gather accurate counts on contributors, stars and forks across the [GitHub organisation](https://github.com/openfaas).
 
-  > Note: Incubator projects are not counted in these totals and are hosted under [openfaas-incubator](https://github.com/openfaas-incubator) awaiting graduation.
+  > Note: any statistics you gather about the openfaas/faas repository will be invalid, the faas repo is not representative of the project's activity.
 
 ### Governance
 
-OpenFaaS&reg; is an independent project founded by [Alex Ellis](https://www.alexellis.io) which is now being built and shaped by a growing community of contributors, GitHub Organisation members, Core contributors and end-users. OpenFaaS Ltd hosts the OpenFaaS codebase and trademarks. Professional services, sponsorships, and commercial support packages are available [upon request](mailto:sales@openfaas.com).
+OpenFaaS &reg; is an independent open-source project created by [Alex Ellis](https://www.alexellis.io), which is being built and shaped by a [growing community of contributors](https://www.openfaas.com/team/).
+
+OpenFaaS is hosted by OpenFaaS Ltd (registration: 11076587), a company which also offers commercial services, homepage sponsorships, and support. OpenFaaS &reg; is a registered trademark in England and Wales.
 
 ### Users
 
@@ -66,32 +68,7 @@ View a selection of end-user companies who have given permission to have their l
 
 If you're using OpenFaaS please let us know [on this thread](https://github.com/openfaas/faas/issues/776). In addition, you are welcome to request to have your logo listed on the homepage. Thank you for your support.
 
-### Technical overview
-
-#### Function Watchdog
-
-* You can make any Docker image into a serverless function by adding the *Function Watchdog* (a tiny Golang HTTP server)
-* The *Function Watchdog* is the entrypoint allowing HTTP requests to be forwarded to the target process via STDIN or HTTP. The response is sent back to the caller by writing to STDOUT or HTTP from your application.
-
-#### API Gateway / UI Portal
-
-* The API Gateway provides an external route into your functions and collects Cloud Native metrics through Prometheus.
-* Your API Gateway will scale functions according to demand by altering the service replica count in the container platform
-* A UI is baked in allowing you to invoke functions in your browser and create new ones as needed.
-
-> The API Gateway is a RESTful micro-service and you can view the [Swagger docs here](https://github.com/openfaas/faas/tree/master/api-docs).
-
-#### CLI
-
-Using the [faas-cli](http://github.com/openfaas/faas-cli) and `faas-cli up` you can create, build, distribute, and deploy your code in a very short period of time.
-
-Any container or process in a Docker container can be a serverless workload in OpenFaaS, as long as it [conforms to The Workload Contract](https://docs.openfaas.com/reference/workloads/).
-
-Create new functions from templates for Node.js, Python, [Go](https://blog.alexellis.io/serverless-golang-with-openfaas/) and many more. If you can't find a suitable template you can also use a Dockerfile or create your own.
-
-The CLI is effectively a RESTful client for the API Gateway. When you have OpenFaaS configured you can [get started with the CLI here](https://blog.alexellis.io/quickstart-openfaas-cli/)
-
-#### Examples
+### Code samples
 
 You can generate new functions using the `faas-cli` and built-in templates or use any binary for Windows or Linux in a Docker container.
 
@@ -164,23 +141,27 @@ OpenFaaS users can subscribe to a weekly Community Newsletter called Insiders Up
 
 ### Support & getting help
 
-* [Consulting](https://www.openfaas.com/consulting) - get hands-on expert help with your cloud, Kubernetes and OpenFaaS migration and projects
+* [Cloud Native Consulting](https://www.openfaas.com/consulting) - get hands-on expert help with your cloud, Kubernetes and OpenFaaS migration and projects
 * [Commercial support](https://www.openfaas.com/support) - a subscription service from OpenFaaS Ltd
 * [Join Slack](https://docs.openfaas.com/community) - run by community volunteers
 
 ### Online training
 
-* **New**: Training course from the LinuxFoundation: [Introduction to Serverless on Kubernetes](https://www.edx.org/course/introduction-to-serverless-on-kubernetes)
+* **New**: Training course from the LinuxFoundation: Introduction to Serverless on Kubernetes
 
     This training course "Introduction to Serverless on Kubernetes" written by the project founder and commissioned by the LinuxFoundation provides an overview of what you need to know to build functions and operate OpenFaaS on public cloud.
 
-* [Self-paced workshop written by the community on GitHub](https://github.com/openfaas/workshop)
+    Training course: [Introduction to Serverless on Kubernetes](https://www.edx.org/course/introduction-to-serverless-on-kubernetes)
+
+* Self-paced workshop written by the community on GitHub
 
     You may also like to try the self-paced workshop on GitHub written by the OpenFaaS community
 
+    Browse the [workshop](https://github.com/openfaas/workshop)
+
 * Corporate trainings
 
-    If you wish to arrange a training session for your team, or a consultation, feel free to contact OpenFaaS Ltd at sales@openfaas.com
+    If you wish to arrange a training session for your team, or a consultation, [feel free to contact OpenFaaS Ltd](https://www.openfaas.com/support/)
 
 ### Quickstart
 
@@ -192,7 +173,6 @@ OpenFaaS users can subscribe to a weekly Community Newsletter called Insiders Up
 Deploy OpenFaaS to Kubernetes, OpenShift, or faasd [deployment guides](./deployment/)
 
 ## Video presentations
-
 
 ### Meet faasd. Look Ma’ No Kubernetes!
 
