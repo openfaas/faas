@@ -156,6 +156,12 @@ Official templates exist for many popular languages and are easily extensible wi
 * Read the documentation: [docs.openfaas.com](https://docs.openfaas.com/deployment)
 * Read latest news and tutorials on the [Official Blog](https://www.openfaas.com/blog/)
 
+## Community Subscription
+
+OpenFaaS users can subscribe to a weekly Community Newsletter called Insiders Updates, to keep up to date with new features, bug fixes, events, tutorials and security patches. Insiders Updates are written by the project founder and distributed via GitHub Sponsors.
+
+* [Get a Community Subscription](https://github.com/support/)
+
 ### Support & getting help
 
 * [Consulting](https://www.openfaas.com/consulting) - get hands-on expert help with your cloud, Kubernetes and OpenFaaS migration and projects
