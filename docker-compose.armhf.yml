@@ -3,7 +3,7 @@ services:
     gateway:
         ports:
             - 8080:8080
-        image: openfaas/gateway:0.18.17-armhf
+        image: openfaas/gateway:0.18.18-armhf
         networks:
             - functions
         environment:
@@ -43,7 +43,7 @@ services:
 
     # auth service provide basic-auth plugin for system APIs
     basic-auth-plugin:
-        image: openfaas/basic-auth-plugin:0.18.17-armhf
+        image: openfaas/basic-auth-plugin:0.18.18-armhf
         networks:
             - functions
         environment:
@@ -73,7 +73,7 @@ services:
     faas-swarm:
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock"
-        image: openfaas/faas-swarm:0.8.5-armhf
+        image: openfaas/faas-swarm:0.9.0-armhf
         networks:
             - functions
         environment:
