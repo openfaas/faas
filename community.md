@@ -26,9 +26,10 @@ It would be great to hear from you especially if you have any of the above and w
 
 [Back to top](#openfaas-community)
 
-| Award/Mention                                          | Author(s)       | Source     | Date        |
+| Award or mention                                          | Author(s)       | Source     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
-| [GOTO 2018, Serverless Beyond the Hype, Alex Ellis](https://www.youtube.com/watch?v=yOpYYYRuDQ0) | Alex Ellis | Youtube.com | 30-Jan-2019 |
+| 🏆 [Winners of the Best of VMworld 2020 Awards - Startup Spotlight 2020 winner](https://searchservervirtualization.techtarget.com/photostory/252489586/Winners-of-the-Best-of-VMworld-2020-Awards/8/Judges-choice-Startup-Spotlight-2020-winner) | Tech Target | techtarget.com | 30-Sep-2020 |
+| [Serverless on Kubernetes training course](https://training.linuxfoundation.org/announcements/new-free-training-course-teaches-fundamentals-of-serverless-on-kubernetes/) | Linux Foundation & Alex Ellis | LinuxFoundation.org | 10-Sep-2020 |
 | [Battle Over Serverless Computing Frameworks to Heat Up in 2019](https://www.itbusinessedge.com/articles/battle-over-serverless-computing-frameworks-to-heat-up-in-2019.html) | Mike Vizard | itbusinessedge.com | 03-Jan-2019 |
 | [Serverless Inside Out: Architecture & Practices](https://www.amazon.cn/dp/B07LD4KXG3/) | Nicholas Geng Chen | China Machine Press | 01-Jan-2019 |
 | 🏆🏆 [2018 Bossie Award Best OSS Cloud Computing](https://www.infoworld.com/article/3306455/cloud-computing/the-best-open-source-software-for-cloud-computing.html#slide13) | Jonathan Freeman et al. | InfoWorld.com | 26-Sep-2018 |
@@ -49,15 +50,18 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Title                                                               | Show       | Date        |
 |---------------------------------------------------------------------|--------------|----------|
+| ["Balancing OSS Sacrifice with Success"](https://github.com/readme/alex-ellis) | GitHub ReadME program | 04-Sep-2020 |
+| [Episode #116 Independent Open Source, with Alex Ellis](https://kubernetespodcast.com/episode/116-independent-open-source/) | Kubernetes Podcast by Google | 12-Aug-2020 |
+| [The explosive growth of CNCF, what is Kubernetes and independent open source](https://blog.newrelic.com/engineering/observy-mcobservface-episode-no-2-alex-ellis/) | Observy McObservface | 29-07-2020 |
+| [How OpenFaaS Found its groove with arm](https://www.worksonarm.com/blog/how-openfaas-found-its-groove-with-arm/) | WorksOnArm | 20-04-2020 |
+| [POPCAST Episode 5 - Going independent and Cloud Native Open Source](https://www.youtube.com/watch?v=66mMC9w-dM4) | Popcast | 09-04-2020 |
 | [Serverless, FaaS, and Kubernetes Tools with Alex Ellis of OpenFaaS DevOps and Docker Talk](https://podcast.bretfisher.com/episodes/serverless-faas-and-kubernetes-tools-with-alex-ellis-of-openfaas) | Bret Fisher Docker and DevOps Talk| 24-Apr-2020 | 
 | [Serverless Functions with Alex Ellis of OpenFaaS: DevOps and Docker Live Show (Ep 68)](https://www.youtube.com/watch?v=5zDvjIkMf9I) | Bret Fisher Docker and DevOps | 16-Jan-2020 | 
+| [Serverless and OpenFaas with Alex Ellis](https://hanselminutes.com/612/serverless-and-openfaas-with-alex-ellis) | The Hanselminutes Podcast | 29-Dec-2019 |
 | [OpenFaaS Creator on Open Source’s Community-Funding Model](https://thenewstack.io/openfaas-creator-on-open-sources-community-funding-model/) | The New Stack | 11-Jul-2019 |
 | [Running functions anywhere with OpenFaaS - featuring Alex Ellis](https://changelog.com/podcast/343) | The Changelog | 25-Apr-2019 |
 | [Episode 022 – OpenFaaS with Docker Captain](https://changelog.com/podcast/343) | The 6 Figure Developer Podcast | 15-Jan-2018 |
-| [Serverless and OpenFaas with Alex Ellis](https://hanselminutes.com/612/serverless-and-openfaas-with-alex-ellis) | The Hanselminutes Podcast | 29-Dec-2019 |
-| [How OpenFaaS Found its groove with arm](https://www.worksonarm.com/blog/how-openfaas-found-its-groove-with-arm/) | WorksOnArm | 20-04-2020 |
-| [POPCAST Episode 5 - Going independent and Cloud Native Open Source](https://www.youtube.com/watch?v=66mMC9w-dM4) | Popcast | 09-04-2020 |
-| [The explosive growth of CNCF, what is Kubernetes and independent open source](https://blog.newrelic.com/engineering/observy-mcobservface-episode-no-2-alex-ellis/) | Observy McObservface | 29-07-2020 |
+| [Serverless and OpenFaas with Alex Ellis](https://hanselminutes.com/612/serverless-and-openfaas-with-alex-ellis) | Hanselminutes with Scott Hanselman | 29-Dec-2017 |
 
 ### Featured Videos
 
@@ -65,11 +69,16 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Title                                                              | Presenter       | Date      |
 | ------------------------------------------------------------------ | --------------- | --------- |
+| [Meet faasd. Look Ma’ No Kubernetes! - Alex Ellis @ KubeCon](https://www.youtube.com/watch?v=ZnZJXI377ak&feature=youtu.be) | Alex Ellis | 8-Sep-2020 |
 | [Cloud Native Tools for Developers with Alex Ellis and Alistair Hey](https://youtu.be/r4mEF8rtXWo) | Alex Ellis and Alistair Hey | 13-Mar-2019 |
 | [Getting Beyond FaaS: The PLONK Stack for Kubernetes Developers](https://www.youtube.com/watch?v=NckMekZXRt8) | Alex Ellis | 21-Nov-2019 |
 | [OpenFaaS Cloud + Linkerd: A Secure, Multi-Tenant Serverless Platform](https://www.youtube.com/watch?v=sD7hCwq3Gw0) | Charles Pretzer & Alex Ellis | 20-Nov-2019 |
+| [How LivePerson is Tailoring its Conversational Platform Using OpenFaaS - ](https://youtu.be/bt06Z28uzPA) | Simon Pelczer & Ivana Yovcheva | 23-May-2019 | 
 | [OpenFaaS Community Call - December OpenFaaS is 3!](https://www.youtube.com/watch?v=wXnYx-wD4Zk) | Various | 18-Dec-2019 |
 | [OpenFaaS Cloud in 100 seconds (ofc-bootstrap)](https://www.youtube.com/watch?v=Sa1VBSfVpK0&index=21&list=PLlIapFDp305DiIRhJFNzMuJXoBnzKdtpi) | Alex Ellis | 31-Jan-2019 |
+| [GOTO 2018, Serverless Beyond the Hype, Alex Ellis](https://www.youtube.com/watch?v=yOpYYYRuDQ0) | Alex Ellis | 30-Jan-2019 |
+| [Digital Transformation of Vision Banco Paraguay with Serverless Functions @ KubeCon](https://kccna18.sched.com/event/GraO/digital-transformation-of-vision-banco-paraguay-with-serverless-functions-alex-ellis-vmware-patricio-diaz-vision-banco-saeca) | Alex Ellis & Patricio Diaz | 13-Dec-2018 |
+| [Introducing "faas" - Cool Hacks Keynote at Dockercon 2017](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/) | Alex Ellis | 04-April-2017 |
 
 ### 2020
 
