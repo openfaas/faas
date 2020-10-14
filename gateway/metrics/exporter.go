@@ -93,7 +93,12 @@ func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions Metri
 			select {
 			case <-ticker.C:
 
-				get, _ := http.NewRequest(http.MethodGet, endpointURL.String()+"system/functions", nil)
+				get, err := http.NewRequest(http.MethodGet, endpointURL.String()+"system/functions", nil)
+				if err != nil {
+					log.Println(err)
+					return
+				}
+
 				if e.credentials != nil {
 					get.SetBasicAuth(e.credentials.User, e.credentials.Password)
 				}
