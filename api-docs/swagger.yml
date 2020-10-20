@@ -36,7 +36,7 @@ paths:
         description: Function to deploy
         required: true
         schema:
-          $ref: '#/definitions/FunctionDefintion'
+          $ref: '#/definitions/FunctionDefinition'
       responses:
         '202':
           description: Accepted
@@ -57,7 +57,7 @@ paths:
         description: Function to update
         required: true
         schema:
-          $ref: '#/definitions/FunctionDefintion'
+          $ref: '#/definitions/FunctionDefinition'
       responses:
         '200':
           description: Accepted
@@ -452,7 +452,7 @@ definitions:
         example: nodeinfo
     required:
     - functionName
-  FunctionDefintion:
+  FunctionDefinition:
     type: object
     properties:
       service:
