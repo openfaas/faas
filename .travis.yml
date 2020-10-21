@@ -15,7 +15,7 @@ addons:
 before_install:
 
 script:
-  - ./build.sh
+  - make build
   - ./contrib/ci.sh
 
 after_success:

@@ -1,5 +1,7 @@
 TAG?=latest
 
+build: build-auth-basic build-gateway
+
 build-gateway:
 	(TAG=latest-dev make -C gateway push)
 

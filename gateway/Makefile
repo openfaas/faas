@@ -5,6 +5,9 @@ endif
 # set default shell
 SHELL=/bin/bash -o pipefail -o errexit
 
+DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
+INIT_BUILDX=$(DIR)/../contrib/init-buildx.sh
+
 TAG ?= latest
 NS  ?= openfaas
 
@@ -35,12 +38,6 @@ push: build
 
 # enable buildx
 ensure-buildx:
-# this is required for cloudbuild
-ifeq ("$(wildcard $(INIT_BUILDX))","")
-	@./init-buildx.sh
-else
 	@exec $(INIT_BUILDX)
-endif
-	@echo "done"
 
 .PHONY: all build push ensure-buildx
