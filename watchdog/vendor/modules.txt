@@ -1,0 +1,31 @@
+# github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973
+github.com/beorn7/perks/quantile
+# github.com/golang/protobuf v1.3.1
+## explicit
+github.com/golang/protobuf/proto
+# github.com/matttproud/golang_protobuf_extensions v1.0.1
+github.com/matttproud/golang_protobuf_extensions/pbutil
+# github.com/openfaas/faas v0.0.0-20201020105606-15b90db952d3
+## explicit
+github.com/openfaas/faas/watchdog/metrics
+github.com/openfaas/faas/watchdog/types
+# github.com/openfaas/faas-middleware v0.0.0-20190415163657-6a78c3a94beb
+## explicit
+github.com/openfaas/faas-middleware/concurrency-limiter
+# github.com/prometheus/client_golang v0.9.2
+## explicit
+github.com/prometheus/client_golang/prometheus
+github.com/prometheus/client_golang/prometheus/internal
+github.com/prometheus/client_golang/prometheus/promauto
+github.com/prometheus/client_golang/prometheus/promhttp
+# github.com/prometheus/client_model v0.0.0-20190129233127-fd36f4220a90
+## explicit
+github.com/prometheus/client_model/go
+# github.com/prometheus/common v0.2.0
+## explicit
+github.com/prometheus/common/expfmt
+github.com/prometheus/common/internal/bitbucket.org/ww/goautoneg
+github.com/prometheus/common/model
+# github.com/prometheus/procfs v0.0.0-20190403104016-ea9eea638872
+## explicit
+github.com/prometheus/procfs
