@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The NATS Authors
+// Copyright 2016-2020 The NATS Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -26,7 +26,7 @@ import (
 )
 
 // Version is the NATS Streaming Go Client version
-const Version = "0.6.0"
+const Version = "0.7.0"
 
 const (
 	// DefaultNatsURL is the default URL the client connects to
@@ -174,7 +174,18 @@ type Options struct {
 }
 
 // GetDefaultOptions returns default configuration options for the client.
+//
+// Deprecated: do not use this from outside the library.
+// This is intended to be used within the library; its visibility to clients is
+// a design wart which we can't remove without breaking API compatibility.
+// Instead, the Connect() function accepts Option parameters, each singular,
+// which are the exposed interface.
 func GetDefaultOptions() Options {
+	return getDefaultOptions()
+}
+
+// getDefaultOptions returns default configuration options for the client.
+func getDefaultOptions() Options {
 	return Options{
 		NatsURL:            DefaultNatsURL,
 		ConnectTimeout:     DefaultConnectWait,
@@ -186,11 +197,12 @@ func GetDefaultOptions() Options {
 	}
 }
 
-// DEPRECATED: Use GetDefaultOptions() instead.
+// DEPRECATED: Use getDefaultOptions() instead in the library, neither in
+// clients.
 // DefaultOptions is not safe for use by multiple clients.
 // For details see https://github.com/nats-io/nats.go/issues/308.
 // DefaultOptions are the NATS Streaming client's default options
-var DefaultOptions = GetDefaultOptions()
+var DefaultOptions = getDefaultOptions()
 
 // Option is a function on the options for a connection.
 type Option func(*Options) error
@@ -323,11 +335,13 @@ type ack struct {
 
 // Connect will form a connection to the NATS Streaming subsystem.
 // Note that clientID can contain only alphanumeric and `-` or `_` characters.
+// The default options are those returned by GetDefaultOptions and each option
+// specified in a parameter here overrides those defaults.
 func Connect(stanClusterID, clientID string, options ...Option) (Conn, error) {
 	// Process Options
 	c := conn{
 		clientID:        clientID,
-		opts:            DefaultOptions,
+		opts:            getDefaultOptions(),
 		connID:          []byte(nuid.Next()),
 		pubNUID:         nuid.New(),
 		pubAckMap:       make(map[string]*ack),
