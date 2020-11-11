@@ -91,6 +91,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Meet faasd. Look Ma’ No Kubernetes!](https://spseu20.sched.com/event/ZWeT/meet-faasd-look-ma-no-kubernetes-alex-ellis-openfaas-ltd) | Alex Ellis | SPS, KubeCon EU | 17-Aug-2020 |
 | [WebAssembly + OpenFaas, the Universal Runtime for Serverless Functions](https://spseu20.sched.com/event/aYpr) | Ramiro Berrelleza | SPS, KubeCon EU | 17-Aug-2020 |
 | [Finding Managed Services in a Serverless World with Crossplane and OpenFaaS](https://spseu20.sched.com/event/aYq0/finding-managed-services-in-a-serverless-world-with-crossplane-and-openfaas-daniel-mangum-upbound) | Daniel Mangum | SPS, KubeCon EU | 17-Aug-2020 |
+| [Migrating AWS Lambda Functions to Open Source Serverless on OpenFaaS](https://www.youtube.com/watch?v=0ZuHCSz1jjQ) | Burton Rheutan | Open Source Summit North America | 30-Jun-2020 |
 | [OpenFaaS: Serverless platform with no strings attached?](https://ndcoslo.com/talk/lightning-talks-3/) | Andreas Mosti | NDC Oslo 2020 Online | 12-Jun-2020 |
 | [GitOps meets Serverless with OpenFaaS and Flux ](https://www.meetup.com/Weave-User-Group/events/269899027/) | Alex Ellis | Weave Online User Group | 29-Apr-2020 |
 | [Service Mesh and Serverless Chatbots with Linkerd, K8s and OpenFaaS](https://sg.com.mx/sgvirtual/sessions/service-mesh-and-serverless-chatbots-with-linkerd-k8s-and-openfaas/) | Sergio Méndez | SG Virtual Conference | 21-Apr-2020 |

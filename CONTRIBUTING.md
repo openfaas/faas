@@ -26,6 +26,10 @@ This is just a short list of ideas, if you have other ideas for contributing ple
 
 ### I want to contribute on GitHub
 
+#### I've found a security issue
+
+Please follow [responsible disclosure practices](https://en.wikipedia.org/wiki/Responsible_disclosure) and send an email to support@openfaas.com. Bear in mind that instructions on how to reproduce the issue are key to proving an issue exists, and getting it resolved. Suggested solutions are also weclome.
+
 #### I've found a typo
 
 * A Pull Request is not necessary. Raise an [Issue](https://github.com/openfaas/faas/issues) and we'll fix it as soon as we can. 

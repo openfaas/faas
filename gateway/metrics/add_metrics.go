@@ -88,7 +88,7 @@ func mixIn(functions *[]types.FunctionStatus, metrics *VectorQueryResponse) {
 	for i, function := range *functions {
 		for _, v := range metrics.Data.Result {
 
-			if v.Metric.FunctionName == function.Name {
+			if v.Metric.FunctionName == fmt.Sprintf("%s.%s", function.Name, function.Namespace) {
 				metricValue := v.Value[1]
 				switch metricValue.(type) {
 				case string:

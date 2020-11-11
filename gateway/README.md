@@ -75,7 +75,7 @@ The gateway can be configured through the following environment variables:
 | `faas_nats_cluster_name` | The name of the target NATS Streaming cluster. Defaults to `faas-cluster` for backwards-compatibility |
 | `faas_nats_channel` | The name of the NATS Streaming channel to use. Defaults to `faas-request` for backwards-compatibility |
 | `faas_prometheus_host`         | Host to connect to Prometheus. Default: `"prometheus"` |
-| `faas_promethus_port`         | Port to connect to Prometheus. Default: `9090` |
+| `faas_prometheus_port`         | Port to connect to Prometheus. Default: `9090` |
 | `direct_functions`            | `true` or `false` -  functions are invoked directly over overlay network by DNS name without passing through the provider |
 | `direct_functions_suffix`     | Provide a DNS suffix for invoking functions directly over overlay network  |
 | `basic_auth`              | Set to `true` or `false` to enable embedded basic auth on the /system and /ui endpoints (recommended) |
