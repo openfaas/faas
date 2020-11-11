@@ -222,6 +222,16 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
                       $scope.selectedFunction = undefined;
                   }
                 }
+
+                if ($scope.selectedFunction) {
+                    response.data.some(function(entry) {
+                        if (entry.name === $scope.selectedFunction.name) {
+                            $scope.selectedFunction.invocationCount = entry.invocationCount
+                            return true
+                        }
+                    });
+                }
+
             });
         };
 

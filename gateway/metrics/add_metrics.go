@@ -76,6 +76,7 @@ func AddMetricsHandler(handler http.HandlerFunc, prometheusQuery PrometheusQuery
 }
 
 func mixIn(functions *[]types.FunctionStatus, metrics *VectorQueryResponse) {
+
 	if functions == nil {
 		return
 	}
@@ -92,7 +93,6 @@ func mixIn(functions *[]types.FunctionStatus, metrics *VectorQueryResponse) {
 				metricValue := v.Value[1]
 				switch metricValue.(type) {
 				case string:
-					// log.Println("String")
 					f, strconvErr := strconv.ParseFloat(metricValue.(string), 64)
 					if strconvErr != nil {
 						log.Printf("Unable to convert value for metric: %s\n", strconvErr)
