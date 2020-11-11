@@ -173,7 +173,7 @@ OpenFaaS users can subscribe to a weekly Community Newsletter called Insiders Up
 
 > Here is a screenshot of the API gateway portal - designed for ease of use with the inception function.
 
-Deploy OpenFaaS to Kubernetes, OpenShift, or faasd [deployment guides](./deployment/)
+Deploy OpenFaaS to Kubernetes, OpenShift, or faasd [deployment guides](https://docs.openfaas.com/deployment/)
 
 ### Video presentations
 
