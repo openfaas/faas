@@ -18,10 +18,13 @@ COPY . .
 # Run a gofmt and exclude all vendored code.
 
 RUN license-check -path ./ --verbose=false "OpenFaaS Authors" "OpenFaaS Author(s)"
-RUN CGO_ENABLED=${CGO_ENABLED} GOOS=${TARGETOS} GOARCH=${TARGETARCH } test -z "$(gofmt -l $(find . -type f -name '*.go' -not -path "./vendor/*"))"
-RUN CGO_ENABLED=${CGO_ENABLED} GOOS=${TARGETOS} GOARCH=${TARGETARCH } \
-    go build --ldflags "-s -w" -a -installsuffix cgo -o handler . && \
-    go test $(go list ./... | grep -v /vendor/) -cover
+
+RUN test -z "$(gofmt -l $(find . -type f -name '*.go' -not -path "./vendor/*"))"
+
+RUN CGO_ENABLED=${CGO_ENABLED} GOOS=${TARGETOS} GOARCH=${TARGETARCH} go test -v ./...
+
+RUN CGO_ENABLED=${CGO_ENABLED} GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build \
+    --ldflags "-s -w" -a -installsuffix cgo -o handler .
 
 FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.12 as ship
 # Add non-root user

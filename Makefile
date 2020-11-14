@@ -1,10 +1,6 @@
 TAG?=latest
 NS?=openfaas
 
-.PHONY: build
-build:
-	./build.sh
-
 .PHONY: build-gateway
 build-gateway:
 	(cd gateway;  docker buildx build --platform linux/amd64 -t $NS/gateway:latest-dev .)
@@ -12,7 +8,3 @@ build-gateway:
 .PHONY: test-ci
 test-ci:
 	./contrib/ci.sh
-
-.PHONY: binaries
-binaries:
-	echo TODO
