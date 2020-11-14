@@ -6,7 +6,7 @@ set -e
 
 # The timeout is required on Travis due to some tasks not starting in
 # time and being deemed to have failed.
-docker service update func_gateway --image=openfaas/gateway:latest-dev \
+docker service update func_gateway --image=ghcr.io/openfaas/gateway:latest-dev \
   --update-failure-action=continue \
   --update-monitor=20s
 
@@ -32,11 +32,13 @@ fi
 
 cd ..
 
-echo $GOPATH
+if [ -z "$GOPATH" ]
+then
+      export GOPATH=$GITHUB_WORKSPACE
+fi
 
 if [ ! -d "$GOPATH/src/github.com/openfaas/" ]; then
     mkdir -p $GOPATH/src/github.com/openfaas/
-    cp -r faas $GOPATH/src/github.com/openfaas/
 fi
 
 if [ ! -d "$GOPATH/src/github.com/openfaas/certifier" ]; then
