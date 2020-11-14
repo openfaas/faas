@@ -1,50 +1,55 @@
-FROM teamserverless/license-check:0.3.6 as license-check
+FROM --platform=${BUILDPLATFORM:-linux/amd64} teamserverless/license-check:0.3.6 as license-check
 
-FROM golang:1.13 as build
+FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.13 as build
 
 ENV GO111MODULE=off
 ENV CGO_ENABLED=0
 
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+ARG TARGETOS
+ARG TARGETARCH
+
 ARG GIT_COMMIT_SHA
 ARG GIT_COMMIT_MESSAGE
 ARG VERSION='dev'
-ARG ARCH="x86_64"
-ARG GOOS=linux
-ARG GOARM
 
 COPY --from=license-check /license-check /usr/bin/
 
 WORKDIR /go/src/github.com/openfaas/faas/gateway
 
-COPY vendor         vendor
+COPY gateway/vendor         vendor
 
-COPY handlers       handlers
-COPY metrics        metrics
-COPY requests       requests
-COPY tests          tests
+COPY gateway/handlers       handlers
+COPY gateway/metrics        metrics
+COPY gateway/requests       requests
+COPY gateway/tests          tests
 
-COPY types          types
-COPY queue          queue
-COPY plugin         plugin
-COPY version        version
-COPY scaling        scaling
-COPY pkg            pkg
-COPY main.go      .
+COPY gateway/types          types
+COPY gateway/queue          queue
+COPY gateway/plugin         plugin
+COPY gateway/version        version
+COPY gateway/scaling        scaling
+COPY gateway/pkg            pkg
+COPY gateway/main.go        .
+COPY .git .
+RUN license-check -path ./ --verbose=false "Alex Ellis" "OpenFaaS Authors" "OpenFaaS Author(s)"
+
 
 # Run a gofmt and exclude all vendored code.
-RUN license-check -path ./ --verbose=false "Alex Ellis" "OpenFaaS Authors" "OpenFaaS Author(s)" \
-    && test -z "$(gofmt -l $(find . -type f -name '*.go' -not -path "./vendor/*"))" \
-    && CGO_ENABLED=${CGO_ENABLED} go test $(go list ./... | grep -v integration | grep -v /vendor/ | grep -v /template/) -cover \
-    && GOARM=${GOARM} CGO_ENABLED=${CGO_ENABLED} GOOS=linux go build --ldflags "-s -w \
-    -X github.com/openfaas/faas/gateway/version.GitCommitSHA=${GIT_COMMIT_SHA}\
-    -X \"github.com/openfaas/faas/gateway/version.GitCommitMessage=${GIT_COMMIT_MESSAGE}\"\
-    -X \"github.com/openfaas/faas/gateway/version.Version=${VERSION}\" \
-    -X github.com/openfaas/faas/gateway/types.Arch=${ARCH}"\
+RUN test -z "$(gofmt -l $(find . -type f -name '*.go' -not -path "./vendor/*"))"
+RUN CGO_ENABLED=${CGO_ENABLED} GOOS=${TARGETOS} GOARCH=${TARGETARCH} go test $(go list ./... | grep -v integration | grep -v /vendor/ | grep -v /template/) -cover
+RUN GIT_COMMIT_MESSAGE=$(git log -1 --pretty=%B 2>&1 | head -n 1) \
+    GIT_COMMIT_SHA=$(git rev-list -1 HEAD) \
+    VERSION=$(git describe --all --exact-match `git rev-parse HEAD` | grep tags | sed 's/tags\///' || echo dev) \
+    CGO_ENABLED=${CGO_ENABLED} GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build --ldflags "-s -w \
+    -X github.com/openfaas/faas/gateway/version.GitCommitSHA=${GIT_COMMIT_SHA} \
+    -X github.com/openfaas/faas/gateway/version.GitCommitMessage=${GIT_COMMIT_MESSAGE} \
+    -X github.com/openfaas/faas/gateway/version.Version=${VERSION} \
+    -X github.com/openfaas/faas/gateway/types.Arch=${TARGETARCH}" \
     -a -installsuffix cgo -o gateway .
 
-FROM alpine:3.11
-
-ARG ARCH="x86_64"
+FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.12 as ship
 
 LABEL org.label-schema.license="MIT" \
     org.label-schema.vcs-url="https://github.com/openfaas/faas" \
@@ -65,8 +70,8 @@ ENV http_proxy      ""
 ENV https_proxy     ""
 
 COPY --from=build /go/src/github.com/openfaas/faas/gateway/gateway    .
-COPY assets     assets
-RUN sed -ie s/x86_64/${ARCH}/g assets/script/funcstore.js && \
+COPY gateway/assets     assets
+RUN sed -ie s/x86_64/${GOARCH}/g assets/script/funcstore.js && \
   rm assets/script/funcstore.jse
 
 RUN chown -R app:app ./

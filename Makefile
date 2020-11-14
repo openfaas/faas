@@ -1,4 +1,5 @@
 TAG?=latest
+NS?=openfaas
 
 .PHONY: build
 build:
@@ -6,24 +7,12 @@ build:
 
 .PHONY: build-gateway
 build-gateway:
-	(cd gateway; ./build.sh latest-dev)
+	(cd gateway;  docker buildx build --platform linux/amd64 -t $NS/gateway:latest-dev .)
 
 .PHONY: test-ci
 test-ci:
 	./contrib/ci.sh
 
-.PHONY: ci-armhf-build
-ci-armhf-build:
-	(cd gateway; ./build.sh $(TAG) ; cd ../auth/basic-auth ; ./build.sh $(TAG))
-
-.PHONY: ci-armhf-push
-ci-armhf-push:
-	(cd gateway; ./push.sh $(TAG) ; cd ../auth/basic-auth ; ./push.sh $(TAG))
-
-.PHONY: ci-arm64-build
-ci-arm64-build:
-	(cd gateway; ./build.sh $(TAG) ; cd ../auth/basic-auth ; ./build.sh $(TAG))
-
-.PHONY: ci-arm64-push
-ci-arm64-push:
-	(cd gateway; ./push.sh $(TAG) ; cd ../auth/basic-auth ; ./push.sh $(TAG))
+.PHONY: binaries
+binaries:
+	echo TODO

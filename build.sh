@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-if [ ! -s "$TRAVIS_TAG" ] ; then
-    echo "This build will be published under the tag: ${TRAVIS_TAG}"
+if [ ! -s "$TAG" ] ; then
+    echo "This build will be published under the tag: ${TAG}"
 fi
 
 (cd gateway && ./build.sh)
