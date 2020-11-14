@@ -1,11 +1,15 @@
-FROM teamserverless/license-check:0.3.6 as license-check
+FROM --platform=${BUILDPLATFORM:-linux/amd64} teamserverless/license-check:0.3.6 as license-check
 
-FROM golang:1.13-alpine3.11 as build
+FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.13 as build
 
 ENV GO111MODULE=off
 ENV CGO_ENABLED=0
 
-RUN apk add --no-cache curl ca-certificates
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+ARG TARGETOS
+ARG TARGETARCH
+
 COPY --from=license-check /license-check /usr/bin/
 
 WORKDIR /go/src/handler
@@ -13,13 +17,13 @@ COPY . .
 
 # Run a gofmt and exclude all vendored code.
 
-RUN license-check -path ./ --verbose=false "OpenFaaS Authors" "OpenFaaS Author(s)" \
- && test -z "$(gofmt -l $(find . -type f -name '*.go' -not -path "./vendor/*"))" \
- && CGO_ENABLED=0 GOOS=linux \
+RUN license-check -path ./ --verbose=false "OpenFaaS Authors" "OpenFaaS Author(s)"
+RUN CGO_ENABLED=${CGO_ENABLED} GOOS=${TARGETOS} GOARCH=${TARGETARCH } test -z "$(gofmt -l $(find . -type f -name '*.go' -not -path "./vendor/*"))"
+RUN CGO_ENABLED=${CGO_ENABLED} GOOS=${TARGETOS} GOARCH=${TARGETARCH } \
     go build --ldflags "-s -w" -a -installsuffix cgo -o handler . && \
     go test $(go list ./... | grep -v /vendor/) -cover
 
-FROM alpine:3.11 as ship
+FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.12 as ship
 # Add non-root user
 RUN addgroup -S app && adduser -S -g app app \
     && mkdir -p /home/app \
