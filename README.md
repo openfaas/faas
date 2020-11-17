@@ -168,7 +168,6 @@ OpenFaaS users can subscribe to a weekly Community Newsletter called Insiders Up
 
 ### Quickstart
 
-
 ![Portal](/docs/inception.png)
 
 > Here is a screenshot of the API gateway portal - designed for ease of use with the inception function.

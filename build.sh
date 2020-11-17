@@ -6,5 +6,4 @@ if [ ! -s "$TRAVIS_TAG" ] ; then
 fi
 
 (cd gateway && ./build.sh)
-(cd watchdog && ./build.sh)
 (cd auth/basic-auth && ./build.sh)
