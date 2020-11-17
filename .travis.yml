@@ -30,41 +30,10 @@ after_success:
         ./ci/registryLogin.sh $REGISTRY; 
         ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/gateway";
         ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/basic-auth-plugin";
-        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" armhf;
-        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" arm64;
-        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" windows;
-        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" x86_64;
-
-        ./watchdog/make_manifest.sh
-        docker push $DOCKER_NS/classic-watchdog:$TRAVIS_TAG
 
         export REGISTRY=quay.io;
         ./ci/registryLogin.sh $REGISTRY;
         ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/gateway";
         ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/basic-auth-plugin";
-        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" armhf;
-        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" arm64;
-        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" windows;
-        ./ci/tagAndPush.sh "$REGISTRY" "$DOCKER_NS/classic-watchdog" x86_64;
 
         fi
-
-before_deploy:
-  - ./ci/hashgen.sh
-
-deploy:
-  provider: releases
-  api_key:
-      secure: "SVwbfJO008Z4TCcGPyjIPsOUcN+W9k8Pi4CFRFznskCd+qXbZd/so72ZdBSDUhR/s1U1+NrrVq43fW18aOI6YdPJgSOU1dJyR+EX5833U+B5yIosjEd0PiU9zcby8BB2k/RIEXgu/qWg7DzeZB50Jd8YOJqW5j8qX9qdl5GI09+8siGCUgoiXRquv/VC2Ucdh+V/+Twlm0ytC9IcvIuww5dhJQUsKGLfNRcykioG/RWnqNoJZ5afZ0s/FgOEO4fVmklMRQq5+07Jnub1HW308lvXiO7Utre4c8n8mOTjHxaNbroHggsdq/8KyPIHLukqc1t0iY7GdutangbY14YVcykZ3XcoCfT660Rtz/RfxEiVsrJ8rdjCLIKypw2wAKM1ZH+i6vdYVm+RAoMO83Qsxbfd+NFaS2UMSU+woPHWJ28oeeoPx0Vt3h2K+J6fWMVg5CBb7cN0TMcSFTZpJSgudnGj1k8P4hTms6Ey+gOolBqcJhwcrAvAVfpNcdiPPDkH2N7ME57Dolr80eAr09fpoaIffHFj71syItEAjBC60X30HzUsf+lyGh8gG9R2yAjMSLksrzSyvta6vWlVBNenxpIJdXi6E/JYCamQule4eNajjNU3Yeyzhy4OD4KTAXvadmvsmRaFS7HOS8kBMWEwLHUw61TyG2+1crveYqhJHOs="
-  file: 
-  - ./watchdog/fwatchdog
-  - ./watchdog/fwatchdog-armhf
-  - ./watchdog/fwatchdog-arm64
-  - ./watchdog/fwatchdog.exe
-  - ./watchdog/fwatchdog.sha256
-  - ./watchdog/fwatchdog-armhf.sha256
-  - ./watchdog/fwatchdog-arm64.sha256
-  - ./watchdog/fwatchdog.exe.sha256
-  skip_cleanup: true
-  on:
-    tags: true
