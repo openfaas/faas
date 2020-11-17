@@ -3,7 +3,8 @@
 # "openfaas/nats-queue-worker"
 # ^ Already multi-arch
 
-declare -a repos=("openfaas-incubator/openfaas-operator" "openfaas-incubator/faas-idler" "openfaas/faas" "openfaas/faas-swarm" "openfaas/faas-netes" )
+declare -a repos=("openfaas/faas-idler" "openfaas/faas" "openfaas/faas-cli" "openfaas/faas-swarm")
+
 HERE=`pwd`
 ARCH=$(uname -m)
 
