@@ -81,7 +81,7 @@ func Test_CacheFunctionExists(t *testing.T) {
 
 	cache := FunctionCache{
 		Cache:  make(map[string]*FunctionMeta),
-		Expiry: time.Millisecond * 10,
+		Expiry: time.Millisecond * 100,
 	}
 
 	cache.Set(fnName, namespace, ServiceQueryResponse{AvailableReplicas: 1})
@@ -102,7 +102,7 @@ func Test_CacheFunctionExistsWithNamespace(t *testing.T) {
 
 	cache := FunctionCache{
 		Cache:  make(map[string]*FunctionMeta),
-		Expiry: time.Millisecond * 10,
+		Expiry: time.Millisecond * 100,
 	}
 
 	cache.Set(fnName, namespace, ServiceQueryResponse{AvailableReplicas: 1})
@@ -123,7 +123,7 @@ func Test_CacheFunctionNotExist(t *testing.T) {
 
 	cache := FunctionCache{
 		Cache:  make(map[string]*FunctionMeta),
-		Expiry: time.Millisecond * 10,
+		Expiry: time.Millisecond * 100,
 	}
 
 	cache.Set(fnName, namespace, ServiceQueryResponse{AvailableReplicas: 1})
