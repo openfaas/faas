@@ -1,4 +1,4 @@
-FROM --platform=${BUILDPLATFORM:-linux/amd64} teamserverless/license-check:0.3.6 as license-check
+FROM --platform=${BUILDPLATFORM:-linux/amd64} teamserverless/license-check:0.3.9 as license-check
 
 FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.13 as build
 

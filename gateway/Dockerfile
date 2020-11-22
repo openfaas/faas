@@ -1,4 +1,4 @@
-FROM --platform=${BUILDPLATFORM:-linux/amd64} teamserverless/license-check:0.3.6 as license-check
+FROM --platform=${BUILDPLATFORM:-linux/amd64} teamserverless/license-check:0.3.9 as license-check
 
 FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.13 as build
 
@@ -68,8 +68,10 @@ ENV https_proxy     ""
 
 COPY --from=build /go/src/github.com/openfaas/faas/gateway/gateway    .
 COPY assets     assets
-RUN sed -ie s/x86_64/${GOARCH}/g assets/script/funcstore.js && \
-  rm assets/script/funcstore.jse
+
+ARG TARGETPLATFORM
+
+RUN if [ "$TARGETPLATFORM" = "linux/arm/v7" ] ; then sed -ie s/x86_64/armhf/g assets/script/funcstore.js ; elif [ "$TARGETPLATFORM" = "linux/arm64" ] ; then sed -ie s/x86_64/arm64/g assets/script/funcstore.js; fi
 
 RUN chown -R app:app ./
 
