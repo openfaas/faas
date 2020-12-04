@@ -304,8 +304,6 @@ If you can no-longer commit to being part of a team, then you may move to Commun
 
 #### Stepping-down and emeritus status
 
-After stepping-down, you may request to have an [emeritus status](https://www.lexico.com/en/definition/emeritus) and to be listed in the [BACKERS.md](/BACKERS.md) file for a period of time.
-
 > emeritus: (of the former holder of an office, especially a university professor) having retired but allowed to retain their title as an honour.
 
 Some guidelines on stepping down:

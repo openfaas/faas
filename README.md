@@ -49,7 +49,7 @@ OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and 
 
 * Website Sponsorship 🌎
 
-  Companies and brands are welcome to sponsor [openfaas.com](https://www.openfaas.com/), the Gold and Platinum tiers come with a homepage logo, [see costs and tiers](BACKERS.md). Website sponsorships are payable by invoice.
+  Companies and brands are welcome to sponsor [openfaas.com](https://www.openfaas.com/), the Gold and Platinum tiers come with a homepage logo, [see costs and tiers](https://github.com/sponsors/openfaas). Website sponsorships are payable by invoice.
 
 * Press / Branding 📸
 
