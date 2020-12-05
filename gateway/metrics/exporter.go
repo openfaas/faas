@@ -92,8 +92,11 @@ func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions Metri
 					log.Println(err)
 				}
 
+				services := []types.FunctionStatus{}
+
+				// Providers like Docker Swarm for instance have no namespaces.
 				if len(namespaces) == 0 {
-					services, err := e.getFunctions(endpointURL, e.FunctionNamespace)
+					services, err = e.getFunctions(endpointURL, e.FunctionNamespace)
 					if err != nil {
 						log.Println(err)
 						continue
@@ -101,14 +104,16 @@ func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions Metri
 					e.services = services
 				} else {
 					for _, namespace := range namespaces {
-						services, err := e.getFunctions(endpointURL, namespace)
+						nsServices, err := e.getFunctions(endpointURL, namespace)
 						if err != nil {
 							log.Println(err)
 							continue
 						}
-						e.services = append(e.services, services...)
+						services = append(services, nsServices...)
 					}
 				}
+
+				e.services = services
 
 				break
 			case <-quit:
