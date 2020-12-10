@@ -1,4 +1,4 @@
-name: piblish
+name: publish
 
 on:
   push:
