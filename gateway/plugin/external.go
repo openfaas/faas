@@ -63,14 +63,16 @@ func (s ExternalServiceQuery) GetReplicas(serviceName, serviceNamespace string) 
 
 	urlPath := fmt.Sprintf("%ssystem/function/%s?namespace=%s", s.URL.String(), serviceName, serviceNamespace)
 
-	req, _ := http.NewRequest(http.MethodGet, urlPath, nil)
+	req, err := http.NewRequest(http.MethodGet, urlPath, nil)
+	if err != nil {
+		return emptyServiceQueryResponse, err
+	}
 
 	if s.AuthInjector != nil {
 		s.AuthInjector.Inject(req)
 	}
 
 	res, err := s.ProxyClient.Do(req)
-
 	if err != nil {
 		log.Println(urlPath, err)
 	} else {
