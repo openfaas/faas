@@ -35,6 +35,9 @@ jobs:
       - name: Get Repo Owner
         id: get_repo_owner
         run: echo ::set-output name=repo_owner::$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
+      - name: Get Commit Message
+        id: get_commit_message
+        run: echo ::set-output name=commit_message::$(git log -1 --pretty=%B 2>&1 | head -n 1)
       - name: Build Gateway
         uses: docker/build-push-action@v2
         with:
@@ -46,7 +49,7 @@ jobs:
           build-args: |
             VERSION=${{ steps.get_tag.outputs.TAG }}
             GIT_COMMIT=${{ github.sha }}
-            GIT_COMMIT_MESSAGE=${{ github.event.head_commit.message }}
+            GIT_COMMIT_MESSAGE=${{ steps.get_commit_message.outputs.commit_message }}
           tags: |
             ghcr.io/openfaas/gateway:latest-dev
       - name: Run CI
@@ -71,6 +74,9 @@ jobs:
       - name: Get Repo Owner
         id: get_repo_owner
         run: echo ::set-output name=repo_owner::$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
+      - name: Get Commit Message
+        id: get_commit_message
+        run: echo ::set-output name=commit_message::$(git log -1 --pretty=%B 2>&1 | head -n 1)
       - name: Build ${{ matrix.svc }}
         uses: docker/build-push-action@v2
         with:
@@ -81,7 +87,7 @@ jobs:
           build-args: |
             VERSION=${{ steps.get_tag.outputs.TAG }}
             GIT_COMMIT=${{ github.sha }}
-            GIT_COMMIT_MESSAGE=${{ github.event.head_commit.message }}
+            GIT_COMMIT_MESSAGE=${{ steps.get_commit_message.outputs.commit_message }}
           tags: |
             ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/gateway:${{ steps.get_tag.outputs.TAG }}
             ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/gateway:${{ github.sha }}
