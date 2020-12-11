@@ -1,6 +1,6 @@
 FROM --platform=${BUILDPLATFORM:-linux/amd64} teamserverless/license-check:0.3.9 as license-check
 
-FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.13 as build
+FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.15 as build
 
 ENV GO111MODULE=off
 ENV CGO_ENABLED=0
