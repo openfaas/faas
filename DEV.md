@@ -1,13 +1,5 @@
 ## Develop your own function
 
-### TestDrive
-
-Before you start development, you may want to take FaaS for a test drive which sets up a stack of sample functions from docker-compose.yml. You can then build your own functions and add them to the stack.
-
-> You can test-drive FaaS with a set of sample functions as defined in docker-compose.yml on play-with-docker.com for free, or on your own laptop.
-
-* [Begin the TestDrive instructions](https://github.com/openfaas/faas/blob/master/TestDrive.md)
-
 ### Working on the API Gateway or Watchdog
 
 To work on either of the FaaS Golang components checkout the "./build.sh" scripts and acompanying Dockerfiles.

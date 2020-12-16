@@ -404,10 +404,10 @@ definitions:
         properties:
           provider:
             type: string
-            example: faas-swarm
+            example: faas-netes
           orchestration:
             type: string
-            example: swarm
+            example: kubernetes
           version:
             type: object
             description: Version of the OpenFaaS Provider

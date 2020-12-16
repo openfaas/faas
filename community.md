@@ -603,8 +603,7 @@ Official providers developed and supported by the OpenFaaS project
 | Project name and description                                         | Author     | Site      | Status      |
 |----------------------------------------------------------------------|------------|-----------|-------------|
 | **faas-netes**- Kubernetes provider | OpenFaaS | [github.com](https://github.com/openfaas/faas-netes) | Supported |
-| **faas-swarm** - Docker Swarm provider | OpenFaaS | [github.com](https://github.com/openfaas/faas-swarm) | Supported |
-| **openfaas-operator** - Kubernetes Operator provider | OpenFaaS | [github.com](https://github.com/openfaas-incubator/openfaas-operator) | Incubation |
+| **faasd**- containerd single-host provider | OpenFaaS | [github.com](https://github.com/openfaas/faasd) | Supported |
 
 Community providers actively being developed and/or supported by a third-party
 
@@ -615,12 +614,12 @@ Community providers actively being developed and/or supported by a third-party
 | **faas-federation** - federation provider to route between one or more providers | Ed Wilde / Alex Ellis | [github.com](https://github.com/openfaas-incubator/faas-federation) | Inception |
 | **faas-fargate** - AWS Fargate provider | Edward Wilde | [github.com](https://github.com/ewilde/faas-fargate) | Incubation |
 | **faas-lambda** - AWS Lambda provider | Ed Wilde / Alex Ellis | [sales@openfaas.com](mailto:sales@openfaas.com) | Incubation |
-| **faas-containerd** - containerd provider for single node / edge | Alex Ellis | [github.com](https://github.com/alexellis/faas-containerd) | Inception |
 
 Community providers no-longer being maintained
 
 | Project name and description                                         | Author     | Site      | Status      |
 |----------------------------------------------------------------------|------------|-----------|-------------|
+| **faas-swarm** - Docker Swarm provider | OpenFaaS | [github.com](https://github.com/openfaas/faas-swarm) | Deprecated |
 | **faas-rancher** - Rancher/Cattle provider | Ken Fukuyama | [github.com](https://github.com/kenfdev/faas-rancher) | Inception |
 | **faas-dcos** - DCOS provider | Alberto Quario | [github.com](https://github.com/realbot/faas-dcos) | Inception  |
 | **faas-hyper** - Hyper.sh provider | Hyper | [github.com](https://github.com/hyperhq/faas-hyper) | Inception |

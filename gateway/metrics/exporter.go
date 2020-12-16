@@ -94,7 +94,7 @@ func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions Metri
 
 				services := []types.FunctionStatus{}
 
-				// Providers like Docker Swarm for instance have no namespaces.
+				// Providers like faasd for instance have no namespaces.
 				if len(namespaces) == 0 {
 					services, err = e.getFunctions(endpointURL, e.FunctionNamespace)
 					if err != nil {

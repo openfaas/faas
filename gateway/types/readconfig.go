@@ -251,7 +251,7 @@ func (g *GatewayConfig) UseNATS() bool {
 		g.NATSAddress != nil
 }
 
-// UseExternalProvider decide whether to bypass built-in Docker Swarm engine
+// UseExternalProvider is now required for all providers
 func (g *GatewayConfig) UseExternalProvider() bool {
 	return g.FunctionsProviderURL != nil
 }

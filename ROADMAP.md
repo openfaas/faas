@@ -16,15 +16,11 @@ The core services which make up OpenFaaS need to run on a Linux master, but Wind
 
 Platforms: the x86_64 platform has first class support, with 32-bit arm and 64-bit arm provided on a best-effort basis.
 
-Orchestrators: there is official support for Kubernetes & Docker Swarm with the community providing support for AWS Fargate, Hashicorp Nomad and others.
+Orchestrators: there is official support for Kubernetes & faasd (containerd) with the community providing support for AWS Fargate, Hashicorp Nomad and others.
 
 ### OpenFaaS Cloud
 
 OpenFaaS Cloud is a multi-user distribution of OpenFaaS with a built-in CI/CD pipeline, OAuth delegation, a dashboard and a git-based workflow with public/private GitHub and self-hosted GitLab.
-
-Platforms: only the x86_64 platform has support.
-
-Orchestrators: there is official support for Kubernetes and for Docker Swarm. Kubernetes has better support for multiple users / tenants than Swarm.
 
 ## What is coming next?
 
