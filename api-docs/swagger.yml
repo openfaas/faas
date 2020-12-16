@@ -461,7 +461,7 @@ definitions:
         example: nodeinfo
       network:
         type: string
-        description: Docker swarm network, usually func_functions
+        description: Network, usually func_functions for Swarm (deprecated)
         example: func_functions
       image:
         type: string

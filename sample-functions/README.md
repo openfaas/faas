@@ -20,7 +20,7 @@ Here is a list of some of the sample functions included this repository.
 | Name                     | Details |
 |--------------------------|-----------------------------------------                          |
 | AlpineFunction           | BusyBox - a useful base image with busybox utilities pre-installed        |
-| apikey-secret            | Example in Golang showing how to read a secret from a HTTP header and validate with a Swarm/Kubernetes secret |
+| apikey-secret            | Example in Golang showing how to read a secret from a HTTP header and validate with a Kubernetes secret |
 | CaptainsIntent           | Alexa skill - find the count of Docker Captains |
 | ChangeColorIntent        | Alexa skill - change the colour of IoT-connected lights |
 | CHelloWorld              | Use C to build a function |

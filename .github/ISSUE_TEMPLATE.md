@@ -42,7 +42,7 @@
 
 * Docker version `docker version` (e.g. Docker 17.0.05 ):
 
-* Are you using Docker Swarm or Kubernetes (FaaS-netes)?
+* Are you using Kubernetes or faasd?
 
 * Operating System and version (e.g. Linux, Windows, MacOS):
 
@@ -50,11 +50,6 @@
 
 * Other diagnostic information / logs from [troubleshooting guide](https://docs.openfaas.com/deployment/troubleshooting)
 
-If using Swarm, run the following and include the output:
-
-```
-curl -sLS https://raw.githubusercontent.com/moby/moby/master/contrib/check-config.sh | bash
-```
 
 ## Next steps
 
