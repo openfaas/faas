@@ -8,7 +8,7 @@
 
 ![OpenFaaS Logo](https://blog.alexellis.io/content/images/2017/08/faas_side.png)
 
-OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and microservices to Kubernetes without repetitive, boiler-plate coding. Package your code or an existing binary in a Docker image to get a highly scalable endpoint with auto-scaling and metrics.
+OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and microservices to Kubernetes without repetitive, boiler-plate coding. Package your code or an existing binary in an OCI-compatible image to get a highly scalable endpoint with auto-scaling and metrics.
 
 [![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/fold_left.svg?style=social&label=Follow%20%40openfaas)](https://twitter.com/openfaas)
 
@@ -16,7 +16,7 @@ OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and 
 
 * Ease of use through UI portal and *one-click* install
 * Write services and functions in any language with [Template Store](https://www.openfaas.com/blog/template-store/) or a Dockerfile
-* Build and ship your code in the Docker/OCI image format
+* Build and ship your code in an OCI-compatible/Docker image
 * Portable: runs on existing hardware or public/private cloud by leveraging [Kubernetes](https://github.com/openfaas/faas-netes)
 * [CLI](http://github.com/openfaas/faas-cli) available with YAML format for templating and defining functions
 * Auto-scales as demand increases [including to zero](https://www.openfaas.com/blog/zero-scale/)
@@ -73,7 +73,7 @@ If you're using OpenFaaS please let us know [on this thread](https://github.com/
 
 ### Code samples
 
-You can generate new functions using the `faas-cli` and built-in templates or use any binary for Windows or Linux in a Docker container.
+You can generate new functions using the `faas-cli` and built-in templates or use any binary for Windows or Linux in a container.
 
 Official templates exist for many popular languages and are easily extensible with Dockerfiles.
 
