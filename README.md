@@ -41,11 +41,15 @@ OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and 
 
 * Individual Sponsorships / End-users / Insiders Track 🍻
 
-    The source code for OpenFaaS is free to use and open source under the terms of the MIT license.
+    The source code for OpenFaaS shared in public repositories on GitHub is free to use and open source under the terms of the MIT license.
 
     OpenFaaS Ltd offers [commercial support and enterprise add-ons](https://www.openfaas.com/support) for end-users and [training and consulting services for Cloud and Kubernetes](https://www.openfaas.com/consulting).
 
     Users and contributors are encouraged to join their peers in supporting the project through [GitHub Sponsors](https://www.openfaas.com/support).
+
+* OpenFaaS PRO
+
+    Commercial users can upgrade to OpenFaaS PRO for scale to zero, triggering functions from Kafka and for Single-Sign On with an IDp.
 
 * Website Sponsorship 🌎
 
