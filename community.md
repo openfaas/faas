@@ -80,6 +80,16 @@ It would be great to hear from you especially if you have any of the above and w
 | [Digital Transformation of Vision Banco Paraguay with Serverless Functions @ KubeCon](https://kccna18.sched.com/event/GraO/digital-transformation-of-vision-banco-paraguay-with-serverless-functions-alex-ellis-vmware-patricio-diaz-vision-banco-saeca) | Alex Ellis & Patricio Diaz | 13-Dec-2018 |
 | [Introducing "faas" - Cool Hacks Keynote at Dockercon 2017](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/) | Alex Ellis | 04-April-2017 |
 
+### 2021
+
+#### Blog posts and write-ups 2021
+
+[Back to top](#openfaas-community)
+
+| Blog/repo name and description                                          | Author       | Site     | Date        |
+|-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Personal Discovery Journey the FaaS-World: FaaSD and OpenFaaS](https://releasecandidate.dev/posts/2021/discovery-faasd-and-openfaas/) | Peter Thaleikis | releasecandidate.dev | 05-01-2021 |
+
 ### 2020
 
 #### Events in 2020
