@@ -17,6 +17,7 @@ import (
 	"github.com/openfaas/faas/gateway/plugin"
 	"github.com/openfaas/faas/gateway/scaling"
 	"github.com/openfaas/faas/gateway/types"
+	"github.com/openfaas/faas/gateway/version"
 	natsHandler "github.com/openfaas/nats-queue-worker/handler"
 )
 
@@ -24,6 +25,11 @@ import (
 const NameExpression = "-a-zA-Z_0-9."
 
 func main() {
+	if len(version.GitCommitMessage) == 0 {
+		version.GitCommitMessage = "Place-holder for commit message"
+	}
+
+	// log.Printf("Commit: %s", version.GitCommitMessage)
 
 	osEnv := types.OsEnv{}
 	readConfig := types.ReadConfig{}
