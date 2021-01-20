@@ -38,12 +38,15 @@ const (
 	ActivationClaim = "activation"
 	//UserClaim is the type of an user JWT
 	UserClaim = "user"
-	//ServerClaim is the type of an server JWT
-	ServerClaim = "server"
-	//ClusterClaim is the type of an cluster JWT
-	ClusterClaim = "cluster"
 	//OperatorClaim is the type of an operator JWT
 	OperatorClaim = "operator"
+
+	//ServerClaim is the type of an server JWT
+	// Deprecated: ServerClaim is not supported
+	ServerClaim = "server"
+	// ClusterClaim is the type of an cluster JWT
+	// Deprecated: ClusterClaim is not supported
+	ClusterClaim = "cluster"
 )
 
 // Claims is a JWT claims

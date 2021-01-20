@@ -49,7 +49,7 @@ message MsgProto {
   string subject         = 2;  // subject
   string reply           = 3;  // optional reply
   bytes  data            = 4;  // payload
-  int64  timestamp       = 5;  // received timestamp
+  int64  timestamp       = 5;  // received timestamp: Unix time (number of nanoseconds elapsed since January 1, 1970 UTC)
   bool   redelivered     = 6;  // Flag specifying if the message is being redelivered
   uint32 redeliveryCount = 7;  // Number of times the message has been redelivered (count currently not persisted)
 

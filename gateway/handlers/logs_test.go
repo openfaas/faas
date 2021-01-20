@@ -14,7 +14,7 @@ import (
 )
 
 func Test_logsProxyDoesNotLeakGoroutinesWhenProviderClosesConnection(t *testing.T) {
-	defer goleak.VerifyNoLeaks(t)
+	defer goleak.VerifyNone(t)
 
 	expectedMsg := "name: funcFoo msg: test message"
 
@@ -63,7 +63,7 @@ func Test_logsProxyDoesNotLeakGoroutinesWhenProviderClosesConnection(t *testing.
 }
 
 func Test_logsProxyDoesNotLeakGoroutinesWhenClientClosesConnection(t *testing.T) {
-	defer goleak.VerifyNoLeaks(t)
+	defer goleak.VerifyNone(t)
 
 	// mock log provider that sends one line and holds until we cancel the context
 	mockLogsUpstreamEndpoint := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

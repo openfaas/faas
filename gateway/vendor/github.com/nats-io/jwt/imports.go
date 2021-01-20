@@ -53,6 +53,10 @@ func (i *Import) IsStream() bool {
 
 // Validate checks if an import is valid for the wrapping account
 func (i *Import) Validate(actPubKey string, vr *ValidationResults) {
+	if i == nil {
+		vr.AddError("null import is not allowed")
+		return
+	}
 	if !i.IsService() && !i.IsStream() {
 		vr.AddError("invalid import type: %q", i.Type)
 	}
@@ -123,6 +127,10 @@ type Imports []*Import
 func (i *Imports) Validate(acctPubKey string, vr *ValidationResults) {
 	toSet := make(map[Subject]bool, len(*i))
 	for _, v := range *i {
+		if v == nil {
+			vr.AddError("null import is not allowed")
+			continue
+		}
 		if v.Type == Service {
 			if _, ok := toSet[v.To]; ok {
 				vr.AddError("Duplicate To subjects for %q", v.To)

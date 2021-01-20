@@ -249,24 +249,27 @@ const (
 
 const (
 	// wincrypt.h
-	PROV_RSA_FULL                    = 1
-	PROV_RSA_SIG                     = 2
-	PROV_DSS                         = 3
-	PROV_FORTEZZA                    = 4
-	PROV_MS_EXCHANGE                 = 5
-	PROV_SSL                         = 6
-	PROV_RSA_SCHANNEL                = 12
-	PROV_DSS_DH                      = 13
-	PROV_EC_ECDSA_SIG                = 14
-	PROV_EC_ECNRA_SIG                = 15
-	PROV_EC_ECDSA_FULL               = 16
-	PROV_EC_ECNRA_FULL               = 17
-	PROV_DH_SCHANNEL                 = 18
-	PROV_SPYRUS_LYNKS                = 20
-	PROV_RNG                         = 21
-	PROV_INTEL_SEC                   = 22
-	PROV_REPLACE_OWF                 = 23
-	PROV_RSA_AES                     = 24
+	/* certenrolld_begin -- PROV_RSA_*/
+	PROV_RSA_FULL      = 1
+	PROV_RSA_SIG       = 2
+	PROV_DSS           = 3
+	PROV_FORTEZZA      = 4
+	PROV_MS_EXCHANGE   = 5
+	PROV_SSL           = 6
+	PROV_RSA_SCHANNEL  = 12
+	PROV_DSS_DH        = 13
+	PROV_EC_ECDSA_SIG  = 14
+	PROV_EC_ECNRA_SIG  = 15
+	PROV_EC_ECDSA_FULL = 16
+	PROV_EC_ECNRA_FULL = 17
+	PROV_DH_SCHANNEL   = 18
+	PROV_SPYRUS_LYNKS  = 20
+	PROV_RNG           = 21
+	PROV_INTEL_SEC     = 22
+	PROV_REPLACE_OWF   = 23
+	PROV_RSA_AES       = 24
+
+	/* dwFlags definitions for CryptAcquireContext */
 	CRYPT_VERIFYCONTEXT              = 0xF0000000
 	CRYPT_NEWKEYSET                  = 0x00000008
 	CRYPT_DELETEKEYSET               = 0x00000010
@@ -274,6 +277,17 @@ const (
 	CRYPT_SILENT                     = 0x00000040
 	CRYPT_DEFAULT_CONTAINER_OPTIONAL = 0x00000080
 
+	/* Flags for PFXImportCertStore */
+	CRYPT_EXPORTABLE                   = 0x00000001
+	CRYPT_USER_PROTECTED               = 0x00000002
+	CRYPT_USER_KEYSET                  = 0x00001000
+	PKCS12_PREFER_CNG_KSP              = 0x00000100
+	PKCS12_ALWAYS_CNG_KSP              = 0x00000200
+	PKCS12_ALLOW_OVERWRITE_KEY         = 0x00004000
+	PKCS12_NO_PERSIST_KEY              = 0x00008000
+	PKCS12_INCLUDE_EXTENDED_PROPERTIES = 0x00000010
+
+	/* Default usage match type is AND with value zero */
 	USAGE_MATCH_TYPE_AND = 0
 	USAGE_MATCH_TYPE_OR  = 1
 
@@ -408,6 +422,10 @@ const (
 	CERT_CHAIN_POLICY_MICROSOFT_ROOT    = 7
 	CERT_CHAIN_POLICY_EV                = 8
 	CERT_CHAIN_POLICY_SSL_F12           = 9
+
+	/* Certificate Store close flags */
+	CERT_CLOSE_STORE_FORCE_FLAG = 0x00000001
+	CERT_CLOSE_STORE_CHECK_FLAG = 0x00000002
 
 	/* AuthType values for SSLExtraCertChainPolicyPara struct */
 	AUTHTYPE_CLIENT = 1
@@ -681,18 +699,26 @@ const (
 	AF_UNSPEC  = 0
 	AF_UNIX    = 1
 	AF_INET    = 2
-	AF_INET6   = 23
 	AF_NETBIOS = 17
+	AF_INET6   = 23
+	AF_IRDA    = 26
+	AF_BTH     = 32
 
 	SOCK_STREAM    = 1
 	SOCK_DGRAM     = 2
 	SOCK_RAW       = 3
+	SOCK_RDM       = 4
 	SOCK_SEQPACKET = 5
 
-	IPPROTO_IP   = 0
-	IPPROTO_IPV6 = 0x29
-	IPPROTO_TCP  = 6
-	IPPROTO_UDP  = 17
+	IPPROTO_IP      = 0
+	IPPROTO_ICMP    = 1
+	IPPROTO_IGMP    = 2
+	BTHPROTO_RFCOMM = 3
+	IPPROTO_TCP     = 6
+	IPPROTO_UDP     = 17
+	IPPROTO_IPV6    = 41
+	IPPROTO_ICMPV6  = 58
+	IPPROTO_RM      = 113
 
 	SOL_SOCKET                = 0xffff
 	SO_REUSEADDR              = 4
@@ -701,6 +727,7 @@ const (
 	SO_BROADCAST              = 32
 	SO_LINGER                 = 128
 	SO_RCVBUF                 = 0x1002
+	SO_RCVTIMEO               = 0x1006
 	SO_SNDBUF                 = 0x1001
 	SO_UPDATE_ACCEPT_CONTEXT  = 0x700b
 	SO_UPDATE_CONNECT_CONTEXT = 0x7010
@@ -1128,6 +1155,11 @@ type CertChainPolicyStatus struct {
 	ChainIndex        uint32
 	ElementIndex      uint32
 	ExtraPolicyStatus Pointer
+}
+
+type CryptDataBlob struct {
+	Size uint32
+	Data *byte
 }
 
 const (
@@ -1575,18 +1607,6 @@ const (
 	JOB_OBJECT_LIMIT_WORKINGSET                 = 0x00000001
 )
 
-type JOBOBJECT_BASIC_LIMIT_INFORMATION struct {
-	PerProcessUserTimeLimit int64
-	PerJobUserTimeLimit     int64
-	LimitFlags              uint32
-	MinimumWorkingSetSize   uintptr
-	MaximumWorkingSetSize   uintptr
-	ActiveProcessLimit      uint32
-	Affinity                uintptr
-	PriorityClass           uint32
-	SchedulingClass         uint32
-}
-
 type IO_COUNTERS struct {
 	ReadOperationCount  uint64
 	WriteOperationCount uint64
@@ -1734,4 +1754,110 @@ const (
 	SHTDN_REASON_VALID_BIT_MASK                 = 0xc0ffffff
 
 	SHUTDOWN_NORETRY = 0x1
+)
+
+// Flags used for GetModuleHandleEx
+const (
+	GET_MODULE_HANDLE_EX_FLAG_PIN                = 1
+	GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT = 2
+	GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS       = 4
+)
+
+// MUI function flag values
+const (
+	MUI_LANGUAGE_ID                    = 0x4
+	MUI_LANGUAGE_NAME                  = 0x8
+	MUI_MERGE_SYSTEM_FALLBACK          = 0x10
+	MUI_MERGE_USER_FALLBACK            = 0x20
+	MUI_UI_FALLBACK                    = MUI_MERGE_SYSTEM_FALLBACK | MUI_MERGE_USER_FALLBACK
+	MUI_THREAD_LANGUAGES               = 0x40
+	MUI_CONSOLE_FILTER                 = 0x100
+	MUI_COMPLEX_SCRIPT_FILTER          = 0x200
+	MUI_RESET_FILTERS                  = 0x001
+	MUI_USER_PREFERRED_UI_LANGUAGES    = 0x10
+	MUI_USE_INSTALLED_LANGUAGES        = 0x20
+	MUI_USE_SEARCH_ALL_LANGUAGES       = 0x40
+	MUI_LANG_NEUTRAL_PE_FILE           = 0x100
+	MUI_NON_LANG_NEUTRAL_FILE          = 0x200
+	MUI_MACHINE_LANGUAGE_SETTINGS      = 0x400
+	MUI_FILETYPE_NOT_LANGUAGE_NEUTRAL  = 0x001
+	MUI_FILETYPE_LANGUAGE_NEUTRAL_MAIN = 0x002
+	MUI_FILETYPE_LANGUAGE_NEUTRAL_MUI  = 0x004
+	MUI_QUERY_TYPE                     = 0x001
+	MUI_QUERY_CHECKSUM                 = 0x002
+	MUI_QUERY_LANGUAGE_NAME            = 0x004
+	MUI_QUERY_RESOURCE_TYPES           = 0x008
+	MUI_FILEINFO_VERSION               = 0x001
+
+	MUI_FULL_LANGUAGE      = 0x01
+	MUI_PARTIAL_LANGUAGE   = 0x02
+	MUI_LIP_LANGUAGE       = 0x04
+	MUI_LANGUAGE_INSTALLED = 0x20
+	MUI_LANGUAGE_LICENSED  = 0x40
+)
+
+// FILE_INFO_BY_HANDLE_CLASS constants for SetFileInformationByHandle/GetFileInformationByHandleEx
+const (
+	FileBasicInfo                  = 0
+	FileStandardInfo               = 1
+	FileNameInfo                   = 2
+	FileRenameInfo                 = 3
+	FileDispositionInfo            = 4
+	FileAllocationInfo             = 5
+	FileEndOfFileInfo              = 6
+	FileStreamInfo                 = 7
+	FileCompressionInfo            = 8
+	FileAttributeTagInfo           = 9
+	FileIdBothDirectoryInfo        = 10
+	FileIdBothDirectoryRestartInfo = 11
+	FileIoPriorityHintInfo         = 12
+	FileRemoteProtocolInfo         = 13
+	FileFullDirectoryInfo          = 14
+	FileFullDirectoryRestartInfo   = 15
+	FileStorageInfo                = 16
+	FileAlignmentInfo              = 17
+	FileIdInfo                     = 18
+	FileIdExtdDirectoryInfo        = 19
+	FileIdExtdDirectoryRestartInfo = 20
+	FileDispositionInfoEx          = 21
+	FileRenameInfoEx               = 22
+	FileCaseSensitiveInfo          = 23
+	FileNormalizedNameInfo         = 24
+)
+
+// LoadLibrary flags for determining from where to search for a DLL
+const (
+	DONT_RESOLVE_DLL_REFERENCES               = 0x1
+	LOAD_LIBRARY_AS_DATAFILE                  = 0x2
+	LOAD_WITH_ALTERED_SEARCH_PATH             = 0x8
+	LOAD_IGNORE_CODE_AUTHZ_LEVEL              = 0x10
+	LOAD_LIBRARY_AS_IMAGE_RESOURCE            = 0x20
+	LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE        = 0x40
+	LOAD_LIBRARY_REQUIRE_SIGNED_TARGET        = 0x80
+	LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR          = 0x100
+	LOAD_LIBRARY_SEARCH_APPLICATION_DIR       = 0x200
+	LOAD_LIBRARY_SEARCH_USER_DIRS             = 0x400
+	LOAD_LIBRARY_SEARCH_SYSTEM32              = 0x800
+	LOAD_LIBRARY_SEARCH_DEFAULT_DIRS          = 0x1000
+	LOAD_LIBRARY_SAFE_CURRENT_DIRS            = 0x00002000
+	LOAD_LIBRARY_SEARCH_SYSTEM32_NO_FORWARDER = 0x00004000
+	LOAD_LIBRARY_OS_INTEGRITY_CONTINUITY      = 0x00008000
+)
+
+// RegNotifyChangeKeyValue notifyFilter flags.
+const (
+	// REG_NOTIFY_CHANGE_NAME notifies the caller if a subkey is added or deleted.
+	REG_NOTIFY_CHANGE_NAME = 0x00000001
+
+	// REG_NOTIFY_CHANGE_ATTRIBUTES notifies the caller of changes to the attributes of the key, such as the security descriptor information.
+	REG_NOTIFY_CHANGE_ATTRIBUTES = 0x00000002
+
+	// REG_NOTIFY_CHANGE_LAST_SET notifies the caller of changes to a value of the key. This can include adding or deleting a value, or changing an existing value.
+	REG_NOTIFY_CHANGE_LAST_SET = 0x00000004
+
+	// REG_NOTIFY_CHANGE_SECURITY notifies the caller of changes to the security descriptor of the key.
+	REG_NOTIFY_CHANGE_SECURITY = 0x00000008
+
+	// REG_NOTIFY_THREAD_AGNOSTIC indicates that the lifetime of the registration must not be tied to the lifetime of the thread issuing the RegNotifyChangeKeyValue call. Note: This flag value is only supported in Windows 8 and later.
+	REG_NOTIFY_THREAD_AGNOSTIC = 0x10000000
 )

@@ -3,7 +3,7 @@
 NATS Streaming is an extremely performant, lightweight reliable streaming platform powered by [NATS](https://nats.io).
 
 [![License Apache 2](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Build Status](https://travis-ci.org/nats-io/stan.go.svg?branch=master)](http://travis-ci.org/nats-io/stan.go)
+[![Build Status](https://travis-ci.com/nats-io/stan.go.svg?branch=master)](https://travis-ci.com/github/nats-io/stan.go)
 [![Coverage Status](https://coveralls.io/repos/nats-io/stan.go/badge.svg?branch=master)](https://coveralls.io/r/nats-io/stan.go?branch=master)
 [![GoDoc](https://godoc.org/github.com/nats-io/stan.go?status.svg)](http://godoc.org/github.com/nats-io/stan.go)
 
@@ -30,8 +30,27 @@ When using or transitioning to Go modules support:
 ```bash
 # Go client latest or explicit version
 go get github.com/nats-io/stan.go/@latest
-go get github.com/nats-io/stan.go/@v0.6.0
+go get github.com/nats-io/stan.go/@v0.7.0
 ```
+
+## Important things to know about reconnections.
+
+A common misunderstanding from users moving from NATS to NATS Streaming has to do with how reconnection works.
+It is important to understand how NATS Streaming relates to NATS "core". You can find some information in [NATS Streaming Concepts/Relation to NATS](https://github.com/nats-io/nats.docs/blob/master/nats-streaming-concepts/relation-to-nats.md).
+
+The NATS Streaming library uses the NATS library to connect to a NATS Server and indirectly communicates with the NATS Streaming "server". To better understand the issues, you should assume that the server has no direct connection with the client, and the client may possibly never lose its TCP connection to a NATS Server and yet may not have access to a streaming server (streaming client connected to a NATS Server, that is cluster to another, to which the NATS Streaming "server" is connected to).
+
+When the low-level NATS TCP connection is broken, the reconnection logic triggers in the core NATS library. Once the connection is re-established, the low level NATS subscriptions used by the Streaming library to communicate with the streaming servers will be resent. All of that activity could have happened and the Streaming server would not know (see topology example described above). But from the server that is not a problem, after all, if a message is delivered while the client is disconnected, the server won't receive an ACK and will redeliver that message after the AckWait interval.
+
+At this point, it is worth noting that a frequent mistake made by new users is to run the NATS Streaming server with memory store (the default if no persistence mode is specified) and after the server is restarted, and the client "reconnects" fine, the application stops receiving messages and/or gets errors on publish. The note in [NATS Streaming Concepts/Client Connections](https://docs.nats.io/nats-streaming-concepts/client-connections) will detail what is happening in this case.
+
+To maintain the streaming connection (a better name may have been "session"), both server and clients send heartbeats/PINGs. If the server misses a configured amount of heartbeats from the client, it will close the connection, which also means deleting all non-durable subscriptions. If the client was "network partitioned" from the server when that happened, even after the partition is resolved, the client would not know what happened. Again, to understand how that is possible, see the topology example above: the network partition happened between the two clustered NATS Servers, and no TCP connection between the streaming client and/or streaming server was ever lost.
+
+To solve that, the client sends PINGs to the server, and if missing enough of them, will close the connection and report it as lost through the ConnectionLost handler. See [Connection Status](#connection-status) for more details. In the case of the network partition example above, even if the client's number of PINGs has not reached its maximum count when the partition is resolved, the server will respond with an error to the next PING going through because it will detect that this specific client instance has been closed due to timeouts.
+
+When that point is reached, the connection **and its subscriptions** are no longer valid and need to be recreated by the user.
+
+The client-to-server PINGs are by default set to pretty aggressive values and should likely be increased in a normal setup. That is, with the default values, the client would not tolerate a server being down/not responding for only 15 seconds or so. Users should adjust the `Pings()` option, deciding how long they are willing to have their application not able to communicate with a server without "knowing", versus declaring the connection lost too soon (and having to recreate the state: connection and all subscriptions).
 
 ## Basic Usage
 
@@ -294,10 +313,10 @@ Here is how you would specify your own PING values and the callback:
 
     // Send PINGs every 10 seconds, and fail after 5 PINGs without any response.
     sc, err := stan.Connect(clusterName, clientName,
-        stan.Pings(10, 5),    
+        stan.Pings(10, 5),
         stan.SetConnectionLostHandler(func(_ stan.Conn, reason error) {
             log.Fatalf("Connection lost, reason: %v", reason)
-        }))      
+        }))
 ```
 
 Note that the only way to be notified is to set the callback. If the callback is not set, PINGs are still sent and the connection

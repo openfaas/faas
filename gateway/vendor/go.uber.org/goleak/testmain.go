@@ -41,9 +41,11 @@ type TestingM interface {
 // verify that there were no goroutine leaks.
 // To use it, your TestMain function should look like:
 //
-// func TestMain(m *testing.M) {
-//   goleak.VerifyTestMain(m)
-// }
+//  func TestMain(m *testing.M) {
+//    goleak.VerifyTestMain(m)
+//  }
+//
+// See https://golang.org/pkg/testing/#hdr-Main for more details.
 //
 // This will run all tests as per normal, and if they were successful, look
 // for any goroutine leaks and fail the tests if any leaks were found.
@@ -51,7 +53,7 @@ func VerifyTestMain(m TestingM, options ...Option) {
 	exitCode := m.Run()
 
 	if exitCode == 0 {
-		if err := FindLeaks(options...); err != nil {
+		if err := Find(options...); err != nil {
 			fmt.Fprintf(_osStderr, "goleak: Errors on successful test run: %v\n", err)
 			exitCode = 1
 		}

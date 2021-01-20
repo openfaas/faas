@@ -57,6 +57,18 @@ func IgnoreTopFunction(f string) Option {
 	})
 }
 
+// IgnoreCurrent records all current goroutines when the option is created, and ignores
+// them in any future Find/Verify calls.
+func IgnoreCurrent() Option {
+	excludeIDSet := map[int]bool{}
+	for _, s := range stack.All() {
+		excludeIDSet[s.ID()] = true
+	}
+	return addFilter(func(s stack.Stack) bool {
+		return excludeIDSet[s.ID()]
+	})
+}
+
 func maxSleep(d time.Duration) Option {
 	return optionFunc(func(opts *opts) {
 		opts.maxSleep = d
@@ -78,6 +90,7 @@ func buildOpts(options ...Option) *opts {
 		isTestStack,
 		isSyscallStack,
 		isStdLibStack,
+		isTraceStack,
 	)
 	for _, option := range options {
 		option.apply(opts)
@@ -114,8 +127,10 @@ func isTestStack(s stack.Stack) bool {
 	// the test in a separate goroutine and waited for that test goroutine
 	// to end by waiting on a channel.
 	// Since go1.7, a separate goroutine is started to wait for signals.
+	// T.Parallel is for parallel tests, which are blocked until all serial
+	// tests have run with T.Parallel at the top of the stack.
 	switch s.FirstFunction() {
-	case "testing.RunTests", "testing.(*T).Run":
+	case "testing.RunTests", "testing.(*T).Run", "testing.(*T).Parallel":
 		// In pre1.7 and post-1.7, background goroutines started by the testing
 		// package are blocked waiting on a channel.
 		return strings.HasPrefix(s.State(), "chan receive")
@@ -138,4 +153,12 @@ func isStdLibStack(s stack.Stack) bool {
 
 	// Using signal.Notify will start a runtime goroutine.
 	return strings.Contains(s.Full(), "runtime.ensureSigM")
+}
+
+func isTraceStack(s stack.Stack) bool {
+	if f := s.FirstFunction(); f != "runtime.goparkunlock" {
+		return false
+	}
+
+	return strings.Contains(s.Full(), "runtime.ReadTrace")
 }

@@ -1,8 +1,8 @@
 FROM --platform=${BUILDPLATFORM:-linux/amd64} teamserverless/license-check:0.3.9 as license-check
 
-FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.13 as build
+FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.15 as build
 
-ENV GO111MODULE=off
+ENV GO111MODULE=on
 ENV CGO_ENABLED=0
 
 ARG TARGETPLATFORM
@@ -19,6 +19,8 @@ COPY --from=license-check /license-check /usr/bin/
 WORKDIR /go/src/github.com/openfaas/faas/gateway
 
 COPY vendor         vendor
+COPY go.mod         go.mod
+COPY go.sum         go.sum
 
 COPY handlers       handlers
 COPY metrics        metrics
@@ -32,6 +34,8 @@ COPY version        version
 COPY scaling        scaling
 COPY pkg            pkg
 COPY main.go        .
+
+
 RUN license-check -path ./ --verbose=false "Alex Ellis" "OpenFaaS Authors" "OpenFaaS Author(s)"
 
 
