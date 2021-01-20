@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The NATS Authors
+ * Copyright 2018-2020 The NATS Authors
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -21,7 +21,7 @@ import (
 	"github.com/nats-io/nkeys"
 )
 
-// Server defines the custom part of a server jwt
+// Deprecated: ServerClaims are not supported
 type Server struct {
 	Permissions
 	Cluster string `json:"cluster,omitempty"`
@@ -34,13 +34,13 @@ func (s *Server) Validate(vr *ValidationResults) {
 	}
 }
 
-// ServerClaims defines the data in a server JWT
+// Deprecated: ServerClaims are not supported
 type ServerClaims struct {
 	ClaimsData
 	Server `json:"nats,omitempty"`
 }
 
-// NewServerClaims creates a new server JWT with the specified subject/public key
+// Deprecated: ServerClaims are not supported
 func NewServerClaims(subject string) *ServerClaims {
 	if subject == "" {
 		return nil
@@ -59,7 +59,7 @@ func (s *ServerClaims) Encode(pair nkeys.KeyPair) (string, error) {
 	return s.ClaimsData.Encode(pair, s)
 }
 
-// DecodeServerClaims tries to parse server claims from a JWT string
+// Deprecated: ServerClaims are not supported
 func DecodeServerClaims(token string) (*ServerClaims, error) {
 	v := ServerClaims{}
 	if err := Decode(token, &v); err != nil {

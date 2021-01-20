@@ -3,92 +3,45 @@ package types
 // FunctionDeployment represents a request to create or update a Function.
 type FunctionDeployment struct {
 
-	// Service corresponds to a Service
+	// Service is the name of the function deployment
 	Service string `json:"service"`
 
-	// Image corresponds to a Docker image
+	// Image is a fully-qualified container image
 	Image string `json:"image"`
 
-	// Network is specific to Docker Swarm - default overlay network is: func_functions
-	Network string `json:"network"`
+	// Namespace for the function, if supported by the faas-provider
+	Namespace string `json:"namespace,omitempty"`
 
-	// EnvProcess corresponds to the fprocess variable for your container watchdog.
-	EnvProcess string `json:"envProcess"`
+	// EnvProcess overrides the fprocess environment variable and can be used
+	// with the watchdog
+	EnvProcess string `json:"envProcess,omitempty"`
 
-	// EnvVars provides overrides for functions.
-	EnvVars map[string]string `json:"envVars"`
+	// EnvVars can be provided to set environment variables for the function runtime.
+	EnvVars map[string]string `json:"envVars,omitempty"`
 
-	// RegistryAuth is the registry authentication (optional)
-	// in the same encoded format as Docker native credentials
-	// (see ~/.docker/config.json)
-	RegistryAuth string `json:"registryAuth,omitempty"`
-
-	// Constraints are specific to back-end orchestration platform
-	Constraints []string `json:"constraints"`
+	// Constraints are specific to the faas-provider.
+	Constraints []string `json:"constraints,omitempty"`
 
 	// Secrets list of secrets to be made available to function
-	Secrets []string `json:"secrets"`
+	Secrets []string `json:"secrets,omitempty"`
 
 	// Labels are metadata for functions which may be used by the
-	// back-end for making scheduling or routing decisions
-	Labels *map[string]string `json:"labels"`
+	// faas-provider or the gateway
+	Labels *map[string]string `json:"labels,omitempty"`
 
 	// Annotations are metadata for functions which may be used by the
-	// back-end for management, orchestration, events and build tasks
-	Annotations *map[string]string `json:"annotations"`
+	// faas-provider or the gateway
+	Annotations *map[string]string `json:"annotations,omitempty"`
 
 	// Limits for function
-	Limits *FunctionResources `json:"limits"`
+	Limits *FunctionResources `json:"limits,omitempty"`
 
 	// Requests of resources requested by function
-	Requests *FunctionResources `json:"requests"`
+	Requests *FunctionResources `json:"requests,omitempty"`
 
 	// ReadOnlyRootFilesystem removes write-access from the root filesystem
 	// mount-point.
-	ReadOnlyRootFilesystem bool `json:"readOnlyRootFilesystem"`
-
-	// Namespace for the function to be deployed into
-	Namespace string `json:"namespace,omitempty"`
-}
-
-// FunctionResources Memory and CPU
-type FunctionResources struct {
-	Memory string `json:"memory"`
-	CPU    string `json:"cpu"`
-}
-
-// FunctionStatus exported for system/functions endpoint
-type FunctionStatus struct {
-
-	// Name corresponds to a Service
-	Name string `json:"name"`
-
-	// Image corresponds to a Docker image
-	Image string `json:"image"`
-
-	// InvocationCount count of invocations
-	InvocationCount float64 `json:"invocationCount"`
-
-	// Replicas desired within the cluster
-	Replicas uint64 `json:"replicas"`
-
-	// EnvProcess is the process to pass to the watchdog, if in use
-	EnvProcess string `json:"envProcess"`
-
-	// AvailableReplicas is the count of replicas ready to receive
-	// invocations as reported by the backend
-	AvailableReplicas uint64 `json:"availableReplicas"`
-
-	// Labels are metadata for functions which may be used by the
-	// backend for making scheduling or routing decisions
-	Labels *map[string]string `json:"labels"`
-
-	// Annotations are metadata for functions which may be used by the
-	// backend for management, orchestration, events and build tasks
-	Annotations *map[string]string `json:"annotations"`
-
-	// Namespace where the function can be accessed
-	Namespace string `json:"namespace,omitempty"`
+	ReadOnlyRootFilesystem bool `json:"readOnlyRootFilesystem,omitempty"`
 }
 
 // Secret for underlying orchestrator
@@ -96,4 +49,66 @@ type Secret struct {
 	Name      string `json:"name"`
 	Namespace string `json:"namespace,omitempty"`
 	Value     string `json:"value,omitempty"`
+}
+
+// FunctionResources Memory and CPU
+type FunctionResources struct {
+	Memory string `json:"memory,omitempty"`
+	CPU    string `json:"cpu,omitempty"`
+}
+
+// FunctionStatus exported for system/functions endpoint
+type FunctionStatus struct {
+
+	// Name is the name of the function deployment
+	Name string `json:"name"`
+
+	// Image is a fully-qualified container image
+	Image string `json:"image"`
+
+	// Namespace for the function, if supported by the faas-provider
+	Namespace string `json:"namespace,omitempty"`
+
+	// EnvProcess overrides the fprocess environment variable and can be used
+	// with the watchdog
+	EnvProcess string `json:"envProcess,omitempty"`
+
+	// EnvVars set environment variables for the function runtime
+	EnvVars map[string]string `json:"envVars,omitempty"`
+
+	// Constraints are specific to the faas-provider
+	Constraints []string `json:"constraints,omitempty"`
+
+	// Secrets list of secrets to be made available to function
+	Secrets []string `json:"secrets,omitempty"`
+
+	// Labels are metadata for functions which may be used by the
+	// faas-provider or the gateway
+	Labels *map[string]string `json:"labels,omitempty"`
+
+	// Annotations are metadata for functions which may be used by the
+	// faas-provider or the gateway
+	Annotations *map[string]string `json:"annotations,omitempty"`
+
+	// Limits for function
+	Limits *FunctionResources `json:"limits,omitempty"`
+
+	// Requests of resources requested by function
+	Requests *FunctionResources `json:"requests,omitempty"`
+
+	// ReadOnlyRootFilesystem removes write-access from the root filesystem
+	// mount-point.
+	ReadOnlyRootFilesystem bool `json:"readOnlyRootFilesystem,omitempty"`
+
+	// ** Status fields *8
+
+	// InvocationCount count of invocations
+	InvocationCount float64 `json:"invocationCount,omitempty"`
+
+	// Replicas desired within the cluster
+	Replicas uint64 `json:"replicas,omitempty"`
+
+	// AvailableReplicas is the count of replicas ready to receive
+	// invocations as reported by the faas-provider
+	AvailableReplicas uint64 `json:"availableReplicas,omitempty"`
 }

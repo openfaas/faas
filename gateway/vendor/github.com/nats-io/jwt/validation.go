@@ -105,3 +105,14 @@ func (v *ValidationResults) Errors() []error {
 	}
 	return errs
 }
+
+// Warnings returns only non blocking issues as strings
+func (v *ValidationResults) Warnings() []string {
+	var errs []string
+	for _, v := range v.Issues {
+		if !v.Blocking {
+			errs = append(errs, v.Description)
+		}
+	}
+	return errs
+}

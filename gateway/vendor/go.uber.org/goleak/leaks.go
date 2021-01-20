@@ -49,9 +49,9 @@ func filterStacks(stacks []stack.Stack, skipID int, opts *opts) []stack.Stack {
 	return filtered
 }
 
-// FindLeaks looks for extra goroutines, and returns a descriptive error if
+// Find looks for extra goroutines, and returns a descriptive error if
 // any are found.
-func FindLeaks(options ...Option) error {
+func Find(options ...Option) error {
 	cur := stack.Current().ID()
 
 	opts := buildOpts(options...)
@@ -69,12 +69,12 @@ func FindLeaks(options ...Option) error {
 	return fmt.Errorf("found unexpected goroutines:\n%s", stacks)
 }
 
-// VerifyNoLeaks calls FindLeaks and calls Error on the passed in TestingT if
-// any leaks are found. This is a helper method to make it easier to integrate
-// in tests by doing:
-// defer VerifyNoLeaks(t)
-func VerifyNoLeaks(t TestingT, options ...Option) {
-	if err := FindLeaks(options...); err != nil {
+// VerifyNone marks the given TestingT as failed if any extra goroutines are
+// found by Find. This is a helper method to make it easier to integrate in
+// tests by doing:
+// 	defer VerifyNone(t)
+func VerifyNone(t TestingT, options ...Option) {
+	if err := Find(options...); err != nil {
 		t.Error(err)
 	}
 }

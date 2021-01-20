@@ -20,7 +20,7 @@ When using or transitioning to Go modules support:
 ```bash
 # Go client latest or explicit version
 go get github.com/nats-io/nats.go/@latest
-go get github.com/nats-io/nats.go/@v1.9.2
+go get github.com/nats-io/nats.go/@v1.10.0
 
 # For latest NATS Server, add /v2 at the end
 go get github.com/nats-io/nats-server/v2
@@ -324,6 +324,18 @@ nc, err := nats.Connect(servers)
 // Optionally set ReconnectWait and MaxReconnect attempts.
 // This example means 10 seconds total per backend.
 nc, err = nats.Connect(servers, nats.MaxReconnects(5), nats.ReconnectWait(2 * time.Second))
+
+// You can also add some jitter for the reconnection.
+// This call will add up to 500 milliseconds for non TLS connections and 2 seconds for TLS connections.
+// If not specified, the library defaults to 100 milliseconds and 1 second, respectively.
+nc, err = nats.Connect(servers, nats.ReconnectJitter(500*time.Millisecond, 2*time.Second))
+
+// You can also specify a custom reconnect delay handler. If set, the library will invoke it when it has tried
+// all URLs in its list. The value returned will be used as the total sleep time, so add your own jitter.
+// The library will pass the number of times it went through the whole list.
+nc, err = nats.Connect(servers, nats.CustomReconnectDelay(func(attempts int) time.Duration {
+    return someBackoffFunction(attempts)
+}))
 
 // Optionally disable randomization of the server pool
 nc, err = nats.Connect(servers, nats.DontRandomize())

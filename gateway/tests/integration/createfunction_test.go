@@ -27,7 +27,6 @@ func TestCreate_ValidRequest(t *testing.T) {
 	request := types.FunctionDeployment{
 		Service:    "test_resizer",
 		Image:      "functions/resizer",
-		Network:    "func_functions",
 		EnvProcess: "",
 	}
 
@@ -51,7 +50,6 @@ func TestCreate_InvalidImage(t *testing.T) {
 	request := types.FunctionDeployment{
 		Service:    "test_resizer",
 		Image:      "a b c",
-		Network:    "func_functions",
 		EnvProcess: "",
 	}
 
@@ -69,34 +67,6 @@ func TestCreate_InvalidImage(t *testing.T) {
 	}
 
 	expectedErrorSlice := "is not a valid repository/tag"
-	if !strings.Contains(body, expectedErrorSlice) {
-		t.Errorf("Error message %s does not contain: %s\n", body, expectedErrorSlice)
-		return
-	}
-}
-
-func TestCreate_InvalidNetwork(t *testing.T) {
-	request := types.FunctionDeployment{
-		Service:    "test_resizer",
-		Image:      "functions/resizer",
-		Network:    "non_existent_network",
-		EnvProcess: "",
-	}
-
-	body, code, err := createFunction(request)
-
-	if err != nil {
-		t.Log(err)
-		t.Fail()
-	}
-
-	expectedErrorCode := http.StatusBadRequest
-	if code != expectedErrorCode {
-		t.Errorf("Got HTTP code: %d, want %d\n", code, expectedErrorCode)
-		return
-	}
-
-	expectedErrorSlice := "network non_existent_network not found"
 	if !strings.Contains(body, expectedErrorSlice) {
 		t.Errorf("Error message %s does not contain: %s\n", body, expectedErrorSlice)
 		return

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The NATS Authors
+ * Copyright 2018-2020 The NATS Authors
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -22,6 +22,7 @@ import (
 )
 
 // Cluster stores the cluster specific elements of a cluster JWT
+// Deprecated: ClusterClaims are not supported
 type Cluster struct {
 	Trust       []string `json:"identity,omitempty"`
 	Accounts    []string `json:"accts,omitempty"`
@@ -35,12 +36,14 @@ func (c *Cluster) Validate(vr *ValidationResults) {
 }
 
 // ClusterClaims defines the data in a cluster JWT
+// Deprecated: ClusterClaims are not supported
 type ClusterClaims struct {
 	ClaimsData
 	Cluster `json:"nats,omitempty"`
 }
 
 // NewClusterClaims creates a new cluster JWT with the specified subject/public key
+// Deprecated: ClusterClaims are not supported
 func NewClusterClaims(subject string) *ClusterClaims {
 	if subject == "" {
 		return nil
@@ -60,6 +63,7 @@ func (c *ClusterClaims) Encode(pair nkeys.KeyPair) (string, error) {
 }
 
 // DecodeClusterClaims tries to parse cluster claims from a JWT string
+// Deprecated: ClusterClaims are not supported
 func DecodeClusterClaims(token string) (*ClusterClaims, error) {
 	v := ClusterClaims{}
 	if err := Decode(token, &v); err != nil {

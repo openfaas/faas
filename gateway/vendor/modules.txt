@@ -1,0 +1,114 @@
+# github.com/beorn7/perks v1.0.1
+github.com/beorn7/perks/quantile
+# github.com/cespare/xxhash/v2 v2.1.1
+github.com/cespare/xxhash/v2
+# github.com/docker/distribution v2.7.1+incompatible
+## explicit
+github.com/docker/distribution/uuid
+# github.com/gogo/protobuf v1.3.2
+github.com/gogo/protobuf/gogoproto
+github.com/gogo/protobuf/proto
+github.com/gogo/protobuf/protoc-gen-gogo/descriptor
+# github.com/golang/protobuf v1.4.3
+github.com/golang/protobuf/proto
+github.com/golang/protobuf/ptypes
+github.com/golang/protobuf/ptypes/any
+github.com/golang/protobuf/ptypes/duration
+github.com/golang/protobuf/ptypes/timestamp
+# github.com/gorilla/mux v1.8.0
+## explicit
+github.com/gorilla/mux
+# github.com/matttproud/golang_protobuf_extensions v1.0.1
+github.com/matttproud/golang_protobuf_extensions/pbutil
+# github.com/nats-io/jwt v1.2.2
+## explicit
+github.com/nats-io/jwt
+# github.com/nats-io/nats-streaming-server v0.20.0
+## explicit
+# github.com/nats-io/nats.go v1.10.0
+github.com/nats-io/nats.go
+github.com/nats-io/nats.go/encoders/builtin
+github.com/nats-io/nats.go/util
+# github.com/nats-io/nkeys v0.2.0
+github.com/nats-io/nkeys
+# github.com/nats-io/nuid v1.0.1
+github.com/nats-io/nuid
+# github.com/nats-io/stan.go v0.8.2
+## explicit
+github.com/nats-io/stan.go
+github.com/nats-io/stan.go/pb
+# github.com/openfaas/faas-provider v0.16.2
+## explicit
+github.com/openfaas/faas-provider/auth
+github.com/openfaas/faas-provider/types
+# github.com/openfaas/nats-queue-worker v0.0.0-20200512211843-8e9eefd5a320
+## explicit
+github.com/openfaas/nats-queue-worker/handler
+github.com/openfaas/nats-queue-worker/nats
+# github.com/prometheus/client_golang v1.9.0
+## explicit
+github.com/prometheus/client_golang/prometheus
+github.com/prometheus/client_golang/prometheus/internal
+github.com/prometheus/client_golang/prometheus/promhttp
+# github.com/prometheus/client_model v0.2.0
+## explicit
+github.com/prometheus/client_model/go
+# github.com/prometheus/common v0.15.0
+github.com/prometheus/common/expfmt
+github.com/prometheus/common/internal/bitbucket.org/ww/goautoneg
+github.com/prometheus/common/model
+# github.com/prometheus/procfs v0.3.0
+## explicit
+github.com/prometheus/procfs
+github.com/prometheus/procfs/internal/fs
+github.com/prometheus/procfs/internal/util
+# go.uber.org/goleak v1.1.10
+## explicit
+go.uber.org/goleak
+go.uber.org/goleak/internal/stack
+# golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897
+golang.org/x/crypto/ed25519
+golang.org/x/crypto/ed25519/internal/edwards25519
+# golang.org/x/lint v0.0.0-20190930215403-16217165b5de
+golang.org/x/lint
+golang.org/x/lint/golint
+# golang.org/x/sys v0.0.0-20210119212857-b64e53b001e4
+## explicit
+golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/unix
+golang.org/x/sys/windows
+# golang.org/x/tools v0.0.0-20210106214847-113979e3529a
+golang.org/x/tools/go/ast/astutil
+golang.org/x/tools/go/gcexportdata
+golang.org/x/tools/go/internal/gcimporter
+# google.golang.org/protobuf v1.23.0
+google.golang.org/protobuf/encoding/prototext
+google.golang.org/protobuf/encoding/protowire
+google.golang.org/protobuf/internal/descfmt
+google.golang.org/protobuf/internal/descopts
+google.golang.org/protobuf/internal/detrand
+google.golang.org/protobuf/internal/encoding/defval
+google.golang.org/protobuf/internal/encoding/messageset
+google.golang.org/protobuf/internal/encoding/tag
+google.golang.org/protobuf/internal/encoding/text
+google.golang.org/protobuf/internal/errors
+google.golang.org/protobuf/internal/fieldnum
+google.golang.org/protobuf/internal/fieldsort
+google.golang.org/protobuf/internal/filedesc
+google.golang.org/protobuf/internal/filetype
+google.golang.org/protobuf/internal/flags
+google.golang.org/protobuf/internal/genname
+google.golang.org/protobuf/internal/impl
+google.golang.org/protobuf/internal/mapsort
+google.golang.org/protobuf/internal/pragma
+google.golang.org/protobuf/internal/set
+google.golang.org/protobuf/internal/strs
+google.golang.org/protobuf/internal/version
+google.golang.org/protobuf/proto
+google.golang.org/protobuf/reflect/protoreflect
+google.golang.org/protobuf/reflect/protoregistry
+google.golang.org/protobuf/runtime/protoiface
+google.golang.org/protobuf/runtime/protoimpl
+google.golang.org/protobuf/types/known/anypb
+google.golang.org/protobuf/types/known/durationpb
+google.golang.org/protobuf/types/known/timestamppb

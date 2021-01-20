@@ -25,12 +25,14 @@ import (
 type User struct {
 	Permissions
 	Limits
+	BearerToken bool `json:"bearer_token,omitempty"`
 }
 
 // Validate checks the permissions and limits in a User jwt
 func (u *User) Validate(vr *ValidationResults) {
 	u.Permissions.Validate(vr)
 	u.Limits.Validate(vr)
+	// When BearerToken is true server will ignore any nonce-signing verification
 }
 
 // UserClaims defines a user JWT
@@ -96,4 +98,9 @@ func (u *UserClaims) Payload() interface{} {
 
 func (u *UserClaims) String() string {
 	return u.ClaimsData.String(u)
+}
+
+// IsBearerToken returns true if nonce-signing requirements should be skipped
+func (u *UserClaims) IsBearerToken() bool {
+	return u.BearerToken
 }

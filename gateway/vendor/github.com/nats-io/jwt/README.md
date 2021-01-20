@@ -1,11 +1,11 @@
 # JWT
-A [JWT](https://jwt.io/) implementation that uses [nkeys](https://github.com/nats-io/nkeys) to digitally sign JWT tokens. 
+A [JWT](https://jwt.io/) implementation that uses [nkeys](https://github.com/nats-io/nkeys) to digitally sign JWT tokens.
 Nkeys use [Ed25519](https://ed25519.cr.yp.to/) to provide authentication of JWT claims.
 
 
 [![License Apache 2](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![ReportCard](http://goreportcard.com/badge/nats-io/jwt)](http://goreportcard.com/report/nats-io/jwt)
-[![Build Status](https://travis-ci.org/nats-io/jwt.svg?branch=master)](http://travis-ci.org/nats-io/jwt)
+[![Build Status](https://travis-ci.com/nats-io/jwt.svg?branch=master)](https://travis-ci.com/github/nats-io/jwt)
 [![GoDoc](http://godoc.org/github.com/nats-io/jwt?status.png)](http://godoc.org/github.com/nats-io/jwt)
 [![Coverage Status](https://coveralls.io/repos/github/nats-io/jwt/badge.svg?branch=master&t=NmEFup)](https://coveralls.io/github/nats-io/jwt?branch=master)
 

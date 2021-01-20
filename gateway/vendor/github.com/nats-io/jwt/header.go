@@ -23,7 +23,7 @@ import (
 
 const (
 	// Version is semantic version.
-	Version = "0.3.2"
+	Version = "1.2.2"
 
 	// TokenTypeJwt is the JWT token type supported JWT tokens
 	// encoded and decoded by this library
@@ -64,7 +64,10 @@ func (h *Header) Valid() error {
 		return fmt.Errorf("not supported type %q", h.Type)
 	}
 
-	if AlgorithmNkey != strings.ToLower(h.Algorithm) {
+	if alg := strings.ToLower(h.Algorithm); alg != AlgorithmNkey {
+		if alg == "ed25519-nkey" {
+			return fmt.Errorf("more recent jwt version")
+		}
 		return fmt.Errorf("unexpected %q algorithm", h.Algorithm)
 	}
 	return nil
