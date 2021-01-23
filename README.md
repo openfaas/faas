@@ -37,44 +37,6 @@ OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and 
 
 > Conceptual architecture and stack, [more detail available in the docs](https://docs.openfaas.com/architecture/stack/)
 
-### Press / Branding / Website Sponsorship
-
-* Individual Sponsorships / End-users / Insiders Track 🍻
-
-    The source code for OpenFaaS shared in public repositories on GitHub is free to use and open source under the terms of the MIT license.
-
-    OpenFaaS Ltd offers [commercial support and enterprise add-ons](https://www.openfaas.com/support) for end-users and [training and consulting services for Cloud and Kubernetes](https://www.openfaas.com/consulting).
-
-    Users and contributors are encouraged to join their peers in supporting the project through [GitHub Sponsors](https://www.openfaas.com/support).
-
-* OpenFaaS PRO
-
-    Commercial users can upgrade to OpenFaaS PRO for scale to zero, triggering functions from Kafka and for Single-Sign On with an IDp.
-
-* Website Sponsorship 🌎
-
-  Companies and brands are welcome to sponsor [openfaas.com](https://www.openfaas.com/), the Gold and Platinum tiers come with a homepage logo, [see costs and tiers](https://github.com/sponsors/openfaas). Website sponsorships are payable by invoice.
-
-* Press / Branding 📸
-
-  For information on branding, the press-kit, registered entities and sponsorship head over to the [openfaas/media](https://github.com/openfaas/media/blob/master/README.md) repo. You can also order custom SWAG or take part in the weekly Twitter contest [#FaaSFriday](https://twitter.com/search?q=faasfriday&src=typd)
-
-  Looking for statistics? This project does not use a mono-repo, but is split across several components. Use [Ken Fukuyama's dashboard](https://kenfdev.o6s.io/github-stats-page) to gather accurate counts on contributors, stars and forks across the [GitHub organisation](https://github.com/openfaas).
-
-  > Note: any statistics you gather about the openfaas/faas repository will be invalid, the faas repo is not representative of the project's activity.
-
-### Governance
-
-OpenFaaS &reg; is an independent open-source project created by [Alex Ellis](https://www.alexellis.io), which is being built and shaped by a [growing community of contributors](https://www.openfaas.com/team/).
-
-OpenFaaS is hosted by OpenFaaS Ltd (registration: 11076587), a company which also offers commercial services, homepage sponsorships, and support. OpenFaaS &reg; is a registered trademark in England and Wales.
-
-### Users
-
-View a selection of end-user companies who have given permission to have their logo listed at [openfaas.com](https://www.openfaas.com/).
-
-If you're using OpenFaaS please let us know [on this thread](https://github.com/openfaas/faas/issues/776). In addition, you are welcome to request to have your logo listed on the homepage. Thank you for your support.
-
 ### Code samples
 
 You can generate new functions using the `faas-cli` and built-in templates or use any binary for Windows or Linux in a container.
@@ -134,6 +96,14 @@ Official templates exist for many popular languages and are easily extensible wi
     ```
 
 ## Get started with OpenFaaS
+
+### Official eBook and training workshop
+
+![eBook logo](https://static-2.gumroad.com/res/gumroad/2028406193591/asset_previews/714aad765f8246463fafb64fcd3be4ea/retina/104810333-b628f280-57eb-11eb-8be9-a2f6c773346b.png)
+
+> Alex's new eBook is the official handbook for faasd - the minimalist's approach to serverless functions. You'll learn how to setup your own server and start writing functions in Node.js.
+
+[Get the eBook](https://gumroad.com/l/serverless-for-everyone-else)
 
 ### Official blog and documentation
 
@@ -217,3 +187,42 @@ Example of a Grafana dashboards linked to OpenFaaS showing auto-scaling live in 
 ![](https://pbs.twimg.com/media/C9caE6CXUAAX_64.jpg:large)
 
 An alternative community dashboard is [available here](https://grafana.com/dashboards/3434)
+
+
+### Press / Branding / Website Sponsorship
+
+* Individual Sponsorships / End-users / Insiders Track 🍻
+
+    The source code for OpenFaaS shared in public repositories on GitHub is free to use and open source under the terms of the MIT license.
+
+    OpenFaaS Ltd offers [commercial support and enterprise add-ons](https://www.openfaas.com/support) for end-users and [training and consulting services for Cloud and Kubernetes](https://www.openfaas.com/consulting).
+
+    Users and contributors are encouraged to join their peers in supporting the project through [GitHub Sponsors](https://www.openfaas.com/support).
+
+* OpenFaaS PRO
+
+    Commercial users can upgrade to OpenFaaS PRO for scale to zero, triggering functions from Kafka and for Single-Sign On with an IDp.
+
+* Website Sponsorship 🌎
+
+  Companies and brands are welcome to sponsor [openfaas.com](https://www.openfaas.com/), the Gold and Platinum tiers come with a homepage logo, [see costs and tiers](https://github.com/sponsors/openfaas). Website sponsorships are payable by invoice.
+
+* Press / Branding 📸
+
+  For information on branding, the press-kit, registered entities and sponsorship head over to the [openfaas/media](https://github.com/openfaas/media/blob/master/README.md) repo. You can also order custom SWAG or take part in the weekly Twitter contest [#FaaSFriday](https://twitter.com/search?q=faasfriday&src=typd)
+
+  Looking for statistics? This project does not use a mono-repo, but is split across several components. Use [Ken Fukuyama's dashboard](https://kenfdev.o6s.io/github-stats-page) to gather accurate counts on contributors, stars and forks across the [GitHub organisation](https://github.com/openfaas).
+
+  > Note: any statistics you gather about the openfaas/faas repository will be invalid, the faas repo is not representative of the project's activity.
+
+### Governance
+
+OpenFaaS &reg; is an independent open-source project created by [Alex Ellis](https://www.alexellis.io), which is being built and shaped by a [growing community of contributors](https://www.openfaas.com/team/).
+
+OpenFaaS is hosted by OpenFaaS Ltd (registration: 11076587), a company which also offers commercial services, homepage sponsorships, and support. OpenFaaS &reg; is a registered trademark in England and Wales.
+
+### Users
+
+View a selection of end-user companies who have given permission to have their logo listed at [openfaas.com](https://www.openfaas.com/).
+
+If you're using OpenFaaS please let us know [on this thread](https://github.com/openfaas/faas/issues/776). In addition, you are welcome to request to have your logo listed on the homepage. Thank you for your support.
