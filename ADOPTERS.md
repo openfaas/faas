@@ -49,6 +49,8 @@ Tell us more:
 
 * [GMO Internet](https://www.gmo.jp/en/)
 
+* [HM Planning Inspectorate](http://www.planninginspectorate.gov.uk) - HM Planning Inspectorate is the UK Government body responsible for dealing with planning appeals, national infrastructure planning applications, examinations of local plans and other specialist casework in England and Wales. OpenFaaS eased the communication between the new planning appeals website and the monolithic back-office application and allowed easy retries in the event of network failure.
+
 * [Iconscout](https://iconscout.com) - e-commerce site for stock photography and icons. OpenFaaS is used to resize images and to bundle assets for customers.
 
 * [Ingrooves](https://ingrooves.com) - Ingrooves is a global music distribution, tech & marketing company, and OpenFaaS is a key component in its finance system for report generation, event publishing, and data ingestion.
