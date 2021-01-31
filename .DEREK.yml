@@ -55,3 +55,25 @@ custom_messages:
            what was added worked as you expected.
 
            Thank you for your contribution.
+
+  - name: enduser
+    value: |
+           Thank you for your interest in OpenFaaS. This project is maintained
+           by volunteers and made available for free, so we need to balance 
+           our time across everyone's needs.
+           
+           Commercial users can purchase [support](https://openfaas.com/support) in
+           order to get dedicated help from OpenFaaS Ltd, or they can book ad-hoc 
+           consulting hours to get an engineer to dedicate time to 
+           helping them.
+           
+           If that is not a good fit for you at this time, please check
+           out the OpenFaaS [GitHub Sponsors](https://github.com/sponsors/openfaas) options which 
+           are priced for practitioners like yourself. Organisations can also 
+           sponsor through their GitHub billing relationship.
+           
+           When you become a sponsor as an indvidual, it will show this 
+           on your issues and PRs, so that the community can see that you are
+           supporting our work, and can prioritise your needs.
+           
+           Thank you for supporting OpenFaaS.
