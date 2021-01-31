@@ -137,7 +137,7 @@ If you feel there is an issue with OpenFaaS or were unable to get the help you n
 
 * What kind of support can I expect for free?
 
-    If you are using one of the Open Source projects within the openfaas or openfaas-incubator repository, then help is offered on a good-will basis by volunteers. You can also request help from employees of OpenFaaS Ltd who host the OpenFaaS projects.
+    If you are using one of the Open Source projects within the openfaas or openfaas-incubator repository, then help is offered on a good-will basis by volunteers. Support customers can request help from [employees of OpenFaaS Ltd](https://openfaas.com/support/).
 
     Please be respectful of volunteer time, it is often limited to evenings and weekends. The person you are requesting help from may not reside in your timezone. 
 
@@ -175,29 +175,24 @@ If you feel there is an issue with OpenFaaS or were unable to get the help you n
 
     More information, a use-case, or context may be required for the change to be accepted.
 
+* What if I am a GitHub Sponsor?
+
+    If you [sponsor OpenFaaS on GitHub](https://github.com/sponsors/openfaas), then you will show up as a Sponsor on your issues and PRs which is one way to show your support for the community and project. Whilst the entry-level sponsorship is only 25 USD / mo, you will benefit from access to regular updates on project development via the [Treasure Trove portal](https://faasd.exit.openfaas.pro/function/trove/). Your company can also take up a GitHub Sponsorship using their GitHub organisation's existing billing relationship.
+
 * What if I need more than that?
 
-    If you're a company using any of these projects, you can get the following through a support agreement with OpenFaaS Ltd so that the time can be paid for to help your business.
+    If you're a company using any of these projects, you can get the following through a [support agreement with OpenFaaS Ltd](https://openfaas.com/support/) so that the time can be paid for to help your business.
 
     A support agreement can be tailored to your needs, you may benefit from support, if you need any of the following:
 
-    * responses within N hours/days on issues/PRs
+    * priority responses to issues/PRs
     * feature prioritisation
-    * urgent help
+    * emergency help via Zoom
     * 1:1 consultations
-    * or any other level of professional services
 
 #### I need to add a dependency
 
-The concept of `vendoring` is used in projects written in Go. This means that a copy of the source-code of dependencies is stored within each repository in the `vendor` folder. It allows for a repeatable build and isolates change.
-
-The chosen tool for vendoring code in the project is [dep](https://github.com/golang/dep).
-
-> Note: despite the availability of [Go modules](https://github.com/golang/go/wiki/Modules) in Go 1.11, they are not being used in the project at this time. If and when the decision is made to move, a complete overhaul of all repositories will need to be made in a coordinated fashion including: CI, releases, unit-, integration- and e2e-tests. This is not a trivial amount of effort.
-
-**An update on Go modules*
-
-A limited effort is being made by the maintainers to move some projects to Go Modules and Go 1.13. This approach will retain the use of the vendor folder, which is a valid strategy for adopting Go modules and is [documented in the Go wiki](https://github.com/golang/go/wiki/Modules). There are different trade-offs between using a vendor folder and not. If you do not understand these trade-offs well, you may explore the topic at your own leisure. We are not inviting the broader community to submit PRs to convert additional projects at this time.
+All projects use [Go modules](https://github.com/golang/go/wiki/Modules) and vendoring. The concept of `vendoring` is still broadly used in projects written in Go. This means that a copy of the source-code of dependencies is stored within each repository in the `vendor` folder. It allows for a repeatable build and isolates change.
 
 ### How are releases made?
 
