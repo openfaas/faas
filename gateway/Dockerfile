@@ -11,7 +11,6 @@ ARG TARGETOS
 ARG TARGETARCH
 
 ARG GIT_COMMIT
-ARG GIT_COMMIT_MESSAGE
 ARG VERSION
 
 COPY --from=license-check /license-check /usr/bin/
@@ -45,7 +44,6 @@ RUN go test $(go list ./... | grep -v integration | grep -v /vendor/ | grep -v /
 
 RUN CGO_ENABLED=${CGO_ENABLED} GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build --ldflags "-s -w \
     -X \"github.com/openfaas/faas/gateway/version.GitCommitSHA=${GIT_COMMIT}\" \
-    -X \"github.com/openfaas/faas/gateway/version.GitCommitMessage=${GIT_COMMIT_MESSAGE}\" \
     -X \"github.com/openfaas/faas/gateway/version.Version=${VERSION}\" \
     -X github.com/openfaas/faas/gateway/types.Arch=${TARGETARCH}" \
     -a -installsuffix cgo -o gateway .

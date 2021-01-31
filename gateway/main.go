@@ -26,10 +26,8 @@ const NameExpression = "-a-zA-Z_0-9."
 
 func main() {
 	if len(version.GitCommitMessage) == 0 {
-		version.GitCommitMessage = "Place-holder for commit message"
+		version.GitCommitMessage = "See GitHub for latest changes"
 	}
-
-	// log.Printf("Commit: %s", version.GitCommitMessage)
 
 	osEnv := types.OsEnv{}
 	readConfig := types.ReadConfig{}

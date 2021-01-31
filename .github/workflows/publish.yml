@@ -45,7 +45,6 @@ jobs:
           build-args: |
             VERSION=${{ steps.get_tag.outputs.TAG }}
             GIT_COMMIT=${{ github.sha }}
-            GIT_COMMIT_MESSAGE="${{ steps.get_commit_message.outputs.commit_message }}"
           tags: |
             ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/gateway:${{ steps.get_tag.outputs.TAG }}
             ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/gateway:${{ github.sha }}
