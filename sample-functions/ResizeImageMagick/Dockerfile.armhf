@@ -1,6 +1,6 @@
 FROM openfaas/classic-watchdog:0.18.8 as watchdog
 
-FROM arm32v6/alpine:3.11
+FROM arm32v6/alpine:3.13
 
 RUN apk --no-cache add imagemagick
 
