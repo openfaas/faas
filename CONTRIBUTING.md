@@ -4,6 +4,34 @@
 
 Guidelines for contributing.
 
+### First impressions - introducing yourself and your use-case
+
+One of the best ways to participate within a new open source communities is to introduce yourself and your use-case. This builds goodwill, but also means the community can start to understand your needs and how best to help you.
+
+Given that the community is made up of volunteers, making a good first impression is important to getting their ear and attention. 
+
+Here is a simple introduction you could try:
+
+> "We at Company Y have an issue with X, and would like some help. What we're trying to achieve is Z" 
+
+The more context you can give the community, the more the community can be of help to you. If you are using OpenFaaS as a hobbyist or as a student, then please also let us know so that we can decide how to prioritise all the requests we receive from users. 
+
+A common example of a poor introduction would be asking for technical support without providing any context, or introduction.
+
+> "We are running into issue X. Can you fix it?"
+> 
+> "We also had this issue"
+
+These kinds of interactions start with "we" and since we is a pronoun, it becomes an anonymous request detached from any context or relationship with the community. This is made worse if you do not list your employer on your GitHub profile or Slack account. The fix is easy, just say who you are and what your interest is, and what your ideal outcome is.
+
+The primary ways to engage with the community are via Slack, GitHub Issues and paid support
+
+* GitHub Issues - for suspected bugs and feature requests, fill out the whole template
+* Slack - to share ideas, to chat with the community and to request help if things don't appear to be working as expected, or you're trying something new
+* Paid support - you will have an agreed way to contact OpenFaaS Ltd for direct support and help
+
+See also: [The no-excuses guide to introducing yourself to a new open source project](https://opensource.com/education/13/7/introduce-yourself-open-source-project)
+
 ### How can I get involved?
 
 The Slack community is the best place to keep up to date with the project and to get help contributing. Here we exchange ideas, ask questions and chat about OpenFaaS. There are also channels for Raspberry Pi/ARM, Kubernetes and other cloud-native topics. (*See below for how to join*)
