@@ -28,6 +28,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Award or mention                                          | Author(s)       | Source     | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
+| [Book: Serverless for Everyone Else](https://gumroad.com/l/serverless-for-everyone-else) | Alex Ellis | gumroad.com | 15-Jan-2021 |
 | 🏆 [Winners of the Best of VMworld 2020 Awards - Startup Spotlight 2020 winner](https://searchservervirtualization.techtarget.com/photostory/252489586/Winners-of-the-Best-of-VMworld-2020-Awards/8/Judges-choice-Startup-Spotlight-2020-winner) | Tech Target | techtarget.com | 30-Sep-2020 |
 | [Serverless on Kubernetes training course](https://training.linuxfoundation.org/announcements/new-free-training-course-teaches-fundamentals-of-serverless-on-kubernetes/) | Linux Foundation & Alex Ellis | LinuxFoundation.org | 10-Sep-2020 |
 | [Battle Over Serverless Computing Frameworks to Heat Up in 2019](https://www.itbusinessedge.com/articles/battle-over-serverless-computing-frameworks-to-heat-up-in-2019.html) | Mike Vizard | itbusinessedge.com | 03-Jan-2019 |
@@ -69,6 +70,8 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Title                                                              | Presenter       | Date      |
 | ------------------------------------------------------------------ | --------------- | --------- |
+| [Event driven Postgres with OpenFaaS](https://www.youtube.com/watch?v=nGOZLOjg5Zs) | Alex Ellis and Lucas Roesler | 02-Feb-2021 |
+| [Exploring Serverless use-cases with David McKay (Rawkode) and Alex Ellis](https://www.youtube.com/watch?v=mzuXVuccaqI) | David McKay (Rawkode) and Alex Ellis | 27-Jan-2021 |
 | [Meet faasd. Look Ma’ No Kubernetes! - Alex Ellis @ KubeCon](https://www.youtube.com/watch?v=ZnZJXI377ak&feature=youtu.be) | Alex Ellis | 8-Sep-2020 |
 | [Cloud Native Tools for Developers with Alex Ellis and Alistair Hey](https://youtu.be/r4mEF8rtXWo) | Alex Ellis and Alistair Hey | 13-Mar-2019 |
 | [Getting Beyond FaaS: The PLONK Stack for Kubernetes Developers](https://www.youtube.com/watch?v=NckMekZXRt8) | Alex Ellis | 21-Nov-2019 |
@@ -88,7 +91,11 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
-| [How I discovered faas and what it changed for me](https://releasecandidate.dev/posts/2021/discovery-faasd-and-openfaas/) | Peter Thaleikis | releasecandidate.dev | 05-01-2021 |
+| [Extend and automate self-hosted Gitea with functions ](https://www.openfaas.com/blog/gitea-faas/) | Matti Ranta | openfaas.com | 31-Jan-2021 |
+| [Event driven functions powered by Postgres](https://lucasroesler.com/posts/2021/event-driven-faasd-with-postgres/) | Lucas Roesler | lucasroesler.com | 30-Jan-2021 |
+| [How to integrate with GitHub the right way with GitHub Apps](https://www.openfaas.com/blog/integrate-with-github-apps-and-faasd/) | Batuhan Apaydın | openfaas.com | 26-Jan-2021 |
+| [Serverless with OpenFaaS and .NET](https://goncalo-a-oliveira.medium.com/serverless-with-openfaas-and-net-6a66b5c30a5f) | Batuhan Apaydın | medium.com | 20-Jan-2021 |
+| [How I discovered faas and what it changed for me](https://releasecandidate.dev/posts/2021/discovery-faasd-and-openfaas/) | Peter Thaleikis | releasecandidate.dev | 05-Jan-2021 |
 
 ### 2020
 
@@ -130,24 +137,41 @@ Postponed events for 2020
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [You're invited to our 4th Birthday!](https://www.openfaas.com/blog/birthday-invite/) | Alex Ellis | openfaas.com | 12-Dec-2020 |
+| [Announcing Venafi Sponsored Apps for Arkade](https://www.openfaas.com/blog/arkade-venafi/) | Alex Ellis | openfaas.com | 08-Dec-2020 |
+| [Serverless Node.js that you can run anywhere](https://www.openfaas.com/blog/serverless-nodejs/) | Alex Ellis | openfaas.com | 02-Dec-2020 |
+| [Build a Flask microservice with OpenFaaS](https://www.openfaas.com/blog/openfaas-flask/) | Alex Ellis | openfaas.com | 19-Nov-2020 |
+| [Web scraping that just works with OpenFaaS with Puppeteer](https://www.openfaas.com/blog/kubernetes-webhooks-made-easy-with-openfaas/) | Alex Ellis | openfaas.com | 28-Oct-2020 |
+| [Kubernetes Webhooks made easy with OpenFaaS](https://www.openfaas.com/blog/kubernetes-webhooks-made-easy-with-openfaas/) | Batuhan Apaydın | openfaas.com | 27-Oct-2020 |
+| [Build and deploy OpenFaaS functions with GitHub Actions](https://www.openfaas.com/blog/openfaas-functions-with-github-actions/) | Kumar Utsav Anand | openfaas.com | 13-Oct-2020 |
+| [New Serverless on Kubernetes Course by the LinuxFoundation](https://www.openfaas.com/blog/introduction-to-serverless-linuxfoundation/) | Alex Ellis | openfaas.com | 16-Sep-2020 |
+| [Enable Single Sign-on (SSO) for OpenFaaS with Okta and OpenID Connect](https://www.openfaas.com/blog/openfaas-oidc-okta/) | Alex Ellis | openfaas.com | 16-Sep-2020 |
+| [Why did the OpenFaaS community build arkade and what's in it for you?](https://www.openfaas.com/blog/openfaas-arkade/) | Alex Ellis | openfaas.com | 13-Aug-2020 |
+| [Bring a lightweight Serverless experience to DigitalOcean with Terraform and faasd](https://www.openfaas.com/blog/faasd-tls-terraform/) | Alex Ellis | openfaas.com | 13-Aug-2020 |
 | [Create Serverless Functions with OpenFaaS](https://dev.to/appfleet/create-serverless-functions-with-openfaas-37ob) | Dmitriy Akulov | dev.to | 13-Aug-2020 |
 | [Live reload for OpenFaaS functions](https://simonemms.com/blog/2020/08/12/live-reload-for-openfaas/) | Simon Emms | simonemms.com | 12-Aug-2020 |
 | [OpenFaaS with TLS via Faasd and Terraform on Openstack](https://markopolo123.github.io/posts/openfaas-openstack/) | Mark Sharpley| markopolo123.github.io | 06-Aug-2020 |
+| [Time travelling through your OpenFaaS Function logs](https://www.openfaas.com/blog/openfaas-loki-into/) | Lucas Roesler | openfaas.com | 06-Jul-2020 |
 | [Serverless with OpenFaaS – DevOps Series, Part 17](https://blogs.cisco.com/developer/serverless-openfaas-devops-17) | Julio Gomez| blogs.cisco.com | 30-June-2020 |
 | [Building serverless Java applications using Micronaut and OpenFaaS](https://openvalue.blog/articles/2020/05/serverless-java-applications.html) | Paulien van Alst | openvalue.blog | 22-June-2020 |
 | [OpenFaaS: Serverless platform with no strings attached?](https://speakerdeck.com/andmos/openfaas-serverless-platform-with-no-strings-attached-2b403d2f-bd80-4e6f-b61c-52b8fa1f83fe) | Andreas Mosti | Speakerdeck | 12-Jun-2020 |
 | [Running OpenFaaS and MongoDB on Raspbian 64bit](https://dev.to/itzikkotler/running-openfaas-and-mongodb-on-raspbian-64bit-j75) | Itzik Kotler| dev.to | 09-Jun-2020 |
+| [Keep your functions running to schedule with the cron-connector](https://www.openfaas.com/blog/schedule-your-functions/) | Martin Dekov | openfaas.com | 27-May-2020 |
 | [Using Azure Storage + lowdb and Node.js to manage state in OpenFaaS functions](https://medium.com/@therealburningman/using-azure-storage-lowdb-and-node-js-to-manage-state-in-openfaas-functions-5776f214e84d) | Hans van den Akker | medium.com | 27-May-2020 |
-| [Powerful dynamic Email processing using SendGrid, node.JS, OpenFaaS (faasnetes), Azure Service Bus and Microsoft Flow](https://itnext.io/powerful-dynamic-email-processing-using-sendgrid-node-js-52ac68f37eeb) | Hans van den Akker
- | medium.com | 16-May-2020 |
+| [Powerful dynamic Email processing using SendGrid, node.JS, OpenFaaS (faasnetes), Azure Service Bus and Microsoft Flow](https://itnext.io/powerful-dynamic-email-processing-using-sendgrid-node-js-52ac68f37eeb) | Hans van den Akker | medium.com | 16-May-2020 |
 | [An openFAAS multipart body processing custom language template based on node12 and restify](https://medium.com/@therealburningman/an-openfaas-multipart-body-processing-custom-language-template-based-on-node12-and-restify-7e9e8a78f9be) | Hans van den Akker | medium.com | 15-May-2020 |
 | [Create Serverless Functions with OpenFaaS](https://medium.com/appfleet/create-serverless-functions-with-openfaas-1b2ba1dff8cf) | Appfleet Team | medium.com | 14-May-2020 |
 | [OpenFaaS, what's it all about?](https://blog.heyal.co.uk/openfaas-whats-it-about/)| Alistair Hey | blog.heyal.co.uk | 12-05-2020 |
 | [Self-hosting serverless with OpenFaaS](https://www.mskog.com/posts/self-hosting-serverless-with-openfaas/) | Magnus Skog | mskog.com | 03-May-2020 |
 | [Why I Created an OpenFaaS Template for COBOL](https://unnecessary.tech/posts/openfaas-cobol/) | Christopher De Vries | unnecessary.tech | 27-Apr-2020 |
+| [Continuous Deployment of your OpenFaaS Cloud](https://www.openfaas.com/blog/continously-deploy-openfaas-cloud/) | Alistair Hey | openfaas.com | 22-Apr-2020 |
+| [Cloud Native Tools for Developers Webinar Recap](https://www.openfaas.com/blog/cloud-native-tools-webinar/) | Alistair Hey | openfaas.com | 21-Apr-2020 |
 | [Call OpenFaaS Serverless Functions with Gloo API Gateway](https://medium.com/alterway/call-openfaas-serverless-functions-with-gloo-api-gateway-678a00710481?source=rss------kubernetes-5) | Hervé Leclerc | medium.com | 21-Apr-2020 |
 | [Data Pipelines with OpenFaas on K3s](https://medium.com/@yoav.nordmann/data-pipelines-with-openfaas-on-k3s-b92e97bc125b) | Yoav Nordmann | medium.com | 19-Apr-2020 |
-|[Tracking Stripe Payments with Slack and faasd](https://myedes.io/stripe-serverless-webhook-faasd/) | Mehdi Yedes | myedes.io | 04-Apr-2020
+| [Meet faasd - portable Serverless without the complexity of Kubernetes](https://www.openfaas.com/blog/introducing-faasd/) | Alex Ellis | openfaas.com | 17-Apr-2020 |
+| [Gain access to your functions with CORS](https://www.openfaas.com/blog/function-cors/) | Alex Ellis | openfaas.com | 08-Apr-2020 |
+| [Tracking Stripe Payments with Slack and faasd](https://myedes.io/stripe-serverless-webhook-faasd/) | Mehdi Yedes | myedes.io | 04-Apr-2020 |
+| [Adding Managed Services to Serverless with Crossplane and OpenFaaS](https://www.openfaas.com/blog/managed-services-serverless/) | Dan Mangnum | openfaas.com | 30-Mar-2020 |
 |[Building Serverless CRUD services in Go with OpenFaaS, Arkade, MongoDB and k3d](https://dev.to/wingkwong/building-serverless-crud-services-in-go-with-openfaas-arkade-mongodb-and-k3d-1d93) | Wing-Kam Wong | dev.to | 29-Mar-2020 |
 |[Raspberry Pi Kubernetes Cluster with OpenFaaS for Serverless Functions](https://www.shogan.co.uk/kubernetes/raspberry-pi-kubernetes-cluster-with-openfaas-for-serverless-functions-part-4/) | Sean Duffy | shogan.co.uk | 24-Mar-2020 |
 | [Telar Social one-click setup: OpenFaaS Cloud Community Cluster](https://medium.com/red-gold/telar-social-one-click-setup-openfaas-cloud-community-cluster-68814b3bf47c) | Amir Movahedi | medium.com | 22-Mar-2020
@@ -159,12 +183,13 @@ Postponed events for 2020
 | [arkade by example — Kubernetes apps, the easy way](https://medium.com/@alexellisuk/kubernetes-apps-the-easy-way-f06d9e5cad3c) | Alex Ellis | medium.com | 01-Mar-2020 |
 | [Introducing Arkade - The Kubernetes app installer](https://blog.heyal.co.uk/introducing-arkade/) | Alistair Hey | blog.heyal.co.uk | 28-Feb-2020 |
 | [Running Faasd in LXC](https://dukemon.leetserve.com/posts/2020/02/faasd-in-lxc/) | Gabriel Duke | dukemon.leetserve.com | 28-Feb-2020 |
-| [Create your own private cloud with OpenFaaS Cloud](https://www.openfaas.com/blog/ofc-private-cloud/) | Alex Ellis | openfaas.com | 28-Feb-2020 |
+| [Create your own private cloud with OpenFaaS Cloud](https://www.openfaas.com/blog/ofc-private-cloud/) | Alex Ellis | openfaas.com | 27-Feb-2020 |
 | [OpenFaaS comes to k9s, the Kubernetes CUI](https://blog.alexellis.io/k9s-the-kubernetes-cui-comes-to-openfaas/) | Alex Ellis | alexellis.io | 14-Feb-2020 |
 | [New OpenFaaS SWAG store launched and Insiders Subscription](https://www.openfaas.com/blog/swag-store-launch/) | Alex Ellis | openfaas.com | 14-Feb-2020 |
 | [Get storage for your functions with Python and MongoDB](https://www.openfaas.com/blog/get-started-with-python-mongo/) | Alex Ellis | openfaas.com | 12-Feb-2020 |
 | [Build a Serverless appliance with faasd](https://blog.alexellis.io/deploy-serverless-faasd-with-cloud-init/) | Alex Ellis | alexellis.io | 06-Feb-2020 |
-| [Painless Serverless Development with Kubernetes, OpenFaaS and Okteto](https://www.openfaas.com/blog/painless-serverless-development/) | Ramiro Berrelleza | alexellis.io | 24-Jan-2020 |
+| [Get started with Java 11 and Vert.x on Kubernetes with OpenFaaS](https://www.openfaas.com/blog/get-started-with-java-openjdk11/) | Alex Ellis | openfaas.com | 30-Jan-2020 |
+| [Painless Serverless Development with Kubernetes, OpenFaaS and Okteto](https://www.openfaas.com/blog/painless-serverless-development/) | Ramiro Berrelleza | openfaas.com | 24-Jan-2020 |
 | [Introduction to OpenFaaS: Serverless made accessible](https://www.objectif-libre.com/en/blog/2020/01/17/openfaas-made-accessible/) | Florian Davasse | www.objectif-libre.com | 17-Jan-2020|
 | [Applying GitOps to OpenFaaS with Flux Helm Operator](https://www.openfaas.com/blog/openfaas-flux/) | Stefan Prodan | openfaas.com| 16-Jan-2020|
 | [OpenFaaS 3rd Birthday Celebrations](https://www.openfaas.com/blog/birthday-teamserverless/) | Alex Ellis | openfaas.com| 14-Jan-2020|
