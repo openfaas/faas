@@ -30,6 +30,8 @@ custom_messages:
            By participating in the community, you are agreeing to follow the contribution guidelines.
 
            This project uses templates for new Issues and Pull Requests. These templates contain information that the team needs you to provide, before they can help.
+           
+           You are receiving this message because you chose to delete the template instead of filling it in as required by the project maintainers.
 
            Please go ahead and edit this Issue or Pull Request and please provide all the fields that were requested. If it is simpler, you may open a new Issue or Pull Request or find the text within the `.github` folder in this repository.
 
