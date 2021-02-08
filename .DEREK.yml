@@ -79,3 +79,13 @@ custom_messages:
            If you are receiving this message after having received hands-on support from the OpenFaaS community, please join [GitHub Sponsors](https://github.com/sponsors/openfaas) to say thank you for our time. 
            
            Thank you for supporting OpenFaaS.
+
+  - name: service
+    value: |
+           We are glad that we could be of help with your usage of OpenFaaS.
+           
+           Since OpenFaaS is maintained by a community of volunteers, we encourage all users to become individual [Sponsors on GitHub](https://github.com/sponsors/openfaas) for the OpenFaaS project.
+           
+           As a benefit, you will show up as a Sponsor on future issues & PRs and also get access to a Sponsors Portal with curated updates across the 40-50 open source projects that we maintain for the community.
+           
+           Thank you for supporting OpenFaaS.
