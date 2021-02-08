@@ -97,13 +97,15 @@ Official templates exist for many popular languages and are easily extensible wi
 
 ## Get started with OpenFaaS
 
-### Official eBook and training workshop
+### Official eBook and video workshop
 
-![eBook logo](https://static-2.gumroad.com/res/gumroad/2028406193591/asset_previews/714aad765f8246463fafb64fcd3be4ea/retina/104810333-b628f280-57eb-11eb-8be9-a2f6c773346b.png)
+![eBook logo](https://static-2.gumroad.com/res/gumroad/2028406193591/asset_previews/741f2ad46ff0a08e16aaf48d21810ba7/retina/social4.png
 
-> Alex's new eBook is the official handbook for faasd - the minimalist's approach to serverless functions. You'll learn how to setup your own server and start writing functions in Node.js.
+The founder of OpenFaaS wrote *Serverless For Everyone Else* to help developers understand the use-case for functions through practical hands-on exercises using JavaScript and Node.js. No programming experience is required to try the exercises.
 
-[Get the eBook](https://gumroad.com/l/serverless-for-everyone-else)
+The examples use the faasd project, which is an easy to use and lightweight way to start learning about OpenFaaS and functions.
+
+[Check out Serverless For Everyone Else on Gumroad](https://gumroad.com/l/serverless-for-everyone-else)
 
 ### Official blog and documentation
 
