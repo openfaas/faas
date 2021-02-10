@@ -42,7 +42,7 @@
 
 * Docker version `docker version` (e.g. Docker 17.0.05 ):
 
-* Are you using Kubernetes or faasd?
+* Are you using OpenFaaS on Kubernetes or [faasd](https://github.com/openfaas/faasd)?
 
 * Operating System and version (e.g. Linux, Windows, MacOS):
 
