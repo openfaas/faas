@@ -8,7 +8,7 @@ require (
 	github.com/nats-io/jwt v1.2.2 // indirect
 	github.com/nats-io/nats-streaming-server v0.20.0 // indirect
 	github.com/nats-io/stan.go v0.8.2 // indirect
-	github.com/openfaas/faas-provider v0.16.2
+	github.com/openfaas/faas-provider v0.17.0
 	github.com/openfaas/nats-queue-worker v0.0.0-20200512211843-8e9eefd5a320
 	github.com/prometheus/client_golang v1.9.0
 	github.com/prometheus/client_model v0.2.0

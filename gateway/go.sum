@@ -241,6 +241,8 @@ github.com/onsi/gomega v1.4.3/go.mod h1:ex+gbHU/CVuBBDIJjb2X0qEXbFg53c61hWP/1Cpa
 github.com/op/go-logging v0.0.0-20160315200505-970db520ece7/go.mod h1:HzydrMdWErDVzsI23lYNej1Htcns9BCg93Dk0bBINWk=
 github.com/openfaas/faas-provider v0.16.2 h1:ChpiZh1RM8zFIzvp31OPlKpTbh5Lcm7f91WCFcpW4gA=
 github.com/openfaas/faas-provider v0.16.2/go.mod h1:fq1JL0mX4rNvVVvRLaLRJ3H6o667sHuyP5p/7SZEe98=
+github.com/openfaas/faas-provider v0.17.0 h1:4rT8CosKhI5xaAMqbyihEgR6KefO/ViJdF0a8THTgwM=
+github.com/openfaas/faas-provider v0.17.0/go.mod h1:fq1JL0mX4rNvVVvRLaLRJ3H6o667sHuyP5p/7SZEe98=
 github.com/openfaas/nats-queue-worker v0.0.0-20200512211843-8e9eefd5a320 h1:rgNxl8VqfRh/2iZLO0OjcOo7D+BUcZrBMTPBUYCB1pY=
 github.com/openfaas/nats-queue-worker v0.0.0-20200512211843-8e9eefd5a320/go.mod h1:BfT8MB890hbhbtPid+X/oU0HAznGFS581NiG2hkr8Rc=
 github.com/opentracing-contrib/go-observer v0.0.0-20170622124052-a52f23424492/go.mod h1:Ngi6UdF0k5OKD5t5wlmGhe/EDKPoUM3BXZSSfIuJbis=
