@@ -144,7 +144,7 @@ func main() {
 		MaxPollCount:         uint(1000),
 		SetScaleRetries:      uint(20),
 		FunctionPollInterval: time.Millisecond * 100,
-		CacheExpiry:          time.Second * 5, // freshness of replica values before going stale
+		CacheExpiry:          time.Millisecond * 250, // freshness of replica values before going stale
 		ServiceQuery:         externalServiceQuery,
 	}
 
