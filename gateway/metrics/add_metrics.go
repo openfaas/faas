@@ -28,15 +28,19 @@ func AddMetricsHandler(handler http.HandlerFunc, prometheusQuery PrometheusQuery
 		}
 
 		defer upstreamCall.Body.Close()
+		upstreamBody, _ := ioutil.ReadAll(upstreamCall.Body)
 
 		if recorder.Code != http.StatusOK {
+			log.Printf("List functions responded with code %d, body: %s",
+				recorder.Code,
+				string(upstreamBody))
+
 			w.Header().Set("Content-Type", "text/plain")
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(fmt.Sprintf("Error pulling metrics from provider/backend. Status code: %d", recorder.Code)))
+			w.Write([]byte(fmt.Sprintf("List functions responded with code %d", recorder.Code)))
 			return
 		}
 
-		upstreamBody, _ := ioutil.ReadAll(upstreamCall.Body)
 		var functions []types.FunctionStatus
 
 		err := json.Unmarshal(upstreamBody, &functions)
