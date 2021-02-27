@@ -91,6 +91,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Diagrams: Architecture with Auth0, an Angular SPA, and OpenFaaS on Kubernetes](https://kylosmcgraff.com/building-in-the-cloud/) | Kyle Brennan | kylosmcgraff.com | 27-Feb-2021
 | [Extend and automate self-hosted Gitea with functions ](https://www.openfaas.com/blog/gitea-faas/) | Matti Ranta | openfaas.com | 31-Jan-2021 |
 | [Event driven functions powered by Postgres](https://lucasroesler.com/posts/2021/event-driven-faasd-with-postgres/) | Lucas Roesler | lucasroesler.com | 30-Jan-2021 |
 | [How to integrate with GitHub the right way with GitHub Apps](https://www.openfaas.com/blog/integrate-with-github-apps-and-faasd/) | Batuhan Apaydın | openfaas.com | 26-Jan-2021 |
