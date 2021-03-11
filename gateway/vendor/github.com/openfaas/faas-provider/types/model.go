@@ -1,5 +1,7 @@
 package types
 
+import "time"
+
 // FunctionDeployment represents a request to create or update a Function.
 type FunctionDeployment struct {
 
@@ -100,7 +102,9 @@ type FunctionStatus struct {
 	// mount-point.
 	ReadOnlyRootFilesystem bool `json:"readOnlyRootFilesystem,omitempty"`
 
-	// ** Status fields *8
+	// ================
+	// Fields for status
+	// ================
 
 	// InvocationCount count of invocations
 	InvocationCount float64 `json:"invocationCount,omitempty"`
@@ -111,4 +115,8 @@ type FunctionStatus struct {
 	// AvailableReplicas is the count of replicas ready to receive
 	// invocations as reported by the faas-provider
 	AvailableReplicas uint64 `json:"availableReplicas,omitempty"`
+
+	// CreatedAt is the time read back from the faas backend's
+	// data store for when the function or its container was created.
+	CreatedAt time.Time `json:"createdAt,omitempty"`
 }

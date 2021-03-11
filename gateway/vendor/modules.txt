@@ -37,7 +37,7 @@ github.com/nats-io/nuid
 ## explicit
 github.com/nats-io/stan.go
 github.com/nats-io/stan.go/pb
-# github.com/openfaas/faas-provider v0.17.0
+# github.com/openfaas/faas-provider v0.17.3
 ## explicit
 github.com/openfaas/faas-provider/auth
 github.com/openfaas/faas-provider/types
