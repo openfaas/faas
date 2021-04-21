@@ -101,6 +101,8 @@ Tell us more:
 
 * [VMware](https://vmware.com) - used in "veba" VMware Event Broker Applicance to extend vSphere by adding event functionality. OpenFaaS functions and the vcenter-connector are used as an appliance. CAS / vRA8 - The Cloud Automation Services product has an option to deploy "FaaS on-premises", this actually deploys OpenFaaS white-boxed / white-labelled. [CAS Write-up from Swisscom](https://ict.swisscom.ch/2019/08/cloud-automation-services-on-prem-faas-provider-for-vsphere/)
 
+* [Waylay](https://www.waylay.io) - We use OpenFaas to deploy small snippets of code that can be combined in a low-code manner by our clients to do data orchestration and automation. Users of the platform also are able to deploy their own plugins (written in multiple languages), which also get deployed on OpenFaas.
+
 * [Wireline.io](https://wireline.io) - portable functions that can run on any hardware, indexed through blockchain.
 
 * [Ytel](https://www.ytel.com) - Ytel are a Google Cloud customer and deployed OpenFaaS vs. the vendor alternative due to its wide range of templates, Dockerfile support and easier access to services within the VPC. The Dockerfile template allowed for easy migration of existing code. The latency of transactions for customers during purchase process was reduced by offloading synchronous code to NATS which is built into OpenFaaS. OpenFaaS also allowed "hot path" code to be refactored from large services into multiple functions, to take advantage of horizontal scaling.
