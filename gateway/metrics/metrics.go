@@ -67,14 +67,6 @@ func BuildMetricsOptions() MetricOptions {
 		[]string{"function_name"},
 	)
 
-	// For automatic monitoring and alerting (RED method)
-	histogram := prometheus.NewHistogramVec(prometheus.HistogramOpts{
-		Subsystem: "http",
-		Name:      "request_duration_seconds",
-		Help:      "Seconds spent serving HTTP requests.",
-		Buckets:   prometheus.DefBuckets,
-	}, []string{"method", "path", "status"})
-
 	// Can be used Kubernetes HPA v2
 	counter := prometheus.NewCounterVec(
 		prometheus.CounterOpts{
