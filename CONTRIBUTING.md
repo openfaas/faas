@@ -145,6 +145,34 @@ If you would like to ammend your commit follow this guide: [Git: Rewriting Histo
 
 Please follow style guide on [this blog post](https://blog.alexellis.io/golang-writing-unit-tests/) from [The Go Programming Language](https://www.amazon.co.uk/Programming-Language-Addison-Wesley-Professional-Computing/dp/0134190440)
 
+Specifically, the style means using Golang code to evaluate whether a tested method produced the correct result, for instance:
+
+```golang
+func TestSum(t *testing.T) {
+    want := 10
+    got := Sum(5, 5)
+    if want != got {
+       t.Fatal("want: %d, but got: %d, want, got)
+    }
+}
+```
+
+Making use of test tables, additional comparison libraries or helper functions is acceptable.
+
+This kind of usage will not be merged into the codebase:
+
+```golang
+func TestSomething(t *testing.T) {
+  assert := assert.New(t)
+
+  // assert equality
+  assert.Equal(Sum(5, 5), 10, "they should be equal")
+```
+
+Please do not introduce .NET/Java-style assertion libararies such as [stretchr/testify](https://github.com/stretchr/testify).
+
+**A note on go-routines**
+
 If you are making changes to code that use goroutines, consider adding `goleak` to your test to help ensure that we are not leaking any goroutines. Simply add
 
 ```go
