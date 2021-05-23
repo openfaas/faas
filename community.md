@@ -91,6 +91,14 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Kubernetes in Docker (KinD) で OpenFaaS を動かす！](https://yoh1496.hatenablog.com/entry/2021/05/17/182207) | ishiguro-yo | yoh1496.hatenablog.com | 17-May-2021 |
+| [Secure Serverless with OpenFaaS](https://dev.to/mikeyglitz/secure-serverless-with-openfaas-509b) | Michael Glitzos | medium.com | 14-May-2021 |
+| [Learn how Istio can provide a service mesh for your functions](https://www.openfaas.com/blog/istio-functions/) | Alex Ellis | openfaas.com | 12-May-2021 |
+| [Functions for data science with R templates for OpenFaaS](https://www.openfaas.com/blog/r-templates/) | Peter Solymos | openfaas.com | 12-May-2021 |
+| [Learn how to build functions faster using Rancher's kim and K3s](https://www.openfaas.com/blog/kim/) | Alex Ellis | openfaas.com | 12-May-2021 |
+| [OpenFaas mit faasd installieren](https://blog.micro-saas.de/open-faas-mit-faasd-installieren/) | Björn Renzel| blog.micro-saas.de | 24-Apr-2021
+| [Bring GitOps to your OpenFaaS functions with ArgoCD](https://www.openfaas.com/blog/bring-gitops-to-your-openfaas-functions-with-argocd/) | Batuhan Apaydın | openfaas.com | 15-Apr-2021 |
+| [Exploring Serverless Use-cases from Companies and the Community](https://www.openfaas.com/blog/exploring-serverless-live/) | Alex Ellis | openfaas.com | 19-Feb-2021 |
 | [Extend and automate self-hosted Gitea with functions ](https://www.openfaas.com/blog/gitea-faas/) | Matti Ranta | openfaas.com | 31-Jan-2021 |
 | [Event driven functions powered by Postgres](https://lucasroesler.com/posts/2021/event-driven-faasd-with-postgres/) | Lucas Roesler | lucasroesler.com | 30-Jan-2021 |
 | [How to integrate with GitHub the right way with GitHub Apps](https://www.openfaas.com/blog/integrate-with-github-apps-and-faasd/) | Batuhan Apaydın | openfaas.com | 26-Jan-2021 |
