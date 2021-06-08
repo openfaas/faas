@@ -98,6 +98,7 @@ It would be great to hear from you especially if you have any of the above and w
 | [Learn how to build functions faster using Rancher's kim and K3s](https://www.openfaas.com/blog/kim/) | Alex Ellis | openfaas.com | 12-May-2021 |
 | [OpenFaas mit faasd installieren](https://blog.micro-saas.de/open-faas-mit-faasd-installieren/) | Björn Renzel| blog.micro-saas.de | 24-Apr-2021
 | [Bring GitOps to your OpenFaaS functions with ArgoCD](https://www.openfaas.com/blog/bring-gitops-to-your-openfaas-functions-with-argocd/) | Batuhan Apaydın | openfaas.com | 15-Apr-2021 |
+| [OpenFaaS and GKE Autopilot](https://johansiebens.dev/posts/2021/03/openfaas-and-gke-autopilot/) | Johan Siebens | johansiebens.dev | 16-Mar-2021 |
 | [Exploring Serverless Use-cases from Companies and the Community](https://www.openfaas.com/blog/exploring-serverless-live/) | Alex Ellis | openfaas.com | 19-Feb-2021 |
 | [Extend and automate self-hosted Gitea with functions ](https://www.openfaas.com/blog/gitea-faas/) | Matti Ranta | openfaas.com | 31-Jan-2021 |
 | [Event driven functions powered by Postgres](https://lucasroesler.com/posts/2021/event-driven-faasd-with-postgres/) | Lucas Roesler | lucasroesler.com | 30-Jan-2021 |
