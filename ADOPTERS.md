@@ -107,4 +107,6 @@ Tell us more:
 
 * [Ytel](https://www.ytel.com) - Ytel are a Google Cloud customer and deployed OpenFaaS vs. the vendor alternative due to its wide range of templates, Dockerfile support and easier access to services within the VPC. The Dockerfile template allowed for easy migration of existing code. The latency of transactions for customers during purchase process was reduced by offloading synchronous code to NATS which is built into OpenFaaS. OpenFaaS also allowed "hot path" code to be refactored from large services into multiple functions, to take advantage of horizontal scaling.
 
+* [smashHit](https://smashhit.eu) - smashHit is a project funded by the European Union's Horizon 2020 research and innovation programme under grant agreement No. 871477. The objective of smashHit is to assure trusted and secure sharing of data streams from both personal and industrial platforms, needed to build sectorial and cross-sectorial services, by establishing a Framework for processing of data owner consent and legal rules (GDPR) and effective contracting, as well as joint security and privacy-preserving mechanisms. We are utilising OpenFaaS to support the need for scalable processing through the use of functions.
+
 See the top of the file for how to participate.
