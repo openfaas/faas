@@ -1,6 +1,6 @@
 FROM openfaas/classic-watchdog:0.18.8 as watchdog
 
-FROM golang:1.13-alpine
+FROM golang:1.15-alpine
 ENV CGO_ENABLED=0
 
 MAINTAINER alexellis2@gmail.com
