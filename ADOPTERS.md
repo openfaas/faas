@@ -4,13 +4,13 @@ This list shows adopters of OpenFaaS. If you're using OpenFaaS in some way, then
 
 ## Further resources
 
-Sponsor
+Become a GitHub Sponsor - either as an individual practitioner using or introducing OpenFaaS, or as a company, or both.
 
-* Become a personal or commercial [OpenFaaS Sponsor on GitHub](https://github.com/openfaas/sponsors)
+* [Sponsor OpenFaaS on GitHub](https://github.com/openfaas/sponsors)
 
-Services:
+Support & OpenFaaS PRO
 
-* Buy a [Premium OpenFaaS Subscription](https://www.openfaas.com/support) from OpenFaaS Ltd
+* Buy [OpenFaaS PRO or Enterprise Subscription](https://openfaas.com/support) from OpenFaaS Ltd
 
 Tell us more:
 
