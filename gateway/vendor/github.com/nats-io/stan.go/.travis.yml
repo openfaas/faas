@@ -1,17 +1,17 @@
 language: go
 go:
+- 1.16.x
 - 1.15.x
-- 1.14.x
 go_import_path: github.com/nats-io/stan.go
 install:
 - go get -u honnef.co/go/tools/cmd/staticcheck
 - go get -u github.com/client9/misspell/cmd/misspell
 before_script:
 - $(exit $(go fmt ./... | wc -l))
-- go vet ./...
+- go vet -modfile go_tests.mod ./...
 - find . -type f -name "*.go" | grep -v "/pb/" | xargs misspell -error -locale US
-- staticcheck ./...
+- staticcheck -tests=false ./...
 script:
 - go test -v -race . -modfile go_tests.mod
 after_success:
-- if [[ "$TRAVIS_GO_VERSION" =~ 1.15 ]]; then ./scripts/cov.sh TRAVIS; fi
+- if [[ "$TRAVIS_GO_VERSION" =~ 1.16 ]]; then ./scripts/cov.sh TRAVIS; fi

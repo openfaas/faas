@@ -1,4 +1,4 @@
-// Copyright 2012-2018 The NATS Authors
+// Copyright 2012-2020 The NATS Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -21,6 +21,7 @@ type msgArg struct {
 	subject []byte
 	reply   []byte
 	sid     int64
+	hdr     int
 	size    int
 }
 
@@ -30,6 +31,7 @@ type parseState struct {
 	state   int
 	as      int
 	drop    int
+	hdr     int
 	ma      msgArg
 	argBuf  []byte
 	msgBuf  []byte
@@ -54,6 +56,7 @@ const (
 	MSG_ARG
 	MSG_PAYLOAD
 	MSG_END
+	OP_H
 	OP_P
 	OP_PI
 	OP_PIN
@@ -83,6 +86,12 @@ func (nc *Conn) parse(buf []byte) error {
 			switch b {
 			case 'M', 'm':
 				nc.ps.state = OP_M
+				nc.ps.hdr = -1
+				nc.ps.ma.hdr = -1
+			case 'H', 'h':
+				nc.ps.state = OP_H
+				nc.ps.hdr = 0
+				nc.ps.ma.hdr = 0
 			case 'P', 'p':
 				nc.ps.state = OP_P
 			case '+':
@@ -91,6 +100,13 @@ func (nc *Conn) parse(buf []byte) error {
 				nc.ps.state = OP_MINUS
 			case 'I', 'i':
 				nc.ps.state = OP_I
+			default:
+				goto parseErr
+			}
+		case OP_H:
+			switch b {
+			case 'M', 'm':
+				nc.ps.state = OP_M
 			default:
 				goto parseErr
 			}
@@ -140,8 +156,7 @@ func (nc *Conn) parse(buf []byte) error {
 				nc.ps.drop, nc.ps.as, nc.ps.state = 0, i+1, MSG_PAYLOAD
 
 				// jump ahead with the index. If this overruns
-				// what is left we fall out and process split
-				// buffer.
+				// what is left we fall out and process a split buffer.
 				i = nc.ps.as + nc.ps.ma.size - 1
 			default:
 				if nc.ps.argBuf != nil {
@@ -415,6 +430,11 @@ func (nc *Conn) cloneMsgArg() {
 const argsLenMax = 4
 
 func (nc *Conn) processMsgArgs(arg []byte) error {
+	// Use separate function for header based messages.
+	if nc.ps.hdr >= 0 {
+		return nc.processHeaderMsgArgs(arg)
+	}
+
 	// Unroll splitArgs to avoid runtime/heap issues
 	a := [argsLenMax][]byte{}
 	args := a[:0]
@@ -455,6 +475,57 @@ func (nc *Conn) processMsgArgs(arg []byte) error {
 	}
 	if nc.ps.ma.size < 0 {
 		return fmt.Errorf("nats: processMsgArgs Bad or Missing Size: '%s'", arg)
+	}
+	return nil
+}
+
+// processHeaderMsgArgs is for a header based message.
+func (nc *Conn) processHeaderMsgArgs(arg []byte) error {
+	// Unroll splitArgs to avoid runtime/heap issues
+	a := [argsLenMax][]byte{}
+	args := a[:0]
+	start := -1
+	for i, b := range arg {
+		switch b {
+		case ' ', '\t', '\r', '\n':
+			if start >= 0 {
+				args = append(args, arg[start:i])
+				start = -1
+			}
+		default:
+			if start < 0 {
+				start = i
+			}
+		}
+	}
+	if start >= 0 {
+		args = append(args, arg[start:])
+	}
+
+	switch len(args) {
+	case 4:
+		nc.ps.ma.subject = args[0]
+		nc.ps.ma.sid = parseInt64(args[1])
+		nc.ps.ma.reply = nil
+		nc.ps.ma.hdr = int(parseInt64(args[2]))
+		nc.ps.ma.size = int(parseInt64(args[3]))
+	case 5:
+		nc.ps.ma.subject = args[0]
+		nc.ps.ma.sid = parseInt64(args[1])
+		nc.ps.ma.reply = args[2]
+		nc.ps.ma.hdr = int(parseInt64(args[3]))
+		nc.ps.ma.size = int(parseInt64(args[4]))
+	default:
+		return fmt.Errorf("nats: processHeaderMsgArgs Parse Error: '%s'", arg)
+	}
+	if nc.ps.ma.sid < 0 {
+		return fmt.Errorf("nats: processHeaderMsgArgs Bad or Missing Sid: '%s'", arg)
+	}
+	if nc.ps.ma.hdr < 0 || nc.ps.ma.hdr > nc.ps.ma.size {
+		return fmt.Errorf("nats: processHeaderMsgArgs Bad or Missing Header Size: '%s'", arg)
+	}
+	if nc.ps.ma.size < 0 {
+		return fmt.Errorf("nats: processHeaderMsgArgs Bad or Missing Size: '%s'", arg)
 	}
 	return nil
 }

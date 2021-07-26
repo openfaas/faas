@@ -1,4 +1,4 @@
-// Copyright 2016-2018 The NATS Authors
+// Copyright 2016-2021 The NATS Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -287,6 +287,23 @@ func (sc *conn) subscribe(subject, qgroup string, cb MsgHandler, options ...Subs
 	if err != nil {
 		sub.inboxSub.Unsubscribe()
 		if err == nats.ErrTimeout {
+			// On timeout, we don't know if the server got the request or
+			// not. So we will do best effort and send a "subscription close"
+			// request. However, since we don't have the AckInbox that is
+			// normally used to close a subscription, we will use the sub's
+			// inbox. Newer servers will fallback to lookup by inbox if they
+			// don't find the sub from the "AckInbox" lookup.
+			scr := &pb.UnsubscribeRequest{
+				ClientID: sc.clientID,
+				Subject:  subject,
+				Inbox:    sub.inbox,
+			}
+			b, _ := scr.Marshal()
+			// Send to the subscription close request, not the unsubscribe subject.
+			sc.nc.Publish(sc.subCloseRequests, b)
+		}
+		if err == nats.ErrTimeout || err == nats.ErrNoResponders {
+			// Report this error to the user.
 			err = ErrSubReqTimeout
 		}
 		return nil, err
@@ -435,7 +452,7 @@ func (sub *subscription) closeOrUnsubscribe(doClose bool) error {
 	b, _ := usr.Marshal()
 	reply, err := sc.nc.Request(reqSubject, b, sc.opts.ConnectTimeout)
 	if err != nil {
-		if err == nats.ErrTimeout {
+		if err == nats.ErrTimeout || err == nats.ErrNoResponders {
 			if doClose {
 				return ErrCloseReqTimeout
 			}
