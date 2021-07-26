@@ -27,7 +27,6 @@ COPY requests       requests
 COPY tests          tests
 
 COPY types          types
-COPY queue          queue
 COPY plugin         plugin
 COPY version        version
 COPY scaling        scaling
