@@ -8,7 +8,7 @@ import (
 	"time"
 
 	stan "github.com/nats-io/stan.go"
-	"github.com/openfaas/faas/gateway/queue"
+	ftypes "github.com/openfaas/faas-provider/types"
 )
 
 // NATSQueue queue for work
@@ -32,7 +32,7 @@ type NATSQueue struct {
 }
 
 // Queue request for processing
-func (q *NATSQueue) Queue(req *queue.Request) error {
+func (q *NATSQueue) Queue(req *ftypes.QueueRequest) error {
 	fmt.Printf("NatsQueue - submitting request: %s.\n", req.Function)
 
 	out, err := json.Marshal(req)

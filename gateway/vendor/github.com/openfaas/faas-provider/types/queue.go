@@ -1,7 +1,4 @@
-// Copyright (c) Alex Ellis 2017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
-package queue
+package types
 
 import (
 	"net/http"
@@ -9,7 +6,7 @@ import (
 )
 
 // Request for asynchronous processing
-type Request struct {
+type QueueRequest struct {
 	// Header from HTTP request
 	Header http.Header
 
@@ -41,5 +38,5 @@ type Request struct {
 
 // RequestQueuer can public a request to be executed asynchronously
 type RequestQueuer interface {
-	Queue(req *Request) error
+	Queue(req *QueueRequest) error
 }
