@@ -2,10 +2,9 @@
 
 [![License Apache 2](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![ReportCard](http://goreportcard.com/badge/nats-io/nkeys)](http://goreportcard.com/report/nats-io/nkeys)
-[![Build Status](https://travis-ci.org/nats-io/nkeys.svg?branch=master)](http://travis-ci.org/nats-io/nkeys)
+[![Build Status](https://travis-ci.com/nats-io/nkeys.svg?branch=master)](http://travis-ci.com/nats-io/nkeys)
 [![GoDoc](http://godoc.org/github.com/nats-io/nkeys?status.svg)](http://godoc.org/github.com/nats-io/nkeys)
 [![Coverage Status](https://coveralls.io/repos/github/nats-io/nkeys/badge.svg?branch=master&service=github)](https://coveralls.io/github/nats-io/nkeys?branch=master)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fnats-io%2Fnkeys.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fnats-io%2Fnkeys?ref=badge_shield)
 
 A public-key signature system based on [Ed25519](https://ed25519.cr.yp.to/) for the NATS ecosystem.
 
@@ -68,5 +67,3 @@ user2, _ := nkeys.FromRawSeed(PrefixByteUser, rawSeed)
 Unless otherwise noted, the NATS source files are distributed
 under the Apache Version 2.0 license found in the LICENSE file.
 
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fnats-io%2Fnkeys.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fnats-io%2Fnkeys?ref=badge_large)

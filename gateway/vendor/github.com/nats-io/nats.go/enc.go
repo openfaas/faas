@@ -93,7 +93,7 @@ func (c *EncodedConn) Publish(subject string, v interface{}) error {
 	if err != nil {
 		return err
 	}
-	return c.Conn.publish(subject, _EMPTY_, b)
+	return c.Conn.publish(subject, _EMPTY_, nil, b)
 }
 
 // PublishRequest will perform a Publish() expecting a response on the
@@ -104,7 +104,7 @@ func (c *EncodedConn) PublishRequest(subject, reply string, v interface{}) error
 	if err != nil {
 		return err
 	}
-	return c.Conn.publish(subject, reply, b)
+	return c.Conn.publish(subject, reply, nil, b)
 }
 
 // Request will create an Inbox and perform a Request() call
@@ -130,7 +130,7 @@ func (c *EncodedConn) Request(subject string, v interface{}, vPtr interface{}, t
 
 // Handler is a specific callback used for Subscribe. It is generalized to
 // an interface{}, but we will discover its format and arguments at runtime
-// and perform the correct callback, including de-marshaling JSON strings
+// and perform the correct callback, including de-marshaling encoded data
 // back into the appropriate struct based on the signature of the Handler.
 //
 // Handlers are expected to have one of four signatures.
@@ -234,7 +234,7 @@ func (c *EncodedConn) subscribe(subject, queue string, cb Handler) (*Subscriptio
 		cbValue.Call(oV)
 	}
 
-	return c.Conn.subscribe(subject, queue, natsCB, nil, false)
+	return c.Conn.subscribe(subject, queue, natsCB, nil, false, nil)
 }
 
 // FlushTimeout allows a Flush operation to have an associated timeout.

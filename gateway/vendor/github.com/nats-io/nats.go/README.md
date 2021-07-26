@@ -3,7 +3,8 @@ A [Go](http://golang.org) client for the [NATS messaging system](https://nats.io
 
 [![License Apache 2](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fnats-io%2Fgo-nats.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fnats-io%2Fgo-nats?ref=badge_shield)
-[![Go Report Card](https://goreportcard.com/badge/github.com/nats-io/nats.go)](https://goreportcard.com/report/github.com/nats-io/nats.go) [![Build Status](https://travis-ci.org/nats-io/nats.go.svg?branch=master)](http://travis-ci.org/nats-io/nats.go) [![GoDoc](https://godoc.org/github.com/nats-io/nats.go?status.svg)](http://godoc.org/github.com/nats-io/nats.go) [![Coverage Status](https://coveralls.io/repos/nats-io/nats.go/badge.svg?branch=master)](https://coveralls.io/r/nats-io/nats.go?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/nats-io/nats.go)](https://goreportcard.com/report/github.com/nats-io/nats.go) [![Build Status](https://travis-ci.com/nats-io/nats.go.svg?branch=master)](http://travis-ci.com/nats-io/nats.go) [![GoDoc](https://img.shields.io/badge/GoDoc-reference-007d9c)](https://pkg.go.dev/github.com/nats-io/nats.go)
+ [![Coverage Status](https://coveralls.io/repos/nats-io/nats.go/badge.svg?branch=master)](https://coveralls.io/r/nats-io/nats.go?branch=master)
 
 ## Installation
 
@@ -20,7 +21,7 @@ When using or transitioning to Go modules support:
 ```bash
 # Go client latest or explicit version
 go get github.com/nats-io/nats.go/@latest
-go get github.com/nats-io/nats.go/@v1.10.0
+go get github.com/nats-io/nats.go/@v1.11.0
 
 # For latest NATS Server, add /v2 at the end
 go get github.com/nats-io/nats-server/v2
@@ -32,7 +33,7 @@ go get github.com/nats-io/nats-server/v2
 ## Basic Usage
 
 ```go
-import nats "github.com/nats-io/nats.go"
+import "github.com/nats-io/nats.go"
 
 // Connect to a server
 nc, _ := nats.Connect(nats.DefaultURL)
@@ -79,6 +80,85 @@ nc.Drain()
 
 // Close connection
 nc.Close()
+```
+
+## JetStream Basic Usage
+
+```go
+import "github.com/nats-io/nats.go"
+
+// Connect to NATS
+nc, _ := nats.Connect(nats.DefaultURL)
+
+// Create JetStream Context
+js, _ := nc.JetStream(nats.PublishAsyncMaxPending(256))
+
+// Simple Stream Publisher
+js.Publish("ORDERS.scratch", []byte("hello"))
+
+// Simple Async Stream Publisher
+for i := 0; i < 500; i++ {
+	js.PublishAsync("ORDERS.scratch", []byte("hello"))
+}
+select {
+case <-js.PublishAsyncComplete():
+case <-time.After(5 * time.Second):
+	fmt.Println("Did not resolve in time")
+}
+
+// Simple Async Ephemeral Consumer
+js.Subscribe("ORDERS.*", func(m *nats.Msg) {
+	fmt.Printf("Received a JetStream message: %s\n", string(m.Data))
+})
+
+// Simple Sync Durable Consumer (optional SubOpts at the end)
+sub, err := js.SubscribeSync("ORDERS.*", nats.Durable("MONITOR"), nats.MaxDeliver(3))
+m, err := sub.NextMsg(timeout)
+
+// Simple Pull Consumer
+sub, err := js.PullSubscribe("ORDERS.*", "MONITOR")
+msgs, err := sub.Fetch(10)
+
+// Unsubscribe
+sub.Unsubscribe()
+
+// Drain
+sub.Drain()
+```
+
+## JetStream Basic Management
+
+```go
+import "github.com/nats-io/nats.go"
+
+// Connect to NATS
+nc, _ := nats.Connect(nats.DefaultURL)
+
+// Create JetStream Context
+js, _ := nc.JetStream()
+
+// Create a Stream
+js.AddStream(&nats.StreamConfig{
+	Name:     "ORDERS",
+	Subjects: []string{"ORDERS.*"},
+})
+
+// Update a Stream
+js.UpdateStream(&nats.StreamConfig{
+	Name:     "ORDERS",
+	MaxBytes: 8,
+})
+
+// Create a Consumer
+js.AddConsumer("ORDERS", &nats.ConsumerConfig{
+	Durable: "MONITOR",
+})
+
+// Delete Consumer
+js.DeleteConsumer("ORDERS", "MONITOR")
+
+// Delete Stream
+js.DeleteStream("ORDERS")
 ```
 
 ## Encoded Connections
@@ -277,12 +357,26 @@ nc.Publish("foo.bar.baz", []byte("Hello World"))
 nc.QueueSubscribe("foo", "job_workers", func(_ *Msg) {
   received += 1;
 })
-
 ```
 
 ## Advanced Usage
 
 ```go
+
+// Normally, the library will return an error when trying to connect and
+// there is no server running. The RetryOnFailedConnect option will set
+// the connection in reconnecting state if it failed to connect right away.
+nc, err := nats.Connect(nats.DefaultURL,
+    nats.RetryOnFailedConnect(true),
+    nats.MaxReconnects(10),
+    nats.ReconnectWait(time.Second),
+    nats.ReconnectHandler(func(_ *nats.Conn) {
+        // Note that this will be invoked for the first asynchronous connect.
+    }))
+if err != nil {
+    // Should not return an error even if it can't connect, but you still
+    // need to check in case there are some configuration errors.
+}
 
 // Flush connection to server, returns when all messages have been processed.
 nc.Flush()

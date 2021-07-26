@@ -26,7 +26,7 @@ import (
 )
 
 // Version is the NATS Streaming Go Client version
-const Version = "0.8.2"
+const Version = "0.9.0"
 
 const (
 	// DefaultNatsURL is the default URL the client connects to
@@ -407,7 +407,7 @@ func Connect(stanClusterID, clientID string, options ...Option) (Conn, error) {
 	reply, err := c.nc.Request(discoverSubject, b, c.opts.ConnectTimeout)
 	if err != nil {
 		c.failConnect(err)
-		if err == nats.ErrTimeout {
+		if err == nats.ErrTimeout || err == nats.ErrNoResponders {
 			return nil, ErrConnectReqTimeout
 		}
 		return nil, err
@@ -544,6 +544,10 @@ func (sc *conn) processPingResponse(m *nats.Msg) {
 			sc.closeDueToPing(errors.New(pingResp.Error))
 			return
 		}
+	} else if m.Header.Get("Status") == "503" {
+		// If this is a no-responder, consider that we missed the reply.
+		// Simply return here and let pingServer() fail the connection.
+		return
 	}
 	// Do not attempt to decrement, simply reset to 0.
 	p := &sc.ping
@@ -659,7 +663,7 @@ func (sc *conn) Close() error {
 	b, _ := req.Marshal()
 	reply, err := sc.nc.Request(sc.closeRequests, b, sc.opts.ConnectTimeout)
 	if err != nil {
-		if err == nats.ErrTimeout {
+		if err == nats.ErrTimeout || err == nats.ErrNoResponders {
 			return ErrCloseReqTimeout
 		}
 		return err

@@ -30,7 +30,7 @@ When using or transitioning to Go modules support:
 ```bash
 # Go client latest or explicit version
 go get github.com/nats-io/stan.go/@latest
-go get github.com/nats-io/stan.go/@v0.7.0
+go get github.com/nats-io/stan.go/@v0.9.0
 ```
 
 ## Important things to know about reconnections.
