@@ -13,7 +13,7 @@ COPY vendor vendor
 
 RUN go install
 
-FROM alpine:3.13
+FROM alpine:3.14
 
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
