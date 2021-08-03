@@ -181,7 +181,7 @@ func main() {
 		)
 	}
 
-	prometheusQuery := metrics.NewPrometheusQuery(config.PrometheusHost, config.PrometheusPort, &http.Client{})
+	prometheusQuery := metrics.NewPrometheusQuery(config.PrometheusHost, config.PrometheusPort, config.PrometheusUser, config.PrometheusPassword, &http.Client{})
 	faasHandlers.ListFunctions = metrics.AddMetricsHandler(faasHandlers.ListFunctions, prometheusQuery)
 	faasHandlers.ScaleFunction = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer, serviceAuthInjector)
 

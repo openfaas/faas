@@ -5,6 +5,7 @@ package types
 
 import (
 	"fmt"
+	"os"
 	"testing"
 	"time"
 )
@@ -305,9 +306,32 @@ func TestRead_PrometheusNonDefaults(t *testing.T) {
 	defaults := NewEnvBucket()
 	defaults.Setenv("faas_prometheus_host", "prom1")
 	defaults.Setenv("faas_prometheus_port", "9999")
+	defaults.Setenv("faas_prometheus_user", "admin")
+	defaults.Setenv("faas_prometheus_password_secret", "passwordsecret.txt")
+
+	//Create test file
+	f, err := os.Create("passwordsecret.txt")
+	if err != nil {
+		t.Log(err)
+		t.Fail()
+	}
+	defer f.Close()
+
+	_, err = f.WriteString("testpassword")
+	if err != nil {
+		t.Log(err)
+		t.Fail()
+	}
+
 	readConfig := ReadConfig{}
 
+	//Remove test file after reading it
 	config, _ := readConfig.Read(defaults)
+	err = os.Remove("passwordsecret.txt")
+	if err != nil {
+		t.Log(err)
+		t.Fail()
+	}
 
 	if config.PrometheusHost != "prom1" {
 		t.Logf("config.PrometheusHost, want: %s, got: %s\n", "prom1", config.PrometheusHost)
@@ -316,6 +340,16 @@ func TestRead_PrometheusNonDefaults(t *testing.T) {
 
 	if config.PrometheusPort != 9999 {
 		t.Logf("config.PrometheusHost, want: %d, got: %d\n", 9999, config.PrometheusPort)
+		t.Fail()
+	}
+
+	if config.PrometheusUser != "admin" {
+		t.Logf("config.PrometheusUser, want: %s, got: %s\n", "admin", config.PrometheusUser)
+		t.Fail()
+	}
+
+	if config.PrometheusPassword != "testpassword" {
+		t.Logf("config.PrometheusPassword, want: %s, got: %s\n", "testpassword", config.PrometheusPassword)
 		t.Fail()
 	}
 }

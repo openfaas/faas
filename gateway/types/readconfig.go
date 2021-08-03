@@ -5,6 +5,7 @@ package types
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/url"
 	"os"
 	"strconv"
@@ -129,6 +130,20 @@ func (ReadConfig) Read(hasEnv HasEnv) (*GatewayConfig, error) {
 		cfg.PrometheusHost = prometheusHost
 	}
 
+	prometheusUser := hasEnv.Getenv("faas_prometheus_user")
+	if len(prometheusUser) > 0 {
+		cfg.PrometheusUser = prometheusUser
+	}
+
+	prometheusPasswordFile := hasEnv.Getenv("faas_prometheus_password_secret")
+	if len(prometheusPasswordFile) > 0 {
+		content, err := ioutil.ReadFile(prometheusPasswordFile)
+		if err != nil {
+			return nil, fmt.Errorf("Unable to read Prometheus password file: %v", err)
+		}
+		cfg.PrometheusPassword = string(content)
+	}
+
 	cfg.DirectFunctions = parseBoolValue(hasEnv.Getenv("direct_functions"))
 	cfg.DirectFunctionsSuffix = hasEnv.Getenv("direct_functions_suffix")
 
@@ -213,6 +228,12 @@ type GatewayConfig struct {
 
 	// Port to connect to Prometheus.
 	PrometheusPort int
+
+	// User to authenticate with Prometheus.
+	PrometheusUser string
+
+	// Password to authenticate with Prometheus.
+	PrometheusPassword string
 
 	// If set to true we will access upstream functions directly rather than through the upstream provider
 	DirectFunctions bool

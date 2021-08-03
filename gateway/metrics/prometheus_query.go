@@ -9,9 +9,11 @@ import (
 
 // PrometheusQuery represents parameters for querying Prometheus
 type PrometheusQuery struct {
-	Port   int
-	Host   string
-	Client *http.Client
+	Port     int
+	Host     string
+	User     string
+	Password string
+	Client   *http.Client
 }
 
 type PrometheusQueryFetcher interface {
@@ -19,11 +21,13 @@ type PrometheusQueryFetcher interface {
 }
 
 // NewPrometheusQuery create a NewPrometheusQuery
-func NewPrometheusQuery(host string, port int, client *http.Client) PrometheusQuery {
+func NewPrometheusQuery(host string, port int, user string, password string, client *http.Client) PrometheusQuery {
 	return PrometheusQuery{
-		Client: client,
-		Host:   host,
-		Port:   port,
+		Client:   client,
+		Host:     host,
+		Port:     port,
+		User:     user,
+		Password: password,
 	}
 }
 
@@ -33,6 +37,11 @@ func (q PrometheusQuery) Fetch(query string) (*VectorQueryResponse, error) {
 	req, reqErr := http.NewRequest(http.MethodGet, fmt.Sprintf("http://%s:%d/api/v1/query?query=%s", q.Host, q.Port, query), nil)
 	if reqErr != nil {
 		return nil, reqErr
+	}
+
+	//Set basic auth in request if added to configuration
+	if q.User != "" && q.Password != "" {
+		req.SetBasicAuth(q.User, q.Password)
 	}
 
 	res, getErr := q.Client.Do(req)
