@@ -21,6 +21,8 @@ Tell us more:
 
 * [3fs](https://3fs.si) - 3fs is using OpenFaaS for automating repetitive development tasks like automatic rebasing, vendoring of dependencies on merge requests and many other things that make our developers lives easier
 
+* [Breu](https://breu.io) - Breu is using OpenFaas to build an hybrid cloud end user monitoring solution.
+
 * [BT](https://www.bt.com) - BT are using OpenFaaS to enable collaboration between data-scientists and developers. The teams are going from 3-years to build and deliver a PoC, to 3 months. See: [KubeCon video](https://www.youtube.com/watch?v=y77HlN2Fa-w)
 
 * [BulletProof](https://www.bulletproof.co.uk/) - Bulletproof are using OpenFaaS to build an on demand and scalable Vulnerability Scanning (VA) engine. Using OpenFaaS allows us to use compute resource efficiently yet maintain the ability to grow to meet customer scanning demands. We also like the ability to use pure docker containers to compose multiple scanning tools with different technologies into a single, coherent interface. This has reduced the time need to add new tools to the platform.
