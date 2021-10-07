@@ -24,11 +24,11 @@ A common example of a poor introduction would be asking for technical support wi
 
 These kinds of interactions start with "we" and since we is a pronoun, it becomes an anonymous request detached from any context or relationship with the community. This is made worse if you do not list your employer on your GitHub profile or Slack account. The fix is easy, just say who you are and what your interest is, and what your ideal outcome is.
 
-The primary ways to engage with the community are via Slack, GitHub Issues and paid support
+The primary ways to engage with the community are via Slack, GitHub Issues and [Enterprise Support](https://openfaas.com/support/).
 
-* GitHub Issues - for suspected bugs and feature requests, fill out the whole template
+* GitHub Issues - for suspected bugs and feature requests, fill out the whole template. Do not use GitHub issues to ask for help with performance/load-testing and/or tuning, this is a professional service which you can get via Enterprise Support.
 * Slack - to share ideas, to chat with the community and to request help if things don't appear to be working as expected, or you're trying something new
-* Paid support - you will have an agreed way to contact OpenFaaS Ltd for direct support and help
+* Enterprise Support - you will have an agreed way to contact OpenFaaS Ltd for direct support and help
 
 See also: [The no-excuses guide to introducing yourself to a new open source project](https://opensource.com/education/13/7/introduce-yourself-open-source-project)
 
@@ -193,11 +193,13 @@ If you feel there is an issue with OpenFaaS or were unable to get the help you n
 
 * What kind of support can I expect for free?
 
-    If you are using one of the Open Source projects within the openfaas or openfaas-incubator repository, then help is offered on a good-will basis by volunteers. Support customers can request help from [employees of OpenFaaS Ltd](https://openfaas.com/support/).
+    OpenFaaS is licensed in a way that enables you to use the source code in or with your project or product.
 
-    Please be respectful of volunteer time, it is often limited to evenings and weekends. The person you are requesting help from may not reside in your timezone. 
+    If you are using one of the Open Source projects within the openfaas or openfaas-incubator repository, then help may be offered on a limited, good-will basis by volunteers, but if you are a commercial user, you will need to purchase support for timely help.
+    
+    Please be respectful of any time given to you and your needs. The person you are requesting help from may not reside in your timezone and contacting them via direct message is inappropriate.
 
-    The Slack workspace is the best place to ask questions, suggest features, and to get help. The GitHub issue tracker can be used for suspected issues with the codebase or deployment artifacts.
+    The Slack workspace is the best place to ask questions, suggest features, and to get help. The GitHub issue tracker can be used for suspected issues with the codebase or deployment artifacts. The whole template must be filled out in detail.
 
 * Doesn't Open Source mean that everything is free?
 
@@ -212,6 +214,8 @@ If you feel there is an issue with OpenFaaS or were unable to get the help you n
     If you see an issue which does not have a response or does not have a resolution, it does not mean that it is not important, or that it is being ignored. It simply means it has not been worked on by a volunteer yet.
 
     Please take responsibility for following up on your Issues if you feel further action is required.
+
+    If you are a business using OpenFaaS and need timely and attentive responses, then you should purchase Enterprise Support from OpenFaaS Ltd.
 
 * What is the SLA for my Pull Request?
 
@@ -237,14 +241,13 @@ If you feel there is an issue with OpenFaaS or were unable to get the help you n
 
 * What if I need more than that?
 
-    If you're a company using any of these projects, you can get the following through a [support agreement with OpenFaaS Ltd](https://openfaas.com/support/) so that the time can be paid for to help your business.
+    If you're a company using any of these projects, you can get the following through an [Enterprise Support agreement with OpenFaaS Ltd](https://openfaas.com/support/) so that the time and resources required to support your business are paid for.
 
     A support agreement can be tailored to your needs, you may benefit from support, if you need any of the following:
 
+    * security issues patched in a timely manner for all 40 +/- open source components
     * priority responses to issues/PRs
-    * feature prioritisation
-    * emergency help via Zoom
-    * 1:1 consultations
+    * immediate help and access to experts
 
 #### I need to add a dependency
 
