@@ -1,6 +1,6 @@
 ## OpenFaaS &reg; - Serverless Functions Made Simple
 
-[![Build Status](https://github.com/openfaas/faas/actions/workflows/build.yml/badge.svg)](https://travis-ci.com/openfaas/faas)
+[![Build Status](https://github.com/openfaas/faas/actions/workflows/build.yml/badge.svg)](https://github.com/openfaas/faas/actions/workflows/build.yml)
 [![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/openfaas/faas)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![OpenFaaS](https://img.shields.io/badge/openfaas-serverless-blue.svg)](https://www.openfaas.com)
