@@ -56,6 +56,8 @@ LABEL org.label-schema.license="MIT" \
     org.label-schema.vendor="openfaas" \
     org.label-schema.docker.schema-version="1.0"
 
+LABEL org.opencontainers.image.source=https://github.com/openfaas/faas
+
 RUN addgroup -S app \
     && adduser -S -g app app \
     && apk add --no-cache ca-certificates
