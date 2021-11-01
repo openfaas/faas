@@ -23,6 +23,8 @@ Tell us more:
 
 * [BT](https://www.bt.com) - BT are using OpenFaaS to enable collaboration between data-scientists and developers. The teams are going from 3-years to build and deliver a PoC, to 3 months. See: [KubeCon video](https://www.youtube.com/watch?v=y77HlN2Fa-w)
 
+* [Breu](https://breu.io) - Breu is using OpenFaaS to build an end user monitoring solution for hybrid cloud.
+
 * [BulletProof](https://www.bulletproof.co.uk/) - Bulletproof are using OpenFaaS to build an on demand and scalable Vulnerability Scanning (VA) engine. Using OpenFaaS allows us to use compute resource efficiently yet maintain the ability to grow to meet customer scanning demands. We also like the ability to use pure docker containers to compose multiple scanning tools with different technologies into a single, coherent interface. This has reduced the time need to add new tools to the platform.
 
 * [Citrix](https://www.citrix.com/en-gb/) - Citrix built out a closed-source multi-tenant functions platform and UI using OpenFaaS. It is used for testing hardware devices and for automated QA testing.
