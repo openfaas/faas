@@ -24,12 +24,6 @@ required_in_issues:
   - "## Your Environment"
 
 custom_messages:
-  - name: slack
-    value: |
-           --
-           Join Slack to connect with the community
-           https://docs.openfaas.com/community
-
   - name: template
     value: |
            Thank you for your interest in the project.

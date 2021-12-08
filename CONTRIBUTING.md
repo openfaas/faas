@@ -22,19 +22,16 @@ A common example of a poor introduction would be asking for technical support wi
 > 
 > "We also had this issue"
 
-These kinds of interactions start with "we" and since we is a pronoun, it becomes an anonymous request detached from any context or relationship with the community. This is made worse if you do not list your employer on your GitHub profile or Slack account. The fix is easy, just say who you are and what your interest is, and what your ideal outcome is.
+These kinds of interactions start with "we" and since we is a pronoun, it becomes an anonymous request detached from any context or relationship with the community. The fix is easy, just say who you are and what your interest is, and what your ideal outcome is.
 
-The primary ways to engage with the community are via Slack, GitHub Issues and [Enterprise Support](https://openfaas.com/support/).
+The primary ways to engage with the community are via GitHub Issues and [Enterprise Support](https://openfaas.com/support/).
 
 * GitHub Issues - for suspected bugs and feature requests, fill out the whole template. Do not use GitHub issues to ask for help with performance/load-testing and/or tuning, this is a professional service which you can get via Enterprise Support.
-* Slack - to share ideas, to chat with the community and to request help if things don't appear to be working as expected, or you're trying something new
 * Enterprise Support - you will have an agreed way to contact OpenFaaS Ltd for direct support and help
 
 See also: [The no-excuses guide to introducing yourself to a new open source project](https://opensource.com/education/13/7/introduce-yourself-open-source-project)
 
 ### How can I get involved?
-
-The Slack community is the best place to keep up to date with the project and to get help contributing. Here we exchange ideas, ask questions and chat about OpenFaaS. There are also channels for Raspberry Pi/ARM, Kubernetes and other cloud-native topics. (*See below for how to join*)
 
 There are a number of areas where contributions can be accepted:
 
@@ -46,9 +43,9 @@ There are a number of areas where contributions can be accepted:
 * Get involved in design reviews and technical proof-of-concepts (PoCs)
 * Help release and package OpenFaaS including the helm chart, compose files, `kubectl` YAML, marketplaces and stores
 * Manage, triage and research Issues and Pull Requests
-* Engage with the growing community by providing technical support on Slack/GitHub
+* Engage with the growing community by providing technical support on GitHub
 * Create docs, guides and write blogs
-* Speak at meet-ups, conferences or by helping folks with OpenFaaS on Slack
+* Speak at meet-ups, conferences or by asking where you can be of help
 
 This is just a short list of ideas, if you have other ideas for contributing please make a suggestion.
 
@@ -183,11 +180,9 @@ at the very beginning of the test, and it will fail the test if it detects gorou
 
 #### I have a question, a suggestion or need help
 
-If you have a simple question you can [join the Slack community](https://docs.openfaas.com/community) and ask there, but please bear in mind that contributors may live in a different timezone or be working to a different timeline to you. If you have an urgent request then let them know about this.
-
 If you have a deeply technical request or need help debugging your application then you should prepare a simple, public GitHub repository with the minimum amount of code required to reproduce the issue. 
 
-If you feel there is an issue with OpenFaaS or were unable to get the help you needed from the Slack channels then raise an issue on one of the GitHub repositories.
+If you feel there is an issue with OpenFaaS or were unable to get the help you needed from the GitHub, [then send us an email](https://openfaas.com/support/)
 
 #### Setting expectations, support and SLAs
 
@@ -199,13 +194,14 @@ If you feel there is an issue with OpenFaaS or were unable to get the help you n
     
     Please be respectful of any time given to you and your needs. The person you are requesting help from may not reside in your timezone and contacting them via direct message is inappropriate.
 
-    The Slack workspace is the best place to ask questions, suggest features, and to get help. The GitHub issue tracker can be used for suspected issues with the codebase or deployment artifacts. The whole template must be filled out in detail.
+    Enterprise support is the best place to ask questions, suggest features, and to get help. The GitHub issue tracker can be used for suspected issues with the codebase or deployment artifacts. The whole template must be filled out in detail.
 
 * Doesn't Open Source mean that everything is free?
 
     The OpenFaaS projects are licensed as MIT which means that you are free to use, modify and distribute the software within the terms of the license.
     
-    Contributions, suggestions and feedback is welcomed in the appropriate channels as outlined in this guide. The MIT license does not cover support for PRs, Issues, Slack questions, feature requests and technical support/professional services which you may require; the preceding are not free and have a cost to those providing the services. Where possible, this time may be volunteered for free, but it is not unlimited.
+    Contributions, suggestions and feedback is welcomed in the appropriate channels as outlined in this guide. The MIT license does not cover support for PRs, Issues, Technical
+    Support questions, feature requests and technical support/professional services which you may require; the preceding are not free and have a cost to those providing the services. Where possible, this time may be volunteered for free, but it is not unlimited.
 
 * What is the SLA for my Issue?
 
@@ -375,19 +371,6 @@ If you have been added to the `.DEREK.yml` file in the root of an OpenFaaS repos
 
 If you are a contributor then you are welcome to request access.
 
-#### Community/project meetings and calls
-
-The community calls are held on Zoom on a regular basis with invitations sent out via email ahead of time.
-
-General format:
-
-- Project updates/briefing
-- Round-table intros/updates
-- Demos of features/new work from community
-- Q&A
-
-If you would like invites, sign-up to Slack and pick "Yes" to Community Events and Updates.
-
 ## Branding guidelines
 
 For press, branding, logos and marks see the [OpenFaaS media repository](https://github.com/openfaas/media).
@@ -399,23 +382,6 @@ This project is written in Golang but many of the community contributions so far
 ### Community file
 
 The [community.md](https://github.com/openfaas/faas/blob/master/community.md) file highlights blogs, talks and code repos with example FaaS functions and usages. Please send a Pull Request if you are doing something cool with OpenFaaS.
-
-### Slack
-
-There is an Slack community which you are welcome to join to discuss OpenFaaS, OpenFaaS Cloud, Kubernetes, Serverless, FaaS, IoT, and ARM / Raspberry Pi.
-
-[Join Slack here](https://docs.openfaas.com/community/)
-
-Getting the best out of Slack
-
-* Explore the channels and post your question or comment into one of them
-* Don't post the same question into multiple channels if you don't get an answer immediately
-* Slack is asynchronous and you may not receive an answer to your question. Commercial support is available, but you are also welcome to ask the question again or in a different way after a reasonable amount of time has passed.
-* Shorter, specific questions are more likely to be answered than longer bodies of text
-* If you can share a code example, it may improve the chances of getting help. There is no need to share confidential code, instead try to create a small sample that reproduces the issue.
-
-* Please be kind to your other participants within the community and bear in mind that English may not be everybody's first language.
-* Moderators reserve the right to remove messages which may be deemed to be antagonistic, lacking context, a plug for a product, or off-topic. 
 
 ### Roadmap
 

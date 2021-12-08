@@ -57,9 +57,3 @@ Check at: https://github.com/sponsors/openfaas
 * Code example or link to GitHub repo or gist to reproduce problem:
 
 * Other diagnostic information / logs from [troubleshooting guide](https://docs.openfaas.com/deployment/troubleshooting)
-
-
-## Next steps
-
-You may [join Slack](https://docs.openfaas.com/community) for community support.
-

@@ -119,9 +119,8 @@ OpenFaaS users can subscribe to a weekly Community Newsletter called Insiders Up
 
 ### Support & getting help
 
+* [Commercial support](https://www.openfaas.com/support) - contact OpenFaaS Ltd about how we can help you with OpenFaaS
 * [Cloud Native Consulting](https://www.openfaas.com/consulting) - get hands-on expert help with your cloud, Kubernetes and OpenFaaS migration and projects
-* [Commercial support](https://www.openfaas.com/support) - a subscription service from OpenFaaS Ltd
-* [Join Slack](https://docs.openfaas.com/community) - run by community volunteers
 
 ### Online training
 
@@ -162,8 +161,6 @@ Deploy OpenFaaS to Kubernetes, OpenShift, or faasd [deployment guides](https://d
 Have you written a blog about OpenFaaS? Do you have a speaking event? Send a Pull Request to the community page below.
 
 * [Read blogs/articles and find events about OpenFaaS](https://github.com/openfaas/faas/blob/master/community.md)
-
-If you'd like to join OpenFaaS community Slack channel to chat with contributors or get some help then check out [this page on community](https://docs.openfaas.com/community).
 
 ### Roadmap and contributing
 
