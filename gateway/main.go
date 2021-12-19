@@ -4,6 +4,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -14,6 +15,7 @@ import (
 	"github.com/openfaas/faas/gateway/handlers"
 	"github.com/openfaas/faas/gateway/metrics"
 	"github.com/openfaas/faas/gateway/pkg/middleware"
+	"github.com/openfaas/faas/gateway/pkg/tracing"
 	"github.com/openfaas/faas/gateway/plugin"
 	"github.com/openfaas/faas/gateway/scaling"
 	"github.com/openfaas/faas/gateway/types"
@@ -45,6 +47,12 @@ func main() {
 	}
 
 	log.Printf("Binding to external function provider: %s", config.FunctionsProviderURL)
+
+	shutdown, err := tracing.Provider(context.TODO(), "gateway", version.Version, version.GitCommitMessage)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer shutdown(context.TODO())
 
 	// credentials is used for service-to-service auth
 	var credentials *auth.BasicAuthCredentials
@@ -154,6 +162,7 @@ func main() {
 		scaler := scaling.NewFunctionScaler(scalingConfig, scalingFunctionCache)
 		functionProxy = handlers.MakeScalingHandler(faasHandlers.Proxy, scaler, scalingConfig, config.Namespace)
 	}
+	functionProxy = tracing.Middleware(tracing.ConstantName("FunctionProxy"), functionProxy)
 
 	if config.UseNATS() {
 		log.Println("Async enabled: Using NATS Streaming.")

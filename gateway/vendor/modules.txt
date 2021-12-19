@@ -1,29 +1,40 @@
 # github.com/beorn7/perks v1.0.1
 github.com/beorn7/perks/quantile
+# github.com/cenkalti/backoff/v4 v4.1.2
+github.com/cenkalti/backoff/v4
 # github.com/cespare/xxhash/v2 v2.1.1
 github.com/cespare/xxhash/v2
 # github.com/docker/distribution v2.7.1+incompatible
 ## explicit
 github.com/docker/distribution/uuid
+# github.com/go-logr/logr v1.2.1
+github.com/go-logr/logr
+github.com/go-logr/logr/funcr
+# github.com/go-logr/stdr v1.2.0
+github.com/go-logr/stdr
 # github.com/gogo/protobuf v1.3.2
 github.com/gogo/protobuf/gogoproto
 github.com/gogo/protobuf/proto
 github.com/gogo/protobuf/protoc-gen-gogo/descriptor
 # github.com/golang/protobuf v1.5.2
+github.com/golang/protobuf/descriptor
+github.com/golang/protobuf/jsonpb
 github.com/golang/protobuf/proto
+github.com/golang/protobuf/protoc-gen-go/descriptor
 github.com/golang/protobuf/ptypes
 github.com/golang/protobuf/ptypes/any
 github.com/golang/protobuf/ptypes/duration
 github.com/golang/protobuf/ptypes/timestamp
+github.com/golang/protobuf/ptypes/wrappers
 # github.com/gorilla/mux v1.8.0
 ## explicit
 github.com/gorilla/mux
+# github.com/grpc-ecosystem/grpc-gateway v1.16.0
+github.com/grpc-ecosystem/grpc-gateway/internal
+github.com/grpc-ecosystem/grpc-gateway/runtime
+github.com/grpc-ecosystem/grpc-gateway/utilities
 # github.com/matttproud/golang_protobuf_extensions v1.0.1
 github.com/matttproud/golang_protobuf_extensions/pbutil
-# github.com/nats-io/nats-server/v2 v2.3.2
-## explicit
-# github.com/nats-io/nats-streaming-server v0.22.0
-## explicit
 # github.com/nats-io/nats.go v1.11.1-0.20210623165838-4b75fc59ae30
 github.com/nats-io/nats.go
 github.com/nats-io/nats.go/encoders/builtin
@@ -59,31 +70,144 @@ github.com/prometheus/common/model
 github.com/prometheus/procfs
 github.com/prometheus/procfs/internal/fs
 github.com/prometheus/procfs/internal/util
-# go.uber.org/goleak v1.1.10
+# go.opentelemetry.io/contrib/propagators/jaeger v1.3.0
+## explicit
+go.opentelemetry.io/contrib/propagators/jaeger
+# go.opentelemetry.io/otel v1.3.0
+## explicit
+go.opentelemetry.io/otel
+go.opentelemetry.io/otel/attribute
+go.opentelemetry.io/otel/baggage
+go.opentelemetry.io/otel/codes
+go.opentelemetry.io/otel/internal
+go.opentelemetry.io/otel/internal/baggage
+go.opentelemetry.io/otel/internal/global
+go.opentelemetry.io/otel/propagation
+go.opentelemetry.io/otel/semconv/v1.4.0
+go.opentelemetry.io/otel/semconv/v1.7.0
+# go.opentelemetry.io/otel/exporters/jaeger v1.3.0
+## explicit
+go.opentelemetry.io/otel/exporters/jaeger
+go.opentelemetry.io/otel/exporters/jaeger/internal/gen-go/agent
+go.opentelemetry.io/otel/exporters/jaeger/internal/gen-go/jaeger
+go.opentelemetry.io/otel/exporters/jaeger/internal/gen-go/zipkincore
+go.opentelemetry.io/otel/exporters/jaeger/internal/third_party/thrift/lib/go/thrift
+# go.opentelemetry.io/otel/exporters/otlp/internal/retry v1.3.0
+go.opentelemetry.io/otel/exporters/otlp/internal/retry
+# go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.3.0
+## explicit
+go.opentelemetry.io/otel/exporters/otlp/otlptrace
+go.opentelemetry.io/otel/exporters/otlp/otlptrace/internal/otlpconfig
+go.opentelemetry.io/otel/exporters/otlp/otlptrace/internal/tracetransform
+# go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.3.0
+## explicit
+go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc
+# go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.3.0
+## explicit
+go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp
+# go.opentelemetry.io/otel/exporters/stdout/stdouttrace v1.3.0
+## explicit
+go.opentelemetry.io/otel/exporters/stdout/stdouttrace
+# go.opentelemetry.io/otel/sdk v1.3.0
+## explicit
+go.opentelemetry.io/otel/sdk/instrumentation
+go.opentelemetry.io/otel/sdk/internal
+go.opentelemetry.io/otel/sdk/resource
+go.opentelemetry.io/otel/sdk/trace
+go.opentelemetry.io/otel/sdk/trace/tracetest
+# go.opentelemetry.io/otel/trace v1.3.0
+## explicit
+go.opentelemetry.io/otel/trace
+# go.opentelemetry.io/proto/otlp v0.11.0
+go.opentelemetry.io/proto/otlp/collector/trace/v1
+go.opentelemetry.io/proto/otlp/common/v1
+go.opentelemetry.io/proto/otlp/resource/v1
+go.opentelemetry.io/proto/otlp/trace/v1
+# go.uber.org/goleak v1.1.12
 ## explicit
 go.uber.org/goleak
 go.uber.org/goleak/internal/stack
 # golang.org/x/crypto v0.0.0-20210616213533-5ff15b29337e
 golang.org/x/crypto/ed25519
 golang.org/x/crypto/ed25519/internal/edwards25519
-# golang.org/x/lint v0.0.0-20190930215403-16217165b5de
-golang.org/x/lint
-golang.org/x/lint/golint
+# golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
+golang.org/x/net/http/httpguts
+golang.org/x/net/http2
+golang.org/x/net/http2/hpack
+golang.org/x/net/idna
+golang.org/x/net/internal/timeseries
+golang.org/x/net/trace
 # golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/tools v0.0.0-20210106214847-113979e3529a
-golang.org/x/tools/go/ast/astutil
-golang.org/x/tools/go/gcexportdata
-golang.org/x/tools/go/internal/gcimporter
-# google.golang.org/protobuf v1.26.0
+golang.org/x/sys/windows/registry
+# golang.org/x/text v0.3.3
+golang.org/x/text/secure/bidirule
+golang.org/x/text/transform
+golang.org/x/text/unicode/bidi
+golang.org/x/text/unicode/norm
+# google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013
+google.golang.org/genproto/googleapis/api/httpbody
+google.golang.org/genproto/googleapis/rpc/errdetails
+google.golang.org/genproto/googleapis/rpc/status
+google.golang.org/genproto/protobuf/field_mask
+# google.golang.org/grpc v1.42.0
+google.golang.org/grpc
+google.golang.org/grpc/attributes
+google.golang.org/grpc/backoff
+google.golang.org/grpc/balancer
+google.golang.org/grpc/balancer/base
+google.golang.org/grpc/balancer/grpclb/state
+google.golang.org/grpc/balancer/roundrobin
+google.golang.org/grpc/binarylog/grpc_binarylog_v1
+google.golang.org/grpc/codes
+google.golang.org/grpc/connectivity
+google.golang.org/grpc/credentials
+google.golang.org/grpc/encoding
+google.golang.org/grpc/encoding/gzip
+google.golang.org/grpc/encoding/proto
+google.golang.org/grpc/grpclog
+google.golang.org/grpc/internal
+google.golang.org/grpc/internal/backoff
+google.golang.org/grpc/internal/balancerload
+google.golang.org/grpc/internal/binarylog
+google.golang.org/grpc/internal/buffer
+google.golang.org/grpc/internal/channelz
+google.golang.org/grpc/internal/credentials
+google.golang.org/grpc/internal/envconfig
+google.golang.org/grpc/internal/grpclog
+google.golang.org/grpc/internal/grpcrand
+google.golang.org/grpc/internal/grpcsync
+google.golang.org/grpc/internal/grpcutil
+google.golang.org/grpc/internal/metadata
+google.golang.org/grpc/internal/resolver
+google.golang.org/grpc/internal/resolver/dns
+google.golang.org/grpc/internal/resolver/passthrough
+google.golang.org/grpc/internal/resolver/unix
+google.golang.org/grpc/internal/serviceconfig
+google.golang.org/grpc/internal/status
+google.golang.org/grpc/internal/syscall
+google.golang.org/grpc/internal/transport
+google.golang.org/grpc/internal/transport/networktype
+google.golang.org/grpc/internal/xds/env
+google.golang.org/grpc/keepalive
+google.golang.org/grpc/metadata
+google.golang.org/grpc/peer
+google.golang.org/grpc/resolver
+google.golang.org/grpc/serviceconfig
+google.golang.org/grpc/stats
+google.golang.org/grpc/status
+google.golang.org/grpc/tap
+# google.golang.org/protobuf v1.27.1
+google.golang.org/protobuf/encoding/protojson
 google.golang.org/protobuf/encoding/prototext
 google.golang.org/protobuf/encoding/protowire
 google.golang.org/protobuf/internal/descfmt
 google.golang.org/protobuf/internal/descopts
 google.golang.org/protobuf/internal/detrand
 google.golang.org/protobuf/internal/encoding/defval
+google.golang.org/protobuf/internal/encoding/json
 google.golang.org/protobuf/internal/encoding/messageset
 google.golang.org/protobuf/internal/encoding/tag
 google.golang.org/protobuf/internal/encoding/text
@@ -107,4 +231,6 @@ google.golang.org/protobuf/runtime/protoimpl
 google.golang.org/protobuf/types/descriptorpb
 google.golang.org/protobuf/types/known/anypb
 google.golang.org/protobuf/types/known/durationpb
+google.golang.org/protobuf/types/known/fieldmaskpb
 google.golang.org/protobuf/types/known/timestamppb
+google.golang.org/protobuf/types/known/wrapperspb
