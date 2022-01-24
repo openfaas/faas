@@ -83,7 +83,7 @@ func Test_FunctionsHandler_ReturnsJSONAndOneFunction(t *testing.T) {
 func makeFunctionsHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		functions := []types.FunctionStatus{
-			types.FunctionStatus{
+			{
 				Name:      "func_echoit",
 				Replicas:  0,
 				Namespace: "openfaas-fn",

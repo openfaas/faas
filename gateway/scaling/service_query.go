@@ -17,4 +17,5 @@ type ServiceQueryResponse struct {
 	ScalingFactor     uint64
 	AvailableReplicas uint64
 	Annotations       *map[string]string
+	TargetLoad        uint64
 }
