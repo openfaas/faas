@@ -100,12 +100,15 @@ func (s ExternalServiceQuery) GetReplicas(serviceName, serviceNamespace string) 
 	scalingFactor := uint64(scaling.DefaultScalingFactor)
 	availableReplicas := function.AvailableReplicas
 
+	targetLoad := uint64(scaling.DefaultTargetLoad)
+
 	if function.Labels != nil {
 		labels := *function.Labels
 
 		minReplicas = extractLabelValue(labels[scaling.MinScaleLabel], minReplicas)
 		maxReplicas = extractLabelValue(labels[scaling.MaxScaleLabel], maxReplicas)
 		extractedScalingFactor := extractLabelValue(labels[scaling.ScalingFactorLabel], scalingFactor)
+		targetLoad = extractLabelValue(labels[scaling.TargetLoadLabel], targetLoad)
 
 		if extractedScalingFactor >= 0 && extractedScalingFactor <= 100 {
 			scalingFactor = extractedScalingFactor
@@ -113,6 +116,7 @@ func (s ExternalServiceQuery) GetReplicas(serviceName, serviceNamespace string) 
 			log.Printf("Bad Scaling Factor: %d, is not in range of [0 - 100]. Will fallback to %d", extractedScalingFactor, scalingFactor)
 		}
 	}
+
 	log.Printf("GetReplicas [%s.%s] took: %fs", serviceName, serviceNamespace, time.Since(start).Seconds())
 
 	return scaling.ServiceQueryResponse{
@@ -122,6 +126,7 @@ func (s ExternalServiceQuery) GetReplicas(serviceName, serviceNamespace string) 
 		ScalingFactor:     scalingFactor,
 		AvailableReplicas: availableReplicas,
 		Annotations:       function.Annotations,
+		TargetLoad:        targetLoad,
 	}, err
 }
 

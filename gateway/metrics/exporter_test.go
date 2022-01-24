@@ -44,21 +44,21 @@ func Test_Describe_DescribesThePrometheusMetrics(t *testing.T) {
 	expectedGatewayFunctionInvocationDesc := `Desc{fqName: "gateway_function_invocation_total", help: "Function metrics", constLabels: {}, variableLabels: [function_name code]}`
 	actualGatewayFunctionInvocationDesc := d.String()
 	if expectedGatewayFunctionInvocationDesc != actualGatewayFunctionInvocationDesc {
-		t.Errorf("Want %s, got: %s", expectedGatewayFunctionInvocationDesc, actualGatewayFunctionInvocationDesc)
+		t.Errorf("Want\n%s\ngot\n%s", expectedGatewayFunctionInvocationDesc, actualGatewayFunctionInvocationDesc)
 	}
 
 	d = <-ch
 	expectedGatewayFunctionsHistogramDesc := `Desc{fqName: "gateway_functions_seconds", help: "Function time taken", constLabels: {}, variableLabels: [function_name]}`
 	actualGatewayFunctionsHistogramDesc := d.String()
 	if expectedGatewayFunctionsHistogramDesc != actualGatewayFunctionsHistogramDesc {
-		t.Errorf("Want %s, got: %s", expectedGatewayFunctionsHistogramDesc, actualGatewayFunctionsHistogramDesc)
+		t.Errorf("Want\n%s\ngot\n%s", expectedGatewayFunctionsHistogramDesc, actualGatewayFunctionsHistogramDesc)
 	}
 
 	d = <-ch
-	expectedServiceReplicasGaugeDesc := `Desc{fqName: "gateway_service_count", help: "Service replicas", constLabels: {}, variableLabels: [function_name]}`
+	expectedServiceReplicasGaugeDesc := `Desc{fqName: "gateway_service_count", help: "Current count of replicas for function", constLabels: {}, variableLabels: [function_name]}`
 	actualServiceReplicasGaugeDesc := d.String()
 	if expectedServiceReplicasGaugeDesc != actualServiceReplicasGaugeDesc {
-		t.Errorf("Want %s, got: %s", expectedServiceReplicasGaugeDesc, actualServiceReplicasGaugeDesc)
+		t.Errorf("Want\n%s\ngot\n%s", expectedServiceReplicasGaugeDesc, actualServiceReplicasGaugeDesc)
 	}
 
 }

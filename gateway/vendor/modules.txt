@@ -20,10 +20,6 @@ github.com/golang/protobuf/ptypes/timestamp
 github.com/gorilla/mux
 # github.com/matttproud/golang_protobuf_extensions v1.0.1
 github.com/matttproud/golang_protobuf_extensions/pbutil
-# github.com/nats-io/nats-server/v2 v2.3.2
-## explicit
-# github.com/nats-io/nats-streaming-server v0.22.0
-## explicit
 # github.com/nats-io/nats.go v1.11.1-0.20210623165838-4b75fc59ae30
 github.com/nats-io/nats.go
 github.com/nats-io/nats.go/encoders/builtin
@@ -35,7 +31,7 @@ github.com/nats-io/nuid
 # github.com/nats-io/stan.go v0.9.0
 github.com/nats-io/stan.go
 github.com/nats-io/stan.go/pb
-# github.com/openfaas/faas-provider v0.18.6
+# github.com/openfaas/faas-provider v0.18.7
 ## explicit
 github.com/openfaas/faas-provider/auth
 github.com/openfaas/faas-provider/types
