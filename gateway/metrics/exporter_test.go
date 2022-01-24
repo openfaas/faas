@@ -75,7 +75,6 @@ func Test_Collect_CollectsTheNumberOfReplicasOfAService(t *testing.T) {
 	exporter.services = []types.FunctionStatus{expectedService}
 
 	ch := make(chan prometheus.Metric)
-	defer close(ch)
 
 	go exporter.Collect(ch)
 
@@ -88,4 +87,6 @@ func Test_Collect_CollectsTheNumberOfReplicasOfAService(t *testing.T) {
 	if expectedReplicas != result.value {
 		t.Errorf("Want %f, got %f", expectedReplicas, result.value)
 	}
+	ch = nil
+
 }
