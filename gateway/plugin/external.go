@@ -25,6 +25,9 @@ type ExternalServiceQuery struct {
 	URL          url.URL
 	ProxyClient  http.Client
 	AuthInjector middleware.AuthInjector
+
+	// IncludeUsage includes usage metrics in the response
+	IncludeUsage bool
 }
 
 // NewExternalServiceQuery proxies service queries to external plugin via HTTP
@@ -49,6 +52,7 @@ func NewExternalServiceQuery(externalURL url.URL, authInjector middleware.AuthIn
 		URL:          externalURL,
 		ProxyClient:  proxyClient,
 		AuthInjector: authInjector,
+		IncludeUsage: false,
 	}
 }
 
@@ -61,7 +65,11 @@ func (s ExternalServiceQuery) GetReplicas(serviceName, serviceNamespace string) 
 
 	function := types.FunctionStatus{}
 
-	urlPath := fmt.Sprintf("%ssystem/function/%s?namespace=%s", s.URL.String(), serviceName, serviceNamespace)
+	urlPath := fmt.Sprintf("%ssystem/function/%s?namespace=%s&usage=%v",
+		s.URL.String(),
+		serviceName,
+		serviceNamespace,
+		s.IncludeUsage)
 
 	req, err := http.NewRequest(http.MethodGet, urlPath, nil)
 	if err != nil {

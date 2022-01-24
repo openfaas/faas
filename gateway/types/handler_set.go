@@ -15,7 +15,9 @@ type HandlerSet struct {
 
 	// ListFunctions lists all deployed functions in a namespace
 	ListFunctions http.HandlerFunc
-	Alert         http.HandlerFunc
+
+	// Alert handles alerts triggered from AlertManager
+	Alert http.HandlerFunc
 
 	// UpdateFunction updates an existing function
 	UpdateFunction http.HandlerFunc
