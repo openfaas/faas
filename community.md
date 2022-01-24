@@ -83,6 +83,14 @@ It would be great to hear from you especially if you have any of the above and w
 | [Digital Transformation of Vision Banco Paraguay with Serverless Functions @ KubeCon](https://kccna18.sched.com/event/GraO/digital-transformation-of-vision-banco-paraguay-with-serverless-functions-alex-ellis-vmware-patricio-diaz-vision-banco-saeca) | Alex Ellis & Patricio Diaz | 13-Dec-2018 |
 | [Introducing "faas" - Cool Hacks Keynote at Dockercon 2017](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/) | Alex Ellis | 04-April-2017 |
 
+### 2022
+
+#### Blog posts and write-ups 2022
+
+| Blog/repo name and description                                          | Author       | Site     | Date        |
+|-------------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFaaS and HashiCorp Vault](https://johansiebens.dev/posts/2022/01/openfaas-and-hashicorp-vault/) | Johan Siebens | johansiebens.dev | 21-Jan-2022 |
+
 ### 2021
 
 #### Blog posts and write-ups 2021
