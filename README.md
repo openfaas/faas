@@ -103,7 +103,7 @@ Official templates exist for many popular languages and are easily extensible wi
 View our [official training materials](https://docs.openfaas.com/tutorials/training)
 
 ### Official eBook and video workshop
-[![eBook logo](https://static-2.gumroad.com/res/gumroad/2028406193591/asset_previews/741f2ad46ff0a08e16aaf48d21810ba7/retina/social4.png)](https://gumroad.com/l/serverless-for-everyone-else)
+[![eBook logo](https://www.alexellis.io/serverless.png)](https://gumroad.com/l/serverless-for-everyone-else)
 
 The founder of OpenFaaS wrote *Serverless For Everyone Else* to help developers understand the use-case for functions through practical hands-on exercises using JavaScript and Node.js. No programming experience is required to try the exercises.
 
