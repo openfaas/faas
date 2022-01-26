@@ -99,6 +99,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [OpenFaaS - Run Containerized Functions On Your Own Terms](https://iximiuz.com/en/posts/openfaas-case-study/) | Ivan Velichko | iximiuz.com | 02-Dec-2021 |
 | [OpenFaaS on RHOCP 4.x – Part 1](https://community.ibm.com/community/user/publiccloud/blogs/alexei-karve/2021/07/06/openfaas-on-rhocp-1) | Alexei Karve | community.ibm.com | 06-July-2021 |
 | [Kubernetes in Docker (KinD) で OpenFaaS を動かす！](https://yoh1496.hatenablog.com/entry/2021/05/17/182207) | ishiguro-yo | yoh1496.hatenablog.com | 17-May-2021 |
 | [Secure Serverless with OpenFaaS](https://dev.to/mikeyglitz/secure-serverless-with-openfaas-509b) | Michael Glitzos | medium.com | 14-May-2021 |
