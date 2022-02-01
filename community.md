@@ -6,11 +6,11 @@ Welcome to the OpenFaaS community page where you can find:
 * [Function Providers/Back-ends](#openfaas-providers)
 * [Commercial adoption and end-users](https://github.com/openfaas/faas/blob/master/ADOPTERS.md)
 
+* Blog posts and write-ups
+    * [2017](#blog-posts-and-write-ups-2017) [2018](#blog-posts-and-write-ups-2018) [2019](#blog-posts-and-write-ups-2019) [2020](#blog-posts-and-write-ups-2020) [2021](#blog-posts-and-write-ups-2021) [2022](#blog-posts-and-write-ups-2022)
+
 * Events
     * [2017](#events-in-2017) [2018](#events-in-2018) [2019](#events-in-2019) [2020](#events-in-2020)
-
-* Blog posts and write-ups
-    * [2017](#blog-posts-and-write-ups-2017) [2018](#blog-posts-and-write-ups-2018) [2019](#blog-posts-and-write-ups-2019) [2020](#blog-posts-and-write-ups-2020)
 
 * [Repositories - Projects, Samples, and Use Cases](#repositories)
 
@@ -89,7 +89,10 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Dude where's my coldstart?](https://www.openfaas.com/blog/what-serverless-coldstart/) | Alex Ellis | openfaas.com | 19-Jan-2022 |
+| [OpenFaaS Highlights from 2021](https://www.openfaas.com/blog/highlights-2021/) | Alex Ellis | openfaas.com | 04-Jan-2022 |
 | [OpenFaaS and HashiCorp Vault](https://johansiebens.dev/posts/2022/01/openfaas-and-hashicorp-vault/) | Johan Siebens | johansiebens.dev | 21-Jan-2022 |
+
 
 ### 2021
 
@@ -99,7 +102,12 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Configure your OpenFaaS functions for staging and production](https://www.openfaas.com/blog/custom-environments/) | Alex Ellis | openfaas.com | 09-Dec-2021 |
 | [OpenFaaS - Run Containerized Functions On Your Own Terms](https://iximiuz.com/en/posts/openfaas-case-study/) | Ivan Velichko | iximiuz.com | 02-Dec-2021 |
+| [Build at the Edge with OpenFaaS and GitHub Actions](https://www.openfaas.com/blog/edge-actions/) | Alex Ellis | openfaas.com | 29-Nov-2021 |
+| [Improving long-running jobs for OpenFaaS users](https://www.openfaas.com/blog/long-running-jobs/) | Alex Ellis | openfaas.com | 05-Nov-2021 |
+| [Derek says goodbye to Docker Swarm](https://www.openfaas.com/blog/migrating-derek-from-docker-swarm/) | Alex Ellis | openfaas.com | 05-Oct-2021 |
+| [Case-study: Building a Low Code automation platform with OpenFaaS](https://www.openfaas.com/blog/low-code-automation/) | Veselin Pizurica | openfaas.com | 05-Oct-2021 |
 | [OpenFaaS on RHOCP 4.x – Part 1](https://community.ibm.com/community/user/publiccloud/blogs/alexei-karve/2021/07/06/openfaas-on-rhocp-1) | Alexei Karve | community.ibm.com | 06-July-2021 |
 | [Kubernetes in Docker (KinD) で OpenFaaS を動かす！](https://yoh1496.hatenablog.com/entry/2021/05/17/182207) | ishiguro-yo | yoh1496.hatenablog.com | 17-May-2021 |
 | [Secure Serverless with OpenFaaS](https://dev.to/mikeyglitz/secure-serverless-with-openfaas-509b) | Michael Glitzos | medium.com | 14-May-2021 |
