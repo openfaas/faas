@@ -1,6 +1,6 @@
 End User License Agreement (EULA)
 
-1. Licensed software. OpenFaaS PRO is licensed as commercial software and must not be used without a valid license key from OpenFaaS Ltd.
+1. Licensed software. OpenFaaS Pro is licensed as commercial software and must not be used without a valid license key from OpenFaaS Ltd.
 
 1.1 OpenFaaS Ltd. ("Supplier") is a registered company in England & Wales with number: 11076587, registered address: Peterborough UK.
 
@@ -14,7 +14,7 @@ End User License Agreement (EULA)
 
 3. Free Trial
 
-If you either register on the OpenFaaS PRO web site for a free trial or otherwise order a free trial version, OpenFaaS Ltd will make certain Licensed Software available to you on a trial basis (the “Trial Version”) free of charge until the end of the free trial period for which you registered or ordered the applicable Licensed Software. The Trial Version may be used only to review, demonstrate and evaluate the Licensed Software and may have limited features. The Trial Version may cease operating after the applicable time period or number of uses based on an internal metering mechanism within the Trial Version itself. Regardless of any such metering, you must stop use at the end of such period or number of uses. Additional trial terms and conditions may appear on the trial registration web page or Order Form. Any such additional terms and conditions are incorporated into this Agreement by reference and are legally binding.
+If you either register on the OpenFaaS Pro web site for a free trial or otherwise order a free trial version, OpenFaaS Ltd will make certain Licensed Software available to you on a trial basis (the “Trial Version”) free of charge until the end of the free trial period for which you registered or ordered the applicable Licensed Software. The Trial Version may be used only to review, demonstrate and evaluate the Licensed Software and may have limited features. The Trial Version may cease operating after the applicable time period or number of uses based on an internal metering mechanism within the Trial Version itself. Regardless of any such metering, you must stop use at the end of such period or number of uses. Additional trial terms and conditions may appear on the trial registration web page or Order Form. Any such additional terms and conditions are incorporated into this Agreement by reference and are legally binding.
 
 4. Grant of License; Ownership.
 
