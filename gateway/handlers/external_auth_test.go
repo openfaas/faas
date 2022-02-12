@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"bytes"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -83,6 +84,32 @@ func Test_External_Auth_Wrapper_PassesValidAuth(t *testing.T) {
 	if rr.Code != want {
 		t.Errorf("Status incorrect, want: %d, but got %d", want, rr.Code)
 	}
+}
+
+func Test_External_Auth_Wrapper_PassesHeaders(t *testing.T) {
+	targetURISuffix := "/system/functions"
+	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		method := r.Header.Get("X-Original-Method")
+		uri := r.Header.Get("X-Original-URI")
+		if method != http.MethodPost {
+			t.Errorf("Incorrect X-Original-Method header, want %s, got %s", http.MethodGet, method)
+		}
+		if !strings.HasSuffix(uri, targetURISuffix) {
+			t.Errorf("Incorrect X-Original-URI header, want suffix %s, got %s", targetURISuffix, uri)
+		}
+		w.WriteHeader(http.StatusOK)
+	}))
+	defer s.Close()
+
+	next := func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNotImplemented)
+	}
+
+	handler := MakeExternalAuthHandler(next, time.Second*5, s.URL, false)
+
+	req := httptest.NewRequest(http.MethodPost, fmt.Sprintf("%s%s", s.URL, targetURISuffix), nil)
+	rr := httptest.NewRecorder()
+	handler(rr, req)
 }
 
 func Test_External_Auth_Wrapper_WithoutRequiredHeaderFailsAuth(t *testing.T) {
