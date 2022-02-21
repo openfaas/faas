@@ -2,7 +2,7 @@ FROM functions/alpine:latest
 
 USER root
 
-RUN apk --update add nodejs nodejs-npm
+RUN apk --update add nodejs npm
 
 COPY package.json .
 COPY main.js .
