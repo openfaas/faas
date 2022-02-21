@@ -163,7 +163,8 @@ Please see the guide on [community & contributing](https://docs.openfaas.com/com
 
 Example of a Grafana dashboard linked to OpenFaaS showing auto-scaling live in action: [here](https://grafana.com/dashboards/3526)
 
-![A Grafana dashboard linked to OpenFaaS](https://pbs.twimg.com/media/C9caE6CXUAAX_64.jpg:large)
+![OpenFaaS Pro auto-scaling dashboard with Grafana](https://pbs.twimg.com/media/FJ9EBVdWQAM9DeW?format=jpg&name=medium)
+> [OpenFaaS Pro auto-scaling](https://docs.openfaas.com/architecture/autoscaling/) dashboard with Grafana
 
 An alternative community dashboard is [available here](https://grafana.com/dashboards/3434)
 
