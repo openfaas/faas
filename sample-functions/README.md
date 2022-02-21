@@ -1,3 +1,7 @@
+## Note: this page contains legacy examples.
+
+To learn how to build functions, see the official training page in the docs: [Training](https://docs.openfaas.com/tutorials/training/)
+
 ## Hello World in different languages:
 
 For examples of hello-world in different programming languages see inside the BaseFunctions folder:

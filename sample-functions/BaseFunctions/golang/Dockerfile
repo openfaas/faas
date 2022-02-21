@@ -1,4 +1,4 @@
-FROM openfaas/classic-watchdog:0.18.8 as watchdog
+FROM ghcr.io/openfaas/classic-watchdog:0.2.0 as watchdog
 
 FROM golang:1.13-alpine
 ENV CGO_ENABLED=0

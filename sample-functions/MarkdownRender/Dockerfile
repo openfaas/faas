@@ -1,4 +1,4 @@
-FROM openfaas/classic-watchdog:0.18.8 as watchdog
+FROM ghcr.io/openfaas/classic-watchdog:0.2.0 as watchdog
 
 FROM golang:1.13-alpine as builder
 ENV CGO_ENABLED=0
@@ -13,7 +13,7 @@ COPY vendor vendor
 
 RUN go install
 
-FROM alpine:3.14
+FROM alpine:3.15 as ship
 
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
