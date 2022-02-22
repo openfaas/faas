@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go-version: [1.13.x]
+        go-version: [1.17.x]
         svc: [
           basic-auth
         ]
