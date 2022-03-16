@@ -89,6 +89,8 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Hosting a React App with OpenFaaS](https://www.openfaas.com/blog/react-app/) | Alex Ellis | openfaas.com | 02-Mar-2022 |
+| [Nitishkumar's Journey to OpenFaaS](https://www.openfaas.com/blog/my-journey-contributing-to-openfaas/) | Nitishkumar Singh | openfaas.com | 02-Mar-2022 |
 | [Dude where's my coldstart?](https://www.openfaas.com/blog/what-serverless-coldstart/) | Alex Ellis | openfaas.com | 19-Jan-2022 |
 | [OpenFaaS Highlights from 2021](https://www.openfaas.com/blog/highlights-2021/) | Alex Ellis | openfaas.com | 04-Jan-2022 |
 | [OpenFaaS and HashiCorp Vault](https://johansiebens.dev/posts/2022/01/openfaas-and-hashicorp-vault/) | Johan Siebens | johansiebens.dev | 21-Jan-2022 |
