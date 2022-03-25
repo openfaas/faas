@@ -35,7 +35,7 @@ func AddMetricsHandler(handler http.HandlerFunc, prometheusQuery PrometheusQuery
 				recorder.Code,
 				string(upstreamBody))
 
-			http.Error(w, "Unexpected status code retriving functions from backend", http.StatusInternalServerError)
+			http.Error(w, "Metrics hander: unexpected status code retrieving functions from backend", http.StatusInternalServerError)
 			return
 		}
 
