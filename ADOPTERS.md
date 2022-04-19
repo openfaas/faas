@@ -43,6 +43,8 @@ Tell us more:
 
 * [Dragonchain](https://dragonchain.com/) - "At Dragonchain, we focus on creating a hybrid blockchain-as-a-service product, with integrations of OpenFaaS as our 'smart contract' platform, to be able to automatically run customer code based on interactions that occur on the blockchain. This allows us to be extremely flexible, as customers only have to create a docker container and give it to us in order to create a 'smart contract' which can have deep integrations with our blockchain itself.". Blog: [Dragonchain & OpenFaaS](https://dragonchain.com/blog/blockchain-as-a-service-at-scale-for-enterprise)
 
+* [Edgedelta](https://www.edgedelta.com/) - "OpenFaaS powers parts of the "edge observability platform"
+
 * [First Baptist Church Carrollton](https://www.fbcc.us) - "We use faasd as the backend for a Slack bot connected to our internal Slack workspace. The bot was initially created to facilitate remote question and answer sessions at our church by allowing viewers of our live stream to text or email questions in, have a staff member ask their question in the room, and then allow the staff member to send a response back to the sender. The texting is facilitated by Twilio while the email is done by interacting with a Gmail account via IMAP and SMTP."
 
 * [Fonix Telematics](https://fonixtelematics.com/) - "We are using OpenFaaS to build our new generation of APIs."
