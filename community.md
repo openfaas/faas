@@ -89,6 +89,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Building a RESTful API with functions](https://simonemms.com/blog/2022/04/24/building-a-restful-api-with-serverless-functions/) | Simon Emms | simonemms.com | 24-April-2022 |
 | [Dude where's my coldstart?](https://www.openfaas.com/blog/what-serverless-coldstart/) | Alex Ellis | openfaas.com | 19-Jan-2022 |
 | [OpenFaaS Highlights from 2021](https://www.openfaas.com/blog/highlights-2021/) | Alex Ellis | openfaas.com | 04-Jan-2022 |
 | [OpenFaaS and HashiCorp Vault](https://johansiebens.dev/posts/2022/01/openfaas-and-hashicorp-vault/) | Johan Siebens | johansiebens.dev | 21-Jan-2022 |
@@ -114,7 +115,8 @@ It would be great to hear from you especially if you have any of the above and w
 | [Learn how Istio can provide a service mesh for your functions](https://www.openfaas.com/blog/istio-functions/) | Alex Ellis | openfaas.com | 12-May-2021 |
 | [Functions for data science with R templates for OpenFaaS](https://www.openfaas.com/blog/r-templates/) | Peter Solymos | openfaas.com | 12-May-2021 |
 | [Learn how to build functions faster using Rancher's kim and K3s](https://www.openfaas.com/blog/kim/) | Alex Ellis | openfaas.com | 12-May-2021 |
-| [OpenFaas mit faasd installieren](https://blog.micro-saas.de/open-faas-mit-faasd-installieren/) | Björn Renzel| blog.micro-saas.de | 24-Apr-2021
+| [OpenFaas mit faasd installieren](https://blog.micro-saas.de/open-faas-mit-faasd-installieren/) | Björn Renzel| blog.micro-saas.de | 24-
+-2021
 | [Bring GitOps to your OpenFaaS functions with ArgoCD](https://www.openfaas.com/blog/bring-gitops-to-your-openfaas-functions-with-argocd/) | Batuhan Apaydın | openfaas.com | 15-Apr-2021 |
 | [OpenFaaS and GKE Autopilot](https://johansiebens.dev/posts/2021/03/openfaas-and-gke-autopilot/) | Johan Siebens | johansiebens.dev | 16-Mar-2021 |
 | [Exploring Serverless Use-cases from Companies and the Community](https://www.openfaas.com/blog/exploring-serverless-live/) | Alex Ellis | openfaas.com | 19-Feb-2021 |
