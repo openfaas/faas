@@ -1,5 +1,5 @@
-# github.com/openfaas/faas-provider v0.17.0
-## explicit
+# github.com/openfaas/faas-provider v0.18.9
+## explicit; go 1.16
 github.com/openfaas/faas-provider/auth
 # github.com/pkg/errors v0.8.1
 ## explicit

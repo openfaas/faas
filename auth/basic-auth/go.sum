@@ -3,8 +3,8 @@ github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB7
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
-github.com/openfaas/faas-provider v0.17.0 h1:4rT8CosKhI5xaAMqbyihEgR6KefO/ViJdF0a8THTgwM=
-github.com/openfaas/faas-provider v0.17.0/go.mod h1:fq1JL0mX4rNvVVvRLaLRJ3H6o667sHuyP5p/7SZEe98=
+github.com/openfaas/faas-provider v0.18.9 h1:nHPlq9PYLGLuyhuXfASlBPOvXiZC/fJqHOr6m+0Fn1s=
+github.com/openfaas/faas-provider v0.18.9/go.mod h1:S217qfIaMrv+XKJxgbhBzJzCfyFvoIF+BvYdDo6XIDQ=
 github.com/pkg/errors v0.8.1 h1:iURUrRGxPUNPdy5/HRSm+Yj6okJ6UtLINN0Q9M4+h3I=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
