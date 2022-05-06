@@ -44,7 +44,7 @@ RUN CGO_ENABLED=${CGO_ENABLED} GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build --
     -X github.com/openfaas/faas/gateway/types.Arch=${TARGETARCH}" \
     -a -installsuffix cgo -o gateway .
 
-FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.15 as ship
+FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.15.4 as ship
 
 LABEL org.label-schema.license="MIT" \
     org.label-schema.vcs-url="https://github.com/openfaas/faas" \

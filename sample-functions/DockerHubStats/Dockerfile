@@ -10,7 +10,7 @@ WORKDIR /go/src/github.com/openfaas/faas/sample-functions/DockerHubStats
 COPY . /go/src/github.com/openfaas/faas/sample-functions/DockerHubStats
 RUN set -ex && apk add make && make install
 
-FROM alpine:3.15 as ship
+FROM alpine:3.15.4 as ship
 
 # Needed to reach the hub
 RUN apk --no-cache add ca-certificates 

@@ -12,7 +12,7 @@ COPY handler.go .
 
 RUN go install
 
-FROM alpine:3.15 as ship
+FROM alpine:3.15.4 as ship
 
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
