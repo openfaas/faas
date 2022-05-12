@@ -89,6 +89,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [WebAssembly functions in OpenFaaS using Sat (Part1)](https://www.wasm.builders/suborbital/webassembly-functions-in-openfaas-using-sat-part-1-2omk) | Connor Hicks | wasm.builders | 04-May-2022 |
 | [Building a RESTful API with functions](https://simonemms.com/blog/2022/04/24/building-a-restful-api-with-serverless-functions/) | Simon Emms | simonemms.com | 24-April-2022 |
 | [Dude where's my coldstart?](https://www.openfaas.com/blog/what-serverless-coldstart/) | Alex Ellis | openfaas.com | 19-Jan-2022 |
 | [OpenFaaS Highlights from 2021](https://www.openfaas.com/blog/highlights-2021/) | Alex Ellis | openfaas.com | 04-Jan-2022 |
