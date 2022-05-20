@@ -103,9 +103,12 @@ Tell us more:
 
 * [Virality](https://www.virality.de/)
 
-* [VMware](https://vmware.com) - used in "veba" VMware Event Broker Applicance to extend vSphere by adding event functionality. OpenFaaS functions and the vcenter-connector are used as an appliance. CAS / vRA8 - The Cloud Automation Services product has an option to deploy "FaaS on-premises", this actually deploys OpenFaaS white-boxed / white-labelled. [CAS Write-up from Swisscom](https://ict.swisscom.ch/2019/08/cloud-automation-services-on-prem-faas-provider-for-vsphere/)
+* [VMware](https://vmware.com)
+    * Used in "veba" VMware Event Broker Appliance to extend vSphere by adding event functionality. OpenFaaS functions and the vcenter-connector are used as an appliance.
+    * CAS / vRA8 - The Cloud Automation Services product has an option to deploy "FaaS on-premises", this actually deploys OpenFaaS white-boxed / white-labelled. [CAS Write-up from Swisscom](https://ict.swisscom.ch/2019/08/cloud-automation-services-on-prem-faas-provider-for-vsphere/)
+    * OpenFaaS is also repackaged as "Automation Extensibility" in the ["vRO" product](https://vnuggets.com/2019/08/16/cloud-assembly-extensibility-with-abx-faas-part1/). [See an example](https://vnuggets.com/2019/08/19/cloud-assembly-extensibility-with-abx-faas-part3/)
 
-* [Waylay](https://www.waylay.io) - We use OpenFaas to deploy small snippets of code that can be combined in a low-code manner by our clients to do data orchestration and automation. Users of the platform also are able to deploy their own plugins (written in multiple languages), which also get deployed on OpenFaas.
+* [Waylay](https://www.waylay.io) - We use OpenFaaS to deploy small snippets of code that can be combined in a low-code manner by our clients to do data orchestration and automation. Users of the platform also are able to deploy their own plugins (written in multiple languages), which also get deployed on OpenFaas.
 
 * [Wireline.io](https://wireline.io) - portable functions that can run on any hardware, indexed through blockchain.
 
