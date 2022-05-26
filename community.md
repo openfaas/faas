@@ -74,8 +74,6 @@ It would be great to hear from you especially if you have any of the above and w
 | ------------------------------------------------------------------ | --------------- | --------- |
 | [How and Why We Rebuilt Auto-scaling in OpenFaaS with Prometheus - Alex Ellis, KubeCon Valencia](https://www.youtube.com/watch?v=ka5QjX0JgFo) | Alex Ellis | 19-May-2022 |
 | [Your pocket-sized cloud with OpenFaaS and GitHub Actions](https://www.youtube.com/watch?v=HTgUCm9RedU) | Alex Ellis & Martin Woodword | 25-Mar-2022 |
-| [Event driven Postgres with OpenFaaS](https://www.youtube.com/watch?v=nGOZLOjg5Zs) | Alex Ellis and Lucas Roesler | 02-Feb-2021 |
-| [Exploring Serverless use-cases with David McKay (Rawkode) and Alex Ellis](https://www.youtube.com/watch?v=mzuXVuccaqI) | David McKay (Rawkode) and Alex Ellis | 27-Jan-2021 |
 | [Meet faasd. Look Ma’ No Kubernetes! - Alex Ellis @ KubeCon](https://www.youtube.com/watch?v=ZnZJXI377ak&feature=youtu.be) | Alex Ellis | 8-Sep-2020 |
 | [Cloud Native Tools for Developers with Alex Ellis and Alistair Hey](https://youtu.be/r4mEF8rtXWo) | Alex Ellis and Alistair Hey | 13-Mar-2019 |
 | [Getting Beyond FaaS: The PLONK Stack for Kubernetes Developers](https://www.youtube.com/watch?v=NckMekZXRt8) | Alex Ellis | 21-Nov-2019 |
@@ -93,13 +91,13 @@ It would be great to hear from you especially if you have any of the above and w
 
 [Back to top](#openfaas-community)
 
-
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
 | [Building a RESTful API with functions](https://simonemms.com/blog/2022/04/24/building-a-restful-api-with-serverless-functions/) | Simon Emms | simonemms.com | 24-April-2022 |
 | [How to process your data the resilient way with back pressure](https://www.openfaas.com/blog/limits-and-backpressure/) | Alex Ellis | openfaas.com | 12-May-2022 |
 | [A Deep Dive into Golang for OpenFaaS Functions](https://www.openfaas.com/blog/golang-deep-dive/) | Alex Ellis | openfaas.com | 13-April-2022 |
 | [My Journey Contributing To OpenFaaS So Far](https://www.openfaas.com/blog/my-journey-contributing-to-openfaas/) | Nitishkumar Singh | openfaas.com | 02-Mar-2022 |
+| [Your pocket-sized cloud with a Raspberry Pi](https://blog.alexellis.io/your-pocket-sized-cloud/) | Alex Ellis | openfaas.com | 23-Mar-2022 |
 | [Hosting a React App with OpenFaaS](https://www.openfaas.com/blog/react-app/) | Alex Ellis | openfaas.com | 01-Mar-2022 |
 | [Dude where's my coldstart?](https://www.openfaas.com/blog/what-serverless-coldstart/) | Alex Ellis | openfaas.com | 19-Jan-2022 |
 | [OpenFaaS Highlights from 2021](https://www.openfaas.com/blog/highlights-2021/) | Alex Ellis | openfaas.com | 04-Jan-2022 |
@@ -114,7 +112,7 @@ Mainly virtual due to pandemic.
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [How and Why We Rebuilt Auto-scaling in OpenFaaS with Prometheus - Alex Ellis, KubeCon Valencia](https://www.youtube.com/watch?v=ka5QjX0JgFo)  | Alex Ellis | Valencia, Spain | 19-May-2022 |
-
+| [Your pocket-sized cloud with OpenFaaS and GitHub Actions](https://www.youtube.com/watch?v=HTgUCm9RedU) | Alex Ellis & Martin Woodword | YouTube | 25-Mar-2022 |
 
 ### 2021
 
@@ -157,7 +155,8 @@ Mainly virtual due to pandemic.
 | Event name and description                                          | Speaker      | Location | Date        |
 |---------------------------------------------------------------------|--------------|----------|-------------|
 | [GopherCon UK 2021: Alex Ellis - Zero to OpenFaas in 60 months](https://www.youtube.com/watch?v=QzwBmHkP-rQ) | Alex Ellis | London, UK | 22 Nov 2021 |
-
+| [Event driven Postgres with OpenFaaS](https://www.youtube.com/watch?v=nGOZLOjg5Zs) | Alex Ellis and Lucas Roesler | YouTube | 02-Feb-2021 |
+| [Exploring Serverless use-cases with David McKay (Rawkode) and Alex Ellis](https://www.youtube.com/watch?v=mzuXVuccaqI) | YouTube | David McKay (Rawkode) and Alex Ellis | 27-Jan-2021 |
 
 ### 2020
 
