@@ -1,6 +1,6 @@
 FROM ghcr.io/openfaas/classic-watchdog:0.2.0 as watchdog
 
-FROM alpine:3.15.4 as builder
+FROM alpine:3.16.0 as builder
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
 
