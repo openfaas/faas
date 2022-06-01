@@ -56,16 +56,17 @@ func (p PrometheusFunctionNotifier) Notify(method string, URL string, originalUR
 		}
 	}
 
+	code := strconv.Itoa(statusCode)
+	labels := prometheus.Labels{"function_name": serviceName, "code": code}
+
 	if event == "completed" {
 		seconds := duration.Seconds()
 		p.Metrics.GatewayFunctionsHistogram.
-			WithLabelValues(serviceName).
+			With(labels).
 			Observe(seconds)
 
-		code := strconv.Itoa(statusCode)
-
 		p.Metrics.GatewayFunctionInvocation.
-			With(prometheus.Labels{"function_name": serviceName, "code": code}).
+			With(labels).
 			Inc()
 	} else if event == "started" {
 		p.Metrics.GatewayFunctionInvocationStarted.WithLabelValues(serviceName).Inc()

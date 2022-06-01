@@ -32,7 +32,7 @@ type ExternalServiceQuery struct {
 
 // NewExternalServiceQuery proxies service queries to external plugin via HTTP
 func NewExternalServiceQuery(externalURL url.URL, authInjector middleware.AuthInjector) scaling.ServiceQuery {
-	timeout := 3 * time.Second
+	timeout := 5 * time.Second
 
 	proxyClient := http.Client{
 		Transport: &http.Transport{
@@ -82,23 +82,33 @@ func (s ExternalServiceQuery) GetReplicas(serviceName, serviceNamespace string) 
 
 	res, err := s.ProxyClient.Do(req)
 	if err != nil {
-		log.Println(urlPath, err)
+		log.Printf("Unable to connect to %s, error: %s", urlPath, err)
 	} else {
 
+		var body []byte
 		if res.Body != nil {
 			defer res.Body.Close()
+			body, _ = ioutil.ReadAll(res.Body)
 		}
 
 		if res.StatusCode == http.StatusOK {
-			bytesOut, _ := ioutil.ReadAll(res.Body)
-			err = json.Unmarshal(bytesOut, &function)
+			err = json.Unmarshal(body, &function)
 			if err != nil {
-				log.Println(urlPath, err)
+				log.Printf("Unable to unmarshal %s, error: %s", string(body), err)
 			}
-			log.Printf("GetReplicas [%s.%s] took: %fs", serviceName, serviceNamespace, time.Since(start).Seconds())
+
+			log.Printf("GetReplicas [%s.%s] took: %fs",
+				serviceName,
+				serviceNamespace,
+				time.Since(start).Seconds())
 
 		} else {
-			log.Printf("GetReplicas [%s.%s] took: %fs, code: %d\n", serviceName, serviceNamespace, time.Since(start).Seconds(), res.StatusCode)
+			log.Printf("GetReplicas [%s.%s] took: %fs, code: %d",
+				serviceName,
+				serviceNamespace,
+				time.Since(start).Seconds(),
+				res.StatusCode)
+
 			return emptyServiceQueryResponse, fmt.Errorf("server returned non-200 status code (%d) for function, %s", res.StatusCode, serviceName)
 		}
 	}
@@ -118,14 +128,12 @@ func (s ExternalServiceQuery) GetReplicas(serviceName, serviceNamespace string) 
 		extractedScalingFactor := extractLabelValue(labels[scaling.ScalingFactorLabel], scalingFactor)
 		targetLoad = extractLabelValue(labels[scaling.TargetLoadLabel], targetLoad)
 
-		if extractedScalingFactor >= 0 && extractedScalingFactor <= 100 {
+		if extractedScalingFactor > 0 && extractedScalingFactor <= 100 {
 			scalingFactor = extractedScalingFactor
 		} else {
 			log.Printf("Bad Scaling Factor: %d, is not in range of [0 - 100]. Will fallback to %d", extractedScalingFactor, scalingFactor)
 		}
 	}
-
-	log.Printf("GetReplicas [%s.%s] took: %fs", serviceName, serviceNamespace, time.Since(start).Seconds())
 
 	return scaling.ServiceQueryResponse{
 		Replicas:          function.Replicas,

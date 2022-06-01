@@ -50,7 +50,7 @@ func BuildMetricsOptions() MetricOptions {
 	gatewayFunctionsHistogram := prometheus.NewHistogramVec(prometheus.HistogramOpts{
 		Name: "gateway_functions_seconds",
 		Help: "Function time taken",
-	}, []string{"function_name"})
+	}, []string{"function_name", "code"})
 
 	gatewayFunctionInvocation := prometheus.NewCounterVec(
 		prometheus.CounterOpts{
