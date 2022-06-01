@@ -175,11 +175,6 @@ func main() {
 			handlers.MakeCallIDMiddleware(handlers.MakeQueuedProxy(metricsOptions, natsQueue, trimURLTransformer, config.Namespace, functionQuery)),
 			forwardingNotifiers,
 		)
-
-		faasHandlers.AsyncReport = handlers.MakeNotifierWrapper(
-			handlers.MakeAsyncReport(metricsOptions),
-			forwardingNotifiers,
-		)
 	}
 
 	prometheusQuery := metrics.NewPrometheusQuery(config.PrometheusHost, config.PrometheusPort, &http.Client{})
