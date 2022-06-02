@@ -52,7 +52,6 @@ It would be great to hear from you especially if you have any of the above and w
 | Title                                                               | Show       | Date        |
 |---------------------------------------------------------------------|--------------|----------|
 | [The Cube Interview - Monetising Open Source at KubeCon Valencia](https://www.youtube.com/watch?v=iyMIF4olLWI) | the Cube | 19-May-2022 |
-
 | ["Balancing OSS Sacrifice with Success"](https://github.com/readme/alex-ellis) | GitHub ReadME program | 04-Sep-2020 |
 | [Episode #116 Independent Open Source, with Alex Ellis](https://kubernetespodcast.com/episode/116-independent-open-source/) | Kubernetes Podcast by Google | 12-Aug-2020 |
 | [The explosive growth of CNCF, what is Kubernetes and independent open source](https://blog.newrelic.com/engineering/observy-mcobservface-episode-no-2-alex-ellis/) | Observy McObservface | 29-07-2020 |
