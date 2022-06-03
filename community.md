@@ -93,6 +93,7 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [The Event-Driven Edge with OpenFaaS](https://www.openfaas.com/blog/eventdriven-edge/) | Han Verstraete | openfaas.com | 01-June-2022 |
 | [Running faasd on Azure Arm-based Virtual Machines](https://blog.ediri.io/running-faasd-on-azure-arm-based-virtual-machines) | Engin Diri | blog.ediri.io | 27-May-2022 |
 | [WebAssembly functions in OpenFaaS using Sat (Part1)](https://www.wasm.builders/suborbital/webassembly-functions-in-openfaas-using-sat-part-1-2omk) | Connor Hicks | wasm.builders | 04-May-2022 |
 | [Building a RESTful API with functions](https://simonemms.com/blog/2022/04/24/building-a-restful-api-with-serverless-functions/) | Simon Emms | simonemms.com | 24-April-2022 |
