@@ -53,6 +53,7 @@ const (
 	wsContinuationFrame     = 0
 	wsMaxFrameHeaderSize    = 14
 	wsMaxControlPayloadSize = 125
+	wsCloseSatusSize        = 2
 
 	// From https://tools.ietf.org/html/rfc6455#section-11.7
 	wsCloseStatusNormalClosure      = 1000
@@ -80,6 +81,7 @@ type websocketReader struct {
 	ib      []byte
 	ff      bool
 	fc      bool
+	nl      bool
 	dc      *wsDecompressor
 	nc      *Conn
 }
@@ -177,6 +179,15 @@ func (d *wsDecompressor) decompress() ([]byte, error) {
 
 func wsNewReader(r io.Reader) *websocketReader {
 	return &websocketReader{r: r, ff: true}
+}
+
+// From now on, reads will be from the readLoop and we will need to
+// acquire the connection lock should we have to send/write a control
+// message from handleControlFrame.
+//
+// Note: this runs under the connection lock.
+func (r *websocketReader) doneWithConnect() {
+	r.nl = true
 }
 
 func (r *websocketReader) Read(p []byte) (int, error) {
@@ -372,7 +383,6 @@ func (r *websocketReader) handleControlFrame(frameType wsOpCode, buf []byte, pos
 	var payload []byte
 	var err error
 
-	statusPos := pos
 	if rem > 0 {
 		payload, pos, err = wsGet(r.r, buf, pos, rem)
 		if err != nil {
@@ -382,25 +392,32 @@ func (r *websocketReader) handleControlFrame(frameType wsOpCode, buf []byte, pos
 	switch frameType {
 	case wsCloseMessage:
 		status := wsCloseStatusNoStatusReceived
-		body := ""
-		// If there is a payload, it should contain 2 unsigned bytes
-		// that represent the status code and then optional payload.
-		if len(payload) >= 2 {
-			status = int(binary.BigEndian.Uint16(buf[statusPos : statusPos+2]))
-			body = string(buf[statusPos+2 : statusPos+len(payload)])
-			if body != "" && !utf8.ValidString(body) {
-				// https://tools.ietf.org/html/rfc6455#section-5.5.1
-				// If body is present, it must be a valid utf8
-				status = wsCloseStatusInvalidPayloadData
-				body = "invalid utf8 body in close frame"
+		var body string
+		lp := len(payload)
+		// If there is a payload, the status is represented as a 2-byte
+		// unsigned integer (in network byte order). Then, there may be an
+		// optional body.
+		hasStatus, hasBody := lp >= wsCloseSatusSize, lp > wsCloseSatusSize
+		if hasStatus {
+			// Decode the status
+			status = int(binary.BigEndian.Uint16(payload[:wsCloseSatusSize]))
+			// Now if there is a body, capture it and make sure this is a valid UTF-8.
+			if hasBody {
+				body = string(payload[wsCloseSatusSize:])
+				if !utf8.ValidString(body) {
+					// https://tools.ietf.org/html/rfc6455#section-5.5.1
+					// If body is present, it must be a valid utf8
+					status = wsCloseStatusInvalidPayloadData
+					body = "invalid utf8 body in close frame"
+				}
 			}
 		}
-		r.nc.wsEnqueueCloseMsg(status, body)
-		// Return io.EOF so that readLoop will close the connection as ClientClosed
+		r.nc.wsEnqueueCloseMsg(r.nl, status, body)
+		// Return io.EOF so that readLoop will close the connection as client closed
 		// after processing pending buffers.
 		return pos, io.EOF
 	case wsPingMessage:
-		r.nc.wsEnqueueControlMsg(wsPongMessage, payload)
+		r.nc.wsEnqueueControlMsg(r.nl, wsPongMessage, payload)
 	case wsPongMessage:
 		// Nothing to do..
 	}
@@ -553,6 +570,15 @@ func (nc *Conn) wsInitHandshake(u *url.URL) error {
 		scheme = "https"
 	}
 	ustr := fmt.Sprintf("%s://%s", scheme, u.Host)
+
+	if nc.Opts.ProxyPath != "" {
+		proxyPath := nc.Opts.ProxyPath
+		if !strings.HasPrefix(proxyPath, "/") {
+			proxyPath = "/" + proxyPath
+		}
+		ustr += proxyPath
+	}
+
 	u, err = url.Parse(ustr)
 	if err != nil {
 		return err
@@ -637,14 +663,16 @@ func (nc *Conn) wsClose() {
 	nc.wsEnqueueCloseMsgLocked(wsCloseStatusNormalClosure, _EMPTY_)
 }
 
-func (nc *Conn) wsEnqueueCloseMsg(status int, payload string) {
+func (nc *Conn) wsEnqueueCloseMsg(needsLock bool, status int, payload string) {
 	// In some low-level unit tests it will happen...
 	if nc == nil {
 		return
 	}
-	nc.mu.Lock()
+	if needsLock {
+		nc.mu.Lock()
+		defer nc.mu.Unlock()
+	}
 	nc.wsEnqueueCloseMsgLocked(status, payload)
-	nc.mu.Unlock()
 }
 
 func (nc *Conn) wsEnqueueCloseMsgLocked(status int, payload string) {
@@ -668,25 +696,26 @@ func (nc *Conn) wsEnqueueCloseMsgLocked(status int, payload string) {
 	nc.bw.flush()
 }
 
-func (nc *Conn) wsEnqueueControlMsg(frameType wsOpCode, payload []byte) {
+func (nc *Conn) wsEnqueueControlMsg(needsLock bool, frameType wsOpCode, payload []byte) {
 	// In some low-level unit tests it will happen...
 	if nc == nil {
 		return
 	}
-	fh, key := wsCreateFrameHeader(false, frameType, len(payload))
-	nc.mu.Lock()
+	if needsLock {
+		nc.mu.Lock()
+		defer nc.mu.Unlock()
+	}
 	wr, ok := nc.bw.w.(*websocketWriter)
 	if !ok {
-		nc.mu.Unlock()
 		return
 	}
+	fh, key := wsCreateFrameHeader(false, frameType, len(payload))
 	wr.ctrlFrames = append(wr.ctrlFrames, fh)
 	if len(payload) > 0 {
 		wsMaskBuf(key, payload)
 		wr.ctrlFrames = append(wr.ctrlFrames, payload)
 	}
 	nc.bw.flush()
-	nc.mu.Unlock()
 }
 
 func wsPMCExtensionSupport(header http.Header) (bool, bool) {

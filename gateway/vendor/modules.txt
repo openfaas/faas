@@ -27,7 +27,7 @@ github.com/gorilla/mux
 # github.com/matttproud/golang_protobuf_extensions v1.0.1
 ## explicit
 github.com/matttproud/golang_protobuf_extensions/pbutil
-# github.com/nats-io/nats.go v1.11.1-0.20210623165838-4b75fc59ae30
+# github.com/nats-io/nats.go v1.16.0
 ## explicit; go 1.16
 github.com/nats-io/nats.go
 github.com/nats-io/nats.go/encoders/builtin

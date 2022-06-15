@@ -19,6 +19,8 @@ import (
 	"github.com/openfaas/faas/gateway/scaling"
 	"github.com/openfaas/faas/gateway/types"
 	"github.com/openfaas/faas/gateway/version"
+
+	ftypes "github.com/openfaas/faas-provider/types"
 	natsHandler "github.com/openfaas/nats-queue-worker/handler"
 )
 
@@ -173,19 +175,33 @@ func main() {
 	}
 
 	if config.UseNATS() {
-		log.Println("Async enabled: Using NATS Streaming.")
 		maxReconnect := config.NATSReconnectMax
 		interval := config.NATSReconnectDelay
 
-		defaultNATSConfig := natsHandler.NewDefaultNATSConfig(maxReconnect, interval)
+		var queuer ftypes.RequestQueuer
+		if config.NATSJetstream {
+			log.Println("Async enabled: Using NATS Jetstream.")
 
-		natsQueue, queueErr := natsHandler.CreateNATSQueue(*config.NATSAddress, *config.NATSPort, *config.NATSClusterName, *config.NATSChannel, defaultNATSConfig)
-		if queueErr != nil {
-			log.Fatalln(queueErr)
+			natsC := handlers.NewNatsClient(*config.NATSAddress, *config.NATSPort, *config.NATSChannel)
+			if err := natsC.Connect(); err != nil {
+				log.Fatalln(err)
+			}
+
+			queuer = natsC
+		} else {
+			log.Println("Async enabled: Using NATS Streaming.")
+
+			defaultNATSConfig := natsHandler.NewDefaultNATSConfig(maxReconnect, interval)
+			natsQueue, queueErr := natsHandler.CreateNATSQueue(*config.NATSAddress, *config.NATSPort, *config.NATSClusterName, *config.NATSChannel, defaultNATSConfig)
+			if queueErr != nil {
+				log.Fatalln(queueErr)
+			}
+
+			queuer = natsQueue
 		}
 
 		faasHandlers.QueuedProxy = handlers.MakeNotifierWrapper(
-			handlers.MakeCallIDMiddleware(handlers.MakeQueuedProxy(metricsOptions, natsQueue, trimURLTransformer, config.Namespace, cachedFunctionQuery)),
+			handlers.MakeCallIDMiddleware(handlers.MakeQueuedProxy(metricsOptions, queuer, trimURLTransformer, config.Namespace, cachedFunctionQuery)),
 			forwardingNotifiers,
 		)
 	}

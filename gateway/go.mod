@@ -5,6 +5,8 @@ go 1.17
 require (
 	github.com/docker/distribution v2.8.1+incompatible
 	github.com/gorilla/mux v1.8.0
+	github.com/hashicorp/golang-lru v0.5.1 // indirect
+	github.com/nats-io/nats.go v1.16.0
 	github.com/openfaas/faas-provider v0.18.7
 	github.com/openfaas/nats-queue-worker v0.0.0-20210726161954-ada9a31504c9
 	github.com/prometheus/client_golang v1.11.1
@@ -18,9 +20,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.1.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
-	github.com/hashicorp/golang-lru v0.5.1 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
-	github.com/nats-io/nats.go v1.11.1-0.20210623165838-4b75fc59ae30 // indirect
 	github.com/nats-io/nkeys v0.3.0 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/nats-io/stan.go v0.9.0 // indirect

@@ -128,6 +128,8 @@ func (ReadConfig) Read(hasEnv HasEnv) (*GatewayConfig, error) {
 
 	cfg.NATSReconnectDelay = parseIntOrDurationValue(hasEnv.Getenv("nats_reconnect_delay"), time.Second*2)
 
+	cfg.NATSJetstream = parseBoolValue(hasEnv.Getenv("faas_nats_jetstream"))
+
 	prometheusPort := hasEnv.Getenv("faas_prometheus_port")
 	if len(prometheusPort) > 0 {
 		prometheusPortVal, err := strconv.Atoi(prometheusPort)
@@ -227,6 +229,8 @@ type GatewayConfig struct {
 	NATSReconnectMax int
 
 	NATSReconnectDelay time.Duration
+	// Use Nats Jetstream
+	NATSJetstream bool
 
 	// Host to connect to Prometheus.
 	PrometheusHost string
