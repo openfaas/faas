@@ -3,12 +3,16 @@
 
 package scaling
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
 type CachedFunctionQuery struct {
 	cache            FunctionCacher
 	serviceQuery     ServiceQuery
 	emptyAnnotations map[string]string
+	singleFlight     *SingleFlight
 }
 
 func NewCachedFunctionQuery(cache FunctionCacher, serviceQuery ServiceQuery) FunctionQuery {
@@ -16,6 +20,7 @@ func NewCachedFunctionQuery(cache FunctionCacher, serviceQuery ServiceQuery) Fun
 		cache:            cache,
 		serviceQuery:     serviceQuery,
 		emptyAnnotations: map[string]string{},
+		singleFlight:     NewSingleFlight(),
 	}
 }
 
@@ -35,13 +40,23 @@ func (c *CachedFunctionQuery) Get(fn string, ns string) (ServiceQueryResponse, e
 
 	query, hit := c.cache.Get(fn, ns)
 	if !hit {
+		key := fmt.Sprintf("GetReplicas-%s.%s", fn, ns)
+		queryResponse, err := c.singleFlight.Do(key, func() (interface{}, error) {
+			log.Printf("Cache miss - run GetReplicas")
+			// If there is a cache miss, then fetch the value from the provider API
+			return c.serviceQuery.GetReplicas(fn, ns)
+		})
 
-		// If there is a cache miss, then fetch the value from the provider API
-		queryResponse, err := c.serviceQuery.GetReplicas(fn, ns)
+		log.Printf("Result: %v %v", queryResponse, err)
+
 		if err != nil {
 			return ServiceQueryResponse{}, err
 		}
-		c.cache.Set(fn, ns, queryResponse)
+
+		if queryResponse != nil {
+			c.cache.Set(fn, ns, queryResponse.(ServiceQueryResponse))
+		}
+
 	} else {
 		return query, nil
 	}
