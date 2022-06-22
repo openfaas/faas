@@ -10,15 +10,17 @@ import (
 // ScalingConfig
 func NewFunctionScaler(config ScalingConfig, functionCacher FunctionCacher) FunctionScaler {
 	return FunctionScaler{
-		Cache:  functionCacher,
-		Config: config,
+		Cache:        functionCacher,
+		Config:       config,
+		SingleFlight: NewSingleFlight(),
 	}
 }
 
 // FunctionScaler scales from zero
 type FunctionScaler struct {
-	Cache  FunctionCacher
-	Config ScalingConfig
+	Cache        FunctionCacher
+	Config       ScalingConfig
+	SingleFlight *SingleFlight
 }
 
 // FunctionScaleResult holds the result of scaling from zero
@@ -43,8 +45,11 @@ func (f *FunctionScaler) Scale(functionName, namespace string) FunctionScaleResu
 			Duration:  time.Since(start),
 		}
 	}
+	getKey := fmt.Sprintf("GetReplicas-%s.%s", functionName, namespace)
 
-	queryResponse, err := f.Config.ServiceQuery.GetReplicas(functionName, namespace)
+	res, err := f.SingleFlight.Do(getKey, func() (interface{}, error) {
+		return f.Config.ServiceQuery.GetReplicas(functionName, namespace)
+	})
 
 	if err != nil {
 		return FunctionScaleResult{
@@ -54,6 +59,16 @@ func (f *FunctionScaler) Scale(functionName, namespace string) FunctionScaleResu
 			Duration:  time.Since(start),
 		}
 	}
+	if res == nil {
+		return FunctionScaleResult{
+			Error:     fmt.Errorf("empty response from server"),
+			Available: false,
+			Found:     false,
+			Duration:  time.Since(start),
+		}
+	}
+
+	queryResponse := res.(ServiceQueryResponse)
 
 	f.Cache.Set(functionName, namespace, queryResponse)
 
@@ -64,10 +79,16 @@ func (f *FunctionScaler) Scale(functionName, namespace string) FunctionScaleResu
 		}
 
 		scaleResult := backoff(func(attempt int) error {
-			queryResponse, err := f.Config.ServiceQuery.GetReplicas(functionName, namespace)
+
+			res, err := f.SingleFlight.Do(getKey, func() (interface{}, error) {
+				return f.Config.ServiceQuery.GetReplicas(functionName, namespace)
+			})
+
 			if err != nil {
 				return err
 			}
+
+			queryResponse = res.(ServiceQueryResponse)
 
 			f.Cache.Set(functionName, namespace, queryResponse)
 
@@ -75,10 +96,18 @@ func (f *FunctionScaler) Scale(functionName, namespace string) FunctionScaleResu
 				return nil
 			}
 
-			log.Printf("[Scale %d] function=%s 0 => %d requested", attempt, functionName, minReplicas)
-			setScaleErr := f.Config.ServiceQuery.SetReplicas(functionName, namespace, minReplicas)
-			if setScaleErr != nil {
-				return fmt.Errorf("unable to scale function [%s], err: %s", functionName, setScaleErr)
+			setKey := fmt.Sprintf("SetReplicas-%s.%s", functionName, namespace)
+
+			if _, err := f.SingleFlight.Do(setKey, func() (interface{}, error) {
+
+				log.Printf("[Scale %d] function=%s 0 => %d requested", attempt, functionName, minReplicas)
+
+				if err := f.Config.ServiceQuery.SetReplicas(functionName, namespace, minReplicas); err != nil {
+					return nil, fmt.Errorf("unable to scale function [%s], err: %s", functionName, err)
+				}
+				return nil, nil
+			}); err != nil {
+				return err
 			}
 
 			return nil
@@ -95,10 +124,16 @@ func (f *FunctionScaler) Scale(functionName, namespace string) FunctionScaleResu
 		}
 
 		for i := 0; i < int(f.Config.MaxPollCount); i++ {
-			queryResponse, err := f.Config.ServiceQuery.GetReplicas(functionName, namespace)
+
+			res, err := f.SingleFlight.Do(getKey, func() (interface{}, error) {
+				return f.Config.ServiceQuery.GetReplicas(functionName, namespace)
+			})
+			queryResponse := res.(ServiceQueryResponse)
+
 			if err == nil {
 				f.Cache.Set(functionName, namespace, queryResponse)
 			}
+
 			totalTime := time.Since(start)
 
 			if err != nil {
