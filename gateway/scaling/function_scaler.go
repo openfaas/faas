@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"time"
+
+	"golang.org/x/sync/singleflight"
 )
 
 // NewFunctionScaler create a new scaler with the specified
@@ -12,7 +14,7 @@ func NewFunctionScaler(config ScalingConfig, functionCacher FunctionCacher) Func
 	return FunctionScaler{
 		Cache:        functionCacher,
 		Config:       config,
-		SingleFlight: NewSingleFlight(),
+		SingleFlight: &singleflight.Group{},
 	}
 }
 
@@ -20,7 +22,7 @@ func NewFunctionScaler(config ScalingConfig, functionCacher FunctionCacher) Func
 type FunctionScaler struct {
 	Cache        FunctionCacher
 	Config       ScalingConfig
-	SingleFlight *SingleFlight
+	SingleFlight *singleflight.Group
 }
 
 // FunctionScaleResult holds the result of scaling from zero
@@ -47,7 +49,7 @@ func (f *FunctionScaler) Scale(functionName, namespace string) FunctionScaleResu
 	}
 	getKey := fmt.Sprintf("GetReplicas-%s.%s", functionName, namespace)
 
-	res, err := f.SingleFlight.Do(getKey, func() (interface{}, error) {
+	res, err, _ := f.SingleFlight.Do(getKey, func() (interface{}, error) {
 		return f.Config.ServiceQuery.GetReplicas(functionName, namespace)
 	})
 
@@ -80,7 +82,7 @@ func (f *FunctionScaler) Scale(functionName, namespace string) FunctionScaleResu
 
 		scaleResult := backoff(func(attempt int) error {
 
-			res, err := f.SingleFlight.Do(getKey, func() (interface{}, error) {
+			res, err, _ := f.SingleFlight.Do(getKey, func() (interface{}, error) {
 				return f.Config.ServiceQuery.GetReplicas(functionName, namespace)
 			})
 
@@ -98,7 +100,7 @@ func (f *FunctionScaler) Scale(functionName, namespace string) FunctionScaleResu
 
 			setKey := fmt.Sprintf("SetReplicas-%s.%s", functionName, namespace)
 
-			if _, err := f.SingleFlight.Do(setKey, func() (interface{}, error) {
+			if _, err, _ := f.SingleFlight.Do(setKey, func() (interface{}, error) {
 
 				log.Printf("[Scale %d] function=%s 0 => %d requested", attempt, functionName, minReplicas)
 
@@ -125,7 +127,7 @@ func (f *FunctionScaler) Scale(functionName, namespace string) FunctionScaleResu
 
 		for i := 0; i < int(f.Config.MaxPollCount); i++ {
 
-			res, err := f.SingleFlight.Do(getKey, func() (interface{}, error) {
+			res, err, _ := f.SingleFlight.Do(getKey, func() (interface{}, error) {
 				return f.Config.ServiceQuery.GetReplicas(functionName, namespace)
 			})
 			queryResponse := res.(ServiceQueryResponse)
