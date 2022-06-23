@@ -11,4 +11,5 @@ require (
 	github.com/prometheus/client_golang v1.11.1
 	github.com/prometheus/client_model v0.2.0
 	go.uber.org/goleak v1.1.10
+	golang.org/x/sync v0.0.0-20220601150217-0de741cfad7f // indirect
 )

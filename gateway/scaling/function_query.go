@@ -6,13 +6,15 @@ package scaling
 import (
 	"fmt"
 	"log"
+
+	"golang.org/x/sync/singleflight"
 )
 
 type CachedFunctionQuery struct {
 	cache            FunctionCacher
 	serviceQuery     ServiceQuery
 	emptyAnnotations map[string]string
-	singleFlight     *SingleFlight
+	singleFlight     *singleflight.Group
 }
 
 func NewCachedFunctionQuery(cache FunctionCacher, serviceQuery ServiceQuery) FunctionQuery {
@@ -20,7 +22,7 @@ func NewCachedFunctionQuery(cache FunctionCacher, serviceQuery ServiceQuery) Fun
 		cache:            cache,
 		serviceQuery:     serviceQuery,
 		emptyAnnotations: map[string]string{},
-		singleFlight:     NewSingleFlight(),
+		singleFlight:     &singleflight.Group{},
 	}
 }
 
@@ -41,7 +43,7 @@ func (c *CachedFunctionQuery) Get(fn string, ns string) (ServiceQueryResponse, e
 	query, hit := c.cache.Get(fn, ns)
 	if !hit {
 		key := fmt.Sprintf("GetReplicas-%s.%s", fn, ns)
-		queryResponse, err := c.singleFlight.Do(key, func() (interface{}, error) {
+		queryResponse, err, _ := c.singleFlight.Do(key, func() (interface{}, error) {
 			log.Printf("Cache miss - run GetReplicas")
 			// If there is a cache miss, then fetch the value from the provider API
 			return c.serviceQuery.GetReplicas(fn, ns)
