@@ -182,7 +182,7 @@ func main() {
 		if config.NATSJetstream {
 			log.Println("Async enabled: Using NATS Jetstream.")
 
-			natsC := handlers.NewNatsClient(*config.NATSAddress, *config.NATSPort, *config.NATSChannel)
+			natsC := handlers.NewNatsClient(*config.NATSAddress, *config.NATSPort, *config.NATSChannel, maxReconnect, interval)
 			if err := natsC.Connect(); err != nil {
 				log.Fatalln(err)
 			}
