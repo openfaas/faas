@@ -310,6 +310,18 @@ func TestRead_UseNATS(t *testing.T) {
 		t.Logf("faas_nats_channel: want %s, got %s", wantNATSChannel, *config.NATSChannel)
 		t.Fail()
 	}
+
+	wantNATSReconnectMax := 60
+	if config.NATSReconnectMax != wantNATSReconnectMax {
+		t.Logf("nats_reconnect_max: want %d, got %d", wantNATSReconnectMax, config.NATSReconnectMax)
+		t.Fail()
+	}
+
+	wantNATSReconnectDelay := time.Second * 2
+	if config.NATSReconnectDelay != wantNATSReconnectDelay {
+		t.Logf("nats_reconnect_delay: want %s, got %s", wantNATSReconnectDelay, config.NATSReconnectDelay)
+		t.Fail()
+	}
 }
 
 func TestRead_UseNATSBadPort(t *testing.T) {
@@ -324,6 +336,24 @@ func TestRead_UseNATSBadPort(t *testing.T) {
 
 	if err != nil {
 		want := "faas_nats_port invalid number: 6fff"
+
+		if want != err.Error() {
+			t.Errorf("want error: %q, got: %q", want, err.Error())
+			t.Fail()
+		}
+	}
+
+}
+
+func TestRead_UseNATSBadReconnectMax(t *testing.T) {
+	defaults := NewEnvBucket()
+	defaults.Setenv("nats_reconnect_max", "a")
+	readConfig := ReadConfig{}
+
+	_, err := readConfig.Read(defaults)
+
+	if err != nil {
+		want := "nats_reconnect_max invalid number: a"
 
 		if want != err.Error() {
 			t.Errorf("want error: %q, got: %q", want, err.Error())

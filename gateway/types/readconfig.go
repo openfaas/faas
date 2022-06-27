@@ -114,6 +114,20 @@ func (ReadConfig) Read(hasEnv HasEnv) (*GatewayConfig, error) {
 		cfg.NATSChannel = &v
 	}
 
+	NATSReconnectMax := hasEnv.Getenv("nats_reconnect_max")
+	if len(NATSReconnectMax) > 0 {
+		v, err := strconv.Atoi(NATSReconnectMax)
+		if err == nil {
+			cfg.NATSReconnectMax = v
+		} else {
+			return nil, fmt.Errorf("nats_reconnect_max invalid number: %s", NATSReconnectMax)
+		}
+	} else {
+		cfg.NATSReconnectMax = 60
+	}
+
+	cfg.NATSReconnectDelay = parseIntOrDurationValue(hasEnv.Getenv("nats_reconnect_delay"), time.Second*2)
+
 	prometheusPort := hasEnv.Getenv("faas_prometheus_port")
 	if len(prometheusPort) > 0 {
 		prometheusPortVal, err := strconv.Atoi(prometheusPort)
@@ -209,6 +223,10 @@ type GatewayConfig struct {
 
 	// NATSChannel is the name of the NATS Streaming channel used for asynchronous function invocations.
 	NATSChannel *string
+
+	NATSReconnectMax int
+
+	NATSReconnectDelay time.Duration
 
 	// Host to connect to Prometheus.
 	PrometheusHost string

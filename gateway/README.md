@@ -74,6 +74,8 @@ The gateway can be configured through the following environment variables:
 | `faas_nats_port`    | The port at which NATS Streaming can be reached. Required for asynchronous mode |
 | `faas_nats_cluster_name` | The name of the target NATS Streaming cluster. Defaults to `faas-cluster` for backwards-compatibility |
 | `faas_nats_channel` | The name of the NATS Streaming channel to use. Defaults to `faas-request` for backwards-compatibility |
+| `nats_reconnect_max` | An integer of the amount of reconnection attempts when the NATS connection is lost. Default `60` |
+| `nats_reconnect_delay` | Delay between retrying to connect to NATS. Default: `2s` |
 | `faas_prometheus_host`         | Host to connect to Prometheus. Default: `"prometheus"` |
 | `faas_prometheus_port`         | Port to connect to Prometheus. Default: `9090` |
 | `direct_functions`            | `true` or `false` -  functions are invoked directly over overlay network by DNS name without passing through the provider |

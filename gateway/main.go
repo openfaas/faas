@@ -174,8 +174,8 @@ func main() {
 
 	if config.UseNATS() {
 		log.Println("Async enabled: Using NATS Streaming.")
-		maxReconnect := 60
-		interval := time.Second * 2
+		maxReconnect := config.NATSReconnectMax
+		interval := config.NATSReconnectDelay
 
 		defaultNATSConfig := natsHandler.NewDefaultNATSConfig(maxReconnect, interval)
 
