@@ -11,6 +11,7 @@ import (
 	"math"
 	"net/http"
 
+	"github.com/openfaas/faas/gateway/pkg/middleware"
 	"github.com/openfaas/faas/gateway/requests"
 	"github.com/openfaas/faas/gateway/scaling"
 )
@@ -19,23 +20,24 @@ import (
 func MakeAlertHandler(service scaling.ServiceQuery, defaultNamespace string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		log.Println("Alert received.")
+		if r.Body == nil {
+			http.Error(w, "A body is required for this endpoint", http.StatusBadRequest)
+			return
+		}
 
-		body, readErr := ioutil.ReadAll(r.Body)
+		defer r.Body.Close()
 
-		log.Println(string(body))
-
-		if readErr != nil {
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte("Unable to read alert."))
 
-			log.Println(readErr)
+			log.Println(err)
 			return
 		}
 
 		var req requests.PrometheusAlert
-		err := json.Unmarshal(body, &req)
-		if err != nil {
+		if err := json.Unmarshal(body, &req); err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte("Unable to parse alert, bad format."))
 			log.Println(err)
@@ -73,7 +75,7 @@ func handleAlerts(req *requests.PrometheusAlert, service scaling.ServiceQuery, d
 func scaleService(alert requests.PrometheusInnerAlert, service scaling.ServiceQuery, defaultNamespace string) error {
 	var err error
 
-	serviceName, namespace := getNamespace(defaultNamespace, alert.Labels.FunctionName)
+	serviceName, namespace := middleware.GetNamespace(defaultNamespace, alert.Labels.FunctionName)
 
 	if len(serviceName) > 0 {
 		queryResponse, getErr := service.GetReplicas(serviceName, namespace)

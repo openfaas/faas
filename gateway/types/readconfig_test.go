@@ -137,6 +137,38 @@ func TestRead_DirectFunctionsOverride(t *testing.T) {
 	}
 }
 
+func TestRead_ProbeFunctions_Default(t *testing.T) {
+	defaults := NewEnvBucket()
+	readConfig := ReadConfig{}
+	defaults.Setenv("probe_functions", "")
+
+	want := false
+
+	config, _ := readConfig.Read(defaults)
+
+	got := config.ProbeFunctions
+	if want != got {
+		t.Logf("ProbeFunctions want %v, but got %v", want, got)
+		t.Fail()
+	}
+}
+
+func TestRead_ProbeFunctions_Enabled(t *testing.T) {
+	defaults := NewEnvBucket()
+	readConfig := ReadConfig{}
+	defaults.Setenv("probe_functions", "true")
+
+	want := true
+
+	config, _ := readConfig.Read(defaults)
+
+	got := config.ProbeFunctions
+	if want != got {
+		t.Logf("ProbeFunctions want %v, but got %v", want, got)
+		t.Fail()
+	}
+}
+
 func TestRead_ScaleZeroDefaultAndOverride(t *testing.T) {
 	defaults := NewEnvBucket()
 	readConfig := ReadConfig{}

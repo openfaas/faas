@@ -49,8 +49,6 @@ func (c *CachedFunctionQuery) Get(fn string, ns string) (ServiceQueryResponse, e
 			return c.serviceQuery.GetReplicas(fn, ns)
 		})
 
-		log.Printf("Result: %v %v", queryResponse, err)
-
 		if err != nil {
 			return ServiceQueryResponse{}, err
 		}

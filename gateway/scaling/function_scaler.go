@@ -5,6 +5,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/openfaas/faas/gateway/types"
 	"golang.org/x/sync/singleflight"
 )
 
@@ -80,7 +81,7 @@ func (f *FunctionScaler) Scale(functionName, namespace string) FunctionScaleResu
 			minReplicas = queryResponse.MinReplicas
 		}
 
-		scaleResult := backoff(func(attempt int) error {
+		scaleResult := types.Retry(func(attempt int) error {
 
 			res, err, _ := f.SingleFlight.Do(getKey, func() (interface{}, error) {
 				return f.Config.ServiceQuery.GetReplicas(functionName, namespace)
@@ -114,7 +115,7 @@ func (f *FunctionScaler) Scale(functionName, namespace string) FunctionScaleResu
 
 			return nil
 
-		}, int(f.Config.SetScaleRetries), f.Config.FunctionPollInterval)
+		}, "Scale", int(f.Config.SetScaleRetries), f.Config.FunctionPollInterval)
 
 		if scaleResult != nil {
 			return FunctionScaleResult{
@@ -170,24 +171,4 @@ func (f *FunctionScaler) Scale(functionName, namespace string) FunctionScaleResu
 		Found:     true,
 		Duration:  time.Since(start),
 	}
-}
-
-type routine func(attempt int) error
-
-func backoff(r routine, attempts int, interval time.Duration) error {
-	var err error
-
-	for i := 0; i < attempts; i++ {
-		res := r(i)
-		if res != nil {
-			err = res
-
-			log.Printf("Attempt: %d, had error: %s\n", i, res)
-		} else {
-			err = nil
-			break
-		}
-		time.Sleep(interval)
-	}
-	return err
 }

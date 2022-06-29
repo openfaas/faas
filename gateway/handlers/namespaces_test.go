@@ -3,10 +3,13 @@
 
 package handlers
 
-import "testing"
+import (
+	"github.com/openfaas/faas/gateway/pkg/middleware"
+	"testing"
+)
 
 func Test_getNamespace_Default(t *testing.T) {
-	root, ns := getNamespace("openfaas-fn", "figlet.openfaas-fn")
+	root, ns := middleware.GetNamespace("openfaas-fn", "figlet.openfaas-fn")
 	wantRoot := "figlet"
 	wantNs := "openfaas-fn"
 
@@ -19,7 +22,7 @@ func Test_getNamespace_Default(t *testing.T) {
 }
 
 func Test_getNamespace_Override(t *testing.T) {
-	root, ns := getNamespace("fn", "figlet.fn")
+	root, ns := middleware.GetNamespace("fn", "figlet.fn")
 	wantRoot := "figlet"
 	wantNs := "fn"
 
@@ -32,7 +35,7 @@ func Test_getNamespace_Override(t *testing.T) {
 }
 
 func Test_getNamespace_Empty(t *testing.T) {
-	root, ns := getNamespace("", "figlet")
+	root, ns := middleware.GetNamespace("", "figlet")
 	wantRoot := "figlet"
 	wantNs := ""
 

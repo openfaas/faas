@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/openfaas/faas/gateway/metrics"
+	"github.com/openfaas/faas/gateway/pkg/middleware"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
@@ -49,7 +50,7 @@ type PrometheusFunctionNotifier struct {
 
 // Notify records metrics in Prometheus
 func (p PrometheusFunctionNotifier) Notify(method string, URL string, originalURL string, statusCode int, event string, duration time.Duration) {
-	serviceName := getServiceName(originalURL)
+	serviceName := middleware.GetServiceName(originalURL)
 	if len(p.FunctionNamespace) > 0 {
 		if !strings.Contains(serviceName, ".") {
 			serviceName = fmt.Sprintf("%s.%s", serviceName, p.FunctionNamespace)
@@ -72,24 +73,6 @@ func (p PrometheusFunctionNotifier) Notify(method string, URL string, originalUR
 		p.Metrics.GatewayFunctionInvocationStarted.WithLabelValues(serviceName).Inc()
 	}
 
-}
-
-func getServiceName(urlValue string) string {
-	var serviceName string
-	forward := "/function/"
-	if strings.HasPrefix(urlValue, forward) {
-		// With a path like `/function/xyz/rest/of/path?q=a`, the service
-		// name we wish to locate is just the `xyz` portion.  With a positive
-		// match on the regex below, it will return a three-element slice.
-		// The item at index `0` is the same as `urlValue`, at `1`
-		// will be the service name we need, and at `2` the rest of the path.
-		matcher := functionMatcher.Copy()
-		matches := matcher.FindStringSubmatch(urlValue)
-		if len(matches) == hasPathCount {
-			serviceName = matches[nameIndex]
-		}
-	}
-	return strings.Trim(serviceName, "/")
 }
 
 // LoggingNotifier notifies a log about a request
