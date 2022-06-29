@@ -14,6 +14,7 @@ import (
 	"github.com/gorilla/mux"
 	ftypes "github.com/openfaas/faas-provider/types"
 	"github.com/openfaas/faas/gateway/metrics"
+	"github.com/openfaas/faas/gateway/pkg/middleware"
 
 	"github.com/openfaas/faas/gateway/scaling"
 )
@@ -21,7 +22,7 @@ import (
 const queueAnnotation = "com.openfaas.queue"
 
 // MakeQueuedProxy accepts work onto a queue
-func MakeQueuedProxy(metrics metrics.MetricOptions, queuer ftypes.RequestQueuer, pathTransformer URLPathTransformer, defaultNS string, functionQuery scaling.FunctionQuery) http.HandlerFunc {
+func MakeQueuedProxy(metrics metrics.MetricOptions, queuer ftypes.RequestQueuer, pathTransformer middleware.URLPathTransformer, defaultNS string, functionQuery scaling.FunctionQuery) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Body != nil {
 			defer r.Body.Close()

@@ -29,6 +29,7 @@ COPY types          types
 COPY plugin         plugin
 COPY version        version
 COPY scaling        scaling
+COPY probing        probing
 COPY pkg            pkg
 COPY main.go        .
 

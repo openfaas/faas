@@ -175,6 +175,8 @@ func (ReadConfig) Read(hasEnv HasEnv) (*GatewayConfig, error) {
 		}
 	}
 
+	cfg.ProbeFunctions = parseBoolValue(hasEnv.Getenv("probe_functions"))
+
 	return &cfg, nil
 }
 
@@ -243,6 +245,9 @@ type GatewayConfig struct {
 
 	// Namespace for endpoints
 	Namespace string
+
+	// ProbeFunctions requires the gateway to probe the health endpoint of a function before invoking it
+	ProbeFunctions bool
 }
 
 // UseNATS Use NATSor not

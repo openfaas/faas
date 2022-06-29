@@ -10,6 +10,8 @@ import (
 	"net/http"
 	"net/url"
 	"testing"
+
+	"github.com/openfaas/faas/gateway/pkg/middleware"
 )
 
 func Test_buildUpstreamRequest_Body_Method_Query(t *testing.T) {
@@ -170,7 +172,7 @@ func Test_getServiceName(t *testing.T) {
 				t.Fatal(err)
 			}
 
-			service := getServiceName(u.Path)
+			service := middleware.GetServiceName(u.Path)
 			if service != s.serviceName {
 				t.Fatalf("Incorrect service name - want: %s, got: %s", s.serviceName, service)
 			}
@@ -195,7 +197,7 @@ func Test_buildUpstreamRequest_WithPathNoQuery(t *testing.T) {
 		t.Fail()
 	}
 
-	transformer := FunctionPrefixTrimmingURLPathTransformer{}
+	transformer := middleware.FunctionPrefixTrimmingURLPathTransformer{}
 	transformedPath := transformer.Transform(request)
 
 	wantTransformedPath := functionPath
@@ -251,7 +253,7 @@ func Test_buildUpstreamRequest_WithNoPathNoQuery(t *testing.T) {
 		t.Fail()
 	}
 
-	transformer := FunctionPrefixTrimmingURLPathTransformer{}
+	transformer := middleware.FunctionPrefixTrimmingURLPathTransformer{}
 	transformedPath := transformer.Transform(request)
 
 	wantTransformedPath := "/"
@@ -305,7 +307,7 @@ func Test_buildUpstreamRequest_WithPathAndQuery(t *testing.T) {
 		t.Fail()
 	}
 
-	transformer := FunctionPrefixTrimmingURLPathTransformer{}
+	transformer := middleware.FunctionPrefixTrimmingURLPathTransformer{}
 	transformedPath := transformer.Transform(request)
 
 	wantTransformedPath := functionPath
