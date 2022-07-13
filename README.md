@@ -79,19 +79,21 @@ Official templates exist for many popular languages and are easily extensible wi
     package function
 
     import (
-        "log"
+        "fmt"
+        "net/http"
 
-        "github.com/openfaas-incubator/go-function-sdk"
+        handler "github.com/openfaas/templates-sdk/go-http"
     )
 
+    // Handle a function invocation
     func Handle(req handler.Request) (handler.Response, error) {
         var err error
 
+        message := fmt.Sprintf("Body: %s", string(req.Body))
+
         return handler.Response{
-            Body: []byte("Try us out today!"),
-            Header: map[string][]string{
-                "X-Served-By": []string{"openfaas.com"},
-            },
+            Body:       []byte(message),
+            StatusCode: http.StatusOK,
         }, err
     }
     ```
