@@ -2,7 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"sync"
 	"time"
@@ -33,7 +32,13 @@ type NATSQueue struct {
 
 // Queue request for processing
 func (q *NATSQueue) Queue(req *ftypes.QueueRequest) error {
-	fmt.Printf("NatsQueue - submitting request: %s.\n", req.Function)
+	callId := ""
+
+	if v := req.Header.Get("X-Call-Id"); len(v) > 0 {
+		callId = v
+	}
+
+	log.Printf("[%s] Queueing (%d) bytes for: %s.\n", callId, len(req.Body), req.Function)
 
 	out, err := json.Marshal(req)
 	if err != nil {

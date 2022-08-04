@@ -1,4 +1,4 @@
-// Copyright (c) 2019 Uber Technologies, Inc.
+// Copyright (c) 2021 Uber Technologies, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,11 +18,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// +build tools
+//go:build !go1.16
+// +build !go1.16
 
 package goleak
 
 import (
-	// Tools we use during development.
-	_ "golang.org/x/lint/golint"
+	"strings"
+
+	"go.uber.org/goleak/internal/stack"
 )
+
+func isTraceStack(s stack.Stack) bool {
+	if f := s.FirstFunction(); f != "runtime.goparkunlock" {
+		return false
+	}
+
+	return strings.Contains(s.Full(), "runtime.ReadTrace")
+}
