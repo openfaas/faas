@@ -63,19 +63,19 @@ type FunctionStatus struct {
 	// data store for when the function or its container was created.
 	CreatedAt time.Time `json:"createdAt,omitempty"`
 
-	// Utilisation represents CPU and RAM used by all of the
+	// Usage represents CPU and RAM used by all of the
 	// functions' replicas. Divide by AvailableReplicas for an
 	// average value per replica.
-	Utilisation FunctionUtilisation `json:"usage,omitempty"`
+	Usage *FunctionUsage `json:"usage,omitempty"`
 }
 
-// FunctionUtilisation represents CPU and RAM used by all of the
+// FunctionUsage represents CPU and RAM used by all of the
 // functions' replicas.
 //
 // CPU is measured in seconds consumed since the last measurement
 // RAM is measured in total bytes consumed
 //
-type FunctionUtilisation struct {
+type FunctionUsage struct {
 	// CPU is the increase in CPU usage since the last measurement
 	// equivalent to Kubernetes' concept of millicores.
 	CPU float64 `json:"cpu,omitempty"`
