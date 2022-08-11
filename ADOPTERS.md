@@ -67,6 +67,8 @@ Tell us more:
 
 * [LivePerson](https://www.liveperson.com/) - LivePerson extended their chat platform by allowing customers to write functions to execute in client chat flows. See [KubeCon video](https://www.youtube.com/watch?v=bt06Z28uzPA)
 
+* [metaspan](https://metaspan.com) - "End-to-end blockchain solutions". metaspan ported all api endpoints from monolith express.js/sails.js to openfaas micro-functions.
+
 * [MoneyLion](https://www.moneylion.com/)
 
 * [Naamio](https://naamio.cloud/) - "Naamio are providing an event-based serverless API to developers to enable rapid development of decentralized applications on the cloud. By providing progressive enhancement within the developer tools, OpenFaaS has enabled Naamio to go from clustered Docker container deployments with REST APIs using Kubernetes, to load balanced deployable functions over an open event queue interface. It was key to enabling a standard multilingual development kit across cloud providers."
