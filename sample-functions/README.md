@@ -13,8 +13,12 @@ Language specific guides from the blog:
 
 Official Training and eBooks:
 
-* [Official Training](https://docs.openfaas.com/tutorials/training/)
+* [OpenFaaS with Node.js examples](https://openfaas.gumroad.com/l/serverless-for-everyone-else)
+* [OpenFaaS with Golang - Premium and Team Editions only](https://store.openfaas.com/l/everyday-golang)
+* [Other Official Training](https://docs.openfaas.com/tutorials/training/)
 
 Official Function store images:
 
 * [Function Store functions](https://github.com/openfaas/store-functions)
+
+Need help? Reach out to us at [openfaas.com/support](https://openfaas.com/support)
