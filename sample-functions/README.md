@@ -8,6 +8,8 @@ Language specific guides from the blog:
 * [Build ASP.NET Core APIs with Kubernetes and OpenFaaS](https://www.openfaas.com/blog/asp-net-core/)
 * [Serverless Node.js that you can run anywhere](https://www.openfaas.com/blog/serverless-nodejs/)
 * [Simple Serverless with Golang Functions and Microservices](https://www.openfaas.com/blog/golang-serverless/)
+* [Get started with Java 11 and Vert.x on Kubernetes with OpenFaaS](https://www.openfaas.com/blog/get-started-with-java-openjdk11/)
+* [FaaS for the Rubyist](https://blog.alexellis.io/faas-for-the-rubyist/)
 
 Official Training and eBooks:
 
