@@ -2,7 +2,7 @@ curators:
  - alexellis
  - LucasRoesler
  - viveksyngh
- - Waterdrips
+ - nitishkumar71
  - rgee0
  - welteki
 
@@ -13,43 +13,3 @@ features:
  - release_notes
 
 contributing_url: https://github.com/openfaas/faas/blob/master/CONTRIBUTING.md
-
-required_in_issues:
-- "## Why do you need this?"
-- "## Expected Behaviour"
-- "## Current Behaviour"
-- "## Steps to Reproduce (for bugs)"
-- "## Your Environment"
-
-custom_messages:
-messages:
-  - name: template
-    value: |
-           Your issue has been marked as *invalid* because you've deleted or removed questions from our issue template.
-           
-           If you wish to participate in this community, then you need to follow guidelines set by the maintainers.
-           
-           You will find the template in the .github folder, edit your issue and use the whole issue template, so that we can help you.
-
-  - name: propose
-    value: |
-           This project follows a contributing guide which states that all
-           changes must be proposed with an Issue before being worked on.
-           
-           Please raise an Issue and update your Pull Request to include
-           the ID or link as part of the description.
-
-           Thank you for your contribution.
-
-  - name: test
-    value: |
-           This project follows a contributing guide which requires that
-           all changes are tested before being merged. You should include
-           worked examples that a maintainer can run to prove that the
-           changes are good.
-
-           Screenshots and command line output are also accepted, but
-           must show the positive, and negative cases, not just that 
-           what was added worked as you expected.
-
-           Thank you for your contribution.
