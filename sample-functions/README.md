@@ -1,43 +1,18 @@
-## Note: this page contains legacy examples.
+# OpenFaaS samples
 
-To learn how to build functions, see the official training page in the docs: [Training](https://docs.openfaas.com/tutorials/training/)
+This folder used to contain legacy function samples written in 2016. As you can imagine, OpenFaaS has developed significantly since then.
 
-## Hello World in different languages:
+Language specific guides from the blog:
 
-For examples of hello-world in different programming languages see inside the BaseFunctions folder:
+* [Build a Flask microservice with OpenFaaS](https://www.openfaas.com/blog/openfaas-flask/)
+* [Build ASP.NET Core APIs with Kubernetes and OpenFaaS](https://www.openfaas.com/blog/asp-net-core/)
+* [Serverless Node.js that you can run anywhere](https://www.openfaas.com/blog/serverless-nodejs/)
+* [Simple Serverless with Golang Functions and Microservices](https://www.openfaas.com/blog/golang-serverless/)
 
-* [Base Functions](https://github.com/openfaas/faas/tree/master/sample-functions/BaseFunctions)
+Official Training and eBooks:
 
-## Demo functions from closing keynote @ Dockercon
+* [Official Training](https://docs.openfaas.com/tutorials/training/)
 
-* Demo functions - [fass-dockercon](https://github.com/alexellis/faas-dockercon/)
-* Video recording from Dockercon [on YouTube](https://youtu.be/-h2VTE9WnZs?t=15m52s)
+Official Function store images:
 
-## Sample functions from the FaaS stack
-
-* [FaaS-And_Furious Community functions](https://github.com/faas-and-furious) (new)
-
-> Also see the [community page](https://github.com/openfaas/faas/blob/master/community.md) for functions created by FaaS users and contributors.
-
-Here is a list of some of the sample functions included this repository.
-
-| Name                     | Details |
-|--------------------------|-----------------------------------------                          |
-| AlpineFunction           | BusyBox - a useful base image with busybox utilities pre-installed        |
-| apikey-secret            | Example in Golang showing how to read a secret from a HTTP header and validate with a Kubernetes secret |
-| CaptainsIntent           | Alexa skill - find the count of Docker Captains |
-| ChangeColorIntent        | Alexa skill - change the colour of IoT-connected lights |
-| CHelloWorld              | Use C to build a function |
-| echo                     | Uses `cat` from BusyBox to provide an echo function |
-| DockerHubStats           | Golang function gives the count of repos a user has on the Docker hub |
-| figlet                   | Generate ascii logos through the use of a binary |
-| gif-maker                | Use gifsicle and ffmpeg packages from Alpine Linux to make gifs from video |
-| HostnameIntent           | Prints the hostname of a container |
-| MarkdownRender           | Use a Go function with vendoring to convert Markdown to HTML |
-| Nmap                     | The network scanning tool as a binary-based function |
-| NodeInfo                 | Node.js - gives CPU/network info on the current container |
-| Phantomjs                | Use Phantomjs to scrape/automate web-pages |
-| ResizeImageMagick        | Resizes an image using the imagemagick binary |
-| SentimentAnalysis        | Perform sentiment analysis with the TextBlob library |
-| WebhookStash             | Golang function provides way to capture webhooks - JSON/text/binary into the container filesystem |
-| WordCountFunction        | BusyBox `wc` is exposed as a function / service through FaaS |
+* [Function Store functions](https://github.com/openfaas/store-functions)

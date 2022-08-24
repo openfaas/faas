@@ -1,1 +1,0 @@
-docker build -t hostnameintent . ; docker service rm HostnameIntent ; docker service create --network=functions --name HostnameIntent hostnameintent
