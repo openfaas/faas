@@ -28,9 +28,6 @@ type HandlerSet struct {
 	// QueuedProxy queue work and return synchronous response
 	QueuedProxy http.HandlerFunc
 
-	// AsyncReport report a deferred execution result
-	AsyncReport http.HandlerFunc
-
 	// ScaleFunction enables a function to be scaled
 	ScaleFunction http.HandlerFunc
 

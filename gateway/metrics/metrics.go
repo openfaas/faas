@@ -17,9 +17,7 @@ type MetricOptions struct {
 	GatewayFunctionsHistogram        *prometheus.HistogramVec
 	GatewayFunctionInvocationStarted *prometheus.CounterVec
 
-	ServiceReplicasGauge    *prometheus.GaugeVec
-	ServiceMinReplicasGauge *prometheus.GaugeVec
-	ServiceTargetLoadGauge  *prometheus.GaugeVec
+	ServiceReplicasGauge *prometheus.GaugeVec
 
 	ServiceMetrics *ServiceMetricOptions
 }
@@ -71,24 +69,6 @@ func BuildMetricsOptions() MetricOptions {
 		[]string{"function_name"},
 	)
 
-	serviceMinReplicas := prometheus.NewGaugeVec(
-		prometheus.GaugeOpts{
-			Namespace: "gateway",
-			Name:      "service_min",
-			Help:      "Minium replicas for function",
-		},
-		[]string{"function_name"},
-	)
-
-	serviceTargetLoad := prometheus.NewGaugeVec(
-		prometheus.GaugeOpts{
-			Namespace: "gateway",
-			Name:      "service_target_load",
-			Help:      "Target load for function",
-		},
-		[]string{"function_name", "scaling_type"},
-	)
-
 	// For automatic monitoring and alerting (RED method)
 	histogram := prometheus.NewHistogramVec(prometheus.HistogramOpts{
 		Subsystem: "http",
@@ -126,8 +106,6 @@ func BuildMetricsOptions() MetricOptions {
 		GatewayFunctionsHistogram:        gatewayFunctionsHistogram,
 		GatewayFunctionInvocation:        gatewayFunctionInvocation,
 		ServiceReplicasGauge:             serviceReplicas,
-		ServiceMinReplicasGauge:          serviceMinReplicas,
-		ServiceTargetLoadGauge:           serviceTargetLoad,
 		ServiceMetrics:                   serviceMetricOptions,
 		GatewayFunctionInvocationStarted: gatewayFunctionInvocationStarted,
 	}
