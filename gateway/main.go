@@ -211,8 +211,6 @@ func main() {
 			decorateExternalAuth(faasHandlers.FunctionStatus, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
 		faasHandlers.InfoHandler =
 			decorateExternalAuth(faasHandlers.InfoHandler, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
-		faasHandlers.AsyncReport =
-			decorateExternalAuth(faasHandlers.AsyncReport, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
 		faasHandlers.SecretHandler =
 			decorateExternalAuth(faasHandlers.SecretHandler, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
 		faasHandlers.LogProxyHandler =
@@ -247,8 +245,6 @@ func main() {
 		r.HandleFunc("/async-function/{name:["+NameExpression+"]+}/", faasHandlers.QueuedProxy).Methods(http.MethodPost)
 		r.HandleFunc("/async-function/{name:["+NameExpression+"]+}", faasHandlers.QueuedProxy).Methods(http.MethodPost)
 		r.HandleFunc("/async-function/{name:["+NameExpression+"]+}/{params:.*}", faasHandlers.QueuedProxy).Methods(http.MethodPost)
-
-		r.HandleFunc("/system/async-report", handlers.MakeNotifierWrapper(faasHandlers.AsyncReport, forwardingNotifiers))
 	}
 
 	fs := http.FileServer(http.Dir("./assets/"))

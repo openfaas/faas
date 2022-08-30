@@ -12,14 +12,12 @@ import (
 	"net/http"
 	"net/url"
 	"path"
-	"strconv"
 	"time"
 
 	"log"
 
 	"github.com/openfaas/faas-provider/auth"
 	types "github.com/openfaas/faas-provider/types"
-	"github.com/openfaas/faas/gateway/scaling"
 	"github.com/prometheus/client_golang/prometheus"
 )
 
@@ -48,7 +46,6 @@ func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
 	e.metricOptions.GatewayFunctionsHistogram.Describe(ch)
 	e.metricOptions.ServiceReplicasGauge.Describe(ch)
 	e.metricOptions.GatewayFunctionInvocationStarted.Describe(ch)
-	e.metricOptions.ServiceTargetLoadGauge.Describe(ch)
 
 	e.metricOptions.ServiceMetrics.Counter.Describe(ch)
 	e.metricOptions.ServiceMetrics.Histogram.Describe(ch)
@@ -62,7 +59,6 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 	e.metricOptions.GatewayFunctionInvocationStarted.Collect(ch)
 
 	e.metricOptions.ServiceReplicasGauge.Reset()
-	e.metricOptions.ServiceTargetLoadGauge.Reset()
 
 	for _, service := range e.services {
 		var serviceName string
@@ -76,49 +72,9 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 		e.metricOptions.ServiceReplicasGauge.
 			WithLabelValues(serviceName).
 			Set(float64(service.Replicas))
-
-		// Set minimum replicas
-		minReplicas := scaling.DefaultMinReplicas
-		if service.Labels != nil {
-			a := *service.Labels
-			if v, ok := a[scaling.MinScaleLabel]; ok && len(v) > 0 {
-				val, _ := strconv.Atoi(v)
-				minReplicas = val
-			}
-		}
-
-		e.metricOptions.ServiceMinReplicasGauge.
-			WithLabelValues(serviceName).
-			Set(float64(minReplicas))
-
-		// Set scale type
-		scaleType := scaling.DefaultTypeScale
-		if service.Labels != nil {
-			a := *service.Labels
-			if v, ok := a[scaling.ScaleTypeLabel]; ok && len(v) > 0 {
-				scaleType = v
-			}
-		}
-
-		// Set target load
-		targetScale := scaling.DefaultTargetLoad
-		if service.Labels != nil {
-			a := *service.Labels
-			if v, ok := a[scaling.TargetLoadLabel]; ok && len(v) > 0 {
-				val, _ := strconv.Atoi(v)
-				targetScale = val
-			}
-		}
-
-		e.metricOptions.ServiceTargetLoadGauge.
-			WithLabelValues(serviceName, scaleType).
-			Set(float64(targetScale))
-
 	}
 
 	e.metricOptions.ServiceReplicasGauge.Collect(ch)
-	e.metricOptions.ServiceMinReplicasGauge.Collect(ch)
-	e.metricOptions.ServiceTargetLoadGauge.Collect(ch)
 
 	e.metricOptions.ServiceMetrics.Counter.Collect(ch)
 	e.metricOptions.ServiceMetrics.Histogram.Collect(ch)
