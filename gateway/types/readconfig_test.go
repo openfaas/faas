@@ -198,13 +198,16 @@ func TestRead_EmptyTimeoutConfig(t *testing.T) {
 
 	config, _ := readConfig.Read(defaults)
 
-	if (config.ReadTimeout) != time.Duration(8)*time.Second {
-		t.Log("ReadTimeout incorrect")
-		t.Fail()
+	want := time.Second * 60
+	got := config.ReadTimeout
+	if got != want {
+		t.Fatalf("config.ReadTimeout want: %s, but got: %s", want, got)
 	}
-	if (config.WriteTimeout) != time.Duration(8)*time.Second {
-		t.Log("WriteTimeout incorrect")
-		t.Fail()
+
+	want = time.Second * 60
+	got = config.WriteTimeout
+	if got != want {
+		t.Fatalf("config.WriteTimeout want: %s, but got: %s", want, got)
 	}
 }
 

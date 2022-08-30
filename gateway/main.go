@@ -27,10 +27,6 @@ const NameExpression = "-a-zA-Z_0-9."
 
 func main() {
 
-	if len(version.GitCommitMessage) == 0 {
-		version.GitCommitMessage = "See GitHub for latest changes"
-	}
-
 	osEnv := types.OsEnv{}
 	readConfig := types.ReadConfig{}
 	config, configErr := readConfig.Read(osEnv)
@@ -38,15 +34,18 @@ func main() {
 	if configErr != nil {
 		log.Fatalln(configErr)
 	}
-
-	log.Printf("HTTP Read Timeout: %s", config.ReadTimeout)
-	log.Printf("HTTP Write Timeout: %s", config.WriteTimeout)
-
 	if !config.UseExternalProvider() {
 		log.Fatalln("You must provide an external provider via 'functions_provider_url' env-var.")
 	}
 
-	log.Printf("Binding to external function provider: %s", config.FunctionsProviderURL)
+	fmt.Printf("OpenFaaS Gateway - Community Edition (CE)\n"+
+		"\nVersion: %s Commit: %s\nTimeouts: read=%s\twrite=%s\tupstream=%s\nFunction provider: %s\n\n",
+		version.BuildVersion(),
+		version.GitCommitSHA,
+		config.ReadTimeout,
+		config.WriteTimeout,
+		config.UpstreamTimeout,
+		config.FunctionsProviderURL)
 
 	// credentials is used for service-to-service auth
 	var credentials *auth.BasicAuthCredentials
@@ -66,9 +65,6 @@ func main() {
 	var faasHandlers types.HandlerSet
 
 	servicePollInterval := time.Second * 5
-
-	metadataQuery := metrics.NewMetadataQuery(credentials)
-	fmt.Println(metadataQuery)
 
 	metricsOptions := metrics.BuildMetricsOptions()
 	exporter := metrics.NewExporter(metricsOptions, credentials, config.Namespace)

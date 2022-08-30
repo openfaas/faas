@@ -59,7 +59,7 @@ func (ReadConfig) Read(hasEnv HasEnv) (*GatewayConfig, error) {
 		PrometheusPort: 9090,
 	}
 
-	defaultDuration := time.Second * 8
+	defaultDuration := time.Second * 60
 
 	cfg.ReadTimeout = parseIntOrDurationValue(hasEnv.Getenv("read_timeout"), defaultDuration)
 	cfg.WriteTimeout = parseIntOrDurationValue(hasEnv.Getenv("write_timeout"), defaultDuration)

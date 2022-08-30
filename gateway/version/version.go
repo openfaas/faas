@@ -8,7 +8,7 @@ var (
 	GitCommitSHA string
 
 	// GitCommitMessage as read from the latest tag/release
-	GitCommitMessage string
+	GitCommitMessage = "See GitHub for latest changes"
 
 	// DevVersion string for the development version
 	DevVersion = "dev"
