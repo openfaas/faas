@@ -102,7 +102,7 @@ func (s ExternalServiceQuery) GetReplicas(serviceName, serviceNamespace string) 
 		// log.Printf("GetReplicas [%s.%s] took: %fs", serviceName, serviceNamespace, time.Since(start).Seconds())
 
 	} else {
-		log.Printf("GetReplicas [%s.%s] took: %fs, code: %d\n", serviceName, serviceNamespace, time.Since(start).Seconds(), res.StatusCode)
+		log.Printf("GetReplicas [%s.%s] took: %.4fs, code: %d\n", serviceName, serviceNamespace, time.Since(start).Seconds(), res.StatusCode)
 		return emptyServiceQueryResponse, fmt.Errorf("server returned non-200 status code (%d) for function, %s, body: %s", res.StatusCode, serviceName, string(bytesOut))
 	}
 
@@ -176,7 +176,8 @@ func (s ExternalServiceQuery) SetReplicas(serviceName, serviceNamespace string, 
 		err = fmt.Errorf("error scaling HTTP code %d, %s", res.StatusCode, urlPath)
 	}
 
-	log.Printf("SetReplicas [%s.%s] took: %fs", serviceName, serviceNamespace, time.Since(start).Seconds())
+	log.Printf("SetReplicas [%s.%s] took: %.4fs",
+		serviceName, serviceNamespace, time.Since(start).Seconds())
 
 	return err
 }
