@@ -7,7 +7,7 @@ SERVER?=docker.io
 OWNER?=alexellis2
 NAME=gateway
 
-.PHONY: build-local
+.PHONY: local-docker
 build-local:
 	@echo $(SERVER)/$(OWNER)/$(NAME):$(TAG) \
 	&& docker buildx create --use --name=multiarch --node multiarch \
@@ -17,8 +17,8 @@ build-local:
 		--output "type=docker,push=false" \
 		--tag $(SERVER)/$(OWNER)/$(NAME):$(TAG) .
 
-.PHONY: build-push
-build-push:
+.PHONY: push-docker
+push-docker:
 	@echo $(SERVER)/$(OWNER)/$(NAME):$(TAG) \
 	&& docker buildx create --use --name=multiarch --node multiarch \
 	&& docker buildx build \
