@@ -20,7 +20,7 @@
 
 
 ## Are you a GitHub Sponsor (Yes/No?)
-<!--- Given this request for help, how are you supporting the project? -->
+<!-- Issues created by customers or monthly sponsors get priority -->
 
 Check at: https://github.com/sponsors/openfaas
 - [ ] Yes
