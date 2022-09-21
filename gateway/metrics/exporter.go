@@ -144,7 +144,7 @@ func (e *Exporter) getHTTPClient(timeout time.Duration) http.Client {
 }
 
 func (e *Exporter) getFunctions(endpointURL url.URL, namespace string) ([]types.FunctionStatus, error) {
-	timeout := 3 * time.Second
+	timeout := 5 * time.Second
 	proxyClient := e.getHTTPClient(timeout)
 
 	endpointURL.Path = path.Join(endpointURL.Path, "/system/functions")
@@ -170,10 +170,11 @@ func (e *Exporter) getFunctions(endpointURL url.URL, namespace string) ([]types.
 		return services, readErr
 	}
 
-	unmarshalErr := json.Unmarshal(bytesOut, &services)
-	if unmarshalErr != nil {
-		return services, unmarshalErr
+	if err := json.Unmarshal(bytesOut, &services); err != nil {
+		return services, fmt.Errorf("error unmarshalling response: %s, error: %s",
+			string(bytesOut), err)
 	}
+
 	return services, nil
 }
 
@@ -186,7 +187,7 @@ func (e *Exporter) getNamespaces(endpointURL url.URL) ([]string, error) {
 		get.SetBasicAuth(e.credentials.User, e.credentials.Password)
 	}
 
-	timeout := 3 * time.Second
+	timeout := 5 * time.Second
 	proxyClient := e.getHTTPClient(timeout)
 
 	res, err := proxyClient.Do(get)
@@ -203,9 +204,8 @@ func (e *Exporter) getNamespaces(endpointURL url.URL) ([]string, error) {
 		return namespaces, readErr
 	}
 
-	unmarshalErr := json.Unmarshal(bytesOut, &namespaces)
-	if unmarshalErr != nil {
-		return namespaces, unmarshalErr
+	if err := json.Unmarshal(bytesOut, &namespaces); err != nil {
+		return namespaces, fmt.Errorf("error unmarshalling response: %s, error: %s", string(bytesOut), err)
 	}
 	return namespaces, nil
 }
