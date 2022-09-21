@@ -35,7 +35,7 @@ func AddMetricsHandler(handler http.HandlerFunc, prometheusQuery PrometheusQuery
 				recorder.Code,
 				string(upstreamBody))
 
-			http.Error(w, "Metrics hander: unexpected status code retrieving functions from backend", http.StatusInternalServerError)
+			http.Error(w, "Metrics handler: unexpected status code from provider listing functions", http.StatusInternalServerError)
 			return
 		}
 
@@ -44,9 +44,9 @@ func AddMetricsHandler(handler http.HandlerFunc, prometheusQuery PrometheusQuery
 		err := json.Unmarshal(upstreamBody, &functions)
 
 		if err != nil {
-			log.Printf("Metrics upstream error: %s", err)
+			log.Printf("Metrics upstream error: %s, value: %s", err, string(upstreamBody))
 
-			http.Error(w, "Error parsing metrics from upstream provider/backend", http.StatusInternalServerError)
+			http.Error(w, "Unable to parse list of functions from provider", http.StatusInternalServerError)
 			return
 		}
 
@@ -72,7 +72,7 @@ func AddMetricsHandler(handler http.HandlerFunc, prometheusQuery PrometheusQuery
 		bytesOut, err := json.Marshal(functions)
 		if err != nil {
 			log.Printf("Error serializing functions: %s", err)
-			http.Error(w, "error writing response after adding metrics", http.StatusInternalServerError)
+			http.Error(w, "Error writing response after adding metrics", http.StatusInternalServerError)
 			return
 		}
 
