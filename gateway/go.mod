@@ -1,6 +1,6 @@
 module github.com/openfaas/faas/gateway
 
-go 1.17
+go 1.18
 
 require (
 	github.com/docker/distribution v2.8.1+incompatible
