@@ -40,6 +40,7 @@ github.com/nats-io/stan.go/pb
 # github.com/openfaas/faas-provider v0.19.1
 ## explicit; go 1.17
 github.com/openfaas/faas-provider/auth
+github.com/openfaas/faas-provider/httputil
 github.com/openfaas/faas-provider/types
 # github.com/openfaas/nats-queue-worker v0.0.0-20220805080536-d1d72d857b1c
 ## explicit; go 1.16
