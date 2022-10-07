@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	types "github.com/openfaas/faas-provider/types"
@@ -53,6 +54,34 @@ func Test_PrometheusMetrics_MixedInto_Services(t *testing.T) {
 	if results[0].InvocationCount != 1 {
 		t.Errorf("InvocationCount want: %d , got: %f", 1, results[0].InvocationCount)
 	}
+}
+
+func Test_MetricHandler_ForwardsErrors(t *testing.T) {
+	functionsHandler := func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusConflict)
+		w.Write([]byte("test error case"))
+	}
+	// explicitly set the query fetcher to nil because it should
+	// not be called when a non-200 response is returned from the
+	// functions handler, if it is called then the test will panic
+	handler := AddMetricsHandler(functionsHandler, nil)
+
+	rr := httptest.NewRecorder()
+	request, _ := http.NewRequest(http.MethodGet, "/system/functions", nil)
+	handler.ServeHTTP(rr, request)
+
+	if status := rr.Code; status != http.StatusConflict {
+		t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusConflict)
+	}
+
+	if rr.Header().Get("Content-Type") != "text/plain; charset=utf-8" {
+		t.Errorf("Want 'text/plain; charset=utf-8' content-type, got: %s", rr.Header().Get("Content-Type"))
+	}
+	body := strings.TrimSpace(rr.Body.String())
+	if body != "test error case" {
+		t.Errorf("Want 'test error case', got: %q", body)
+	}
+
 }
 
 func Test_FunctionsHandler_ReturnsJSONAndOneFunction(t *testing.T) {

@@ -34,15 +34,13 @@ func AddMetricsHandler(handler http.HandlerFunc, prometheusQuery PrometheusQuery
 			log.Printf("List functions responded with code %d, body: %s",
 				recorder.Code,
 				string(upstreamBody))
-
-			http.Error(w, "Metrics handler: unexpected status code from provider listing functions", http.StatusInternalServerError)
+			http.Error(w, string(upstreamBody), recorder.Code)
 			return
 		}
 
 		var functions []types.FunctionStatus
 
 		err := json.Unmarshal(upstreamBody, &functions)
-
 		if err != nil {
 			log.Printf("Metrics upstream error: %s, value: %s", err, string(upstreamBody))
 
@@ -63,8 +61,8 @@ func AddMetricsHandler(handler http.HandlerFunc, prometheusQuery PrometheusQuery
 
 			results, err := prometheusQuery.Fetch(url.QueryEscape(q))
 			if err != nil {
+				// log the error but continue, the mixIn will correctly handle the empty results.
 				log.Printf("Error querying Prometheus: %s\n", err.Error())
-				return
 			}
 			mixIn(&functions, results)
 		}
