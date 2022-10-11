@@ -53,6 +53,8 @@ Tell us more:
 
 * [GMO Internet](https://www.gmo.jp/en/)
 
+* [HelloSafe](https://hellosafe.ca/en/) - "HelloSafe is one of the leading website of financial products comparison in Canada. We're using OpenFaas on our production applications."
+
 * [HPE](https://www.hpe.com/) - HPE Ezmeral is a purpose-built, hybrid cloud platform for data science and analytics workloads.
 
 * [HM Planning Inspectorate](http://www.planninginspectorate.gov.uk) - HM Planning Inspectorate is the UK Government body responsible for dealing with planning appeals, national infrastructure planning applications, examinations of local plans and other specialist casework in England and Wales. OpenFaaS eased the communication between the new planning appeals website and the monolithic back-office application and allowed easy retries in the event of network failure.
