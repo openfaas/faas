@@ -1,16 +1,29 @@
 # Adopters
 
-This list shows adopters of OpenFaaS. If you're using OpenFaaS in some way, then please get in touch.
+This list shows adopters of OpenFaaS. If you're using OpenFaaS in some way, then please add your team and use-case to this file
 
-## Further resources
+## How else can you support this project?
 
-Become a GitHub Sponsor - either as an individual practitioner using or introducing OpenFaaS, or as a company, or both.
+### Individual or company sponsor
+
+You can sponsor OpenFaaS on GitHub, most users do this using their personal accounts.
+
+You'll show up as a sponsor on issues and PRs, which is going to make it more likely you'll get a timely response and help from the community.
 
 * [Sponsor OpenFaaS on GitHub](https://github.com/openfaas/sponsors)
 
-Support & OpenFaaS PRO
+### Help yourself, with the manual for OpenFaaS
 
-* Buy [OpenFaaS PRO or Enterprise Subscription](https://openfaas.com/support) from OpenFaaS Ltd
+Help yourself learn and grow, whilst supporting us.
+
+* [Serverless For Everyone Else](https://openfaas.gumroad.com/l/serverless-for-everyone-else) is the official manual for OpenFaaS, brimming with examples written in Node.js
+* [Everyday Go](https://openfaas.gumroad.com/l/everyday-golang) is the official reference material from the OpenFaaS founder Alex Ellis for learning Go, and writing functions in Go.
+
+### Running OpenFaaS in production?
+
+See how Community Edition (CE) which you are using now, compares to OpenFaaS Pro, which is designed for commercial use:
+
+[Overview and comparison of OpenFaaS Pro](https://docs.openfaas.com/openfaas-pro/introduction/)
 
 Tell us more:
 
