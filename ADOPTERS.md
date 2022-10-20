@@ -32,6 +32,8 @@ Tell us more:
 
 ## Adopters list (alphabetical)
 
+* [Axa France](https://www.axa.fr) - Axa uses OpenFaaS for inference and predictions at scale using ML models - Pierre-Henri Gache
+
 * [3fs](https://3fs.si) - 3fs is using OpenFaaS for automating repetitive development tasks like automatic rebasing, vendoring of dependencies on merge requests and many other things that make our developers lives easier
 
 * [BT](https://www.bt.com) - BT are using OpenFaaS to enable collaboration between data-scientists and developers. The teams are going from 3-years to build and deliver a PoC, to 3 months. See: [KubeCon video](https://www.youtube.com/watch?v=y77HlN2Fa-w)
@@ -92,6 +94,10 @@ Tell us more:
 
 * [NGC](https://www.ngcsoftware.com/)
 
+* [Northwestern Mutual](https://www.northwesternmutual.com/) - "OpenFaaS is a great platform and Alex and team are a great resource. They will work very diligently with your team to help you get the most out of OpenFaaS, and he will always be able to provide valuable insight into issues that a team might face while developing software for the cloud." Kieran Gordon
+
+* [P. A. Media Group](https://pamediagroup.com/) - "We use OpenFaaS to orchestrate Terraform and Jenkins jobs for our internal infrastructure provisioning" - Rob Stonham
+
 * [PathfinderZA](https://www.pathfinderza.com) - PathfinderZA is an IOT security firm selling underground sensors that transmits warnings to users if a person or vehicle goes past it. We're using OpenFaas, with Dockerised functions written in Java (Quarkus) and Rust (Actix/Rocket-RS).
 
 * [Pentium Network](https://www.pentium.network/)
@@ -99,6 +105,8 @@ Tell us more:
 * [PiperCI](https://piperci.dreamer-labs.net) - PiperCI is a task management framework that provides users with a standard library of CI/CD-centric tasks and the [OpenFaas](https://www.openfaas.com/) and [Kubernetes](https://kubernetes.io/) based infrastructure required to run them. PiperCI can be used in conjunction with existing CI/CD orchestrators like GitlabCI, Jenkins, TravisCI, or others to create a more scalable, robust, and functional CI/CD system.
 
 * [Press Association](https://www.pressassociation.com/) - Press Association is using OpenFaaS in development and production as part of our deployment pipeline.
+
+* [Outsystems](https://outsystems.com) - "In my team, we're using OpenFaaS to help the orchestration of our CD pipelines. From a high-level perspective, we have a NATS cluster and the OpenFaaS functions subscribing to NATS topics and reacting to them. Our functions are doing some work related to the pipeline, like saving data to the database, sending Slack messages, or just returning something from the database." (Marco Alves)
 
 * [Ratehub](https://www.ratehub.ca) - Ratehub is Canada's leading personal finance comparison site. We're breaking apart our monolithic PHP and Java codebases into Node, PHP and Java OpenFaaS functions; there's not much that we don't plan on moving to FaaS!
 
@@ -109,6 +117,8 @@ Tell us more:
 * [SURF](https://www.surf.nl) - [The Green Village](https://www.thegreenvillage.org/) is a living lab at Delft University of Technology. It is an experimental, real-life setting with the goal to accelerate innovation for a sustainable future. [SURF](https://www.surf.nl/), a cooperative association of Dutch educational and research institutions providing digital infrastructure and ICT services, has developed a [digital platform](https://youtu.be/_WYVzoBuWKk) for The Green Village that uses OpenFaaS to classify and sort incoming sensor data at scale.
 
 * [SURFsara IoT Platform for Sensemakers](https://github.com/sensemakersamsterdam/sensemakers-iot-platform) - The SURFsara IoT Platform for Sensemakers is a platform for storing, monitoring, visualising and analyzing sensor data. It is a collaboration platform designed to host multiple projects carried by the Sensemakers community. In addition, there is a project dedicated to experimentation, available for everyone to use. All data within the platform is shared. OpenFaaS serverless functions give access to the platform through an HTTP entry point, take care of the metadata extraction and enable custom event-driven actions.
+
+* [skyslope.com](https://skyslope.com) - "We process millions of documents per day and moved from AWS Lambda to Kubernetes. We estimate that OpenFaaS has saved us 60,000 USD each year over the past three years that we've been running it in our business" - Derrick Martinez
 
 * [Transmute Industries](https://www.transmute.industries/) - "At Transmute we use OpenFaaS to develop identity and access integrations leveraging decentralized identities that integrate with legacy IAM systems. OpenFaaS helps Transmute and our customers avoid vendor lock in, encourages modularity, and helps us rapidly develop and release integrations for customers."
 
