@@ -104,6 +104,8 @@ Tell us more:
 
 * [PiperCI](https://piperci.dreamer-labs.net) - PiperCI is a task management framework that provides users with a standard library of CI/CD-centric tasks and the [OpenFaas](https://www.openfaas.com/) and [Kubernetes](https://kubernetes.io/) based infrastructure required to run them. PiperCI can be used in conjunction with existing CI/CD orchestrators like GitlabCI, Jenkins, TravisCI, or others to create a more scalable, robust, and functional CI/CD system.
 
+* [Politics Rewired](https://www.politicsrewired.com/) - Politics Rewired uses OpenFaaS to enable organisation of political campaigns and sending of SMS message at scale using functions.
+
 * [Press Association](https://www.pressassociation.com/) - Press Association is using OpenFaaS in development and production as part of our deployment pipeline.
 
 * [Pypestream](https://www.pypestream.com) - "We have just migrated 50 of our customers from Kubeless, which is now deprecated to OpenFaaS" - Antoine Hamon
