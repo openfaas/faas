@@ -114,6 +114,8 @@ Tell us more:
 
 * [Rapid Circle](https://www.rapidcircle.com) is using OpenFaaS within a Azure Kubernetes cluster to host a large amount of micro-services aiming at automating core activities of their Microsoft 365 Cloud Managed Services offering. Robustness, speed, scalable and simplicity have been major reasons to favor OpenFaaS over Azure Functions.
 
+* [rain.co.za](https://rain.co.za) - "We migrated our Python functions from AWS Lambda using automation, and now run them on OpenFaaS" - Renier Rhode
+
 * [Sprucee](https://spruce.casa) - We use [faasd](https://github.com/openfaas/faasd) as part of our base Encryption as a Service platform which were manually managed docker containers. As NATS based platform we were able to scale to every size we want, but deployment takes many labor time as we need to deal with OS level and customer limitations. Now we can use "faas install/up" to accomplish 80% of deployment effort.
 
 * [SURF](https://www.surf.nl) - [The Green Village](https://www.thegreenvillage.org/) is a living lab at Delft University of Technology. It is an experimental, real-life setting with the goal to accelerate innovation for a sustainable future. [SURF](https://www.surf.nl/), a cooperative association of Dutch educational and research institutions providing digital infrastructure and ICT services, has developed a [digital platform](https://youtu.be/_WYVzoBuWKk) for The Green Village that uses OpenFaaS to classify and sort incoming sensor data at scale.
