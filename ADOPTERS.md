@@ -106,6 +106,8 @@ Tell us more:
 
 * [Press Association](https://www.pressassociation.com/) - Press Association is using OpenFaaS in development and production as part of our deployment pipeline.
 
+* [Pypestream](https://www.pypestream.com) - "We have just migrated 50 of our customers from Kubeless, which is now deprecated to OpenFaaS" - Antoine Hamon
+
 * [Outsystems](https://outsystems.com) - "In my team, we're using OpenFaaS to help the orchestration of our CD pipelines. From a high-level perspective, we have a NATS cluster and the OpenFaaS functions subscribing to NATS topics and reacting to them. Our functions are doing some work related to the pipeline, like saving data to the database, sending Slack messages, or just returning something from the database." (Marco Alves)
 
 * [Ratehub](https://www.ratehub.ca) - Ratehub is Canada's leading personal finance comparison site. We're breaking apart our monolithic PHP and Java codebases into Node, PHP and Java OpenFaaS functions; there's not much that we don't plan on moving to FaaS!
