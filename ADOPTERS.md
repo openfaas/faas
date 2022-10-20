@@ -32,9 +32,13 @@ Tell us more:
 
 ## Adopters list (alphabetical)
 
+* [911 Security](https://www.911security.com/) - "We migrated our Python functions from AWS Lambda using automation, and now run them in airgapped environments for customers using OpenFaaS and arkade" - Scott Creager
+
 * [Axa France](https://www.axa.fr) - Axa uses OpenFaaS for inference and predictions at scale using ML models - Pierre-Henri Gache
 
 * [3fs](https://3fs.si) - 3fs is using OpenFaaS for automating repetitive development tasks like automatic rebasing, vendoring of dependencies on merge requests and many other things that make our developers lives easier
+
+* [Baidu](https://baidu.com) - A team within Baidu provides ML models to customers which are hosted on OpenFaaS - He Sun.
 
 * [BT](https://www.bt.com) - BT are using OpenFaaS to enable collaboration between data-scientists and developers. The teams are going from 3-years to build and deliver a PoC, to 3 months. See: [KubeCon video](https://www.youtube.com/watch?v=y77HlN2Fa-w)
 
@@ -63,6 +67,8 @@ Tell us more:
 * [First Baptist Church Carrollton](https://www.fbcc.us) - "We use faasd as the backend for a Slack bot connected to our internal Slack workspace. The bot was initially created to facilitate remote question and answer sessions at our church by allowing viewers of our live stream to text or email questions in, have a staff member ask their question in the room, and then allow the staff member to send a response back to the sender. The texting is facilitated by Twilio while the email is done by interacting with a Gmail account via IMAP and SMTP."
 
 * [Fonix Telematics](https://fonixtelematics.com/) - "We are using OpenFaaS to build our new generation of APIs."
+
+* [FTI Consulting](https://www.fticonsulting.com/) - "We've built a cloud-based analytical framework using Netflix Conductor for the workflow engine and OpenFaaS for our serverless function implementation, where each function can be called from a workflow. We've currently deployed several dozen OpenFaaS functions to our on-premise Kubernetes clusters" - Jason Cullison
 
 * [GalaxyCard](https://www.galaxycard.in/) - "GalaxyCard is a happy user of OpenFaaS"
 
@@ -119,8 +125,6 @@ Tell us more:
 * [Ratehub](https://www.ratehub.ca) - Ratehub is Canada's leading personal finance comparison site. We're breaking apart our monolithic PHP and Java codebases into Node, PHP and Java OpenFaaS functions; there's not much that we don't plan on moving to FaaS!
 
 * [Rapid Circle](https://www.rapidcircle.com) is using OpenFaaS within a Azure Kubernetes cluster to host a large amount of micro-services aiming at automating core activities of their Microsoft 365 Cloud Managed Services offering. Robustness, speed, scalable and simplicity have been major reasons to favor OpenFaaS over Azure Functions.
-
-* [rain.co.za](https://rain.co.za) - "We migrated our Python functions from AWS Lambda using automation, and now run them on OpenFaaS" - Renier Rhode
 
 * [Sprucee](https://spruce.casa) - We use [faasd](https://github.com/openfaas/faasd) as part of our base Encryption as a Service platform which were manually managed docker containers. As NATS based platform we were able to scale to every size we want, but deployment takes many labor time as we need to deal with OS level and customer limitations. Now we can use "faas install/up" to accomplish 80% of deployment effort.
 
