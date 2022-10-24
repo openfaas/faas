@@ -92,6 +92,8 @@ Tell us more:
 
 * [Naamio](https://naamio.cloud/) - "Naamio are providing an event-based serverless API to developers to enable rapid development of decentralized applications on the cloud. By providing progressive enhancement within the developer tools, OpenFaaS has enabled Naamio to go from clustered Docker container deployments with REST APIs using Kubernetes, to load balanced deployable functions over an open event queue interface. It was key to enabling a standard multilingual development kit across cloud providers."
 
+* [Neoskop](https://www.neoskop.de) - Neoskop is using OpenFAAS in production to provide our developers with a self-service platform for backend functionality and thereby our customers agile and rapid feature development.
+
 * [Nexylan](nexylan.com/) - "We are a French professional hoster that use OpenFaaS in dev and production inside our private extranet. We use OpenFaaS to split our historic monolith project and then simplify development/maintainability and speed up development times."
 
 * [NGC](https://www.ngcsoftware.com/)
