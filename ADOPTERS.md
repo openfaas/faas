@@ -82,6 +82,8 @@ Tell us more:
 
 * [Intraffic](https://www.intraffic.nl/) - "Using OpenFaaS for integration and callable AI/ML models for asset management."
 
+* [Klar MX](https://klar.mx) - "Cuenta con Klar" - Klar provides access to credit cards in Mexico for those who have issues with credit history.
+
 * [LivePerson](https://www.liveperson.com/) - LivePerson extended their chat platform by allowing customers to write functions to execute in client chat flows. See [KubeCon video](https://www.youtube.com/watch?v=bt06Z28uzPA)
 
 * [metaspan](https://metaspan.com) - "End-to-end blockchain solutions". metaspan ported all api endpoints from monolith express.js/sails.js to openfaas micro-functions.
