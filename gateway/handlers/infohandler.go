@@ -5,10 +5,9 @@ package handlers
 
 import (
 	"encoding/json"
+	"io"
 	"log"
 	"net/http"
-
-	"io/ioutil"
 	"net/http/httptest"
 
 	providerTypes "github.com/openfaas/faas-provider/types"
@@ -27,7 +26,7 @@ func MakeInfoHandler(h http.Handler) http.HandlerFunc {
 
 		var provider *providerTypes.ProviderInfo
 
-		upstreamBody, _ := ioutil.ReadAll(upstreamCall.Body)
+		upstreamBody, _ := io.ReadAll(upstreamCall.Body)
 		err := json.Unmarshal(upstreamBody, &provider)
 		if err != nil {
 			log.Printf("Error unmarshalling provider json from body %s. Error %s\n", upstreamBody, err.Error())
