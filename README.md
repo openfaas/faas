@@ -20,7 +20,7 @@ OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and 
 * Portable: runs on existing hardware or public/private cloud by leveraging [Kubernetes](https://github.com/openfaas/faas-netes)
 * [CLI](http://github.com/openfaas/faas-cli) available with YAML format for templating and defining functions
 * Auto-scales as demand increases [including to zero](https://docs.openfaas.com/architecture/autoscaling/)
-* [Commercially supported distribution by the team behind OpenFaaS](https://openfaas.com/support/)
+* [Commercially supported Pro distribution by the team behind OpenFaaS](https://openfaas.com/pricing/)
 
 **Want to dig deeper into OpenFaaS?**
 
