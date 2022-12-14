@@ -6,7 +6,6 @@ package handlers
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -18,8 +17,6 @@ import (
 
 	"github.com/openfaas/faas/gateway/scaling"
 )
-
-const queueAnnotation = "com.openfaas.queue"
 
 // MakeQueuedProxy accepts work onto a queue
 func MakeQueuedProxy(metrics metrics.MetricOptions, queuer ftypes.RequestQueuer, pathTransformer middleware.URLPathTransformer, defaultNS string, functionQuery scaling.FunctionQuery) http.HandlerFunc {
@@ -44,12 +41,6 @@ func MakeQueuedProxy(metrics metrics.MetricOptions, queuer ftypes.RequestQueuer,
 		vars := mux.Vars(r)
 		name := vars["name"]
 
-		queueName, err := getQueueName(name, functionQuery)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
 		req := &ftypes.QueueRequest{
 			Function:    name,
 			Body:        body,
@@ -59,11 +50,6 @@ func MakeQueuedProxy(metrics metrics.MetricOptions, queuer ftypes.RequestQueuer,
 			Header:      r.Header,
 			Host:        r.Host,
 			CallbackURL: callbackURL,
-			QueueName:   queueName,
-		}
-
-		if len(queueName) > 0 {
-			log.Printf("Queueing %s to: %s\n", name, queueName)
 		}
 
 		if err = queuer.Queue(req); err != nil {
@@ -90,21 +76,6 @@ func getCallbackURLHeader(header http.Header) (*url.URL, error) {
 	}
 
 	return callbackURL, nil
-}
-
-func getQueueName(name string, fnQuery scaling.FunctionQuery) (queueName string, err error) {
-	fn, ns := getNameParts(name)
-
-	annotations, err := fnQuery.GetAnnotations(fn, ns)
-	if err != nil {
-		return "", err
-	}
-	queueName = ""
-	if v := annotations[queueAnnotation]; len(v) > 0 {
-		queueName = v
-	}
-
-	return queueName, err
 }
 
 func getNameParts(name string) (fn, ns string) {
