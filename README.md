@@ -153,9 +153,9 @@ Have you written a blog about OpenFaaS? Do you have a speaking event? Send a Pul
 
 * [Read blogs/articles and find events about OpenFaaS](https://github.com/openfaas/faas/blob/master/community.md)
 
-### Roadmap and contributing
+### Contributing
 
-OpenFaaS is written in Golang and is MIT licensed - contributions are welcomed whether that means providing feedback, testing existing and new feature or hacking on the source.
+OpenFaaS Community Edition is written in Golang and is MIT licensed. Various types of contributions are welcomed whether that means providing feedback, testing existing and new feature or hacking on the source code.
 
 #### How do I become a contributor?
 

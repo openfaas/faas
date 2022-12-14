@@ -385,13 +385,7 @@ The [community.md](https://github.com/openfaas/faas/blob/master/community.md) fi
 
 ### Roadmap
 
-* See the [2019 Project Update](https://www.openfaas.com/blog/project-update/)
-
-* Browse open issues in [openfaas/faas](https://github.com/openfaas/faas/issues)
-
-* Join the [2020 Roadmap on Trello](https://trello.com/invite/b/5OpMyrBP/ade103a10ae1e38eb5d3eee7955260a9/2020-openfaas-roadmap)
-
-For commercial users, please feel free to ask about support, backlog prioritisation and feature development. Email sales@openfaas.com.
+See also: [OpenFaaS Pro](https://docs.openfaas.com/openfaas-pro/introduction/)
 
 ## License
 
