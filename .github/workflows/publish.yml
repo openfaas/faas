@@ -9,6 +9,14 @@ jobs:
 
   publish-gateway:
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      checks: write
+      issues: read
+      packages: write
+      pull-requests: read
+      repository-projects: read
+      statuses: read
     strategy:
       matrix:
         go-version: [1.19.x]
@@ -58,6 +66,14 @@ jobs:
 
   publish-auth-plugins:
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      checks: write
+      issues: read
+      packages: write
+      pull-requests: read
+      repository-projects: read
+      statuses: read
     strategy:
       matrix:
         go-version: [1.19.x]
