@@ -5,7 +5,7 @@ package handlers
 
 import "net/http"
 
-//HealthzHandler healthz hanlder for mertics server
+// HealthzHandler healthz hanlder for mertics server
 func HealthzHandler(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {

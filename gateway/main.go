@@ -278,7 +278,7 @@ func main() {
 	log.Fatal(s.ListenAndServe())
 }
 
-//runMetricsServer Listen on a separate HTTP port for Prometheus metrics to keep this accessible from
+// runMetricsServer Listen on a separate HTTP port for Prometheus metrics to keep this accessible from
 // the internal network only.
 func runMetricsServer() {
 	metricsHandler := metrics.PrometheusHandler()
