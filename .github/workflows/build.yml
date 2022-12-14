@@ -46,7 +46,6 @@ jobs:
             GIT_COMMIT=${{ github.sha }}
           tags: |
             ghcr.io/${{ env.REPO_OWNER }}/gateway:${{ github.sha }}
-            ghcr.io/${{ env.REPO_OWNER }}/gateway:${{ env.TAG }}
             ghcr.io/${{ env.REPO_OWNER }}/gateway:latest
 
   build-auth-plugins:
@@ -85,5 +84,4 @@ jobs:
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           tags: |
             ghcr.io/${{ env.REPO_OWNER }}/${{ matrix.svc }}:${{ github.sha }}
-            ghcr.io/${{ env.REPO_OWNER }}/${{ matrix.svc }}:${{ env.TAG }}
             ghcr.io/${{ env.REPO_OWNER }}/${{ matrix.svc }}:latest
