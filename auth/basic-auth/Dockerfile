@@ -1,6 +1,6 @@
-FROM --platform=${BUILDPLATFORM:-linux/amd64} ghcr.io/openfaas/license-check:0.4.0 as license-check
+FROM --platform=${BUILDPLATFORM:-linux/amd64} ghcr.io/openfaas/license-check:0.4.1 as license-check
 
-FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.18 as build
+FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.19 as build
 
 ENV GO111MODULE=off
 ENV CGO_ENABLED=0
@@ -26,7 +26,7 @@ RUN CGO_ENABLED=${CGO_ENABLED} GOOS=${TARGETOS} GOARCH=${TARGETARCH} go test -v 
 RUN CGO_ENABLED=${CGO_ENABLED} GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build \
     --ldflags "-s -w" -a -installsuffix cgo -o handler .
 
-FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.16.2 as ship
+FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.17 as ship
 # Add non-root user
 RUN addgroup -S app && adduser -S -g app app \
     && mkdir -p /home/app \
