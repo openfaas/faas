@@ -66,10 +66,10 @@ func (f *FunctionHTTPProber) Probe(functionName, namespace string) FunctionProbe
 	start := time.Now()
 
 	cachedResponse, _ := f.Query.Get(functionName, namespace)
-	probePath := "/_/health"
+	probePath := "/_/ready"
 
 	if cachedResponse.Annotations != nil {
-		if v, ok := (*cachedResponse.Annotations)["com.openfaas.http.path"]; ok && len(v) > 0 {
+		if v, ok := (*cachedResponse.Annotations)["com.openfaas.ready.http.path"]; ok && len(v) > 0 {
 			probePath = v
 		}
 	}
