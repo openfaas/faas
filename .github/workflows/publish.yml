@@ -6,8 +6,7 @@ on:
       - '*'
 
 jobs:
-
-  publish-gateway:
+  publish:
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -17,9 +16,7 @@ jobs:
       pull-requests: read
       repository-projects: read
       statuses: read
-    strategy:
-      matrix:
-        go-version: [1.19.x]
+
     steps:
       - uses: actions/checkout@master
         with:
@@ -63,60 +60,3 @@ jobs:
             ghcr.io/${{ env.REPO_OWNER }}/gateway:${{ github.sha }}
             ghcr.io/${{ env.REPO_OWNER }}/gateway:${{ env.TAG }}
             ghcr.io/${{ env.REPO_OWNER }}/gateway:latest
-
-  publish-auth-plugins:
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      checks: write
-      issues: read
-      packages: write
-      pull-requests: read
-      repository-projects: read
-      statuses: read
-    strategy:
-      matrix:
-        go-version: [1.19.x]
-        svc: [
-          basic-auth
-        ]
-    steps:
-      - uses: actions/checkout@master
-        with:
-          fetch-depth: 1
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Login to Docker Registry
-        uses: docker/login-action@v1
-        with:
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          registry: ghcr.io
-
-      - name: Get TAG
-        id: get_tag
-        run: echo TAG=${GITHUB_REF#refs/tags/} >> $GITHUB_ENV
-
-      - name: Get git commit
-        id: get_git_commit
-        run: echo "GIT_COMMIT=$(git rev-parse HEAD)" >> $GITHUB_ENV
-      - name: Get version
-        id: get_version
-        run: echo "VERSION=$(git describe --tags --dirty)" >> $GITHUB_ENV
-      - name: Get Repo Owner
-        id: get_repo_owner
-        run: echo "REPO_OWNER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" > $GITHUB_ENV
-
-      - name: Publish ${{ matrix.svc }}
-        uses: docker/build-push-action@v2
-        with:
-          context: ./auth/${{ matrix.svc }}
-          file: ./auth/${{ matrix.svc }}/Dockerfile
-          outputs: "type=registry,push=true"
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
-          tags: |
-            ghcr.io/${{ env.REPO_OWNER }}/${{ matrix.svc }}:${{ github.sha }}
-            ghcr.io/${{ env.REPO_OWNER }}/${{ matrix.svc }}:${{ env.TAG }}
-            ghcr.io/${{ env.REPO_OWNER }}/${{ matrix.svc }}:latest
