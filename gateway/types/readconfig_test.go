@@ -38,16 +38,6 @@ func TestRead_UseExternalProvider_Defaults(t *testing.T) {
 		t.Fail()
 	}
 
-	if config.DirectFunctions != false {
-		t.Log("Default for DirectFunctions should be false")
-		t.Fail()
-	}
-
-	if len(config.DirectFunctionsSuffix) > 0 {
-		t.Log("Default for DirectFunctionsSuffix should be empty")
-		t.Fail()
-	}
-
 	if len(config.Namespace) > 0 {
 		t.Log("Default for Namespace should be empty")
 		t.Fail()
@@ -85,86 +75,6 @@ func TestRead_NamespaceOverrideAgressWithFunctionSuffix_Valid(t *testing.T) {
 
 	if err != nil {
 		t.Logf("Error found: %s", err)
-		t.Fail()
-	}
-}
-
-func TestRead_NamespaceOverrideAgressWithFunctionSuffix_Invalid(t *testing.T) {
-
-	defaults := NewEnvBucket()
-	readConfig := ReadConfig{}
-
-	defaults.Setenv("direct_functions", "true")
-	wantSuffix := "openfaas-fn.cluster.local.svc."
-
-	defaults.Setenv("direct_functions_suffix", wantSuffix)
-	defaults.Setenv("function_namespace", "fn")
-
-	_, err := readConfig.Read(defaults)
-
-	if err == nil {
-		t.Logf("Expected an error because function_namespace should be a sub-string of direct_functions_suffix")
-		t.Fail()
-		return
-	}
-
-	want := "function_namespace must be a sub-string of direct_functions_suffix"
-
-	if want != err.Error() {
-		t.Logf("Error want: %s, got: %s", want, err.Error())
-		t.Fail()
-	}
-
-}
-
-func TestRead_DirectFunctionsOverride(t *testing.T) {
-	defaults := NewEnvBucket()
-	readConfig := ReadConfig{}
-	defaults.Setenv("direct_functions", "true")
-	wantSuffix := "openfaas-fn.cluster.local.svc."
-	defaults.Setenv("direct_functions_suffix", wantSuffix)
-
-	config, _ := readConfig.Read(defaults)
-
-	if config.DirectFunctions != true {
-		t.Logf("DirectFunctions should be true, got: %v", config.DirectFunctions)
-		t.Fail()
-	}
-
-	if config.DirectFunctionsSuffix != wantSuffix {
-		t.Logf("DirectFunctionsSuffix want: %s, got: %s", wantSuffix, config.DirectFunctionsSuffix)
-		t.Fail()
-	}
-}
-
-func TestRead_ProbeFunctions_Default(t *testing.T) {
-	defaults := NewEnvBucket()
-	readConfig := ReadConfig{}
-	defaults.Setenv("probe_functions", "")
-
-	want := false
-
-	config, _ := readConfig.Read(defaults)
-
-	got := config.ProbeFunctions
-	if want != got {
-		t.Logf("ProbeFunctions want %v, but got %v", want, got)
-		t.Fail()
-	}
-}
-
-func TestRead_ProbeFunctions_Enabled(t *testing.T) {
-	defaults := NewEnvBucket()
-	readConfig := ReadConfig{}
-	defaults.Setenv("probe_functions", "true")
-
-	want := true
-
-	config, _ := readConfig.Read(defaults)
-
-	got := config.ProbeFunctions
-	if want != got {
-		t.Logf("ProbeFunctions want %v, but got %v", want, got)
 		t.Fail()
 	}
 }

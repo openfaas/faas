@@ -15,7 +15,6 @@ import (
 	"github.com/openfaas/faas/gateway/metrics"
 	"github.com/openfaas/faas/gateway/pkg/middleware"
 	"github.com/openfaas/faas/gateway/plugin"
-	"github.com/openfaas/faas/gateway/probing"
 	"github.com/openfaas/faas/gateway/scaling"
 	"github.com/openfaas/faas/gateway/types"
 	"github.com/openfaas/faas/gateway/version"
@@ -97,16 +96,8 @@ func main() {
 	nilURLTransformer := middleware.TransparentURLPathTransformer{}
 	trimURLTransformer := middleware.FunctionPrefixTrimmingURLPathTransformer{}
 
-	if config.DirectFunctions {
-		functionURLResolver = middleware.FunctionAsHostBaseURLResolver{
-			FunctionSuffix:    config.DirectFunctionsSuffix,
-			FunctionNamespace: config.Namespace,
-		}
-		functionURLTransformer = trimURLTransformer
-	} else {
-		functionURLResolver = urlResolver
-		functionURLTransformer = nilURLTransformer
-	}
+	functionURLResolver = urlResolver
+	functionURLTransformer = nilURLTransformer
 
 	var serviceAuthInjector middleware.AuthInjector
 
@@ -155,13 +146,6 @@ func main() {
 
 	functionProxy := faasHandlers.Proxy
 
-	if config.ProbeFunctions {
-		prober := probing.NewFunctionProber(cachedFunctionQuery, functionURLResolver)
-		// Default of 5 seconds between refreshing probes for function invocations
-		probeCache := probing.NewProbeCache(time.Second * 5)
-		functionProxy = handlers.MakeProbeHandler(prober, probeCache, functionURLResolver, functionProxy, config.Namespace)
-	}
-
 	if config.ScaleFromZero {
 		scalingFunctionCache := scaling.NewFunctionCache(scalingConfig.CacheExpiry)
 		scaler := scaling.NewFunctionScaler(scalingConfig, scalingFunctionCache)
@@ -169,7 +153,9 @@ func main() {
 	}
 
 	if config.UseNATS() {
-		log.Println("Async enabled: Using NATS Streaming.")
+		log.Println("Async enabled: Using NATS Streaming")
+		log.Println("Deprecation Notice: NATS Streaming is no longer maintained and won't receive updates from June 2023")
+
 		maxReconnect := 60
 		interval := time.Second * 2
 
