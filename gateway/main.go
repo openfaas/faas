@@ -105,8 +105,6 @@ func main() {
 		serviceAuthInjector = &middleware.BasicAuthInjector{Credentials: credentials}
 	}
 
-	decorateExternalAuth := handlers.MakeExternalAuthHandler
-
 	// externalServiceQuery is used to query metadata from the provider about a function
 	externalServiceQuery := plugin.NewExternalServiceQuery(*config.FunctionsProviderURL, serviceAuthInjector)
 
@@ -178,27 +176,27 @@ func main() {
 
 	if credentials != nil {
 		faasHandlers.Alert =
-			decorateExternalAuth(faasHandlers.Alert, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
+			auth.DecorateWithBasicAuth(faasHandlers.Alert, credentials)
 		faasHandlers.UpdateFunction =
-			decorateExternalAuth(faasHandlers.UpdateFunction, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
+			auth.DecorateWithBasicAuth(faasHandlers.UpdateFunction, credentials)
 		faasHandlers.DeleteFunction =
-			decorateExternalAuth(faasHandlers.DeleteFunction, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
+			auth.DecorateWithBasicAuth(faasHandlers.DeleteFunction, credentials)
 		faasHandlers.DeployFunction =
-			decorateExternalAuth(faasHandlers.DeployFunction, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
+			auth.DecorateWithBasicAuth(faasHandlers.DeployFunction, credentials)
 		faasHandlers.ListFunctions =
-			decorateExternalAuth(faasHandlers.ListFunctions, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
+			auth.DecorateWithBasicAuth(faasHandlers.ListFunctions, credentials)
 		faasHandlers.ScaleFunction =
-			decorateExternalAuth(faasHandlers.ScaleFunction, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
+			auth.DecorateWithBasicAuth(faasHandlers.ScaleFunction, credentials)
 		faasHandlers.FunctionStatus =
-			decorateExternalAuth(faasHandlers.FunctionStatus, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
+			auth.DecorateWithBasicAuth(faasHandlers.FunctionStatus, credentials)
 		faasHandlers.InfoHandler =
-			decorateExternalAuth(faasHandlers.InfoHandler, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
+			auth.DecorateWithBasicAuth(faasHandlers.InfoHandler, credentials)
 		faasHandlers.SecretHandler =
-			decorateExternalAuth(faasHandlers.SecretHandler, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
+			auth.DecorateWithBasicAuth(faasHandlers.SecretHandler, credentials)
 		faasHandlers.LogProxyHandler =
-			decorateExternalAuth(faasHandlers.LogProxyHandler, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
+			auth.DecorateWithBasicAuth(faasHandlers.LogProxyHandler, credentials)
 		faasHandlers.NamespaceListerHandler =
-			decorateExternalAuth(faasHandlers.NamespaceListerHandler, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)
+			auth.DecorateWithBasicAuth(faasHandlers.NamespaceListerHandler, credentials)
 	}
 
 	r := mux.NewRouter()
@@ -238,9 +236,11 @@ func main() {
 	uiHandler := http.StripPrefix("/ui", fsCORS)
 	if credentials != nil {
 		r.PathPrefix("/ui/").Handler(
-			decorateExternalAuth(uiHandler.ServeHTTP, config.UpstreamTimeout, config.AuthProxyURL, config.AuthProxyPassBody)).Methods(http.MethodGet)
+			auth.DecorateWithBasicAuth(uiHandler.ServeHTTP, credentials)).
+			Methods(http.MethodGet)
 	} else {
-		r.PathPrefix("/ui/").Handler(uiHandler).Methods(http.MethodGet)
+		r.PathPrefix("/ui/").Handler(uiHandler).
+			Methods(http.MethodGet)
 	}
 
 	//Start metrics server in a goroutine
