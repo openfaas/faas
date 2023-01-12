@@ -40,6 +40,8 @@ This Agreement is effective from the first date you install the Software. You ma
 
 6.1 Customer Data. In order to use the Products, Customer may need to complete a registration process and provide contact information such as an email address, credentials and other account billing information ("Account Data"). Customer must provide complete and accurate Account Data during the registration process and must keep Customer's Account Data up-to-date. Customer is prohibited from misrepresenting Customer's identity or affiliation with any company or other entity. By providing Account Data, Customer hereby consents that it may receive email or other communications from OpenFaaS Ltd. Such communications may include communications regarding Customer's use of the Products and/or commercial content relating to other OpenFaaS Ltd Products. If you do not wish to receive such communications, a Customer may opt-out by notifying OpenFaaS Ltd at contact@openfaas.com
 
+6.2. Supplier may audit Your use of the Software (e.g., through use of software tools) to assess whether Your use of the Software is in accordance with this Agreement. You agree to cooperate with Supplier's audit and provide reasonable assistance and access to information. Any such audit shall not unreasonably interfere with Your normal business operations.
+
 7. Co-Marketing
 At the request of Supplier, Customer agrees to participate in other reasonable marketing activities that promote the benefits of the Services to other potential customers and to use of Customer's name and logo on the Supplier's web site and in Supplier's promotional materials. Customer agrees that Supplier may disclose Customer as a customer of the Products.
 
