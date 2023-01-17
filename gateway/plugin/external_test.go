@@ -75,7 +75,6 @@ func TestGetReplicasExistentFn(t *testing.T) {
 		MinReplicas:       uint64(scaling.DefaultMinReplicas),
 		ScalingFactor:     uint64(scaling.DefaultScalingFactor),
 		AvailableReplicas: 0,
-		TargetLoad:        10,
 	}
 
 	var injector middleware.AuthInjector

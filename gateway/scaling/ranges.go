@@ -5,13 +5,10 @@ const (
 	DefaultMinReplicas = 1
 
 	// DefaultMaxReplicas is the amount of replicas a service will auto-scale up to.
-	DefaultMaxReplicas = 20
+	DefaultMaxReplicas = 5
 
 	// DefaultScalingFactor is the defining proportion for the scaling increments.
-	DefaultScalingFactor = 20
-
-	// DefaultTargetLoad
-	DefaultTargetLoad = 10
+	DefaultScalingFactor = 10
 
 	DefaultTypeScale = "rps"
 
@@ -23,10 +20,4 @@ const (
 
 	// ScalingFactorLabel label indicates the scaling factor for a function
 	ScalingFactorLabel = "com.openfaas.scale.factor"
-
-	// TargetLoadLabel see also DefaultTargetScale
-	TargetLoadLabel = "com.openfaas.scale.target"
-
-	// ScaleTypeLabel see also DefaultScaleType
-	ScaleTypeLabel = "com.openfaas.scale.type"
 )
