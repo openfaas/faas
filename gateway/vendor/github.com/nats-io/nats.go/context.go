@@ -1,4 +1,4 @@
-// Copyright 2016-2018 The NATS Authors
+// Copyright 2016-2022 The NATS Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -21,20 +21,13 @@ import (
 // RequestMsgWithContext takes a context, a subject and payload
 // in bytes and request expecting a single response.
 func (nc *Conn) RequestMsgWithContext(ctx context.Context, msg *Msg) (*Msg, error) {
-	var hdr []byte
-	var err error
-
-	if len(msg.Header) > 0 {
-		if !nc.info.Headers {
-			return nil, ErrHeadersNotSupported
-		}
-
-		hdr, err = msg.headerBytes()
-		if err != nil {
-			return nil, err
-		}
+	if msg == nil {
+		return nil, ErrInvalidMsg
 	}
-
+	hdr, err := msg.headerBytes()
+	if err != nil {
+		return nil, err
+	}
 	return nc.requestWithContext(ctx, msg.Subject, hdr, msg.Data)
 }
 
@@ -92,7 +85,7 @@ func (nc *Conn) requestWithContext(ctx context.Context, subj string, hdr, data [
 
 // oldRequestWithContext utilizes inbox and subscription per request.
 func (nc *Conn) oldRequestWithContext(ctx context.Context, subj string, hdr, data []byte) (*Msg, error) {
-	inbox := NewInbox()
+	inbox := nc.NewInbox()
 	ch := make(chan *Msg, RequestChanLen)
 
 	s, err := nc.subscribe(inbox, _EMPTY_, nil, ch, true, nil)
@@ -110,10 +103,7 @@ func (nc *Conn) oldRequestWithContext(ctx context.Context, subj string, hdr, dat
 	return s.NextMsgWithContext(ctx)
 }
 
-// NextMsgWithContext takes a context and returns the next message
-// available to a synchronous subscriber, blocking until it is delivered
-// or context gets canceled.
-func (s *Subscription) NextMsgWithContext(ctx context.Context) (*Msg, error) {
+func (s *Subscription) nextMsgWithContext(ctx context.Context, pullSubInternal, waitIfNoMsg bool) (*Msg, error) {
 	if ctx == nil {
 		return nil, ErrInvalidContext
 	}
@@ -125,7 +115,7 @@ func (s *Subscription) NextMsgWithContext(ctx context.Context) (*Msg, error) {
 	}
 
 	s.mu.Lock()
-	err := s.validateNextMsgState()
+	err := s.validateNextMsgState(pullSubInternal)
 	if err != nil {
 		s.mu.Unlock()
 		return nil, err
@@ -150,6 +140,11 @@ func (s *Subscription) NextMsgWithContext(ctx context.Context) (*Msg, error) {
 			return msg, nil
 		}
 	default:
+		// If internal and we don't want to wait, signal that there is no
+		// message in the internal queue.
+		if pullSubInternal && !waitIfNoMsg {
+			return nil, errNoMessages
+		}
 	}
 
 	select {
@@ -165,6 +160,13 @@ func (s *Subscription) NextMsgWithContext(ctx context.Context) (*Msg, error) {
 	}
 
 	return msg, nil
+}
+
+// NextMsgWithContext takes a context and returns the next message
+// available to a synchronous subscriber, blocking until it is delivered
+// or context gets canceled.
+func (s *Subscription) NextMsgWithContext(ctx context.Context) (*Msg, error) {
+	return s.nextMsgWithContext(ctx, false, true)
 }
 
 // FlushWithContext will allow a context to control the duration
@@ -215,7 +217,7 @@ func (nc *Conn) FlushWithContext(ctx context.Context) error {
 
 // RequestWithContext will create an Inbox and perform a Request
 // using the provided cancellation context with the Inbox reply
-// for the data v. A response will be decoded into the vPtrResponse.
+// for the data v. A response will be decoded into the vPtr last parameter.
 func (c *EncodedConn) RequestWithContext(ctx context.Context, subject string, v interface{}, vPtr interface{}) error {
 	if ctx == nil {
 		return ErrInvalidContext

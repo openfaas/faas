@@ -3,8 +3,8 @@
 NATS Streaming is an extremely performant, lightweight reliable streaming platform powered by [NATS](https://nats.io).
 
 [![License Apache 2](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Build Status](https://travis-ci.com/nats-io/stan.go.svg?branch=master)](https://travis-ci.com/github/nats-io/stan.go)
-[![Coverage Status](https://coveralls.io/repos/nats-io/stan.go/badge.svg?branch=master)](https://coveralls.io/r/nats-io/stan.go?branch=master)
+[![Build Status](https://travis-ci.com/nats-io/stan.go.svg?branch=main)](https://travis-ci.com/github/nats-io/stan.go)
+[![Coverage Status](https://coveralls.io/repos/nats-io/stan.go/badge.svg?branch=main)](https://coveralls.io/r/nats-io/stan.go?branch=main)
 [![GoDoc](https://godoc.org/github.com/nats-io/stan.go?status.svg)](http://godoc.org/github.com/nats-io/stan.go)
 
 NATS Streaming provides the following high-level feature set:
@@ -30,7 +30,7 @@ When using or transitioning to Go modules support:
 ```bash
 # Go client latest or explicit version
 go get github.com/nats-io/stan.go/@latest
-go get github.com/nats-io/stan.go/@v0.9.0
+go get github.com/nats-io/stan.go/@v0.10.4
 ```
 
 ## Important things to know about reconnections.

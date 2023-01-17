@@ -22,7 +22,11 @@ github.com/gorilla/mux
 # github.com/matttproud/golang_protobuf_extensions v1.0.1
 ## explicit
 github.com/matttproud/golang_protobuf_extensions/pbutil
-# github.com/nats-io/nats.go v1.11.1-0.20210623165838-4b75fc59ae30
+# github.com/nats-io/nats-server/v2 v2.9.11
+## explicit; go 1.19
+# github.com/nats-io/nats-streaming-server v0.25.3
+## explicit; go 1.14
+# github.com/nats-io/nats.go v1.22.1
 ## explicit; go 1.16
 github.com/nats-io/nats.go
 github.com/nats-io/nats.go/encoders/builtin
@@ -33,7 +37,7 @@ github.com/nats-io/nkeys
 # github.com/nats-io/nuid v1.0.1
 ## explicit
 github.com/nats-io/nuid
-# github.com/nats-io/stan.go v0.9.0
+# github.com/nats-io/stan.go v0.10.4
 ## explicit; go 1.14
 github.com/nats-io/stan.go
 github.com/nats-io/stan.go/pb
@@ -42,8 +46,8 @@ github.com/nats-io/stan.go/pb
 github.com/openfaas/faas-provider/auth
 github.com/openfaas/faas-provider/httputil
 github.com/openfaas/faas-provider/types
-# github.com/openfaas/nats-queue-worker v0.0.0-20220805080536-d1d72d857b1c
-## explicit; go 1.16
+# github.com/openfaas/nats-queue-worker v0.0.0-20230117214128-3615ccb286cc
+## explicit; go 1.18
 github.com/openfaas/nats-queue-worker/handler
 github.com/openfaas/nats-queue-worker/nats
 # github.com/prometheus/client_golang v1.13.0
@@ -64,17 +68,19 @@ github.com/prometheus/common/model
 github.com/prometheus/procfs
 github.com/prometheus/procfs/internal/fs
 github.com/prometheus/procfs/internal/util
+# github.com/stretchr/testify v1.7.1
+## explicit; go 1.13
 # go.uber.org/goleak v1.1.12
 ## explicit; go 1.13
 go.uber.org/goleak
 go.uber.org/goleak/internal/stack
-# golang.org/x/crypto v0.0.0-20220817201139-bc19a97f63c8
+# golang.org/x/crypto v0.5.0
 ## explicit; go 1.17
 golang.org/x/crypto/ed25519
-# golang.org/x/sync v0.0.0-20220819030929-7fc1605a5dde
+# golang.org/x/sync v0.1.0
 ## explicit
 golang.org/x/sync/singleflight
-# golang.org/x/sys v0.0.0-20220823224334-20c2bfdbfe24
+# golang.org/x/sys v0.4.1-0.20230105183443-b8be2fde2a9e
 ## explicit; go 1.17
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix

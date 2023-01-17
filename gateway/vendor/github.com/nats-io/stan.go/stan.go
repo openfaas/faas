@@ -26,7 +26,7 @@ import (
 )
 
 // Version is the NATS Streaming Go Client version
-const Version = "0.9.0"
+const Version = "0.10.4"
 
 const (
 	// DefaultNatsURL is the default URL the client connects to
@@ -137,7 +137,15 @@ type Options struct {
 	// the NATS streaming connection does NOT close this NATS connection.
 	// It is the responsibility of the application to manage the lifetime of
 	// the supplied NATS connection.
+	//
+	// DEPRECATED: Users should provide NATS options through NatsOptions()
+	// instead to configure the underlying NATS connection.
 	NatsConn *nats.Conn
+
+	// NatsOptions is an array of NATS options to configure the NATS connection
+	// that will be created and owned by the library. Note that some options
+	// may be overridden by the library.
+	NatsOptions []nats.Option
 
 	// ConnectTimeout is the timeout for the initial Connect(). This value is also
 	// used for some of the internal request/replies with the cluster.
@@ -171,6 +179,21 @@ type Options struct {
 	// ConnectionLostCB specifies the handler to be invoked when the connection
 	// is permanently lost.
 	ConnectionLostCB ConnectionLostHandler
+
+	// AllowCloseRetry specifies that a failed connection Close() can be retried.
+	//
+	// By default, after the first call to Close(), the underlying NATS connection
+	// is closed (when owned by the library), regardless if the library gets a
+	// response from the server or not, and calling Close() again is a no-op.
+	// With AllowCloseRetry set to true, if the library fails to get a response
+	// from the close protocol, calling Close() again is possible and the library
+	// will try to resend the protocol. It means that the underlying NATS connection
+	// won't be closed until the library successfully gets a response from the server.
+	// This behavior can have side effects in that the underlying NATS connection
+	// may stay open (or reconnect) when otherwise it would have been closed after
+	// calling Close(). So AllowCloseRetry is disabled by default to maintain
+	// expected default behavior in regard with the underlying NATS connection state.
+	AllowCloseRetry bool
 }
 
 // GetDefaultOptions returns default configuration options for the client.
@@ -246,9 +269,22 @@ func MaxPubAcksInflight(max int) Option {
 // NatsConn is an Option to set the underlying NATS connection to be used
 // by a streaming connection object. When such option is set, closing the
 // streaming connection does not close the provided NATS connection.
+//
+// DEPRECATED: Users should use NatsOptions instead to configure the
+// underlying NATS Connection created by the Streaming connection.
 func NatsConn(nc *nats.Conn) Option {
 	return func(o *Options) error {
 		o.NatsConn = nc
+		return nil
+	}
+}
+
+// NatsOptions is an Option to provide the NATS options that will be used
+// to create the underlying NATS connection to be used by a streaming
+// connection object.
+func NatsOptions(opts ...nats.Option) Option {
+	return func(o *Options) error {
+		o.NatsOptions = append([]nats.Option(nil), opts...)
 		return nil
 	}
 }
@@ -287,6 +323,15 @@ func SetConnectionLostHandler(handler ConnectionLostHandler) Option {
 	}
 }
 
+// AllowCloseRetry is an Option that allows a failed connection close to be retried.
+// See option AllowCloseRetry for more information.
+func AllowCloseRetry(allow bool) Option {
+	return func(o *Options) error {
+		o.AllowCloseRetry = allow
+		return nil
+	}
+}
+
 // A conn represents a bare connection to a stan cluster.
 type conn struct {
 	sync.RWMutex
@@ -310,6 +355,7 @@ type conn struct {
 	pubNUID          *nuid.NUID // NUID generator for published messages.
 	connLostCB       ConnectionLostHandler
 	closed           bool
+	fullyClosed      bool
 	ping             pingInfo
 }
 
@@ -357,15 +403,22 @@ func Connect(stanClusterID, clientID string, options ...Option) (Conn, error) {
 	c.nc = c.opts.NatsConn
 	// Create a NATS connection if it doesn't exist.
 	if c.nc == nil {
+		nopts := c.opts.NatsOptions
+		nopts = append(nopts, nats.MaxReconnects(-1), nats.ReconnectBufSize(-1))
+		// Set name only if not provided by the user...
+		var do nats.Options
+		for _, o := range nopts {
+			o(&do)
+		}
+		if do.Name == "" {
+			nopts = append(nopts, nats.Name(clientID))
+		}
 		// We will set the max reconnect attempts to -1 (infinite)
 		// and the reconnect buffer to -1 to prevent any buffering
 		// (which may cause a published message to be flushed on
 		// reconnect while the API may have returned an error due
 		// to PubAck timeout.
-		nc, err := nats.Connect(c.opts.NatsURL,
-			nats.Name(clientID),
-			nats.MaxReconnects(-1),
-			nats.ReconnectBufSize(-1))
+		nc, err := nats.Connect(c.opts.NatsURL, nopts...)
 		if err != nil {
 			return nil, err
 		}
@@ -644,20 +697,22 @@ func (sc *conn) Close() error {
 	sc.Lock()
 	defer sc.Unlock()
 
-	if sc.closed {
-		// We are already closed.
+	// If we are fully closed, simply return.
+	if sc.fullyClosed {
 		return nil
 	}
-	// Signals we are closed.
-	sc.closed = true
-
-	// Capture for NATS calls below.
-	if sc.ncOwned {
-		defer sc.nc.Close()
+	// If this is the very first Close() call, do some internal cleanup,
+	// otherwise, simply send the close protocol message.
+	if !sc.closed {
+		sc.closed = true
+		sc.cleanupOnClose(ErrConnectionClosed)
+		if !sc.opts.AllowCloseRetry {
+			sc.fullyClosed = true
+			if sc.ncOwned {
+				defer sc.nc.Close()
+			}
+		}
 	}
-
-	// Now close ourselves.
-	sc.cleanupOnClose(ErrConnectionClosed)
 
 	req := &pb.CloseRequest{ClientID: sc.clientID}
 	b, _ := req.Marshal()
@@ -672,6 +727,11 @@ func (sc *conn) Close() error {
 	err = cr.Unmarshal(reply.Data)
 	if err != nil {
 		return err
+	}
+	// As long as we got a valid response, we consider the connection fully closed.
+	sc.fullyClosed = true
+	if sc.ncOwned && sc.opts.AllowCloseRetry {
+		sc.nc.Close()
 	}
 	if cr.Error != "" {
 		return errors.New(cr.Error)
@@ -872,14 +932,17 @@ func (sc *conn) processMsg(raw *nats.Msg) {
 	msg.Sub = sub
 
 	sub.RLock()
+	if sub.closed {
+		sub.RUnlock()
+		return
+	}
 	cb := sub.cb
 	ackSubject := sub.ackInbox
 	isManualAck := sub.opts.ManualAcks
-	subsc := sub.sc // Can be nil if sub has been unsubscribed.
 	sub.RUnlock()
 
 	// Perform the callback
-	if cb != nil && subsc != nil {
+	if cb != nil {
 		cb(msg)
 	}
 
