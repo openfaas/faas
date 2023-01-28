@@ -17,20 +17,6 @@ type HTTPNotifier interface {
 	Notify(method string, URL string, originalURL string, statusCode int, event string, duration time.Duration)
 }
 
-// PrometheusServiceNotifier notifier for core service endpoints
-type PrometheusServiceNotifier struct {
-	ServiceMetrics *metrics.ServiceMetricOptions
-}
-
-// Notify about service metrics
-func (psn PrometheusServiceNotifier) Notify(method string, URL string, originalURL string, statusCode int, event string, duration time.Duration) {
-	code := fmt.Sprintf("%d", statusCode)
-	path := urlToLabel(URL)
-
-	psn.ServiceMetrics.Counter.WithLabelValues(method, path, code).Inc()
-	psn.ServiceMetrics.Histogram.WithLabelValues(method, path, code).Observe(duration.Seconds())
-}
-
 func urlToLabel(path string) string {
 	if len(path) > 0 {
 		path = strings.TrimRight(path, "/")

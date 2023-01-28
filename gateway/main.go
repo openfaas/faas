@@ -82,13 +82,9 @@ func main() {
 		FunctionNamespace: config.Namespace,
 	}
 
-	prometheusServiceNotifier := handlers.PrometheusServiceNotifier{
-		ServiceMetrics: metricsOptions.ServiceMetrics,
-	}
-
 	functionNotifiers := []handlers.HTTPNotifier{loggingNotifier, prometheusNotifier}
-	forwardingNotifiers := []handlers.HTTPNotifier{loggingNotifier, prometheusServiceNotifier}
-	quietNotifier := []handlers.HTTPNotifier{prometheusServiceNotifier}
+	forwardingNotifiers := []handlers.HTTPNotifier{loggingNotifier}
+	quietNotifier := []handlers.HTTPNotifier{}
 
 	urlResolver := middleware.SingleHostBaseURLResolver{BaseURL: config.FunctionsProviderURL.String()}
 	var functionURLResolver middleware.BaseURLResolver

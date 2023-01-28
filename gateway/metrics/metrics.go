@@ -18,8 +18,6 @@ type MetricOptions struct {
 	GatewayFunctionInvocationStarted *prometheus.CounterVec
 
 	ServiceReplicasGauge *prometheus.GaugeVec
-
-	ServiceMetrics *ServiceMetricOptions
 }
 
 // ServiceMetricOptions provides RED metrics
@@ -69,24 +67,6 @@ func BuildMetricsOptions() MetricOptions {
 		[]string{"function_name"},
 	)
 
-	// For automatic monitoring and alerting (RED method)
-	histogram := prometheus.NewHistogramVec(prometheus.HistogramOpts{
-		Subsystem: "http",
-		Name:      "request_duration_seconds",
-		Help:      "Seconds spent serving HTTP requests.",
-		Buckets:   prometheus.DefBuckets,
-	}, []string{"method", "path", "status"})
-
-	// Can be used Kubernetes HPA v2
-	counter := prometheus.NewCounterVec(
-		prometheus.CounterOpts{
-			Subsystem: "http",
-			Name:      "requests_total",
-			Help:      "The total number of HTTP requests.",
-		},
-		[]string{"method", "path", "status"},
-	)
-
 	gatewayFunctionInvocationStarted := prometheus.NewCounterVec(
 		prometheus.CounterOpts{
 			Namespace: "gateway",
@@ -97,16 +77,10 @@ func BuildMetricsOptions() MetricOptions {
 		[]string{"function_name"},
 	)
 
-	serviceMetricOptions := &ServiceMetricOptions{
-		Counter:   counter,
-		Histogram: histogram,
-	}
-
 	metricsOptions := MetricOptions{
 		GatewayFunctionsHistogram:        gatewayFunctionsHistogram,
 		GatewayFunctionInvocation:        gatewayFunctionInvocation,
 		ServiceReplicasGauge:             serviceReplicas,
-		ServiceMetrics:                   serviceMetricOptions,
 		GatewayFunctionInvocationStarted: gatewayFunctionInvocationStarted,
 	}
 

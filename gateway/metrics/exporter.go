@@ -46,9 +46,6 @@ func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
 	e.metricOptions.GatewayFunctionsHistogram.Describe(ch)
 	e.metricOptions.ServiceReplicasGauge.Describe(ch)
 	e.metricOptions.GatewayFunctionInvocationStarted.Describe(ch)
-
-	e.metricOptions.ServiceMetrics.Counter.Describe(ch)
-	e.metricOptions.ServiceMetrics.Histogram.Describe(ch)
 }
 
 // Collect collects data to be consumed by prometheus
@@ -75,9 +72,6 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 	}
 
 	e.metricOptions.ServiceReplicasGauge.Collect(ch)
-
-	e.metricOptions.ServiceMetrics.Counter.Collect(ch)
-	e.metricOptions.ServiceMetrics.Histogram.Collect(ch)
 }
 
 // StartServiceWatcher starts a ticker and collects service replica counts to expose to prometheus
