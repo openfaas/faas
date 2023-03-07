@@ -86,12 +86,13 @@ It would be great to hear from you especially if you have any of the above and w
 
 ### 2022
 
-#### Blog posts and write-ups 2022
+#### Blog posts, write-ups and videos 2022
 
 [Back to top](#openfaas-community)
 
-| Blog/repo name and description                                          | Author       | Site     | Date        |
+| Blog/video/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Deploy Serverless Function on k3s/Kubernetes with OpenFaaS (x86/Arm, Linux VM, Go)](https://www.youtube.com/watch?v=-8MrDWg6K6s) | David Hwang | youtube.com | 09-Nov-2022 |
 | [The Event-Driven Edge with OpenFaaS](https://www.openfaas.com/blog/eventdriven-edge/) | Han Verstraete | openfaas.com | 01-June-2022 |
 | [Running faasd on Azure Arm-based Virtual Machines](https://blog.ediri.io/running-faasd-on-azure-arm-based-virtual-machines) | Engin Diri | blog.ediri.io | 27-May-2022 |
 | [WebAssembly functions in OpenFaaS using Sat (Part1)](https://www.wasm.builders/suborbital/webassembly-functions-in-openfaas-using-sat-part-1-2omk) | Connor Hicks | wasm.builders | 04-May-2022 |
@@ -147,6 +148,7 @@ Mainly virtual due to pandemic.
 | [How to integrate with GitHub the right way with GitHub Apps](https://www.openfaas.com/blog/integrate-with-github-apps-and-faasd/) | Batuhan Apaydın | openfaas.com | 26-Jan-2021 |
 | [Serverless with OpenFaaS and .NET](https://goncalo-a-oliveira.medium.com/serverless-with-openfaas-and-net-6a66b5c30a5f) | Batuhan Apaydın | medium.com | 20-Jan-2021 |
 | [How I discovered faas and what it changed for me](https://releasecandidate.dev/posts/2021/discovery-faasd-and-openfaas/) | Peter Thaleikis | releasecandidate.dev | 05-Jan-2021 |
+| [Installing OpenFaaS On k3s (Single Node)](https://midnightprogrammer.net/post/installing-openfaas-on-k3s-single-node/) | Pashant Khandelwal  | midnightprogrammer.net | 04-Jan-2021 |
 
 #### Events in 2021
 
