@@ -84,6 +84,18 @@ It would be great to hear from you especially if you have any of the above and w
 | [Digital Transformation of Vision Banco Paraguay with Serverless Functions @ KubeCon](https://kccna18.sched.com/event/GraO/digital-transformation-of-vision-banco-paraguay-with-serverless-functions-alex-ellis-vmware-patricio-diaz-vision-banco-saeca) | Alex Ellis & Patricio Diaz | 13-Dec-2018 |
 | [Introducing "faas" - Cool Hacks Keynote at Dockercon 2017](https://blog.docker.com/2017/04/dockercon-2017-mobys-cool-hack-sessions/) | Alex Ellis | 04-April-2017 |
 
+### 2023
+
+#### Blog posts, write-ups and videos 2023
+
+[Back to top](#openfaas-community)
+
+| Blog/video/repo name and description                                          | Author       | Site     | Date        |
+|-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Import leads from Google Forms into your CRM with functions](https://www.openfaas.com/blog/import-leads-from-google-forms-to-crm/) | Alex Ellis | openfaas.com | 02-Mar-2023 |
+| [Using OpenFaaS on AKS](https://learn.microsoft.com/en-us/azure/aks/openfaas) | Various | learn.microsoft.com | 27-Feb-2023 |
+| [How to integrate OpenFaaS functions with managed AWS services](https://www.openfaas.com/blog/integrate-openfaas-with-managed-aws-services/) | Han Verstraete | openfaas.com | 19-Jan-2023 |
+
 ### 2022
 
 #### Blog posts, write-ups and videos 2022
@@ -92,13 +104,31 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/video/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Trigger OpenFaaS functions from PostgreSQL with AWS Aurora](https://www.openfaas.com/blog/trigger-functions-from-postgres/) | Han Verstraete | openfaas.com | 16-Dec-2022 |
+| [Introducing our new Python template for production](https://www.openfaas.com/blog/openfaas-pro-python-template/) | Han Verstraete | openfaas.com | 06-Dec-2022 |
 | [Deploy Serverless Function on k3s/Kubernetes with OpenFaaS (x86/Arm, Linux VM, Go)](https://www.youtube.com/watch?v=-8MrDWg6K6s) | David Hwang | youtube.com | 09-Nov-2022 |
-| [The Event-Driven Edge with OpenFaaS](https://www.openfaas.com/blog/eventdriven-edge/) | Han Verstraete | openfaas.com | 01-June-2022 |
+| [Rethinking Auto-scaling for OpenFaaS](https://www.openfaas.com/blog/autoscaling-functions/) | Han Verstraete | openfaas.com | 05-Nov-2022 |
+| [Custom health and readiness checks for your OpenFaaS Functions](https://www.openfaas.com/blog/health-and-readiness-for-functions/) | Alex Ellis | openfaas.com | 26-Oct-2022 |
+| [Generate PDFs at scale on Kubernetes using OpenFaaS and Puppeteer](https://www.openfaas.com/blog/pdf-generation-at-scale-on-kubernetes/) | Han Verstraete | openfaas.com | 06-Oct-2022 |
+| [Eliminate vendor locking of Serverless workloads with OpenFaaS](https://awstip.com/eliminate-vendor-lock-in-of-serverless-workloads-with-openfaas-474807383ce1) | Meher Chaitanya | medium.com | 06-Oct-2022 |
+| [Use the Serverless Function Method to Build a Machine Learning Microservice System](https://blog.infuseai.io/use-serverless-function-method-to-build-a-ml-microservice-system-a108f3f2c1c) |  SimonLiu  | blog.infuseai.io | 30-Aug-2022 |
+| [Go Functions as a Service With Kubernetes and OpenFaaS](https://dominikbraun.io/blog/go-functions-as-a-service-with-kubernetes-and-openfaas/) |  Dominik Braun  | dominikbraun.io | 24-Aug-2022 |
+| [Exploring the Fan out and Fan in pattern with OpenFaaS](https://www.openfaas.com/blog/fan-out-and-back-in-using-functions/) | Han Verstraete | openfaas.com | 22-Aug-2022 |
+| [Finding Raspberry Pis with Raspberry Pis](https://www.openfaas.com/blog/searching-for-raspberrypi/) | Alex Ellis | openfaas.com | 08-Aug-2022 |
+| [The Next Generation of Queuing: JetStream for OpenFaaS](https://www.openfaas.com/blog/jetstream-for-openfaas/) | Han Verstraete | openfaas.com | 21-Jul-2022 |
+| [How to update your OpenFaaS functions automatically with the Argo CD Image Updater](https://www.openfaas.com/blog/argocd-image-updater-for-functions/) | Han Verstraete | openfaas.com | 04-Jul-2022 |
+| [How to build functions from source code with the Function Builder API](https://www.openfaas.com/blog/how-to-build-via-api/) | Han Verstraete | openfaas.com | 23-Jun-2022 |
+| [OpenFaaS First Function](https://rpi4cluster.com/k3s/k3s-openfaas-function/) | Vlado Portos | rpi4cluster.com | 22-Jun-2022 |
+| [OpenFaaS](https://rpi4cluster.com/k3s/k3s-openfaas/) | Vlado Portos | rpi4cluster.com | 22-Jun-2022 |
+| [How to package OpenFaaS functions with Helm](https://www.openfaas.com/blog/howto-package-functions-with-helm/) | Han Verstraete | openfaas.com | 09-Jun-2022 |
+| [The Event-Driven Edge with OpenFaaS](https://www.openfaas.com/blog/eventdriven-edge/) | Han Verstraete | openfaas.com | 01-Jun-2022 |
 | [Running faasd on Azure Arm-based Virtual Machines](https://blog.ediri.io/running-faasd-on-azure-arm-based-virtual-machines) | Engin Diri | blog.ediri.io | 27-May-2022 |
 | [WebAssembly functions in OpenFaaS using Sat (Part1)](https://www.wasm.builders/suborbital/webassembly-functions-in-openfaas-using-sat-part-1-2omk) | Connor Hicks | wasm.builders | 04-May-2022 |
-| [Building a RESTful API with functions](https://simonemms.com/blog/2022/04/24/building-a-restful-api-with-serverless-functions/) | Simon Emms | simonemms.com | 24-April-2022 |
+| [Building a RESTful API with functions](https://simonemms.com/blog/2022/04/24/building-a-restful-api-with-serverless-functions/) | Simon Emms | simonemms.com | 24-Apr-2022 |
 | [How to process your data the resilient way with back pressure](https://www.openfaas.com/blog/limits-and-backpressure/) | Alex Ellis | openfaas.com | 12-May-2022 |
-| [A Deep Dive into Golang for OpenFaaS Functions](https://www.openfaas.com/blog/golang-deep-dive/) | Alex Ellis | openfaas.com | 13-April-2022 |
+| [Open-Faas on Centos 7](https://medium.com/geekculture/open-faas-on-centos-7-c4dc629f28fe) | Heshani Samarasekara | medium.com | 07-May-2022 |
+| [A Deep Dive into Golang for OpenFaaS Functions](https://www.openfaas.com/blog/golang-deep-dive/) | Alex Ellis | openfaas.com | 13-Apr-2022 |
+| [Serverless Architecture with OpenFaaS and Java](https://www.xenonstack.com/blog/serverless-open-faas-java) | Navdeep Singh Gill | xenonstack.com | 13-Mar-2022 |
 | [My Journey Contributing To OpenFaaS So Far](https://www.openfaas.com/blog/my-journey-contributing-to-openfaas/) | Nitishkumar Singh | openfaas.com | 02-Mar-2022 |
 | [Your pocket-sized cloud with a Raspberry Pi](https://blog.alexellis.io/your-pocket-sized-cloud/) | Alex Ellis | openfaas.com | 23-Mar-2022 |
 | [Hosting a React App with OpenFaaS](https://www.openfaas.com/blog/react-app/) | Alex Ellis | openfaas.com | 01-Mar-2022 |
