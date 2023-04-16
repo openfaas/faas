@@ -92,6 +92,10 @@ It would be great to hear from you especially if you have any of the above and w
 
 | Blog/video/repo name and description                                          | Author       | Site     | Date        |
 |-------------------------------------------------------------------------|--------------|----------|-------------|
+| [Building OpenFaaS Serverless function to detect weather using OpenWeatherMap and Python](https://www.faizanbashir.me/building-openfaas-serverless-function-to-detect-weather-using-openweathermap-and-python) | Faizan Bashir | faizanbashir.me | 02-Apr-2023 |
+| [Fine-tuning the cold-start in OpenFaaS ](https://www.openfaas.com/blog/fine-tuning-the-cold-start/) | Alex Ellis | openfaas.com | 28-Mar-2023 |
+| [How do changes to the Docker Hub affect OpenFaaS?](https://www.openfaas.com/blog/how-does-docker-hub-affect-openfaas/) | Alex Ellis | openfaas.com | 20-Mar-2023 |
+| [Cluster auto-scaling with DigitalOcean Kubernetes and OpenFaaS](https://www.openfaas.com/blog/cluster-autoscaling-with-digitalocean/) | Alex Ellis | openfaas.com | 16-Mar-2023 |
 | [Import leads from Google Forms into your CRM with functions](https://www.openfaas.com/blog/import-leads-from-google-forms-to-crm/) | Alex Ellis | openfaas.com | 02-Mar-2023 |
 | [Using OpenFaaS on AKS](https://learn.microsoft.com/en-us/azure/aks/openfaas) | Various | learn.microsoft.com | 27-Feb-2023 |
 | [How to integrate OpenFaaS functions with managed AWS services](https://www.openfaas.com/blog/integrate-openfaas-with-managed-aws-services/) | Han Verstraete | openfaas.com | 19-Jan-2023 |
@@ -157,6 +161,7 @@ Mainly virtual due to pandemic.
 |-------------------------------------------------------------------------|--------------|----------|-------------|
 | [Configure your OpenFaaS functions for staging and production](https://www.openfaas.com/blog/custom-environments/) | Alex Ellis | openfaas.com | 09-Dec-2021 |
 | [OpenFaaS - Run Containerized Functions On Your Own Terms](https://iximiuz.com/en/posts/openfaas-case-study/) | Ivan Velichko | iximiuz.com | 02-Dec-2021 |
+| [Making a Docker Dev Environment for OpenFaaS](https://www.felipecruz.es/making-a-docker-dev-environment-for-openfaas/) | Felipe Cruz | felipecruz.es | 30-Nov-2021 |
 | [Build at the Edge with OpenFaaS and GitHub Actions](https://www.openfaas.com/blog/edge-actions/) | Alex Ellis | openfaas.com | 29-Nov-2021 |
 | [Improving long-running jobs for OpenFaaS users](https://www.openfaas.com/blog/long-running-jobs/) | Alex Ellis | openfaas.com | 05-Nov-2021 |
 | [Derek says goodbye to Docker Swarm](https://www.openfaas.com/blog/migrating-derek-from-docker-swarm/) | Alex Ellis | openfaas.com | 05-Oct-2021 |
