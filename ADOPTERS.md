@@ -36,6 +36,10 @@ Tell us more:
 
 * [Axa France](https://www.axa.fr) - Axa uses OpenFaaS for inference and predictions at scale using ML models - Pierre-Henri Gache
 
+* [BCubed Engineering](https://bcubed-corp.com) - "We use OpenFaaS to provide a serverless platform for our customers to run their code on."
+
+* [Black.ai](https://black.ai) - video encoding, transcoding - object detection for CCTV using AI.
+
 * [3fs](https://3fs.si) - 3fs is using OpenFaaS for automating repetitive development tasks like automatic rebasing, vendoring of dependencies on merge requests and many other things that make our developers lives easier
 
 * [Baidu](https://baidu.com) - A team within Baidu provides ML models to customers which are hosted on OpenFaaS - He Sun.
@@ -80,6 +84,8 @@ Tell us more:
 
 * [HM Planning Inspectorate](http://www.planninginspectorate.gov.uk) - HM Planning Inspectorate is the UK Government body responsible for dealing with planning appeals, national infrastructure planning applications, examinations of local plans and other specialist casework in England and Wales. OpenFaaS eased the communication between the new planning appeals website and the monolithic back-office application and allowed easy retries in the event of network failure.
 
+* [Intel.com](https://intel.com) - OpenFaaS is used within a commercial service and within the Open Source group for AI model serving.
+
 * [Iconscout](https://iconscout.com) - e-commerce site for stock photography and icons. OpenFaaS is used to resize images and to bundle assets for customers.
 
 * [Ingrooves](https://ingrooves.com) - Ingrooves is a global music distribution, tech & marketing company, and OpenFaaS is a key component in its finance system for report generation, event publishing, and data ingestion.
@@ -90,7 +96,11 @@ Tell us more:
 
 * [Klar MX](https://klar.mx) - "Cuenta con Klar" - Klar provides access to credit cards in Mexico for those who have issues with credit history.
 
+* [Kubiya.ai](https://kubiya.ai) - ChatGPT-like DevOps Virtual Assistant that runs OpenFaaS functions for custom infrastructure automation and management.
+
 * [LivePerson](https://www.liveperson.com/) - LivePerson extended their chat platform by allowing customers to write functions to execute in client chat flows. See [KubeCon video](https://www.youtube.com/watch?v=bt06Z28uzPA)
+
+* [Live Time Value (LTV) Co.](https://www.ltvco.com) - "Data is at the heart of what we do" - the data-science team at LTV use OpenFaaS to provide a scalable and cost-effective way to run their models in production.
 
 * [metaspan](https://metaspan.com) - "End-to-end blockchain solutions". metaspan ported all api endpoints from monolith express.js/sails.js to openfaas micro-functions.
 
@@ -106,7 +116,11 @@ Tell us more:
 
 * [Northwestern Mutual](https://www.northwesternmutual.com/) - "OpenFaaS is a great platform and Alex and team are a great resource. They will work very diligently with your team to help you get the most out of OpenFaaS, and he will always be able to provide valuable insight into issues that a team might face while developing software for the cloud." Kieran Gordon
 
+* [Optiv](https://optiv.com) - Cyber Security Solutions
+
 * [P. A. Media Group](https://pamediagroup.com/) - "We use OpenFaaS to orchestrate Terraform and Jenkins jobs for our internal infrastructure provisioning" - Rob Stonham
+
+* [Patchworks Integration Limited](https://www.wearepatchworks.com) - Ecommerce integrations made easy - functions provide custom enrichment for data and integrations with third-party APIs. Customers can provide their own PHP code to execute in a sandboxed environment.
 
 * [PathfinderZA](https://www.pathfinderza.com) - PathfinderZA is an IOT security firm selling underground sensors that transmits warnings to users if a person or vehicle goes past it. We're using OpenFaas, with Dockerised functions written in Java (Quarkus) and Rust (Actix/Rocket-RS).
 
@@ -127,6 +141,8 @@ Tell us more:
 * [Rapid Circle](https://www.rapidcircle.com) is using OpenFaaS within a Azure Kubernetes cluster to host a large amount of micro-services aiming at automating core activities of their Microsoft 365 Cloud Managed Services offering. Robustness, speed, scalable and simplicity have been major reasons to favor OpenFaaS over Azure Functions.
 
 * [Sprucee](https://spruce.casa) - We use [faasd](https://github.com/openfaas/faasd) as part of our base Encryption as a Service platform which were manually managed docker containers. As NATS based platform we were able to scale to every size we want, but deployment takes many labor time as we need to deal with OS level and customer limitations. Now we can use "faas install/up" to accomplish 80% of deployment effort.
+
+* [Surge](https://www.workwithsurge.com) - Lending Platform and Salesforce integrations
 
 * [SURF](https://www.surf.nl) - [The Green Village](https://www.thegreenvillage.org/) is a living lab at Delft University of Technology. It is an experimental, real-life setting with the goal to accelerate innovation for a sustainable future. [SURF](https://www.surf.nl/), a cooperative association of Dutch educational and research institutions providing digital infrastructure and ICT services, has developed a [digital platform](https://youtu.be/_WYVzoBuWKk) for The Green Village that uses OpenFaaS to classify and sort incoming sensor data at scale.
 
@@ -160,5 +176,7 @@ Tell us more:
 * [Ytel](https://www.ytel.com) - Ytel are a Google Cloud customer and deployed OpenFaaS vs. the vendor alternative due to its wide range of templates, Dockerfile support and easier access to services within the VPC. The Dockerfile template allowed for easy migration of existing code. The latency of transactions for customers during purchase process was reduced by offloading synchronous code to NATS which is built into OpenFaaS. OpenFaaS also allowed "hot path" code to be refactored from large services into multiple functions, to take advantage of horizontal scaling.
 
 * [smashHit](https://smashhit.eu) - smashHit is a project funded by the European Union's Horizon 2020 research and innovation programme under grant agreement No. 871477. The objective of smashHit is to assure trusted and secure sharing of data streams from both personal and industrial platforms, needed to build sectorial and cross-sectorial services, by establishing a Framework for processing of data owner consent and legal rules (GDPR) and effective contracting, as well as joint security and privacy-preserving mechanisms. We are utilising OpenFaaS to support the need for scalable processing through the use of functions.
+
+* [Yokogawa Electric](https://en.wikipedia.org/wiki/Yokogawa_Electric)
 
 See the top of the file for how to participate.
