@@ -171,6 +171,8 @@ Tell us more:
     * CAS / vRA8 - The Cloud Automation Services product has an option to deploy "FaaS on-premises", this actually deploys OpenFaaS white-boxed / white-labelled. [CAS Write-up from Swisscom](https://ict.swisscom.ch/2019/08/cloud-automation-services-on-prem-faas-provider-for-vsphere/)
     * OpenFaaS is also repackaged as "Automation Extensibility" in the ["vRO" product](https://vnuggets.com/2019/08/16/cloud-assembly-extensibility-with-abx-faas-part1/). [See an example](https://vnuggets.com/2019/08/19/cloud-assembly-extensibility-with-abx-faas-part3/)
 
+* [VNourdin](https://www.vnourdin.dev) - I am a French web developer working with the Jamstack, using 11ty and faasd. I started with faasd as I wanted to make it work on my small VPS, but as I do more and more projects relying on OpenFaaS, I'll probably switch to a K8s cluster to gain scalability.
+
 * [Waylay](https://www.waylay.io) - We use OpenFaaS to deploy small snippets of code that can be combined in a low-code manner by our clients to do data orchestration and automation. Users of the platform also are able to deploy their own plugins (written in multiple languages), which also get deployed on OpenFaas.
 
 * [Wireline.io](https://wireline.io) - portable functions that can run on any hardware, indexed through blockchain.
