@@ -40,6 +40,8 @@ Tell us more:
 
 * [Black.ai](https://black.ai) - video encoding, transcoding - object detection for CCTV using AI.
 
+* [Corva.ai](https://corva.ai) - "Corva is an information-sharing, collaboration-driving, and productivity-powering solution for your Drilling, Completions, Geoscience, and Sustainability teams."
+
 * [3fs](https://3fs.si) - 3fs is using OpenFaaS for automating repetitive development tasks like automatic rebasing, vendoring of dependencies on merge requests and many other things that make our developers lives easier
 
 * [Baidu](https://baidu.com) - A team within Baidu provides ML models to customers which are hosted on OpenFaaS - He Sun.
