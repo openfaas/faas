@@ -1,0 +1,968 @@
+openapi: 3.0.1
+info:
+  title: OpenFaaS API Gateway
+  description: OpenFaaS API documentation
+  license:
+    name: MIT
+  version: 0.8.12
+  contact:
+    name: OpenFaaS Ltd
+    url: https://www.openfaas.com/support/
+servers:
+- url: "http://localhost:8080"
+  description: Local server
+tags:
+  - name: internal
+    description: Internal use only
+  - name: system
+    description: System endpoints for managing functions and related objects
+  - name: function
+    description: Endpoints for invoking functions
+paths:
+  "/healthz":
+    get:
+      summary: Healthcheck
+      operationId: healthcheck
+      description: Healthcheck for the gateway, indicates if the gateway is running and available
+      tags:
+        - internal
+      responses:
+        '200':
+          description: Healthy
+        '500':
+          description: Not healthy
+  "/metrics":
+    get:
+      summary: Prometheus metrics
+      operationId: metrics
+      description: Prometheus metrics for the gateway
+      tags:
+        - internal
+      responses:
+        '200':
+          description: Prometheus metrics in text format
+  "/system/info":
+    get:
+      operationId: GetSystemInfo
+      description: Get system provider information
+      summary: Get info such as provider version number and provider orchestrator
+      tags:
+        - system
+      responses:
+        '200':
+          description: Info result
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/GatewayInfo"
+        '500':
+          description: Internal Server Error
+  "/system/alert":
+    post:
+      operationId: ScaleAlert
+      description: Scale a function based on an alert
+      summary: | 
+        Event-sink for AlertManager, for auto-scaling
+        
+        Internal use for AlertManager, requires valid AlertManager alert
+        JSON
+      tags:
+        - internal
+      requestBody:
+        description: Incoming alert
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrometheusAlert'
+        required: false
+      responses:
+        '200':
+          description: Alert handled successfully
+        '500':
+          description: Internal error with swarm or request JSON invalid
+  "/system/functions":
+    get:
+      operationId: GetFunctions
+      description: Get a list of deployed functions
+      summary: 'Get a list of deployed functions with: stats and image digest'
+      tags:
+        - system
+      responses:
+        '200':
+          description: List of deployed functions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/FunctionStatus"
+    put:
+      operationId: UpdateFunction
+      description: update a function spec
+      summary: Update a function.
+      tags:
+        - system
+      requestBody:
+        description: Function to update
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/FunctionDeployment"
+        required: true
+      responses:
+        '200':
+          description: Accepted
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    post:
+      operationId: DeployFunction
+      description: Deploy a new function.
+      summary: Deploy a new function.
+      tags:
+        - system
+      requestBody:
+        description: Function to deploy
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/FunctionDeployment"
+        required: true
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    delete:
+      operationId: DeleteFunction
+      description: Remove a deployed function.
+      summary: Remove a deployed function.
+      tags:
+        - system
+      requestBody:
+        description: Function to delete
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/DeleteFunctionRequest"
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  "/system/scale-function/{functionName}":
+    post:
+      operationId: ScaleFunction
+      description: Scale a function
+      summary: Scale a function to a specific replica count
+      tags:
+        - system
+      parameters:
+      - name: functionName
+        in: path
+        description: Function name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScaleServiceRequest'
+      responses:
+        '200':
+          description: Scaling OK
+        '202':
+          description: Scaling OK
+        '404':
+          description: Function not found
+        '500':
+          description: Error scaling function
+
+  "/system/function/{functionName}":
+    get:
+      operationId: GetFunctionStatus
+      description: Get the status of a function by name
+      tags:
+        - system
+      parameters:
+      - name: functionName
+        in: path
+        description: Function name
+        required: true
+        schema:
+          type: string
+      - name: namespace
+        in: query
+        description: Namespace of the function
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Function Summary
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/FunctionStatus"
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  "/system/secrets":
+    get:
+      operationId: ListSecrets
+      description: Get a list of secret names and metadata from the provider
+      summary: Get a list of secret names and metadata from the provider
+      tags:
+        - system
+      responses:
+        '200':
+          description: List of submitted secrets.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/SecretDescription"
+    put:
+      operationId: UpdateSecret
+      description: Update a secret.
+      summary: Update a secret, the value is replaced.
+      tags:
+        - system
+      requestBody:
+        description: Secret to update
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Secret"
+        required: true
+      responses:
+        '200':
+          description: Ok
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not Allowed. Secret update is not allowed in faas-swarm.
+        '500':
+          description: Internal Server Error
+    post:
+      operationId: CreateSecret
+      description: Create a new secret.
+      tags:
+        - system
+      requestBody:
+        description: A new secret to create
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/Secret"
+        required: true
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    delete:
+      operationId: DeleteSecret
+      description: Remove a secret.
+      tags:
+        - system
+      requestBody:
+        description: Secret to delete
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/SecretDescription"
+        required: true
+      responses:
+        '204':
+          description: OK
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  "/system/logs":
+    get:
+      operationId: GetFunctionLogs
+      description: Get a stream of the logs for a specific function
+      tags:
+        - system
+      parameters:
+      - name: name
+        in: query
+        description: Function name
+        required: true
+        schema:
+          type: string
+      - name: namespace
+        in: query
+        description: Namespace of the function
+        required: false
+        schema:
+          type: string
+      - name: instance
+        in: query
+        description: Instance of the function
+        required: false
+        schema:
+          type: string
+      - name: tail
+        in: query
+        description: Sets the maximum number of log messages to return, <=0 means
+          unlimited
+        schema:
+          type: integer
+      - name: follow
+        in: query
+        description: When true, the request will stream logs until the request timeout
+        schema:
+          type: boolean
+      - name: since
+        in: query
+        description: Only return logs after a specific date (RFC3339)
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: Newline delimited stream of log messages
+          content:
+            application/x-ndjson:
+              schema:
+                "$ref": "#/components/schemas/LogEntry"
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  
+  "/async-function/{functionName}":
+    post:
+      operationId: InvokeAsync
+      description: Invoke a function asynchronously
+      summary: |
+        Invoke a function asynchronously in the default OpenFaaS namespace
+
+        Any additional path segments and query parameters will be passed to the function as is.
+
+        See https://docs.openfaas.com/reference/async/.
+      tags:
+        - function
+      parameters:
+      - name: functionName
+        in: path
+        description: Function name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: "(Optional) data to pass to function"
+        content:
+          "*/*":
+            schema:
+              type: string
+              format: binary
+              example: '{"hello": "world"}'
+        required: false
+      responses:
+        '202':
+          description: Request accepted and queued
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+
+  "/async-function/{functionName}.{namespace}":
+    post:
+      operationId: InvokeAsyncNamespaced
+      description: Invoke a function asynchronously in an OpenFaaS namespace.
+      summary: |
+        Invoke a function asynchronously in an OpenFaaS namespace.
+
+        Any additional path segments and query parameters will be passed to the function as is.
+
+        See https://docs.openfaas.com/reference/async/.
+      tags:
+        - function
+      parameters:
+      - name: functionName
+        in: path
+        description: Function name
+        required: true
+        schema:
+          type: string
+      - name: namespace
+        in: path
+        description: Namespace of the function
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: "(Optional) data to pass to function"
+        content:
+          "*/*":
+            schema:
+              type: string
+              format: binary
+              example: '{"hello": "world"}'
+        required: false
+      responses:
+        '202':
+          description: Request accepted and queued
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+
+  "/function/{functionName}":
+    post:
+      operationId: InvokeFunction
+      description: Invoke a function in the default OpenFaaS namespace.
+      summary: |
+        Synchronously invoke a function defined in te default OpenFaaS namespace.
+
+        Any additional path segments and query parameters will be passed to the function as is.
+      tags:
+        - function
+      parameters:
+      - name: functionName
+        in: path
+        description: Function name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: "(Optional) data to pass to function"
+        content:
+          "*/*":
+            schema:
+              type: string
+              format: binary
+              example: '{"hello": "world"}'
+        required: false
+      responses:
+        '200':
+          description: Value returned from function
+        '404':
+          description: Not Found
+        '500':
+          description: Internal server error
+
+  "/function/{functionName}.{namespace}":
+    post:
+      operationId: InvokeFunctionNamespaced
+      description: Invoke a function in an OpenFaaS namespace.
+      summary: |
+        Synchronously invoke a function defined in the specified namespace.
+
+        Any additional path segments and query parameters will be passed to the function as is.
+      tags:
+        - function
+      parameters:
+      - name: functionName
+        in: path
+        description: Function name
+        required: true
+        schema:
+          type: string
+      - name: namespace
+        in: path
+        description: Namespace of the function
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: "(Optional) data to pass to function"
+        content:
+          "*/*":
+            schema:
+              type: string
+              format: binary
+              example: '{"hello": "world"}'
+        required: false
+      responses:
+        '200':
+          description: Value returned from function
+        '404':
+          description: Not Found
+        '500':
+          description: Internal server error
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+
+  schemas:
+    GatewayInfo:
+      required:
+      - provider
+      - version
+      - arch
+      type: object
+      properties:
+        provider:
+          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/ProviderInfo"
+        version:
+          nullable: true
+          description: version of the gateway
+          allOf:
+            - $ref: "#/components/schemas/VersionInfo"
+        arch:
+          type: string
+          description: Platform architecture
+          example: x86_64
+    VersionInfo:
+      type: object
+      required:
+        - sha
+        - release
+      properties:
+        commit_message:
+          type: string
+          example: Sample Message
+        sha:
+          type: string
+          example: 7108418d9dd6b329ddff40e7393b3166f8160a88
+        release:
+          type: string
+          format: semver
+          example: 0.8.9
+    ProviderInfo:
+      type: object
+      required:
+        - provider
+        - orchestration
+        - version
+      properties:
+        provider:
+          type: string
+          description: The orchestration provider / implementation
+          example: faas-netes
+        orchestration:
+          type: string
+          example: kubernetes
+        version:
+          description: The version of the provider
+          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/VersionInfo"
+    
+    PrometheusAlert:
+      type: object
+      description: Prometheus alert produced by AlertManager. This is only a subset of the full alert payload.
+      required:
+        - status
+        - receiver
+        - alerts
+      properties:
+        status:
+          type: string
+          description: The status of the alert
+          example: resolved
+        receiver:
+          type: string
+          description: The name of the receiver
+          example: webhook
+        alerts:
+          type: array
+          description: The list of alerts
+          items:
+            $ref: "#/components/schemas/PrometheusInnerAlert"
+      example:
+        {
+          "receiver": "scale-up",
+          "status": "firing",
+          "alerts": [{
+              "status": "firing",
+              "labels": {
+                  "alertname": "APIHighInvocationRate",
+                  "code": "200",
+                  "function_name": "func_nodeinfo",
+                  "instance": "gateway:8080",
+                  "job": "gateway",
+                  "monitor": "faas-monitor",
+                  "service": "gateway",
+                  "severity": "major",
+                  "value": "8.998200359928017"
+              },
+              "annotations": {
+                  "description": "High invocation total on gateway:8080",
+                  "summary": "High invocation total on gateway:8080"
+              },
+              "startsAt": "2017-03-15T15:52:57.805Z",
+              "endsAt": "0001-01-01T00:00:00Z",
+              "generatorURL": "http://4156cb797423:9090/graph?g0.expr=rate%28gateway_function_invocation_total%5B10s%5D%29+%3E+5\u0026g0.tab=0"
+          }],
+          "groupLabels": {
+              "alertname": "APIHighInvocationRate",
+              "service": "gateway"
+          },
+          "commonLabels": {
+              "alertname": "APIHighInvocationRate",
+              "code": "200",
+              "function_name": "func_nodeinfo",
+              "instance": "gateway:8080",
+              "job": "gateway",
+              "monitor": "faas-monitor",
+              "service": "gateway",
+              "severity": "major",
+              "value": "8.998200359928017"
+          },
+          "commonAnnotations": {
+              "description": "High invocation total on gateway:8080",
+              "summary": "High invocation total on gateway:8080"
+          },
+          "externalURL": "http://f054879d97db:9093",
+          "version": "3",
+          "groupKey": 18195285354214864953
+        }
+      
+    PrometheusInnerAlert:
+      type: object
+      description: A single alert produced by Prometheus
+      required:
+        - status
+        - labels
+      properties:
+        status:
+          type: string
+          description: The status of the alert
+          example: resolved
+        labels:
+          $ref: "#/components/schemas/PrometheusInnerAlertLabel"
+
+    PrometheusInnerAlertLabel:
+      type: object
+      description: A single label of a Prometheus alert
+      required:
+        - alertname
+        - function_name
+      properties:
+        alertname:
+          type: string
+          description: The name of the alert
+        function_name:
+          type: string
+          description: The name of the function
+          example: nodeinfo
+
+    FunctionDeployment:
+      required:
+      - service
+      - image
+      type: object
+      properties:
+        service:
+          type: string
+          description: Name of deployed function
+          example: nodeinfo
+        image:
+          type: string
+          description: Docker image in accessible registry
+          example: functions/nodeinfo:latest
+        namespace:
+          type: string
+          description: Namespace to deploy function to. When omitted, the default namespace
+            is used, typically this is `openfaas-fn` but is configured by the provider.
+          example: openfaas-fn
+        envProcess:
+          type: string
+          description: |
+            Process for watchdog to fork, i.e. the command to start the function process.
+
+            This value configures the `fprocess` env variable.
+          example: node main.js
+        constraints:
+          type: array
+          items:
+            type: string
+            description: Constraints are specific to OpenFaaS Provider
+            example: node.platform.os == linux
+        envVars:
+          type: object
+          additionalProperties:
+            type: string
+          description: Overrides to environmental variables
+        secrets:
+          type: array
+          items:
+            type: string
+            description: An array of names of secrets that are required to be loaded
+              from the Docker Swarm.
+            example: secret-name-1
+        labels:
+          type: object
+          nullable: true
+          additionalProperties:
+            type: string
+          description: A map of labels for making scheduling or routing decisions
+          example:
+            foo: bar
+        annotations:
+          type: object
+          nullable: true
+          additionalProperties:
+            type: string
+          description: A map of annotations for management, orchestration, events
+            and build tasks
+          example:
+            topics: awesome-kafka-topic
+            foo: bar
+        limits:
+          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/FunctionResources"
+        requests:
+          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/FunctionResources"
+        readOnlyRootFilesystem:
+          type: boolean
+          description: Make the root filesystem of the function read-only
+
+        # DEPRECATED FIELDS, these fields are ignored in all current providers 
+        registryAuth:
+          type: string
+          description: |
+            Deprecated: Private registry base64-encoded basic auth (as present in ~/.docker/config.json)
+            
+            Use a Kubernetes Secret with registry-auth secret type to provide this value instead.
+
+            This value is completely ignored.
+          example: dXNlcjpwYXNzd29yZA==
+          deprecated: true
+        network:
+          type: string
+          description: |
+            Deprecated: Network, usually func_functions for Swarm.
+
+            This value is completely ignored.
+          deprecated: true
+          example: func_functions
+
+    FunctionStatus:
+      type: object
+      required:
+        - name
+        - image
+      properties:
+        name:
+          type: string
+          description: The name of the function
+          example: nodeinfo
+        image:
+          type: string
+          description: The fully qualified docker image name of the function
+          example: functions/nodeinfo:latest
+        namespace:
+          type: string
+          description: The namespace of the function
+          example: openfaas-fn
+        envProcess:
+          type: string
+          description: Process for watchdog to fork
+          example: node main.js
+        envVars:
+          type: object
+          additionalProperties:
+            type: string
+          description: environment variables for the function runtime
+        constraints:
+          type: array
+          items:
+            type: string
+            description: Constraints are specific to OpenFaaS Provider
+            example: node.platform.os == linux
+        secrets:
+          type: array
+          items:
+            type: string
+            description: An array of names of secrets that are made available to the function
+        labels:
+          type: object
+          nullable: true
+          additionalProperties:
+            type: string
+          description: A map of labels for making scheduling or routing decisions
+          example:
+            foo: bar
+        annotations:
+          type: object
+          nullable: true
+          additionalProperties:
+            type: string
+          description: A map of annotations for management, orchestration, events
+            and build tasks
+          example:
+            topics: awesome-kafka-topic
+            foo: bar
+        limits:
+          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/FunctionResources"
+        requests:
+          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/FunctionResources"
+        readOnlyRootFilesystem:
+          type: boolean
+          description: removes write-access from the root filesystem mount-point.
+        invocationCount:
+          type: number
+          description: The amount of invocations for the specified function
+          format: integer
+          example: 1337
+        replicas:
+          type: number
+          description: The current minimal ammount of replicas
+          format: integer
+          example: 2
+        availableReplicas:
+          type: number
+          description: The current available amount of replicas
+          format: integer
+          example: 2
+        createdAt:
+          type: string
+          description: | 
+            is the time read back from the faas backend's
+            data store for when the function or its container was created.
+          format: date-time
+        usage:
+          nullable: true
+          allOf:  
+            - $ref: "#/components/schemas/FunctionUsage"
+
+    FunctionResources:
+      type: object
+      properties:
+        memory:
+          type: string
+          description: The amount of memory that is allocated for the function
+          example: 128M
+        cpu:
+          type: string
+          description: The amount of cpu that is allocated for the function
+          example: '0.01'
+
+    FunctionUsage:
+      type: object
+      properties:
+        cpu:
+          type: number
+          description: | 
+            is the increase in CPU usage since the last measurement
+            equivalent to Kubernetes' concept of millicores.
+          format: double
+          example: 0.01
+        totalMemoryBytes:
+          type: number
+          description: is the total memory usage in bytes.
+          format: double
+          example: 1337
+
+    DeleteFunctionRequest:
+      required:
+      - functionName
+      type: object
+      properties:
+        functionName:
+          type: string
+          description: Name of deployed function
+          example: nodeinfo
+
+    ScaleServiceRequest:
+      required:
+      - serviceName
+      - replicas
+      type: object
+      properties:
+        serviceName:
+          type: string
+          description: Name of deployed function
+          example: nodeinfo
+        replicas:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Number of replicas to scale to
+          example: 2
+
+    SecretDescription:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of secret
+          example: aws-key
+        namespace:
+          type: string
+          description: Namespace of secret
+          example: openfaas-fn
+    SecretValues:
+      type: object
+      properties:
+        value:
+          type: string
+          description: Value of secret in plain-text
+          example: changeme
+        rawValue:
+          type: string
+          format: byte
+          description: |
+            Value of secret in base64.
+
+            This can be used to provide raw binary data when the `value` field is omitted.
+          example: Y2hhbmdlbWU=
+
+    Secret:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/SecretDescription"
+        - $ref: "#/components/schemas/SecretValues"
+      
+    LogEntry:
+      type: object
+      required:
+        - name
+        - namespace
+        - instance
+        - timestamp
+        - text
+      properties:
+        name:
+          type: string
+          description: the function name
+        namespace:
+          type: string
+          description: the namespace of the function
+        instance:
+          type: string
+          description: the name/id of the specific function instance
+        timestamp:
+          type: string
+          description: the timestamp of when the log message was recorded
+          format: date-time
+        text:
+          type: string
+          description: raw log message content

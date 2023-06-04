@@ -44,7 +44,7 @@ func MakeAlertHandler(service scaling.ServiceQuery, defaultNamespace string) htt
 			return
 		}
 
-		errors := handleAlerts(&req, service, defaultNamespace)
+		errors := handleAlerts(req, service, defaultNamespace)
 		if len(errors) > 0 {
 			log.Println(errors)
 			var errorOutput string
@@ -60,7 +60,7 @@ func MakeAlertHandler(service scaling.ServiceQuery, defaultNamespace string) htt
 	}
 }
 
-func handleAlerts(req *requests.PrometheusAlert, service scaling.ServiceQuery, defaultNamespace string) []error {
+func handleAlerts(req requests.PrometheusAlert, service scaling.ServiceQuery, defaultNamespace string) []error {
 	var errors []error
 	for _, alert := range req.Alerts {
 		if err := scaleService(alert, service, defaultNamespace); err != nil {
