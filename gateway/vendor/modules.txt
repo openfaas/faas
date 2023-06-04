@@ -7,9 +7,6 @@ github.com/cespare/xxhash/v2
 # github.com/docker/distribution v2.8.1+incompatible
 ## explicit
 github.com/docker/distribution/uuid
-# github.com/go-ozzo/ozzo-validation/v4 v4.3.0
-## explicit; go 1.13
-github.com/go-ozzo/ozzo-validation/v4
 # github.com/gogo/protobuf v1.3.2
 ## explicit; go 1.15
 github.com/gogo/protobuf/gogoproto
