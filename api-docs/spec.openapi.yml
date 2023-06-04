@@ -351,6 +351,22 @@ paths:
         '500':
           description: Internal Server Error
   
+  "/system/namespaces":
+    get:
+      operationId: ListNamespaces
+      description: Get a list of namespaces
+      tags:
+        - system
+      responses:
+        '200':
+          description: List of namespaces
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListNamespaceResponse'
+        '500':
+          description: Internal Server Error
+  
   "/async-function/{functionName}":
     post:
       operationId: InvokeAsync
@@ -966,3 +982,10 @@ components:
         text:
           type: string
           description: raw log message content
+
+    ListNamespaceResponse:
+      type: array
+      items:
+        type: string
+        description: Namespace name
+        example: openfaas-fn
