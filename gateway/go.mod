@@ -4,7 +4,6 @@ go 1.19
 
 require (
 	github.com/docker/distribution v2.8.1+incompatible
-	github.com/go-ozzo/ozzo-validation/v4 v4.3.0
 	github.com/gorilla/mux v1.8.0
 	github.com/openfaas/faas-provider v0.19.1
 	github.com/openfaas/nats-queue-worker v0.0.0-20230117214128-3615ccb286cc
