@@ -3,7 +3,7 @@ module github.com/openfaas/faas/gateway
 go 1.19
 
 require (
-	github.com/docker/distribution v2.8.1+incompatible
+	github.com/docker/distribution v2.8.2+incompatible
 	github.com/gorilla/mux v1.8.0
 	github.com/openfaas/faas-provider v0.19.1
 	github.com/openfaas/nats-queue-worker v0.0.0-20230117214128-3615ccb286cc
