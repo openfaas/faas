@@ -12,27 +12,42 @@ const (
 
 // FaaSHandlers provide handlers for OpenFaaS
 type FaaSHandlers struct {
+	// ListNamespace lists namespaces which are annotated for OpenFaaS
+	ListNamespaces http.HandlerFunc
+
+	// MutateNamespace mutates a namespace to be annotated for OpenFaaS
+	// each namespace must contain an annotation of "openfaas=1"
+	MutateNamespace http.HandlerFunc
+
 	// FunctionProxy provides the function invocation proxy logic.  Use proxy.NewHandlerFunc to
 	// use the standard OpenFaaS proxy implementation or provide completely custom proxy logic.
 	FunctionProxy http.HandlerFunc
 
-	FunctionReader http.HandlerFunc
-	DeployHandler  http.HandlerFunc
+	// FunctionLister lists deployed functions within a namespace
+	FunctionLister http.HandlerFunc
 
-	DeleteHandler  http.HandlerFunc
-	ReplicaReader  http.HandlerFunc
-	ReplicaUpdater http.HandlerFunc
-	SecretHandler  http.HandlerFunc
-	// LogHandler provides streaming json logs of functions
-	LogHandler http.HandlerFunc
+	// DeployFunction deploys a function which doesn't exist
+	DeployFunction http.HandlerFunc
 
-	// UpdateHandler an existing function/service
-	UpdateHandler http.HandlerFunc
-	// HealthHandler defines the default health endpoint bound to "/healthz
+	// UpdateFunction updates an existing function
+	UpdateFunction http.HandlerFunc
+
+	DeleteFunction http.HandlerFunc
+
+	FunctionStatus http.HandlerFunc
+
+	ScaleFunction http.HandlerFunc
+
+	Secrets http.HandlerFunc
+
+	// Logs provides streaming json logs of functions
+	Logs http.HandlerFunc
+
+	// Health defines the default health endpoint bound to "/healthz
 	// If the handler is not set, then the "/healthz" path will not be configured
-	HealthHandler        http.HandlerFunc
-	InfoHandler          http.HandlerFunc
-	ListNamespaceHandler http.HandlerFunc
+	Health http.HandlerFunc
+
+	Info http.HandlerFunc
 }
 
 // FaaSConfig set config for HTTP handlers

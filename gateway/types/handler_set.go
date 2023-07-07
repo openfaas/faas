@@ -42,4 +42,6 @@ type HandlerSet struct {
 
 	// NamespaceListerHandler lists namespaces
 	NamespaceListerHandler http.HandlerFunc
+
+	NamespaceMutatorHandler http.HandlerFunc
 }

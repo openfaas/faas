@@ -130,6 +130,7 @@ func main() {
 	faasHandlers.SecretHandler = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer, serviceAuthInjector)
 
 	faasHandlers.NamespaceListerHandler = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer, serviceAuthInjector)
+	faasHandlers.NamespaceMutatorHandler = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer, serviceAuthInjector)
 
 	faasHandlers.Alert = handlers.MakeNotifierWrapper(
 		handlers.MakeAlertHandler(externalServiceQuery, config.Namespace),
@@ -193,6 +194,8 @@ func main() {
 			auth.DecorateWithBasicAuth(faasHandlers.LogProxyHandler, credentials)
 		faasHandlers.NamespaceListerHandler =
 			auth.DecorateWithBasicAuth(faasHandlers.NamespaceListerHandler, credentials)
+		faasHandlers.NamespaceMutatorHandler =
+			auth.DecorateWithBasicAuth(faasHandlers.NamespaceMutatorHandler, credentials)
 	}
 
 	r := mux.NewRouter()
@@ -216,6 +219,8 @@ func main() {
 	r.HandleFunc("/system/logs", faasHandlers.LogProxyHandler).Methods(http.MethodGet)
 
 	r.HandleFunc("/system/namespaces", faasHandlers.NamespaceListerHandler).Methods(http.MethodGet)
+	r.HandleFunc("/system/namespace/{namespace:["+NameExpression+"]*}", faasHandlers.NamespaceMutatorHandler).
+		Methods(http.MethodPost, http.MethodDelete, http.MethodPut, http.MethodGet)
 
 	if faasHandlers.QueuedProxy != nil {
 		r.HandleFunc("/async-function/{name:["+NameExpression+"]+}/", faasHandlers.QueuedProxy).Methods(http.MethodPost)

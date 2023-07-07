@@ -1,6 +1,7 @@
 package types
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
@@ -53,6 +54,26 @@ func ParseIntOrDurationValue(val string, fallback time.Duration) time.Duration {
 	}
 
 	return duration
+}
+
+// ParseIntOrDurationValue interprets a string representing an int or duration and returns
+// an int as the number of seconds. An error is returned if val can not be parsed as int or duration.
+func ParseIntOrDuration(val string) (int, error) {
+	i, err := strconv.ParseInt(val, 10, 0)
+	if err == nil {
+		return int(i), nil
+	}
+
+	if err != nil && errors.Is(err, strconv.ErrRange) {
+		return int(i), err
+	}
+
+	d, err := time.ParseDuration(val)
+	if err != nil {
+		return 0, err
+	}
+
+	return int(d.Seconds()), nil
 }
 
 // ParseBoolValue parses the the boolean in val or, if there is an error, returns the
