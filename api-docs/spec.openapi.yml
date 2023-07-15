@@ -908,6 +908,7 @@ components:
     ScaleServiceRequest:
       required:
       - serviceName
+      - namespace
       - replicas
       type: object
       properties:
@@ -915,6 +916,10 @@ components:
           type: string
           description: Name of deployed function
           example: nodeinfo
+        namespace:
+          type: string
+          description: Namespace the function is deployed to.
+          example: openfaas-fn
         replicas:
           type: integer
           format: int64
