@@ -56,6 +56,8 @@ Tell us more:
 
 * [BulletProof](https://www.bulletproof.co.uk/) - Bulletproof are using OpenFaaS to build an on demand and scalable Vulnerability Scanning (VA) engine. Using OpenFaaS allows us to use compute resource efficiently yet maintain the ability to grow to meet customer scanning demands. We also like the ability to use pure docker containers to compose multiple scanning tools with different technologies into a single, coherent interface. This has reduced the time need to add new tools to the platform.
 
+* [CDATA](https://cdata.com) - Used for background jobs and tasks such as backing up and exchanging data between systems.
+
 * [Citrix](https://www.citrix.com/en-gb/) - Citrix built out a closed-source multi-tenant functions platform and UI using OpenFaaS. It is used for testing hardware devices and for automated QA testing.
 
 * [Civo](https://www.civo.com) - Civo Cloud provide a 1-click Kubernetes marketplace application for OpenFaaS
