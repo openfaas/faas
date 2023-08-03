@@ -36,6 +36,8 @@ Tell us more:
 
 * [911 Security](https://www.911security.com/) - "We migrated our Python functions from AWS Lambda using automation, and now run them in airgapped environments for customers using OpenFaaS and arkade" - Scott Creager
 
+* [Altair Engineering](https://altair.com/) - OpenFaaS powers the customer functions capability of the IoT SaaS platform, and separately each private on-prem installation of the product.
+
 * [Axa France](https://www.axa.fr) - Axa uses OpenFaaS for inference and predictions at scale using ML models - Pierre-Henri Gache
 
 * [Baidu](https://baidu.com) - A team within Baidu provides ML models to customers which are hosted on OpenFaaS - He Sun.
