@@ -6,7 +6,7 @@ package handlers
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"testing"
@@ -33,7 +33,7 @@ func Test_buildUpstreamRequest_Body_Method_Query(t *testing.T) {
 		t.Fail()
 	}
 
-	upstreamBytes, _ := ioutil.ReadAll(upstream.Body)
+	upstreamBytes, _ := io.ReadAll(upstream.Body)
 
 	if string(upstreamBytes) != string(srcBytes) {
 		t.Errorf("Body - want: %s, got: %s", string(upstreamBytes), string(srcBytes))
@@ -212,7 +212,7 @@ func Test_buildUpstreamRequest_WithPathNoQuery(t *testing.T) {
 		t.Fail()
 	}
 
-	upstreamBytes, _ := ioutil.ReadAll(upstream.Body)
+	upstreamBytes, _ := io.ReadAll(upstream.Body)
 
 	if string(upstreamBytes) != string(srcBytes) {
 		t.Errorf("Body - want: %s, got: %s", string(upstreamBytes), string(srcBytes))
@@ -268,7 +268,7 @@ func Test_buildUpstreamRequest_WithNoPathNoQuery(t *testing.T) {
 		t.Fail()
 	}
 
-	upstreamBytes, _ := ioutil.ReadAll(upstream.Body)
+	upstreamBytes, _ := io.ReadAll(upstream.Body)
 
 	if string(upstreamBytes) != string(srcBytes) {
 		t.Errorf("Body - want: %s, got: %s", string(upstreamBytes), string(srcBytes))
@@ -322,7 +322,7 @@ func Test_buildUpstreamRequest_WithPathAndQuery(t *testing.T) {
 		t.Fail()
 	}
 
-	upstreamBytes, _ := ioutil.ReadAll(upstream.Body)
+	upstreamBytes, _ := io.ReadAll(upstream.Body)
 
 	if string(upstreamBytes) != string(srcBytes) {
 		t.Errorf("Body - want: %s, got: %s", string(upstreamBytes), string(srcBytes))

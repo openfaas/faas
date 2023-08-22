@@ -6,7 +6,7 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"math"
 	"net/http"
@@ -27,7 +27,7 @@ func MakeAlertHandler(service scaling.ServiceQuery, defaultNamespace string) htt
 
 		defer r.Body.Close()
 
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte("Unable to read alert."))

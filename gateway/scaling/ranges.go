@@ -3,6 +3,7 @@ package scaling
 import (
 	"bytes"
 	"encoding/json"
+	"io"
 	"io/ioutil"
 	"net/http"
 
@@ -43,7 +44,7 @@ func MakeHorizontalScalingHandler(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			http.Error(w, "Error reading request body", http.StatusBadRequest)
 			return

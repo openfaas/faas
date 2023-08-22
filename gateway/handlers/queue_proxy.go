@@ -5,7 +5,7 @@ package handlers
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"net/url"
@@ -27,7 +27,7 @@ func MakeQueuedProxy(metrics metrics.MetricOptions, queuer ftypes.RequestQueuer,
 			defer r.Body.Close()
 
 			var err error
-			body, err = ioutil.ReadAll(r.Body)
+			body, err = io.ReadAll(r.Body)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 				return

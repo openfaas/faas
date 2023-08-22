@@ -3,7 +3,7 @@ package handlers
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -52,7 +52,7 @@ func Test_logsProxyDoesNotLeakGoroutinesWhenProviderClosesConnection(t *testing.
 		t.Fatalf("unexpected error sending log request: %s", err)
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		t.Fatalf("unexpected error reading the response body: %s", err)
 	}
@@ -126,7 +126,7 @@ func Test_logsProxyDoesNotLeakGoroutinesWhenClientClosesConnection(t *testing.T)
 	go func() {
 		defer resp.Body.Close()
 		defer close(errCh)
-		_, err := ioutil.ReadAll(resp.Body)
+		_, err := io.ReadAll(resp.Body)
 		errCh <- err
 	}()
 	cancel()

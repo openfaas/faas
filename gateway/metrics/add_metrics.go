@@ -3,7 +3,7 @@ package metrics
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -28,7 +28,7 @@ func AddMetricsHandler(handler http.HandlerFunc, prometheusQuery PrometheusQuery
 		}
 
 		defer upstreamCall.Body.Close()
-		upstreamBody, _ := ioutil.ReadAll(upstreamCall.Body)
+		upstreamBody, _ := io.ReadAll(upstreamCall.Body)
 
 		if recorder.Code != http.StatusOK {
 			log.Printf("List functions responded with code %d, body: %s",

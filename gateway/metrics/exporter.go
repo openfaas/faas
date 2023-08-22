@@ -7,7 +7,7 @@ package metrics
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net"
 	"net/http"
 	"net/url"
@@ -159,7 +159,7 @@ func (e *Exporter) getFunctions(endpointURL url.URL, namespace string) ([]types.
 		return services, err
 	}
 
-	bytesOut, readErr := ioutil.ReadAll(res.Body)
+	bytesOut, readErr := io.ReadAll(res.Body)
 	if readErr != nil {
 		return services, readErr
 	}
@@ -193,7 +193,7 @@ func (e *Exporter) getNamespaces(endpointURL url.URL) ([]string, error) {
 		return namespaces, nil
 	}
 
-	bytesOut, readErr := ioutil.ReadAll(res.Body)
+	bytesOut, readErr := io.ReadAll(res.Body)
 	if readErr != nil {
 		return namespaces, readErr
 	}

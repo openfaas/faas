@@ -3,7 +3,7 @@ package metrics
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -44,7 +44,7 @@ func (q PrometheusQuery) Fetch(query string) (*VectorQueryResponse, error) {
 		defer res.Body.Close()
 	}
 
-	bytesOut, readErr := ioutil.ReadAll(res.Body)
+	bytesOut, readErr := io.ReadAll(res.Body)
 	if readErr != nil {
 		return nil, readErr
 	}
