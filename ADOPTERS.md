@@ -46,6 +46,8 @@ Tell us more:
 
 * [Black.ai](https://black.ai) - video encoding, transcoding - object detection for CCTV using AI.
 
+* [Cloud Initiatives](https://cloudinitiatives.com) - Used for customer installations for custom functionality, and for main product providing educational course metrics.
+
 * [Corva.ai](https://corva.ai) - "Corva is an information-sharing, collaboration-driving, and productivity-powering solution for your Drilling, Completions, Geoscience, and Sustainability teams."
 
 * [3fs](https://3fs.si) - 3fs is using OpenFaaS for automating repetitive development tasks like automatic rebasing, vendoring of dependencies on merge requests and many other things that make our developers lives easier
@@ -113,6 +115,8 @@ Tell us more:
 * [Live Time Value (LTV) Co.](https://www.ltvco.com) - "Data is at the heart of what we do" - the data-science team at LTV use OpenFaaS to provide a scalable and cost-effective way to run their models in production.
 
 * [metaspan](https://metaspan.com) - "End-to-end blockchain solutions". metaspan ported all api endpoints from monolith express.js/sails.js to openfaas micro-functions.
+
+* [Mercedes Benz Tech Innovation](https://mercedes-benz.com) - "We are currently using OpenFaaS as a communicative API between the vehicle app and the backend. In the future we plan to offer a service in the company, which every app developer can host an API on the OpenFaaS platform at short notice"
 
 * [MoneyLion](https://www.moneylion.com/)
 
@@ -186,6 +190,8 @@ Tell us more:
 * [VNourdin](https://www.vnourdin.dev) - I am a French web developer working with the Jamstack, using 11ty and faasd. I started with faasd as I wanted to make it work on my small VPS, but as I do more and more projects relying on OpenFaaS, I'll probably switch to a K8s cluster to gain scalability.
 
 * [Waylay](https://www.waylay.io) - We use OpenFaaS to deploy small snippets of code that can be combined in a low-code manner by our clients to do data orchestration and automation. Users of the platform also are able to deploy their own plugins (written in multiple languages), which also get deployed on OpenFaas.
+
+* [WorldQuant](https://worldquant.com) - Using OpenFaaS as part of WorldQuant's solutions.
 
 * [Wireline.io](https://wireline.io) - portable functions that can run on any hardware, indexed through blockchain.
 
