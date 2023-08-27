@@ -56,7 +56,7 @@ func TestInitialScale_From1_Factor10(t *testing.T) {
 	minReplicas := uint64(1)
 	scalingFactor := uint64(10)
 	got := CalculateReplicas("firing", scaling.DefaultMinReplicas, scaling.DefaultMaxReplicas, minReplicas, scalingFactor)
-	want := uint64(2)
+	want := uint64(1)
 
 	if got != want {
 		t.Fatalf("want: %d, but got: %d", want, got)

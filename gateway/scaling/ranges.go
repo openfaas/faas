@@ -12,7 +12,7 @@ import (
 
 const (
 	// DefaultMinReplicas is the minimal amount of replicas for a service.
-	DefaultMinReplicas = 1
+	DefaultMinReplicas = 0
 
 	// DefaultMaxReplicas is the amount of replicas a service will auto-scale up to.
 	DefaultMaxReplicas = 5
