@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
-	"io/ioutil"
 	"net/http"
 
 	"github.com/openfaas/faas-provider/types"
@@ -66,7 +65,7 @@ func MakeHorizontalScalingHandler(next http.HandlerFunc) http.HandlerFunc {
 
 		upstreamReq, _ := json.Marshal(scaleRequest)
 		// Restore the io.ReadCloser to its original state
-		r.Body = ioutil.NopCloser(bytes.NewBuffer(upstreamReq))
+		r.Body = io.NopCloser(bytes.NewBuffer(upstreamReq))
 
 		next.ServeHTTP(w, r)
 	}
