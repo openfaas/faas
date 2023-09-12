@@ -90,6 +90,8 @@ Tell us more:
 
 * [GMO Internet](https://www.gmo.jp/en/)
 
+* [GH Electronic GmbH](https://gselectronic.com/) - "We've been using OpenFaaS in production for over 5 years and have 30 C# functions which are used in our manufacturing process."
+
 * [HelloSafe](https://hellosafe.ca/en/) - "HelloSafe is one of the leading website of financial products comparison in Canada. We're using OpenFaas on our production applications."
 
 * [HM Planning Inspectorate](http://www.planninginspectorate.gov.uk) - HM Planning Inspectorate is the UK Government body responsible for dealing with planning appeals, national infrastructure planning applications, examinations of local plans and other specialist casework in England and Wales. OpenFaaS eased the communication between the new planning appeals website and the monolithic back-office application and allowed easy retries in the event of network failure.
