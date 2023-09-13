@@ -9,10 +9,14 @@ import (
 	"time"
 
 	"github.com/docker/distribution/uuid"
+	"github.com/openfaas/faas/gateway/version"
 )
 
 // MakeCallIDMiddleware middleware tags a request with a uid
 func MakeCallIDMiddleware(next http.HandlerFunc) http.HandlerFunc {
+
+	version := version.Version
+
 	return func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		if len(r.Header.Get("X-Call-Id")) == 0 {
@@ -23,6 +27,8 @@ func MakeCallIDMiddleware(next http.HandlerFunc) http.HandlerFunc {
 
 		r.Header.Add("X-Start-Time", fmt.Sprintf("%d", start.UTC().UnixNano()))
 		w.Header().Add("X-Start-Time", fmt.Sprintf("%d", start.UTC().UnixNano()))
+
+		w.Header().Add("X-Served-By", fmt.Sprintf("openfaas-community/%s", version))
 
 		next(w, r)
 	}
