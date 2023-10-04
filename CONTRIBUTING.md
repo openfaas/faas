@@ -1,12 +1,14 @@
-# Contributing
+# Contributing guidelines
 
-## Guidelines
+These are the guidelines for contributing to OpenFaaS Community Edition (CE) and faasd components.
 
-Guidelines for contributing.
+OpenFaaS Standard and OpenFaaS For Enterprises are commercial software, and maintained solely by employees of OpenFaaS Ltd.
 
-### First impressions - introducing yourself and your use-case
+Customers can provide feedback via the [openfaas/customers](https://github.com/openfaas/customers) repository
 
-One of the best ways to participate within a new open source communities is to introduce yourself and your use-case. This builds goodwill, but also means the community can start to understand your needs and how best to help you.
+## First impressions - introducing yourself and your use-case
+
+One of the best ways to participate within a new open source community is to introduce yourself and your use-case. This builds goodwill, but also means the community can start to understand your needs and how best to help you.
 
 Given that the community is made up of volunteers, making a good first impression is important to getting their ear and attention. 
 
@@ -31,7 +33,7 @@ The primary ways to engage with the community are via GitHub Issues and [Enterpr
 
 See also: [The no-excuses guide to introducing yourself to a new open source project](https://opensource.com/education/13/7/introduce-yourself-open-source-project)
 
-### How can I get involved?
+## How can I get involved?
 
 There are a number of areas where contributions can be accepted:
 
@@ -49,17 +51,19 @@ There are a number of areas where contributions can be accepted:
 
 This is just a short list of ideas, if you have other ideas for contributing please make a suggestion.
 
-### I want to contribute on GitHub
+If you'd like help getting involved, [join our weekly community call on Zoom](https://docs.openfaas.com/community).
 
-#### I've found a security issue
+## I want to contribute on GitHub
 
-Please follow [responsible disclosure practices](https://en.wikipedia.org/wiki/Responsible_disclosure) and send an email to support@openfaas.com. Bear in mind that instructions on how to reproduce the issue are key to proving an issue exists, and getting it resolved. Suggested solutions are also weclome.
+### I've found a security issue
 
-#### I've found a typo
+Please follow [responsible disclosure practices](https://en.wikipedia.org/wiki/Responsible_disclosure) and send an email to support@openfaas.com. Bear in mind that instructions on how to reproduce the issue are key to proving an issue exists, and getting it resolved.
+
+### I've found a typo
 
 * A Pull Request is not necessary. Raise an [Issue](https://github.com/openfaas/faas/issues) and we'll fix it as soon as we can. 
 
-#### I have a (great) idea
+### I have a (great) idea
 
 The OpenFaaS maintainers would like to make OpenFaaS the best it can be and welcome new contributions that align with the project's goals. Our time is limited so we'd like to make sure we agree on the proposed work before you spend time doing it. Saying "no" is hard which is why we'd rather say "yes" ahead of time. You need to raise a proposal.
 
@@ -84,7 +88,7 @@ If you are proposing a new tool or service please do due diligence. Does this to
 
 Every effort will be made to work with contributors who do not follow the process. Your PR may be closed or marked as `invalid` if it is left inactive, or the proposal cannot move into a `design/approved` status.
 
-#### Paperwork for Pull Requests
+### Paperwork for Pull Requests
 
 Please read this whole guide and make sure you agree to the Developer Certificate of Origin (DCO) agreement (included below):
 
@@ -95,7 +99,7 @@ Please read this whole guide and make sure you agree to the Developer Certificat
 * Always give instructions for testing
  * Provide us CLI commands and output or screenshots where you can
 
-##### Commit messages
+#### Commit messages
 
 The first line of the commit message is the *subject*, this should be followed by a blank line and then a message describing the intent and purpose of the commit. These guidelines are based upon a [post by Chris Beams](https://chris.beams.io/posts/git-commit/).
 
@@ -178,47 +182,50 @@ defer goleak.VerifyNoLeaks(t)
 
 at the very beginning of the test, and it will fail the test if it detects goroutines that were opened but never cleaned up at the end of the test.
 
-#### I have a question, a suggestion or need help
+#### I need to add a dependency
+
+All projects use [Go modules](https://github.com/golang/go/wiki/Modules) and vendoring. The concept of `vendoring` is still broadly used in projects written in Go. This means that a copy of the source-code of dependencies is stored within each repository in the `vendor` folder. It allows for a repeatable build and isolates change.
+
+Components must be licensed with an MIT, BSD, or Apache 2.0 license. We may ask you to write your own code when dependencies are trivial, or unmaintained by their authors.
+
+### I have a question, a suggestion or need help
 
 If you have a deeply technical request or need help debugging your application then you should prepare a simple, public GitHub repository with the minimum amount of code required to reproduce the issue. 
 
-If you feel there is an issue with OpenFaaS or were unable to get the help you needed from the GitHub, [then send us an email](https://openfaas.com/support/)
-
 #### Setting expectations, support and SLAs
 
-* What kind of support can I expect for free?
+* What kind of support can I expect?
 
-    OpenFaaS is licensed in a way that enables you to use the source code in or with your project or product.
+    OpenFaaS Standard customers have self-service support, and can directly contact the OpenFaaS Ltd team via the [openfaas/customers](https://github.com/openfaas/customers) repository using Discussions.
 
-    If you are using one of the Open Source projects within the openfaas or openfaas-incubator repository, then help may be offered on a limited, good-will basis by volunteers, but if you are a commercial user, you will need to purchase support for timely help.
-    
-    Please be respectful of any time given to you and your needs. The person you are requesting help from may not reside in your timezone and contacting them via direct message is inappropriate.
+    Support is only offered to free users to fix bugs and issues in the codebase, where the full Issue Template is filled out with sufficient instructions to reproduce the issue. We will not debug your application, or comment on your architecture on GitHub.
 
-    Enterprise support is the best place to ask questions, suggest features, and to get help. The GitHub issue tracker can be used for suspected issues with the codebase or deployment artifacts. The whole template must be filled out in detail.
+* Can we talk to you in person?
+
+    There is a weekly Zoom call for any free user or customer to attend, topics are taken at the beginning of the call, and we will strive to give everyone time to talk.
 
 * Doesn't Open Source mean that everything is free?
 
-    The OpenFaaS projects are licensed as MIT which means that you are free to use, modify and distribute the software within the terms of the license.
+    The OpenFaaS Community Edition (CE) projects are licensed as MIT which means that you are free to use, modify and distribute the software within the terms of the license.
     
-    Contributions, suggestions and feedback is welcomed in the appropriate channels as outlined in this guide. The MIT license does not cover support for PRs, Issues, Technical
-    Support questions, feature requests and technical support/professional services which you may require; the preceding are not free and have a cost to those providing the services. Where possible, this time may be volunteered for free, but it is not unlimited.
+    Contributions, suggestions and feedback is welcomed in the appropriate channels as outlined in this guide. The MIT license does not cover support for PRs, Issues, Technical Support questions, feature requests and technical support/professional services which you may require; the preceding are not free and have a cost to those providing the services.
 
 * What is the SLA for my Issue?
 
     Issues are examined, triaged and answered on a best effort basis by volunteers and community contributors. This means that you may receive an initial response within any time period such as: 1 minute, 1 hour, 1 day, or 1 week. There is no implicit meaning to the time between you raising an issue and it being answered or resolved.
 
-    If you see an issue which does not have a response or does not have a resolution, it does not mean that it is not important, or that it is being ignored. It simply means it has not been worked on by a volunteer yet.
+    If you see an issue which does not have a response or does not have a resolution, it does not mean that it is not important, or that it is being ignored. It simply means it has not been worked on yet, or may have been missed.
 
     Please take responsibility for following up on your Issues if you feel further action is required.
 
-    If you are a business using OpenFaaS and need timely and attentive responses, then you should purchase Enterprise Support from OpenFaaS Ltd.
+    If you're an OpenFaaS customer, then you will have a direct line of communication with the OpenFaaS Ltd team, feel free to reach out for an update.
 
 * What is the SLA for my Pull Request?
 
     In a similar way to Issues, Pull Requests are triaged, reviewed, and considered by a team of volunteers - the Core Team,  Members Team and the Project Lead. There are dozens of components that make up the OpenFaaS project and a limited amount of people. Sometimes PRs may become blocked or require further action.
     
     Please take responsibility for following up on your Pull Requests if you feel further action is required.
-    
+
 * Why may your PR be delayed?
 
     * The contributing guide was not followed in some way
@@ -229,25 +236,19 @@ If you feel there is an issue with OpenFaaS or were unable to get the help you n
 
     * Changes have been requested
 
-    More information, a use-case, or context may be required for the change to be accepted.
+    * The PR is low priority or low impact
+
+    In addition, more information, a use-case, or context may be required for the change to be accepted.
 
 * What if I am a GitHub Sponsor?
 
-    If you [sponsor OpenFaaS on GitHub](https://github.com/sponsors/openfaas), then you will show up as a Sponsor on your issues and PRs which is one way to show your support for the community and project. Whilst the entry-level sponsorship is only 25 USD / mo, you will benefit from access to regular updates on project development via the [Treasure Trove portal](https://faasd.exit.openfaas.pro/function/trove/). Your company can also take up a GitHub Sponsorship using their GitHub organisation's existing billing relationship.
+    If you [sponsor OpenFaaS on GitHub](https://github.com/sponsors/openfaas), then you will show up as a Sponsor on your issues and PRs which is one way to show your support for the community and project. Thank you for your contribution.
+ 
+    Most sponsors are individuals, not corporations. But if your organisation can also take up a GitHub Sponsorship using their GitHub organisation's existing billing relationship.
 
-* What if I need more than that?
+* What if I need more?
 
-    If you're a company using any of these projects, you can get the following through an [Enterprise Support agreement with OpenFaaS Ltd](https://openfaas.com/support/) so that the time and resources required to support your business are paid for.
-
-    A support agreement can be tailored to your needs, you may benefit from support, if you need any of the following:
-
-    * security issues patched in a timely manner for all 40 +/- open source components
-    * priority responses to issues/PRs
-    * immediate help and access to experts
-
-#### I need to add a dependency
-
-All projects use [Go modules](https://github.com/golang/go/wiki/Modules) and vendoring. The concept of `vendoring` is still broadly used in projects written in Go. This means that a copy of the source-code of dependencies is stored within each repository in the `vendor` folder. It allows for a repeatable build and isolates change.
+    [Check out the options for self-service and enterprise support](https://openfaas.com/pricing/).
 
 ### How are releases made?
 
@@ -302,8 +303,10 @@ Core Team attend all project meetings and calls. Allowances will be made for tim
 
 The Core Team includes:
 
-- Alex Ellis (@alexellis) - Lead
-- Lucas Roesler (@LucasRoesler) - SME for logs, provider model and secrets
+- Alex Ellis (@alexellis) - Founder, OpenFaaS Ltd
+- Han Verstraete (@welteki) - Junior Software Developer, OpenFaaS Ltd
+- Lucas Roesler (@LucasRoesler) - SME for logs, provider model and secrets. Lead Developer @ Contiamo
+- Nitishkumar Singh (@nitishkumar71) - Senior Engineer, CTO.ai
 
 #### Members Team
 
@@ -389,7 +392,9 @@ See also: [OpenFaaS Pro](https://docs.openfaas.com/openfaas-pro/introduction/)
 
 ## License
 
-This project is licensed under the MIT License.
+OpenFaaS Community Edition (CE) is licensed under the MIT License.
+
+OpenFaaS Standard and OpenFaaS for Enterprises are proprietary and binaries are licensed under the commercial [OpenFaaS Pro EULA](https://github.com/openfaas/faas/blob/master/pro/EULA.md).
 
 ### Copyright notice
 
@@ -398,7 +403,7 @@ It is important to state that you retain copyright for your contributions, but a
 Please add a Copyright notice to new files you add where this is not already present.
 
 ```
-// Copyright (c) OpenFaaS Author(s) 2018. All rights reserved.
+// Copyright (c) OpenFaaS Author(s) 2023. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 ```
 
