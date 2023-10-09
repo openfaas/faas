@@ -46,14 +46,6 @@ Tell us more:
 
 * [Black.ai](https://black.ai) - video encoding, transcoding - object detection for CCTV using AI.
 
-* [Cloud Initiatives](https://cloudinitiatives.com) - Used for customer installations for custom functionality, and for main product providing educational course metrics.
-
-* [Corva.ai](https://corva.ai) - "Corva is an information-sharing, collaboration-driving, and productivity-powering solution for your Drilling, Completions, Geoscience, and Sustainability teams."
-
-* [3fs](https://3fs.si) - 3fs is using OpenFaaS for automating repetitive development tasks like automatic rebasing, vendoring of dependencies on merge requests and many other things that make our developers lives easier
-
-* [Baidu](https://baidu.com) - A team within Baidu provides ML models to customers which are hosted on OpenFaaS - He Sun.
-
 * [Breu](https://breu.io) - Breu is using OpenFaaS to build an end user monitoring solution for hybrid cloud.
 
 * [BT](https://www.bt.com) - BT are using OpenFaaS to enable collaboration between data-scientists and developers. The teams are going from 3-years to build and deliver a PoC, to 3 months. See: [KubeCon video](https://www.youtube.com/watch?v=y77HlN2Fa-w)
@@ -66,9 +58,13 @@ Tell us more:
 
 * [Civo](https://www.civo.com) - Civo Cloud provide a 1-click Kubernetes marketplace application for OpenFaaS
 
+* [Cloud Initiatives](https://cloudinitiatives.com) - Used for customer installations for custom functionality, and for main product providing educational course metrics.
+
 * [Cognite](https://www.cognite.com) - Cognite targets heavy asset industries such as oil and gas, shipping and energy sector. They provide data integration tools that help you extract, import, and transform data from siloed source systems, and OpenFaaS is used to provide a cloud function service for heavy tasks.
 
 * [Contiamo](https://www.contiamo.com) - data-science platform hosting jupyter notebooks and functions for multiple tenants.
+
+* [Corva.ai](https://corva.ai) - "Corva is an information-sharing, collaboration-driving, and productivity-powering solution for your Drilling, Completions, Geoscience, and Sustainability teams."
 
 * [DB2 Limited](https://db2.io) - mobile and web development company in Ukraine. Our internal projects using OpenFaaS functions to run customers code in Kubernetes cluster.
 
@@ -88,9 +84,9 @@ Tell us more:
 
 * [GalaxyCard](https://www.galaxycard.in/) - "GalaxyCard is a happy user of OpenFaaS"
 
-* [GMO Internet](https://www.gmo.jp/en/)
-
 * [GH Electronic GmbH](https://gselectronic.com/) - "We've been using OpenFaaS in production for over 5 years and have 30 C# functions which are used in our manufacturing process."
+
+* [GMO Internet](https://www.gmo.jp/en/)
 
 * [HelloSafe](https://hellosafe.ca/en/) - "HelloSafe is one of the leading website of financial products comparison in Canada. We're using OpenFaas on our production applications."
 
@@ -100,9 +96,9 @@ Tell us more:
 
 * [Iconscout](https://iconscout.com) - e-commerce site for stock photography and icons. OpenFaaS is used to resize images and to bundle assets for customers.
 
-* [Ingrooves](https://ingrooves.com) - Ingrooves is a global music distribution, tech & marketing company, and OpenFaaS is a key component in its finance system for report generation, event publishing, and data ingestion.
-
 * [Infotechpartners](www.infotechpartners.be)
+
+* [Ingrooves](https://ingrooves.com) - Ingrooves is a global music distribution, tech & marketing company, and OpenFaaS is a key component in its finance system for report generation, event publishing, and data ingestion.
 
 * [Intel.com](https://intel.com) - OpenFaaS is used within a commercial service and within the Open Source group for AI model serving.
 
@@ -116,9 +112,9 @@ Tell us more:
 
 * [Live Time Value (LTV) Co.](https://www.ltvco.com) - "Data is at the heart of what we do" - the data-science team at LTV use OpenFaaS to provide a scalable and cost-effective way to run their models in production.
 
-* [metaspan](https://metaspan.com) - "End-to-end blockchain solutions". metaspan ported all api endpoints from monolith express.js/sails.js to openfaas micro-functions.
-
 * [Mercedes Benz Tech Innovation](https://mercedes-benz.com) - "We are currently using OpenFaaS as a communicative API between the vehicle app and the backend. In the future we plan to offer a service in the company, which every app developer can host an API on the OpenFaaS platform at short notice"
+
+* [metaspan](https://metaspan.com) - "End-to-end blockchain solutions". metaspan ported all api endpoints from monolith express.js/sails.js to openfaas micro-functions.
 
 * [MoneyLion](https://www.moneylion.com/)
 
@@ -152,9 +148,11 @@ Tell us more:
 
 * [Pypestream](https://www.pypestream.com) - "We have just migrated 50 of our customers from Kubeless, which is now deprecated to OpenFaaS" - Antoine Hamon
 
+* [Rapid Circle](https://www.rapidcircle.com) is using OpenFaaS within a Azure Kubernetes cluster to host a large amount of micro-services aiming at automating core activities of their Microsoft 365 Cloud Managed Services offering. Robustness, speed, scalable and simplicity have been major reasons to favor OpenFaaS over Azure Functions.
+
 * [Ratehub](https://www.ratehub.ca) - Ratehub is Canada's leading personal finance comparison site. We're breaking apart our monolithic PHP and Java codebases into Node, PHP and Java OpenFaaS functions; there's not much that we don't plan on moving to FaaS!
 
-* [Rapid Circle](https://www.rapidcircle.com) is using OpenFaaS within a Azure Kubernetes cluster to host a large amount of micro-services aiming at automating core activities of their Microsoft 365 Cloud Managed Services offering. Robustness, speed, scalable and simplicity have been major reasons to favor OpenFaaS over Azure Functions.
+* [skyslope.com](https://skyslope.com) - "We process millions of documents per day and moved from AWS Lambda to Kubernetes. We estimate that OpenFaaS has saved us 60,000 USD each year over the past three years that we've been running it in our business" - Derrick Martinez
 
 * [smashHit](https://smashhit.eu) - smashHit is a project funded by the European Union's Horizon 2020 research and innovation programme under grant agreement No. 871477. The objective of smashHit is to assure trusted and secure sharing of data streams from both personal and industrial platforms, needed to build sectorial and cross-sectorial services, by establishing a Framework for processing of data owner consent and legal rules (GDPR) and effective contracting, as well as joint security and privacy-preserving mechanisms. We are utilising OpenFaaS to support the need for scalable processing through the use of functions.
 
@@ -166,11 +164,9 @@ Tell us more:
 
 * [Surge](https://www.workwithsurge.com) - Lending Platform and Salesforce integrations
 
-* [skyslope.com](https://skyslope.com) - "We process millions of documents per day and moved from AWS Lambda to Kubernetes. We estimate that OpenFaaS has saved us 60,000 USD each year over the past three years that we've been running it in our business" - Derrick Martinez
+* [TeamViewer.com] - "TeamViewer users OpenFaaS across several clusters"
 
 * [T-Mobile](https://www.t-mobile.com/) - T-Mobile is a global mobile network that provides mobile data, voice and text services to consumers and businesses.
-
-* [TeamViewer.com] - "TeamViewer users OpenFaaS across several clusters"
 
 * [Transmute Industries](https://www.transmute.industries/) - "At Transmute we use OpenFaaS to develop identity and access integrations leveraging decentralized identities that integrate with legacy IAM systems. OpenFaaS helps Transmute and our customers avoid vendor lock in, encourages modularity, and helps us rapidly develop and release integrations for customers."
 
@@ -193,12 +189,27 @@ Tell us more:
 
 * [Waylay](https://www.waylay.io) - We use OpenFaaS to deploy small snippets of code that can be combined in a low-code manner by our clients to do data orchestration and automation. Users of the platform also are able to deploy their own plugins (written in multiple languages), which also get deployed on OpenFaas.
 
-* [WorldQuant](https://worldquant.com) - Using OpenFaaS as part of WorldQuant's solutions.
-
 * [Wireline.io](https://wireline.io) - portable functions that can run on any hardware, indexed through blockchain.
+
+* [WorldQuant](https://worldquant.com) - Using OpenFaaS as part of WorldQuant's solutions.
 
 * [Yokogawa Electric](https://en.wikipedia.org/wiki/Yokogawa_Electric)
 
 * [Ytel](https://www.ytel.com) - Ytel are a Google Cloud customer and deployed OpenFaaS vs. the vendor alternative due to its wide range of templates, Dockerfile support and easier access to services within the VPC. The Dockerfile template allowed for easy migration of existing code. The latency of transactions for customers during purchase process was reduced by offloading synchronous code to NATS which is built into OpenFaaS. OpenFaaS also allowed "hot path" code to be refactored from large services into multiple functions, to take advantage of horizontal scaling.
 
 See the top of the file for how to participate.
+
+## Appendix
+
+### Sorting sections
+
+Adopeters list should be sorted after it's been updated, here's how you can do that with bash.
+
+```bash
+cat | sort --ignore-case
+# Copy / paste
+
+# Control + D
+```
+
+Please note, for few vendors multiple use case has been listed under same vendor. Hence, the output need to be compared with content in document before updating the document. 
