@@ -2,13 +2,13 @@ export DOCKER_CLI_EXPERIMENTAL=enabled
 
 PLATFORM := "linux/amd64,linux/arm/v7,linux/arm64"
 
-TAG?=latest
-SERVER?=docker.io
-OWNER?=alexellis2
+TAG?=dev
+SERVER?=ttl.sh
+OWNER?=openfaas
 NAME=gateway
 
-.PHONY: local-docker
-build-local:
+.PHONY: buildx-local
+buildx-local:
 	@echo $(SERVER)/$(OWNER)/$(NAME):$(TAG) \
 	&& docker buildx create --use --name=multiarch --node multiarch \
 	&& docker buildx build \
@@ -17,8 +17,8 @@ build-local:
 		--output "type=docker,push=false" \
 		--tag $(SERVER)/$(OWNER)/$(NAME):$(TAG) .
 
-.PHONY: push-docker
-push-docker:
+.PHONY: buildx-push
+buildx-push:
 	@echo $(SERVER)/$(OWNER)/$(NAME):$(TAG) \
 	&& docker buildx create --use --name=multiarch --node multiarch \
 	&& docker buildx build \

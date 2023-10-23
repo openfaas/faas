@@ -29,7 +29,7 @@ When using or transitioning to Go modules support:
 ```bash
 # Go client latest or explicit version
 go get github.com/nats-io/nats.go/@latest
-go get github.com/nats-io/nats.go/@v1.22.1
+go get github.com/nats-io/nats.go/@v1.31.0
 
 # For latest NATS Server, add /v2 at the end
 go get github.com/nats-io/nats-server/v2
@@ -90,84 +90,47 @@ nc.Drain()
 nc.Close()
 ```
 
-## JetStream Basic Usage
+## JetStream
+
+JetStream is the built-in NATS persistence system. `nats.go` provides a built-in
+API enabling both managing JetStream assets as well as publishing/consuming
+persistent messages.
+
+### Basic usage
 
 ```go
-import "github.com/nats-io/nats.go"
-
-// Connect to NATS
+// connect to nats server
 nc, _ := nats.Connect(nats.DefaultURL)
 
-// Create JetStream Context
-js, _ := nc.JetStream(nats.PublishAsyncMaxPending(256))
+// create jetstream context from nats connection
+js, _ := jetstream.New(nc)
 
-// Simple Stream Publisher
-js.Publish("ORDERS.scratch", []byte("hello"))
+ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+defer cancel()
 
-// Simple Async Stream Publisher
-for i := 0; i < 500; i++ {
-	js.PublishAsync("ORDERS.scratch", []byte("hello"))
-}
-select {
-case <-js.PublishAsyncComplete():
-case <-time.After(5 * time.Second):
-	fmt.Println("Did not resolve in time")
-}
+// get existing stream handle
+stream, _ := js.Stream(ctx, "foo")
 
-// Simple Async Ephemeral Consumer
-js.Subscribe("ORDERS.*", func(m *nats.Msg) {
-	fmt.Printf("Received a JetStream message: %s\n", string(m.Data))
+// retrieve consumer handle from a stream
+cons, _ := stream.Consumer(ctx, "cons")
+
+// consume messages from the consumer in callback
+cc, _ := cons.Consume(func(msg jetstream.Msg) {
+    fmt.Println("Received jetstream message: ", string(msg.Data()))
+    msg.Ack()
 })
-
-// Simple Sync Durable Consumer (optional SubOpts at the end)
-sub, err := js.SubscribeSync("ORDERS.*", nats.Durable("MONITOR"), nats.MaxDeliver(3))
-m, err := sub.NextMsg(timeout)
-
-// Simple Pull Consumer
-sub, err := js.PullSubscribe("ORDERS.*", "MONITOR")
-msgs, err := sub.Fetch(10)
-
-// Unsubscribe
-sub.Unsubscribe()
-
-// Drain
-sub.Drain()
+defer cc.Stop()
 ```
 
-## JetStream Basic Management
+To find more information on `nats.go` JetStream API, visit
+[`jetstream/README.md`](jetstream/README.md)
 
-```go
-import "github.com/nats-io/nats.go"
+> The current JetStream API replaces the [legacy JetStream API](legacy_jetstream.md)
 
-// Connect to NATS
-nc, _ := nats.Connect(nats.DefaultURL)
+## Service API
 
-// Create JetStream Context
-js, _ := nc.JetStream()
-
-// Create a Stream
-js.AddStream(&nats.StreamConfig{
-	Name:     "ORDERS",
-	Subjects: []string{"ORDERS.*"},
-})
-
-// Update a Stream
-js.UpdateStream(&nats.StreamConfig{
-	Name:     "ORDERS",
-	MaxBytes: 8,
-})
-
-// Create a Consumer
-js.AddConsumer("ORDERS", &nats.ConsumerConfig{
-	Durable: "MONITOR",
-})
-
-// Delete Consumer
-js.DeleteConsumer("ORDERS", "MONITOR")
-
-// Delete Stream
-js.DeleteStream("ORDERS")
-```
+The service API (`micro`) allows you to [easily build NATS services](micro/README.md) The
+services API is currently in beta release.
 
 ## Encoded Connections
 

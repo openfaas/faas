@@ -1,11 +1,12 @@
 language: go
 go:
-- 1.18.x
-- 1.17.x
+- "1.21.x"
+- "1.20.x"
 go_import_path: github.com/nats-io/nats.go
 install:
 - go get -t ./...
-- if [[ "$TRAVIS_GO_VERSION" =~ 1.18 ]]; then
+- curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
+- if [[ "$TRAVIS_GO_VERSION" =~ 1.21 ]]; then
     go install github.com/mattn/goveralls@latest;
     go install github.com/wadey/gocovmerge@latest;
     go install honnef.co/go/tools/cmd/staticcheck@latest;
@@ -14,12 +15,22 @@ install:
 before_script:
 - $(exit $(go fmt ./... | wc -l))
 - go vet -modfile=go_test.mod ./...
-- if [[ "$TRAVIS_GO_VERSION" =~ 1.18 ]]; then
+- if [[ "$TRAVIS_GO_VERSION" =~ 1.21 ]]; then
     find . -type f -name "*.go" | xargs misspell -error -locale US;
     GOFLAGS="-mod=mod -modfile=go_test.mod" staticcheck ./...;
   fi
+- golangci-lint run ./jetstream/...
 script:
 - go test -modfile=go_test.mod -v -run=TestNoRace -p=1 ./... --failfast -vet=off
-- if [[ "$TRAVIS_GO_VERSION" =~ 1.18 ]]; then ./scripts/cov.sh TRAVIS; else go test -modfile=go_test.mod -race -v -p=1 ./... --failfast -vet=off; fi
+- if [[ "$TRAVIS_GO_VERSION" =~ 1.21 ]]; then ./scripts/cov.sh TRAVIS; else go test -modfile=go_test.mod -race -v -p=1 ./... --failfast -vet=off -tags=internal_testing; fi
 after_success:
-- if [[ "$TRAVIS_GO_VERSION" =~ 1.18 ]]; then $HOME/gopath/bin/goveralls -coverprofile=acc.out -service travis-ci; fi
+- if [[ "$TRAVIS_GO_VERSION" =~ 1.21 ]]; then $HOME/gopath/bin/goveralls -coverprofile=acc.out -service travis-ci; fi
+
+jobs:
+  include:
+  - name: "Go: 1.21.x (nats-server@main)"
+    go: "1.21.x"
+    before_script:
+    - go get -modfile go_test.mod github.com/nats-io/nats-server/v2@main
+  allow_failures:
+  - name: "Go: 1.21.x (nats-server@main)"

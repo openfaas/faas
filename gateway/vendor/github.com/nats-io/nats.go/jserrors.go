@@ -33,6 +33,26 @@ var (
 	// ErrStreamNameAlreadyInUse is returned when a stream with given name already exists and has a different configuration.
 	ErrStreamNameAlreadyInUse JetStreamError = &jsError{apiErr: &APIError{ErrorCode: JSErrCodeStreamNameInUse, Description: "stream name already in use", Code: 400}}
 
+	// ErrStreamSubjectTransformNotSupported is returned when the connected nats-server version does not support setting
+	// the stream subject transform. If this error is returned when executing AddStream(), the stream with invalid
+	// configuration was already created in the server.
+	ErrStreamSubjectTransformNotSupported JetStreamError = &jsError{message: "stream subject transformation not supported by nats-server"}
+
+	// ErrStreamSourceSubjectTransformNotSupported is returned when the connected nats-server version does not support setting
+	// the stream source subject transform. If this error is returned when executing AddStream(), the stream with invalid
+	// configuration was already created in the server.
+	ErrStreamSourceSubjectTransformNotSupported JetStreamError = &jsError{message: "stream subject transformation not supported by nats-server"}
+
+	// ErrStreamSourceNotSupported is returned when the connected nats-server version does not support setting
+	// the stream sources. If this error is returned when executing AddStream(), the stream with invalid
+	// configuration was already created in the server.
+	ErrStreamSourceNotSupported JetStreamError = &jsError{message: "stream sourcing is not supported by nats-server"}
+
+	// ErrStreamSourceMultipleSubjectTransformsNotSupported is returned when the connected nats-server version does not support setting
+	// the stream sources. If this error is returned when executing AddStream(), the stream with invalid
+	// configuration was already created in the server.
+	ErrStreamSourceMultipleSubjectTransformsNotSupported JetStreamError = &jsError{message: "stream sourceing with multiple subject transforms not supported by nats-server"}
+
 	// ErrConsumerNotFound is an error returned when consumer with given name does not exist.
 	ErrConsumerNotFound JetStreamError = &jsError{apiErr: &APIError{ErrorCode: JSErrCodeConsumerNotFound, Description: "consumer not found", Code: 404}}
 
@@ -41,6 +61,15 @@ var (
 
 	// ErrBadRequest is returned when invalid request is sent to JetStream API.
 	ErrBadRequest JetStreamError = &jsError{apiErr: &APIError{ErrorCode: JSErrCodeBadRequest, Description: "bad request", Code: 400}}
+
+	// ErrDuplicateFilterSubjects is returned when both FilterSubject and FilterSubjects are specified when creating consumer.
+	ErrDuplicateFilterSubjects JetStreamError = &jsError{apiErr: &APIError{ErrorCode: JSErrCodeDuplicateFilterSubjects, Description: "consumer cannot have both FilterSubject and FilterSubjects specified", Code: 500}}
+
+	// ErrDuplicateFilterSubjects is returned when filter subjects overlap when creating consumer.
+	ErrOverlappingFilterSubjects JetStreamError = &jsError{apiErr: &APIError{ErrorCode: JSErrCodeOverlappingFilterSubjects, Description: "consumer subject filters cannot overlap", Code: 500}}
+
+	// ErrEmptyFilter is returned when a filter in FilterSubjects is empty.
+	ErrEmptyFilter JetStreamError = &jsError{apiErr: &APIError{ErrorCode: JSErrCodeConsumerEmptyFilter, Description: "consumer filter in FilterSubjects cannot be empty", Code: 500}}
 
 	// Client errors
 
@@ -62,6 +91,11 @@ var (
 	// ErrConsumerNameRequired is returned when the provided consumer durable name is empty.
 	ErrConsumerNameRequired JetStreamError = &jsError{message: "consumer name is required"}
 
+	// ErrConsumerMultipleFilterSubjectsNotSupported is returned when the connected nats-server version does not support setting
+	// multiple filter subjects with filter_subjects field. If this error is returned when executing AddConsumer(), the consumer with invalid
+	// configuration was already created in the server.
+	ErrConsumerMultipleFilterSubjectsNotSupported JetStreamError = &jsError{message: "multiple consumer filter subjects not supported by nats-server"}
+
 	// ErrConsumerConfigRequired is returned when empty consumer consuguration is supplied to add/update consumer.
 	ErrConsumerConfigRequired JetStreamError = &jsError{message: "consumer configuration is required"}
 
@@ -80,10 +114,10 @@ var (
 	// ErrNotJSMessage is returned when attempting to get metadata from non JetStream message .
 	ErrNotJSMessage JetStreamError = &jsError{message: "not a jetstream message"}
 
-	// ErrInvalidStreamName is returned when the provided stream name is invalid (contains '.').
+	// ErrInvalidStreamName is returned when the provided stream name is invalid (contains '.' or ' ').
 	ErrInvalidStreamName JetStreamError = &jsError{message: "invalid stream name"}
 
-	// ErrInvalidConsumerName is returned when the provided consumer name is invalid (contains '.').
+	// ErrInvalidConsumerName is returned when the provided consumer name is invalid (contains '.' or ' ').
 	ErrInvalidConsumerName JetStreamError = &jsError{message: "invalid consumer name"}
 
 	// ErrNoMatchingStream is returned when stream lookup by subject is unsuccessful.
@@ -104,6 +138,9 @@ var (
 	// ErrConsumerLeadershipChanged is returned when pending requests are no longer valid after leadership has changed
 	ErrConsumerLeadershipChanged JetStreamError = &jsError{message: "Leadership Changed"}
 
+	// ErrNoHeartbeat is returned when no heartbeat is received from server when sending requests with pull consumer.
+	ErrNoHeartbeat JetStreamError = &jsError{message: "no heartbeat received"}
+
 	// DEPRECATED: ErrInvalidDurableName is no longer returned and will be removed in future releases.
 	// Use ErrInvalidConsumerName instead.
 	ErrInvalidDurableName = errors.New("nats: invalid durable name")
@@ -115,17 +152,22 @@ type ErrorCode uint16
 const (
 	JSErrCodeJetStreamNotEnabledForAccount ErrorCode = 10039
 	JSErrCodeJetStreamNotEnabled           ErrorCode = 10076
+	JSErrCodeInsufficientResourcesErr      ErrorCode = 10023
 
 	JSErrCodeStreamNotFound  ErrorCode = 10059
 	JSErrCodeStreamNameInUse ErrorCode = 10058
 
-	JSErrCodeConsumerNotFound      ErrorCode = 10014
-	JSErrCodeConsumerNameExists    ErrorCode = 10013
-	JSErrCodeConsumerAlreadyExists ErrorCode = 10105
+	JSErrCodeConsumerNotFound          ErrorCode = 10014
+	JSErrCodeConsumerNameExists        ErrorCode = 10013
+	JSErrCodeConsumerAlreadyExists     ErrorCode = 10105
+	JSErrCodeDuplicateFilterSubjects   ErrorCode = 10136
+	JSErrCodeOverlappingFilterSubjects ErrorCode = 10138
+	JSErrCodeConsumerEmptyFilter       ErrorCode = 10139
 
 	JSErrCodeMessageNotFound ErrorCode = 10037
 
-	JSErrCodeBadRequest ErrorCode = 10003
+	JSErrCodeBadRequest   ErrorCode = 10003
+	JSStreamInvalidConfig ErrorCode = 10052
 
 	JSErrCodeStreamWrongLastSequence ErrorCode = 10071
 )

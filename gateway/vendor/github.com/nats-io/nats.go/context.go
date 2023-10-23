@@ -136,9 +136,8 @@ func (s *Subscription) nextMsgWithContext(ctx context.Context, pullSubInternal, 
 		}
 		if err := s.processNextMsgDelivered(msg); err != nil {
 			return nil, err
-		} else {
-			return msg, nil
 		}
+		return msg, nil
 	default:
 		// If internal and we don't want to wait, signal that there is no
 		// message in the internal queue.
@@ -218,7 +217,7 @@ func (nc *Conn) FlushWithContext(ctx context.Context) error {
 // RequestWithContext will create an Inbox and perform a Request
 // using the provided cancellation context with the Inbox reply
 // for the data v. A response will be decoded into the vPtr last parameter.
-func (c *EncodedConn) RequestWithContext(ctx context.Context, subject string, v interface{}, vPtr interface{}) error {
+func (c *EncodedConn) RequestWithContext(ctx context.Context, subject string, v any, vPtr any) error {
 	if ctx == nil {
 		return ErrInvalidContext
 	}

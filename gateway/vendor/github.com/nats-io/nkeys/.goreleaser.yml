@@ -6,23 +6,45 @@ release:
   name_template: '{{.Tag}}'
   draft: true
 builds:
-  - main: ./nk/main.go
+  - id: nk
+    main: ./nk/main.go
     ldflags: "-X main.Version={{.Tag}}_{{.Commit}}"
     binary: nk
     goos:
-      - linux
       - darwin
+      - linux
+      - windows
+      - freebsd
     goarch:
       - amd64
-
+      - arm
+      - arm64
+      - 386
+      - mips64le
+      - s390x
+    goarm:
+      - 6
+      - 7
+    ignore:
+      - goos: darwin
+        goarch: 386
+      - goos: freebsd
+        goarch: arm
+      - goos: freebsd
+        goarch: arm64
+      - goos: freebsd
+        goarch: 386
 
 dist: build
 
-archive:
-  wrap_in_directory: true
-  name_template: '{{ .ProjectName }}-v{{ .Version }}-{{ .Os }}-{{ .Arch }}{{ if .Arm
+archives:
+  - name_template: '{{ .ProjectName }}-v{{ .Version }}-{{ .Os }}-{{ .Arch }}{{ if .Arm
     }}v{{ .Arm }}{{ end }}'
-  format: zip
+    wrap_in_directory: true
+    format: zip
+    files:
+      - README.md
+      - LICENSE
 
 checksum:
   name_template: '{{ .ProjectName }}-v{{ .Version }}-checksums.txt'
@@ -30,9 +52,12 @@ checksum:
 snapshot:
   name_template: 'dev'
 
-nfpm:
-  formats:
-    - deb
-  bindir: /usr/local/bin
-  description: NKeys utility cli program
-  vendor: nats-io
+nfpms:
+  - file_name_template: '{{ .ProjectName }}-v{{ .Version }}-{{ .Arch }}{{ if .Arm
+    }}v{{ .Arm }}{{ end }}'
+    maintainer: nats.io
+    description: NKeys utility cli program
+    vendor: nats-io
+    bindir: /usr/local/bin
+    formats:
+      - deb

@@ -28,7 +28,7 @@ type GobEncoder struct {
 // FIXME(dlc) - This could probably be more efficient.
 
 // Encode
-func (ge *GobEncoder) Encode(subject string, v interface{}) ([]byte, error) {
+func (ge *GobEncoder) Encode(subject string, v any) ([]byte, error) {
 	b := new(bytes.Buffer)
 	enc := gob.NewEncoder(b)
 	if err := enc.Encode(v); err != nil {
@@ -38,7 +38,7 @@ func (ge *GobEncoder) Encode(subject string, v interface{}) ([]byte, error) {
 }
 
 // Decode
-func (ge *GobEncoder) Decode(subject string, data []byte, vPtr interface{}) (err error) {
+func (ge *GobEncoder) Decode(subject string, data []byte, vPtr any) (err error) {
 	dec := gob.NewDecoder(bytes.NewBuffer(data))
 	err = dec.Decode(vPtr)
 	return

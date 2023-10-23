@@ -102,30 +102,35 @@ type JetStreamManager interface {
 // There are sensible defaults for most. If no subjects are
 // given the name will be used as the only subject.
 type StreamConfig struct {
-	Name                 string          `json:"name"`
-	Description          string          `json:"description,omitempty"`
-	Subjects             []string        `json:"subjects,omitempty"`
-	Retention            RetentionPolicy `json:"retention"`
-	MaxConsumers         int             `json:"max_consumers"`
-	MaxMsgs              int64           `json:"max_msgs"`
-	MaxBytes             int64           `json:"max_bytes"`
-	Discard              DiscardPolicy   `json:"discard"`
-	DiscardNewPerSubject bool            `json:"discard_new_per_subject,omitempty"`
-	MaxAge               time.Duration   `json:"max_age"`
-	MaxMsgsPerSubject    int64           `json:"max_msgs_per_subject"`
-	MaxMsgSize           int32           `json:"max_msg_size,omitempty"`
-	Storage              StorageType     `json:"storage"`
-	Replicas             int             `json:"num_replicas"`
-	NoAck                bool            `json:"no_ack,omitempty"`
-	Template             string          `json:"template_owner,omitempty"`
-	Duplicates           time.Duration   `json:"duplicate_window,omitempty"`
-	Placement            *Placement      `json:"placement,omitempty"`
-	Mirror               *StreamSource   `json:"mirror,omitempty"`
-	Sources              []*StreamSource `json:"sources,omitempty"`
-	Sealed               bool            `json:"sealed,omitempty"`
-	DenyDelete           bool            `json:"deny_delete,omitempty"`
-	DenyPurge            bool            `json:"deny_purge,omitempty"`
-	AllowRollup          bool            `json:"allow_rollup_hdrs,omitempty"`
+	Name                 string           `json:"name"`
+	Description          string           `json:"description,omitempty"`
+	Subjects             []string         `json:"subjects,omitempty"`
+	Retention            RetentionPolicy  `json:"retention"`
+	MaxConsumers         int              `json:"max_consumers"`
+	MaxMsgs              int64            `json:"max_msgs"`
+	MaxBytes             int64            `json:"max_bytes"`
+	Discard              DiscardPolicy    `json:"discard"`
+	DiscardNewPerSubject bool             `json:"discard_new_per_subject,omitempty"`
+	MaxAge               time.Duration    `json:"max_age"`
+	MaxMsgsPerSubject    int64            `json:"max_msgs_per_subject"`
+	MaxMsgSize           int32            `json:"max_msg_size,omitempty"`
+	Storage              StorageType      `json:"storage"`
+	Replicas             int              `json:"num_replicas"`
+	NoAck                bool             `json:"no_ack,omitempty"`
+	Template             string           `json:"template_owner,omitempty"`
+	Duplicates           time.Duration    `json:"duplicate_window,omitempty"`
+	Placement            *Placement       `json:"placement,omitempty"`
+	Mirror               *StreamSource    `json:"mirror,omitempty"`
+	Sources              []*StreamSource  `json:"sources,omitempty"`
+	Sealed               bool             `json:"sealed,omitempty"`
+	DenyDelete           bool             `json:"deny_delete,omitempty"`
+	DenyPurge            bool             `json:"deny_purge,omitempty"`
+	AllowRollup          bool             `json:"allow_rollup_hdrs,omitempty"`
+	Compression          StoreCompression `json:"compression"`
+	FirstSeq             uint64           `json:"first_seq,omitempty"`
+
+	// Allow applying a subject transform to incoming messages before doing anything else.
+	SubjectTransform *SubjectTransformConfig `json:"subject_transform,omitempty"`
 
 	// Allow republish of the message after being sequenced and stored.
 	RePublish *RePublish `json:"republish,omitempty"`
@@ -134,6 +139,20 @@ type StreamConfig struct {
 	AllowDirect bool `json:"allow_direct"`
 	// Allow higher performance and unified direct access for mirrors as well.
 	MirrorDirect bool `json:"mirror_direct"`
+
+	// Limits for consumers on this stream.
+	ConsumerLimits StreamConsumerLimits `json:"consumer_limits,omitempty"`
+
+	// Metadata is additional metadata for the Stream.
+	// Keys starting with `_nats` are reserved.
+	// NOTE: Metadata requires nats-server v2.10.0+
+	Metadata map[string]string `json:"metadata,omitempty"`
+}
+
+// SubjectTransformConfig is for applying a subject transform (to matching messages) before doing anything else when a new message is received.
+type SubjectTransformConfig struct {
+	Source      string `json:"src,omitempty"`
+	Destination string `json:"dest"`
 }
 
 // RePublish is for republishing messages once committed to a stream. The original
@@ -152,12 +171,13 @@ type Placement struct {
 
 // StreamSource dictates how streams can source from other streams.
 type StreamSource struct {
-	Name          string          `json:"name"`
-	OptStartSeq   uint64          `json:"opt_start_seq,omitempty"`
-	OptStartTime  *time.Time      `json:"opt_start_time,omitempty"`
-	FilterSubject string          `json:"filter_subject,omitempty"`
-	External      *ExternalStream `json:"external,omitempty"`
-	Domain        string          `json:"-"`
+	Name              string                   `json:"name"`
+	OptStartSeq       uint64                   `json:"opt_start_seq,omitempty"`
+	OptStartTime      *time.Time               `json:"opt_start_time,omitempty"`
+	FilterSubject     string                   `json:"filter_subject,omitempty"`
+	SubjectTransforms []SubjectTransformConfig `json:"subject_transforms,omitempty"`
+	External          *ExternalStream          `json:"external,omitempty"`
+	Domain            string                   `json:"-"`
 }
 
 // ExternalStream allows you to qualify access to a stream source in another
@@ -165,6 +185,13 @@ type StreamSource struct {
 type ExternalStream struct {
 	APIPrefix     string `json:"api"`
 	DeliverPrefix string `json:"deliver,omitempty"`
+}
+
+// StreamConsumerLimits are the limits for a consumer on a stream.
+// These can be overridden on a per consumer basis.
+type StreamConsumerLimits struct {
+	InactiveThreshold time.Duration `json:"inactive_threshold,omitempty"`
+	MaxAckPending     int           `json:"max_ack_pending,omitempty"`
 }
 
 // Helper for copying when we do not want to change user's version.
@@ -310,7 +337,7 @@ func (js *js) AddConsumer(stream string, cfg *ConsumerConfig, opts ...JSOpt) (*C
 		consumerName = cfg.Durable
 	}
 	if consumerName != _EMPTY_ {
-		consInfo, err := js.ConsumerInfo(stream, consumerName)
+		consInfo, err := js.ConsumerInfo(stream, consumerName, opts...)
 		if err != nil && !errors.Is(err, ErrConsumerNotFound) && !errors.Is(err, ErrStreamNotFound) {
 			return nil, err
 		}
@@ -319,6 +346,8 @@ func (js *js) AddConsumer(stream string, cfg *ConsumerConfig, opts ...JSOpt) (*C
 			sameConfig := checkConfig(&consInfo.Config, cfg)
 			if sameConfig != nil {
 				return nil, fmt.Errorf("%w: creating consumer %q on stream %q", ErrConsumerNameAlreadyInUse, consumerName, stream)
+			} else {
+				return consInfo, nil
 			}
 		}
 	}
@@ -359,19 +388,28 @@ func (js *js) upsertConsumer(stream, consumerName string, cfg *ConsumerConfig, o
 
 	var ccSubj string
 	if consumerName == _EMPTY_ {
-		// if consumer name is empty, use the legacy ephemeral endpoint
+		// if consumer name is empty (neither Durable nor Name is set), use the legacy ephemeral endpoint
 		ccSubj = fmt.Sprintf(apiLegacyConsumerCreateT, stream)
 	} else if err := checkConsumerName(consumerName); err != nil {
 		return nil, err
-	} else if !js.nc.serverMinVersion(2, 9, 0) || (cfg.Durable != "" && js.opts.featureFlags.useDurableConsumerCreate) {
-		// if server version is lower than 2.9.0 or user set the useDurableConsumerCreate flag, use the legacy DURABLE.CREATE endpoint
-		ccSubj = fmt.Sprintf(apiDurableCreateT, stream, consumerName)
-	} else {
-		// if above server version 2.9.0, use the endpoints with consumer name
-		if cfg.FilterSubject == _EMPTY_ || cfg.FilterSubject == ">" {
+	} else if js.nc.serverMinVersion(2, 9, 0) {
+		if cfg.Durable != "" && js.opts.featureFlags.useDurableConsumerCreate {
+			// if user set the useDurableConsumerCreate flag, use the legacy DURABLE.CREATE endpoint
+			ccSubj = fmt.Sprintf(apiDurableCreateT, stream, consumerName)
+		} else if cfg.FilterSubject == _EMPTY_ || cfg.FilterSubject == ">" {
+			// if filter subject is empty or ">", use the endpoint without filter subject
 			ccSubj = fmt.Sprintf(apiConsumerCreateT, stream, consumerName)
 		} else {
+			// if filter subject is not empty, use the endpoint with filter subject
 			ccSubj = fmt.Sprintf(apiConsumerCreateWithFilterSubjectT, stream, consumerName, cfg.FilterSubject)
+		}
+	} else {
+		if cfg.Durable != "" {
+			// if Durable is set, use the DURABLE.CREATE endpoint
+			ccSubj = fmt.Sprintf(apiDurableCreateT, stream, consumerName)
+		} else {
+			// if Durable is not set, use the legacy ephemeral endpoint
+			ccSubj = fmt.Sprintf(apiLegacyConsumerCreateT, stream)
 		}
 	}
 
@@ -396,6 +434,11 @@ func (js *js) upsertConsumer(stream, consumerName string, cfg *ConsumerConfig, o
 		}
 		return nil, info.Error
 	}
+
+	// check whether multiple filter subjects (if used) are reflected in the returned ConsumerInfo
+	if len(cfg.FilterSubjects) != 0 && len(info.Config.FilterSubjects) == 0 {
+		return nil, ErrConsumerMultipleFilterSubjectsNotSupported
+	}
 	return info.ConsumerInfo, nil
 }
 
@@ -409,19 +452,20 @@ func checkStreamName(stream string) error {
 	if stream == _EMPTY_ {
 		return ErrStreamNameRequired
 	}
-	if strings.Contains(stream, ".") {
+	if strings.ContainsAny(stream, ". ") {
 		return ErrInvalidStreamName
 	}
 	return nil
 }
 
-// Check that the durable name exists and is valid, that is, that it does not contain any "."
+// Check that the consumer name is not empty and is valid (does not contain "." and " ").
+// Additional consumer name validation is done in nats-server.
 // Returns ErrConsumerNameRequired if consumer name is empty, ErrInvalidConsumerName is invalid, otherwise nil
 func checkConsumerName(consumer string) error {
 	if consumer == _EMPTY_ {
 		return ErrConsumerNameRequired
 	}
-	if strings.Contains(consumer, ".") {
+	if strings.ContainsAny(consumer, ". ") {
 		return ErrInvalidConsumerName
 	}
 	return nil
@@ -768,6 +812,21 @@ func (js *js) AddStream(cfg *StreamConfig, opts ...JSOpt) (*StreamInfo, error) {
 		return nil, resp.Error
 	}
 
+	// check that input subject transform (if used) is reflected in the returned ConsumerInfo
+	if cfg.SubjectTransform != nil && resp.StreamInfo.Config.SubjectTransform == nil {
+		return nil, ErrStreamSubjectTransformNotSupported
+	}
+	if len(cfg.Sources) != 0 {
+		if len(cfg.Sources) != len(resp.Config.Sources) {
+			return nil, ErrStreamSourceNotSupported
+		}
+		for i := range cfg.Sources {
+			if len(cfg.Sources[i].SubjectTransforms) != 0 && len(resp.Sources[i].SubjectTransforms) == 0 {
+				return nil, ErrStreamSourceMultipleSubjectTransformsNotSupported
+			}
+		}
+	}
+
 	return resp.StreamInfo, nil
 }
 
@@ -885,11 +944,13 @@ type StreamAlternate struct {
 
 // StreamSourceInfo shows information about an upstream stream source.
 type StreamSourceInfo struct {
-	Name     string          `json:"name"`
-	Lag      uint64          `json:"lag"`
-	Active   time.Duration   `json:"active"`
-	External *ExternalStream `json:"external"`
-	Error    *APIError       `json:"error"`
+	Name              string                   `json:"name"`
+	Lag               uint64                   `json:"lag"`
+	Active            time.Duration            `json:"active"`
+	External          *ExternalStream          `json:"external"`
+	Error             *APIError                `json:"error"`
+	FilterSubject     string                   `json:"filter_subject,omitempty"`
+	SubjectTransforms []SubjectTransformConfig `json:"subject_transforms,omitempty"`
 }
 
 // StreamState is information about the given stream.
@@ -961,6 +1022,23 @@ func (js *js) UpdateStream(cfg *StreamConfig, opts ...JSOpt) (*StreamInfo, error
 		}
 		return nil, resp.Error
 	}
+
+	// check that input subject transform (if used) is reflected in the returned StreamInfo
+	if cfg.SubjectTransform != nil && resp.StreamInfo.Config.SubjectTransform == nil {
+		return nil, ErrStreamSubjectTransformNotSupported
+	}
+
+	if len(cfg.Sources) != 0 {
+		if len(cfg.Sources) != len(resp.Config.Sources) {
+			return nil, ErrStreamSourceNotSupported
+		}
+		for i := range cfg.Sources {
+			if len(cfg.Sources[i].SubjectTransforms) != 0 && len(resp.Sources[i].SubjectTransforms) == 0 {
+				return nil, ErrStreamSourceMultipleSubjectTransformsNotSupported
+			}
+		}
+	}
+
 	return resp.StreamInfo, nil
 }
 
@@ -1107,7 +1185,7 @@ func (js *js) getMsg(name string, mreq *apiMsgGetRequest, opts ...JSOpt) (*RawSt
 
 	var hdr Header
 	if len(msg.Header) > 0 {
-		hdr, err = decodeHeadersMsg(msg.Header)
+		hdr, err = DecodeHeadersMsg(msg.Header)
 		if err != nil {
 			return nil, err
 		}
