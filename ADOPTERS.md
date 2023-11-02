@@ -164,7 +164,7 @@ Tell us more:
 
 * [Surge](https://www.workwithsurge.com) - Lending Platform and Salesforce integrations
 
-* [TeamViewer.com] - "TeamViewer users OpenFaaS across several clusters"
+* [TeamViewer.com](https://teamviewer.com) - "TeamViewer users OpenFaaS across several clusters"
 
 * [T-Mobile](https://www.t-mobile.com/) - T-Mobile is a global mobile network that provides mobile data, voice and text services to consumers and businesses.
 
