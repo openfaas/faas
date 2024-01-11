@@ -192,6 +192,8 @@ github.com/openfaas/faas-provider v0.19.1 h1:xH8lTWabfDZwzIvC0u1AO48ghD3BNw6Vo23
 github.com/openfaas/faas-provider v0.19.1/go.mod h1:Farrp+9Med8LeK3aoYpqplMP8f5ebTILbCSLg2LPLZk=
 github.com/openfaas/faas-provider v0.24.4 h1:Zzbkabgd0PoQmnRjy53NbMXjhLaIyoIiwP3qaLkm9rE=
 github.com/openfaas/faas-provider v0.24.4/go.mod h1:NsETIfEndZn4mn/w/XnBTcDTwKqULCziphLp7KgeRcA=
+github.com/openfaas/faas-provider v0.25.2 h1:sAyL96CzAk/YnuXQZiRJcHo7UrcYMaf7RDvKxsQb/2o=
+github.com/openfaas/faas-provider v0.25.2/go.mod h1:NsETIfEndZn4mn/w/XnBTcDTwKqULCziphLp7KgeRcA=
 github.com/openfaas/nats-queue-worker v0.0.0-20230303171817-9dfe6fa61387 h1:D4xbdy309Wdyhlm6PgJqUV/aR77VQQG8UTF+q0ay71c=
 github.com/openfaas/nats-queue-worker v0.0.0-20230303171817-9dfe6fa61387/go.mod h1:s86POyW6C8S4CALFRhO8ax5sR2uaQUJQ0HaQGvbTpTc=
 github.com/openfaas/nats-queue-worker v0.0.0-20231023101743-fa54e89c9db2 h1:I8U2kq2h7Wl6pkd4hjRK6P0/o3AcCNdfmNJS5gdgxKU=

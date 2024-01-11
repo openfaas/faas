@@ -1,6 +1,6 @@
 FROM --platform=${BUILDPLATFORM:-linux/amd64} ghcr.io/openfaas/license-check:0.4.1 as license-check
 
-FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.20 as build
+FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.21 as build
 
 ENV GO111MODULE=on
 ENV CGO_ENABLED=0
@@ -42,9 +42,9 @@ RUN CGO_ENABLED=${CGO_ENABLED} GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build --
     -X \"github.com/openfaas/faas/gateway/version.GitCommitSHA=${GIT_COMMIT}\" \
     -X \"github.com/openfaas/faas/gateway/version.Version=${VERSION}\" \
     -X github.com/openfaas/faas/gateway/types.Arch=${TARGETARCH}" \
-    -a -installsuffix cgo -o gateway .
+    -o gateway .
 
-FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.18.3 as ship
+FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.19.0 as ship
 
 LABEL org.label-schema.license="MIT" \
     org.label-schema.vcs-url="https://github.com/openfaas/faas" \
