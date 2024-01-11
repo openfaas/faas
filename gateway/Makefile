@@ -1,6 +1,6 @@
 export DOCKER_CLI_EXPERIMENTAL=enabled
 
-PLATFORM := "linux/amd64,linux/arm/v7,linux/arm64"
+PLATFORM?="linux/amd64,linux/arm/v7,linux/arm64"
 
 TAG?=dev
 SERVER?=ttl.sh
@@ -19,6 +19,16 @@ buildx-local:
 
 .PHONY: buildx-push
 buildx-push:
+	@echo $(SERVER)/$(OWNER)/$(NAME):$(TAG) \
+	&& docker buildx create --use --name=multiarch --node multiarch \
+	&& docker buildx build \
+		--progress=plain \
+		--platform linux/amd64 \
+		--output "type=image,push=true" \
+		--tag $(SERVER)/$(OWNER)/$(NAME):$(TAG) .
+
+.PHONY: buildx-push-all
+buildx-push-all:
 	@echo $(SERVER)/$(OWNER)/$(NAME):$(TAG) \
 	&& docker buildx create --use --name=multiarch --node multiarch \
 	&& docker buildx build \
