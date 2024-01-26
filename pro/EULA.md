@@ -2,7 +2,9 @@ End User License Agreement (EULA)
 
 1. Licensed software. OpenFaaS Pro is licensed as commercial software and must not be used without a valid license key from OpenFaaS Ltd.
 
-1.1 OpenFaaS Ltd. ("Supplier") is a registered company in England & Wales with number: 11076587, registered address: Peterborough UK.
+1.2 There are two variants of OpenFaaS Pro, OpenFaaS Standard and OpenFaaS for Enterprises. The term OpenFaaS Pro may be used to refer to either of these variants.
+
+1.3 OpenFaaS Ltd. ("Supplier") is a registered company in England & Wales with number: 11076587, registered address: Peterborough UK.
 
 2. Your agreement. By accessing, executing, or otherwise using the Licensed Software, you ("Customer") acknowledge that you have read this Agreement, understand it, and agree to be bound by its terms and conditions. If you are not willing to be bound by the terms of this Agreement, do not access or use the Licensed Software.
 
@@ -42,8 +44,19 @@ This Agreement is effective from the first date you install the Software. You ma
 
 6.2. Supplier may audit Your use of the Software (e.g., through use of software tools) to assess whether Your use of the Software is in accordance with this Agreement. You agree to cooperate with Supplier's audit and provide reasonable assistance and access to information. Any such audit shall not unreasonably interfere with Your normal business operations.
 
+6.3 In order to audit Your use of the Software, Telemetry Data may be collected and sent via the Internet to servers operated by OpenFaaS Ltd. Telemetry Data includes information about the host servers where the Software is installed such as: number of Nodes, CPUs, RAM, and version numbers. Information about the Software may also be collected such as the total number of Functions, Function invocations, and the number of installations of the Software.
+
+6.4 Your Telemetry Data will be kept private and confidential and will not be shared with any third parties. Telemetry Data will be used to provide You with better support, to improve the Software, and for accurate billing.
+
+6.5 Unless otherwise agreed in writing, sharing of Telemetry Data with OpenFaaS Ltd is a prerequisite for using the Software.
+
 7. Co-Marketing
-At the request of Supplier, Customer agrees to participate in other reasonable marketing activities that promote the benefits of the Services to other potential customers and to use of Customer's name and logo on the Supplier's web site and in Supplier's promotional materials. Customer agrees that Supplier may disclose Customer as a customer of the Products.
+
+7.1 At the request of Supplier, Customer agrees to participate in other reasonable marketing activities that promote the benefits of the Services to other potential customers, including providing testimonials, case studies, and references.
+
+7.2 Customer grants use of the Customer's name and logo on the Supplier's websites and in the Supplier's promotional materials.
+
+7.3 Customer agrees that Supplier may disclose Customer as a customer of the Products.
 
 8. Limitation of Liability.
 
