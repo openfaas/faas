@@ -40,3 +40,13 @@ General Provisions.
 
 7.2 Contact Information. For questions about these terms, contact OpenFaaS Ltd at: contact@openfaas.com.
 
+8. Installation and Usage Restrictions
+
+8.1 Single Installation Limit for Commercial Use: The License granted under this Agreement for the OpenFaaS Community Edition permits commercial use of the software for a period not exceeding 60 days. This period is intended to allow for evaluation of the software's capabilities in a commercial environment. Commercial use is strictly limited to one (1) installation per company for the 60-day evaluation period.
+
+8.2 Prohibition on Circumvention: To ensure fair use of the OpenFaaS Community Edition, the Customer agrees not to engage in any action with the intent to circumvent the 60-day evaluation period limitation. This includes, but is not limited to, uninstalling and reinstalling the software on the same or different systems within the company to restart the evaluation period.
+
+8.3 Enforcement and Verification: OpenFaaS Ltd reserves the right to implement reasonable measures to verify compliance with the terms of this Agreement, including the installation and usage restrictions set forth herein. The Customer agrees to cooperate with OpenFaaS Ltd in any such compliance verification efforts.
+
+8.4 Consequences of Violation: Any attempt to bypass or violate the installation and usage restrictions, as described in Sections 8.1 and 8.2, may result in immediate termination of this EULA and the License granted hereunder. Further, the Customer may be subject to legal action and liable for damages resulting from any such violation.
+
