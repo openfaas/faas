@@ -158,6 +158,7 @@ func (e *Exporter) getFunctions(endpointURL url.URL, namespace string) ([]types.
 	if err != nil {
 		return services, err
 	}
+	defer res.Body.Close()
 
 	bytesOut, readErr := io.ReadAll(res.Body)
 	if readErr != nil {
