@@ -167,7 +167,9 @@ func (e *Exporter) getFunctions(endpointURL url.URL, namespace string) ([]types.
 		} else {
 			body = b
 		}
-	} else {
+	}
+
+	if len(body) == 0 {
 		return services, fmt.Errorf("no response body from /system/functions")
 	}
 
@@ -209,6 +211,10 @@ func (e *Exporter) getNamespaces(endpointURL url.URL) ([]string, error) {
 		} else {
 			body = b
 		}
+	}
+
+	if len(body) == 0 {
+		return namespaces, fmt.Errorf("no response body from /system/namespaces")
 	}
 
 	if err := json.Unmarshal(body, &namespaces); err != nil {
