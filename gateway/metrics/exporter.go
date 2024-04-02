@@ -86,7 +86,7 @@ func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions Metri
 
 				namespaces, err := e.getNamespaces(endpointURL)
 				if err != nil {
-					log.Println(err)
+					log.Printf("Error listing namespaces: %s", err)
 				}
 
 				services := []types.FunctionStatus{}
@@ -95,7 +95,7 @@ func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions Metri
 				if len(namespaces) == 0 {
 					services, err = e.getFunctions(endpointURL, e.FunctionNamespace)
 					if err != nil {
-						log.Println(err)
+						log.Printf("Error getting functions from: %s, error: %s", e.FunctionNamespace, err)
 						continue
 					}
 					e.services = services
@@ -103,7 +103,7 @@ func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions Metri
 					for _, namespace := range namespaces {
 						nsServices, err := e.getFunctions(endpointURL, namespace)
 						if err != nil {
-							log.Println(err)
+							log.Printf("Error getting functions from: %s, error: %s", e.FunctionNamespace, err)
 							continue
 						}
 						services = append(services, nsServices...)
@@ -112,7 +112,6 @@ func (e *Exporter) StartServiceWatcher(endpointURL url.URL, metricsOptions Metri
 
 				e.services = services
 
-				break
 			case <-quit:
 				return
 			}
@@ -159,14 +158,22 @@ func (e *Exporter) getFunctions(endpointURL url.URL, namespace string) ([]types.
 		return services, err
 	}
 
-	bytesOut, readErr := io.ReadAll(res.Body)
-	if readErr != nil {
-		return services, readErr
+	var body []byte
+	if res.Body != nil {
+		defer res.Body.Close()
+
+		if b, err := io.ReadAll(res.Body); err != nil {
+			return services, err
+		} else {
+			body = b
+		}
+	} else {
+		return services, fmt.Errorf("no response body from /system/functions")
 	}
 
-	if err := json.Unmarshal(bytesOut, &services); err != nil {
+	if err := json.Unmarshal(body, &services); err != nil {
 		return services, fmt.Errorf("error unmarshalling response: %s, error: %s",
-			string(bytesOut), err)
+			string(body), err)
 	}
 
 	return services, nil
@@ -193,13 +200,20 @@ func (e *Exporter) getNamespaces(endpointURL url.URL) ([]string, error) {
 		return namespaces, nil
 	}
 
-	bytesOut, readErr := io.ReadAll(res.Body)
-	if readErr != nil {
-		return namespaces, readErr
+	var body []byte
+	if res.Body != nil {
+		defer res.Body.Close()
+
+		if b, err := io.ReadAll(res.Body); err != nil {
+			return namespaces, err
+		} else {
+			body = b
+		}
 	}
 
-	if err := json.Unmarshal(bytesOut, &namespaces); err != nil {
-		return namespaces, fmt.Errorf("error unmarshalling response: %s, error: %s", string(bytesOut), err)
+	if err := json.Unmarshal(body, &namespaces); err != nil {
+		return namespaces, fmt.Errorf("error unmarshalling response: %s, error: %s", string(body), err)
 	}
+
 	return namespaces, nil
 }
