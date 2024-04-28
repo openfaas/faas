@@ -96,7 +96,7 @@ func TestRead_ScaleZeroDefaultAndOverride(t *testing.T) {
 	want = true
 
 	if config.ScaleFromZero != want {
-		t.Logf("ScaleFromZero was overriden - should be %v, got: %v", want, config.ScaleFromZero)
+		t.Logf("ScaleFromZero was overridden - should be %v, got: %v", want, config.ScaleFromZero)
 		t.Fail()
 	}
 

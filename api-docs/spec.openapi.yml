@@ -848,7 +848,7 @@ components:
           example: 1337
         replicas:
           type: number
-          description: The current minimal ammount of replicas
+          description: Desired amount of replicas
           format: integer
           example: 2
         availableReplicas:
