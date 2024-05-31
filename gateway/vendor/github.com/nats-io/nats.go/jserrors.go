@@ -1,4 +1,4 @@
-// Copyright 2020-2022 The NATS Authors
+// Copyright 2020-2023 The NATS Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -22,6 +22,10 @@ var (
 	// API errors
 
 	// ErrJetStreamNotEnabled is an error returned when JetStream is not enabled for an account.
+	//
+	// Note: This error will not be returned in clustered mode, even if each
+	// server in the cluster does not have JetStream enabled. In clustered mode,
+	// requests will time out instead.
 	ErrJetStreamNotEnabled JetStreamError = &jsError{apiErr: &APIError{ErrorCode: JSErrCodeJetStreamNotEnabled, Description: "jetstream not enabled", Code: 503}}
 
 	// ErrJetStreamNotEnabledForAccount is an error returned when JetStream is not enabled for an account.
@@ -51,7 +55,7 @@ var (
 	// ErrStreamSourceMultipleSubjectTransformsNotSupported is returned when the connected nats-server version does not support setting
 	// the stream sources. If this error is returned when executing AddStream(), the stream with invalid
 	// configuration was already created in the server.
-	ErrStreamSourceMultipleSubjectTransformsNotSupported JetStreamError = &jsError{message: "stream sourceing with multiple subject transforms not supported by nats-server"}
+	ErrStreamSourceMultipleSubjectTransformsNotSupported JetStreamError = &jsError{message: "stream sourcing with multiple subject transforms not supported by nats-server"}
 
 	// ErrConsumerNotFound is an error returned when consumer with given name does not exist.
 	ErrConsumerNotFound JetStreamError = &jsError{apiErr: &APIError{ErrorCode: JSErrCodeConsumerNotFound, Description: "consumer not found", Code: 404}}
@@ -120,6 +124,9 @@ var (
 	// ErrInvalidConsumerName is returned when the provided consumer name is invalid (contains '.' or ' ').
 	ErrInvalidConsumerName JetStreamError = &jsError{message: "invalid consumer name"}
 
+	// ErrInvalidFilterSubject is returned when the provided filter subject is invalid.
+	ErrInvalidFilterSubject JetStreamError = &jsError{message: "invalid filter subject"}
+
 	// ErrNoMatchingStream is returned when stream lookup by subject is unsuccessful.
 	ErrNoMatchingStream JetStreamError = &jsError{message: "no stream matches subject"}
 
@@ -140,6 +147,9 @@ var (
 
 	// ErrNoHeartbeat is returned when no heartbeat is received from server when sending requests with pull consumer.
 	ErrNoHeartbeat JetStreamError = &jsError{message: "no heartbeat received"}
+
+	// ErrSubscriptionClosed is returned when attempting to send pull request to a closed subscription
+	ErrSubscriptionClosed JetStreamError = &jsError{message: "subscription closed"}
 
 	// DEPRECATED: ErrInvalidDurableName is no longer returned and will be removed in future releases.
 	// Use ErrInvalidConsumerName instead.

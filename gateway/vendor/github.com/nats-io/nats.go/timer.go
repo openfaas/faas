@@ -29,7 +29,7 @@ type timerPool struct {
 
 // Get returns a timer that completes after the given duration.
 func (tp *timerPool) Get(d time.Duration) *time.Timer {
-	if t, _ := tp.p.Get().(*time.Timer); t != nil {
+	if t, ok := tp.p.Get().(*time.Timer); ok && t != nil {
 		t.Reset(d)
 		return t
 	}

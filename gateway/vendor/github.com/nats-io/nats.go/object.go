@@ -1,4 +1,4 @@
-// Copyright 2021-2022 The NATS Authors
+// Copyright 2021-2023 The NATS Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -153,6 +153,9 @@ type ObjectStoreConfig struct {
 	// Bucket-specific metadata
 	// NOTE: Metadata requires nats-server v2.10.0+
 	Metadata map[string]string `json:"metadata,omitempty"`
+	// Enable underlying stream compression.
+	// NOTE: Compression is supported for nats-server 2.10.0+
+	Compression bool `json:"compression,omitempty"`
 }
 
 type ObjectStoreStatus interface {
@@ -174,6 +177,8 @@ type ObjectStoreStatus interface {
 	BackingStore() string
 	// Metadata is the user supplied metadata for the bucket
 	Metadata() map[string]string
+	// IsCompressed indicates if the data is compressed on disk
+	IsCompressed() bool
 }
 
 // ObjectMetaOptions
@@ -266,7 +271,10 @@ func (js *js) CreateObjectStore(cfg *ObjectStoreConfig) (ObjectStore, error) {
 	if maxBytes == 0 {
 		maxBytes = -1
 	}
-
+	var compression StoreCompression
+	if cfg.Compression {
+		compression = S2Compression
+	}
 	scfg := &StreamConfig{
 		Name:        fmt.Sprintf(objNameTmpl, name),
 		Description: cfg.Description,
@@ -280,6 +288,7 @@ func (js *js) CreateObjectStore(cfg *ObjectStoreConfig) (ObjectStore, error) {
 		AllowRollup: true,
 		AllowDirect: true,
 		Metadata:    cfg.Metadata,
+		Compression: compression,
 	}
 
 	// Create our stream.
@@ -377,13 +386,16 @@ func (obs *obs) Put(meta *ObjectMeta, r io.Reader, opts ...ObjectOpt) (*ObjectIn
 
 	defer jetStream.(*js).cleanupReplySub()
 
-	purgePartial := func() {
+	purgePartial := func() error {
 		// wait until all pubs are complete or up to default timeout before attempting purge
 		select {
 		case <-jetStream.PublishAsyncComplete():
 		case <-time.After(obs.js.opts.wait):
 		}
-		obs.js.purgeStream(obs.stream, &StreamPurgeRequest{Subject: chunkSubj})
+		if err := obs.js.purgeStream(obs.stream, &StreamPurgeRequest{Subject: chunkSubj}); err != nil {
+			return fmt.Errorf("could not cleanup bucket after erroneous put operation: %w", err)
+		}
+		return nil
 	}
 
 	m, h := NewMsg(chunkSubj), sha256.New()
@@ -404,7 +416,9 @@ func (obs *obs) Put(meta *ObjectMeta, r io.Reader, opts ...ObjectOpt) (*ObjectIn
 			default:
 			}
 			if err != nil {
-				purgePartial()
+				if purgeErr := purgePartial(); purgeErr != nil {
+					return nil, errors.Join(err, purgeErr)
+				}
 				return nil, err
 			}
 		}
@@ -415,7 +429,9 @@ func (obs *obs) Put(meta *ObjectMeta, r io.Reader, opts ...ObjectOpt) (*ObjectIn
 
 		// Handle all non EOF errors
 		if readErr != nil && readErr != io.EOF {
-			purgePartial()
+			if purgeErr := purgePartial(); purgeErr != nil {
+				return nil, errors.Join(readErr, purgeErr)
+			}
 			return nil, readErr
 		}
 
@@ -427,11 +443,15 @@ func (obs *obs) Put(meta *ObjectMeta, r io.Reader, opts ...ObjectOpt) (*ObjectIn
 
 			// Send msg itself.
 			if _, err := jetStream.PublishMsgAsync(m); err != nil {
-				purgePartial()
+				if purgeErr := purgePartial(); purgeErr != nil {
+					return nil, errors.Join(err, purgeErr)
+				}
 				return nil, err
 			}
 			if err := getErr(); err != nil {
-				purgePartial()
+				if purgeErr := purgePartial(); purgeErr != nil {
+					return nil, errors.Join(err, purgeErr)
+				}
 				return nil, err
 			}
 			// Update totals.
@@ -455,7 +475,9 @@ func (obs *obs) Put(meta *ObjectMeta, r io.Reader, opts ...ObjectOpt) (*ObjectIn
 	mm.Data, err = json.Marshal(info)
 	if err != nil {
 		if r != nil {
-			purgePartial()
+			if purgeErr := purgePartial(); purgeErr != nil {
+				return nil, errors.Join(err, purgeErr)
+			}
 		}
 		return nil, err
 	}
@@ -464,7 +486,9 @@ func (obs *obs) Put(meta *ObjectMeta, r io.Reader, opts ...ObjectOpt) (*ObjectIn
 	_, err = jetStream.PublishMsgAsync(mm)
 	if err != nil {
 		if r != nil {
-			purgePartial()
+			if purgeErr := purgePartial(); purgeErr != nil {
+				return nil, errors.Join(err, purgeErr)
+			}
 		}
 		return nil, err
 	}
@@ -474,7 +498,9 @@ func (obs *obs) Put(meta *ObjectMeta, r io.Reader, opts ...ObjectOpt) (*ObjectIn
 	case <-jetStream.PublishAsyncComplete():
 		if err := getErr(); err != nil {
 			if r != nil {
-				purgePartial()
+				if purgeErr := purgePartial(); purgeErr != nil {
+					return nil, errors.Join(err, purgeErr)
+				}
 			}
 			return nil, err
 		}
@@ -487,7 +513,9 @@ func (obs *obs) Put(meta *ObjectMeta, r io.Reader, opts ...ObjectOpt) (*ObjectIn
 	// Delete any original chunks.
 	if einfo != nil && !einfo.Deleted {
 		echunkSubj := fmt.Sprintf(objChunksPreTmpl, obs.name, einfo.NUID)
-		obs.js.purgeStream(obs.stream, &StreamPurgeRequest{Subject: echunkSubj})
+		if err := obs.js.purgeStream(obs.stream, &StreamPurgeRequest{Subject: echunkSubj}); err != nil {
+			return info, err
+		}
 	}
 
 	// TODO would it be okay to do this to return the info with the correct time?
@@ -516,11 +544,12 @@ func DecodeObjectDigest(data string) ([]byte, error) {
 // ObjectResult impl.
 type objResult struct {
 	sync.Mutex
-	info   *ObjectInfo
-	r      io.ReadCloser
-	err    error
-	ctx    context.Context
-	digest hash.Hash
+	info        *ObjectInfo
+	r           io.ReadCloser
+	err         error
+	ctx         context.Context
+	digest      hash.Hash
+	readTimeout time.Duration
 }
 
 func (info *ObjectInfo) isLink() bool {
@@ -604,7 +633,7 @@ func (obs *obs) Get(name string, opts ...GetObjectOpt) (ObjectResult, error) {
 		return lobs.Get(info.ObjectMeta.Opts.Link.Name)
 	}
 
-	result := &objResult{info: info, ctx: ctx}
+	result := &objResult{info: info, ctx: ctx, readTimeout: obs.js.opts.wait}
 	if info.Size == 0 {
 		return result, nil
 	}
@@ -626,7 +655,7 @@ func (obs *obs) Get(name string, opts ...GetObjectOpt) (ObjectResult, error) {
 		if ctx != nil {
 			select {
 			case <-ctx.Done():
-				if ctx.Err() == context.Canceled {
+				if errors.Is(ctx.Err(), context.Canceled) {
 					err = ctx.Err()
 				} else {
 					err = ErrTimeout
@@ -665,7 +694,12 @@ func (obs *obs) Get(name string, opts ...GetObjectOpt) (ObjectResult, error) {
 	}
 
 	chunkSubj := fmt.Sprintf(objChunksPreTmpl, obs.name, info.NUID)
-	_, err = obs.js.Subscribe(chunkSubj, processChunk, OrderedConsumer())
+	streamName := fmt.Sprintf(objNameTmpl, obs.name)
+	subscribeOpts := []SubOpt{
+		OrderedConsumer(),
+		BindStream(streamName),
+	}
+	_, err = obs.js.Subscribe(chunkSubj, processChunk, subscribeOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -926,7 +960,7 @@ func (obs *obs) GetInfo(name string, opts ...GetObjectInfoOpt) (*ObjectInfo, err
 
 	m, err := obs.js.GetLastMsg(stream, metaSubj)
 	if err != nil {
-		if err == ErrMsgNotFound {
+		if errors.Is(err, ErrMsgNotFound) {
 			err = ErrObjectNotFound
 		}
 		return nil, err
@@ -1081,7 +1115,8 @@ func (obs *obs) Watch(opts ...WatchOpt) (ObjectWatcher, error) {
 	}
 
 	// Used ordered consumer to deliver results.
-	subOpts := []SubOpt{OrderedConsumer()}
+	streamName := fmt.Sprintf(objNameTmpl, obs.name)
+	subOpts := []SubOpt{OrderedConsumer(), BindStream(streamName)}
 	if !o.includeHistory {
 		subOpts = append(subOpts, DeliverLastPerSubject())
 	}
@@ -1204,6 +1239,9 @@ func (s *ObjectBucketStatus) Metadata() map[string]string { return s.nfo.Config.
 // StreamInfo is the stream info retrieved to create the status
 func (s *ObjectBucketStatus) StreamInfo() *StreamInfo { return s.nfo }
 
+// IsCompressed indicates if the data is compressed on disk
+func (s *ObjectBucketStatus) IsCompressed() bool { return s.nfo.Config.Compression != NoCompression }
+
 // Status retrieves run-time status about a bucket
 func (obs *obs) Status() (ObjectStoreStatus, error) {
 	nfo, err := obs.js.StreamInfo(obs.stream)
@@ -1223,7 +1261,11 @@ func (obs *obs) Status() (ObjectStoreStatus, error) {
 func (o *objResult) Read(p []byte) (n int, err error) {
 	o.Lock()
 	defer o.Unlock()
+	readDeadline := time.Now().Add(o.readTimeout)
 	if ctx := o.ctx; ctx != nil {
+		if deadline, ok := ctx.Deadline(); ok {
+			readDeadline = deadline
+		}
 		select {
 		case <-ctx.Done():
 			if ctx.Err() == context.Canceled {
@@ -1242,7 +1284,7 @@ func (o *objResult) Read(p []byte) (n int, err error) {
 	}
 
 	r := o.r.(net.Conn)
-	r.SetReadDeadline(time.Now().Add(2 * time.Second))
+	r.SetReadDeadline(readDeadline)
 	n, err = r.Read(p)
 	if err, ok := err.(net.Error); ok && err.Timeout() {
 		if ctx := o.ctx; ctx != nil {

@@ -2,9 +2,9 @@
 
 [![License Apache 2](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Go Report Card](https://goreportcard.com/badge/github.com/nats-io/nkeys)](https://goreportcard.com/report/github.com/nats-io/nkeys)
-[![Build Status](https://app.travis-ci.com/nats-io/nkeys.svg?branch=master)](https://app.travis-ci.com/nats-io/nkeys)
+[![Build Status](https://github.com/nats-io/nkeys/actions/workflows/release.yaml/badge.svg)](https://github.com/nats-io/nkeys/actions/workflows/release.yaml/badge.svg)
 [![GoDoc](https://godoc.org/github.com/nats-io/nkeys?status.svg)](https://godoc.org/github.com/nats-io/nkeys)
-[![Coverage Status](https://coveralls.io/repos/github/nats-io/nkeys/badge.svg?branch=master&service=github)](https://coveralls.io/github/nats-io/nkeys?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/nats-io/nkeys/badge.svg?branch=main&service=github)](https://coveralls.io/github/nats-io/nkeys?branch=main)
 
 A public-key signature system based on [Ed25519](https://ed25519.cr.yp.to/) for the NATS ecosystem.
 
@@ -66,4 +66,3 @@ user2, _ := nkeys.FromRawSeed(PrefixByteUser, rawSeed)
 
 Unless otherwise noted, the NATS source files are distributed
 under the Apache Version 2.0 license found in the LICENSE file.
-

@@ -1,4 +1,4 @@
-// Copyright 2021-2022 The NATS Authors
+// Copyright 2021-2023 The NATS Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -65,7 +65,10 @@ type KeyValue interface {
 	// WatchAll will invoke the callback for all updates.
 	WatchAll(opts ...WatchOpt) (KeyWatcher, error)
 	// Keys will return all keys.
+	// DEPRECATED: Use ListKeys instead to avoid memory issues.
 	Keys(opts ...WatchOpt) ([]string, error)
+	// ListKeys will return all keys in a channel.
+	ListKeys(opts ...WatchOpt) (KeyLister, error)
 	// History will return all historical values for the key.
 	History(key string, opts ...WatchOpt) ([]KeyValueEntry, error)
 	// Bucket returns the current bucket name.
@@ -95,6 +98,9 @@ type KeyValueStatus interface {
 
 	// Bytes returns the size in bytes of the bucket
 	Bytes() uint64
+
+	// IsCompressed indicates if the data is compressed on disk
+	IsCompressed() bool
 }
 
 // KeyWatcher is what is returned when doing a watch.
@@ -104,6 +110,12 @@ type KeyWatcher interface {
 	// Updates returns a channel to read any updates to entries.
 	Updates() <-chan KeyValueEntry
 	// Stop will stop this watcher.
+	Stop() error
+}
+
+// KeyLister is used to retrieve a list of key value store keys
+type KeyLister interface {
+	Keys() <-chan string
 	Stop() error
 }
 
@@ -237,18 +249,22 @@ func purge() DeleteOpt {
 
 // KeyValueConfig is for configuring a KeyValue store.
 type KeyValueConfig struct {
-	Bucket       string
-	Description  string
-	MaxValueSize int32
-	History      uint8
-	TTL          time.Duration
-	MaxBytes     int64
-	Storage      StorageType
-	Replicas     int
-	Placement    *Placement
-	RePublish    *RePublish
-	Mirror       *StreamSource
-	Sources      []*StreamSource
+	Bucket       string          `json:"bucket"`
+	Description  string          `json:"description,omitempty"`
+	MaxValueSize int32           `json:"max_value_size,omitempty"`
+	History      uint8           `json:"history,omitempty"`
+	TTL          time.Duration   `json:"ttl,omitempty"`
+	MaxBytes     int64           `json:"max_bytes,omitempty"`
+	Storage      StorageType     `json:"storage,omitempty"`
+	Replicas     int             `json:"num_replicas,omitempty"`
+	Placement    *Placement      `json:"placement,omitempty"`
+	RePublish    *RePublish      `json:"republish,omitempty"`
+	Mirror       *StreamSource   `json:"mirror,omitempty"`
+	Sources      []*StreamSource `json:"sources,omitempty"`
+
+	// Enable underlying stream compression.
+	// NOTE: Compression is supported for nats-server 2.10.0+
+	Compression bool `json:"compression,omitempty"`
 }
 
 // Used to watch all keys.
@@ -328,8 +344,9 @@ const (
 
 // Regex for valid keys and buckets.
 var (
-	validBucketRe = regexp.MustCompile(`\A[a-zA-Z0-9_-]+\z`)
-	validKeyRe    = regexp.MustCompile(`\A[-/_=\.a-zA-Z0-9]+\z`)
+	validBucketRe    = regexp.MustCompile(`^[a-zA-Z0-9_-]+$`)
+	validKeyRe       = regexp.MustCompile(`^[-/_=\.a-zA-Z0-9]+$`)
+	validSearchKeyRe = regexp.MustCompile(`^[-/_=\.a-zA-Z0-9*]*[>]?$`)
 )
 
 // KeyValue will lookup and bind to an existing KeyValue store.
@@ -337,13 +354,13 @@ func (js *js) KeyValue(bucket string) (KeyValue, error) {
 	if !js.nc.serverMinVersion(2, 6, 2) {
 		return nil, errors.New("nats: key-value requires at least server version 2.6.2")
 	}
-	if !validBucketRe.MatchString(bucket) {
+	if !bucketValid(bucket) {
 		return nil, ErrInvalidBucketName
 	}
 	stream := fmt.Sprintf(kvBucketNameTmpl, bucket)
 	si, err := js.StreamInfo(stream)
 	if err != nil {
-		if err == ErrStreamNotFound {
+		if errors.Is(err, ErrStreamNotFound) {
 			err = ErrBucketNotFound
 		}
 		return nil, err
@@ -365,7 +382,7 @@ func (js *js) CreateKeyValue(cfg *KeyValueConfig) (KeyValue, error) {
 	if cfg == nil {
 		return nil, ErrKeyValueConfigRequired
 	}
-	if !validBucketRe.MatchString(cfg.Bucket) {
+	if !bucketValid(cfg.Bucket) {
 		return nil, ErrInvalidBucketName
 	}
 	if _, err := js.AccountInfo(); err != nil {
@@ -405,6 +422,10 @@ func (js *js) CreateKeyValue(cfg *KeyValueConfig) (KeyValue, error) {
 	if cfg.TTL > 0 && cfg.TTL < duplicateWindow {
 		duplicateWindow = cfg.TTL
 	}
+	var compression StoreCompression
+	if cfg.Compression {
+		compression = S2Compression
+	}
 	scfg := &StreamConfig{
 		Name:              fmt.Sprintf(kvBucketNameTmpl, cfg.Bucket),
 		Description:       cfg.Description,
@@ -422,6 +443,7 @@ func (js *js) CreateKeyValue(cfg *KeyValueConfig) (KeyValue, error) {
 		MaxConsumers:      -1,
 		AllowDirect:       true,
 		RePublish:         cfg.RePublish,
+		Compression:       compression,
 	}
 	if cfg.Mirror != nil {
 		// Copy in case we need to make changes so we do not change caller's version.
@@ -465,7 +487,7 @@ func (js *js) CreateKeyValue(cfg *KeyValueConfig) (KeyValue, error) {
 		// the stream.
 		// The same logic applies for KVs created pre 2.9.x and
 		// the AllowDirect setting.
-		if err == ErrStreamNameAlreadyInUse {
+		if errors.Is(err, ErrStreamNameAlreadyInUse) {
 			if si, _ = js.StreamInfo(scfg.Name); si != nil {
 				// To compare, make the server's stream info discard
 				// policy same than ours.
@@ -486,7 +508,7 @@ func (js *js) CreateKeyValue(cfg *KeyValueConfig) (KeyValue, error) {
 
 // DeleteKeyValue will delete this KeyValue store (JetStream stream).
 func (js *js) DeleteKeyValue(bucket string) error {
-	if !validBucketRe.MatchString(bucket) {
+	if !bucketValid(bucket) {
 		return ErrInvalidBucketName
 	}
 	stream := fmt.Sprintf(kvBucketNameTmpl, bucket)
@@ -526,6 +548,13 @@ func (e *kve) Created() time.Time    { return e.created }
 func (e *kve) Delta() uint64         { return e.delta }
 func (e *kve) Operation() KeyValueOp { return e.op }
 
+func bucketValid(bucket string) bool {
+	if len(bucket) == 0 {
+		return false
+	}
+	return validBucketRe.MatchString(bucket)
+}
+
 func keyValid(key string) bool {
 	if len(key) == 0 || key[0] == '.' || key[len(key)-1] == '.' {
 		return false
@@ -533,11 +562,18 @@ func keyValid(key string) bool {
 	return validKeyRe.MatchString(key)
 }
 
+func searchKeyValid(key string) bool {
+	if len(key) == 0 || key[0] == '.' || key[len(key)-1] == '.' {
+		return false
+	}
+	return validSearchKeyRe.MatchString(key)
+}
+
 // Get returns the latest value for the key.
 func (kv *kvs) Get(key string) (KeyValueEntry, error) {
 	e, err := kv.get(key, kvLatestRevision)
 	if err != nil {
-		if err == ErrKeyDeleted {
+		if errors.Is(err, ErrKeyDeleted) {
 			return nil, ErrKeyNotFound
 		}
 		return nil, err
@@ -550,7 +586,7 @@ func (kv *kvs) Get(key string) (KeyValueEntry, error) {
 func (kv *kvs) GetRevision(key string, revision uint64) (KeyValueEntry, error) {
 	e, err := kv.get(key, revision)
 	if err != nil {
-		if err == ErrKeyDeleted {
+		if errors.Is(err, ErrKeyDeleted) {
 			return nil, ErrKeyNotFound
 		}
 		return nil, err
@@ -587,7 +623,7 @@ func (kv *kvs) get(key string, revision uint64) (KeyValueEntry, error) {
 		}
 	}
 	if err != nil {
-		if err == ErrMsgNotFound {
+		if errors.Is(err, ErrMsgNotFound) {
 			err = ErrKeyNotFound
 		}
 		return nil, err
@@ -654,7 +690,7 @@ func (kv *kvs) Create(key string, value []byte) (revision uint64, err error) {
 
 	// TODO(dlc) - Since we have tombstones for DEL ops for watchers, this could be from that
 	// so we need to double check.
-	if e, err := kv.get(key, kvLatestRevision); err == ErrKeyDeleted {
+	if e, err := kv.get(key, kvLatestRevision); errors.Is(err, ErrKeyDeleted) {
 		return kv.Update(key, value, e.Revision())
 	}
 
@@ -830,6 +866,41 @@ func (kv *kvs) Keys(opts ...WatchOpt) ([]string, error) {
 	return keys, nil
 }
 
+type keyLister struct {
+	watcher KeyWatcher
+	keys    chan string
+}
+
+// ListKeys will return all keys.
+func (kv *kvs) ListKeys(opts ...WatchOpt) (KeyLister, error) {
+	opts = append(opts, IgnoreDeletes(), MetaOnly())
+	watcher, err := kv.WatchAll(opts...)
+	if err != nil {
+		return nil, err
+	}
+	kl := &keyLister{watcher: watcher, keys: make(chan string, 256)}
+
+	go func() {
+		defer close(kl.keys)
+		defer watcher.Stop()
+		for entry := range watcher.Updates() {
+			if entry == nil {
+				return
+			}
+			kl.keys <- entry.Key()
+		}
+	}()
+	return kl, nil
+}
+
+func (kl *keyLister) Keys() <-chan string {
+	return kl.keys
+}
+
+func (kl *keyLister) Stop() error {
+	return kl.watcher.Stop()
+}
+
 // History will return all values for the key.
 func (kv *kvs) History(key string, opts ...WatchOpt) ([]KeyValueEntry, error) {
 	opts = append(opts, IncludeHistory())
@@ -895,6 +966,9 @@ func (kv *kvs) WatchAll(opts ...WatchOpt) (KeyWatcher, error) {
 // Watch will fire the callback when a key that matches the keys pattern is updated.
 // keys needs to be a valid NATS subject.
 func (kv *kvs) Watch(keys string, opts ...WatchOpt) (KeyWatcher, error) {
+	if !searchKeyValid(keys) {
+		return nil, fmt.Errorf("%w: %s", ErrInvalidKey, "keys cannot be empty and must be a valid NATS subject")
+	}
 	var o watchOpts
 	for _, opt := range opts {
 		if opt != nil {
@@ -1040,6 +1114,9 @@ func (s *KeyValueBucketStatus) StreamInfo() *StreamInfo { return s.nfo }
 // Bytes is the size of the stream
 func (s *KeyValueBucketStatus) Bytes() uint64 { return s.nfo.State.Bytes }
 
+// IsCompressed indicates if the data is compressed on disk
+func (s *KeyValueBucketStatus) IsCompressed() bool { return s.nfo.Config.Compression != NoCompression }
+
 // Status retrieves the status and configuration of a bucket
 func (kv *kvs) Status() (KeyValueStatus, error) {
 	nfo, err := kv.js.StreamInfo(kv.stream)
@@ -1062,7 +1139,7 @@ func (js *js) KeyValueStoreNames() <-chan string {
 				if !strings.HasPrefix(name, kvBucketNamePre) {
 					continue
 				}
-				ch <- name
+				ch <- strings.TrimPrefix(name, kvBucketNamePre)
 			}
 		}
 	}()

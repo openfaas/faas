@@ -19,7 +19,7 @@ package nkeys
 import "io"
 
 // Version is our current version
-const Version = "0.4.5"
+const Version = "0.4.7"
 
 // KeyPair provides the central interface to nkeys.
 type KeyPair interface {

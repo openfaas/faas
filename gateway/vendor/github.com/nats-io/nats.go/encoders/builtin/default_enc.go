@@ -1,4 +1,4 @@
-// Copyright 2012-2018 The NATS Authors
+// Copyright 2012-2023 The NATS Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -24,7 +24,7 @@ import (
 // DefaultEncoder implementation for EncodedConn.
 // This encoder will leave []byte and string untouched, but will attempt to
 // turn numbers into appropriate strings that can be decoded. It will also
-// propely encoded and decode bools. If will encode a struct, but if you want
+// properly encoded and decode bools. If will encode a struct, but if you want
 // to properly handle structures you should use JsonEncoder.
 type DefaultEncoder struct {
 	// Empty

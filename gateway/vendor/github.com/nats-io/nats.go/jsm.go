@@ -1,4 +1,4 @@
-// Copyright 2021-2022 The NATS Authors
+// Copyright 2021-2023 The NATS Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -70,6 +70,10 @@ type JetStreamManager interface {
 	SecureDeleteMsg(name string, seq uint64, opts ...JSOpt) error
 
 	// AddConsumer adds a consumer to a stream.
+	// If the consumer already exists, and the configuration is the same, it
+	// will return the existing consumer.
+	// If the consumer already exists, and the configuration is different, it
+	// will return ErrConsumerNameAlreadyInUse.
 	AddConsumer(stream string, cfg *ConsumerConfig, opts ...JSOpt) (*ConsumerInfo, error)
 
 	// UpdateConsumer updates an existing consumer.
@@ -102,51 +106,143 @@ type JetStreamManager interface {
 // There are sensible defaults for most. If no subjects are
 // given the name will be used as the only subject.
 type StreamConfig struct {
-	Name                 string           `json:"name"`
-	Description          string           `json:"description,omitempty"`
-	Subjects             []string         `json:"subjects,omitempty"`
-	Retention            RetentionPolicy  `json:"retention"`
-	MaxConsumers         int              `json:"max_consumers"`
-	MaxMsgs              int64            `json:"max_msgs"`
-	MaxBytes             int64            `json:"max_bytes"`
-	Discard              DiscardPolicy    `json:"discard"`
-	DiscardNewPerSubject bool             `json:"discard_new_per_subject,omitempty"`
-	MaxAge               time.Duration    `json:"max_age"`
-	MaxMsgsPerSubject    int64            `json:"max_msgs_per_subject"`
-	MaxMsgSize           int32            `json:"max_msg_size,omitempty"`
-	Storage              StorageType      `json:"storage"`
-	Replicas             int              `json:"num_replicas"`
-	NoAck                bool             `json:"no_ack,omitempty"`
-	Template             string           `json:"template_owner,omitempty"`
-	Duplicates           time.Duration    `json:"duplicate_window,omitempty"`
-	Placement            *Placement       `json:"placement,omitempty"`
-	Mirror               *StreamSource    `json:"mirror,omitempty"`
-	Sources              []*StreamSource  `json:"sources,omitempty"`
-	Sealed               bool             `json:"sealed,omitempty"`
-	DenyDelete           bool             `json:"deny_delete,omitempty"`
-	DenyPurge            bool             `json:"deny_purge,omitempty"`
-	AllowRollup          bool             `json:"allow_rollup_hdrs,omitempty"`
-	Compression          StoreCompression `json:"compression"`
-	FirstSeq             uint64           `json:"first_seq,omitempty"`
+	// Name is the name of the stream. It is required and must be unique
+	// across the JetStream account.
+	//
+	// Name Names cannot contain whitespace, ., *, >, path separators
+	// (forward or backwards slash), and non-printable characters.
+	Name string `json:"name"`
 
-	// Allow applying a subject transform to incoming messages before doing anything else.
+	// Description is an optional description of the stream.
+	Description string `json:"description,omitempty"`
+
+	// Subjects is a list of subjects that the stream is listening on.
+	// Wildcards are supported. Subjects cannot be set if the stream is
+	// created as a mirror.
+	Subjects []string `json:"subjects,omitempty"`
+
+	// Retention defines the message retention policy for the stream.
+	// Defaults to LimitsPolicy.
+	Retention RetentionPolicy `json:"retention"`
+
+	// MaxConsumers specifies the maximum number of consumers allowed for
+	// the stream.
+	MaxConsumers int `json:"max_consumers"`
+
+	// MaxMsgs is the maximum number of messages the stream will store.
+	// After reaching the limit, stream adheres to the discard policy.
+	// If not set, server default is -1 (unlimited).
+	MaxMsgs int64 `json:"max_msgs"`
+
+	// MaxBytes is the maximum total size of messages the stream will store.
+	// After reaching the limit, stream adheres to the discard policy.
+	// If not set, server default is -1 (unlimited).
+	MaxBytes int64 `json:"max_bytes"`
+
+	// Discard defines the policy for handling messages when the stream
+	// reaches its limits in terms of number of messages or total bytes.
+	Discard DiscardPolicy `json:"discard"`
+
+	// DiscardNewPerSubject is a flag to enable discarding new messages per
+	// subject when limits are reached. Requires DiscardPolicy to be
+	// DiscardNew and the MaxMsgsPerSubject to be set.
+	DiscardNewPerSubject bool `json:"discard_new_per_subject,omitempty"`
+
+	// MaxAge is the maximum age of messages that the stream will retain.
+	MaxAge time.Duration `json:"max_age"`
+
+	// MaxMsgsPerSubject is the maximum number of messages per subject that
+	// the stream will retain.
+	MaxMsgsPerSubject int64 `json:"max_msgs_per_subject"`
+
+	// MaxMsgSize is the maximum size of any single message in the stream.
+	MaxMsgSize int32 `json:"max_msg_size,omitempty"`
+
+	// Storage specifies the type of storage backend used for the stream
+	// (file or memory).
+	Storage StorageType `json:"storage"`
+
+	// Replicas is the number of stream replicas in clustered JetStream.
+	// Defaults to 1, maximum is 5.
+	Replicas int `json:"num_replicas"`
+
+	// NoAck is a flag to disable acknowledging messages received by this
+	// stream.
+	//
+	// If set to true, publish methods from the JetStream client will not
+	// work as expected, since they rely on acknowledgements. Core NATS
+	// publish methods should be used instead. Note that this will make
+	// message delivery less reliable.
+	NoAck bool `json:"no_ack,omitempty"`
+
+	// Duplicates is the window within which to track duplicate messages.
+	// If not set, server default is 2 minutes.
+	Duplicates time.Duration `json:"duplicate_window,omitempty"`
+
+	// Placement is used to declare where the stream should be placed via
+	// tags and/or an explicit cluster name.
+	Placement *Placement `json:"placement,omitempty"`
+
+	// Mirror defines the configuration for mirroring another stream.
+	Mirror *StreamSource `json:"mirror,omitempty"`
+
+	// Sources is a list of other streams this stream sources messages from.
+	Sources []*StreamSource `json:"sources,omitempty"`
+
+	// Sealed streams do not allow messages to be published or deleted via limits or API,
+	// sealed streams can not be unsealed via configuration update. Can only
+	// be set on already created streams via the Update API.
+	Sealed bool `json:"sealed,omitempty"`
+
+	// DenyDelete restricts the ability to delete messages from a stream via
+	// the API. Defaults to false.
+	DenyDelete bool `json:"deny_delete,omitempty"`
+
+	// DenyPurge restricts the ability to purge messages from a stream via
+	// the API. Defaults to false.
+	DenyPurge bool `json:"deny_purge,omitempty"`
+
+	// AllowRollup allows the use of the Nats-Rollup header to replace all
+	// contents of a stream, or subject in a stream, with a single new
+	// message.
+	AllowRollup bool `json:"allow_rollup_hdrs,omitempty"`
+
+	// Compression specifies the message storage compression algorithm.
+	// Defaults to NoCompression.
+	Compression StoreCompression `json:"compression"`
+
+	// FirstSeq is the initial sequence number of the first message in the
+	// stream.
+	FirstSeq uint64 `json:"first_seq,omitempty"`
+
+	// SubjectTransform allows applying a transformation to matching
+	// messages' subjects.
 	SubjectTransform *SubjectTransformConfig `json:"subject_transform,omitempty"`
 
-	// Allow republish of the message after being sequenced and stored.
+	// RePublish allows immediate republishing a message to the configured
+	// subject after it's stored.
 	RePublish *RePublish `json:"republish,omitempty"`
 
-	// Allow higher performance, direct access to get individual messages. E.g. KeyValue
+	// AllowDirect enables direct access to individual messages using direct
+	// get API. Defaults to false.
 	AllowDirect bool `json:"allow_direct"`
-	// Allow higher performance and unified direct access for mirrors as well.
+
+	// MirrorDirect enables direct access to individual messages from the
+	// origin stream using direct get API. Defaults to false.
 	MirrorDirect bool `json:"mirror_direct"`
 
-	// Limits for consumers on this stream.
+	// ConsumerLimits defines limits of certain values that consumers can
+	// set, defaults for those who don't set these settings
 	ConsumerLimits StreamConsumerLimits `json:"consumer_limits,omitempty"`
 
-	// Metadata is additional metadata for the Stream.
-	// Keys starting with `_nats` are reserved.
-	// NOTE: Metadata requires nats-server v2.10.0+
+	// Metadata is a set of application-defined key-value pairs for
+	// associating metadata on the stream. This feature requires nats-server
+	// v2.10.0 or later.
 	Metadata map[string]string `json:"metadata,omitempty"`
+
+	// Template identifies the template that manages the Stream. DEPRECATED:
+	// This feature is no longer supported.
+	Template string `json:"template_owner,omitempty"`
 }
 
 // SubjectTransformConfig is for applying a subject transform (to matching messages) before doing anything else when a new message is received.
@@ -252,11 +348,13 @@ type AccountInfo struct {
 }
 
 type Tier struct {
-	Memory    uint64        `json:"memory"`
-	Store     uint64        `json:"storage"`
-	Streams   int           `json:"streams"`
-	Consumers int           `json:"consumers"`
-	Limits    AccountLimits `json:"limits"`
+	Memory         uint64        `json:"memory"`
+	Store          uint64        `json:"storage"`
+	ReservedMemory uint64        `json:"reserved_memory"`
+	ReservedStore  uint64        `json:"reserved_storage"`
+	Streams        int           `json:"streams"`
+	Consumers      int           `json:"consumers"`
+	Limits         AccountLimits `json:"limits"`
 }
 
 // APIStats reports on API calls to JetStream for this account.
@@ -282,9 +380,13 @@ type accountInfoResponse struct {
 	AccountInfo
 }
 
-// AccountInfo retrieves info about the JetStream usage from the current account.
-// If JetStream is not enabled, this will return ErrJetStreamNotEnabled
-// Other errors can happen but are generally considered retryable
+// AccountInfo fetches account information from the server, containing details
+// about the account associated with this JetStream connection. If account is
+// not enabled for JetStream, ErrJetStreamNotEnabledForAccount is returned.
+//
+// If the server does not have JetStream enabled, ErrJetStreamNotEnabled is
+// returned (for a single server setup). For clustered topologies, AccountInfo
+// will time out.
 func (js *js) AccountInfo(opts ...JSOpt) (*AccountInfo, error) {
 	o, cancel, err := getJSContextOpts(js.opts, opts...)
 	if err != nil {
@@ -297,7 +399,7 @@ func (js *js) AccountInfo(opts ...JSOpt) (*AccountInfo, error) {
 	resp, err := js.apiRequestWithContext(o.ctx, js.apiSubj(apiAccountInfo), nil)
 	if err != nil {
 		// todo maybe nats server should never have no responder on this subject and always respond if they know there is no js to be had
-		if err == ErrNoResponders {
+		if errors.Is(err, ErrNoResponders) {
 			err = ErrJetStreamNotEnabled
 		}
 		return nil, err
@@ -327,7 +429,11 @@ type consumerResponse struct {
 	*ConsumerInfo
 }
 
-// AddConsumer will add a JetStream consumer.
+// AddConsumer adds a consumer to a stream.
+// If the consumer already exists, and the configuration is the same, it
+// will return the existing consumer.
+// If the consumer already exists, and the configuration is different, it
+// will return ErrConsumerNameAlreadyInUse.
 func (js *js) AddConsumer(stream string, cfg *ConsumerConfig, opts ...JSOpt) (*ConsumerInfo, error) {
 	if cfg == nil {
 		cfg = &ConsumerConfig{}
@@ -400,6 +506,10 @@ func (js *js) upsertConsumer(stream, consumerName string, cfg *ConsumerConfig, o
 			// if filter subject is empty or ">", use the endpoint without filter subject
 			ccSubj = fmt.Sprintf(apiConsumerCreateT, stream, consumerName)
 		} else {
+			// safeguard against passing invalid filter subject in request subject
+			if cfg.FilterSubject[0] == '.' || cfg.FilterSubject[len(cfg.FilterSubject)-1] == '.' {
+				return nil, fmt.Errorf("%w: %q", ErrInvalidFilterSubject, cfg.FilterSubject)
+			}
 			// if filter subject is not empty, use the endpoint with filter subject
 			ccSubj = fmt.Sprintf(apiConsumerCreateWithFilterSubjectT, stream, consumerName, cfg.FilterSubject)
 		}
@@ -415,7 +525,7 @@ func (js *js) upsertConsumer(stream, consumerName string, cfg *ConsumerConfig, o
 
 	resp, err := js.apiRequestWithContext(o.ctx, js.apiSubj(ccSubj), req)
 	if err != nil {
-		if err == ErrNoResponders {
+		if errors.Is(err, ErrNoResponders) {
 			err = ErrJetStreamNotEnabled
 		}
 		return nil, err
@@ -1623,7 +1733,7 @@ func (jsc *js) StreamNameBySubject(subj string, opts ...JSOpt) (string, error) {
 
 	resp, err := jsc.apiRequestWithContext(o.ctx, jsc.apiSubj(apiStreams), j)
 	if err != nil {
-		if err == ErrNoResponders {
+		if errors.Is(err, ErrNoResponders) {
 			err = ErrJetStreamNotEnabled
 		}
 		return _EMPTY_, err

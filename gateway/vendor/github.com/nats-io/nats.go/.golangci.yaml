@@ -7,6 +7,9 @@ issues:
       text: "Unsubscribe"
     - linters:
       - errcheck
+      text: "Drain"
+    - linters:
+      - errcheck
       text: "msg.Ack"
     - linters:
       - errcheck
