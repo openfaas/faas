@@ -36,9 +36,13 @@ Limitation of Liability.
 
 General Provisions.
 
-7.1 Entire Agreement. This EULA constitutes the entire agreement between the parties concerning the subject matter hereof.
+7. Co-Marketing
 
-7.2 Contact Information. For questions about these terms, contact OpenFaaS Ltd at: contact@openfaas.com.
+7.1 At the request of Supplier, Customer agrees to participate in other reasonable marketing activities that promote the benefits of the Services to other potential customers, including providing testimonials, case studies, and references.
+
+7.2 Customer grants use of the Customer's name and logo on the Supplier's websites and in the Supplier's promotional materials.
+
+7.3 Customer agrees that Supplier may disclose Customer as a customer of the Products.
 
 8. Installation and Usage Restrictions
 
@@ -50,3 +54,8 @@ General Provisions.
 
 8.4 Consequences of Violation: Any attempt to bypass or violate the installation and usage restrictions, as described in Sections 8.1 and 8.2, may result in immediate termination of this EULA and the License granted hereunder. Further, the Customer may be subject to legal action and liable for damages resulting from any such violation.
 
+9.1 Entire Agreement. This EULA constitutes the entire agreement between the parties concerning the subject matter hereof.
+
+9.2 Sections 1-8 will remain effective after the termination of the Agreement.
+
+9.3 Contact Information. For questions about these terms, contact OpenFaaS Ltd at: contact@openfaas.com.
