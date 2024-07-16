@@ -16,9 +16,9 @@ jobs:
         with:
           fetch-depth: 1
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Get git commit
         id: get_git_commit
@@ -31,7 +31,7 @@ jobs:
         run: echo "REPO_OWNER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" > $GITHUB_ENV
 
       - name: Build ${{ matrix.svc }}
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: ./gateway
           file: ./gateway/Dockerfile

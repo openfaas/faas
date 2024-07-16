@@ -4,8 +4,6 @@ github.com/beorn7/perks/quantile
 # github.com/cespare/xxhash/v2 v2.3.0
 ## explicit; go 1.11
 github.com/cespare/xxhash/v2
-# github.com/distribution/reference v0.6.0
-## explicit; go 1.20
 # github.com/docker/distribution v2.8.3+incompatible
 ## explicit
 github.com/docker/distribution/uuid
@@ -14,16 +12,25 @@ github.com/docker/distribution/uuid
 github.com/gogo/protobuf/gogoproto
 github.com/gogo/protobuf/proto
 github.com/gogo/protobuf/protoc-gen-gogo/descriptor
-# github.com/golang/protobuf v1.5.4
-## explicit; go 1.17
 # github.com/gorilla/mux v1.8.1
 ## explicit; go 1.20
 github.com/gorilla/mux
+# github.com/hashicorp/go-hclog v1.6.3
+## explicit; go 1.13
+# github.com/hashicorp/go-msgpack/v2 v2.1.2
+## explicit; go 1.19
+# github.com/hashicorp/raft v1.7.0
+## explicit; go 1.20
 # github.com/klauspost/compress v1.17.9
 ## explicit; go 1.20
 github.com/klauspost/compress/flate
-# github.com/matttproud/golang_protobuf_extensions v1.0.4
-## explicit; go 1.9
+# github.com/minio/highwayhash v1.0.3
+## explicit; go 1.15
+# github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822
+## explicit
+github.com/munnerz/goautoneg
+# github.com/nats-io/jwt/v2 v2.5.8
+## explicit; go 1.18
 # github.com/nats-io/nats.go v1.36.0
 ## explicit; go 1.20
 github.com/nats-io/nats.go
@@ -40,11 +47,7 @@ github.com/nats-io/nuid
 ## explicit; go 1.14
 github.com/nats-io/stan.go
 github.com/nats-io/stan.go/pb
-# github.com/opencontainers/go-digest v1.0.0
-## explicit; go 1.13
-# github.com/opencontainers/image-spec v1.1.0
-## explicit; go 1.18
-# github.com/openfaas/faas-provider v0.25.3
+# github.com/openfaas/faas-provider v0.25.4
 ## explicit; go 1.20
 github.com/openfaas/faas-provider/auth
 github.com/openfaas/faas-provider/httputil
@@ -61,27 +64,25 @@ github.com/prometheus/client_golang/prometheus/promhttp
 # github.com/prometheus/client_model v0.6.1
 ## explicit; go 1.19
 github.com/prometheus/client_model/go
-# github.com/prometheus/common v0.54.0
+# github.com/prometheus/common v0.55.0
 ## explicit; go 1.20
 github.com/prometheus/common/expfmt
-github.com/prometheus/common/internal/bitbucket.org/ww/goautoneg
 github.com/prometheus/common/model
 # github.com/prometheus/procfs v0.15.1
 ## explicit; go 1.20
 github.com/prometheus/procfs
 github.com/prometheus/procfs/internal/fs
 github.com/prometheus/procfs/internal/util
-# github.com/stretchr/testify v1.9.0
-## explicit; go 1.17
+# go.etcd.io/bbolt v1.3.10
+## explicit; go 1.21
 # go.uber.org/goleak v1.3.0
 ## explicit; go 1.20
 go.uber.org/goleak
 go.uber.org/goleak/internal/stack
-# golang.org/x/crypto v0.24.0
-## explicit; go 1.18
+# golang.org/x/crypto v0.25.0
+## explicit; go 1.20
 golang.org/x/crypto/blake2b
 golang.org/x/crypto/curve25519
-golang.org/x/crypto/curve25519/internal/field
 golang.org/x/crypto/ed25519
 golang.org/x/crypto/internal/alias
 golang.org/x/crypto/internal/poly1305
@@ -91,11 +92,13 @@ golang.org/x/crypto/salsa20/salsa
 # golang.org/x/sync v0.7.0
 ## explicit; go 1.18
 golang.org/x/sync/singleflight
-# golang.org/x/sys v0.21.0
+# golang.org/x/sys v0.22.0
 ## explicit; go 1.18
 golang.org/x/sys/cpu
 golang.org/x/sys/unix
 golang.org/x/sys/windows
+# golang.org/x/time v0.5.0
+## explicit; go 1.18
 # google.golang.org/protobuf v1.34.2
 ## explicit; go 1.20
 google.golang.org/protobuf/encoding/protodelim

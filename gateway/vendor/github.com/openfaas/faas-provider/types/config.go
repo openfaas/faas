@@ -48,6 +48,8 @@ type FaaSHandlers struct {
 	Health http.HandlerFunc
 
 	Info http.HandlerFunc
+
+	Telemetry http.HandlerFunc
 }
 
 // FaaSConfig set config for HTTP handlers
