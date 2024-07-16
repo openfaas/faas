@@ -1,6 +1,6 @@
-FROM --platform=${BUILDPLATFORM:-linux/amd64} ghcr.io/openfaas/license-check:0.4.1 as license-check
+FROM --platform=${BUILDPLATFORM:-linux/amd64} ghcr.io/openfaas/license-check:0.4.1 AS license-check
 
-FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.22 as build
+FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.22 AS build
 
 ENV GO111MODULE=on
 ENV CGO_ENABLED=0
@@ -44,9 +44,9 @@ RUN CGO_ENABLED=${CGO_ENABLED} GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build --
     -X github.com/openfaas/faas/gateway/types.Arch=${TARGETARCH}" \
     -o gateway .
 
-FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.20.0 as ship
+FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.20.1 AS ship
 
-LABEL org.label-schema.license="OpenFaaS CE EULA" \
+LABEL org.label-schema.license="OpenFaaS CE EULA - non-commercial" \
     org.label-schema.vcs-url="https://github.com/openfaas/faas" \
     org.label-schema.vcs-type="Git" \
     org.label-schema.name="openfaas/faas" \
@@ -63,8 +63,8 @@ WORKDIR /home/app
 
 EXPOSE 8080
 EXPOSE 8082
-ENV http_proxy      ""
-ENV https_proxy     ""
+ENV http_proxy=""
+ENV https_proxy=""
 
 COPY --from=build /go/src/github.com/openfaas/faas/gateway/gateway    .
 COPY assets     assets
