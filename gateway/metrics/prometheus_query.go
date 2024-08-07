@@ -9,9 +9,10 @@ import (
 
 // PrometheusQuery represents parameters for querying Prometheus
 type PrometheusQuery struct {
-	Port   int
-	Host   string
-	Client *http.Client
+	host             string
+	port             int
+	client           *http.Client
+	userAgentVersion string
 }
 
 type PrometheusQueryFetcher interface {
@@ -19,45 +20,47 @@ type PrometheusQueryFetcher interface {
 }
 
 // NewPrometheusQuery create a NewPrometheusQuery
-func NewPrometheusQuery(host string, port int, client *http.Client) PrometheusQuery {
+func NewPrometheusQuery(host string, port int, client *http.Client, userAgentVersion string) PrometheusQuery {
 	return PrometheusQuery{
-		Client: client,
-		Host:   host,
-		Port:   port,
+		client:           client,
+		host:             host,
+		port:             port,
+		userAgentVersion: userAgentVersion,
 	}
 }
 
 // Fetch queries aggregated stats
 func (q PrometheusQuery) Fetch(query string) (*VectorQueryResponse, error) {
 
-	req, reqErr := http.NewRequest(http.MethodGet, fmt.Sprintf("http://%s:%d/api/v1/query?query=%s", q.Host, q.Port, query), nil)
-	if reqErr != nil {
-		return nil, reqErr
+	req, err := http.NewRequest(http.MethodGet, fmt.Sprintf("http://%s:%d/api/v1/query?query=%s", q.host, q.port, query), nil)
+	if err != nil {
+		return nil, err
 	}
 
-	res, getErr := q.Client.Do(req)
-	if getErr != nil {
-		return nil, getErr
+	req.Header.Set("User-Agent", fmt.Sprintf("openfaas-gateway/%s (Prometheus query)", q.userAgentVersion))
+
+	res, err := q.client.Do(req)
+	if err != nil {
+		return nil, err
 	}
 
 	if res.Body != nil {
 		defer res.Body.Close()
 	}
 
-	bytesOut, readErr := io.ReadAll(res.Body)
-	if readErr != nil {
-		return nil, readErr
+	bytesOut, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
 	}
 
 	if res.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("Unexpected status code from Prometheus want: %d, got: %d, body: %s", http.StatusOK, res.StatusCode, string(bytesOut))
+		return nil, fmt.Errorf("unexpected status code from Prometheus want: %d, got: %d, body: %s", http.StatusOK, res.StatusCode, string(bytesOut))
 	}
 
 	var values VectorQueryResponse
 
-	unmarshalErr := json.Unmarshal(bytesOut, &values)
-	if unmarshalErr != nil {
-		return nil, fmt.Errorf("Error unmarshaling result: %s, '%s'", unmarshalErr, string(bytesOut))
+	if err := json.Unmarshal(bytesOut, &values); err != nil {
+		return nil, fmt.Errorf("error unmarshaling result: %s, '%s'", err, string(bytesOut))
 	}
 
 	return &values, nil
