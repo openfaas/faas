@@ -2,7 +2,6 @@
 
 [![Build Status](https://github.com/openfaas/faas/actions/workflows/build.yml/badge.svg)](https://github.com/openfaas/faas/actions/workflows/build.yml)
 [![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/openfaas/faas)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![OpenFaaS](https://img.shields.io/badge/openfaas-serverless-blue.svg)](https://www.openfaas.com)
 [![Derek App](https://alexellis.o6s.io/badge?owner=openfaas&repo=faas)](https://github.com/alexellis/derek/)
 
@@ -155,7 +154,7 @@ Have you written a blog about OpenFaaS? Do you have a speaking event? Send a Pul
 
 ### Contributing
 
-OpenFaaS Community Edition is written in Golang and is MIT licensed. Various types of contributions are welcomed whether that means providing feedback, testing existing and new feature or hacking on the source code.
+OpenFaaS Community Edition is written in Golang and contributions to the source code are made under the MIT license, additional restrictions may apply to OpenFaaS CE as a distribution. Various types of contributions are welcomed whether that means providing feedback, testing existing and new feature or hacking on the source code.
 
 #### How do I become a contributor?
 
@@ -174,21 +173,13 @@ An alternative community dashboard is [available here](https://grafana.com/dashb
 
 * Individual Sponsorships 🍻
 
-    The source code for OpenFaaS shared in public repositories on GitHub is free to use and open source under the terms of the MIT license.
-
-    OpenFaaS Ltd offers [commercial support and enterprise add-ons](https://www.openfaas.com/support) for end-users and [training and consulting services for Cloud and Kubernetes](https://www.openfaas.com/consulting).
-
-    Users and contributors are encouraged to join their peers in supporting the project through [GitHub Sponsors](https://github.com/sponsors/openfaas).
+    Users and contributors are encouraged to join their peers in supporting the OpenFaaS project through [GitHub Sponsors](https://github.com/sponsors/openfaas).
 
 * OpenFaaS Pro for Production
 
-    OpenFaaS Pro is built for production, the Community Edition (CE) is suitable for open-source developers.
+    OpenFaaS Pro (Standard and For Enterprises) is built for production, the [Community Edition (CE)](EULA.md) is suitable for a Proof of Concept (PoC), for experimentation, and some limited internal use.
 
-    Upgrade to our commercial distribution with finely-tuned auto-scaling, scale to zero and event connectors for Kafka and AWS SQS.
-
-    We also offer Enterprise Support where you get to work directly with the founders of the project.
-
-    [Contact us about OpenFaaS Pro & Enterprise Support](https://openfaas.com/support/)
+    [Learn more about OpenFaaS editions](https://openfaas.com/pricing/)
 
 * Website Sponsorship 🌎
 
