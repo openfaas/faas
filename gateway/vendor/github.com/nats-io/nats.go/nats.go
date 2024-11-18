@@ -47,7 +47,7 @@ import (
 
 // Default Constants
 const (
-	Version                   = "1.36.0"
+	Version                   = "1.37.0"
 	DefaultURL                = "nats://127.0.0.1:4222"
 	DefaultPort               = 4222
 	DefaultMaxReconnect       = 60
@@ -160,7 +160,7 @@ func GetDefaultOptions() Options {
 	}
 }
 
-// DEPRECATED: Use GetDefaultOptions() instead.
+// Deprecated: Use GetDefaultOptions() instead.
 // DefaultOptions is not safe for use by multiple clients.
 // For details see #308.
 var DefaultOptions = GetDefaultOptions()
@@ -386,7 +386,7 @@ type Options struct {
 	// DisconnectedCB sets the disconnected handler that is called
 	// whenever the connection is disconnected.
 	// Will not be called if DisconnectedErrCB is set
-	// DEPRECATED. Use DisconnectedErrCB which passes error that caused
+	// Deprecated. Use DisconnectedErrCB which passes error that caused
 	// the disconnect event.
 	DisconnectedCB ConnHandler
 
@@ -450,7 +450,7 @@ type Options struct {
 	TokenHandler AuthTokenHandler
 
 	// Dialer allows a custom net.Dialer when forming connections.
-	// DEPRECATED: should use CustomDialer instead.
+	// Deprecated: should use CustomDialer instead.
 	Dialer *net.Dialer
 
 	// CustomDialer allows to specify a custom dialer (not necessarily
@@ -1108,7 +1108,7 @@ func DisconnectErrHandler(cb ConnErrHandler) Option {
 }
 
 // DisconnectHandler is an Option to set the disconnected handler.
-// DEPRECATED: Use DisconnectErrHandler.
+// Deprecated: Use DisconnectErrHandler.
 func DisconnectHandler(cb ConnHandler) Option {
 	return func(o *Options) error {
 		o.DisconnectedCB = cb
@@ -1280,7 +1280,7 @@ func SyncQueueLen(max int) Option {
 
 // Dialer is an Option to set the dialer which will be used when
 // attempting to establish a connection.
-// DEPRECATED: Should use CustomDialer instead.
+// Deprecated: Should use CustomDialer instead.
 func Dialer(dialer *net.Dialer) Option {
 	return func(o *Options) error {
 		o.Dialer = dialer
@@ -1397,7 +1397,7 @@ func TLSHandshakeFirst() Option {
 // Handler processing
 
 // SetDisconnectHandler will set the disconnect event handler.
-// DEPRECATED: Use SetDisconnectErrHandler
+// Deprecated: Use SetDisconnectErrHandler
 func (nc *Conn) SetDisconnectHandler(dcb ConnHandler) {
 	if nc == nil {
 		return
@@ -1513,7 +1513,7 @@ func processUrlString(url string) []string {
 	urls := strings.Split(url, ",")
 	var j int
 	for _, s := range urls {
-		u := strings.TrimSpace(s)
+		u := strings.TrimSuffix(strings.TrimSpace(s), "/")
 		if len(u) > 0 {
 			urls[j] = u
 			j++
@@ -4902,7 +4902,8 @@ func (s *Subscription) processNextMsgDelivered(msg *Msg) error {
 }
 
 // Queued returns the number of queued messages in the client for this subscription.
-// DEPRECATED: Use Pending()
+//
+// Deprecated: Use Pending()
 func (s *Subscription) QueuedMsgs() (int, error) {
 	m, _, err := s.Pending()
 	return int(m), err

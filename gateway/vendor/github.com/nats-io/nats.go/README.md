@@ -31,7 +31,7 @@ When using or transitioning to Go modules support:
 ```bash
 # Go client latest or explicit version
 go get github.com/nats-io/nats.go/@latest
-go get github.com/nats-io/nats.go/@v1.36.0
+go get github.com/nats-io/nats.go/@v1.37.0
 
 # For latest NATS Server, add /v2 at the end
 go get github.com/nats-io/nats-server/v2
@@ -93,10 +93,12 @@ nc.Close()
 ```
 
 ## JetStream
+[![JetStream API Reference](https://pkg.go.dev/badge/github.com/nats-io/nats.go/jetstream.svg)](https://pkg.go.dev/github.com/nats-io/nats.go/jetstream)
 
 JetStream is the built-in NATS persistence system. `nats.go` provides a built-in
 API enabling both managing JetStream assets as well as publishing/consuming
 persistent messages.
+
 
 ### Basic usage
 
@@ -133,60 +135,6 @@ To find more information on `nats.go` JetStream API, visit
 
 The service API (`micro`) allows you to [easily build NATS services](micro/README.md) The
 services API is currently in beta release.
-
-## Encoded Connections
-
-```go
-
-nc, _ := nats.Connect(nats.DefaultURL)
-c, _ := nats.NewEncodedConn(nc, nats.JSON_ENCODER)
-defer c.Close()
-
-// Simple Publisher
-c.Publish("foo", "Hello World")
-
-// Simple Async Subscriber
-c.Subscribe("foo", func(s string) {
-    fmt.Printf("Received a message: %s\n", s)
-})
-
-// EncodedConn can Publish any raw Go type using the registered Encoder
-type person struct {
-     Name     string
-     Address  string
-     Age      int
-}
-
-// Go type Subscriber
-c.Subscribe("hello", func(p *person) {
-    fmt.Printf("Received a person: %+v\n", p)
-})
-
-me := &person{Name: "derek", Age: 22, Address: "140 New Montgomery Street, San Francisco, CA"}
-
-// Go type Publisher
-c.Publish("hello", me)
-
-// Unsubscribe
-sub, err := c.Subscribe("foo", nil)
-// ...
-sub.Unsubscribe()
-
-// Requests
-var response string
-err = c.Request("help", "help me", &response, 10*time.Millisecond)
-if err != nil {
-    fmt.Printf("Request failed: %v\n", err)
-}
-
-// Replying
-c.Subscribe("help", func(subj, reply string, msg string) {
-    c.Publish(reply, "I can help!")
-})
-
-// Close connection
-c.Close();
-```
 
 ## New Authentication (Nkeys and User Credentials)
 This requires server with version >= 2.0.0
@@ -265,34 +213,6 @@ if err != nil {
 	t.Fatalf("Got an error on Connect with Secure Options: %+v\n", err)
 }
 
-```
-
-## Using Go Channels (netchan)
-
-```go
-nc, _ := nats.Connect(nats.DefaultURL)
-ec, _ := nats.NewEncodedConn(nc, nats.JSON_ENCODER)
-defer ec.Close()
-
-type person struct {
-     Name     string
-     Address  string
-     Age      int
-}
-
-recvCh := make(chan *person)
-ec.BindRecvChan("hello", recvCh)
-
-sendCh := make(chan *person)
-ec.BindSendChan("hello", sendCh)
-
-me := &person{Name: "derek", Age: 22, Address: "140 New Montgomery Street"}
-
-// Send via Go channels
-sendCh <- me
-
-// Receive via Go channels
-who := <- recvCh
 ```
 
 ## Wildcard Subscriptions
@@ -461,17 +381,6 @@ msg, err := nc.RequestWithContext(ctx, "foo", []byte("bar"))
 sub, err := nc.SubscribeSync("foo")
 msg, err := sub.NextMsgWithContext(ctx)
 
-// Encoded Request with context
-c, err := nats.NewEncodedConn(nc, nats.JSON_ENCODER)
-type request struct {
-	Message string `json:"message"`
-}
-type response struct {
-	Code int `json:"code"`
-}
-req := &request{Message: "Hello"}
-resp := &response{}
-err := c.RequestWithContext(ctx, "foo", req, resp)
 ```
 
 ## Backwards compatibility

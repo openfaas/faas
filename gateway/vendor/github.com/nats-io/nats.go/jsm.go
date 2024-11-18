@@ -41,7 +41,7 @@ type JetStreamManager interface {
 	PurgeStream(name string, opts ...JSOpt) error
 
 	// StreamsInfo can be used to retrieve a list of StreamInfo objects.
-	// DEPRECATED: Use Streams() instead.
+	// Deprecated: Use Streams() instead.
 	StreamsInfo(opts ...JSOpt) <-chan *StreamInfo
 
 	// Streams can be used to retrieve a list of StreamInfo objects.
@@ -86,7 +86,7 @@ type JetStreamManager interface {
 	ConsumerInfo(stream, name string, opts ...JSOpt) (*ConsumerInfo, error)
 
 	// ConsumersInfo is used to retrieve a list of ConsumerInfo objects.
-	// DEPRECATED: Use Consumers() instead.
+	// Deprecated: Use Consumers() instead.
 	ConsumersInfo(stream string, opts ...JSOpt) <-chan *ConsumerInfo
 
 	// Consumers is used to retrieve a list of ConsumerInfo objects.
@@ -240,7 +240,7 @@ type StreamConfig struct {
 	// v2.10.0 or later.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
-	// Template identifies the template that manages the Stream. DEPRECATED:
+	// Template identifies the template that manages the Stream. Deprecated:
 	// This feature is no longer supported.
 	Template string `json:"template_owner,omitempty"`
 }
@@ -747,7 +747,7 @@ func (jsc *js) Consumers(stream string, opts ...JSOpt) <-chan *ConsumerInfo {
 }
 
 // ConsumersInfo is used to retrieve a list of ConsumerInfo objects.
-// DEPRECATED: Use Consumers() instead.
+// Deprecated: Use Consumers() instead.
 func (jsc *js) ConsumersInfo(stream string, opts ...JSOpt) <-chan *ConsumerInfo {
 	return jsc.Consumers(stream, opts...)
 }
@@ -1617,7 +1617,7 @@ func (jsc *js) Streams(opts ...JSOpt) <-chan *StreamInfo {
 }
 
 // StreamsInfo can be used to retrieve a list of StreamInfo objects.
-// DEPRECATED: Use Streams() instead.
+// Deprecated: Use Streams() instead.
 func (jsc *js) StreamsInfo(opts ...JSOpt) <-chan *StreamInfo {
 	return jsc.Streams(opts...)
 }

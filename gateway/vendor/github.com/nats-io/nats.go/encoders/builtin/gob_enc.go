@@ -21,6 +21,8 @@ import (
 // GobEncoder is a Go specific GOB Encoder implementation for EncodedConn.
 // This encoder will use the builtin encoding/gob to Marshal
 // and Unmarshal most types, including structs.
+//
+// Deprecated: Encoded connections are no longer supported.
 type GobEncoder struct {
 	// Empty
 }
@@ -28,6 +30,8 @@ type GobEncoder struct {
 // FIXME(dlc) - This could probably be more efficient.
 
 // Encode
+//
+// Deprecated: Encoded connections are no longer supported.
 func (ge *GobEncoder) Encode(subject string, v any) ([]byte, error) {
 	b := new(bytes.Buffer)
 	enc := gob.NewEncoder(b)
@@ -38,6 +42,8 @@ func (ge *GobEncoder) Encode(subject string, v any) ([]byte, error) {
 }
 
 // Decode
+//
+// Deprecated: Encoded connections are no longer supported.
 func (ge *GobEncoder) Decode(subject string, data []byte, vPtr any) (err error) {
 	dec := gob.NewDecoder(bytes.NewBuffer(data))
 	err = dec.Decode(vPtr)

@@ -21,11 +21,15 @@ import (
 // JsonEncoder is a JSON Encoder implementation for EncodedConn.
 // This encoder will use the builtin encoding/json to Marshal
 // and Unmarshal most types, including structs.
+//
+// Deprecated: Encoded connections are no longer supported.
 type JsonEncoder struct {
 	// Empty
 }
 
 // Encode
+//
+// Deprecated: Encoded connections are no longer supported.
 func (je *JsonEncoder) Encode(subject string, v any) ([]byte, error) {
 	b, err := json.Marshal(v)
 	if err != nil {
@@ -35,6 +39,8 @@ func (je *JsonEncoder) Encode(subject string, v any) ([]byte, error) {
 }
 
 // Decode
+//
+// Deprecated: Encoded connections are no longer supported.
 func (je *JsonEncoder) Decode(subject string, data []byte, vPtr any) (err error) {
 	switch arg := vPtr.(type) {
 	case *string:

@@ -26,6 +26,8 @@ import (
 // turn numbers into appropriate strings that can be decoded. It will also
 // properly encoded and decode bools. If will encode a struct, but if you want
 // to properly handle structures you should use JsonEncoder.
+//
+// Deprecated: Encoded connections are no longer supported.
 type DefaultEncoder struct {
 	// Empty
 }
@@ -35,6 +37,8 @@ var falseB = []byte("false")
 var nilB = []byte("")
 
 // Encode
+//
+// Deprecated: Encoded connections are no longer supported.
 func (je *DefaultEncoder) Encode(subject string, v any) ([]byte, error) {
 	switch arg := v.(type) {
 	case string:
@@ -58,6 +62,8 @@ func (je *DefaultEncoder) Encode(subject string, v any) ([]byte, error) {
 }
 
 // Decode
+//
+// Deprecated: Encoded connections are no longer supported.
 func (je *DefaultEncoder) Decode(subject string, data []byte, vPtr any) error {
 	// Figure out what it's pointing to...
 	sData := *(*string)(unsafe.Pointer(&data))

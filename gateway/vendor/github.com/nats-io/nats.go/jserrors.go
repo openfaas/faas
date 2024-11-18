@@ -151,7 +151,10 @@ var (
 	// ErrSubscriptionClosed is returned when attempting to send pull request to a closed subscription
 	ErrSubscriptionClosed JetStreamError = &jsError{message: "subscription closed"}
 
-	// DEPRECATED: ErrInvalidDurableName is no longer returned and will be removed in future releases.
+	// ErrJetStreamPublisherClosed is returned for each unfinished ack future when JetStream.Cleanup is called.
+	ErrJetStreamPublisherClosed JetStreamError = &jsError{message: "jetstream context closed"}
+
+	// Deprecated: ErrInvalidDurableName is no longer returned and will be removed in future releases.
 	// Use ErrInvalidConsumerName instead.
 	ErrInvalidDurableName = errors.New("nats: invalid durable name")
 )
