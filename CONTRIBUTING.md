@@ -204,12 +204,6 @@ If you have a deeply technical request or need help debugging your application t
 
     There is a weekly Zoom call for any free user or customer to attend, topics are taken at the beginning of the call, and we will strive to give everyone time to talk.
 
-* Doesn't Open Source mean that everything is free?
-
-    The OpenFaaS Community Edition (CE) projects are licensed as MIT which means that you are free to use, modify and distribute the software within the terms of the license.
-    
-    Contributions, suggestions and feedback is welcomed in the appropriate channels as outlined in this guide. The MIT license does not cover support for PRs, Issues, Technical Support questions, feature requests and technical support/professional services which you may require; the preceding are not free and have a cost to those providing the services.
-
 * What is the SLA for my Issue?
 
     Issues are examined, triaged and answered on a best effort basis by volunteers and community contributors. This means that you may receive an initial response within any time period such as: 1 minute, 1 hour, 1 day, or 1 week. There is no implicit meaning to the time between you raising an issue and it being answered or resolved.
@@ -392,7 +386,7 @@ See also: [OpenFaaS Pro](https://docs.openfaas.com/openfaas-pro/introduction/)
 
 ## License
 
-OpenFaaS Community Edition (CE) is licensed under the MIT License.
+All third-party contributions are licensed under the MIT license, all OpenFaaS Ltd contributions are licensed under the [OpenFaaS CE EULA](https://github.com/openfaas/faas/blob/master/EULA.md).
 
 OpenFaaS Standard and OpenFaaS for Enterprises are proprietary and binaries are licensed under the commercial [OpenFaaS Pro EULA](https://github.com/openfaas/faas/blob/master/pro/EULA.md).
 

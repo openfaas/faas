@@ -1,3 +1,14 @@
+All contributions from Alex Ellis & OpenFaaS Ltd are licensed under the
+OpenFaaS Community Edition (CE) EULA between the years 2017,2019-2024.
+
+Contributions from third-parties are licensed under the MIT license.
+
+A license is required for commercial use of OpenFaaS CE:
+https://github.com/openfaas/faas/blob/master/EULA.md
+
+A separate commercial license covering all contributions can be purchased
+from OpenFaaS Ltd, with details available at: https://openfaas.com/pricing
+
 MIT License
 
 Copyright (c) 2016-2018 Alex Ellis

@@ -154,7 +154,7 @@ Have you written a blog about OpenFaaS? Do you have a speaking event? Send a Pul
 
 ### Contributing
 
-OpenFaaS Community Edition is written in Golang and contributions to the source code are made under the MIT license, additional restrictions may apply to OpenFaaS CE as a distribution. Various types of contributions are welcomed whether that means providing feedback, testing existing and new feature or hacking on the source code.
+OpenFaaS Community Edition is written in Golang. All third-party contributions to the source code are made under the MIT license, additional restrictions apply to OpenFaaS CE as a whole, where contributions from OpenFaaS Ltd are licensed under the [OpenFaaS CE EULA](EULA.md). Various types of contributions are welcomed whether that means providing feedback, testing existing and new feature or hacking on the source code.
 
 #### How do I become a contributor?
 

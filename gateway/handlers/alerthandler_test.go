@@ -1,5 +1,7 @@
-// Copyright (c) Alex Ellis 1017. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// License: OpenFaaS Community Edition (CE) EULA
+// Copyright (c) 2017,2019-2024 OpenFaaS Author(s)
+
+// Copyright (c) Alex Ellis 2017. All rights reserved.
 
 package handlers
 
