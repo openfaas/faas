@@ -1,8 +1,8 @@
 End User License Agreement (EULA) for OpenFaaS Community Edition
 
-Licensed Software. OpenFaaS Community Edition is provided as free software under this End User License Agreement (EULA). This EULA applies to all tooling, documentation, configuration, binaries, and container images produced by OpenFaaS Ltd since 2019.
+Licensed Software. OpenFaaS Community Edition is provided as free software under this End User License Agreement (EULA). This EULA applies to all source code, tooling, documentation, configuration, binaries, and container images produced by OpenFaaS Ltd 2017, 2019-2024. Any third-party contributions included in OpenFaaS Community Edition (CE) are licensed under the MIT License.
 
-1.1 Software Ownership. All available artifacts that comprise "OpenFaaS" (gateway, faasd, faas-netes, queue-worker, etc) including documentation, configuration, designs, binaries and container images are the sole property and copyright of OpenFaaS Ltd.
+1.1 Software Ownership. All available artifacts that comprise "OpenFaaS" (gateway, faasd, faas-netes, queue-worker, etc) including code, documentation, configuration, designs, binaries and container images are the sole property and copyright of OpenFaaS Ltd.
 
 1.2 Use Restrictions. Commercial use of the OpenFaaS Community Edition is limited to one installation per company and to a period not exceeding 60 days. The software cannot be resold, distributed to, or installed for a client for commercial purposes.
 
