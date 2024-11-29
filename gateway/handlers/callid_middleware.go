@@ -30,7 +30,7 @@ func MakeCallIDMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		r.Header.Add("X-Start-Time", fmt.Sprintf("%d", start.UTC().UnixNano()))
 		w.Header().Add("X-Start-Time", fmt.Sprintf("%d", start.UTC().UnixNano()))
 
-		w.Header().Add("X-Served-By", fmt.Sprintf("openfaas-community/%s", version))
+		w.Header().Add("X-Served-By", fmt.Sprintf("openfaas-ce/%s", version))
 
 		next(w, r)
 	}

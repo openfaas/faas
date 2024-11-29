@@ -38,6 +38,19 @@ If you either register on the OpenFaaS Pro web site for a free trial or otherwis
 
 This Agreement is effective from the first date you install the Software. You may terminate this Agreement at any time by permanently deleting, destroying and returning, at your own cost, the Software, all backup copies and all related materials provided by OpenFaaS Ltd. OpenFaaS Ltd or its licensors may terminate this Agreement at any time without notice if you fail to comply with any terms or conditions of this Agreement. Once it is terminated you MUST stop using this Software and delete all the Software and associated materials already copied and/or installed on your computer immediately.
 
+5. Termination and Continuing Obligations
+
+This Agreement is effective from the first date you install or access the Licensed Software and continues until terminated as set forth below:
+
+By the Customer: You may terminate this Agreement at any time by permanently deleting the Licensed Software, destroying all copies, and ceasing all use.
+By OpenFaaS Ltd: OpenFaaS Ltd may terminate this Agreement immediately upon written notice if you fail to comply with any terms or conditions herein, including use of the Licensed Software without a valid license key.
+
+Additionally:
+
+This Agreement shall terminate automatically without notice upon expiry of the license key or the failure to renew your subscription for the Licensed Software.
+Upon termination, you must immediately stop using the Licensed Software, delete all copies in your possession or control, and confirm in writing to OpenFaaS Ltd that these actions have been completed.
+Sections 1, 2, 4, 6, 7, and 8 of this Agreement shall survive termination.
+
 6. Customer Data
 
 6.1 Customer Data. In order to use the Products, Customer may need to complete a registration process and provide contact information such as an email address, credentials and other account billing information ("Account Data"). Customer must provide complete and accurate Account Data during the registration process and must keep Customer's Account Data up-to-date. Customer is prohibited from misrepresenting Customer's identity or affiliation with any company or other entity. By providing Account Data, Customer hereby consents that it may receive email or other communications from OpenFaaS Ltd. Such communications may include communications regarding Customer's use of the Products and/or commercial content relating to other OpenFaaS Ltd Products. If you do not wish to receive such communications, a Customer may opt-out by notifying OpenFaaS Ltd at contact@openfaas.com
