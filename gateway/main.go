@@ -129,6 +129,8 @@ func main() {
 	faasHandlers.FunctionStatus = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer, serviceAuthInjector)
 
 	faasHandlers.InfoHandler = handlers.MakeInfoHandler(handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer, serviceAuthInjector))
+	faasHandlers.TelemetryHandler = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer, nil)
+
 	faasHandlers.SecretHandler = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer, serviceAuthInjector)
 
 	faasHandlers.NamespaceListerHandler = handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer, serviceAuthInjector)
@@ -208,6 +210,8 @@ func main() {
 	r.HandleFunc("/function/{name:["+NameExpression+"]+}/{params:.*}", functionProxy)
 
 	r.HandleFunc("/system/info", faasHandlers.InfoHandler).Methods(http.MethodGet)
+	r.HandleFunc("/system/telemetry", faasHandlers.TelemetryHandler).Methods(http.MethodGet)
+
 	r.HandleFunc("/system/alert", faasHandlers.Alert).Methods(http.MethodPost)
 
 	r.HandleFunc("/system/function/{name:["+NameExpression+"]+}", faasHandlers.FunctionStatus).Methods(http.MethodGet)

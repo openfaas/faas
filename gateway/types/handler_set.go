@@ -34,6 +34,8 @@ type HandlerSet struct {
 	// InfoHandler provides version and build info
 	InfoHandler http.HandlerFunc
 
+	TelemetryHandler http.HandlerFunc
+
 	// SecretHandler enables secrets to be managed
 	SecretHandler http.HandlerFunc
 
