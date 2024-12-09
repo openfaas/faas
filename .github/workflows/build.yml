@@ -36,7 +36,7 @@ jobs:
           context: ./gateway
           file: ./gateway/Dockerfile
           outputs: "type=image,push=false"
-          platforms: linux/amd64,linux/arm/v7,linux/arm64
+          platforms: linux/amd64,linux/arm64
           build-args: |
             VERSION=${{ env.TAG }}
             GIT_COMMIT=${{ github.sha }}
