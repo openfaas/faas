@@ -1,4 +1,4 @@
-// Copyright 2022-2023 The NATS Authors
+// Copyright 2022-2024 The NATS Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -15,6 +15,7 @@ package nkeys
 
 import (
 	"bytes"
+	"crypto/ed25519"
 	"crypto/rand"
 	"encoding/binary"
 	"io"
@@ -40,17 +41,18 @@ type ckp struct {
 
 // CreateCurveKeys will create a Curve typed KeyPair.
 func CreateCurveKeys() (KeyPair, error) {
-	return CreateCurveKeysWithRand(rand.Reader)
+	return CreateCurveKeysWithRand(nil)
 }
 
 // CreateCurveKeysWithRand will create a Curve typed KeyPair
 // with specified rand source.
 func CreateCurveKeysWithRand(rr io.Reader) (KeyPair, error) {
 	var kp ckp
-	_, err := io.ReadFull(rr, kp.seed[:])
+	_, priv, err := ed25519.GenerateKey(rr)
 	if err != nil {
 		return nil, err
 	}
+	kp.seed = [curveKeyLen]byte(priv.Seed())
 	return &kp, nil
 }
 

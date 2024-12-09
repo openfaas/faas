@@ -19,7 +19,7 @@ github.com/gorilla/mux
 ## explicit; go 1.13
 # github.com/hashicorp/go-msgpack/v2 v2.1.2
 ## explicit; go 1.19
-# github.com/hashicorp/raft v1.7.0
+# github.com/hashicorp/raft v1.7.1
 ## explicit; go 1.20
 # github.com/klauspost/compress v1.17.11
 ## explicit; go 1.21
@@ -36,15 +36,15 @@ github.com/klauspost/compress/zstd/internal/xxhash
 # github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822
 ## explicit
 github.com/munnerz/goautoneg
-# github.com/nats-io/jwt/v2 v2.5.8
-## explicit; go 1.18
+# github.com/nats-io/jwt/v2 v2.7.2
+## explicit; go 1.22
 # github.com/nats-io/nats.go v1.37.0
 ## explicit; go 1.20
 github.com/nats-io/nats.go
 github.com/nats-io/nats.go/encoders/builtin
 github.com/nats-io/nats.go/internal/parser
 github.com/nats-io/nats.go/util
-# github.com/nats-io/nkeys v0.4.7
+# github.com/nats-io/nkeys v0.4.8
 ## explicit; go 1.20
 github.com/nats-io/nkeys
 # github.com/nats-io/nuid v1.0.1
@@ -73,7 +73,7 @@ github.com/prometheus/client_golang/prometheus/promhttp
 # github.com/prometheus/client_model v0.6.1
 ## explicit; go 1.19
 github.com/prometheus/client_model/go
-# github.com/prometheus/common v0.60.1
+# github.com/prometheus/common v0.61.0
 ## explicit; go 1.21
 github.com/prometheus/common/expfmt
 github.com/prometheus/common/model
@@ -82,31 +82,30 @@ github.com/prometheus/common/model
 github.com/prometheus/procfs
 github.com/prometheus/procfs/internal/fs
 github.com/prometheus/procfs/internal/util
-# go.etcd.io/bbolt v1.3.10
-## explicit; go 1.21
+# go.etcd.io/bbolt v1.3.11
+## explicit; go 1.22
 # go.uber.org/goleak v1.3.0
 ## explicit; go 1.20
 go.uber.org/goleak
 go.uber.org/goleak/internal/stack
-# golang.org/x/crypto v0.29.0
+# golang.org/x/crypto v0.30.0
 ## explicit; go 1.20
 golang.org/x/crypto/blake2b
 golang.org/x/crypto/curve25519
-golang.org/x/crypto/ed25519
 golang.org/x/crypto/internal/alias
 golang.org/x/crypto/internal/poly1305
 golang.org/x/crypto/nacl/box
 golang.org/x/crypto/nacl/secretbox
 golang.org/x/crypto/salsa20/salsa
-# golang.org/x/sync v0.9.0
+# golang.org/x/sync v0.10.0
 ## explicit; go 1.18
 golang.org/x/sync/singleflight
-# golang.org/x/sys v0.27.0
+# golang.org/x/sys v0.28.0
 ## explicit; go 1.18
 golang.org/x/sys/cpu
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/time v0.5.0
+# golang.org/x/time v0.8.0
 ## explicit; go 1.18
 # google.golang.org/protobuf v1.35.2
 ## explicit; go 1.21

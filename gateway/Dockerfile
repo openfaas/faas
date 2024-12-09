@@ -1,6 +1,6 @@
 FROM --platform=${BUILDPLATFORM:-linux/amd64} ghcr.io/openfaas/license-check:0.4.1 AS license-check
 
-FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.22 AS build
+FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.23 AS build
 
 ENV GO111MODULE=on
 ENV CGO_ENABLED=0
@@ -44,7 +44,7 @@ RUN CGO_ENABLED=${CGO_ENABLED} GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build --
     -X github.com/openfaas/faas/gateway/types.Arch=${TARGETARCH}" \
     -o gateway .
 
-FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.20.1 AS ship
+FROM --platform=${TARGETPLATFORM:-linux/amd64} alpine:3.21.0 AS ship
 
 LABEL org.label-schema.license="OpenFaaS CE EULA - non-commercial" \
     org.label-schema.vcs-url="https://github.com/openfaas/faas" \
