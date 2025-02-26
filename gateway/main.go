@@ -256,7 +256,7 @@ func main() {
 	r.HandleFunc("/healthz",
 		handlers.MakeForwardingProxyHandler(reverseProxy, forwardingNotifiers, urlResolver, nilURLTransformer, serviceAuthInjector)).Methods(http.MethodGet)
 
-	r.Handle("/", http.RedirectHandler("/ui/", http.StatusMovedPermanently)).Methods(http.MethodGet)
+	r.Handle("/", http.RedirectHandler("/ui/", http.StatusTemporaryRedirect)).Methods(http.MethodGet)
 
 	tcpPort := 8080
 
