@@ -14,6 +14,10 @@ Your Agreement. By accessing, executing, or otherwise using the OpenFaaS Communi
 
 2.3 Governing Law. This Agreement shall be governed by, and construed in accordance with, the laws of England and Wales.
 
+2.4 Entire Agreement and Supersession.
+
+This Agreement, together with any referenced Order Form, forms the entire agreement between the Customer and OpenFaaS Ltd. regarding the Licensed Software, superseding all prior or existing agreements, including any purchase order (PO) terms submitted by the Customer. Any PO T&Cs are void and replaced by this Agreement unless OpenFaaS Ltd. agrees otherwise in writing.
+
 License Grant; Ownership.
 
 3.1 License Grant. Subject to the terms and conditions of this Agreement, OpenFaaS Ltd hereby grants to the Customer a limited, non-exclusive, non-transferable, revocable license to use the OpenFaaS Community Edition solely for internal business purposes and in accordance with the restrictions set forth herein.
