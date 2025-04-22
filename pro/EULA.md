@@ -80,6 +80,4 @@ Sections 1, 2, 4, 6, 7, and 8 of this Agreement shall survive termination.
 
 8.3 Limitation of Liability. To the extent permitted by applicable law, the liability of OpenFaaS Ltd and its licensors, personnel, subcontractors and suppliers arising out of, in connection with, or resulting from this Agreement and, without limitation, for any and all causes with respect to the Licensed Program Materials, breach of contract, tort, warranty or otherwise, shall in the aggregate not exceed the license fees paid by Licensee hereunder in the twelve (12) months immediately preceding the event giving rise to the claim.
 
-8.3 Sections 1, 2, 3, 4, 5, 6, 7 and 8 will remain effective after the termination of the Agreement.
-
-8.4 If you have any questions about these terms or our Services you may contact us by email at: contact@openfaas.com
+9. If you have any questions about these terms or our Services you may contact us by email at: contact@openfaas.com
