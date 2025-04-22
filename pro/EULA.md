@@ -34,13 +34,9 @@ If you either register on the OpenFaaS Pro web site for a free trial or otherwis
 
 4.5 Feedback. Customer may provide feedback to OpenFaaS Ltd about the Products (e.g. technical support input, suggestions, or enhancement requests). OpenFaaS Ltd may develop, modify, and improve the Products based on Customer’s Feedback without obligation to Customer, and Customer irrevocably assigns to OpenFaaS Ltd all right, title, and interest in that Feedback.
 
-5. Termination and ongoing effectiveness
-
-This Agreement is effective from the first date you install the Software. You may terminate this Agreement at any time by permanently deleting, destroying and returning, at your own cost, the Software, all backup copies and all related materials provided by OpenFaaS Ltd. OpenFaaS Ltd or its licensors may terminate this Agreement at any time without notice if you fail to comply with any terms or conditions of this Agreement. Once it is terminated you MUST stop using this Software and delete all the Software and associated materials already copied and/or installed on your computer immediately.
-
 5. Termination and Continuing Obligations
 
-This Agreement is effective from the first date you install or access the Licensed Software and continues until terminated as set forth below:
+5.1 This Agreement is effective from the first date you install or access the Licensed Software and continues until terminated as set forth below:
 
 By the Customer: You may terminate this Agreement at any time by permanently deleting the Licensed Software, destroying all copies, and ceasing all use.
 By OpenFaaS Ltd: OpenFaaS Ltd may terminate this Agreement immediately upon written notice if you fail to comply with any terms or conditions herein, including use of the Licensed Software without a valid license key.
@@ -50,6 +46,11 @@ Additionally:
 This Agreement shall terminate automatically without notice upon expiry of the license key or the failure to renew your subscription for the Licensed Software.
 Upon termination, you must immediately stop using the Licensed Software, delete all copies in your possession or control, and confirm in writing to OpenFaaS Ltd that these actions have been completed.
 Sections 1, 2, 4, 6, 7, and 8 of this Agreement shall survive termination.
+
+5.2 License Renewal and Customer Responsibilities
+
+(a) It is the sole responsibility of the Customer to renew and remit payment for any licenses for the Licensed Software in a timely manner to maintain uninterrupted access and compliance with this Agreement. OpenFaaS Ltd. recommends that Customers request a renewal quote at least thirty (30) days prior to the expiry of the current license to ensure sufficient time for processing.
+(b) OpenFaaS Ltd. shall bear no costs, liabilities, or obligations related to the Customer's failure to renew or remit payment for licenses in a timely manner. The Customer acknowledges and agrees that maintaining a valid and active license is 100% their responsibility, and any interruption or cessation of access to the Licensed Software due to non-renewal or non-payment shall not entitle the Customer to any remedies or compensation from OpenFaaS Ltd.
 
 6. Customer Data
 
