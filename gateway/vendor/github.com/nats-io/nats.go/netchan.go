@@ -113,5 +113,5 @@ func (c *EncodedConn) bindRecvChan(subject, queue string, channel any) (*Subscri
 		chVal.Send(oPtr)
 	}
 
-	return c.Conn.subscribe(subject, queue, cb, nil, false, nil)
+	return c.Conn.subscribe(subject, queue, cb, nil, nil, false, nil)
 }

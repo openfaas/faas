@@ -52,14 +52,14 @@ func main() {
 	var credentials *auth.BasicAuthCredentials
 
 	if config.UseBasicAuth {
-		var readErr error
+		var err error
 		reader := auth.ReadBasicAuthFromDisk{
 			SecretMountPath: config.SecretMountPath,
 		}
-		credentials, readErr = reader.Read()
+		credentials, err = reader.Read()
 
-		if readErr != nil {
-			log.Panicf(readErr.Error())
+		if err != nil {
+			log.Panic(err.Error())
 		}
 	}
 

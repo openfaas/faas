@@ -7,8 +7,8 @@ A [Go](http://golang.org) client for the [NATS messaging system](https://nats.io
 [License-Image]: https://img.shields.io/badge/License-Apache2-blue.svg
 [ReportCard-Url]: https://goreportcard.com/report/github.com/nats-io/nats.go
 [ReportCard-Image]: https://goreportcard.com/badge/github.com/nats-io/nats.go
-[Build-Status-Url]: https://travis-ci.com/github/nats-io/nats.go
-[Build-Status-Image]: https://travis-ci.com/nats-io/nats.go.svg?branch=main
+[Build-Status-Url]: https://github.com/nats-io/nats.go/actions
+[Build-Status-Image]: https://github.com/nats-io/nats.go/actions/workflows/ci.yaml/badge.svg?branch=main
 [GoDoc-Url]: https://pkg.go.dev/github.com/nats-io/nats.go
 [GoDoc-Image]: https://img.shields.io/badge/GoDoc-reference-007d9c
 [Coverage-Url]: https://coveralls.io/r/nats-io/nats.go?branch=main
@@ -19,25 +19,14 @@ A [Go](http://golang.org) client for the [NATS messaging system](https://nats.io
 ## Installation
 
 ```bash
-# Go client
-go get github.com/nats-io/nats.go/
+# To get the latest released Go client:
+go get github.com/nats-io/nats.go@latest
 
-# Server
-go get github.com/nats-io/nats-server
-```
+# To get a specific version:
+go get github.com/nats-io/nats.go@v1.45.0
 
-When using or transitioning to Go modules support:
-
-```bash
-# Go client latest or explicit version
-go get github.com/nats-io/nats.go/@latest
-go get github.com/nats-io/nats.go/@v1.37.0
-
-# For latest NATS Server, add /v2 at the end
-go get github.com/nats-io/nats-server/v2
-
-# NATS Server v1 is installed otherwise
-# go get github.com/nats-io/nats-server
+# Note that the latest major version for NATS Server is v2:
+go get github.com/nats-io/nats-server/v2@latest
 ```
 
 ## Basic Usage

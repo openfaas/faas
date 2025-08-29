@@ -76,14 +76,15 @@ var wsGUID = []byte("258EAFA5-E914-47DA-95CA-C5AB0DC85B11")
 var compressFinalBlock = []byte{0x00, 0x00, 0xff, 0xff, 0x01, 0x00, 0x00, 0xff, 0xff}
 
 type websocketReader struct {
-	r       io.Reader
-	pending [][]byte
-	ib      []byte
-	ff      bool
-	fc      bool
-	nl      bool
-	dc      *wsDecompressor
-	nc      *Conn
+	r        io.Reader
+	pending  [][]byte
+	compress bool
+	ib       []byte
+	ff       bool
+	fc       bool
+	nl       bool
+	dc       *wsDecompressor
+	nc       *Conn
 }
 
 type wsDecompressor struct {
@@ -237,8 +238,8 @@ func (r *websocketReader) Read(p []byte) (int, error) {
 		case wsPingMessage, wsPongMessage, wsCloseMessage:
 			if rem > wsMaxControlPayloadSize {
 				return 0, fmt.Errorf(
-					fmt.Sprintf("control frame length bigger than maximum allowed of %v bytes",
-						wsMaxControlPayloadSize))
+					"control frame length bigger than maximum allowed of %v bytes",
+					wsMaxControlPayloadSize)
 			}
 			if compressed {
 				return 0, errors.New("control frame should not be compressed")
@@ -312,6 +313,8 @@ func (r *websocketReader) Read(p []byte) (int, error) {
 				}
 				r.fc = false
 			}
+		} else if r.compress {
+			b = bytes.Clone(b)
 		}
 		// Add to the pending list if dealing with uncompressed frames or
 		// after we have received the full compressed message and decompressed it.
@@ -622,7 +625,7 @@ func (nc *Conn) wsInitHandshake(u *url.URL) error {
 			!strings.EqualFold(resp.Header.Get("Connection"), "upgrade") ||
 			resp.Header.Get("Sec-Websocket-Accept") != wsAcceptKey(wsKey)) {
 
-		err = fmt.Errorf("invalid websocket connection")
+		err = errors.New("invalid websocket connection")
 	}
 	// Check compression extension...
 	if err == nil && compress {
@@ -634,7 +637,7 @@ func (nc *Conn) wsInitHandshake(u *url.URL) error {
 		if !srvCompress {
 			compress = false
 		} else if !noCtxTakeover {
-			err = fmt.Errorf("compression negotiation error")
+			err = errors.New("compression negotiation error")
 		}
 	}
 	if resp != nil {
@@ -647,6 +650,7 @@ func (nc *Conn) wsInitHandshake(u *url.URL) error {
 
 	wsr := wsNewReader(nc.br.r)
 	wsr.nc = nc
+	wsr.compress = compress
 	// We have to slurp whatever is in the bufio reader and copy to br.r
 	if n := br.Buffered(); n != 0 {
 		wsr.ib, _ = br.Peek(n)

@@ -12,7 +12,6 @@
 // limitations under the License.
 
 //go:build internal_testing
-// +build internal_testing
 
 // Functions in this file are only available when building nats.go with the
 // internal_testing build tag. They are used by the nats.go test suite.
