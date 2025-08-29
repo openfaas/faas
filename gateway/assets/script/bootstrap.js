@@ -23,6 +23,24 @@ app.controller("home", ['$scope', '$log', '$http', '$location', '$interval', '$f
             contentType: "text"
         };
 
+        // License banner functionality
+        $scope.showLicenseBanner = true; // Always show on page load
+        $scope.bannerCanBeDismissed = false; // Start as non-dismissible
+        
+        // Enable dismissal after 5 seconds
+        $interval(function() {
+            $scope.bannerCanBeDismissed = true;
+        }, 5000, 1); // Run once after 5 seconds
+        
+        $scope.dismissLicenseBanner = function() {
+            if ($scope.bannerCanBeDismissed) {
+                $scope.showLicenseBanner = false;
+            }
+        };
+        $scope.openPricingPage = function() {
+            window.open('https://openfaas.com/pricing', '_blank');
+        };
+
         $scope.baseUrl = $location.absUrl().replace(/\ui\/$/, '');
 
         try {

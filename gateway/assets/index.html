@@ -25,6 +25,21 @@
     <div class="jsonly">
     <div layout="column" ng-cloak>
 
+        <!-- EULA Banner -->
+        <div id="eula-banner" class="eula-banner" ng-show="showLicenseBanner">
+            <div class="eula-banner-content">
+                <span class="eula-banner-text">
+                    <strong>OpenFaaS CE</strong> is a limited version for personal use or a single 60-day trial. 
+                    <button class="eula-banner-button" ng-click="openPricingPage()" aria-label="Learn more about OpenFaaS licensing">Learn more</button>
+                </span>
+                <button class="eula-banner-close" 
+                        ng-class="{'eula-banner-close-disabled': !bannerCanBeDismissed}"
+                        ng-click="dismissLicenseBanner()" 
+                        ng-disabled="!bannerCanBeDismissed"
+                        aria-label="Dismiss banner">×</button>
+            </div>
+        </div>
+
         <md-toolbar class="md-theme-indigo" hide-gt-sm>
             <div class="md-toolbar-tools no-pad">
                 <md-button ng-click="toggleSideNav()" class="md-icon-button" aria-label="Menu">

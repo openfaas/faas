@@ -2,6 +2,99 @@ body {
 	background-color: rgb(243, 244, 250);
 }
 
+/* EULA Banner Styles */
+.eula-banner {
+	background-color: #fff3cd;
+	border: 1px solid #ffeaa7;
+	color: #856404;
+	padding: 0;
+	position: relative;
+	z-index: 1000;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Hide banner when modal dialogs are open */
+.md-dialog-is-showing .eula-banner {
+	display: none !important;
+}
+
+.eula-banner-content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 16px;
+	max-width: 100%;
+}
+
+.eula-banner-text {
+	flex: 1;
+	font-size: 14px;
+	line-height: 1.4;
+}
+
+.eula-banner-button {
+	background-color: #856404;
+	border: none;
+	border-radius: 4px;
+	color: white;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: 500;
+	margin-left: 8px;
+	padding: 4px 12px;
+	transition: background-color 0.2s ease;
+	vertical-align: baseline;
+}
+
+.eula-banner-button:hover {
+	background-color: #533f03;
+}
+
+.eula-banner-button:focus {
+	outline: 2px solid #856404;
+	outline-offset: 2px;
+}
+
+.eula-banner-close {
+	background: none;
+	border: none;
+	color: #856404;
+	cursor: pointer;
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 1;
+	margin-left: 16px;
+	padding: 0;
+	width: 24px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 4px;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.eula-banner-close:hover:not(:disabled) {
+	background-color: rgba(133, 100, 4, 0.1);
+}
+
+.eula-banner-close:focus:not(:disabled) {
+	outline: 2px solid #856404;
+	outline-offset: 2px;
+}
+
+.eula-banner-close-disabled,
+.eula-banner-close:disabled {
+	color: #bbb !important;
+	cursor: not-allowed !important;
+	opacity: 0.5;
+}
+
+.eula-banner-close-disabled:hover,
+.eula-banner-close:disabled:hover {
+	background-color: transparent !important;
+}
+
 md-content.blankslate {
 	background-color: rgb(243, 244, 250);
 	padding-top: 50px;
