@@ -30,6 +30,22 @@ OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and 
 * Integrate with Istio or Linkerd with [Featured Tutorials](https://docs.openfaas.com/tutorials/featured/#service-mesh)
 * Deploy to [Kubernetes or OpenShift](https://docs.openfaas.com/deployment/)
 
+## OpenFaaS Tiers and Pricing
+
+This repository is part of OpenFaaS Community Edition (CE), which is licensed for non-commercial use by individuals, and a time-limited trial for commercial Proof Of Concepts (PoC). Internal use within a company or business requires a license.
+
+OpenFaaS CE:
+
+* has usage restrictions, which you can learn about in the [OpenFaaS CE EULA](EULA.md)
+* has basic or primitive features and capabilities compared to the commercial versions
+* is not licensed for commercial use of any kind beyond an initial trial period
+
+OpenFaaS Standard and OpenFaaS for Enterprises are full and distinct commercial products. 
+
+They are maintained and developed independently, by a full-time team, with commercial support, and active maintenance for CVEs, and updates in the Kubernetes and Cloud Native ecosystem.
+
+Learn more about the tiers at [https://www.openfaas.com/pricing/](https://www.openfaas.com/pricing/)
+
 ## Overview of OpenFaaS (Serverless Functions Made Simple)
 
 ![Conceptual architecture](/docs/of-layer-overview.png)
@@ -122,12 +138,6 @@ Everyday Go is a practical, hands-on guide to writing CLIs, web pages, and micro
 * Read the documentation: [docs.openfaas.com](https://docs.openfaas.com/deployment)
 * Read latest news and tutorials on the [Official Blog](https://www.openfaas.com/blog/)
 
-## Community Sponsorship
-
-OpenFaaS users can subscribe to a weekly Community Newsletter called Insiders Updates, to keep up to date with new features, bug fixes, events, tutorials and security patches. Insiders Updates are written by the project founder and distributed via GitHub Sponsors.
-
-* [Get a Community Subscription](https://github.com/sponsors/openfaas/)
-
 ### Quickstart
 
 ![OpenFaaS Community Edition UI](/docs/inception.png)
@@ -170,27 +180,15 @@ An alternative community dashboard is [available here](https://grafana.com/dashb
 
 ### Press / Branding / Website Sponsorship
 
-* Individual Sponsorships 🍻
-
-    Users and contributors are encouraged to join their peers in supporting the OpenFaaS project through [GitHub Sponsors](https://github.com/sponsors/openfaas).
-
-* OpenFaaS Pro for Production
-
-    OpenFaaS Pro (Standard and For Enterprises) is built for production, the [Community Edition (CE)](EULA.md) is suitable for a Proof of Concept (PoC), for experimentation, and some limited internal use.
-
-    [Learn more about OpenFaaS editions](https://openfaas.com/pricing/)
-
 * Website Sponsorship 🌎
 
-  Companies and brands are welcome to sponsor [openfaas.com](https://www.openfaas.com/), the Gold and Platinum tiers come with a homepage logo, [see costs and tiers](https://github.com/sponsors/openfaas). Website sponsorships are payable by invoice.
+  If you'd like to gain visibility by displaying your logon on the [openfaas.com](https://www.openfaas.com/) homepage, feel free to reach out via email or browse the tiers via [GitHub Sponsors](https://github.com/sponsors/openfaas).
 
-* Press / Branding 📸
+* Press / Analysts
 
-  For information on branding, the press-kit, registered entities and sponsorship head over to the [openfaas/media](https://github.com/openfaas/media/blob/master/README.md) repo. You can also order custom SWAG or take part in the weekly Twitter contest [#FaaSFriday](https://twitter.com/search?q=faasfriday&src=typd)
+  Looking at these repositories for commit counts and activity? All public repositories are part of OpenFaaS CE, a limited version of OpenFaaS aimed at giving people a low-barrier trial experience without having to sign up with a credit card. OpenFaaS CE is maintained on a best effort basis, but is not "OpenFaaS" itself. All OpenFaaS product development is done in private repositories, and cannot be tracked by third parties or by simply browsing GitHub.
 
-  Looking for statistics? This project does not use a mono-repo, but is split across several components. Use [Ken Fukuyama's dashboard](https://kenfdev.o6s.io/github-stats-page) to gather accurate counts on contributors, stars and forks across the [GitHub organisation](https://github.com/openfaas).
-
-  > Note: any statistics you gather about the openfaas/faas repository will be invalid, the faas repo is not representative of the project's activity.
+  How are GitHub Stars and Forks counted? OpenFaaS CE is not a mono-repo, you cannot simply look at one repository and say "ah that's the count" - statistics are gathered from the whole [GitHub organisation](https://github.com/openfaas).
 
 ### Governance
 
@@ -201,5 +199,3 @@ OpenFaaS is hosted by OpenFaaS Ltd (registration: 11076587), a company which als
 ### Users
 
 View a selection of end-user companies who have given permission to have their logo listed at [openfaas.com](https://www.openfaas.com/).
-
-If you're using OpenFaaS please let us know [on this thread](https://github.com/openfaas/faas/issues/776). In addition, you are welcome to request to have your logo listed on the homepage. Thank you for your support.
