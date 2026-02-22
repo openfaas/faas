@@ -149,6 +149,8 @@ Everyday Go is a practical, hands-on guide to writing CLIs, web pages, and micro
 
 Deploy OpenFaaS to Kubernetes, OpenShift, or faasd now with a [deployment guide](https://docs.openfaas.com/deployment/)
 
+OpenFaaS Standard and OpenFaaS for Enterprises have their own, brand new dashboard with multi-tenancy support, learn more about the [OpenFaaS Dashboard](https://docs.openfaas.com/openfaas-pro/dashboard/).
+
 ### Video presentations
 
 * [Meet faasd. Look Ma’ No Kubernetes! 2020](https://www.youtube.com/watch?v=ZnZJXI377ak&feature=youtu.be)
