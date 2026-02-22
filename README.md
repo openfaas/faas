@@ -54,11 +54,13 @@ Learn more about the tiers at [https://www.openfaas.com/pricing/](https://www.op
 
 ### Code samples
 
-You can generate new functions using the `faas-cli` and built-in templates or use any binary for Windows or Linux in a container.
+You can scaffold a new function using the `faas-cli new` command passing in the name of the function and the language template you want to use i.e. `faas-cli new --lang node20 stripe-webhooks`.
 
 Official templates exist for many popular languages and are easily extensible with Dockerfiles.
 
-* Node.js (`node12`) example:
+Learn about [OpenFaaS templates in the docs](https://docs.openfaas.com/languages/overview/)
+
+* Node.js (`node20`) example:
 
     ```js
    "use strict"
@@ -76,39 +78,40 @@ Official templates exist for many popular languages and are easily extensible wi
     ```
     *handler.js*
 
-* Python 3 example:
+* Python 3 example (`python3-http`):
 
     ```python
-    import requests
-
-    def handle(req):
-        r =  requests.get(req, timeout = 1)
-        return "{} => {:d}".format(req, r.status_code)
+    def handle(event, context):
+        return {
+            "statusCode": 200,
+            "body": "Hello from OpenFaaS!"
+        }
     ```
+
     *handler.py*
 
-* Golang example (`golang-http`)
+* Golang example (`golang-middleware`)
 
-    ```golang
+    ```go
     package function
-
+    
     import (
-        "fmt"
-        "net/http"
-
-        handler "github.com/openfaas/templates-sdk/go-http"
+     	"fmt"
+     	"io"
+     	"net/http"
     )
-
-    // Handle a function invocation
-    func Handle(req handler.Request) (handler.Response, error) {
-        var err error
-
-        message := fmt.Sprintf("Body: %s", string(req.Body))
-
-        return handler.Response{
-            Body:       []byte(message),
-            StatusCode: http.StatusOK,
-        }, err
+    
+    func Handle(w http.ResponseWriter, r *http.Request) {
+   	    var input []byte
+        
+       	if r.Body != nil {
+        		defer r.Body.Close()
+        		body, _ := io.ReadAll(r.Body)
+        		input = body
+       	}
+        
+       	w.WriteHeader(http.StatusOK)
+       	w.Write([]byte(fmt.Sprintf("Body: %s", string(input))))
     }
     ```
 
