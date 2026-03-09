@@ -45,7 +45,7 @@ Additionally:
 
 This Agreement shall terminate automatically without notice upon expiry of the license key or the failure to renew your subscription for the Licensed Software.
 Upon termination, you must immediately stop using the Licensed Software, delete all copies in your possession or control, and confirm in writing to OpenFaaS Ltd that these actions have been completed.
-Sections 1, 2, 4, 6, 7, and 8 of this Agreement shall survive termination.
+Sections 1, 2, 4, 6, 7, 8, and 9 of this Agreement shall survive termination.
 
 5.2 License Renewal and Customer Responsibilities
 
@@ -80,4 +80,12 @@ Sections 1, 2, 4, 6, 7, and 8 of this Agreement shall survive termination.
 
 8.3 Limitation of Liability. To the extent permitted by applicable law, the liability of OpenFaaS Ltd and its licensors, personnel, subcontractors and suppliers arising out of, in connection with, or resulting from this Agreement and, without limitation, for any and all causes with respect to the Licensed Program Materials, breach of contract, tort, warranty or otherwise, shall in the aggregate not exceed the license fees paid by Licensee hereunder in the twelve (12) months immediately preceding the event giving rise to the claim.
 
-9. If you have any questions about these terms or our Services you may contact us by email at: contact@openfaas.com
+9. Purchase Orders
+
+9.1 Any purchase order issued by Customer is for administrative or billing purposes only.
+
+9.2 Any terms or conditions contained in a purchase order, vendor portal, or other Customer-provided document shall have no force or effect, and shall not modify, supersede, or supplement this Agreement or the applicable Order Form.
+
+9.3 In the event of any conflict between documents, the Order Form and this Agreement shall prevail.
+
+10. If you have any questions about these terms or our Services you may contact us by email at: contact@openfaas.com
