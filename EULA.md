@@ -58,8 +58,12 @@ General Provisions.
 
 8.4 Consequences of Violation: Any attempt to bypass or violate the installation and usage restrictions, as described in Sections 8.1 and 8.2, may result in immediate termination of this EULA and the License granted hereunder. Further, the Customer may be subject to legal action and liable for damages resulting from any such violation.
 
+8.5 Prior Commercial Licensees. Any company, organisation, or other legal entity that has at any time held, or been named on, a valid paid license, subscription, Order Form, or other paid entitlement for OpenFaaS Standard, OpenFaaS for Enterprises, or OpenFaaS Edge (collectively, "Commercial Editions") is permanently ineligible to use the OpenFaaS Community Edition under this Agreement, whether for evaluation, internal use, migration, contingency, or any other purpose. This restriction applies regardless of whether the prior Commercial Edition has expired, been terminated, been suspended, or not been renewed. For the avoidance of doubt, the 60-day evaluation period in Section 8.1 does not apply to, and may not be invoked by, any such prior commercial licensee. The OpenFaaS Community Edition may not be used as a bridge, downgrade, fallback, replacement, or continuation of use following the expiry, termination, suspension, or non-renewal of any Commercial Edition. Any use of the OpenFaaS Community Edition in breach of this Section 8.5 shall constitute unauthorised use of the software and a material breach of this Agreement, entitling OpenFaaS Ltd to exercise any rights or remedies available under this Agreement or applicable law.
+
 9.1 Entire Agreement. This EULA constitutes the entire agreement between the parties concerning the subject matter hereof.
 
-9.2 Sections 1-8 will remain effective after the termination of the Agreement.
+9.2 Variation and Waiver. Any waiver, consent, exception, or variation under this Agreement, including any exception to Sections 8.1 through 8.5, is valid only if it is in writing and signed by an authorised representative of OpenFaaS Ltd. No failure or delay by OpenFaaS Ltd to enforce any provision of this Agreement shall operate as a waiver of that provision or any other provision.
 
-9.3 Contact Information. For questions about these terms, contact OpenFaaS Ltd at: contact@openfaas.com.
+9.3 Sections 1-9 will remain effective after the termination of the Agreement.
+
+9.4 Contact Information. For questions about these terms, contact OpenFaaS Ltd at: contact@openfaas.com.
