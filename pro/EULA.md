@@ -34,6 +34,16 @@ If you either register on the OpenFaaS Pro web site for a free trial or otherwis
 
 4.5 Feedback. Customer may provide feedback to OpenFaaS Ltd about the Products (e.g. technical support input, suggestions, or enhancement requests). OpenFaaS Ltd may develop, modify, and improve the Products based on Customer’s Feedback without obligation to Customer, and Customer irrevocably assigns to OpenFaaS Ltd all right, title, and interest in that Feedback.
 
+4.6 Transition to Standard Requires Prior Written Approval; Historical Custom Terms. OpenFaaS Standard is a separate commercial offering made available on Supplier's standard commercial, legal, support, ordering, and procurement terms.
+
+Where Customer has licensed OpenFaaS for Enterprises, or where Customer has required, accepted, or benefited from any custom, negotiated, or non-standard legal, commercial, support, security, onboarding, invoicing, procurement, or other business terms or processes in connection with OpenFaaS Standard or OpenFaaS for Enterprises, Customer may not renew, convert, downgrade, migrate, transition to, or obtain OpenFaaS Standard through Supplier's standard checkout, standard invoice flow, or standard-form terms unless Supplier has first approved that transition in writing.
+
+For the avoidance of doubt, this Section reflects that OpenFaaS Standard is offered only on Supplier's standard-form legal and commercial basis, whereas Enterprise arrangements may include bespoke legal, support, liability, security, procurement, and commercial terms that cannot be unwound, replaced, or transitioned through self-service purchase, standard-form terms, or by implication.
+
+Any such transition requires new legal review, new scoping, and a new written agreement signed by authorised representatives of both parties. Supplier may approve or decline any such request in its discretion and may condition any approved transition on revised pricing, a minimum term, transition fees, professional services fees, and such technical, legal, and commercial conditions as Supplier specifies in the applicable Order Form or migration agreement.
+
+Supplier is under no obligation to preserve any prior discount, concession, service level, indemnity, liability position, support arrangement, or other non-standard term except as expressly set out in that new written agreement.
+
 5. Termination and Continuing Obligations
 
 5.1 This Agreement is effective from the first date you install or access the Licensed Software and continues until terminated as set forth below:
@@ -45,12 +55,16 @@ Additionally:
 
 This Agreement shall terminate automatically without notice upon expiry of the license key or the failure to renew your subscription for the Licensed Software.
 Upon termination, you must immediately stop using the Licensed Software, delete all copies in your possession or control, and confirm in writing to OpenFaaS Ltd that these actions have been completed.
-Sections 1, 2, 4, 6, 7, 8, and 9 of this Agreement shall survive termination.
+Sections 1, 2, 4, 5, 6, 7, 8, and 9 of this Agreement shall survive termination.
 
 5.2 License Renewal and Customer Responsibilities
 
 (a) It is the sole responsibility of the Customer to renew and remit payment for any licenses for the Licensed Software in a timely manner to maintain uninterrupted access and compliance with this Agreement. OpenFaaS Ltd. recommends that Customers request a renewal quote at least thirty (30) days prior to the expiry of the current license to ensure sufficient time for processing.
 (b) OpenFaaS Ltd. shall bear no costs, liabilities, or obligations related to the Customer's failure to renew or remit payment for licenses in a timely manner. The Customer acknowledges and agrees that maintaining a valid and active license is 100% their responsibility, and any interruption or cessation of access to the Licensed Software due to non-renewal or non-payment shall not entitle the Customer to any remedies or compensation from OpenFaaS Ltd.
+
+5.3 No Implied Continuity or Unapproved Transition
+
+Expiry, termination, suspension, or non-renewal of the Licensed Software does not create or imply any right for the Customer to continue operations under OpenFaaS Community Edition or under OpenFaaS Standard, whether by self-service purchase, standard invoice process, or otherwise. Where Section 4.6 applies, any replacement, migration, transition to OpenFaaS Standard, or continued use requires Supplier's prior written approval and a new written agreement signed by authorised representatives of both parties.
 
 6. Customer Data
 
@@ -87,5 +101,7 @@ Sections 1, 2, 4, 6, 7, 8, and 9 of this Agreement shall survive termination.
 9.2 Any terms or conditions contained in a purchase order, vendor portal, or other Customer-provided document shall have no force or effect, and shall not modify, supersede, or supplement this Agreement or the applicable Order Form.
 
 9.3 In the event of any conflict between documents, the Order Form and this Agreement shall prevail.
+
+9.4 Variation and Waiver. Any waiver, consent, exception, or variation of this Agreement, including any approval under Sections 4.6 or 5.3, is effective only if it is in writing and signed by authorised representatives of both parties. No failure or delay by OpenFaaS Ltd to enforce any provision of this Agreement shall operate as a waiver of that provision or any other provision.
 
 10. If you have any questions about these terms or our Services you may contact us by email at: contact@openfaas.com
