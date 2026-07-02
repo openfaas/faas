@@ -8,7 +8,9 @@
 
 OpenFaaS&reg; makes it easy for developers to deploy event-driven functions and microservices to Kubernetes without repetitive, boiler-plate coding. Package your code or an existing binary in an OCI-compatible image to get a highly scalable endpoint with auto-scaling and metrics.
 
-[![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/fold_left.svg?style=social&label=Follow%20%40openfaas)](https://twitter.com/openfaas)
+> "OpenFaaS Community Edition (CE) is licensed for individual exploration and hobbyist use. A 60 day limit applies for commercial PoCs. Commercial and production workloads require OpenFaaS Standard or OpenFaaS for Enterprises."
+
+[![Follow @openfaas on X](https://img.shields.io/twitter/url/https/twitter.com/fold_left.svg?style=social&label=Follow%20%40openfaas)](https://x.com/openfaas)
 
 **Highlights**
 
@@ -184,6 +186,12 @@ Example of a Grafana dashboard linked to OpenFaaS showing auto-scaling live in a
 An alternative community dashboard is [available here](https://grafana.com/dashboards/3434)
 
 ### Press / Branding / Website Sponsorship
+
+* OpenFaaS for commercial and internal use
+
+    OpenFaaS Pro (Standard and For Enterprises) is fully featured, supported, and built for production. The [Community Edition (CE)](EULA.md) is licensed for a 60-day Proof of Concept (PoC) and limited experimentation.
+
+    [Learn more about OpenFaaS editions](https://openfaas.com/pricing/)
 
 * Website Sponsorship 🌎
 

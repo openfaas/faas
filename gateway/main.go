@@ -200,6 +200,8 @@ func main() {
 			auth.DecorateWithBasicAuth(faasHandlers.NamespaceListerHandler, credentials)
 		faasHandlers.NamespaceMutatorHandler =
 			auth.DecorateWithBasicAuth(faasHandlers.NamespaceMutatorHandler, credentials)
+		faasHandlers.TelemetryHandler =
+			auth.DecorateWithBasicAuth(faasHandlers.TelemetryHandler, credentials)
 	}
 
 	r := mux.NewRouter()
