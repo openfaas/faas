@@ -1,4 +1,4 @@
-// Copyright 2020-2025 The NATS Authors
+// Copyright 2020-2026 The NATS Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -296,8 +296,7 @@ type jsOpts struct {
 }
 
 const (
-	defaultRequestWait  = 5 * time.Second
-	defaultAccountCheck = 20 * time.Second
+	defaultRequestWait = 5 * time.Second
 )
 
 // JetStream returns a JetStreamContext for messaging and stream management.
@@ -446,13 +445,21 @@ func StreamListFilter(subject string) JSOpt {
 }
 
 func (js *js) apiSubj(subj string) string {
-	if js.opts.pre == _EMPTY_ {
+	return apiSubjWithPrefix(js.opts.pre, subj)
+}
+
+func apiSubjWithPrefix(pre, subj string) string {
+	if pre == _EMPTY_ {
 		return subj
 	}
 	var b strings.Builder
-	b.WriteString(js.opts.pre)
+	b.WriteString(pre)
 	b.WriteString(subj)
 	return b.String()
+}
+
+func (o *jsOpts) apiSubj(subj string) string {
+	return apiSubjWithPrefix(o.pre, subj)
 }
 
 // PubOpt configures options for publishing JetStream messages.
@@ -719,6 +726,7 @@ func (js *js) newAsyncReply() string {
 		go js.resetPendingAcksOnReconnect()
 	}
 	var sb strings.Builder
+	sb.Grow(len(js.rpre) + aReplyTokensize)
 	sb.WriteString(js.rpre)
 	for {
 		rn := js.rr.Int63()
@@ -1132,7 +1140,7 @@ func (js *js) PublishMsgAsync(m *Msg, opts ...PubOpt) (PubAckFuture, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err := js.nc.publish(m.Subject, reply, hdr, m.Data); err != nil {
+	if err := js.nc.publish(m.Subject, reply, false, hdr, m.Data); err != nil {
 		js.clearPAF(id)
 		return nil, err
 	}
@@ -1430,6 +1438,8 @@ type jsSub struct {
 	dseq    uint64
 	sseq    uint64
 	ccreq   *createConsumerRequest
+	// A reset waits for the buffer to drain, see tryResetOrderedConsumer.
+	resetPending bool
 
 	// Heartbeats and Flow Control handling from push consumers.
 	hbc    *time.Timer
@@ -1948,7 +1958,6 @@ func (js *js) subscribe(subj, queue string, cb MsgHandler, ch chan *Msg, isSync,
 		} else if consName == "" {
 			consName = getHash(nuid.Next())
 		}
-		var info *ConsumerInfo
 		if o.ctx != nil {
 			info, err = js.upsertConsumer(stream, consName, ccreq.Config, Context(o.ctx))
 		} else {
@@ -1960,7 +1969,11 @@ func (js *js) subscribe(subj, queue string, cb MsgHandler, ch chan *Msg, isSync,
 				cleanUpSub()
 				return nil, err
 			}
-			if consumer == _EMPTY_ ||
+			lookupConsumer := consumer
+			if lookupConsumer == _EMPTY_ {
+				lookupConsumer = consName
+			}
+			if lookupConsumer == _EMPTY_ ||
 				(apiErr.ErrorCode != JSErrCodeConsumerAlreadyExists && apiErr.ErrorCode != JSErrCodeConsumerNameExists) {
 				cleanUpSub()
 				if errors.Is(apiErr, ErrStreamNotFound) {
@@ -1973,7 +1986,7 @@ func (js *js) subscribe(subj, queue string, cb MsgHandler, ch chan *Msg, isSync,
 				cleanUpSub()
 			}
 
-			info, err = js.ConsumerInfo(stream, consumer)
+			info, err = js.ConsumerInfo(stream, lookupConsumer)
 			if err != nil {
 				return nil, err
 			}
@@ -2030,10 +2043,7 @@ func (js *js) subscribe(subj, queue string, cb MsgHandler, ch chan *Msg, isSync,
 	// If maxap is greater than the default sub's pending limit, use that.
 	if maxap > DefaultSubPendingMsgsLimit {
 		// For bytes limit, use the min of maxp*1MB or DefaultSubPendingBytesLimit
-		bl := maxap * 1024 * 1024
-		if bl < DefaultSubPendingBytesLimit {
-			bl = DefaultSubPendingBytesLimit
-		}
+		bl := max(maxap*1024*1024, DefaultSubPendingBytesLimit)
 		if err := sub.SetPendingLimits(maxap, bl); err != nil {
 			return nil, err
 		}
@@ -2150,51 +2160,142 @@ func (sub *Subscription) trackSequences(reply string) {
 	sub.jsi.cmeta = reply
 }
 
+// orderedSeqs carries the sequences of a message that passed the ordering check
+// but has not yet been handed off for delivery.
+type orderedSeqs struct {
+	dseq, sseq uint64
+}
+
 // Check to make sure messages are arriving in order.
-// Returns true if the sub had to be replaced. Will cause upper layers to return.
-// The caller has verified that sub.jsi != nil and that this is not a control message.
+// Returns true when m is not the message the ordered consumer was expecting
+// next. The tracker is not advanced here; the returned sequences are applied
+// with commitOrderedMsg once m is queued for delivery.
 // Lock should be held.
-func (sub *Subscription) checkOrderedMsgs(m *Msg) bool {
+func (sub *Subscription) checkOrderedMsgs(m *Msg) (bool, orderedSeqs) {
 	// Ignore msgs with no reply like HBs and flow control, they are handled elsewhere.
 	if m.Reply == _EMPTY_ {
-		return false
+		return false, orderedSeqs{}
 	}
 
 	// Normal message here.
 	tokens, err := parser.GetMetadataFields(m.Reply)
 	if err != nil {
-		return false
+		return false, orderedSeqs{}
 	}
 	sseq, dseq := parser.ParseNum(tokens[parser.AckStreamSeqTokenPos]), parser.ParseNum(tokens[parser.AckConsumerSeqTokenPos])
 
 	jsi := sub.jsi
 	if dseq != jsi.dseq {
-		sub.resetOrderedConsumer(jsi.sseq + 1)
-		return true
+		return true, orderedSeqs{}
 	}
-	// Update our tracking here.
-	jsi.dseq, jsi.sseq = dseq+1, sseq
-	return false
+	return false, orderedSeqs{dseq: dseq, sseq: sseq}
 }
 
-// Update and replace sid.
+// commitOrderedMsg advances the ordered consumer tracker for a message that has
+// been queued for delivery. Pairs with checkOrderedMsgs.
+// Lock should be held.
+func (sub *Subscription) commitOrderedMsg(seqs orderedSeqs) {
+	if seqs.dseq == 0 {
+		return
+	}
+	sub.jsi.dseq, sub.jsi.sseq = seqs.dseq+1, seqs.sseq
+}
+
+// jsMsgAction tells processMsg what to do with a message once the ordered
+// consumer checks have run against it.
+type jsMsgAction int
+
+const (
+	jsMsgDeliver jsMsgAction = iota
+	// Cannot be delivered. The caller's slow consumer path counts it and
+	// releases the pending accounting reserved for it.
+	jsMsgDrop
+	// Out of order and fully handled. The caller only unlocks and returns.
+	jsMsgDropGap
+)
+
+// checkOrderedDelivery validates an ordered consumer message's place in the
+// sequence and reports what processMsg should do with it.
+//
+// The caller has verified that sub.jsi != nil and that the consumer is ordered.
+// Lock is held on entry and on return, but a reset releases and reacquires it
+// to recreate the consumer.
+func (sub *Subscription) checkOrderedDelivery(m *Msg) (jsMsgAction, orderedSeqs) {
+	jsi := sub.jsi
+	// Everything still arriving belongs to the consumer about to be replaced
+	// and is refetched by the reset, which may have room by now.
+	if jsi.resetPending {
+		sub.tryResetOrderedConsumer()
+		return jsMsgDrop, orderedSeqs{}
+	}
+	// A full channel would drop the message below anyway; checking first keeps
+	// the drop from reading as a gap.
+	if sub.mch != nil && cap(sub.mch) > 0 && len(sub.mch) == cap(sub.mch) {
+		return jsMsgDrop, orderedSeqs{}
+	}
+
+	gap, seqs := sub.checkOrderedMsgs(m)
+	if !gap {
+		return jsMsgDeliver, seqs
+	}
+
+	// An unbuffered channel has no capacity signal. With nothing delivered
+	// since the last reset, resetting again would just refetch into the same
+	// wall, so leave it to the heartbeat. Once something has been delivered
+	// the reader is there and a drop means it was merely busy, so reset at
+	// once; deferring to the heartbeat here would drain a backlog one message
+	// per interval.
+	if sub.mch != nil && cap(sub.mch) == 0 && jsi.dseq == 1 {
+		return jsMsgDrop, orderedSeqs{}
+	}
+	sub.releaseReserved(m)
+	sub.tryResetOrderedConsumer()
+	return jsMsgDropGap, orderedSeqs{}
+}
+
+// tryResetOrderedConsumer recreates the consumer after a gap, or defers that
+// while more than half of the subscription's buffer is in use, so the refetch
+// is not dropped into a buffer that is still nearly full. A deferred reset is
+// retried as messages are delivered and as messages and heartbeats arrive.
+// Lock should be held.
+func (sub *Subscription) tryResetOrderedConsumer() {
+	jsi := sub.jsi
+	if (sub.pMsgsLimit > 0 && sub.pMsgs > sub.pMsgsLimit/2) ||
+		(sub.pBytesLimit > 0 && sub.pBytes > sub.pBytesLimit/2) ||
+		(sub.mch != nil && len(sub.mch) > cap(sub.mch)/2) {
+		jsi.resetPending = true
+		return
+	}
+	sub.resetOrderedConsumer(jsi.sseq + 1)
+}
+
+// Update and replace sid. Returns the old and the new sid. Returns ok == false,
+// leaving everything untouched, if the subscription is no longer registered on
+// the connection.
 // Lock should be held on entry but will be unlocked to prevent lock inversion.
-func (sub *Subscription) applyNewSID() (osid int64) {
+func (sub *Subscription) applyNewSID() (osid, nsid int64, ok bool) {
 	nc := sub.conn
 	sub.mu.Unlock()
 
 	nc.subsMu.Lock()
 	osid = sub.sid
+	// removeSub or close() may have run while sub.mu was released;
+	// re-registering would resurrect the sub or write to a nil nc.subs.
+	if nc.subs[osid] != sub {
+		nc.subsMu.Unlock()
+		sub.mu.Lock()
+		return osid, 0, false
+	}
 	delete(nc.subs, osid)
 	// Place new one.
 	nc.ssid++
-	nsid := nc.ssid
+	nsid = nc.ssid
 	nc.subs[nsid] = sub
+	sub.sid = nsid
 	nc.subsMu.Unlock()
 
 	sub.mu.Lock()
-	sub.sid = nsid
-	return osid
+	return osid, nsid, true
 }
 
 // We are here if we have detected a gap with an ordered consumer.
@@ -2202,9 +2303,10 @@ func (sub *Subscription) applyNewSID() (osid int64) {
 // Lock should be held.
 func (sub *Subscription) resetOrderedConsumer(sseq uint64) {
 	nc := sub.conn
-	if sub.jsi == nil || nc == nil || sub.closed {
+	if sub.jsi == nil || nc == nil || sub.closed || sub.draining {
 		return
 	}
+	sub.jsi.resetPending = false
 
 	var maxStr string
 	// If there was an AUTO_UNSUB done, we need to adjust the new value
@@ -2215,26 +2317,31 @@ func (sub *Subscription) resetOrderedConsumer(sseq uint64) {
 			maxStr = strconv.Itoa(int(adjustedMax))
 		} else {
 			// We are already at the max, so we should just unsub the
-			// existing sub and be done
-			go func(sid int64) {
+			// existing sub and be done. The sid is read in the go routine
+			// because it is protected by subsMu, which cannot be acquired
+			// here since sub.mu is held.
+			go func() {
 				nc.mu.Lock()
+				nc.subsMu.RLock()
+				sid := sub.sid
+				nc.subsMu.RUnlock()
 				nc.bw.appendString(fmt.Sprintf(unsubProto, sid, _EMPTY_))
 				nc.kickFlusher()
 				nc.mu.Unlock()
-			}(sub.sid)
+			}()
 			return
 		}
 	}
 
 	// Quick unsubscribe. Since we know this is a simple push subscriber we do in place.
-	osid := sub.applyNewSID()
+	osid, nsid, ok := sub.applyNewSID()
+	if !ok {
+		return
+	}
 
 	// Grab new inbox.
 	newDeliver := nc.NewInbox()
 	sub.Subject = newDeliver
-
-	// Snapshot the new sid under sub lock.
-	nsid := sub.sid
 
 	// We are still in the low level readLoop for the connection so we need
 	// to spin a go routine to try to create the new consumer.
@@ -2242,14 +2349,9 @@ func (sub *Subscription) resetOrderedConsumer(sseq uint64) {
 		// Unsubscribe and subscribe with new inbox and sid.
 		// Remap a new low level sub into this sub since its client accessible.
 		// This is done here in this go routine to prevent lock inversion.
-		nc.mu.Lock()
-		nc.bw.appendString(fmt.Sprintf(unsubProto, osid, _EMPTY_))
-		nc.bw.appendString(fmt.Sprintf(subProto, newDeliver, _EMPTY_, nsid))
-		if maxStr != _EMPTY_ {
-			nc.bw.appendString(fmt.Sprintf(unsubProto, nsid, maxStr))
+		if !nc.rewireOrderedSub(sub, osid, nsid, newDeliver, maxStr) {
+			return
 		}
-		nc.kickFlusher()
-		nc.mu.Unlock()
 
 		pushErr := func(err error) {
 			nc.handleConsumerSequenceMismatch(sub, fmt.Errorf("%w: recreating ordered consumer", err))
@@ -2263,8 +2365,13 @@ func (sub *Subscription) resetOrderedConsumer(sseq uint64) {
 		jsi.cmeta = _EMPTY_
 		jsi.fcr, jsi.fcd = _EMPTY_, 0
 		jsi.deliver = newDeliver
-		// Reset consumer request for starting policy.
-		cfg := jsi.ccreq.Config
+		// Reset consumer request for starting policy. Take a value copy of the
+		// ConsumerConfig so concurrent activityCheck-spawned resets don't race
+		// on a shared *ConsumerConfig — a later goroutine's writes here would
+		// otherwise overlap an earlier goroutine's json.Marshal in
+		// upsertConsumer below (called outside sub.mu).
+		cfgCopy := *jsi.ccreq.Config
+		cfg := &cfgCopy
 		cfg.DeliverSubject = newDeliver
 		cfg.DeliverPolicy = DeliverByStartSequencePolicy
 		cfg.OptStartSeq = sseq
@@ -2310,9 +2417,46 @@ func (sub *Subscription) resetOrderedConsumer(sseq uint64) {
 		}
 
 		sub.mu.Lock()
+		if sub.closed || sub.draining {
+			// Unsubscribed or drained while the consumer was being created.
+			// The consumer is not attached to anything anymore, so delete it
+			// rather than waiting for the inactivity threshold.
+			sub.mu.Unlock()
+			go js.DeleteConsumer(jsi.stream, cinfo.Name)
+			return
+		}
 		jsi.consumer = cinfo.Name
 		sub.mu.Unlock()
 	}()
+}
+
+// rewireOrderedSub moves the subscription from osid to nsid on the server.
+// The old sid is always unsubscribed; the new one is only subscribed if the
+// subscription is still registered and not draining, so that no interest is
+// created for a subscription that will not accept messages anymore. Returns
+// whether that happened. unsubscribe runs under nc.mu too, so the check is
+// exact.
+func (nc *Conn) rewireOrderedSub(sub *Subscription, osid, nsid int64, deliver, maxStr string) bool {
+	nc.mu.Lock()
+	defer nc.mu.Unlock()
+
+	nc.bw.appendString(fmt.Sprintf(unsubProto, osid, _EMPTY_))
+	nc.subsMu.RLock()
+	sub.mu.Lock()
+	// A draining subscription is only removed from nc.subs once the drain
+	// completes, and that removal sends no UNSUB, so subscribing the new sid
+	// here would leave interest on the server for the life of the connection.
+	registered := nc.subs[nsid] == sub && !sub.draining
+	sub.mu.Unlock()
+	nc.subsMu.RUnlock()
+	if registered {
+		nc.bw.appendString(fmt.Sprintf(subProto, deliver, _EMPTY_, nsid))
+		if maxStr != _EMPTY_ {
+			nc.bw.appendString(fmt.Sprintf(unsubProto, nsid, maxStr))
+		}
+	}
+	nc.kickFlusher()
+	return registered
 }
 
 // For jetstream subscriptions, returns the number of delivered messages.
@@ -2373,7 +2517,7 @@ func (sub *Subscription) activityCheck() {
 			return
 		}
 		sub.mu.Lock()
-		sub.resetOrderedConsumer(jsi.sseq + 1)
+		sub.tryResetOrderedConsumer()
 		sub.mu.Unlock()
 	}
 }
@@ -2414,6 +2558,27 @@ func (nc *Conn) checkForSequenceMismatch(msg *Msg, s *Subscription, jsi *jsSub) 
 	jsi.active = true
 	s.mu.Unlock()
 
+	// The server reports the last consumer sequence it delivered.
+	var ldseq string
+	if hdr := msg.Header[lastConsumerSeqHdr]; len(hdr) == 1 {
+		ldseq = hdr[0]
+	}
+
+	if ordered {
+		if ldseq == _EMPTY_ {
+			return
+		}
+		// jsi.dseq is the next sequence expected and advances only for messages
+		// handed off for delivery, so caught up means ldseq == jsi.dseq-1 and
+		// ldseq >= jsi.dseq means there is a gap.
+		s.mu.Lock()
+		if parser.ParseNum(ldseq) >= jsi.dseq {
+			s.tryResetOrderedConsumer()
+		}
+		s.mu.Unlock()
+		return
+	}
+
 	if ctrl == _EMPTY_ {
 		return
 	}
@@ -2424,12 +2589,7 @@ func (nc *Conn) checkForSequenceMismatch(msg *Msg, s *Subscription, jsi *jsSub) 
 	}
 
 	// Consumer sequence.
-	var ldseq string
 	dseq := tokens[parser.AckConsumerSeqTokenPos]
-	hdr := msg.Header[lastConsumerSeqHdr]
-	if len(hdr) == 1 {
-		ldseq = hdr[0]
-	}
 
 	// Detect consumer sequence mismatch and whether
 	// should restart the consumer.
@@ -2437,18 +2597,12 @@ func (nc *Conn) checkForSequenceMismatch(msg *Msg, s *Subscription, jsi *jsSub) 
 		// Dispatch async error including details such as
 		// from where the consumer could be restarted.
 		sseq := parser.ParseNum(tokens[parser.AckStreamSeqTokenPos])
-		if ordered {
-			s.mu.Lock()
-			s.resetOrderedConsumer(jsi.sseq + 1)
-			s.mu.Unlock()
-		} else {
-			ecs := &ErrConsumerSequenceMismatch{
-				StreamResumeSequence: uint64(sseq),
-				ConsumerSequence:     parser.ParseNum(dseq),
-				LastConsumerSequence: parser.ParseNum(ldseq),
-			}
-			nc.handleConsumerSequenceMismatch(s, ecs)
+		ecs := &ErrConsumerSequenceMismatch{
+			StreamResumeSequence: uint64(sseq),
+			ConsumerSequence:     parser.ParseNum(dseq),
+			LastConsumerSequence: parser.ParseNum(ldseq),
 		}
+		nc.handleConsumerSequenceMismatch(s, ecs)
 	}
 }
 
@@ -2835,8 +2989,15 @@ func ConsumerFilterSubjects(subjects ...string) SubOpt {
 func (sub *Subscription) ConsumerInfo() (*ConsumerInfo, error) {
 	sub.mu.Lock()
 	// TODO(dlc) - Better way to mark especially if we attach.
-	if sub.jsi == nil || sub.jsi.consumer == _EMPTY_ {
+	if sub.jsi == nil {
 		sub.mu.Unlock()
+		return nil, ErrTypeSubscription
+	} else if sub.jsi.consumer == _EMPTY_ {
+		ordered := sub.jsi.ordered
+		sub.mu.Unlock()
+		if ordered {
+			return nil, ErrConsumerInfoOnOrderedReset
+		}
 		return nil, ErrTypeSubscription
 	}
 
@@ -3108,10 +3269,7 @@ func (sub *Subscription) Fetch(batch int, opts ...PullOpt) ([]*Msg, error) {
 			}
 
 			// Make our request expiration a bit shorter than the current timeout.
-			expiresDiff := time.Duration(float64(ttl) * 0.1)
-			if expiresDiff > 5*time.Second {
-				expiresDiff = 5 * time.Second
-			}
+			expiresDiff := min(time.Duration(float64(ttl)*0.1), 5*time.Second)
 			expires := ttl - expiresDiff
 
 			nr.Batch = batch - len(msgs)
@@ -3202,6 +3360,7 @@ func newFetchInbox(subj string) (string, string) {
 	}
 	reqID := nuid.Next()
 	var sb strings.Builder
+	sb.Grow(len(subj) - 1 + nuidSize)
 	sb.WriteString(subj[:len(subj)-1])
 	sb.WriteString(reqID)
 	return sb.String(), reqID
@@ -3392,10 +3551,7 @@ func (sub *Subscription) FetchBatch(batch int, opts ...PullOpt) (MessageBatch, e
 	ttl = time.Until(deadline)
 
 	// Make our request expiration a bit shorter than the current timeout.
-	expiresDiff := time.Duration(float64(ttl) * 0.1)
-	if expiresDiff > 5*time.Second {
-		expiresDiff = 5 * time.Second
-	}
+	expiresDiff := min(time.Duration(float64(ttl)*0.1), 5*time.Second)
 	expires := ttl - expiresDiff
 
 	connStatusChanged := nc.StatusChanged()
@@ -3510,12 +3666,12 @@ func (o *pullOpts) checkCtxErr(err error) error {
 func (js *js) getConsumerInfo(stream, consumer string) (*ConsumerInfo, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), js.opts.wait)
 	defer cancel()
-	return js.getConsumerInfoContext(ctx, stream, consumer)
+	return js.getConsumerInfoContext(ctx, stream, consumer, js.opts)
 }
 
-func (js *js) getConsumerInfoContext(ctx context.Context, stream, consumer string) (*ConsumerInfo, error) {
+func (js *js) getConsumerInfoContext(ctx context.Context, stream, consumer string, o *jsOpts) (*ConsumerInfo, error) {
 	ccInfoSubj := fmt.Sprintf(apiConsumerInfoT, stream, consumer)
-	resp, err := js.apiRequestWithContext(ctx, js.apiSubj(ccInfoSubj), nil)
+	resp, err := js.apiRequestWithContext(ctx, o.apiSubj(ccInfoSubj), nil)
 	if err != nil {
 		if errors.Is(err, ErrNoResponders) {
 			err = ErrJetStreamNotEnabled
@@ -3556,7 +3712,7 @@ func (js *js) apiRequestWithContext(ctx context.Context, subj string, data []byt
 	}
 	if js.opts.shouldTrace {
 		ctrace := js.opts.ctrace
-		if ctrace.RequestSent != nil {
+		if ctrace.ResponseReceived != nil {
 			ctrace.ResponseReceived(subj, resp.Data, resp.Header)
 		}
 	}
@@ -3746,6 +3902,13 @@ const (
 	// AckExplicitPolicy requires ack or nack for all messages.
 	AckExplicitPolicy
 
+	// AckFlowControlPolicy functions like AckAllPolicy, but acks based on
+	// responses to flow control. Used by durable stream sourcing and
+	// mirroring against an existing durable push consumer.
+	//
+	// This feature requires nats-server v2.14.0 or later.
+	AckFlowControlPolicy
+
 	// For configuration mismatch check
 	ackPolicyNotSet = 99
 )
@@ -3762,6 +3925,8 @@ func (p *AckPolicy) UnmarshalJSON(data []byte) error {
 		*p = AckAllPolicy
 	case jsonString("explicit"):
 		*p = AckExplicitPolicy
+	case jsonString("flow_control"):
+		*p = AckFlowControlPolicy
 	default:
 		return fmt.Errorf("nats: can not unmarshal %q", data)
 	}
@@ -3777,6 +3942,8 @@ func (p AckPolicy) MarshalJSON() ([]byte, error) {
 		return json.Marshal("all")
 	case AckExplicitPolicy:
 		return json.Marshal("explicit")
+	case AckFlowControlPolicy:
+		return json.Marshal("flow_control")
 	default:
 		return nil, fmt.Errorf("nats: unknown acknowledgement policy %v", p)
 	}
@@ -3790,6 +3957,8 @@ func (p AckPolicy) String() string {
 		return "AckAll"
 	case AckExplicitPolicy:
 		return "AckExplicit"
+	case AckFlowControlPolicy:
+		return "AckFlowControl"
 	case ackPolicyNotSet:
 		return "Not Initialized"
 	default:

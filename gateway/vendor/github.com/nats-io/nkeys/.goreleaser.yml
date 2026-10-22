@@ -1,3 +1,4 @@
+version: 2
 project_name: nkeys
 release:
   github:
@@ -41,7 +42,8 @@ archives:
   - name_template: '{{ .ProjectName }}-v{{ .Version }}-{{ .Os }}-{{ .Arch }}{{ if .Arm
     }}v{{ .Arm }}{{ end }}'
     wrap_in_directory: true
-    format: zip
+    formats:
+      - zip
     files:
       - README.md
       - LICENSE
@@ -50,7 +52,7 @@ checksum:
   name_template: '{{ .ProjectName }}-v{{ .Version }}-checksums.txt'
 
 snapshot:
-  name_template: 'dev'
+  version_template: dev
 
 nfpms:
   - file_name_template: '{{ .ProjectName }}-v{{ .Version }}-{{ .Arch }}{{ if .Arm

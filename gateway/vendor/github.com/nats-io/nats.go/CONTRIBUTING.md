@@ -66,15 +66,21 @@ send your question to the [NATS Google Group](https://groups.google.com/forum/#!
 
 ## Testing
 
+The integration tests run against real NATS servers spawned by a tester service. Locally it runs inside the test binary
+(`github.com/synadia-io/orbit.go/ntf`), so no docker is needed; CI uses the
+[synadia/ntf-server](https://hub.docker.com/r/synadia/ntf-server) docker image instead. See [TESTING.md](TESTING.md) for
+the full workflow; the short version:
+
+```shell
+make test                            # full race-enabled suite, no docker
+make test T=TestName PKG=./test/...  # iterate on a single test
+```
+
+Nothing to install or start.
+
 You should use `go_test.mod` to manage your testing dependencies. Please use the following command to update your
 dependencies and avoid changing the main `go.mod` in a PR:
 
 ```shell
 go mod tidy -modfile=go_test.mod
-```
-
-To the tests you can pass `-modfile=go_test.mod` flag to `go test` or instead you can also set `GOFLAGS="-modfile=go_test.mod"` as an environment variable:
-
-```shell
-go test ./... -modfile=go_test.mod
 ```

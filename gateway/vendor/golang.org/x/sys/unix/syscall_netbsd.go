@@ -248,6 +248,23 @@ func Statvfs(path string, buf *Statvfs_t) (err error) {
 	return Statvfs1(path, buf, ST_WAIT)
 }
 
+func Getvfsstat(buf []Statvfs_t, flags int) (n int, err error) {
+	var (
+		_p0     unsafe.Pointer
+		bufsize uintptr
+	)
+	if len(buf) > 0 {
+		_p0 = unsafe.Pointer(&buf[0])
+		bufsize = unsafe.Sizeof(Statvfs_t{}) * uintptr(len(buf))
+	}
+	r0, _, e1 := Syscall(SYS_GETVFSSTAT, uintptr(_p0), bufsize, uintptr(flags))
+	n = int(r0)
+	if e1 != 0 {
+		err = e1
+	}
+	return
+}
+
 /*
  * Exposed directly
  */
@@ -276,6 +293,15 @@ func Statvfs(path string, buf *Statvfs_t) (err error) {
 //sys	ExtattrSetLink(link string, attrnamespace int, attrname string, data uintptr, nbytes int) (ret int, err error)
 //sys	ExtattrDeleteLink(link string, attrnamespace int, attrname string) (err error)
 //sys	ExtattrListLink(link string, attrnamespace int, data uintptr, nbytes int) (ret int, err error)
+//sys	extattrGetFd(fd int, attrnamespace int, attrname string, data unsafe.Pointer, nbytes int) (ret int, err error)
+//sys	extattrSetFd(fd int, attrnamespace int, attrname string, data unsafe.Pointer, nbytes int) (ret int, err error)
+//sys	extattrListFd(fd int, attrnamespace int, data unsafe.Pointer, nbytes int) (ret int, err error)
+//sys	extattrGetFile(file string, attrnamespace int, attrname string, data unsafe.Pointer, nbytes int) (ret int, err error)
+//sys	extattrSetFile(file string, attrnamespace int, attrname string, data unsafe.Pointer, nbytes int) (ret int, err error)
+//sys	extattrListFile(file string, attrnamespace int, data unsafe.Pointer, nbytes int) (ret int, err error)
+//sys	extattrGetLink(link string, attrnamespace int, attrname string, data unsafe.Pointer, nbytes int) (ret int, err error)
+//sys	extattrSetLink(link string, attrnamespace int, attrname string, data unsafe.Pointer, nbytes int) (ret int, err error)
+//sys	extattrListLink(link string, attrnamespace int, data unsafe.Pointer, nbytes int) (ret int, err error)
 //sys	Faccessat(dirfd int, path string, mode uint32, flags int) (err error)
 //sys	Fadvise(fd int, offset int64, length int64, advice int) (err error) = SYS_POSIX_FADVISE
 //sys	Fchdir(fd int) (err error)

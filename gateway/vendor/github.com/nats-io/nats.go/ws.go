@@ -55,6 +55,12 @@ const (
 	wsMaxControlPayloadSize = 125
 	wsCloseSatusSize        = 2
 
+	// wsMaxMsgPayloadMultiple is the multiplier applied to MaxPayload to
+	// determine the maximum WebSocket frame size.
+	wsMaxMsgPayloadMultiple = 8
+	// wsMaxMsgPayloadLimit is the absolute cap on WebSocket frame size (64MB).
+	wsMaxMsgPayloadLimit = 64 * 1024 * 1024
+
 	// From https://tools.ietf.org/html/rfc6455#section-11.7
 	wsCloseStatusNormalClosure      = 1000
 	wsCloseStatusNoStatusReceived   = 1005
@@ -85,6 +91,7 @@ type websocketReader struct {
 	nl       bool
 	dc       *wsDecompressor
 	nc       *Conn
+	closeErr error
 }
 
 type wsDecompressor struct {
@@ -113,10 +120,7 @@ func (d *wsDecompressor) Read(dst []byte) (int, error) {
 	copied := 0
 	rem := len(dst)
 	for buf := d.bufs[0]; buf != nil && rem > 0; {
-		n := len(buf[d.off:])
-		if n > rem {
-			n = rem
-		}
+		n := min(len(buf[d.off:]), rem)
 		copy(dst[copied:], buf[d.off:d.off+n])
 		copied += n
 		rem -= n
@@ -181,6 +185,18 @@ func wsNewReader(r io.Reader) *websocketReader {
 	return &websocketReader{r: r, ff: true}
 }
 
+// maxFrameSize returns the maximum allowed WebSocket frame size based on the
+// negotiated MaxPayload. This mirrors the server-side wsMaxMessageSize logic.
+func (r *websocketReader) maxFrameSize() uint64 {
+	if r.nc != nil {
+		mp := r.nc.info.MaxPayload
+		if mp > 0 && uint64(mp) <= wsMaxMsgPayloadLimit/wsMaxMsgPayloadMultiple {
+			return uint64(mp) * wsMaxMsgPayloadMultiple
+		}
+	}
+	return wsMaxMsgPayloadLimit
+}
+
 // From now on, reads will be from the readLoop and we will need to
 // acquire the connection lock should we have to send/write a control
 // message from handleControlFrame.
@@ -200,6 +216,15 @@ func (r *websocketReader) Read(p []byte) (int, error) {
 	} else {
 		if len(r.pending) > 0 {
 			return r.drainPending(p), nil
+		}
+
+		// If we have a deferred close error (from a previous Read that
+		// had both data frames and a close frame), return it now that
+		// pending data has been drained.
+		if r.closeErr != nil {
+			err := r.closeErr
+			r.closeErr = nil
+			return 0, err
 		}
 
 		// Get some data from the underlying reader.
@@ -278,13 +303,27 @@ func (r *websocketReader) Read(p []byte) (int, error) {
 			if err != nil {
 				return 0, err
 			}
-			rem = int(binary.BigEndian.Uint64(tmpBuf))
+			rem64 := binary.BigEndian.Uint64(tmpBuf)
+			if rem64&(1<<63) != 0 {
+				return 0, errors.New("invalid websocket frame: MSB set in 64-bit payload length")
+			}
+			if rem64 > r.maxFrameSize() {
+				return 0, fmt.Errorf("websocket frame too large: %d", rem64)
+			}
+			rem = int(rem64)
 		}
 
 		// Handle control messages in place...
 		if wsIsControlFrame(frameType) {
 			pos, err = r.handleControlFrame(frameType, buf, pos, rem)
 			if err != nil {
+				// If we already have pending data (e.g. a -ERR message
+				// that arrived before this close frame), defer the error
+				// so the pending data can be returned to the caller first.
+				if len(r.pending) > 0 {
+					r.closeErr = err
+					break
+				}
 				return 0, err
 			}
 			rem = 0
@@ -583,6 +622,11 @@ func (nc *Conn) wsInitHandshake(u *url.URL) error {
 			proxyPath = "/" + proxyPath
 		}
 		ustr += proxyPath
+	} else if u.Path != "" {
+		ustr += u.Path
+	}
+	if u.RawQuery != "" {
+		ustr += "?" + u.RawQuery
 	}
 
 	u, err = url.Parse(ustr)
@@ -609,6 +653,9 @@ func (nc *Conn) wsInitHandshake(u *url.URL) error {
 	req.Header["Sec-WebSocket-Version"] = []string{"13"}
 	if compress {
 		req.Header.Add("Sec-WebSocket-Extensions", wsPMCReqHeaderValue)
+	}
+	if err := nc.wsUpdateConnectionHeaders(req); err != nil {
+		return err
 	}
 	if err := req.Write(nc.conn); err != nil {
 		return err
@@ -726,6 +773,25 @@ func (nc *Conn) wsEnqueueControlMsg(needsLock bool, frameType wsOpCode, payload 
 		wr.ctrlFrames = append(wr.ctrlFrames, payload)
 	}
 	nc.bw.flush()
+}
+
+func (nc *Conn) wsUpdateConnectionHeaders(req *http.Request) error {
+	var headers http.Header
+	var err error
+	if nc.Opts.WebSocketConnectionHeadersHandler != nil {
+		headers, err = nc.Opts.WebSocketConnectionHeadersHandler()
+		if err != nil {
+			return err
+		}
+	} else {
+		headers = nc.Opts.WebSocketConnectionHeaders
+	}
+	for key, values := range headers {
+		for _, val := range values {
+			req.Header.Add(key, val)
+		}
+	}
+	return nil
 }
 
 func wsPMCExtensionSupport(header http.Header) (bool, bool) {

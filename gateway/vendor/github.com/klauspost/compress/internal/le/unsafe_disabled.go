@@ -1,4 +1,4 @@
-//go:build !(amd64 || arm64 || ppc64le || riscv64) || nounsafe || purego || appengine
+//go:build !(amd64 || arm64 || ppc64le || riscv64) || nounsafe || purego
 
 package le
 
@@ -37,6 +37,6 @@ func Store32(b []byte, v uint32) {
 }
 
 // Store64 will store v at b.
-func Store64(b []byte, v uint64) {
-	binary.LittleEndian.PutUint64(b, v)
+func Store64[I Indexer](b []byte, i I, v uint64) {
+	binary.LittleEndian.PutUint64(b[i:], v)
 }

@@ -95,7 +95,7 @@ func (nc *Conn) oldRequestWithContext(ctx context.Context, subj string, hdr, dat
 	s.AutoUnsubscribe(1)
 	defer s.Unsubscribe()
 
-	err = nc.publish(subj, inbox, hdr, data)
+	err = nc.publish(subj, inbox, false, hdr, data)
 	if err != nil {
 		return nil, err
 	}
