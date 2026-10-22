@@ -32,9 +32,17 @@ type QueueRequest struct {
 	// for default.
 	QueueName string `json:"QueueName,omitempty"`
 
-	// Annotations defines a collection of meta-data that can be used by
-	// the queue worker when processing the queued request.
+	// Subset of annotations to pass on to the queue-worker
+	// for processing the queued request.
 	Annotations map[string]string `json:"Annotations,omitempty"`
+
+	// Subset of labels to pass on to the queue-worker
+	// for processing the queued request.
+	Labels map[string]string `json:"Labels,omitempty"`
+
+	// Subset of environment variables to pass on to the queue-worker
+	// for processing the queued request.
+	Environment map[string]string `json:"Environment,omitempty"`
 
 	// Used by queue worker to submit a result
 	CallbackURL *url.URL `json:"CallbackUrl,omitempty"`

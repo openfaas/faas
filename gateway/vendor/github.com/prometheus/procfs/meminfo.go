@@ -1,4 +1,4 @@
-// Copyright 2019 The Prometheus Authors
+// Copyright The Prometheus Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -21,7 +21,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/prometheus/procfs/internal/util"
+	"github.com/prometheus/procfs/internal/parsers"
 )
 
 // Meminfo represents memory statistics.
@@ -210,7 +210,7 @@ type Meminfo struct {
 // Meminfo returns an information about current kernel/system memory statistics.
 // See https://www.kernel.org/doc/Documentation/filesystems/proc.txt
 func (fs FS) Meminfo() (Meminfo, error) {
-	b, err := util.ReadFileNoStat(fs.proc.Path("meminfo"))
+	b, err := parsers.ReadFileNoStat(fs.proc.Path("meminfo"))
 	if err != nil {
 		return Meminfo{}, err
 	}
@@ -307,7 +307,7 @@ func parseMemInfo(r io.Reader) (*Meminfo, error) {
 			m.ZswapBytes = &valBytes
 		case "Zswapped:":
 			m.Zswapped = &val
-			m.ZswapBytes = &valBytes
+			m.ZswappedBytes = &valBytes
 		case "Dirty:":
 			m.Dirty = &val
 			m.DirtyBytes = &valBytes

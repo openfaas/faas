@@ -15,6 +15,7 @@ package nkeys
 
 import (
 	"bytes"
+	"crypto/ed25519"
 	"encoding/base32"
 	"encoding/binary"
 )
@@ -184,6 +185,9 @@ func DecodeSeed(src []byte) (PrefixByte, []byte, error) {
 	if checkValidPublicPrefixByte(PrefixByte(b2)) != nil {
 		return PrefixByteSeed, nil, ErrInvalidSeed
 	}
+	if len(raw[2:]) != seedLen {
+		return PrefixByteSeed, nil, ErrInvalidSeed
+	}
 	return PrefixByte(b2), raw[2:], nil
 }
 
@@ -208,14 +212,23 @@ func Prefix(src string) PrefixByte {
 
 // IsValidPublicKey will decode and verify that the string is a valid encoded public key.
 func IsValidPublicKey(src string) bool {
-	b, err := decode([]byte(src))
+	_, _, err := decodePublicKey(src)
+	return err == nil
+}
+
+func decodePublicKey(public string) (PrefixByte, []byte, error) {
+	raw, err := decode([]byte(public))
 	if err != nil {
-		return false
+		return PrefixByteUnknown, nil, err
 	}
-	if prefix := PrefixByte(b[0]); checkValidPublicPrefixByte(prefix) != nil {
-		return false
+	pre := PrefixByte(raw[0])
+	if err := checkValidPublicPrefixByte(pre); err != nil {
+		return PrefixByteUnknown, nil, ErrInvalidPublicKey
 	}
-	return true
+	if len(raw[1:]) != ed25519.PublicKeySize {
+		return PrefixByteUnknown, nil, ErrInvalidPublicKey
+	}
+	return pre, raw[1:], nil
 }
 
 // IsValidPublicUserKey will decode and verify the string is a valid encoded Public User Key.

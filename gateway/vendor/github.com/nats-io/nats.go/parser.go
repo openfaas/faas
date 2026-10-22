@@ -430,6 +430,7 @@ func (nc *Conn) cloneMsgArg() {
 }
 
 const argsLenMax = 4
+const hdrArgsLenMax = 5
 
 func (nc *Conn) processMsgArgs(arg []byte) error {
 	// Use separate function for header based messages.
@@ -484,7 +485,7 @@ func (nc *Conn) processMsgArgs(arg []byte) error {
 // processHeaderMsgArgs is for a header based message.
 func (nc *Conn) processHeaderMsgArgs(arg []byte) error {
 	// Unroll splitArgs to avoid runtime/heap issues
-	a := [argsLenMax][]byte{}
+	a := [hdrArgsLenMax][]byte{}
 	args := a[:0]
 	start := -1
 	for i, b := range arg {

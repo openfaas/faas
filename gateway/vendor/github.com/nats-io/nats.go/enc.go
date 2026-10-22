@@ -107,7 +107,7 @@ func (c *EncodedConn) Publish(subject string, v any) error {
 	if err != nil {
 		return err
 	}
-	return c.Conn.publish(subject, _EMPTY_, nil, b)
+	return c.Conn.publish(subject, _EMPTY_, false, nil, b)
 }
 
 // PublishRequest will perform a Publish() expecting a response on the
@@ -120,7 +120,7 @@ func (c *EncodedConn) PublishRequest(subject, reply string, v any) error {
 	if err != nil {
 		return err
 	}
-	return c.Conn.publish(subject, reply, nil, b)
+	return c.Conn.publish(subject, reply, true, nil, b)
 }
 
 // Request will create an Inbox and perform a Request() call

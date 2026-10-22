@@ -63,6 +63,7 @@ func (sub *Subscription) MsgsTimeout(timeout time.Duration) iter.Seq2[*Msg, erro
 				if !errors.Is(err, ErrTimeout) {
 					return
 				}
+				continue
 			}
 			if !yield(msg, nil) {
 				return

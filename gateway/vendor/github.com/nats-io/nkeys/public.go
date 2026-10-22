@@ -52,6 +52,9 @@ func (p *pub) Sign(input []byte) ([]byte, error) {
 
 // Verify will verify the input against a signature utilizing the public key.
 func (p *pub) Verify(input []byte, sig []byte) error {
+	if len(p.pub) != ed25519.PublicKeySize {
+		return ErrInvalidPublicKey
+	}
 	if !ed25519.Verify(p.pub, input, sig) {
 		return ErrInvalidSignature
 	}

@@ -1,16 +1,43 @@
+version: "2"
+linters:
+  settings:
+    staticcheck:
+      # The merged staticcheck linter pulls in more check families than this
+      # repo has ever run; keep it to the set that was in force before.
+      checks:
+        - SA*
+        - S1*
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - errcheck
+        text: Unsubscribe
+      - linters:
+          - errcheck
+        text: Drain
+      - linters:
+          - errcheck
+        text: msg.Ack
+      - linters:
+          - errcheck
+        text: watcher.Stop
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
 issues:
   max-issues-per-linter: 0
   max-same-issues: 0
-  exclude-rules:
-    - linters:
-      - errcheck
-      text: "Unsubscribe"
-    - linters:
-      - errcheck
-      text: "Drain"
-    - linters:
-      - errcheck
-      text: "msg.Ack"
-    - linters:
-      - errcheck
-      text: "watcher.Stop"
+formatters:
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

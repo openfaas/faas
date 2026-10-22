@@ -1,4 +1,4 @@
-// Copyright 2018 The Prometheus Authors
+// Copyright The Prometheus Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/prometheus/procfs/internal/util"
+	"github.com/prometheus/procfs/internal/parsers"
 )
 
 // Originally, this USER_HZ value was dynamically retrieved via a sysconf call
@@ -134,7 +134,7 @@ func (p Proc) NewStat() (ProcStat, error) {
 
 // Stat returns the current status information of the process.
 func (p Proc) Stat() (ProcStat, error) {
-	data, err := util.ReadFileNoStat(p.path("stat"))
+	data, err := parsers.ReadFileNoStat(p.path("stat"))
 	if err != nil {
 		return ProcStat{}, err
 	}

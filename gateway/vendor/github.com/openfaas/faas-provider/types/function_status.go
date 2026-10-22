@@ -74,7 +74,6 @@ type FunctionStatus struct {
 //
 // CPU is measured in seconds consumed since the last measurement
 // RAM is measured in total bytes consumed
-//
 type FunctionUsage struct {
 	// CPU is the increase in CPU usage since the last measurement
 	// equivalent to Kubernetes' concept of millicores.
